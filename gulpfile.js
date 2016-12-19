@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
     queue = require('gulp-sequence'),
+    contentIncluder = require('gulp-content-includer'),
     packageJson = require('./package.json');
 
 function branch(_path) {
@@ -42,6 +43,13 @@ gulp.task('concat', function() {
 gulp.task('clean', function() {
     return gulp.src('dist').pipe($.clean());
 })
+gulp.task('html', function() {
+	return gulp.src(path.src.root('templates/**/*.html'))
+		.pipe(contentIncluder({
+                includerReg:/<!\-\-include\s+"([^"]+)"\-\->/g
+            }))
+            .pipe(gulp.dest(path.dist.root()));
+})
 gulp.task('copy', function() {
     return gulp.src([
             path.src.root('templates/**/*.html'),
@@ -57,6 +65,7 @@ gulp.task('default', function(cb) {
     queue(
         'clean',
         'copy',
+        'html',
         'less',
         'concat',
         cb);
