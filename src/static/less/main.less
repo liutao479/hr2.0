@@ -1,4 +1,5 @@
 @import (reference) "defined.less";
+@import (less) "global.less";
 
 html,body,p,div,a,ul,li,dl,dt,dd,span,em,h2,h3,h4,i {
 	margin:0;
@@ -35,52 +36,33 @@ a {
 		content: " ";
 	    display: block;
 	    height: 0;
-	    overflow: hidden
+	    overflow: hidden;
     }
     &:after {
     	clear: both;
     }
 }
-.button {
-	display: inline-block;
-	height: 40px;
-	line-height: 40px;
-	padding: 20px;
-	border-radius: 3px;
-	line-height: 40px;
-	&.button-mini {
-		height: 32px;
-		line-height: 32px;
-	}
+@font-face {
+    font-family: 'iconfont';  /* project id 203349 */
+    src: url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.eot');
+    src: url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.woff') format('woff'),
+    url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.svg#iconfont') format('svg');
 }
-.arrow {
-	position: absolute;
-	border-width: 5px;
-	top: 50%;
-	&&-left, &&-right {
-		margin-top: -6px;
-	}
-	&&-left {
-		border-style: dashed solid dashed dashed;
-		border-color: transparent @fontColor transparent transparent;
-	}
-	&&-right {
-		border-style: dashed dashed dashed solid;
-		border-color: transparent transparent transparent @fontColor;
-	}
-	&&-top {
-		margin-top: -8px;
-		border-style: dashed dashed solid dashed;
-		border-color: transparent transparent @fontColor transparent;
-	}
-	&&-bottom {
-		margin-top: -3px;
-		border-style: solid dashed dashed dashed;
-		border-color: @fontColor transparent transparent transparent;
-	}
+
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+//  -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
 }
+
 .navigator {
 	position: fixed;
+	z-index: 999;
 	left: 0;
 	right: 0;
 	top: 0;
@@ -105,45 +87,230 @@ a {
 		background: url(img/logo.png);
 		background-size: 100%;
 	}
+	.user-field {
+	    width: 215px;
+	    position: absolute;
+	    top: 0;
+	    right: 80px;
+	    padding-right:13px;
+	    li {
+	        float: left;
+	        height: 60px;
+	        line-height: 60px;
+	        text-align: center;
+	        &.QR-Code,&.message {
+                width: 50px;
+                height: 60px;
+                i {
+                    font-size: 21px;
+                }
+            }
+            .message-a{
+                position: relative;
+                .message-number{
+                    position: absolute;
+                    left: 11px;
+                    top:-11px;
+                }
+            } 
+            &.user {
+                width: 102px;
+            }
+            a {
+                color: #FFF;
+            }
+	    }
+	}
 }
 .menu {
 	position: fixed;
 	left: 0;
 	top: 60px;
 	bottom: 0;
-	width: 200px;
-	background-color: #f3f4f9;
+	width: 200px; 
+	overflow: hidden;
+	overflow-y: scroll;
+	border-right: 1px solid @borderColor;
+	.mark{
+		margin-right: 13px;
+		position: relative;
+		top: 2px;
+	}
 	a.menu-item, a.menu-group-item {
 		display: block;
 		cursor: pointer;
+		color: @fontColor;
 		&:hover {
-			background-color: #f8f9fc;
+			background-color: @menuHoverBgColor;
 		}
 	}
 	.menu-item, .menu-group-title {
 		position: relative;
 		padding-left: 25px;
 	}
-	.menu-item {
+	.menu-item { 
 		height: 55px;
 		line-height: 55px;
 	}
 	.menu-group {
-		margin: 7px 0 14px 0;
 		.menu-group-item {
 			padding-left: 58px;
 		}
-		.menu-group-title, .menu-group-item {
+		.menu-group-title {
+		    height: 55px;
+            line-height: 55px;
+            cursor: pointer;
+		    &:hover {
+                background-color: @menuHoverBgColor;
+            }
+		}
+		.menu-group-item {
 			height: 40px;
 			line-height: 40px;
+			cursor: pointer;
 		}
 		.menu-group-title {
-			.arrow {
-
+			.iconfont-arrow {
+                position: absolute;
+                right: 25px;
+                font-size: 12px;
 			}
 		}
 	}
+	.menu-item-active {
+	    color: @menuActiveColor;
+	    background-color: @menuActiveBgColor;
+	    &:before {
+	        position: absolute;
+	        left: 0;
+	        top: 0;
+	        content:"";
+	        width: 4px;
+	        height: 55px;
+	        background-color: @menuActiveColor;
+	    }
+	}
 }
+//工作台,
 .console {
-	width: 100%;
-}
+	padding: 20px 60px 100px 39px;
+	margin: 60px 0 0 200px;
+	background-color: @consoleBgColor;
+	overflow: hidden;
+	.container {
+	    border: 1px solid @borderColor;
+	    .search-bar {
+	        position: relative;
+            height: 59px;
+            line-height: 59px;
+            background-color: #FFF;
+            input {
+                margin-left: 24px;
+                margin-right: 10px;
+            }
+            .drop-down-box .drop-down-text {
+                color: #6b59c9;
+            }
+            .drop-down-box i {
+                color: #2c405a;
+            }
+            .button {
+                position: absolute;
+                top: 50%;
+                right: 24px;
+                margin-top: -20px;
+                background-color: #6b59c9;
+                color: #FFF;
+            }
+        }
+        .orders-box {
+            border-collapse: collapse;
+        }
+        .orders-bar-title {
+            background-color: #717ea1;
+        }
+        .orders-item-data {
+            height: 40px;
+            color: #FFF;
+            text-align: center;
+            font-size: 14px;
+            &:nth-of-type(1) {
+                a {
+                    color: #FFF;
+                    img {
+                        position: relative;
+                        top: 2px;
+                        left: 5px;
+                        width: 13px;
+                        height: 13px;
+                    }
+                }
+            }
+            .button {
+                background-color: #e9e7f7;
+                color: #6b59c9;
+            }
+        }
+        tbody tr {
+            border-top:1px dashed #cdd9e9;
+            &:nth-of-type(1) {
+                border: none;
+            }
+            &:nth-of-type(odd) {
+                background-color: #FFF;
+            }
+            &:nth-of-type(even) {
+                background-color: #f3f4f9;
+            }
+            .orders-item-data {
+                &.status-back {
+                    color: @messageNumberBgColor;
+                }
+                height: 78px;
+                color: @fontColor;
+            }
+        }
+	}
+	.pageToolbar {
+	    height: 48px;
+	    border: 1px solid @borderColor;
+	    background-color: #FFF;
+	    margin-top: 15px;
+	}
+	.remind {
+	    position: fixed;
+	    top: 80px;
+	    right: 0;
+	    .remind-tips{
+	        width: 44px;
+            border: 1px solid @borderColor;
+            border-right: none;
+            text-align: center;
+            padding: 18px 0;
+            cursor: pointer;
+            background-color: #f3f4f9;
+            .remind-tips-text {
+                margin:0 0 10px 15px;
+                font-size: 14px;
+                width: 14px;
+            }
+	    }
+	    .remind-content {
+	        position: absolute;
+	        left: 44px;
+	        top: 0;
+	        width: 155px;
+	        background-color: #FFF;
+	        padding: 9px 20px;
+	        border-top: 1px solid @borderColor;
+	        border-left: 1px solid @borderColor;
+	        .remind-box .remind-item{
+	            line-height: 33px;
+	            cursor: pointer;
+	            .message-number {
+	                margin-left: 10px;
+	            }
+	        }
+	    }
+	}
+} 
