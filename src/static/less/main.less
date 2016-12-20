@@ -42,6 +42,23 @@ a {
     	clear: both;
     }
 }
+@font-face {
+    font-family: 'iconfont';  /* project id 203349 */
+    src: url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.eot');
+    src: url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.woff') format('woff'),
+    url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.svg#iconfont') format('svg');
+}
+
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+//  -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 .navigator {
 	position: fixed;
@@ -81,7 +98,7 @@ a {
 	        height: 60px;
 	        line-height: 60px;
 	        text-align: center;
-	        &.erweima,&.message {
+	        &.QR-Code,&.message {
                 width: 50px;
                 height: 60px;
                 i {
@@ -143,7 +160,6 @@ a {
 		    height: 55px;
             line-height: 55px;
             cursor: pointer;
-		    background-color: #e7e9ee;
 		    &:hover {
                 background-color: @menuHoverBgColor;
             }
@@ -154,7 +170,7 @@ a {
 			cursor: pointer;
 		}
 		.menu-group-title {
-			.icon-arrow-top,.icon-arrow-bottom {
+			.iconfont-arrow {
                 position: absolute;
                 right: 25px;
                 font-size: 12px;
@@ -262,7 +278,7 @@ a {
 	    margin-top: 15px;
 	}
 	.remind {
-	    position: absolute;
+	    position: fixed;
 	    top: 80px;
 	    right: 0;
 	    .remind-tips{

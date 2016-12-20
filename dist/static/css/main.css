@@ -42,8 +42,7 @@
 .drop-down-box .drop-down-a .drop-down-text {
   margin-right: 5px;
 }
-.drop-down-box .drop-down-a .icon-arrow-top,
-.drop-down-box .drop-down-a .icon-arrow-bottom {
+.drop-down-box .drop-down-a .iconfont-arrow {
   font-size: 12px;
 }
 .message-number {
@@ -114,6 +113,9 @@
   background-color: #6b59c9;
   color: #FFFFFF;
   border-color: #6b59c9;
+}
+.paginator li.focus:hover {
+  color: #FFF;
 }
 .paginator li.page-ellipse {
   border: none;
@@ -238,6 +240,19 @@ a {
 .clearfix:after {
   clear: both;
 }
+@font-face {
+  font-family: 'iconfont';
+  /* project id 203349 */
+  src: url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.eot');
+  src: url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.woff') format('woff'), url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.ttf') format('truetype'), url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.svg#iconfont') format('svg');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .navigator {
   position: fixed;
   z-index: 999;
@@ -279,12 +294,12 @@ a {
   line-height: 60px;
   text-align: center;
 }
-.navigator .user-field li.erweima,
+.navigator .user-field li.QR-Code,
 .navigator .user-field li.message {
   width: 50px;
   height: 60px;
 }
-.navigator .user-field li.erweima i,
+.navigator .user-field li.QR-Code i,
 .navigator .user-field li.message i {
   font-size: 21px;
 }
@@ -343,7 +358,6 @@ a {
   height: 55px;
   line-height: 55px;
   cursor: pointer;
-  background-color: #e7e9ee;
 }
 .menu .menu-group .menu-group-title:hover {
   background-color: #e2e0ed;
@@ -353,8 +367,7 @@ a {
   line-height: 40px;
   cursor: pointer;
 }
-.menu .menu-group .menu-group-title .icon-arrow-top,
-.menu .menu-group .menu-group-title .icon-arrow-bottom {
+.menu .menu-group .menu-group-title .iconfont-arrow {
   position: absolute;
   right: 25px;
   font-size: 12px;
@@ -457,7 +470,7 @@ a {
   margin-top: 15px;
 }
 .console .remind {
-  position: absolute;
+  position: fixed;
   top: 80px;
   right: 0;
 }

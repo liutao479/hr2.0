@@ -48,7 +48,7 @@ gulp.task('html', function() {
 		.pipe(contentIncluder({
                 includerReg:/<!\-\-include\s+"([^"]+)"\-\->/g
             }))
-            .pipe(gulp.dest(path.dist.root()));
+            .pipe(gulp.dest(path.dist.root('templates')));
 })
 gulp.task('copy', function() {
     return gulp.src([
