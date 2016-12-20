@@ -13,11 +13,38 @@
         color: #FFF !important;
     }
     &.button-mini {
+        width: 124px;
         height: 32px;
         line-height: 32px;
+        text-align: center;
+        padding: 0;
+        background-color: #FFF !important;
+        color: @buttonBgColor;
+        font-size: 13px;
+        border: 1px solid @borderColor;
+        &:hover {
+            background-color: @buttonBgColor !important;
+            color: #FFF !important;
+        }
     }
     i {
         margin-right: 7px;
+    }
+}
+
+//单选框
+.checkbox {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    .borderRadius(4px);
+    border: 1px solid #cad2e1;
+    cursor: pointer;
+    &:hover {
+        border-color: @tableActiveColor;
+    }
+    &.checked {
+        
     }
 }
 //输入框
@@ -102,6 +129,7 @@
     border: 1px solid @selectBorderColor;
     font-size: 12px;
     color: @tiperColor;
+    cursor: pointer;
     &&-common {
         width: 120px;
     }
@@ -113,10 +141,21 @@
     }
 }
 
+//键值对形式框
+.key-value-box {
+    display: inline-block;
+    .key {
+        color: @tiperColor;
+    }
+    .value {
+        color: @fontColor;
+    }
+}
+
 .layout {
     border: 1px solid @borderColor;
     background-color: #FFF;
-    
+    padding: 0 15px 0 20px;
 }
 
 //分页器

@@ -279,42 +279,6 @@ a {
 	    background-color: #FFF;
 	    margin-top: 15px;
 	}
-	.remind {
-	    position: fixed;
-	    top: 80px;
-	    right: 0;
-	    .remind-tips{
-	        width: 44px;
-            border: 1px solid @borderColor;
-            border-right: none;
-            text-align: center;
-            padding: 18px 0;
-            cursor: pointer;
-            background-color: #f3f4f9;
-            .remind-tips-text {
-                margin:0 0 10px 15px;
-                font-size: 14px;
-                width: 14px;
-            }
-	    }
-	    .remind-content {
-	        position: absolute;
-	        left: 44px;
-	        top: 0;
-	        width: 155px;
-	        background-color: #FFF;
-	        padding: 9px 20px;
-	        border-top: 1px solid @borderColor;
-	        border-left: 1px solid @borderColor;
-	        .remind-box .remind-item{
-	            line-height: 33px;
-	            cursor: pointer;
-	            .message-number {
-	                margin-left: 10px;
-	            }
-	        }
-	    }
-	}
 	.custormer {
 	    .select-search-bar {
 	        .box;
@@ -353,10 +317,11 @@ a {
 	        background-color: #FFF;
 	        border: 1px solid @borderColor;
 	        padding: 0 20px;
-	        height: 38px;
-	        line-height: 38px;
+	        height: 40px;
+	        line-height: 40px;
 	        .time-sort {
 	            float: left;
+	            color: @fontColor;
 	            img {
                     position: relative;
                     top: 2px;
@@ -390,6 +355,11 @@ a {
                     .borderRadius(3px);
                     &.disabled {
                         color: @disabledColor;
+                        cursor: default;
+                        &:hover {
+                            color: @disabledColor;
+                            border-color: #cdd9e9;
+                        }
                     }
                     &:hover {
                         color: #6b59c9;
@@ -399,12 +369,147 @@ a {
 	        }
 	    }
 	    .custormer-orders .orders-box {
+	        border: 1px solid @borderColor;
+	        border-collapse: collapse;
+	        margin-top: 11px;
+	        text-align: left;
+	        &:hover {
+	            border-color: @tableActiveColor;
+	           cursor: pointer;
+	        }
+	        .iconfont {
+	            color: @tableActiveColor;
+	        }
 	        thead {
-	            background-color: #f0eefc;
+	            color: @tiperColor;
+	            background-color: #f3f4f9;
+	            height: 43px;
+	            line-height: 43px;
+	            td {
+	                &:nth-of-type(1) {
+	                    width: 240px;
+	                }
+	                text-align: left;
+	                padding-left: 20px;
+	            }
 	        }
 	        tbody {
 	            background-color: #FFF;
+	            margin: 13px 0;
+	            tr:nth-of-type(1) td {
+	                padding-top: 13px;
+	            }
+	            tr:nth-of-type(3) td {
+                    padding-bottom: 13px;
+                }
+	            .car-logo {
+	                width: 71px;
+	                height: 71px;
+	                display: block;
+	                float: left;
+	                margin: 0 10px 0 15px;
+	            }
+	            .car-name {
+	                width: 120px;
+	                float: left;
+	                display: inline-block;
+	                margin-top: 10px;
+	            }
+	            .status-name {
+	                color: @tiperColor;
+	                .status-value {
+	                    color: @fontColor;
+	                }
+	            }
+	            .td-last {
+	                text-align: center;
+	                padding-bottom: 5px;
+	            }
 	        }
 	    }
 	}
 } 
+
+
+//待办提醒
+.remind {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    //待办提醒未展开
+    .remind-tips{
+        width: 44px;
+        border: 1px solid @borderColor;
+        border-right: none;
+        text-align: center;
+        padding: 18px 0;
+        cursor: pointer;
+        background-color: #f3f4f9;
+        .remind-tips-text {
+            margin:0 0 10px 15px;
+            font-size: 14px;
+            width: 14px;
+        }
+    }
+    //待办提醒展开部分
+    .remind-content {
+        position: absolute;
+        left: 44px;
+        top: 0;
+        width: 155px;
+        background-color: #FFF;
+        padding: 9px 20px;
+        border-top: 1px solid @borderColor;
+        border-left: 1px solid @borderColor;
+        .remind-box .remind-item{
+            line-height: 33px;
+            cursor: pointer;
+            .message-number {
+                margin-left: 10px;
+            }
+        }
+    }
+}
+
+//返回列表面板
+.path-back-bar {
+    .layout;
+    height: 48px;
+    line-height: 48px;
+    .path-back {
+        display: inline-block;
+        color: @tableActiveColor;
+        .current-page {
+            color: @fontColor;
+        }
+    }
+    .key-value-box {
+        float: right;
+        margin-left: 40px;
+    }
+}
+
+//顶部为蓝条的面板
+.panel {
+    .layout;
+    border-top: 3px solid @blue;
+    margin-top: 15px;
+    .panel-title {
+        height: 46px;
+        line-height: 46px;
+        color: @blue;
+        .iconfont {
+            position: relative;
+            top: 2px;
+        }
+        .panel-title-name {
+            margin-left: 7px;
+        }
+    }
+    .panel-content {
+        padding-left: 23px;
+        .loanman-material-item {
+            .box;
+        }
+    }
+}
