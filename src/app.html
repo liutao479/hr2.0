@@ -1,40 +1,303 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8"/>
 	<title>惠融车贷业务云</title>
 	<link rel="stylesheet" type="text/css" href="static/css/main.css">
 </head>
 <body>
+	<!--导航条-->
 	<div class="navigator">
 		<a class="logo-field">
 			<span class="logo"></span>
 			惠融车贷业务云
 		</a>
+		<ul class="user-field">
+			<li class="QR-Code">
+				<a href="#"><i class="iconfont">&#xe600;</i></a>
+			</li>
+			<li class="message">
+				<a href="#" class="message-a">
+					<i class="iconfont">&#xe6b4;</i>
+					<span class="message-number">533</span>
+				</a>
+			</li>
+			<li class="user">
+				<div id="" class="drop-down-box">
+					<a href="#" class="drop-down-a">
+						<span class="drop-down-text">王二麻子</span>
+						<i class="iconfont iconfont-arrow">&#xe621;</i>
+					</a>
+				</div>
+			</li>
+		</ul>
 	</div>
+	<!--导航条 end-->
+	
+	<!--左侧菜单栏-->
 	<div class="menu">
-		<a class="menu-item">业务工作台</a>
-		<a class="menu-item">我的客户</a>
+		<a class="menu-item menu-item-active">
+			<i class="iconfont mark">&#xe6f9;</i>
+			业务工作台
+		</a>
+		<a class="menu-item">
+			<i class="iconfont mark">&#xe6c3;</i>
+			我的客户
+		</a>
 		<div class="menu-group">
 			<div class="menu-group-title">
-				<span class="iconfont"></span>
+				<i class="iconfont mark">&#xe60e;</i>
+				<span>订单管理</span>
+				<i class="iconfont iconfont-arrow">&#xe66c;</i>
+			</div>
+			<a class="menu-group-item" data-href="loadManger">我的客户</a>
+			<a class="menu-group-item" data-href="loadManger">信息修改审核</a>
+			<a class="menu-group-item" data-href="loadManger">终止订单审核</a>
+		</div>
+		<div class="menu-group">
+			<div class="menu-group-title">
+				<i class="iconfont mark">&#xe623;</i>
 				<span>财务管理</span>
-				<span class="arrow arrow-top"></span>
+				<i class="iconfont iconfont-arrow">&#xe66c;</i>
 			</div>
 			<a class="menu-group-item" data-href="loadManger">借款管理</a>
-			<a class="menu-group-item">保证金管理</a>
+			<a class="menu-group-item" data-href="loadManger">保证金管理</a>
+			<a class="menu-group-item" data-href="loadManger">银行回款管理</a>
 		</div>
 		<div class="menu-group">
 			<div class="menu-group-title">
-				<span class="iconfont"></span>
+				<i class="iconfont mark">&#xe61b;</i>
 				<span>上牌管理</span>
-				<span class="arrow arrow-bottom"></span>
+				<i class="iconfont iconfont-arrow">&#xe66c;</i>
 			</div>
-			<a class="menu-group-item">上牌管理</a>
-			<a class="menu-group-item">上牌审核</a>
+			<a class="menu-group-item" data-href="loadManger">上牌办理</a>
+			<a class="menu-group-item" data-href="loadManger">上牌审核</a>
+			<a class="menu-group-item" data-href="loadManger">上牌进度查看</a>
+		</div>
+		<div class="menu-group">
+			<div class="menu-group-title">
+				<i class="iconfont mark">&#xe65d;</i>
+				<span>抵押管理</span>
+				<i class="iconfont iconfont-arrow">&#xe66c;</i>
+			</div>
+			<a class="menu-group-item" data-href="loadManger">抵押办理</a>
+			<a class="menu-group-item" data-href="loadManger">抵押审核</a>
+			<a class="menu-group-item" data-href="loadManger">抵押进度查看</a>
+		</div>
+		<div class="menu-group">
+			<div class="menu-group-title">
+				<i class="iconfont mark">&#xe654;</i>
+				<span>逾期管理</span>
+				<i class="iconfont iconfont-arrow">&#xe66c;</i>
+			</div>
+			<a class="menu-group-item" data-href="loadManger">逾期信息录入</a>
+			<a class="menu-group-item" data-href="loadManger">预逾期理</a>
+		</div>
+		<div class="menu-group">
+			<div class="menu-group-title">
+				<i class="iconfont mark">&#xe630;</i>
+				<span>档案管理</span>
+				<i class="iconfont iconfont-arrow">&#xe66c;</i>
+			</div>
+			<a class="menu-group-item" data-href="loadManger">资料下载</a>
+			<a class="menu-group-item" data-href="loadManger">资料打印</a>
+		</div>
+		<div class="menu-group">
+			<div class="menu-group-title">
+				<i class="iconfont mark">&#xe603;</i>
+				<span>运营分析</span>
+			</div>
+		</div>
+		<div class="menu-group">
+			<div class="menu-group-title">
+				<i class="iconfont mark">&#xe6cb;</i>
+				<span>合作机构</span>
+			</div>
 		</div>
 	</div>
-	<div class="console" id="console"></div>
-	<script src="static/js/vendor/jquery.min.js"></script>
-	<script src="static/js/app.js"></script>
+	<!--左侧菜单栏 end-->
+	
+	<!--主工作台-->
+	<div class="console" id="console">
+		
+		<!--订单表格-->
+		<div class="container">
+			<div class="search-bar">
+				<input type="text" name="" id="search" value="" placeholder="订单号\借款人姓名\身份证号\手机号" class="input-text" />
+				<div id="" class="drop-down-box">
+					<a href="#" class="drop-down-a">
+						<span class="drop-down-text">任务类型</span>
+						<i class="iconfont iconfont-arrow">&#xe621;</i>
+					</a>
+				</div>
+				<div id="" class="drop-down-box">
+					<a href="#" class="drop-down-a">
+						<span class="drop-down-text">处理状态</span>
+						<i class="iconfont iconfont-arrow">&#xe621;</i>
+					</a>
+				</div>
+				<div class="button">
+					<i class="iconfont">&#xe615;</i>新建业务
+				</div>
+			</div>
+			<table border="0" cellpadding="" width="100%" class="orders-box">
+				<thead>
+					<tr class="orders-bar-title">
+						<td class="orders-item-data"><a href="javascript:;">创建时间<img src="static/css/img/sort-up.png" alt="" title="时间升序" /></a></td>
+						<td class="orders-item-data">订单号</td>
+						<td class="orders-item-data">借款人</td>
+						<td class="orders-item-data">任务类型</td>
+						<td class="orders-item-data">处理状态</td>
+						<td class="orders-item-data">操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="orders-item-data"><span id="" class="orders-item-date">2016-10-10</span id="">&nbsp;<span>12:00</span></td>
+						<td class="orders-item-data">98765432123456789</td>
+						<td class="orders-item-data">张三</td>
+						<td class="orders-item-data">征信材料上传</td>
+						<td class="orders-item-data">未处理</td>
+						<td class="orders-item-data"><div class="button">立即处理</div></td>
+					</tr>
+					<tr>
+						<td class="orders-item-data"><span id="">2016-10-10</span id="">&nbsp;<span>12:00</span></td>
+						<td class="orders-item-data">98765432123456789</td>
+						<td class="orders-item-data">张三</td>
+						<td class="orders-item-data">征信材料上传</td>
+						<td class="orders-item-data">未处理</td>
+						<td class="orders-item-data"><div class="button">立即处理</div></td>
+					</tr>
+					<tr>
+						<td class="orders-item-data"><span id="">2016-10-10</span id="">&nbsp;<span>12:00</span></td>
+						<td class="orders-item-data">98765432123456789</td>
+						<td class="orders-item-data">张三</td>
+						<td class="orders-item-data">征信材料上传</td>
+						<td class="orders-item-data status-back">审核退回</td>
+						<td class="orders-item-data"><div class="button">立即处理</div></td>
+					</tr>
+					<tr>
+						<td class="orders-item-data"><span id="">2016-10-10</span id="">&nbsp;<span>12:00</span></td>
+						<td class="orders-item-data">98765432123456789</td>
+						<td class="orders-item-data">张三</td>
+						<td class="orders-item-data">征信材料上传</td>
+						<td class="orders-item-data">未处理</td>
+						<td class="orders-item-data"><div class="button">立即处理</div></td>
+					</tr>
+					<tr>
+						<td class="orders-item-data"><span id="">2016-10-10</span id="">&nbsp;<span>12:00</span></td>
+						<td class="orders-item-data">98765432123456789</td>
+						<td class="orders-item-data">张三</td>
+						<td class="orders-item-data">征信材料上传</td>
+						<td class="orders-item-data status-back">审核退回</td>
+						<td class="orders-item-data"><div class="button">立即处理</div></td>
+					</tr>
+					<tr>
+						<td class="orders-item-data"><span id="">2016-10-10</span id="">&nbsp;<span>12:00</span></td>
+						<td class="orders-item-data">98765432123456789</td>
+						<td class="orders-item-data">张三</td>
+						<td class="orders-item-data">征信材料上传</td>
+						<td class="orders-item-data">未处理</td>
+						<td class="orders-item-data"><div class="button">立即处理</div></td>
+					</tr>
+					<tr>
+						<td class="orders-item-data"><span id="">2016-10-10</span id="">&nbsp;<span>12:00</span></td>
+						<td class="orders-item-data">98765432123456789</td>
+						<td class="orders-item-data">张三</td>
+						<td class="orders-item-data">征信材料上传</td>
+						<td class="orders-item-data">未处理</td>
+						<td class="orders-item-data"><div class="button">立即处理</div></td>
+					</tr>
+					<tr>
+						<td class="orders-item-data"><span id="">2016-10-10</span id="">&nbsp;<span>12:00</span></td>
+						<td class="orders-item-data">98765432123456789</td>
+						<td class="orders-item-data">张三</td>
+						<td class="orders-item-data">征信材料上传</td>
+						<td class="orders-item-data">未处理</td>
+						<td class="orders-item-data"><div class="button">立即处理</div></td>
+					</tr>
+					<tr>
+						<td class="orders-item-data"><span id="">2016-10-10</span id="">&nbsp;<span>12:00</span></td>
+						<td class="orders-item-data">98765432123456789</td>
+						<td class="orders-item-data">张三</td>
+						<td class="orders-item-data">征信材料上传</td>
+						<td class="orders-item-data">未处理</td>
+						<td class="orders-item-data"><div class="button">立即处理</div></td>
+					</tr>
+					<tr>
+						<td class="orders-item-data"><span id="">2016-10-10</span id="">&nbsp;<span>12:00</span></td>
+						<td class="orders-item-data">98765432123456789</td>
+						<td class="orders-item-data">张三</td>
+						<td class="orders-item-data">征信材料上传</td>
+						<td class="orders-item-data">未处理</td>
+						<td class="orders-item-data"><div class="button">立即处理</div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!--订单列表 end-->
+		
+		
+		<!--分页器-->
+		<div class="pageToolbar">
+			<ul class="paginator clearfix">
+				<li class="page"><i class="iconfont">&#xe601;</i></li>
+				<li class="page">1</li>
+				<li class="page">2</li>
+				<li class="page">3</li>
+				<li class="page">4</li>
+				<li class="page focus">5</li>
+				<li class="page page-ellipse"><i class="iconfont">&#xe66f;</i></li>
+				<li class="page">100</li>
+				<li class="page"><i class="iconfont">&#xe670;</i></li>
+				<li class="page-jump-area">
+					<span>到第</span>
+					<input type="text" class="input-text"/>
+					<span>页</span>
+					<div class="button">确定</div>
+				</li>
+			</ul>
+		</div>
+		<!--分页器 end-->
+		
+		
+		<!--分页插件改编（未完成）-->
+		<!--<div id="pageToolbar" class="pageToolbar">
+				
+		</div>-->
+		
+		<!--待办事项-->
+		<div class="remind" id="remind">
+			<div class="remind-tips" id="remind-tips">
+				<i class="iconfont" id="iconfont-shouqi">&#xe697;</i>
+				<div class="remind-tips-text">待办提醒</div>
+				<span class="message-number">500</span>
+			</div>
+			<div class="remind-content">
+				<ul class="remind-box">
+					<li class="remind-item">征信材料上传<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信材料上传<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入</li>
+					<li class="remind-item">开卡信息录入</li>
+					<li class="remind-item">开卡信息录入</li>
+				</ul>
+			</div>
+		</div>
+		<!--代办事项 end-->
+	</div>
+	<!--主工作台 end-->
+	
+	<script type="text/javascript" src="static/js/vendor/jquery.min.js"></script>
+	<!--<script type="text/javascript" src="static/js/vendor/query.js"></script>
+	<script type="text/javascript" src="static/js/vendor/paging.js"></script>-->
+	<script type="text/javascript" src="static/js/app.js"></script>
 </body>
 </html>
