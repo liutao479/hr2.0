@@ -7,6 +7,7 @@
     font-size: 14px;
     cursor: pointer;
     .borderRadius;
+    background-color: @buttonBgColor;
     &:hover {
         background-color: @buttonBgColor !important;
         color: #FFF !important;
@@ -22,7 +23,9 @@
 //输入框
 .input-text {
     width: 348px;
-    padding: 9px 10px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
     border: 1px solid @borderColor;
     .borderRadius(3px);
     outline: none;
@@ -86,6 +89,34 @@
         border-style: solid dashed dashed dashed;
         border-color: @fontColor transparent transparent transparent;
     }
+}
+
+//选择框
+.select {
+    position: relative;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    .borderRadius(3px);
+    padding: 0 10px;
+    border: 1px solid @selectBorderColor;
+    font-size: 12px;
+    color: @tiperColor;
+    &&-common {
+        width: 120px;
+    }
+    &&-date {
+        width: 120px;
+    }
+    .arrow {
+        right: 10px;         
+    }
+}
+
+.layout {
+    border: 1px solid @borderColor;
+    background-color: #FFF;
+    
 }
 
 //分页器

@@ -8,6 +8,7 @@
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
+  background-color: #5084fc;
 }
 .button:hover {
   background-color: #5084fc !important;
@@ -22,7 +23,9 @@
 }
 .input-text {
   width: 348px;
-  padding: 9px 10px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
   border: 1px solid #d6dbdf;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
@@ -82,6 +85,32 @@
   margin-top: -3px;
   border-style: solid dashed dashed dashed;
   border-color: #2c405a transparent transparent transparent;
+}
+.select {
+  position: relative;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  padding: 0 10px;
+  border: 1px solid #cdd9e9;
+  font-size: 12px;
+  color: #999;
+}
+.select.select-common {
+  width: 120px;
+}
+.select.select-date {
+  width: 120px;
+}
+.select .arrow {
+  right: 10px;
+}
+.layout {
+  border: 1px solid #d6dbdf;
+  background-color: #FFF;
 }
 .paginator {
   font-size: 12px;
@@ -243,8 +272,8 @@ a {
 @font-face {
   font-family: 'iconfont';
   /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.eot');
-  src: url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.woff') format('woff'), url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.ttf') format('truetype'), url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_78bd8iar0wxc4n29.eot');
+  src: url('//at.alicdn.com/t/font_78bd8iar0wxc4n29.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_78bd8iar0wxc4n29.woff') format('woff'), url('//at.alicdn.com/t/font_78bd8iar0wxc4n29.ttf') format('truetype'), url('//at.alicdn.com/t/font_78bd8iar0wxc4n29.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family: "iconfont" !important;
@@ -380,7 +409,7 @@ a {
   position: absolute;
   left: 0;
   top: 0;
-  content: "";
+  content: " ";
   width: 4px;
   height: 55px;
   background-color: #6347bd;
@@ -504,4 +533,98 @@ a {
 }
 .console .remind .remind-content .remind-box .remind-item .message-number {
   margin-left: 10px;
+}
+.console .custormer .select-search-bar {
+  display: -webkit-box;
+  display: -moz-box;
+  padding: 24px 20px;
+  border: 1px solid #d6dbdf;
+  background-color: #FFF;
+}
+.console .custormer .select-search-bar .search-item-box {
+  -webkit-box-flex: 6;
+  -moz-box-flex: 6;
+  width: 0;
+}
+.console .custormer .select-search-bar .search-item-box .search-item {
+  float: left;
+  color: #2c405a;
+  line-height: 30px;
+  margin: 0 30px 10px 0;
+}
+.console .custormer .select-search-bar .search-item-box .separator {
+  margin: 0 5px;
+  color: #cdd9e9;
+}
+.console .custormer .select-search-bar .search-sure-box {
+  width: 0;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  display: -webkit-box;
+  display: -moz-box;
+  -webkit-box-align: end;
+  -webkit-box-pack: end;
+}
+.console .custormer .select-search-bar .button {
+  background-color: #6b59c9;
+  color: #FFF;
+}
+.console .custormer .page-bar {
+  position: relative;
+  margin-top: 15px;
+  background-color: #FFF;
+  border: 1px solid #d6dbdf;
+  padding: 0 20px;
+  height: 38px;
+  line-height: 38px;
+}
+.console .custormer .page-bar .time-sort {
+  float: left;
+}
+.console .custormer .page-bar .time-sort img {
+  position: relative;
+  top: 2px;
+  left: 5px;
+  width: 13px;
+  height: 13px;
+}
+.console .custormer .page-bar .page-bar-right {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  bottom: 0;
+  height: 38px;
+  line-height: 38px;
+}
+.console .custormer .page-bar .page-bar-right .page-count {
+  float: left;
+}
+.console .custormer .page-bar .page-bar-right .page-change {
+  float: left;
+  color: #2c405a;
+  font-weight: 700;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  margin: 4px 0 0 5px;
+  margin-left: 5px;
+  cursor: pointer;
+  border: 1px solid #cdd9e9;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.console .custormer .page-bar .page-bar-right .page-change.disabled {
+  color: #99abb5;
+}
+.console .custormer .page-bar .page-bar-right .page-change:hover {
+  color: #6b59c9;
+  border-color: #6b59c9;
+}
+.console .custormer .custormer-orders .orders-box thead {
+  background-color: #f0eefc;
+}
+.console .custormer .custormer-orders .orders-box tbody {
+  background-color: #FFF;
 }

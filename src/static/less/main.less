@@ -42,13 +42,15 @@ a {
     	clear: both;
     }
 }
+
+//iconfont矢量字体
 @font-face {
-    font-family: 'iconfont';  /* project id 203349 */
-    src: url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.eot');
-    src: url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.woff') format('woff'),
-    url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_2qv0t4z7tkervn29.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* project id 203349 */
+  src: url('//at.alicdn.com/t/font_78bd8iar0wxc4n29.eot');
+  src: url('//at.alicdn.com/t/font_78bd8iar0wxc4n29.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_78bd8iar0wxc4n29.woff') format('woff'),
+  url('//at.alicdn.com/t/font_78bd8iar0wxc4n29.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_78bd8iar0wxc4n29.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -184,7 +186,7 @@ a {
 	        position: absolute;
 	        left: 0;
 	        top: 0;
-	        content:"";
+	        content:" ";
 	        width: 4px;
 	        height: 55px;
 	        background-color: @menuActiveColor;
@@ -310,6 +312,98 @@ a {
 	            .message-number {
 	                margin-left: 10px;
 	            }
+	        }
+	    }
+	}
+	.custormer {
+	    .select-search-bar {
+	        .box;
+	        padding: 24px 20px;
+	        border: 1px solid @borderColor;
+	        background-color: #FFF;
+	        .search-item-box {
+	            .box-flex(6);
+	            width: 0;
+	            .search-item {
+                    float: left;
+                    color: @fontColor;
+                    line-height: 30px;
+                    margin: 0 30px 10px 0;
+                }
+                .separator {
+                    margin: 0 5px;
+                    color: @selectBorderColor;
+                }
+	        }
+	        .search-sure-box {
+	            width: 0;
+	            .box-flex(1);
+	            .box;
+	            -webkit-box-align: end;
+	            -webkit-box-pack: end;
+	        }
+	        .button {
+	            background-color: #6b59c9;
+                color: #FFF;
+	        }
+	    }
+	    .page-bar {
+	        position: relative;
+	        margin-top: 15px;
+	        background-color: #FFF;
+	        border: 1px solid @borderColor;
+	        padding: 0 20px;
+	        height: 38px;
+	        line-height: 38px;
+	        .time-sort {
+	            float: left;
+	            img {
+                    position: relative;
+                    top: 2px;
+                    left: 5px;
+                    width: 13px;
+                    height: 13px;
+                }
+	        }
+	        .page-bar-right {
+	            position: absolute;
+	            top: 0;
+	            right: 20px;
+	            bottom: 0;
+	            height: 38px;
+	            line-height: 38px;
+	            .page-count {
+	                float: left;
+	            }
+                .page-change {
+                    float: left;
+                    color: @fontColor;
+                    font-weight: 700;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    text-align: center;
+                    margin:4px 0 0 5px;
+                    margin-left: 5px;
+                    cursor: pointer;
+                    border:1px solid #cdd9e9;
+                    .borderRadius(3px);
+                    &.disabled {
+                        color: @disabledColor;
+                    }
+                    &:hover {
+                        color: #6b59c9;
+                        border-color: #6b59c9;
+                    }
+                }
+	        }
+	    }
+	    .custormer-orders .orders-box {
+	        thead {
+	            background-color: #f0eefc;
+	        }
+	        tbody {
+	            background-color: #FFF;
 	        }
 	    }
 	}

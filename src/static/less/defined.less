@@ -10,6 +10,8 @@
 @messageNumberBgColor: #ff5c57;
 @consoleBgColor: #edf0f5; 
 @buttonBgColor: #5084fc; 
+@selectBorderColor: #cdd9e9;
+@disabledColor: #99abb5;
  
 //圆角
 .borderRadius(@radius:3px) { 
@@ -17,4 +19,15 @@
     -webkit-border-radius: @radius; 
     border-radius: @radius; 
 }
- 
+
+//弹性盒子
+.box {
+    display: -webkit-box;
+    display: -moz-box;
+}
+
+//box-flex
+.box-flex(@flex) {
+    -webkit-box-flex: @flex;
+    -moz-box-flex: @flex;
+}
