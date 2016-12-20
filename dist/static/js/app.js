@@ -4,6 +4,7 @@ $('#menu > a').on('click', function() {
 	
 })
 
+<<<<<<< HEAD
 
 
 
@@ -251,6 +252,8 @@ $('#menu > a').on('click', function() {
 
 
 
+=======
+>>>>>>> master
 /**
 * 模板渲染文件
 * 处理服务端获取的模板、数据，渲染成指定的dom结构
