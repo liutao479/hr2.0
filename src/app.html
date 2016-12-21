@@ -260,11 +260,10 @@
 		</div>
 		<!--分页器 end-->
 		
+
 		
 		<!--分页插件改编（未完成）-->
-		<!--<div id="pageToolbar" class="pageToolbar">
-				
-		</div>-->
+		<div id="pageToolbar" class="pageToolbar" data-pages="50" data-current="8"></div>
 		
 		<!--待办事项-->
 		<div class="remind" id="remind">
@@ -294,10 +293,14 @@
 		<!--代办事项 end-->
 	</div>
 	<!--主工作台 end-->
-	
 	<script type="text/javascript" src="static/js/vendor/jquery.min.js"></script>
 	<!--<script type="text/javascript" src="static/js/vendor/query.js"></script>
 	<script type="text/javascript" src="static/js/vendor/paging.js"></script>-->
 	<script type="text/javascript" src="static/js/app.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('#pageToolbar').paging();
+		})
+	</script>
 </body>
 </html>

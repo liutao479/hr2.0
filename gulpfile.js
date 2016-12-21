@@ -35,7 +35,8 @@ gulp.task('less', function() {
 })
 gulp.task('concat', function() {
     return gulp.src([
-            path.src.js('core/**/*.js')
+            path.src.js('core/**/*.js'),
+            path.src.js('componements/**/*.js')
         ])
         .pipe($.concat('app.js'))
         .pipe(gulp.dest(path.dist.js()));
