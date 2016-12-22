@@ -1,4 +1,5 @@
 /node_modules/
-.project
 dist/
-.idea/
+.project
+.idea
+readme

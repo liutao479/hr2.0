@@ -1,3 +1,21 @@
+//iconfont矢量字体
+@font-face {
+  font-family: 'iconfont';  /* project id 203349 */
+  src: url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.eot');
+  src: url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.svg#iconfont') format('svg');
+}
+
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+//  -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
 //按钮
 .button {
     display: inline-block;
@@ -7,17 +25,61 @@
     font-size: 14px;
     cursor: pointer;
     .borderRadius;
-    background-color: @buttonBgColor;
+    background-color: @tableActiveColor;
+    color: #FFF; 
     &:hover {
         background-color: @buttonBgColor !important;
         color: #FFF !important;
     }
     &.button-mini {
+        width: 124px;
         height: 32px;
         line-height: 32px;
+        text-align: center;
+        padding: 0;
+        background-color: #FFF !important;
+        color: @buttonBgColor;
+        font-size: 13px;
+        border: 1px solid @borderColor;
+        &:hover {
+            background-color: @buttonBgColor !important;
+            color: #FFF !important;
+        }
+    }
+    &.button-mini-nowidth {
+        height: 32px;
+        line-height: 32px;
+        background-color: #e9e7f7;
+        color: @tableActiveColor;
     }
     i {
         margin-right: 7px;
+    }
+}
+
+//单选框
+.checkbox {
+    display: inline-block;
+    border: 1px solid #cad2e1;
+    .borderRadius(4px);
+    background-color: #FFF;
+    cursor: pointer;
+    &:hover {
+        border-color: @tableActiveColor;
+    }
+    &&-select {
+        padding: 12px 15px;
+        color: @fontColor;
+        &:hover {
+            color: @tableActiveColor;
+        }
+        &.checked {
+            color: @tableActiveColor;
+        }
+    }
+    &&-normal {
+        width: 18px;
+        height: 18px;
     }
 }
 //输入框
@@ -102,6 +164,7 @@
     border: 1px solid @selectBorderColor;
     font-size: 12px;
     color: @tiperColor;
+    cursor: pointer;
     &&-common {
         width: 120px;
     }
@@ -113,10 +176,20 @@
     }
 }
 
+//键值对形式框
+.key-value-box {
+    display: inline-block;
+    .key {
+        color: @tiperColor;
+    }
+    .value {
+        color: @fontColor;
+    }
+}
+
 .layout {
     border: 1px solid @borderColor;
     background-color: #FFF;
-    
 }
 
 //分页器
