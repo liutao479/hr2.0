@@ -487,6 +487,103 @@ a {
     &.panel-credit {
         margin: 0;
     }
+    //征信结果录入详细内容面板
+    &&-result-typing {
+        margin-top: 0;
+    }
+    //工作台左侧菜单
+    &&-menu {
+        float: left;
+        border-top: 3px solid @tableActiveColor; 
+        .panel-menu-item {
+           display: block;
+           width: 142px;
+           padding: 0 24px;
+           height: 42px;
+           line-height: 42px;
+           color: @fontColor;
+           &:hover, &.panel-menu-item-active {
+               position: relative;
+               background-color: #d4d6fc;
+               color: @mainColor;
+               .arrow {
+                   border-width: 6px;
+                   right: -13px;
+                   border-left-color: #d4d6fc;
+               }
+           }
+       }
+    }
+    //工作台有左侧菜单的右侧详细内容区域
+    &&-detail {
+        margin-left: 162px;
+    }
+    //工作台有左侧菜单的右侧详细内容区域（title）
+    .panel-content-title {
+        text-align: right;
+        padding: 0 15px;
+        height: 60px;
+        line-height: 60px;
+        border-top: 1px dashed @borderColor;
+        border-bottom: 1px dashed @borderColor;
+        &.panel-title-box-special {
+            border-top: none;
+        }
+        .key-value-box {
+            float: left;
+            margin-right: 24px;
+        }
+    }
+    //工作台有左侧菜单的右侧详细内容区域（content）
+    .panel-detail-content {
+        padding: 0 15px 22px 41px;
+        .panel-item-box {
+            .box;
+            margin-top: 25px;
+            .panel-key-area {
+                text-align: right;
+                width: 100px;
+                line-height: 25px;
+            }
+            .panel-value-area {
+                .box-flex(1);
+                margin-left: 20px;
+                //文字元素给行高保持与左侧水平
+                .panel-value-item {
+                    line-height: 25px;
+                }
+                //图片展示（可点击）
+                .imgs-item {
+                    display: inline-block;
+                    width: 220px;
+                    height: 136px;
+                    border: 2px solid @borderColor;
+                    .borderRadius(3px);
+                    margin-right: 25px;
+                }
+                //征信字段的表格
+                .field-table {
+                    width: 100%;
+                    border: 1px solid @borderColor;
+                    border-collapse: collapse;
+                    tr:nth-of-type(odd) {
+                        background-color: #f3f4f9;
+                    }
+                    tr:nth-of-type(even) {
+                        background-color: #FFF;
+                    }
+                    td {
+                        padding: 0 37px;
+                        text-align: center;
+                        height: 40px;
+                    }
+                }
+                .remark {
+                    line-height: 25px;
+                }
+            }
+        }
+    }
     .panel-title-box {
         height: 46px;
         line-height: 46px;
@@ -537,6 +634,15 @@ a {
 .commit-orders-box {
     text-align: right;
     margin-top: 46px;
+    &.commit-orders-box-area {
+        height: 68px;
+        line-height: 68px;
+        margin-top: 0;
+        border: 1px solid @borderColor;
+        border-top: none;
+        background-color: #FFF;
+        padding-right: 15px;
+    }
 }
 
 //征信材料角色tab切换栏
@@ -609,29 +715,34 @@ a {
 
 .credit-imgs-bar {
     padding: 24px 125px;
-    .imgs-item-group {
-        float: left;
-        width: 224px;
+}
+//图片上传控件
+.imgs-item-group {
+    float: left;
+    width: 224px;
+    text-align: center;
+    margin-right: 29px;
+    margin-bottom: 10px;
+    .imgs-item-upload {
+        display: block;
+        width: 220px;
+        height: 136px;
+        color: #b7bfc5;
         text-align: center;
-        margin-right: 29px;
-        margin-bottom: 10px;
-        .imgs-item {
-            width: 220px;
-            height: 136px;
-            color: #b7bfc5;
-            text-align: center;
-            padding: 20px 0;
-            cursor: pointer;
-            border: 2px solid @borderColor;
-            background-color: #f1f1f2;
-            .borderRadius(3px);
-            .iconfont {
-                font-size: 65px;
-            }
+        padding: 20px 0;
+        cursor: pointer;
+        border: 2px solid @borderColor;
+        background-color: #f1f1f2;
+        .borderRadius(3px);
+        &:hover {
+            background-color: darken(#f1f1f2,5%);
         }
-        .imgs-item-p {
-            line-height: 42px;
-            text-align: center;
+        .iconfont {
+            font-size: 65px;
         }
+    }
+    .imgs-item-p {
+        line-height: 42px;
+        text-align: center;
     }
 }
