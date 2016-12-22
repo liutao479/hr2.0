@@ -10,16 +10,16 @@
     "dist": "dist/"
   },
   "devDependencies": {
-    "gulp": "^3.8.11",
-    "gulp-clean": "^0.3.1",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
     "gulp-concat": "*",
     "gulp-content-includer": "0.0.7",
-    "gulp-copy": "*",
+    "gulp-copy": "^1.0.0",
     "gulp-csso": "*",
-    "gulp-less": "*",
+    "gulp-less": "^3.3.0",
     "gulp-load-plugins": "^0.10.0",
     "gulp-sequence": "^0.3.2",
     "gulp-uglify": "*",
-    "gulp-watch": "*"
+    "gulp-watch": "^4.3.11"
   }
 }

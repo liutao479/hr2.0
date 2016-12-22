@@ -21,7 +21,271 @@ $("#remind-tips").on("click",function (){
 	}
 });
 
+(function(global) {
+	/**
+	* 添加string.format方法
+	*/
+	if(!String.prototype.format) {
+		String.prototype.format = function(){
+			var args = arguments;
+			return this.replace(/\{(\d+)\}/g,                
+		    function(match, number){
+		        return typeof args[number] != 'undefined' ? args[number] : match;
+		    });
+		};
+	}
+})(window)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'use strict';
 /**
 * 模板渲染文件
 * 处理服务端获取的模板、数据，渲染成指定的dom结构
@@ -74,23 +338,4 @@ $("#remind-tips").on("click",function (){
 			}
 		}
 	};
-})(window)
-var router = {
-	routers: {
-		'customer': {
-			templateUrl: ''
-		}
-	},
-	init:function() {
-		var hash = window.location.hash;
-		if(!hash) {
-
-		} else {
-			router.direct(router.routers[hash]);
-		}
-
-	},
-	direct:function() {
-		//跳转逻辑
-	}
-}
+})(window);
