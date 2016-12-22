@@ -537,6 +537,9 @@ a {
     //工作台有左侧菜单的右侧详细内容区域（content）
     .panel-detail-content {
         padding: 0 15px 22px 41px;
+        &.panel-detail-gate {
+            padding-top: 25px;
+        }
         .panel-item-box {
             .box;
             margin-top: 25px;
@@ -628,7 +631,18 @@ a {
         }
     }
 }
-
+//上门材料地址栏
+.investigate-address-bar {
+    padding: 10px 50px;
+    border-bottom: 1px solid @borderColor;
+    background-color: #f3f4f9;
+    .key-value-box {
+        line-height: 35px;
+        .key {
+            color: @tableActiveColor;
+        }
+    }
+}
 
 //单独一栏提交订单按钮
 .commit-orders-box {
@@ -642,6 +656,11 @@ a {
         border-top: none;
         background-color: #FFF;
         padding-right: 15px;
+    }
+    &.commit-orders-box-layout {
+        .layout;
+        padding: 15px;
+        margin-top: 15px;
     }
 }
 
@@ -716,31 +735,68 @@ a {
 .credit-imgs-bar {
     padding: 24px 125px;
 }
-//图片上传控件
+//图片组件
 .imgs-item-group {
+    position: relative;
     float: left;
     width: 224px;
     text-align: center;
     margin-right: 29px;
     margin-bottom: 10px;
-    .imgs-item-upload {
+    //图片组件公共部分样式
+    .imgs-item-upload, .imgs-item-view {
         display: block;
+        position: relative;
         width: 220px;
         height: 136px;
-        color: #b7bfc5;
+        border: 2px solid @borderColor;
+        .borderRadius(3px);
+    }
+    //图片上传样式
+    .imgs-item-upload {
+        background-color: #f1f1f2;
         text-align: center;
+        color: #b7bfc5;
         padding: 20px 0;
         cursor: pointer;
-        border: 2px solid @borderColor;
-        background-color: #f1f1f2;
-        .borderRadius(3px);
         &:hover {
             background-color: darken(#f1f1f2,5%);
         }
         .iconfont {
             font-size: 65px;
         }
+        .input-file {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            width: 220px;
+            filter: alpha(opacity=0);
+            cursor: pointer;
+        }
     }
+    //图片查看组件的地址信息
+    .imgs-item-view .imgs-describe {
+        position: absolute;
+        bottom: -2px;
+        left: -2px;
+        width: 220px;
+        height: 31px;
+        line-height: 31px;
+        padding-left: 10px;
+        background-color: #a8a8a9;
+        color: #FFF;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        .iconfont {
+            position: relative;
+            top: 2px;
+        }
+    }
+    
     .imgs-item-p {
         line-height: 42px;
         text-align: center;

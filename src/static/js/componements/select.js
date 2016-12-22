@@ -59,6 +59,6 @@
 	
 })()
 
-$(function(){
-	$('.select').hrSelect();
-})
+//$(function(){
+//	$('.select').hrSelect();
+//})
