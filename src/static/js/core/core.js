@@ -1,3 +1,4 @@
+'use strict';
 (function(global) {
 	/**
 	* 添加string.format方法
@@ -11,7 +12,16 @@
 		    });
 		};
 	}
-})(window)
+	/*
+	* 本地验证规则
+	*/
+	var regulation = {
+		number: /^[1-9]{1,}$/,
+		phone: /^1[\d+]{10}$/,
+		idc: /^[\d+]{14|17}[\d+|Xx]{1}$/i
+	}
+	global.regulation = $.extend(global.regulation || {}, regulation);
+})(window);
 
 
 
