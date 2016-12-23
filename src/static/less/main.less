@@ -411,47 +411,6 @@ a {
 	}
 } 
 
-
-//待办提醒
-.remind {
-    position: fixed;
-    top: 80px;
-    right: 0;
-    //待办提醒未展开
-    .remind-tips{
-        width: 44px;
-        border: 1px solid @borderColor;
-        border-right: none;
-        text-align: center;
-        padding: 18px 0;
-        cursor: pointer;
-        background-color: #f3f4f9;
-        .remind-tips-text {
-            margin:0 0 10px 15px;
-            font-size: 14px;
-            width: 14px;
-        }
-    }
-    //待办提醒展开部分
-    .remind-content {
-        position: absolute;
-        left: 44px;
-        top: 0;
-        width: 155px;
-        background-color: #FFF;
-        padding: 9px 20px;
-        border-top: 1px solid @borderColor;
-        border-left: 1px solid @borderColor;
-        .remind-box .remind-item{
-            line-height: 33px;
-            cursor: pointer;
-            .message-number {
-                margin-left: 10px;
-            }
-        }
-    }
-}
-
 //返回列表面板
 .path-back-bar {
     position: relative;
@@ -517,6 +476,7 @@ a {
     //工作台有左侧菜单的右侧详细内容区域
     &&-detail {
         margin-left: 162px;
+//      float: left;
     }
     //工作台有左侧菜单的右侧详细内容区域（title）
     .panel-content-title {
@@ -537,8 +497,13 @@ a {
     //工作台有左侧菜单的右侧详细内容区域（content）
     .panel-detail-content {
         padding: 0 15px 22px 41px;
-        &.panel-detail-gate {
+        &.panel-detail-layout {
             padding-top: 25px;
+        }
+        //详细内容区域放图片的区域
+        .panel-detail-imgs {
+            padding: 10px;
+            background-color: #FFF;
         }
         .panel-item-box {
             .box;
@@ -738,7 +703,7 @@ a {
 //图片组件
 .imgs-item-group {
     position: relative;
-    float: left;
+    display: inline-block;
     width: 224px;
     text-align: center;
     margin-right: 29px;
@@ -775,6 +740,7 @@ a {
             width: 220px;
             filter: alpha(opacity=0);
             cursor: pointer;
+            border: none;
         }
     }
     //图片查看组件的地址信息
@@ -800,5 +766,115 @@ a {
     .imgs-item-p {
         line-height: 42px;
         text-align: center;
+    }
+}
+
+
+//待办提醒
+.remind {
+    position: fixed;
+    z-index: 999;
+    top: 80px;
+    right: 0;
+    //待办提醒未展开
+    .remind-tips{
+        width: 44px;
+        border: 1px solid @borderColor;
+        border-right: none;
+        text-align: center;
+        padding: 18px 0;
+        cursor: pointer;
+        background-color: #f3f4f9;
+        .remind-tips-text {
+            margin:0 0 10px 15px;
+            font-size: 14px;
+            width: 14px;
+        }
+    }
+    //待办提醒展开部分
+    .remind-content {
+        position: absolute;
+        left: 44px;
+        top: 0;
+        width: 155px;
+        background-color: #FFF;
+        padding: 9px 20px;
+        border: 1px solid @borderColor;
+        border-right: none;
+        .remind-box .remind-item{
+            line-height: 33px;
+            cursor: pointer;
+            .message-number {
+                margin-left: 10px;
+            }
+        }
+    }
+}
+
+//右边栏
+.sideBar {
+    position: fixed;
+    z-index: 998;
+    top: 254px;
+    right: 0;
+    .sideBar-item {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        text-align: center;
+        background-color: #f3f4f9;
+        cursor: pointer;
+        color: @fontColor;
+        border: 1px solid @borderColor;
+        border-bottom: 1px solid transparent; 
+        border-top: 1px solid transparent;
+        &:hover {
+            color: #FFFFFF;
+            background-color: @mainColor;
+            border-color: @mainColor !important;
+            .iconfont {
+                color: #FFFFFF;
+            }
+        }
+        &:first-child {
+            border-top: 1px solid @borderColor;
+        }
+        &:last-child {
+            border-color: @borderColor;
+            line-height: 16px; 
+            padding-top: 5px;
+            .iconfont {
+                margin-top: 5px; 
+                margin-left: 3px;
+            }
+            
+        }
+        .iconfont {
+            color: #90a4ae;
+            font-size: 22px;
+        }
+        .sideBar-content {
+            position: absolute;
+            display: none;
+            right: 43px;
+            top: -1px;
+            width: 111px;
+            height: 44px;
+            line-height: 44px;
+            border: 1px solid @mainColor;
+            border-right: none;
+            background-color: #f3f4f9;
+            color: @tableActiveColor;
+            .sideBar-content-item {
+                display: inline-block;
+                text-align: center;
+            }
+            .arrow {
+                position: absolute;
+                right: -9px;
+                border-color: transparent transparent transparent #f3f4f9;
+            }
+        }
     }
 }
