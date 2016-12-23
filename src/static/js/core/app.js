@@ -8,15 +8,23 @@ var isOpen = false;
 $("#remind-tips").on("click",function (){
 	if(!isOpen) {
 		$("#remind").animate({
-			right: "195px"
+			right: "155px"
 		},500);
-		$("#iconfont-shouqi").removeClass("icon-shouqi").addClass("icon-collapse-right");
+		$(this).find(".iconfont").html("&#xe605;");
 		isOpen = true;
 	} else {
 		$("#remind").animate({
 			right: "0"
 		},500);
-		$("#iconfont-shouqi").removeClass("icon-collapse-right").addClass("icon-shouqi");
+		$(this).find(".iconfont").html("&#xe697;");
 		isOpen = false;
 	}
+});
+
+
+//右边栏
+$(".sideBar-item").hover(function() {
+	$(this).find(".sideBar-content").show();	
+},function() {
+	$(this).find(".sideBar-content").hide();		
 });
