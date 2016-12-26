@@ -1,0 +1,305 @@
+//iconfont矢量字体
+@font-face {
+  font-family: 'iconfont';  /* project id 203349 */
+  src: url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.eot');
+  src: url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.svg#iconfont') format('svg');
+}
+
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+//  -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+//按钮
+.button {
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    padding:0 20px;
+    font-size: 14px;
+    cursor: pointer;
+    .borderRadius;
+    background-color: @tableActiveColor;
+    color: #FFF; 
+    &:hover {
+        background-color: @buttonBgColor !important;
+        color: #FFF !important;
+    }
+    &.button-mini {
+        width: 124px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        padding: 0;
+        background-color: #FFF !important;
+        color: @buttonBgColor;
+        font-size: 13px;
+        border: 1px solid @borderColor;
+        &:hover {
+            background-color: @buttonBgColor !important;
+            color: #FFF !important;
+        }
+    }
+    &.button-mini-nowidth {
+        height: 32px;
+        line-height: 32px;
+        background-color: #e9e7f7;
+        color: @tableActiveColor;
+    }
+    i {
+        margin-right: 7px;
+    }
+}
+
+//单选框
+.checkbox {
+    display: inline-block;
+    border: 1px solid #cad2e1;
+    .borderRadius(4px);
+    background-color: #FFF;
+    cursor: pointer;
+    &:hover {
+        border-color: @tableActiveColor;
+    }
+    &&-select {
+        padding: 12px 15px;
+        color: @fontColor;
+        &:hover {
+            color: @tableActiveColor;
+        }
+        &.checked {
+            color: @tableActiveColor;
+        }
+    }
+    &&-normal {
+        width: 18px;
+        height: 18px;
+    }
+}
+//输入框
+.input-text {
+    width: 348px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    border: 1px solid @borderColor;
+    .borderRadius(3px);
+    outline: none;
+}
+
+//无边界下拉框 
+.drop-down-box {
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 5px;
+    width: 102px;
+    .drop-down-a {
+        color: #000;
+        .drop-down-text {
+            margin-right: 5px;
+        }
+        .iconfont-arrow {
+            font-size: 12px;
+        }
+    }
+    
+}
+//提示消息条数
+.message-number {
+    display: inline-block;
+    color: #FFF;
+    height: 16px;
+    line-height: 16px;
+    padding: 1px 4px;
+    background-color: @messageNumberBgColor;
+    .borderRadius(8px);
+}
+
+//升序和降序
+
+
+//箭头
+.arrow {
+    position: absolute;
+    border-width: 5px;
+    top: 50%;
+    &&-left, &&-right {
+        margin-top: -6px;
+    }
+    &&-left {
+        border-style: dashed solid dashed dashed;
+        border-color: transparent @fontColor transparent transparent;
+    }
+    &&-right {
+        border-style: dashed dashed dashed solid;
+        border-color: transparent transparent transparent @fontColor;
+    }
+    &&-top {
+        margin-top: -8px;
+        border-style: dashed dashed solid dashed;
+        border-color: transparent transparent @fontColor transparent;
+    }
+    &&-bottom {
+        margin-top: -3px;
+        border-style: solid dashed dashed dashed;
+        border-color: @fontColor transparent transparent transparent;
+    }
+}
+
+//选择框
+.select {
+    position: relative;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    .borderRadius(3px);
+    padding: 0 10px;
+    border: 1px solid @selectBorderColor;
+    font-size: 12px;
+    color: @tiperColor;
+    cursor: pointer;
+    &&-common {
+        width: 120px;
+    }
+    &&-date {
+        width: 120px;
+    }
+    .arrow {
+        right: 10px;         
+    }
+}
+
+//键值对形式框
+.key-value-box {
+    display: inline-block;
+    .key {
+        color: @tiperColor;
+    }
+    .value {
+        color: @fontColor;
+    }
+}
+
+.layout {
+    border: 1px solid @borderColor;
+    background-color: #FFF;
+}
+.backReason {
+    border: 1px solid @backReasonBorderColor;
+    background-color: @backReasonBgColor;
+}
+
+//分页器
+.paginator {
+    font-size: 12px;
+    line-height: 48px;
+    float: right;
+    margin-right: 30px;
+    color: #97a1b5;
+    li {
+        display: inline-block;
+        &.page {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            margin-left: 5px;
+            cursor: pointer;
+            border:1px solid #cdd9e9;
+            .borderRadius(3px);
+            &:hover {
+                color: #6b59c9;
+                border-color: #6b59c9;
+            }
+        }
+        &.focus {
+            background-color: #6b59c9;
+            color:#FFFFFF;
+            border-color: #6b59c9;
+            &:hover {
+                color: #FFF;
+            }
+        }
+        &.page-ellipse{
+            border:none;
+            cursor: default;
+        }
+        &.page-jump-area {
+            .input-text {
+                width: 48px;
+                height: 30px;
+            }
+            .button {
+                background-color: #FFF;
+                color: #000;
+                font-size: 14px;
+                border: 1px solid #cdd9e9;
+                height: 30px;
+                line-height: 30px;
+            }
+        }
+        &.page-jump-area:hover {
+            color: #97a1b5;
+        }
+    }
+}
+
+
+
+//改编分页样式
+.ui-paging-container {
+    color:#666;
+    font-size: 12px;
+    ul {
+        overflow: hidden;
+        float: right;
+        line-height: 30px;
+        li {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            margin-left: 5px;
+            color:#97a1b5;
+            &.ui-pager{
+                cursor: pointer; 
+                border:1px solid #cdd9e9;
+                .borderRadius(3px);
+            }
+            &:hover {
+                color: #6b59c9;
+                border-color: #6b59c9;
+            }
+            &.focus {
+                background-color: #6b59c9;
+                color:#FFFFFF;
+                border-color: #6b59c9;
+            }
+            &.ui-paging-ellipse{
+                border:none;
+            }
+            &.ui-paging-toolbar{
+                width: 156px;
+                text-align: left;
+            }
+            &.ui-paging-toolbar input{
+                
+            }
+            &.ui-paging-toolbar a{
+                
+            }
+            &.ui-pager-disabled,&.ui-pager-disabled:hover {
+                
+            }
+            
+        }
+    }
+}
