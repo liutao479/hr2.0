@@ -1,4 +1,5 @@
 @import (reference) "defined.less";
+@import (less) "global.less";
 
 html,body,p,div,a,ul,li,dl,dt,dd,span,em,h2,h3,h4,i {
 	margin:0;
@@ -35,52 +36,16 @@ a {
 		content: " ";
 	    display: block;
 	    height: 0;
-	    overflow: hidden
+	    overflow: hidden;
     }
     &:after {
     	clear: both;
     }
 }
-.button {
-	display: inline-block;
-	height: 40px;
-	line-height: 40px;
-	padding: 20px;
-	border-radius: 3px;
-	line-height: 40px;
-	&.button-mini {
-		height: 32px;
-		line-height: 32px;
-	}
-}
-.arrow {
-	position: absolute;
-	border-width: 5px;
-	top: 50%;
-	&&-left, &&-right {
-		margin-top: -6px;
-	}
-	&&-left {
-		border-style: dashed solid dashed dashed;
-		border-color: transparent @fontColor transparent transparent;
-	}
-	&&-right {
-		border-style: dashed dashed dashed solid;
-		border-color: transparent transparent transparent @fontColor;
-	}
-	&&-top {
-		margin-top: -8px;
-		border-style: dashed dashed solid dashed;
-		border-color: transparent transparent @fontColor transparent;
-	}
-	&&-bottom {
-		margin-top: -3px;
-		border-style: solid dashed dashed dashed;
-		border-color: @fontColor transparent transparent transparent;
-	}
-}
+
 .navigator {
 	position: fixed;
+	z-index: 999;
 	left: 0;
 	right: 0;
 	top: 0;
@@ -105,45 +70,1006 @@ a {
 		background: url(img/logo.png);
 		background-size: 100%;
 	}
+	.user-field {
+	    width: 215px;
+	    position: absolute;
+	    top: 0;
+	    right: 80px;
+	    padding-right:13px;
+	    li {
+	        float: left;
+	        height: 60px;
+	        line-height: 60px;
+	        text-align: center;
+	        &.QR-Code,&.message {
+                width: 50px;
+                height: 60px;
+                i {
+                    font-size: 21px;
+                }
+            }
+            .message-a{
+                position: relative;
+                .message-number{
+                    position: absolute;
+                    left: 11px;
+                    top:-11px;
+                }
+            } 
+            &.user {
+                width: 102px;
+            }
+            a {
+                color: #FFF;
+            }
+	    }
+	}
 }
 .menu {
 	position: fixed;
 	left: 0;
 	top: 60px;
 	bottom: 0;
-	width: 200px;
-	background-color: #f3f4f9;
+	width: 200px; 
+	overflow: hidden;
+	overflow-y: scroll;
+	border-right: 1px solid @borderColor;
+	.mark{
+		margin-right: 13px;
+		position: relative;
+		top: 2px;
+	}
 	a.menu-item, a.menu-group-item {
 		display: block;
 		cursor: pointer;
+		color: @fontColor;
 		&:hover {
-			background-color: #f8f9fc;
+			background-color: @menuHoverBgColor;
 		}
 	}
 	.menu-item, .menu-group-title {
 		position: relative;
 		padding-left: 25px;
 	}
-	.menu-item {
+	.menu-item { 
 		height: 55px;
 		line-height: 55px;
 	}
 	.menu-group {
-		margin: 7px 0 14px 0;
 		.menu-group-item {
 			padding-left: 58px;
 		}
-		.menu-group-title, .menu-group-item {
+		.menu-group-title {
+		    height: 55px;
+            line-height: 55px;
+            cursor: pointer;
+		    &:hover {
+                background-color: @menuHoverBgColor;
+            }
+		}
+		.menu-group-item {
 			height: 40px;
 			line-height: 40px;
+			cursor: pointer;
 		}
 		.menu-group-title {
-			.arrow {
-
+			.iconfont-arrow {
+                position: absolute;
+                right: 25px;
+                font-size: 12px;
 			}
 		}
 	}
+	.menu-item-active {
+	    color: @menuActiveColor;
+	    background-color: @menuActiveBgColor;
+	    &:before {
+	        position: absolute;
+	        left: 0;
+	        top: 0;
+	        content:" ";
+	        width: 4px;
+	        height: 55px;
+	        background-color: @menuActiveColor;
+	    }
+	}
 }
+//工作台,
 .console {
-	width: 100%;
+	padding: 20px 60px 100px 39px;
+	margin: 60px 0 0 200px;
+	background-color: @consoleBgColor;
+	overflow: hidden;
+	.container {
+	    border: 1px solid @borderColor;
+	    .search-bar {
+	        position: relative;
+            height: 59px;
+            line-height: 59px;
+            background-color: #FFF;
+            input {
+                margin-left: 24px;
+                margin-right: 10px;
+            }
+            .drop-down-box .drop-down-text {
+                color: #6b59c9;
+            }
+            .drop-down-box i {
+                color: #2c405a;
+            }
+            .button {
+                position: absolute;
+                top: 50%;
+                right: 24px;
+                margin-top: -20px;
+                background-color: #6b59c9;
+                color: #FFF;
+            }
+        }
+        .orders-box {
+            border-collapse: collapse;
+        }
+        .orders-bar-title {
+            background-color: #717ea1;
+        }
+        .orders-item-data {
+            height: 40px;
+            color: #FFF;
+            text-align: center;
+            font-size: 14px;
+            &:nth-of-type(1) {
+                a {
+                    color: #FFF;
+                    img {
+                        position: relative;
+                        top: 2px;
+                        left: 5px;
+                        width: 13px;
+                        height: 13px;
+                    }
+                }
+            }
+            .button {
+                background-color: #e9e7f7;
+                color: #6b59c9;
+            }
+        }
+        tbody tr {
+            border-top:1px dashed #cdd9e9;
+            &:nth-of-type(1) {
+                border: none;
+            }
+            &:nth-of-type(odd) {
+                background-color: #FFF;
+            }
+            &:nth-of-type(even) {
+                background-color: #f3f4f9;
+            }
+            .orders-item-data {
+                &.status-back {
+                    color: @messageNumberBgColor;
+                }
+                height: 78px;
+                color: @fontColor;
+            }
+        }
+	}
+	.pageToolbar {
+	    height: 48px;
+	    border: 1px solid @borderColor;
+	    background-color: #FFF;
+	    margin-top: 15px;
+	}
+	.custormer {
+	    .select-search-bar {
+	        .box;
+	        padding: 24px 20px;
+	        border: 1px solid @borderColor;
+	        background-color: #FFF;
+	        .search-item-box {
+	            .box-flex(6);
+	            width: 0;
+	            .search-item {
+                    float: left;
+                    color: @fontColor;
+                    line-height: 30px;
+                    margin: 0 30px 10px 0;
+                }
+                .separator {
+                    margin: 0 5px;
+                    color: @selectBorderColor;
+                }
+	        }
+	        .search-sure-box {
+	            width: 0;
+	            .box-flex(1);
+	            .box;
+	            -webkit-box-align: end;
+	            -webkit-box-pack: end;
+	        }
+	        .button {
+	            background-color: #6b59c9;
+                color: #FFF;
+	        }
+	    }
+	    .page-bar {
+	        position: relative;
+	        margin-top: 15px;
+	        background-color: #FFF;
+	        border: 1px solid @borderColor;
+	        padding: 0 20px;
+	        height: 40px;
+	        line-height: 40px;
+	        .time-sort {
+	            float: left;
+	            color: @fontColor;
+	            img {
+                    position: relative;
+                    top: 2px;
+                    left: 5px;
+                    width: 13px;
+                    height: 13px;
+                }
+	        }
+	        .page-bar-right {
+	            position: absolute;
+	            top: 0;
+	            right: 20px;
+	            bottom: 0;
+	            height: 38px;
+	            line-height: 38px;
+	            .page-count {
+	                float: left;
+	            }
+                .page-change {
+                    float: left;
+                    color: @fontColor;
+                    font-weight: 700;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    text-align: center;
+                    margin:4px 0 0 5px;
+                    margin-left: 5px;
+                    cursor: pointer;
+                    border:1px solid #cdd9e9;
+                    .borderRadius(3px);
+                    &.disabled {
+                        color: @disabledColor;
+                        cursor: default;
+                        &:hover {
+                            color: @disabledColor;
+                            border-color: #cdd9e9;
+                        }
+                    }
+                    &:hover {
+                        color: #6b59c9;
+                        border-color: #6b59c9;
+                    }
+                }
+	        }
+	    }
+	    .custormer-orders .orders-box {
+	        border: 1px solid @borderColor;
+	        border-collapse: collapse;
+	        margin-top: 11px;
+	        text-align: left;
+	        &:hover {
+	            border-color: @tableActiveColor;
+	           cursor: pointer;
+	        }
+	        .iconfont {
+	            color: @tableActiveColor;
+	        }
+	        thead {
+	            color: @tiperColor;
+	            background-color: #f3f4f9;
+	            height: 43px;
+	            line-height: 43px;
+	            td {
+	                &:nth-of-type(1) {
+	                    width: 240px;
+	                }
+	                text-align: left;
+	                padding-left: 20px;
+	            }
+	        }
+	        tbody {
+	            background-color: #FFF;
+	            margin: 13px 0;
+	            tr:nth-of-type(1) td {
+	                padding-top: 13px;
+	            }
+	            tr:nth-of-type(3) td {
+                    padding-bottom: 13px;
+                }
+	            .car-logo {
+	                width: 71px;
+	                height: 71px;
+	                display: block;
+	                float: left;
+	                margin: 0 10px 0 15px;
+	            }
+	            .car-name {
+	                width: 120px;
+	                float: left;
+	                display: inline-block;
+	                margin-top: 10px;
+	            }
+	            .status-name {
+	                color: @tiperColor;
+	                .status-value {
+	                    color: @fontColor;
+	                }
+	            }
+	            .td-last {
+	                text-align: center;
+	                padding-bottom: 5px;
+	            }
+	        }
+	    }
+	}
+} 
+
+<<<<<<< HEAD
+=======
+
+//待办提醒
+.remind {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    //待办提醒未展开
+    .remind-tips{
+        width: 44px;
+        border: 1px solid @borderColor;
+        border-right: none;
+        text-align: center;
+        padding: 18px 0;
+        cursor: pointer;
+        background-color: #f3f4f9;
+        .remind-tips-text {
+            margin:0 0 10px 15px;
+            font-size: 14px;
+            width: 14px;
+        }
+    }
+    //待办提醒展开部分
+    .remind-content {
+        position: absolute;
+        left: 44px;
+        top: 0;
+        width: 155px;
+        background-color: #FFF;
+        padding: 9px 20px;
+        border-top: 1px solid @borderColor;
+        border-left: 1px solid @borderColor;
+        .remind-box .remind-item{
+            line-height: 33px;
+            cursor: pointer;
+            .message-number {
+                margin-left: 10px;
+            }
+        }
+    }
+}
+
+>>>>>>> origin/zhy
+//返回列表面板
+.path-back-bar {
+    position: relative;
+    .layout;
+    padding: 0 15px 0 20px;
+    text-align: right;
+    .path-back {
+        position: absolute;
+        left: 15px;
+        display: block;
+        color: @tableActiveColor;
+        line-height: 49px;
+        .iconfont {
+            position: relative;
+            top: 3px;
+            font-size: 22px;
+        }
+        .current-page {
+            color: @fontColor;
+        }
+    }
+    .key-value-box {
+        line-height: 49px;
+        margin-left: 40px;
+    }
+}
+
+//顶部为蓝条的面板
+.panel {
+    .layout;
+    border-top: 3px solid @blue;
+    margin-top: 15px;
+    &.panel-credit {
+        margin: 0;
+    }
+<<<<<<< HEAD
+    //征信结果录入详细内容面板
+    &&-result-typing {
+        margin-top: 0;
+    }
+    //工作台左侧菜单
+    &&-menu {
+        float: left;
+        border-top: 3px solid @tableActiveColor; 
+        .panel-menu-item {
+           display: block;
+           width: 142px;
+           padding: 0 24px;
+           height: 42px;
+           line-height: 42px;
+           color: @fontColor;
+           &:hover, &.panel-menu-item-active {
+               position: relative;
+               background-color: #d4d6fc;
+               color: @mainColor;
+               .arrow {
+                   border-width: 6px;
+                   right: -13px;
+                   border-left-color: #d4d6fc;
+               }
+           }
+       }
+    }
+    //工作台有左侧菜单的右侧详细内容区域
+    &&-detail {
+        margin-left: 162px;
+//      float: left;
+    }
+    //工作台有左侧菜单的右侧详细内容区域（title）
+    .panel-content-title {
+        text-align: right;
+        padding: 0 15px;
+        height: 60px;
+        line-height: 60px;
+        border-top: 1px dashed @borderColor;
+        border-bottom: 1px dashed @borderColor;
+        &.panel-title-box-special {
+            border-top: none;
+        }
+        .key-value-box {
+            float: left;
+            margin-right: 24px;
+        }
+    }
+    //工作台有左侧菜单的右侧详细内容区域（content）
+    .panel-detail-content {
+        padding: 0 15px 22px 41px;
+        &.panel-detail-layout {
+            padding-top: 25px;
+        }
+        //详细内容区域放图片的区域
+        .panel-detail-imgs {
+            padding: 10px;
+            background-color: #FFF;
+        }
+        .panel-item-box {
+            .box;
+            margin-top: 25px;
+            .panel-key-area {
+                text-align: right;
+                width: 100px;
+                line-height: 25px;
+            }
+            .panel-value-area {
+                .box-flex(1);
+                margin-left: 20px;
+                //文字元素给行高保持与左侧水平
+                .panel-value-item {
+                    line-height: 25px;
+                }
+                //图片展示（可点击）
+                .imgs-item {
+                    display: inline-block;
+                    width: 220px;
+                    height: 136px;
+                    border: 2px solid @borderColor;
+                    .borderRadius(3px);
+                    margin-right: 25px;
+                }
+                //征信字段的表格
+                .field-table {
+                    width: 100%;
+                    border: 1px solid @borderColor;
+                    border-collapse: collapse;
+                    tr:nth-of-type(odd) {
+                        background-color: #f3f4f9;
+                    }
+                    tr:nth-of-type(even) {
+                        background-color: #FFF;
+                    }
+                    td {
+                        padding: 0 37px;
+                        text-align: center;
+                        height: 40px;
+                    }
+                }
+                .remark {
+                    line-height: 25px;
+                }
+            }
+        }
+    }
+=======
+>>>>>>> origin/zhy
+    .panel-title-box {
+        height: 46px;
+        line-height: 46px;
+        color: @blue;
+        border-bottom: 1px solid @borderColor;
+        .panel-title {
+            padding-left: 20px;
+            .iconfont {
+                position: relative;
+                top: 1px;
+                font-size: 18px;
+            }
+            .panel-title-name {
+                margin-left: 7px;
+                font-size: 15px;
+            }
+<<<<<<< HEAD
+=======
+            .button{
+                float:right;
+                margin:7px 20px 0 0;
+            }
+>>>>>>> origin/zhy
+        }
+    }
+    .panel-content {
+        float: left;
+        padding: 0 0 29px 23px;
+<<<<<<< HEAD
+=======
+        width: 100%;//ZOU
+>>>>>>> origin/zhy
+        .loanman-material-item {
+            .box;
+            padding-top: 5px;
+            .check-item {
+                width: 75px;
+                text-align: center;
+                padding-top: 30px;
+            }
+            .checkname-item {
+                width: 115px;
+                text-align: left;
+                padding: 30px 0 0 10px;
+            }
+            .block-item {
+                .box-flex(1);
+                padding-top: 10px;
+                .checkbox {
+                    margin: 10px 0 0 10px;
+                }
+            }
+        }
+    }
+}
+<<<<<<< HEAD
+//上门材料地址栏
+.investigate-address-bar {
+    padding: 10px 50px;
+    border-bottom: 1px solid @borderColor;
+    background-color: #f3f4f9;
+    .key-value-box {
+        line-height: 35px;
+        .key {
+            color: @tableActiveColor;
+        }
+    }
+}
+=======
+
+>>>>>>> origin/zhy
+
+//单独一栏提交订单按钮
+.commit-orders-box {
+    text-align: right;
+    margin-top: 46px;
+<<<<<<< HEAD
+    &.commit-orders-box-area {
+        height: 68px;
+        line-height: 68px;
+        margin-top: 0;
+        border: 1px solid @borderColor;
+        border-top: none;
+        background-color: #FFF;
+        padding-right: 15px;
+    }
+    &.commit-orders-box-layout {
+        .layout;
+        padding: 15px;
+        margin-top: 15px;
+    }
+=======
+>>>>>>> origin/zhy
+}
+
+//征信材料角色tab切换栏
+.credit-material-tab-bar {
+    background-color: #FFF;
+    margin-top: 12px;
+    border: 1px solid @borderColor;
+    border-bottom: none;
+    height: 50px;
+    line-height: 50px;
+    text-align: right;
+    padding-right: 20px;
+    .role-bar-ul {
+        position: relative;
+        top: -1px;
+        left: -1px;
+        float: left;
+        .role-bar-li {
+            height: 49px;
+            float: left;
+            &:last-child .role-item{
+                border-right: 1px solid @borderColor;
+            }
+            .role-item {
+                display: inline-block;
+                line-height: 49px;
+                padding: 0 20px;
+                color: @fontColor;
+                border-left: 1px solid @borderColor;
+                border-top: 1px solid @borderColor;
+                &.role-item-active {
+                    background-color: @buttonBgColor;
+                    color: #FFF;
+                    border-right: none;
+                    border-left: none;
+                    border-color: @buttonBgColor;
+                }
+            }
+        }
+    }
+    .button {
+        margin-left: 10px;
+    }
+}
+
+.credit-datas-bar {
+    border-top: 1px dashed @borderColor;
+    border-bottom: 1px dashed @borderColor;
+    padding: 0 20px;
+    &.credit-datas-bar-special {
+        border-top: none;
+    }
+    .delete-credit-item {
+        float: right;
+        line-height: 60px;
+    }
+}
+.key-item-box {
+    display: inline-block;
+    float: left;
+    margin-right: 25px;
+    line-height: 60px;
+    .key-item {
+        margin-right: 25px;
+    }
+    .key-value {
+        width: 175px;
+    }
+}
+
+.credit-imgs-bar {
+    padding: 24px 125px;
+}
+<<<<<<< HEAD
+//图片组件
+.imgs-item-group {
+    position: relative;
+    display: inline-block;
+=======
+.imgs-item-group {
+    float: left;
+>>>>>>> origin/zhy
+    width: 224px;
+    text-align: center;
+    margin-right: 29px;
+    margin-bottom: 10px;
+<<<<<<< HEAD
+    //图片组件公共部分样式
+    .imgs-item-upload, .imgs-item-view {
+        display: block;
+        position: relative;
+        width: 220px;
+        height: 136px;
+        border: 2px solid @borderColor;
+        .borderRadius(3px);
+    }
+    //图片上传样式
+    .imgs-item-upload {
+        background-color: #f1f1f2;
+        text-align: center;
+        color: #b7bfc5;
+        padding: 20px 0;
+        cursor: pointer;
+        &:hover {
+            background-color: darken(#f1f1f2,5%);
+        }
+        .iconfont {
+            font-size: 65px;
+        }
+        .input-file {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            width: 220px;
+            filter: alpha(opacity=0);
+            cursor: pointer;
+            border: none;
+        }
+    }
+    //图片查看组件的地址信息
+    .imgs-item-view .imgs-describe {
+        position: absolute;
+        bottom: -2px;
+        left: -2px;
+        width: 220px;
+        height: 31px;
+        line-height: 31px;
+        padding-left: 10px;
+        background-color: #a8a8a9;
+        color: #FFF;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        .iconfont {
+            position: relative;
+            top: 2px;
+        }
+    }
+    
+=======
+    .imgs-item {
+        width: 220px;
+        height: 136px;
+        color: #b7bfc5;
+        text-align: center;
+        padding: 20px 0;
+        cursor: pointer;
+        border: 2px solid @borderColor;
+        background-color: #f1f1f2;
+        .borderRadius(3px);
+        .iconfont {
+            font-size: 65px;
+        }
+    }
+>>>>>>> origin/zhy
+    .imgs-item-p {
+        line-height: 42px;
+        text-align: center;
+    }
+}
+
+<<<<<<< HEAD
+
+//待办提醒
+.remind {
+    position: fixed;
+    z-index: 999;
+    top: 80px;
+    right: 0;
+    //待办提醒未展开
+    .remind-tips{
+        width: 44px;
+        border: 1px solid @borderColor;
+        border-right: none;
+        text-align: center;
+        padding: 18px 0;
+        cursor: pointer;
+        background-color: #f3f4f9;
+        .remind-tips-text {
+            margin:0 0 10px 15px;
+            font-size: 14px;
+            width: 14px;
+        }
+    }
+    //待办提醒展开部分
+    .remind-content {
+        position: absolute;
+        left: 44px;
+        top: 0;
+        width: 155px;
+        background-color: #FFF;
+        padding: 9px 20px;
+        border: 1px solid @borderColor;
+        border-right: none;
+        .remind-box .remind-item{
+            line-height: 33px;
+            cursor: pointer;
+            .message-number {
+                margin-left: 10px;
+            }
+=======
+.loan-imgs-bar {
+    padding: 24px 0 0 0;
+    .imgs-item-group {
+        &:nth-last-of-type(1) {
+            margin-right: 0;
+        }
+    }
+}
+//返回列表条目下，贷款材料上传（退回增加XX）
+.add-credit-bar {
+    .layout;
+    border-top:none;
+    padding: 0 15px 0 20px;
+    .add-credit {
+        display: block;
+        color: @tableActiveColor;
+        line-height: 49px;
+        .current-page {
+            color: @fontColor;
+        }
+    }
+}
+.key-value-check-box {
+    line-height: 49px;
+    margin-right: 20px;
+    display: inline-block;
+    .check-key{
+        width:20px;
+        height:20px;
+        display:inline-block;
+        position:relative;
+        margin:0 5px 0 10px;
+        .checkbox{
+            position:absolute;
+            width:20px;
+            height:20px;
+            top:4px;
+>>>>>>> origin/zhy
+        }
+    }
+}
+
+<<<<<<< HEAD
+//右边栏
+.sideBar {
+    position: fixed;
+    z-index: 998;
+    top: 254px;
+    right: 0;
+    .sideBar-item {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        text-align: center;
+        background-color: #f3f4f9;
+        cursor: pointer;
+        color: @fontColor;
+        border: 1px solid @borderColor;
+        border-bottom: 1px solid transparent; 
+        border-top: 1px solid transparent;
+        &:hover {
+            color: #FFFFFF;
+            background-color: @mainColor;
+            border-color: @mainColor !important;
+            .iconfont {
+                color: #FFFFFF;
+            }
+        }
+        &:first-child {
+            border-top: 1px solid @borderColor;
+        }
+        &:last-child {
+            border-color: @borderColor;
+            line-height: 16px; 
+            padding-top: 5px;
+            .iconfont {
+                margin-top: 5px; 
+                margin-left: 3px;
+            }
+            
+        }
+        .iconfont {
+            color: #90a4ae;
+            font-size: 22px;
+        }
+        .sideBar-content {
+            position: absolute;
+            display: none;
+            right: 43px;
+            top: -1px;
+            width: 111px;
+            height: 44px;
+            line-height: 44px;
+            border: 1px solid @mainColor;
+            border-right: none;
+            background-color: #f3f4f9;
+            color: @tableActiveColor;
+            .sideBar-content-item {
+                display: inline-block;
+                text-align: center;
+            }
+            .arrow {
+                position: absolute;
+                right: -9px;
+                border-color: transparent transparent transparent #f3f4f9;
+            }
+        }
+    }
+=======
+//征信退回原因
+.back-creditRes-bar {
+    .backReason;
+    padding: 15px 20px;
+    margin: 10px 0;
+    color: @backReasonBorderColor;
+    .back-credit {
+        display: block;
+        line-height: 49px;
+        .key-value-box {
+            line-height: 30px;
+            margin-right: 20px;
+            display:block;
+            .key{
+                color: @backReasonBorderColor;
+            }
+            .value{
+                color: @backReasonBorderColor;
+            }
+        }
+    }
+}
+//贷款信息录入
+.loan-info {
+    padding: 24px 125px;
+}
+.info-key-value-box{
+    width: calc(50% - 2px);
+    display: inline-block;
+    margin: 10px 0;
+    i{
+        color:@backReasonBorderColor;
+    }
+    .info-key{
+        color:@fontColor;
+        display:inline-block;
+        width:120px;
+        text-align:right;
+    }
+    .info-value{
+        border:1px solid @selectBorderColor;
+        height:30px;
+        padding:5px;
+        border-radius:4px;
+        display:inline-block;
+        width:200px;
+        input{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+        select{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+    }
+    &:nth-of-type(odd) {
+        text-align:left;
+    }
+    &:nth-of-type(even) {
+        text-align:right;
+    }
+>>>>>>> origin/zhy
 }
