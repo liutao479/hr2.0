@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 'use strict';
-=======
->>>>>>> origin/zhy
 (function(global) {
 	/**
 	* 添加string.format方法
@@ -15,7 +12,6 @@
 		    });
 		};
 	}
-<<<<<<< HEAD
 	/*
 	* 本地验证规则
 	*/
@@ -26,9 +22,6 @@
 	}
 	global.regulation = $.extend(global.regulation || {}, regulation);
 })(window);
-=======
-})(window)
->>>>>>> origin/zhy
 
 
 
