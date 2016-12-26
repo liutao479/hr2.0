@@ -36,7 +36,7 @@
 		return self;
 	};
 
-	paging.prototype.init = function(opt){
+	paging.prototype.init = function(opt) {
 		var self = this;
 		self.$el.on('selectstart', false);
 		self.compile();
