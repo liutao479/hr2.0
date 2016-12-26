@@ -3,6 +3,34 @@
 @linkColor: #11a0f8;
 @errorColor: #f93048;
 @mainColor: #6b59c9;
-.border {
-	border: 1px solid #cdd9e9;
+@borderColor: #d6dbdf;
+@menuActiveColor: #6347bd;
+@menuActiveBgColor: #f0eefc;
+@menuHoverBgColor: #e2e0ed;
+@messageNumberBgColor: #ff5c57;
+@consoleBgColor: #edf0f5; 
+@buttonBgColor: #5084fc; 
+@selectBorderColor: #cdd9e9;
+@disabledColor: #99abb5;
+@tableActiveColor: #6f5eca;
+@blue: #5084fc;
+
+//圆角
+.borderRadius(@radius:3px) { 
+    -moz-border-radius: @radius; 
+    -webkit-border-radius: @radius; 
+    border-radius: @radius; 
 }
+
+//弹性盒子
+.box {
+    display: -webkit-box;
+    display: -moz-box;
+}
+
+//box-flex
+.box-flex(@flex) {
+    -webkit-box-flex: @flex;
+    -moz-box-flex: @flex;
+}
+

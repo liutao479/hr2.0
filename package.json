@@ -1,0 +1,25 @@
+{
+  "name": "system2.0",
+  "version": "2.0.1",
+  "description": "业务云2.0系统前端框架",
+  "author": "sjdong",
+  "license": "ISC",
+  "path": {
+    "mock": "http://127.0.0.1:1003/mock/",
+    "src": "src/",
+    "dist": "dist/"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "*",
+    "gulp-content-includer": "0.0.7",
+    "gulp-copy": "*",
+    "gulp-csso": "*",
+    "gulp-less": "*",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-sequence": "^0.3.2",
+    "gulp-uglify": "*",
+    "gulp-watch": "*"
+  }
+}
