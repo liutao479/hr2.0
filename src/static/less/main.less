@@ -411,6 +411,50 @@ a {
 	}
 } 
 
+<<<<<<< HEAD
+=======
+
+//待办提醒
+.remind {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    //待办提醒未展开
+    .remind-tips{
+        width: 44px;
+        border: 1px solid @borderColor;
+        border-right: none;
+        text-align: center;
+        padding: 18px 0;
+        cursor: pointer;
+        background-color: #f3f4f9;
+        .remind-tips-text {
+            margin:0 0 10px 15px;
+            font-size: 14px;
+            width: 14px;
+        }
+    }
+    //待办提醒展开部分
+    .remind-content {
+        position: absolute;
+        left: 44px;
+        top: 0;
+        width: 155px;
+        background-color: #FFF;
+        padding: 9px 20px;
+        border-top: 1px solid @borderColor;
+        border-left: 1px solid @borderColor;
+        .remind-box .remind-item{
+            line-height: 33px;
+            cursor: pointer;
+            .message-number {
+                margin-left: 10px;
+            }
+        }
+    }
+}
+
+>>>>>>> origin/zhy
 //返回列表面板
 .path-back-bar {
     position: relative;
@@ -446,6 +490,7 @@ a {
     &.panel-credit {
         margin: 0;
     }
+<<<<<<< HEAD
     //征信结果录入详细内容面板
     &&-result-typing {
         margin-top: 0;
@@ -552,6 +597,8 @@ a {
             }
         }
     }
+=======
+>>>>>>> origin/zhy
     .panel-title-box {
         height: 46px;
         line-height: 46px;
@@ -568,11 +615,22 @@ a {
                 margin-left: 7px;
                 font-size: 15px;
             }
+<<<<<<< HEAD
+=======
+            .button{
+                float:right;
+                margin:7px 20px 0 0;
+            }
+>>>>>>> origin/zhy
         }
     }
     .panel-content {
         float: left;
         padding: 0 0 29px 23px;
+<<<<<<< HEAD
+=======
+        width: 100%;//ZOU
+>>>>>>> origin/zhy
         .loanman-material-item {
             .box;
             padding-top: 5px;
@@ -596,6 +654,7 @@ a {
         }
     }
 }
+<<<<<<< HEAD
 //上门材料地址栏
 .investigate-address-bar {
     padding: 10px 50px;
@@ -608,11 +667,15 @@ a {
         }
     }
 }
+=======
+
+>>>>>>> origin/zhy
 
 //单独一栏提交订单按钮
 .commit-orders-box {
     text-align: right;
     margin-top: 46px;
+<<<<<<< HEAD
     &.commit-orders-box-area {
         height: 68px;
         line-height: 68px;
@@ -627,6 +690,8 @@ a {
         padding: 15px;
         margin-top: 15px;
     }
+=======
+>>>>>>> origin/zhy
 }
 
 //征信材料角色tab切换栏
@@ -700,14 +765,20 @@ a {
 .credit-imgs-bar {
     padding: 24px 125px;
 }
+<<<<<<< HEAD
 //图片组件
 .imgs-item-group {
     position: relative;
     display: inline-block;
+=======
+.imgs-item-group {
+    float: left;
+>>>>>>> origin/zhy
     width: 224px;
     text-align: center;
     margin-right: 29px;
     margin-bottom: 10px;
+<<<<<<< HEAD
     //图片组件公共部分样式
     .imgs-item-upload, .imgs-item-view {
         display: block;
@@ -763,12 +834,29 @@ a {
         }
     }
     
+=======
+    .imgs-item {
+        width: 220px;
+        height: 136px;
+        color: #b7bfc5;
+        text-align: center;
+        padding: 20px 0;
+        cursor: pointer;
+        border: 2px solid @borderColor;
+        background-color: #f1f1f2;
+        .borderRadius(3px);
+        .iconfont {
+            font-size: 65px;
+        }
+    }
+>>>>>>> origin/zhy
     .imgs-item-p {
         line-height: 42px;
         text-align: center;
     }
 }
 
+<<<<<<< HEAD
 
 //待办提醒
 .remind {
@@ -807,10 +895,50 @@ a {
             .message-number {
                 margin-left: 10px;
             }
+=======
+.loan-imgs-bar {
+    padding: 24px 0 0 0;
+    .imgs-item-group {
+        &:nth-last-of-type(1) {
+            margin-right: 0;
+        }
+    }
+}
+//返回列表条目下，贷款材料上传（退回增加XX）
+.add-credit-bar {
+    .layout;
+    border-top:none;
+    padding: 0 15px 0 20px;
+    .add-credit {
+        display: block;
+        color: @tableActiveColor;
+        line-height: 49px;
+        .current-page {
+            color: @fontColor;
+        }
+    }
+}
+.key-value-check-box {
+    line-height: 49px;
+    margin-right: 20px;
+    display: inline-block;
+    .check-key{
+        width:20px;
+        height:20px;
+        display:inline-block;
+        position:relative;
+        margin:0 5px 0 10px;
+        .checkbox{
+            position:absolute;
+            width:20px;
+            height:20px;
+            top:4px;
+>>>>>>> origin/zhy
         }
     }
 }
 
+<<<<<<< HEAD
 //右边栏
 .sideBar {
     position: fixed;
@@ -877,4 +1005,71 @@ a {
             }
         }
     }
+=======
+//征信退回原因
+.back-creditRes-bar {
+    .backReason;
+    padding: 15px 20px;
+    margin: 10px 0;
+    color: @backReasonBorderColor;
+    .back-credit {
+        display: block;
+        line-height: 49px;
+        .key-value-box {
+            line-height: 30px;
+            margin-right: 20px;
+            display:block;
+            .key{
+                color: @backReasonBorderColor;
+            }
+            .value{
+                color: @backReasonBorderColor;
+            }
+        }
+    }
+}
+//贷款信息录入
+.loan-info {
+    padding: 24px 125px;
+}
+.info-key-value-box{
+    width: calc(50% - 2px);
+    display: inline-block;
+    margin: 10px 0;
+    i{
+        color:@backReasonBorderColor;
+    }
+    .info-key{
+        color:@fontColor;
+        display:inline-block;
+        width:120px;
+        text-align:right;
+    }
+    .info-value{
+        border:1px solid @selectBorderColor;
+        height:30px;
+        padding:5px;
+        border-radius:4px;
+        display:inline-block;
+        width:200px;
+        input{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+        select{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+    }
+    &:nth-of-type(odd) {
+        text-align:left;
+    }
+    &:nth-of-type(even) {
+        text-align:right;
+    }
+>>>>>>> origin/zhy
 }

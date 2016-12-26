@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--head-->
+		<meta charset="UTF-8"/>
+		<title>惠融车贷业务云</title>
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_jf5rbw8hkbg9zfr.css"/>
+		<link rel="stylesheet" type="text/css" href="/hr2.0/dist/static/css/main.css">
+		<!--head end-->
+	</head>
+	<body>
+		<!--导航条-->		
+		<div class="navigator">
+			<a class="logo-field">
+				<span class="logo"></span>
+				惠融车贷业务云
+			</a>
+			<ul class="user-field">
+				<li class="QR-Code">
+					<a href="#"><i class="iconfont">&#xe600;</i></a>
+				</li>
+				<li class="message">
+					<a href="#" class="message-a">
+						<i class="iconfont">&#xe6b4;</i>
+						<span class="message-number">533</span>
+					</a>
+				</li>
+				<li class="user">
+					<div id="" class="drop-down-box">
+						<a href="#" class="drop-down-a">
+							<span class="drop-down-text">王二麻子</span>
+							<i class="iconfont iconfont-arrow">&#xe621;</i>
+						</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<!--导航条 end-->
+		<!--左侧菜单栏-->
+		<div class="menu">
+			<a class="menu-item menu-item-active">
+				<i class="iconfont mark">&#xe6f9;</i>
+				业务工作台
+			</a>
+			<a class="menu-item">
+				<i class="iconfont mark">&#xe6c3;</i>
+				我的客户
+			</a>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe60e;</i>
+					<span>订单管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">信息修改审核</a>
+				<a class="menu-group-item" data-href="loadManger">终止订单审核</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe623;</i>
+					<span>财务管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">借款管理</a>
+				<a class="menu-group-item" data-href="loadManger">保证金管理</a>
+				<a class="menu-group-item" data-href="loadManger">银行回款管理</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe61b;</i>
+					<span>上牌管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">上牌办理</a>
+				<a class="menu-group-item" data-href="loadManger">上牌审核</a>
+				<a class="menu-group-item" data-href="loadManger">上牌进度查看</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe65d;</i>
+					<span>抵押管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">抵押办理</a>
+				<a class="menu-group-item" data-href="loadManger">抵押审核</a>
+				<a class="menu-group-item" data-href="loadManger">抵押进度查看</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe654;</i>
+					<span>逾期管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">逾期信息录入</a>
+				<a class="menu-group-item" data-href="loadManger">预逾期理</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe630;</i>
+					<span>档案管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">资料下载</a>
+				<a class="menu-group-item" data-href="loadManger">资料打印</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe603;</i>
+					<span>运营分析</span>
+				</div>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe6cb;</i>
+					<span>合作机构</span>
+				</div>
+			</div>
+		</div>
+		<!--左侧菜单栏 end-->
+		<!--主工作台-->
+		<div class="console" id="console">
+			<!--我的客户-->
+			<div class="custormer" id="custormer">
+				<div class="select-search-bar clearfix">
+					<div class="search-item-box">
+						<div class="search-item">
+							<span class="select-name">创建日期：</span>
+							<span class="select select-date">0000-00-00 <span class="arrow arrow-bottom"></span></span>
+							<span class="separator">-</span>
+							<span class="select select-date">0000-00-00 <span class="arrow arrow-bottom"></span></span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">经销商：</span>
+							<span class="select select-common">请选择<span class="arrow arrow-bottom"></span></span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">车辆品牌：</span>
+							<span class="select select-common">请选择<span class="arrow arrow-bottom"></span></span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">经办行：</span>
+							<span class="select select-common">请选择<span class="arrow arrow-bottom"></span></span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">订单状态：</span>
+							<span class="select select-common">请选择<span class="arrow arrow-bottom"></span></span>
+						</div>
+						<input class="input-text" placeholder="订单号\借款人姓名\身份证号手机号" />
+					</div>
+					<div class="search-sure-box">
+						<a href="javascript:;">重置</a>
+						<div id="" class="button">搜索</div>
+					</div>
+				</div>
+				<div class="page-bar clearfix">
+					<a href="javascript:;" class="time-sort">创建时间<img src="../static/css/img/sort-up.png" alt="" title="时间升序" /></a>
+					<div class="page-bar-right">
+						<span class="page-count">1/100</span>
+						<a href="javascript:;" class="page-change disabled"><i class="iconfont">&#xe601;</i></a>
+						<a href="javascript:;" class="page-change"><i class="iconfont">&#xe670;</i></a>
+					</div>
+				</div>
+				<div class="custormer-orders">
+					<table border="0" cellpadding="" width="100%" class="orders-box">
+						<thead>
+							<tr class="orders-bar-title">
+								<td>
+									<p>订单生成时间：<span>2016-04-08</span></p>
+								</td>
+								<td colspan="4">
+									<p>订单号：<span>hqdb2016040815101772</span></p>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="3">
+									<img src="../static/css/img/car-logo.png" class="car-logo"/>
+									<span class="car-name">大众C4L-2016时尚款大众C4L-2016时尚款</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe656;</i>
+									<span id="customer-name">张三</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe6f5;</i>
+									<span id="customer-ID">452019 19952627 2727</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe607;</i>
+									<span id="customer-phone">15845674567</span>
+								</td>
+								<td class="td-last">
+									<div class="button button-mini">放款预约</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="status-name">分期金额：<span class="status-value">10000</span></td>
+								<td class="status-name">期数：<span class="status-value">24</span></td>
+								<td class="status-name">首付比例：<span class="status-value">30%</span></td>
+								<td class="td-last">
+									<div class="button button-mini">申请删除订单</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" class="status-name">订单状态：<span class="status-value">征信材料待完善&gt;</span></td>
+								<td class="td-last">
+									<div class="button button-mini">申请修改贷款信息</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table border="0" cellpadding="" width="100%" class="orders-box">
+						<thead>
+							<tr class="orders-bar-title">
+								<td>
+									<p>订单生成时间：<span>2016-04-08</span></p>
+								</td>
+								<td colspan="4">
+									<p>订单号：<span>hqdb2016040815101772</span></p>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="3">
+									<img src="../static/css/img/car-logo.png" class="car-logo"/>
+									<span class="car-name">大众C4L-2016时尚款大众C4L-2016时尚款</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe656;</i>
+									<span id="customer-name">张三</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe6f5;</i>
+									<span id="customer-ID">452019 19952627 2727</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe607;</i>
+									<span id="customer-phone">15845674567</span>
+								</td>
+								<td class="td-last">
+									<div class="button button-mini">放款预约</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="status-name">分期金额：<span class="status-value">10000</span></td>
+								<td class="status-name">期数：<span class="status-value">24</span></td>
+								<td class="status-name">首付比例：<span class="status-value">30%</span></td>
+								<td class="td-last">
+									<div class="button button-mini">申请删除订单</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" class="status-name">订单状态：<span class="status-value">征信材料待完善&gt;</span></td>
+								<td class="td-last">
+									<div class="button button-mini">申请修改贷款信息</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table border="0" cellpadding="" width="100%" class="orders-box">
+						<thead>
+							<tr class="orders-bar-title">
+								<td>
+									<p>订单生成时间：<span>2016-04-08</span></p>
+								</td>
+								<td colspan="4">
+									<p>订单号：<span>hqdb2016040815101772</span></p>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="3">
+									<img src="../static/css/img/car-logo.png" class="car-logo"/>
+									<span class="car-name">大众C4L-2016时尚款大众C4L-2016时尚款</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe656;</i>
+									<span id="customer-name">张三</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe6f5;</i>
+									<span id="customer-ID">452019 19952627 2727</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe607;</i>
+									<span id="customer-phone">15845674567</span>
+								</td>
+								<td class="td-last">
+									<div class="button button-mini">放款预约</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="status-name">分期金额：<span class="status-value">10000</span></td>
+								<td class="status-name">期数：<span class="status-value">24</span></td>
+								<td class="status-name">首付比例：<span class="status-value">30%</span></td>
+								<td class="td-last">
+									<div class="button button-mini">申请删除订单</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" class="status-name">订单状态：<span class="status-value">征信材料待完善&gt;</span></td>
+								<td class="td-last">
+									<div class="button button-mini">申请修改贷款信息</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table border="0" cellpadding="" width="100%" class="orders-box">
+						<thead>
+							<tr class="orders-bar-title">
+								<td>
+									<p>订单生成时间：<span>2016-04-08</span></p>
+								</td>
+								<td colspan="4">
+									<p>订单号：<span>hqdb2016040815101772</span></p>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="3">
+									<img src="../static/css/img/car-logo.png" class="car-logo"/>
+									<span class="car-name">大众C4L-2016时尚款大众C4L-2016时尚款</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe656;</i>
+									<span id="customer-name">张三</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe6f5;</i>
+									<span id="customer-ID">452019 19952627 2727</span>
+								</td>
+								<td>
+									<i class="iconfont">&#xe607;</i>
+									<span id="customer-phone">15845674567</span>
+								</td>
+								<td class="td-last">
+									<div class="button button-mini">放款预约</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="status-name">分期金额：<span class="status-value">10000</span></td>
+								<td class="status-name">期数：<span class="status-value">24</span></td>
+								<td class="status-name">首付比例：<span class="status-value">30%</span></td>
+								<td class="td-last">
+									<div class="button button-mini">申请删除订单</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" class="status-name">订单状态：<span class="status-value">征信材料待完善&gt;</span></td>
+								<td class="td-last">
+									<div class="button button-mini">申请修改贷款信息</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="custormer-orders-item">
+						<div class="order-item-title">
+							
+							
+						</div>
+						<div class="order-item-content">
+							
+						</div>
+					</div>
+				</div>
+				
+					
+				<!--分页器-->
+				<div class="pageToolbar">
+					<ul class="paginator clearfix">
+						<li class="page"><i class="iconfont">&#xe601;</i></li>
+						<li class="page">1</li>
+						<li class="page">2</li>
+						<li class="page">3</li>
+						<li class="page">4</li>
+						<li class="page focus">5</li>
+						<li class="page page-ellipse"><i class="iconfont">&#xe66f;</i></li>
+						<li class="page">100</li>
+						<li class="page"><i class="iconfont">&#xe670;</i></li>
+						<li class="page-jump-area">
+							<span>到第</span>
+							<input type="text" class="input-text"/>
+							<span>页</span>
+							<div class="button">确定</div>
+						</li>
+					</ul>
+				</div>
+				<!--分页器 end-->
+				
+			</div>
+			<!--我的客户 end-->
+		</div>
+		<!--待办事项-->
+		<div class="remind" id="remind">
+			<div class="remind-tips" id="remind-tips">
+				<i class="iconfont" id="iconfont-shouqi">&#xe697;</i>
+				<div class="remind-tips-text">待办提醒</div>
+				<span class="message-number">500</span>
+			</div>
+			<div class="remind-content">
+				<ul class="remind-box">
+					<li class="remind-item">征信材料上传<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信材料上传<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入</li>
+					<li class="remind-item">开卡信息录入</li>
+					<li class="remind-item">开卡信息录入</li>
+				</ul>
+			</div>
+		</div>
+		<!--代办事项 end-->
+		<!--js文件-->
+		<script src="/hr2.0/dist/static/js/vendor/jquery.min.js"></script>
+		<script src="/hr2.0/dist/static/js/app.js"></script>
+		<!--js文件 end-->
+	</body>
+</html>

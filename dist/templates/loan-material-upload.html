@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--head-->
+		<meta charset="UTF-8"/>
+		<title>惠融车贷业务云</title>
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_jf5rbw8hkbg9zfr.css"/>
+		<link rel="stylesheet" type="text/css" href="/hr2.0/dist/static/css/main.css">
+		<!--head end-->
+	</head>
+	<body>
+		<!--导航条-->		
+		<div class="navigator">
+			<a class="logo-field">
+				<span class="logo"></span>
+				惠融车贷业务云
+			</a>
+			<ul class="user-field">
+				<li class="QR-Code">
+					<a href="#"><i class="iconfont">&#xe600;</i></a>
+				</li>
+				<li class="message">
+					<a href="#" class="message-a">
+						<i class="iconfont">&#xe6b4;</i>
+						<span class="message-number">533</span>
+					</a>
+				</li>
+				<li class="user">
+					<div id="" class="drop-down-box">
+						<a href="#" class="drop-down-a">
+							<span class="drop-down-text">王二麻子</span>
+							<i class="iconfont iconfont-arrow">&#xe621;</i>
+						</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<!--导航条 end-->
+		<!--左侧菜单栏-->
+		<div class="menu">
+			<a class="menu-item menu-item-active">
+				<i class="iconfont mark">&#xe6f9;</i>
+				业务工作台
+			</a>
+			<a class="menu-item">
+				<i class="iconfont mark">&#xe6c3;</i>
+				我的客户
+			</a>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe60e;</i>
+					<span>订单管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">信息修改审核</a>
+				<a class="menu-group-item" data-href="loadManger">终止订单审核</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe623;</i>
+					<span>财务管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">借款管理</a>
+				<a class="menu-group-item" data-href="loadManger">保证金管理</a>
+				<a class="menu-group-item" data-href="loadManger">银行回款管理</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe61b;</i>
+					<span>上牌管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">上牌办理</a>
+				<a class="menu-group-item" data-href="loadManger">上牌审核</a>
+				<a class="menu-group-item" data-href="loadManger">上牌进度查看</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe65d;</i>
+					<span>抵押管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">抵押办理</a>
+				<a class="menu-group-item" data-href="loadManger">抵押审核</a>
+				<a class="menu-group-item" data-href="loadManger">抵押进度查看</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe654;</i>
+					<span>逾期管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">逾期信息录入</a>
+				<a class="menu-group-item" data-href="loadManger">预逾期理</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe630;</i>
+					<span>档案管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">资料下载</a>
+				<a class="menu-group-item" data-href="loadManger">资料打印</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe603;</i>
+					<span>运营分析</span>
+				</div>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe6cb;</i>
+					<span>合作机构</span>
+				</div>
+			</div>
+		</div>
+		<!--左侧菜单栏 end-->
+		<!--主工作台-->
+		<div class="console" id="console">
+			<!--贷款材料上传-->
+			<div class="loan-material-upload" id="loan-material-upload">
+				<!--返回列表-->
+				<div class="path-back-bar">
+					<div class="path-back">
+						<i class="iconfont">&#xe626;</i>
+						<a href="#">返回列表</a>&nbsp;&gt;
+						<span class="current-page">贷款材料上传</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">借款人：</span>
+						<span class="value">张三</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">订单生成时间：</span>
+						<span class="value">2016-11-03 14:02</span>
+					</div>
+				</div>
+				<!--增加征信人员-->
+				<div class="add-credit-bar">
+					<div class="add-credit">
+						<span class="current-page">增加征信人员：</span>
+						<div class="key-value-check-box">
+							<span class="check-key"><div class="checkbox"></div></span>
+							<span class="check-value">增加共同还款人</span>
+						</div>
+						<div class="key-value-check-box">
+							<span class="check-key"><div class="checkbox"></div></span>
+							<span class="check-value">增加反担保人</span>
+						</div>
+					</div>
+				</div>
+				<!--征信退回原因及人员信息-->
+				<div class="back-creditRes-bar">
+					<div class="back-credit">
+						<div class="key-value-box">
+							<span class="key">退回人员：</span>
+							<span class="value">增加共同还款人</span>
+						</div>
+						<div class="key-value-box">
+							<span class="key">退回原因：</span>
+							<span class="value">增加反担保人</span>
+						</div>
+					</div>
+				</div>
+				
+				<!--面板-->
+				<div class="panel panel-loan clearfix">
+					<!--借款人信息填写栏-->
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">借款人材料</span>
+						</div>
+					</div>
+					<div class="panel-content clearfix">
+						<div class="loan-imgs-bar clearfix">
+							<div class="imgs-item-group clearfix">
+								<div class="imgs-item">
+									<i class="iconfont">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+								</div>
+								<span class="imgs-item-p">共同还款人身份证正面</span>
+							</div>
+							<div class="imgs-item-group clearfix">
+								<div class="imgs-item">
+									<i class="iconfont">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+								</div>
+								<span class="imgs-item-p">共同还款人身份证反面</span>
+							</div>
+							<div class="imgs-item-group clearfix">
+								<div class="imgs-item">
+									<i class="iconfont">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+								</div>
+								<span class="imgs-item-p">共同还款人征信授权书</span>
+							</div>
+							<div class="imgs-item-group clearfix">
+								<div class="imgs-item">
+									<i class="iconfont">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+								</div>
+								<span class="imgs-item-p">系统使用知情书</span>
+							</div>
+							<div class="imgs-item-group clearfix">
+								<div class="imgs-item">
+									<i class="iconfont">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+								</div>
+								<span class="imgs-item-p">授权书签字照片</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-loan clearfix">
+					<!--借款人信息填写栏-->
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">借款人材料</span>
+						</div>
+					</div>
+					<div class="panel-content clearfix">
+						<div class="loan-imgs-bar clearfix">
+							<div class="imgs-item-group clearfix">
+								<div class="imgs-item">
+									<i class="iconfont">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+								</div>
+								<span class="imgs-item-p">共同还款人身份证正面</span>
+							</div>
+							<div class="imgs-item-group clearfix">
+								<div class="imgs-item">
+									<i class="iconfont">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+								</div>
+								<span class="imgs-item-p">共同还款人身份证反面</span>
+							</div>
+							<div class="imgs-item-group clearfix">
+								<div class="imgs-item">
+									<i class="iconfont">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+								</div>
+								<span class="imgs-item-p">共同还款人征信授权书</span>
+							</div>
+							<div class="imgs-item-group clearfix">
+								<div class="imgs-item">
+									<i class="iconfont">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+								</div>
+								<span class="imgs-item-p">系统使用知情书</span>
+							</div>
+							<div class="imgs-item-group clearfix">
+								<div class="imgs-item">
+									<i class="iconfont">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+								</div>
+								<span class="imgs-item-p">授权书签字照片</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--提交订单按钮-->
+				<div class="commit-orders-box">
+					<div id="" class="button">提交订单</div>
+				</div>
+			</div>
+		</div>
+		<!--待办事项-->
+		<div class="remind" id="remind">
+			<div class="remind-tips" id="remind-tips">
+				<i class="iconfont" id="iconfont-shouqi">&#xe697;</i>
+				<div class="remind-tips-text">待办提醒</div>
+				<span class="message-number">500</span>
+			</div>
+			<div class="remind-content">
+				<ul class="remind-box">
+					<li class="remind-item">征信材料上传<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信材料上传<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入</li>
+					<li class="remind-item">开卡信息录入</li>
+					<li class="remind-item">开卡信息录入</li>
+				</ul>
+			</div>
+		</div>
+		<!--代办事项 end-->
+		<!--js文件-->
+		<script src="/hr2.0/dist/static/js/vendor/jquery.min.js"></script>
+		<script src="/hr2.0/dist/static/js/app.js"></script>
+		<!--js文件 end-->
+	</body>
+</html>
