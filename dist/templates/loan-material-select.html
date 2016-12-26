@@ -29,7 +29,7 @@
 					<div id="" class="drop-down-box">
 						<a href="#" class="drop-down-a">
 							<span class="drop-down-text">王二麻子</span>
-							<i class="iconfont iconfont-arrow">&#xe621;</i>
+							<i class="iconfont">&#xe621;</i>
 						</a>
 					</div>
 				</li>
@@ -50,7 +50,7 @@
 				<div class="menu-group-title">
 					<i class="iconfont mark">&#xe60e;</i>
 					<span>订单管理</span>
-					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+					<i class="iconfont">&#xe66c;</i>
 				</div>
 				<a class="menu-group-item" data-href="loadManger">信息修改审核</a>
 				<a class="menu-group-item" data-href="loadManger">终止订单审核</a>
@@ -59,7 +59,7 @@
 				<div class="menu-group-title">
 					<i class="iconfont mark">&#xe623;</i>
 					<span>财务管理</span>
-					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+					<i class="iconfont">&#xe66c;</i>
 				</div>
 				<a class="menu-group-item" data-href="loadManger">借款管理</a>
 				<a class="menu-group-item" data-href="loadManger">保证金管理</a>
@@ -69,7 +69,7 @@
 				<div class="menu-group-title">
 					<i class="iconfont mark">&#xe61b;</i>
 					<span>上牌管理</span>
-					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+					<i class="iconfont">&#xe66c;</i>
 				</div>
 				<a class="menu-group-item" data-href="loadManger">上牌办理</a>
 				<a class="menu-group-item" data-href="loadManger">上牌审核</a>
@@ -79,7 +79,7 @@
 				<div class="menu-group-title">
 					<i class="iconfont mark">&#xe65d;</i>
 					<span>抵押管理</span>
-					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+					<i class="iconfont">&#xe66c;</i>
 				</div>
 				<a class="menu-group-item" data-href="loadManger">抵押办理</a>
 				<a class="menu-group-item" data-href="loadManger">抵押审核</a>
@@ -89,7 +89,7 @@
 				<div class="menu-group-title">
 					<i class="iconfont mark">&#xe654;</i>
 					<span>逾期管理</span>
-					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+					<i class="iconfont">&#xe66c;</i>
 				</div>
 				<a class="menu-group-item" data-href="loadManger">逾期信息录入</a>
 				<a class="menu-group-item" data-href="loadManger">预逾期理</a>
@@ -98,7 +98,7 @@
 				<div class="menu-group-title">
 					<i class="iconfont mark">&#xe630;</i>
 					<span>档案管理</span>
-					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+					<i class="iconfont">&#xe66c;</i>
 				</div>
 				<a class="menu-group-item" data-href="loadManger">资料下载</a>
 				<a class="menu-group-item" data-href="loadManger">资料打印</a>
@@ -129,33 +129,220 @@
 						<span class="current-page">贷款材料</span>
 					</div>
 					<div class="key-value-box">
-						<span class="key">订单生成时间：</span>
-						<span class="value">2016-11-03 14:02</span>
-					</div>
-					<div class="key-value-box">
 						<span class="key">借款人：</span>
 						<span class="value">张三</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">订单生成时间：</span>
+						<span class="value">2016-11-03 14:02</span>
 					</div>
 				</div>
 				
 				<!--面板-->
-				<div class="panel">
-					<div class="panel-title">
-						<i class="iconfont">&#xe6f5;</i>
-						<span class="panel-title-name">借款人申贷材料</span>
+				<div class="panel clearfix">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe6f5;</i>
+							<span class="panel-title-name">借款人申贷材料</span>
+						</div>
 					</div>
 					<div class="panel-content">
 						<div class="loanman-material-item">
-							<div class="checkbox"></div>
-							<div>婚姻状况证明：</div>
-							<div>
-								<a href="#">结婚证</a>
-								<a href="#">离婚证</a>
-								<a href="#">财产分割协议</a>
-								<a href="#">死亡证明</a>
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">婚姻状况证明：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">结婚证</div>
+								<div class="checkbox checkbox-select">离婚证</div>
+								<div class="checkbox checkbox-select">财产分割协议</div>
+								<div class="checkbox checkbox-select">死亡证明</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">借款人户口本：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人户口本首页</div>
+								<div class="checkbox checkbox-select">申请人户口本户主页</div>
+								<div class="checkbox checkbox-select">申请人户口本本人页</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">借款人收入证明：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人收入证明一</div>
+								<div class="checkbox checkbox-select">申请人收入证明二</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">借款人银行流水：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人银行流水首页</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度一</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度二</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度三</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度四</div>
+								<div class="checkbox checkbox-select">申请人银行流水末页</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">借款人房产证明：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人居住证明</div>
+								<div class="checkbox checkbox-select">申请人房产证内容页</div>
+								<div class="checkbox checkbox-select">申请人购房发票</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度三</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度四</div>
+								<div class="checkbox checkbox-select">申请人银行流水末页</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">企业资料：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人居住证明</div>
+								<div class="checkbox checkbox-select">申请人房产证内容页</div>
+								<div class="checkbox checkbox-select">申请人购房发票</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度三</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度四</div>
+								<div class="checkbox checkbox-select">申请人银行流水末页</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">公牌资料：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人居住证明</div>
+								<div class="checkbox checkbox-select">申请人房产证内容页</div>
+								<div class="checkbox checkbox-select">申请人购房发票</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度三</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度四</div>
+								<div class="checkbox checkbox-select">申请人银行流水末页</div>
 							</div>
 						</div>
 					</div>
+				</div>
+				
+				<!--面板-->
+				<div class="panel clearfix">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe6f5;</i>
+							<span class="panel-title-name">共同还款人</span>
+						</div>
+					</div>
+					<div class="panel-content">
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">婚姻状况证明：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">结婚证</div>
+								<div class="checkbox checkbox-select">离婚证</div>
+								<div class="checkbox checkbox-select">财产分割协议</div>
+								<div class="checkbox checkbox-select">死亡证明</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">借款人户口本：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人户口本首页</div>
+								<div class="checkbox checkbox-select">申请人户口本户主页</div>
+								<div class="checkbox checkbox-select">申请人户口本本人页</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">借款人收入证明：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人收入证明一</div>
+								<div class="checkbox checkbox-select">申请人收入证明二</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">借款人银行流水：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人银行流水首页</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度一</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度二</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度三</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度四</div>
+								<div class="checkbox checkbox-select">申请人银行流水末页</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">借款人房产证明：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人居住证明</div>
+								<div class="checkbox checkbox-select">申请人房产证内容页</div>
+								<div class="checkbox checkbox-select">申请人购房发票</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度三</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度四</div>
+								<div class="checkbox checkbox-select">申请人银行流水末页</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">企业资料：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人居住证明</div>
+								<div class="checkbox checkbox-select">申请人房产证内容页</div>
+								<div class="checkbox checkbox-select">申请人购房发票</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度三</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度四</div>
+								<div class="checkbox checkbox-select">申请人银行流水末页</div>
+							</div>
+						</div>
+						<div class="loanman-material-item">
+							<div class="check-item">
+								<div class="checkbox checkbox-normal"></div>
+							</div>
+							<div class="checkname-item">公牌资料：</div>
+							<div class="block-item">
+								<div class="checkbox checkbox-select">申请人居住证明</div>
+								<div class="checkbox checkbox-select">申请人房产证内容页</div>
+								<div class="checkbox checkbox-select">申请人购房发票</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度三</div>
+								<div class="checkbox checkbox-select">申请人流水结息页季度四</div>
+								<div class="checkbox checkbox-select">申请人银行流水末页</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--提交订单按钮-->
+				<div class="commit-orders-box">
+					<div id="" class="button">提交订单</div>
 				</div>
 			</div>
 			<!--贷款材料选择 end-->
@@ -163,7 +350,7 @@
 		<!--待办事项-->
 		<div class="remind" id="remind">
 			<div class="remind-tips" id="remind-tips">
-				<i class="iconfont" id="iconfont-shouqi">&#xe697;</i>
+				<i class="iconfont">&#xe697;</i>
 				<div class="remind-tips-text">待办提醒</div>
 				<span class="message-number">500</span>
 			</div>

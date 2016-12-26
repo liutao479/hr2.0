@@ -992,7 +992,7 @@ a {
     padding: 24px 125px;
 }
 .info-key-value-box{
-    width: calc(50% - 2px);
+    width: calc(~"50% - 2px");
     display: inline-block;
     margin: 10px 0;
     i{
@@ -1029,5 +1029,45 @@ a {
     }
     &:nth-of-type(even) {
         text-align:right;
+    }
+}
+.info-key-check-box{
+    margin: 10px 0;
+    .box;
+    i{
+        color:@backReasonBorderColor;
+    }
+    .info-key{
+        color: @fontColor;
+        width: 120px;
+        margin-right: 25px;
+        text-align: right;
+        line-height: 30px;
+//      -moz-box-flex: 1;
+//      -webkit-box-flex: 1;
+//      box-flex: 1;
+    }
+    .info-check-box{
+        -moz-box-flex: 1;
+        -webkit-box-flex: 1;
+        box-flex: 1;
+        .info-check{
+            width:auto;
+            float:left;
+            margin:0 10px 10px 10px;
+        }
+        .check-key{
+            width:20px;
+            height:20px;
+            display:inline-block;
+            position:relative;
+            margin:0 5px 0 10px;
+            .checkbox{
+                position:absolute;
+                width:20px;
+                height:20px;
+                top:4px;
+            }
+        }
     }
 }
