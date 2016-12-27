@@ -68,24 +68,28 @@
         border-color: @tableActiveColor;
     }
     &&-select {
-        padding: 12px 15px;
+        padding: 0 12px;
+        height: 23px;
+        line-height: 23px;
         color: @fontColor;
         &:hover {
             color: @tableActiveColor;
         }
         &.checked {
             color: @tableActiveColor;
+            border-color: @tableActiveColor;
         }
     }
     &&-normal {
         width: 18px;
         height: 18px;
+        &.checked {
+            color: #FFF;
+            background-color: @tableActiveColor;
+            border-color: @tableActiveColor;
+        }
     }
-    &.checked {
-        color: #FFF;
-        background-color: @tableActiveColor;
-        border-color: @tableActiveColor;
-    }
+    
     .iconfont {
         color: #FFF !important;
         float: left;
@@ -164,12 +168,18 @@
     }
 }
 
+.test-box {
+    height: 1000px;
+    padding: 20px;  
+    border: 1px solid @borderColor;  
+    background-color: #FFF;
+}
+
 //选择框
 .select {
     position: relative;
     display: inline-block;
     height: 30px;
-    line-height: 30px;
     .borderRadius(3px);
     padding: 0 10px;
     border: 1px solid @selectBorderColor;
@@ -181,6 +191,117 @@
     }
     &&-date {
         width: 120px;
+    }
+    &&-car {
+        width: 248px;
+    }
+    .placeholder {
+        float: left;
+        display: inline-block;
+        line-height: 30px;
+    }
+    .select-box {
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        border: 1px solid @buttonBgColor;
+        .borderRadius(3px);
+        width: 248px;
+        .select-tab {
+            width: 248px;
+            height: 30px;
+            margin-top: 28px;
+            .select-tab-item {
+                position: relative;
+                float: left; 
+                cursor: pointer;
+                color: @fontColor;
+                line-height: 30px;
+                width: 82px;
+                border: 1px solid @borderColor;
+                border-right: none;
+                text-align: center;
+                background-color: #f3f4f9;
+                &:first-child {
+                    border-left: none;
+                }
+                &.select-tab-item-active {
+                    color: @buttonBgColor;
+                    background-color: #FFF;
+                    border-bottom-color: #FFF;
+                    &:before {
+                        content: "";
+                        width: 82px;
+                        height: 3px;
+                        background-color: @buttonBgColor;
+                        position: absolute;
+                        top: -1px;
+                        left: 0;
+                    }
+                }
+            }
+        }
+        .select-content-box {
+            width: 246px;
+            height: 336px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            //品牌车系车型
+            .select-content {
+                display: none;
+                padding: 0 15px 15px 15px;
+                width: 248px;
+                &.select-content-active {
+                    display: block;
+                }
+                &.select-content-brand {
+                    .checkbox {
+                        margin: 10px 5px 0 0;
+                    }
+                }
+                .word-area {
+                    margin-top: 10px;
+                    &:last-child dd {
+                        border: none;
+                    }
+                    dt {
+                        float: left;
+                        width: 21px;
+                        font-weight: 600;
+                        color: #000;
+                        line-height: 23px;
+                    }
+                    dd {
+                        margin-left: 21px;
+                        padding-bottom: 10px;
+                        border-bottom: 1px dashed @borderColor;
+                        .car-item {
+                            display: inline-block;
+                            color: @fontColor;
+                            margin-right: 25px;
+                            line-height: 23px;
+                        }
+                    }
+                }
+                .audi-area {
+                    dt {
+                        padding-top: 10px;
+                        color: #000;
+                        font-weight: 700;
+                    }
+                    dd {
+                        border-bottom: 1px dashed @borderColor;
+                        padding: 10px 0;
+                        .car-item {
+                            line-height: 23px;
+                            margin-right: 23px;
+                            color: @fontColor;
+                        }
+                    }
+                }
+            }
+        }
+        
     }
     .arrow {
         right: 10px;         
