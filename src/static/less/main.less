@@ -42,7 +42,9 @@ a {
     	clear: both;
     }
 }
-
+.float-right{
+    float: right;
+}
 .navigator {
 	position: fixed;
 	z-index: 999;
@@ -1047,6 +1049,7 @@ a {
         display:inline-block;
         width:120px;
         text-align:right;
+        margin-right: 25px;
     }
     .info-value{
         border:1px solid @selectBorderColor;
@@ -1055,6 +1058,14 @@ a {
         border-radius:4px;
         display:inline-block;
         width:200px;
+        position: relative;
+        .unit-text{
+            position: absolute;
+            top:0;
+            right:3px;
+            line-height: 28px;
+            color: @unitTextColor;
+        }
         input{
             border:none;
             outline:none;
@@ -1087,6 +1098,7 @@ a {
         margin-right: 25px;
         text-align: right;
         line-height: 30px;
+        display: block;
 //      -moz-box-flex: 1;
 //      -webkit-box-flex: 1;
 //      box-flex: 1;
@@ -1095,10 +1107,14 @@ a {
         -moz-box-flex: 1;
         -webkit-box-flex: 1;
         box-flex: 1;
+        display: block;
         .info-check{
             width:auto;
             float:left;
             margin:0 10px 10px 10px;
+            .check-value{
+                line-height: 30px;
+            }
         }
         .check-key{
             width:20px;

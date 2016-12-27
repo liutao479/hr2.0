@@ -30,9 +30,31 @@
 						</div>
 					</div>
 				</div>
+				<!--工作台左侧菜单面板-->
+				<div class="panel panel-menu">
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">征信结果</a>
+					<a class="panel-menu-item" href="#">开卡信息</a>
+					<a class="panel-menu-item" href="#">二手车评估信息</a>
+					<a class="panel-menu-item panel-menu-item-active" href="#">
+						贷款材料
+						<span class="arrow arrow-right"></span>
+					</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+				</div>
+				<!--工作台左侧菜单面板 end-->
 				
 				<!--面板-->
-				<div class="panel panel-loan">
+				<div class="panel panel-loan panel-detail">
 					<!--借款人信息填写栏-->
 					<div class="panel-title-box">
 						<div class="panel-title">
@@ -43,7 +65,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="panel-detail-content-layout">
+					<div class="panel-detail-content panel-detail-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>业务来源：</span>
@@ -120,7 +142,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan">
+				<div class="panel panel-loan panel-detail">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
@@ -130,7 +152,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="panel-detail-content-layout">
+					<div class="panel-detail-content panel-detail-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>车辆型号：</span>
@@ -205,7 +227,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan">
+				<div class="panel panel-loan panel-detail">
 					<!--借款人信息填写栏-->
 					<div class="panel-title-box">
 						<div class="panel-title">
@@ -216,7 +238,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="panel-detail-content-layout">
+					<div class="panel-detail-content panel-detail-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>贷款金额：</span>
@@ -245,7 +267,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan">
+				<div class="panel panel-loan panel-detail">
 					<!--借款人信息填写栏-->
 					<div class="panel-title-box">
 						<div class="panel-title">
@@ -256,15 +278,23 @@
 							</div>
 						</div>
 					</div>
-					<div class="panel-detail-content-layout">
+					<div class="panel-detail-content panel-detail-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>联系电话：</span>
-								<span class="info-value"><input type="text" /></span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>公司电话：</span>
-								<span class="info-value"><input type="text" /></span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭住址：</span>
@@ -276,11 +306,19 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位名称：</span>
-								<span class="info-value"><input type="text" /></span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址：</span>
-								<span class="info-value"><input type="text" /></span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>婚姻状况：</span>
@@ -300,7 +338,11 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>税后月收入：</span>
-								<span class="info-value"><input type="text" /></span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>是否企业法人：</span>
@@ -312,95 +354,49 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>公积金账号：</span>
-								<span class="info-value"><input type="text" /></span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>公积金密码：</span>
-								<span class="info-value"><input type="text" /></span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-check-box">
-								<span class="info-key"><i>*</i>本地常住类型：</span>
+								<span class="info-key"><i>*</i>本地常住：</span>
 								<span class="info-check-box">
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">本地户口</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">本地工作</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">本地居住</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">异地工作</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">非本地户口</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">1年本地房产</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">企业成立1年</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">1年社保或工资流水</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">其他</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 								</span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan">
+				<div class="panel panel-loan panel-detail">
 					<!--借款人信息填写栏-->
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">共同还款人1信息</span>
+							<span class="panel-title-name">订单信息</span>
 							<div class="button button-mini-nowidth">
 								保存
 							</div>
 						</div>
 					</div>
-					<div class="panel-detail-content-layout">
+					<div class="panel-detail-content panel-detail-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>联系电话：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>公司电话：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>家庭住址：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>家庭电话：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位名称：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位地址：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>婚姻状况：</span>
+								<span class="info-key"><i>*</i>业务来源：</span>
 								<span class="info-value">
 									<select>
 										<option>12</option>
@@ -408,7 +404,7 @@
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>有无固定房产：</span>
+								<span class="info-key"><i>*</i>业务模式：</span>
 								<span class="info-value">
 									<select>
 										<option>12</option>
@@ -416,11 +412,15 @@
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>税后月收入：</span>
+								<span class="info-key"><i>*</i>牌照类型：</span>
 								<span class="info-value"><input type="text" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>是否企业法人：</span>
+								<span class="info-key"><i>*</i>上牌地：</span>
+								<span class="info-value"><input type="text" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>经办银行：</span>
 								<span class="info-value">
 									<select>
 										<option>12</option>
@@ -428,96 +428,108 @@
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>公积金账号：</span>
-								<span class="info-value"><input type="text" /></span>
+								<span class="info-key"><i>*</i>业务类型：</span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>公积金密码：</span>
-								<span class="info-value"><input type="text" /></span>
+								<span class="info-key"><i>*</i>主办人：</span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>辅办人：</span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>调查人：</span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>签单员：</span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-check-box">
-								<span class="info-key"><i>*</i>本地常住类型：</span>
+								<span class="info-key"><i>*</i>本地常住：</span>
 								<span class="info-check-box">
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">本地户口</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">本地工作</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">本地居住</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">异地工作</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">非本地户口</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">1年本地房产</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">企业成立1年</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">1年社保或工资流水</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">其他</span>
+										<span class="check-value">增加反担保人</span>
+									</div>
+									<div class="info-check">
+										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 								</span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan">
+				<div class="panel panel-loan panel-detail">
 					<!--借款人信息填写栏-->
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">共同还款人2信息</span>
+							<span class="panel-title-name">订单信息</span>
 							<div class="button button-mini-nowidth">
 								保存
 							</div>
 						</div>
 					</div>
-					<div class="panel-detail-content-layout">
+					<div class="panel-detail-content panel-detail-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>联系电话：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>公司电话：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>家庭住址：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>家庭电话：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位名称：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位地址：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>婚姻状况：</span>
+								<span class="info-key"><i>*</i>业务来源：</span>
 								<span class="info-value">
 									<select>
 										<option>12</option>
@@ -525,7 +537,7 @@
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>有无固定房产：</span>
+								<span class="info-key"><i>*</i>业务模式：</span>
 								<span class="info-value">
 									<select>
 										<option>12</option>
@@ -533,11 +545,15 @@
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>税后月收入：</span>
+								<span class="info-key"><i>*</i>牌照类型：</span>
 								<span class="info-value"><input type="text" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>是否企业法人：</span>
+								<span class="info-key"><i>*</i>上牌地：</span>
+								<span class="info-value"><input type="text" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>经办银行：</span>
 								<span class="info-value">
 									<select>
 										<option>12</option>
@@ -545,51 +561,87 @@
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>公积金账号：</span>
-								<span class="info-value"><input type="text" /></span>
+								<span class="info-key"><i>*</i>业务类型：</span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>公积金密码：</span>
-								<span class="info-value"><input type="text" /></span>
+								<span class="info-key"><i>*</i>主办人：</span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>辅办人：</span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>调查人：</span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>签单员：</span>
+								<span class="info-value">
+									<select>
+										<option>12</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-check-box">
-								<span class="info-key"><i>*</i>本地常住类型：</span>
+								<span class="info-key"><i>*</i>本地常住：</span>
 								<span class="info-check-box">
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">本地户口</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">本地工作</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">本地居住</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">异地工作</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">非本地户口</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">1年本地房产</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">企业成立1年</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">1年社保或工资流水</span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 									<div class="info-check">
 										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">其他</span>
+										<span class="check-value">增加反担保人</span>
+									</div>
+									<div class="info-check">
+										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-value">增加反担保人</span>
 									</div>
 								</span>
 							</div>
