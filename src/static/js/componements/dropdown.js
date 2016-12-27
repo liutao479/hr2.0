@@ -11,12 +11,17 @@
 (function($) {
 	$.fn.dropdown = function() {
 		return this.each(function() {
-			var self = $(this);
-			self.$dropdown = new dropdown();
+			var that = $(this);
+			that.$dropdown = new dropdown(that, self.data());
 		})
 	}
 
-	function dropdown() {
+	/**
+	* dropdown类
+	* @params {element} $el 要渲染的节点对象
+	* @params {object} options 配置参数
+	*/
+	function dropdown($el, options) {
 
 		return this;
 	}
