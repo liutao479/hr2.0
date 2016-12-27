@@ -9,7 +9,7 @@
 * data-size {int} 每页显示的数量 默认 20
 * data-current {int} 当前页码 默认 1
 */
-(function($, _) {
+(function($) {
 	$.fn.paging = function() {
 		return this.each(function() {
 			var that = $(this);
