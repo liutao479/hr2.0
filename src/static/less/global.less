@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.eot');
-  src: url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_4nxxrdk9xbr442t9.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_w4cffai9e44mquxr.eot');
+  src: url('//at.alicdn.com/t/font_w4cffai9e44mquxr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_w4cffai9e44mquxr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_w4cffai9e44mquxr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_w4cffai9e44mquxr.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -81,6 +81,16 @@
         width: 18px;
         height: 18px;
     }
+    &.checked {
+        color: #FFF;
+        background-color: @tableActiveColor;
+        border-color: @tableActiveColor;
+    }
+    .iconfont {
+        color: #FFF !important;
+        float: left;
+        line-height: 18px;
+    }
 }
 //输入框
 .input-text {
@@ -92,6 +102,7 @@
     .borderRadius(3px);
     outline: none;
 }
+//图片上传
 
 //无边界下拉框 
 .drop-down-box {
