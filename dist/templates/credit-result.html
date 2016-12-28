@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--head-->
+		<meta charset="UTF-8"/>
+		<title>惠融车贷业务云</title>
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_jf5rbw8hkbg9zfr.css"/>
+		<link rel="stylesheet" type="text/css" href="/hr2.0/dist/static/css/main.css">
+		<!--head end-->
+	</head>
+	<body>
+		<!--导航条-->		
+		<div class="navigator">
+			<a class="logo-field">
+				<span class="logo"></span>
+				惠融车贷业务云
+			</a>
+			<ul class="user-field">
+				<li class="QR-Code">
+					<a href="#"><i class="iconfont">&#xe600;</i></a>
+				</li>
+				<li class="message">
+					<a href="#" class="message-a">
+						<i class="iconfont">&#xe6b4;</i>
+						<span class="message-number">533</span>
+					</a>
+				</li>
+				<li class="user">
+					<div id="" class="drop-down-box">
+						<a href="#" class="drop-down-a">
+							<span class="drop-down-text">王二麻子</span>
+							<i class="iconfont iconfont-arrow">&#xe621;</i>
+						</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<!--导航条 end-->
+		<!--左侧菜单栏-->
+		<div class="menu">
+			<a class="menu-item menu-item-active">
+				<i class="iconfont mark">&#xe6f9;</i>
+				业务工作台
+			</a>
+			<a class="menu-item">
+				<i class="iconfont mark">&#xe6c3;</i>
+				我的客户
+			</a>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe60e;</i>
+					<span>订单管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">信息修改审核</a>
+				<a class="menu-group-item" data-href="loadManger">终止订单审核</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe623;</i>
+					<span>财务管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">借款管理</a>
+				<a class="menu-group-item" data-href="loadManger">保证金管理</a>
+				<a class="menu-group-item" data-href="loadManger">银行回款管理</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe61b;</i>
+					<span>上牌管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">上牌办理</a>
+				<a class="menu-group-item" data-href="loadManger">上牌审核</a>
+				<a class="menu-group-item" data-href="loadManger">上牌进度查看</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe65d;</i>
+					<span>抵押管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">抵押办理</a>
+				<a class="menu-group-item" data-href="loadManger">抵押审核</a>
+				<a class="menu-group-item" data-href="loadManger">抵押进度查看</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe654;</i>
+					<span>逾期管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">逾期信息录入</a>
+				<a class="menu-group-item" data-href="loadManger">预逾期理</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe630;</i>
+					<span>档案管理</span>
+					<i class="iconfont iconfont-arrow">&#xe66c;</i>
+				</div>
+				<a class="menu-group-item" data-href="loadManger">资料下载</a>
+				<a class="menu-group-item" data-href="loadManger">资料打印</a>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe603;</i>
+					<span>运营分析</span>
+				</div>
+			</div>
+			<div class="menu-group">
+				<div class="menu-group-title">
+					<i class="iconfont mark">&#xe6cb;</i>
+					<span>合作机构</span>
+				</div>
+			</div>
+		</div>
+		<!--左侧菜单栏 end-->
+		<!--主工作台-->
+		<div class="console" id="console">
+			<!--征信结果-->
+			<div class="credit-material-upload" id="credit-material-upload">
+				<!--返回列表-->
+				<div class="path-back-bar">
+					<div class="path-back">
+						<i class="iconfont">&#xe626;</i>
+						<a href="#">返回列表</a>&nbsp;&gt;
+						<span class="current-page">征信材料上传</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">借款人：</span>
+						<span class="value">张三</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">当前操作人：</span>
+						<span class="value">程辉</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">角色：</span>
+						<span class="value">客户经理</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">订单生成时间：</span>
+						<span class="value">2016-11-03 14:02</span>
+					</div>
+					
+				</div>
+				
+				<!--提交订单按钮-->
+				<div class="commit-orders-box commit-orders-box-area">
+					<div id="" class="button">放款预约</div>
+					<div id="" class="button">申请终止订单</div>
+					<div id="" class="button">申请修改分期信息</div>
+				</div>
+				<!--提交订单按钮 end-->
+				
+				<!--工作台左侧菜单面板-->
+				<div class="panel panel-menu">
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item panel-menu-item-active" href="#">
+						征信结果
+						<span class="arrow arrow-right"></span>
+					</a>
+					<a class="panel-menu-item" href="#">开卡信息</a>
+					<a class="panel-menu-item" href="#">二手车评估信息</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+					<a class="panel-menu-item" href="#">贷款信息表</a>
+				</div>
+				<!--工作台左侧菜单面板 end-->
+				
+				
+				<!--工作台左侧菜单对应项详细面板（申请人）-->
+				<div class="panel panel-detail">
+					<!--一级标题-->
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe6f5;</i>
+							<span class="panel-title-name">申请人</span>
+						</div>
+					</div>
+					<!--二级标题（姓名，身份证等等...）-->
+					<div class="panel-content-title panel-title-box-special">
+						<div class="key-value-box">
+							<span class="key">姓名：</span>
+							<span class="value">北上</span>
+						</div>
+						<div class="key-value-box">
+							<span class="key">身份证号：</span>
+							<span class="value">412702199102033154</span>
+						</div>
+						<div class="key-value-box">
+							<span class="key">征信查询时间：</span>
+							<span class="value">2016-11-01 12:00</span>
+						</div>
+						<div class="button button-mini-nowidth">查看征信材料</div>
+					</div>
+					<!--详细内容罗列-->
+					<div class="panel-detail-content">
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信查询机构：</div>
+							<div class="panel-value-area">
+								<span class="panel-value-item">广东工行</span>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信报告编号：</div>
+							<div class="panel-value-area">
+								<span class="panel-value-item">ZXBG123456789</span>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信报告照片：</div>
+							<div class="panel-value-area">
+								<div class="imgs-item-group">
+									<div class="imgs-item-view">
+										我是身份证照片
+									</div>
+								</div>
+								<div class="imgs-item-group">
+									<div class="imgs-item-view">
+										我是身份证照片
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信字段：</div>
+							<div class="panel-value-area">
+								<table border="1" cellspacing="" cellpadding="" class="field-table">
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">备注信息：</div>
+							<div class="panel-value-area">
+								<span class="panel-value-item">备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息</span>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">辅证数据：</div>
+							<div class="panel-value-area">
+								<a href="#" class="panel-value-item">点击查看</a>
+							</div>
+						</div>
+					</div>
+					<!--详细内容罗列结束 end-->
+					
+				</div>
+				
+				<!--工作台左侧菜单对应项详细面板（共同还款人）-->
+				<div class="panel panel-detail">
+					<!--一级标题-->
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe6f5;</i>
+							<span class="panel-title-name">申请人</span>
+						</div>
+					</div>
+					<!--二级标题（姓名，身份证等等...）-->
+					<div class="panel-content-title panel-title-box-special">
+						<div class="key-value-box">
+							<span class="key">姓名：</span>
+							<span class="value">北上</span>
+						</div>
+						<div class="key-value-box">
+							<span class="key">身份证号：</span>
+							<span class="value">412702199102033154</span>
+						</div>
+						<div class="key-value-box">
+							<span class="key">征信查询时间：</span>
+							<span class="value">2016-11-01 12:00</span>
+						</div>
+						<div class="button button-mini-nowidth">查看征信材料</div>
+					</div>
+					<!--详细内容罗列-->
+					<div class="panel-detail-content">
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信查询机构：</div>
+							<div class="panel-value-area">
+								<span class="panel-value-item">广东工行</span>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信报告编号：</div>
+							<div class="panel-value-area">
+								<span class="panel-value-item">ZXBG123456789</span>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信报告照片：</div>
+							<div class="panel-value-area">
+								<div class="imgs-item-group">
+									<div class="imgs-item-view">
+										我是身份证照片
+									</div>
+								</div>
+								<div class="imgs-item-group">
+									<div class="imgs-item-view">
+										我是身份证照片
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信字段：</div>
+							<div class="panel-value-area">
+								<table border="1" cellspacing="" cellpadding="" class="field-table">
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">备注信息：</div>
+							<div class="panel-value-area">
+								<span class="panel-value-item">备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息</span>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">辅证数据：</div>
+							<div class="panel-value-area">
+								<a href="#" class="panel-value-item">点击查看</a>
+							</div>
+						</div>
+					</div>
+					<!--共同还款人  end-->
+					
+					<!--二级标题（姓名，身份证等等...）-->
+					<div class="panel-content-title">
+						<div class="key-value-box">
+							<span class="key">姓名：</span>
+							<span class="value">北上</span>
+						</div>
+						<div class="key-value-box">
+							<span class="key">身份证号：</span>
+							<span class="value">412702199102033154</span>
+						</div>
+						<div class="key-value-box">
+							<span class="key">征信查询时间：</span>
+							<span class="value">2016-11-01 12:00</span>
+						</div>
+						<div class="button button-mini-nowidth">查看征信材料</div>
+					</div>
+					<!--详细内容罗列-->
+					<div class="panel-detail-content">
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信查询机构：</div>
+							<div class="panel-value-area">
+								<span class="panel-value-item">广东工行</span>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信报告编号：</div>
+							<div class="panel-value-area">
+								<span class="panel-value-item">ZXBG123456789</span>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信报告照片：</div>
+							<div class="panel-value-area">
+								<div class="imgs-item-group">
+									<div class="imgs-item-view">
+										我是身份证照片
+									</div>
+								</div>
+								<div class="imgs-item-group">
+									<div class="imgs-item-view">
+										我是身份证照片
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">征信字段：</div>
+							<div class="panel-value-area">
+								<table border="1" cellspacing="" cellpadding="" class="field-table">
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+									<tr>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+										<td>征信字段征信字段</td>
+										<td>1次</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">备注信息：</div>
+							<div class="panel-value-area">
+								<span class="panel-value-item">备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息</span>
+							</div>
+						</div>
+						<div class="panel-item-box">
+							<div class="panel-key-area">辅证数据：</div>
+							<div class="panel-value-area">
+								<a href="#" class="panel-value-item">点击查看</a>
+							</div>
+						</div>
+					</div>
+					<!--共同还款人  end-->
+					
+				</div>
+			</div>
+		</div>
+		<!--待办事项-->
+		<div class="remind" id="remind">
+			<div class="remind-tips" id="remind-tips">
+				<i class="iconfont">&#xe697;</i>
+				<div class="remind-tips-text">待办提醒</div>
+				<span class="message-number">500</span>
+			</div>
+			<div class="remind-content">
+				<ul class="remind-box">
+					<li class="remind-item">征信材料上传<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信材料上传<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
+					<li class="remind-item">征信预审核<span class="message-number">10</span></li>
+					<li class="remind-item">开卡信息录入</li>
+					<li class="remind-item">开卡信息录入</li>
+					<li class="remind-item">开卡信息录入</li>
+				</ul>
+			</div>
+		</div>
+		<!--代办事项 end-->
+		<!--js文件-->
+		<script src="/hr2.0/dist/static/js/vendor/jquery.min.js"></script>
+		<script src="/hr2.0/dist/static/js/app.js"></script>
+		<!--js文件 end-->
+	</body>
+</html>

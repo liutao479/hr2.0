@@ -42,7 +42,9 @@ a {
     	clear: both;
     }
 }
-
+.float-right{
+    float: right;
+}
 .navigator {
 	position: fixed;
 	z-index: 999;
@@ -465,6 +467,7 @@ a {
 	}
 } 
 
+
 /**
 * 页面特殊部分处理
 **/
@@ -486,6 +489,46 @@ a {
 }
 .workplat, .mortgage-handle, .mortgage-progress-query, .mortgage-verify {
     border: 1px solid @borderColor;
+}
+
+//待办提醒
+.remind {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    //待办提醒未展开
+    .remind-tips{
+        width: 44px;
+        border: 1px solid @borderColor;
+        border-right: none;
+        text-align: center;
+        padding: 18px 0;
+        cursor: pointer;
+        background-color: #f3f4f9;
+        .remind-tips-text {
+            margin:0 0 10px 15px;
+            font-size: 14px;
+            width: 14px;
+        }
+    }
+    //待办提醒展开部分
+    .remind-content {
+        position: absolute;
+        left: 44px;
+        top: 0;
+        width: 155px;
+        background-color: #FFF;
+        padding: 9px 20px;
+        border-top: 1px solid @borderColor;
+        border-left: 1px solid @borderColor;
+        .remind-box .remind-item{
+            line-height: 33px;
+            cursor: pointer;
+            .message-number {
+                margin-left: 10px;
+            }
+        }
+    }
 }
 
 //有选择功能的搜索栏
@@ -745,11 +788,16 @@ a {
                 margin-left: 7px;
                 font-size: 15px;
             }
+            .button{
+                float:right;
+                margin:7px 20px 0 0;
+            }
         }
     }
     .panel-content {
         float: left;
         padding: 0 0 29px 23px;
+        width: 100%;//ZOU
         .loanman-material-item {
             .box;
             padding-top: 5px;
@@ -1031,6 +1079,47 @@ a {
     }
 }
 
+.loan-imgs-bar {
+    padding: 24px 0 0 0;
+    .imgs-item-group {
+        &:nth-last-of-type(1) {
+            margin-right: 0;
+        }
+    }
+}
+//返回列表条目下，贷款材料上传（退回增加XX）
+.add-credit-bar {
+    .layout;
+    border-top:none;
+    padding: 0 15px 0 20px;
+    .add-credit {
+        display: block;
+        color: @tableActiveColor;
+        line-height: 49px;
+        .current-page {
+            color: @fontColor;
+        }
+    }
+}
+.key-value-check-box {
+    line-height: 49px;
+    margin-right: 20px;
+    display: inline-block;
+    .check-key{
+        width:20px;
+        height:20px;
+        display:inline-block;
+        position:relative;
+        margin:0 5px 0 10px;
+        .checkbox{
+            position:absolute;
+            width:20px;
+            height:20px;
+            top:4px;
+        }
+    }
+}
+
 //右边栏
 .sideBar {
     position: fixed;
@@ -1094,6 +1183,126 @@ a {
                 position: absolute;
                 right: -9px;
                 border-color: transparent transparent transparent #f3f4f9;
+            }
+        }
+    }
+}    
+//征信退回原因
+.back-creditRes-bar {
+    .backReason;
+    padding: 15px 20px;
+    margin: 10px 0;
+    color: @backReasonBorderColor;
+    .back-credit {
+        display: block;
+        line-height: 49px;
+        .key-value-box {
+            line-height: 30px;
+            margin-right: 20px;
+            display:block;
+            .key{
+                color: @backReasonBorderColor;
+            }
+            .value{
+                color: @backReasonBorderColor;
+            }
+        }
+    }
+}
+//贷款信息录入
+.loan-info {
+    padding: 24px 125px;
+}
+.info-key-value-box{
+    width: calc(~"50% - 2px");
+    display: inline-block;
+    margin: 10px 0;
+    i{
+        color:@backReasonBorderColor;
+    }
+    .info-key{
+        color:@fontColor;
+        display:inline-block;
+        width:120px;
+        text-align:right;
+        margin-right: 25px;
+    }
+    .info-value{
+        border:1px solid @selectBorderColor;
+        height:30px;
+        padding:5px;
+        border-radius:4px;
+        display:inline-block;
+        width:200px;
+        position: relative;
+        .unit-text{
+            position: absolute;
+            top:0;
+            right:3px;
+            line-height: 28px;
+            color: @unitTextColor;
+        }
+        input{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+        select{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+    }
+    &:nth-of-type(odd) {
+        text-align:left;
+    }
+    &:nth-of-type(even) {
+        text-align:right;
+    }
+}
+.info-key-check-box{
+    margin: 10px 0;
+    .box;
+    i{
+        color:@backReasonBorderColor;
+    }
+    .info-key{
+        color: @fontColor;
+        width: 120px;
+        margin-right: 25px;
+        text-align: right;
+        line-height: 30px;
+        display: block;
+//      -moz-box-flex: 1;
+//      -webkit-box-flex: 1;
+//      box-flex: 1;
+    }
+    .info-check-box{
+        -moz-box-flex: 1;
+        -webkit-box-flex: 1;
+        box-flex: 1;
+        display: block;
+        .info-check{
+            width:auto;
+            float:left;
+            margin:0 10px 10px 10px;
+            .check-value{
+                line-height: 30px;
+            }
+        }
+        .check-key{
+            width:20px;
+            height:20px;
+            display:inline-block;
+            position:relative;
+            margin:0 5px 0 10px;
+            .checkbox{
+                position:absolute;
+                width:20px;
+                height:20px;
+                top:4px;
             }
         }
     }
