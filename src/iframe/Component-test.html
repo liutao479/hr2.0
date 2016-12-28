@@ -1,10 +1,15 @@
 <!--下拉选择框（车型）-->
 	<div class="test-box">
-		<h1>下拉选择框（车型）</h1>
-		<span class="select select-car">
-			<span class="placeholder">请选择</span>
+		<span class="select select-date">
+			<span class="placeholder">0000-00-00</span>
 			<span class="arrow arrow-bottom"></span>
-			<div class="select-box">
+		</span>
+		<h1>下拉选择框（车型）</h1>
+		<div class="select select-car">
+			<input type="text" placeholder="请选择" class="placeholder" />
+			<span class="arrow arrow-bottom"></span>
+			<!--点击显示部分-->
+			<div class="select-box" style="display: none;">
 				<ul class="select-tab">
 					<li class="select-tab-item select-tab-item-active">品牌</li>
 					<li class="select-tab-item">车系</li>
@@ -21,7 +26,7 @@
 						</div>
 						<dl class="word-area">
 							<dt>A</dt>
-							<dd>
+							<dd class="clearfix">
 								<a href="javascript:;" class="car-item">奥迪</a>
 								<a href="javascript:;" class="car-item">阿斯顿•马丁</a>
 								<a href="javascript:;" class="car-item">阿尔特</a>
@@ -33,7 +38,7 @@
 						</dl>
 						<dl class="word-area">
 							<dt>B</dt>
-							<dd>
+							<dd class="clearfix">
 								<a href="javascript:;" class="car-item">本田</a>
 								<a href="javascript:;" class="car-item">奔驰</a>
 								<a href="javascript:;" class="car-item">别克</a>
@@ -45,7 +50,7 @@
 						</dl>
 						<dl class="word-area">
 							<dt>C</dt>
-							<dd>
+							<dd class="clearfix">
 								<a href="javascript:;" class="car-item">奥迪</a>
 								<a href="javascript:;" class="car-item">阿斯顿•马丁</a>
 								<a href="javascript:;" class="car-item">阿尔特</a>
@@ -140,5 +145,6 @@
 				</div>
 				
 			</div>
-		</span>
+			<!--点击显示部分  end-->
+		</div>
 	</div>

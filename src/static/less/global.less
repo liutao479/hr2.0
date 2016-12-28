@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_w4cffai9e44mquxr.eot');
-  src: url('//at.alicdn.com/t/font_w4cffai9e44mquxr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_w4cffai9e44mquxr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_w4cffai9e44mquxr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_w4cffai9e44mquxr.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_k5pis6eka7yl23xr.eot');
+  src: url('//at.alicdn.com/t/font_k5pis6eka7yl23xr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_k5pis6eka7yl23xr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_k5pis6eka7yl23xr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_k5pis6eka7yl23xr.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -51,6 +51,9 @@
         line-height: 32px;
         background-color: #e9e7f7;
         color: @tableActiveColor;
+    }
+    &.button-nowidth {
+        background-color: @mainColor;
     }
     i {
         margin-right: 7px;
@@ -167,7 +170,7 @@
         border-color: @fontColor transparent transparent transparent;
     }
 }
-
+//测试页面的样式（最后删掉）
 .test-box {
     height: 1000px;
     padding: 20px;  
@@ -179,13 +182,13 @@
 .select {
     position: relative;
     display: inline-block;
-    height: 30px;
+    height: 32px;
+    line-height: 32px;
     .borderRadius(3px);
     padding: 0 10px;
     border: 1px solid @selectBorderColor;
     font-size: 12px;
     color: @tiperColor;
-    cursor: pointer;
     &&-common {
         width: 120px;
     }
@@ -195,12 +198,18 @@
     &&-car {
         width: 248px;
     }
+    .arrow {
+        cursor: pointer;
+    }
     .placeholder {
         float: left;
-        display: inline-block;
-        line-height: 30px;
+        width: 200px;
+        height: 30px;
+        border: none;
+        outline: none;
     }
     .select-box {
+        cursor: default;
         position: absolute;
         top: -1px;
         left: -1px;
@@ -256,29 +265,31 @@
                 }
                 &.select-content-brand {
                     .checkbox {
-                        margin: 10px 5px 0 0;
+                        margin-top: 10px;
                     }
                 }
                 .word-area {
+                    position: relative;
                     margin-top: 10px;
                     &:last-child dd {
                         border: none;
                     }
                     dt {
-                        float: left;
+                        position: absolute;
+                        left: 0;
                         width: 21px;
                         font-weight: 600;
                         color: #000;
                         line-height: 23px;
                     }
                     dd {
-                        margin-left: 21px;
                         padding-bottom: 10px;
                         border-bottom: 1px dashed @borderColor;
                         .car-item {
+                            float: left;
                             display: inline-block;
                             color: @fontColor;
-                            margin-right: 25px;
+                            margin-left: 25px;
                             line-height: 23px;
                         }
                     }
