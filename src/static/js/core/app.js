@@ -9,13 +9,13 @@ $('#remind-tips').on('click',function (){
 	if(!isOpen) {
 		$('#remind').animate({
 			right: '155px'
-		},500);
+		},200);
 		$(this).find('.iconfont').html('&#xe605;');
 		isOpen = true;
 	} else {
 		$('#remind').animate({
 			right: '0'
-		},500);
+		},200);
 		$(this).find('.iconfont').html('&#xe697;');
 		isOpen = false;
 	}
@@ -41,3 +41,10 @@ $('.checkbox-normal').on('click', function() {
 		$(this).html('');
 	}
 })
+
+$(function() {
+	
+})
+
+
+
