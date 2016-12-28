@@ -5,7 +5,7 @@
   "author": "sjdong",
   "license": "ISC",
   "path": {
-    "mock": "http://127.0.0.1:1003/mock/",
+    "mock": "http://127.0.0.1:8020/mock/",
     "src": "src/",
     "dist": "dist/"
   },
