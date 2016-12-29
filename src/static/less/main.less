@@ -45,6 +45,8 @@ a {
 .float-right{
     float: right;
 }
+
+//顶部导航栏
 .navigator {
 	position: fixed;
 	z-index: 999;
@@ -73,22 +75,121 @@ a {
 		background-size: 100%;
 	}
 	.user-field {
-	    width: 215px;
+	    width: 235px;
 	    position: absolute;
 	    top: 0;
 	    right: 80px;
 	    padding-right:13px;
-	    li {
+	    .user-li  {
+	        position: relative;
 	        float: left;
 	        height: 60px;
 	        line-height: 60px;
 	        text-align: center;
+	        cursor: pointer;
 	        &.QR-Code,&.message {
-                width: 50px;
+                width: 60px;
                 height: 60px;
                 i {
                     font-size: 21px;
                 }
+            }
+            &.user {
+                width: 102px;
+            }
+            &:hover {
+                background-color: #6347bd;
+            }
+            .QR-Code-area, .message-area, .user-area {
+                position: absolute;
+                display: none;
+                z-index: 999;
+                right: 0;
+                top: 60px;
+                background-color: #FFF;
+                border: 1px solid @borderColor;
+                border-top: none;
+                line-height: normal;
+                cursor: default;
+            } 
+            .QR-Code-area {
+                width: 125px;
+                padding: 15px;
+                text-align: center;
+                color: #90a4ae;
+                .QR-Code-text {
+                    margin-top: 3px;   
+                }
+            }
+            .message-area {
+                width: 325px;
+                padding: 5px 20px;
+                .message-panel {
+                    margin: 0 auto;
+                    .message-item {
+                        line-height: 40px;
+                        border-bottom: 1px dashed @borderColor;
+                        &:last-child {
+                            border: none;
+                        }
+                        .message-item-data {
+                            float: left;
+                            display: inline-block;
+                            text-align: left;
+                            width: 205px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            a {
+                                color: @fontColor;
+                            }
+                        }
+                        .message-time, .message-more {
+                            float: right;
+                        }
+                        .message-time {
+                            color: #90a4ae;
+                        }
+                        .message-more {
+                            color: #3cb4f3;
+                        }
+                    }
+                }
+            }
+            .user-area {
+               width: 300px;
+               text-align: left;
+               .user-area-top {
+                   padding: 10px 15px;
+                   border-bottom: 1px solid @borderColor;
+                   .user-panel {
+                       .user-panel-key {
+                           float: left;
+                           width: 40px;
+                           line-height: 25px;
+                       }
+                       .user-panel-value {
+                           margin-left: 40px;
+                           line-height: 25px;
+                           .phone-bind {
+                               color: #3cb4f3;
+                               margin-left: 16px;
+                           }
+                       }
+                   }
+               }
+               .user-area-bottom {
+                   line-height: 40px;
+                   padding: 0 15px;
+                   .modify-pwd {
+                       float: left;
+                       color: #3cb4f3;
+                   }
+                   .user-quit {
+                       color: #90a4ae;
+                       float: right;
+                   }
+               }
             }
             .message-a{
                 position: relative;
@@ -98,10 +199,7 @@ a {
                     top:-11px;
                 }
             } 
-            &.user {
-                width: 102px;
-            }
-            a {
+            .user-field-item {
                 color: #FFF;
             }
 	    }
@@ -126,7 +224,8 @@ a {
 		cursor: pointer;
 		color: @fontColor;
 		&:hover {
-			background-color: @menuHoverBgColor;
+		    color: @menuActiveColor;
+			background-color: #f0eefc;
 		}
 	}
 	.menu-item, .menu-group-title {
@@ -145,6 +244,9 @@ a {
 		    height: 55px;
             line-height: 55px;
             cursor: pointer;
+            &.menu-group-title-active {
+                background-color: @menuHoverBgColor;
+            }
 		    &:hover {
                 background-color: @menuHoverBgColor;
             }
@@ -182,12 +284,13 @@ a {
 	margin: 60px 0 0 200px;
 	background-color: @consoleBgColor;
 	overflow: hidden;
-	.container, .mortgage-handle, .mortgage-progress-query, .mortgage-verify {
-	    border: 1px solid @borderColor;
+	.container {
 	    .search-bar {
+	        border: 1px solid @borderColor;
+	        border-bottom: none;
 	        position: relative;
-            height: 59px;
-            line-height: 59px;
+            height: 60px;
+            line-height: 60px;
             background-color: #FFF;
             input {
                 margin-left: 24px;
@@ -236,7 +339,7 @@ a {
                 -webkit-box-pack: end;
             }
             .search-item {
-                line-height: 30px;
+                line-height: 32px;
                 margin: 0 30px 10px 0;
             }
             .separator {
@@ -369,6 +472,29 @@ a {
 } 
 
 
+/**
+* 页面特殊部分处理
+**/
+//征信材料上传,征信结果录入
+.credit-material-upload, .credit-result-typing {
+    .tab-bar {
+        margin-top: 15px;
+    }
+}
+//合作机构维护
+.cooperation-maintenance {
+    .panel {
+        margin-top: 0;
+    }
+    .cooperation-maintenance-table  .button{
+        padding: 0 15px;
+//      margin-right: 15px;
+    }
+}
+//.workplat, .mortgage-progress-query, .mortgage-verify {
+//  border: 1px solid @borderColor;
+//}
+
 //待办提醒
 .remind {
     position: fixed;
@@ -408,10 +534,22 @@ a {
         }
     }
 }
+
 //有选择功能的搜索栏
 .select-search-bar {
     padding: 0 20px;
     background-color: #FFF;
+    border: 1px solid @borderColor;
+    border-bottom: none;
+    &.select-search-bar-noborder {
+        border: none;
+    }
+    &.select-search-bar-notopborder {
+        border-top: none;
+    }
+    &.select-search-bar-special {
+        margin-top: 15px;
+    }
     .input-text {
         width: 198px;
         line-height: 60px;
@@ -422,10 +560,12 @@ a {
     .search-item {
         float: left;
         color: @fontColor;
-        line-height: 60px !important;
+        line-height: 60px;
         margin: 0 30px 0 0;
         .select {
-            
+            position: relative;
+            top: -2px;
+            vertical-align: middle;
         }
         .checkbox {
             position: relative;
@@ -445,7 +585,12 @@ a {
 }
 //各个订单类表格统一样式
 .orders-table {
+    border: 1px solid @borderColor;
+    border-top: none;
     border-collapse: collapse;
+    &.orders-table-noborder {
+        border: none;
+    }
     .orders-bar-title {
         background-color: #717ea1;
     }
@@ -476,6 +621,9 @@ a {
         &:nth-of-type(1) {
             border: none;
         }
+        td.order-item-first {
+            width: 50px; 
+        }
         &:nth-of-type(odd) {
             background-color: #FFF;
         }
@@ -498,9 +646,23 @@ a {
             height: 78px;
             color: @fontColor;
         }
+        &.acount-name-data {
+            padding: 10px 0;
+        }
+        .acount-name {
+            line-height: 24px;
+        }
     }
 }
 
+
+//边框处理
+.no-top-border {
+    border-top: none;
+}
+.no-bottom-border {
+    border-bottom: none;
+}
 //返回列表面板
 .path-back-bar {
     position: relative;
@@ -508,7 +670,7 @@ a {
     padding: 0 15px 0 20px;
     text-align: right;
     .path-back {
-        position: absolute;
+        float: left;
         left: 15px;
         display: block;
         color: @tableActiveColor;
@@ -591,9 +753,8 @@ a {
             padding-top: 25px;
         }
         //详细内容区域放图片的区域
-        .panel-detail-imgs {
-            padding: 10px;
-            background-color: #FFF;
+        &.panel-detail-imgs {
+            padding: 30px 30px 22px 50px;
         }
         .panel-item-box {
             .box;
@@ -684,8 +845,25 @@ a {
             .block-item {
                 .box-flex(1);
                 padding-top: 10px;
-                .checkbox {
+                .block-item-data {
+                    position: relative;
+                    display: inline-block;
+                    border: 1px solid #cad2e1;
+                    .borderRadius(4px);
+                    background-color: #FFF;
                     margin: 10px 0 0 10px;
+                    padding: 0 12px;
+                    height: 38px;
+                    line-height: 38px;
+                    color: @fontColor;
+                    &.selected {
+                        color: @tableActiveColor;
+                        border-color: @tableActiveColor;
+                    }
+                    .tips-content {
+                        top: 44px;
+                        left: -70px;
+                    }
                 }
             }
         }
@@ -719,27 +897,83 @@ a {
 //单独一栏提交订单按钮
 .commit-orders-box {
     text-align: right;
-    margin-top: 46px;
+    margin-top: 15px;
+    height: 60px;
+    line-height: 60px;
+    border: 1px solid @borderColor;
+    background-color: #FFF;
+    padding-right: 15px;
     &.commit-orders-box-area {
-        height: 68px;
-        line-height: 68px;
+        height: 51px;
+        line-height: 51px;
         margin-top: 0;
-        border: 1px solid @borderColor;
         border-top: none;
-        background-color: #FFF;
-        padding-right: 15px;
     }
     &.commit-orders-box-layout {
         .layout;
         padding: 15px;
         margin-top: 15px;
     }
+    
+    .cancel {
+        background-color: #efad4f;
+    }
+}
+//带图标的可点击元素
+.commit-item {
+    color: @fontColor;
+    margin-right: 30px;
+    .iconfont {
+        vertical-align: middle;
+        color: @mainColor;
+        margin-right: 3px;
+    }
+    &:hover {
+        color: @mainColor;
+    }
+}
+    
+//全选操作框
+.all-select-panel {
+    .layout;
+    padding: 0 15px;
+    &.all-select-panel-nobottomborder {
+        border-bottom: none;
+    }
+    .all-check-box {
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        margin-right: 15px;
+        .checkbox {
+            position: relative;
+            top: -2px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .button-special {
+            background-color: @mainColor;
+            color: #FFF;
+        }
+        .tips-area {
+            display: inline-block;
+            padding: 4px 20px;
+            background-color: #fcf7e3;
+            border: 1px solid #efad4f;
+            color: #ef810e;
+            line-height: 24px;
+            .borderRadius(3px);
+        }
+        .all-import {
+            color: @buttonBgColor;
+        }
+    }
 }
 
-//征信材料角色tab切换栏
-.credit-material-tab-bar {
+
+//tab切换栏
+.tab-bar {
     background-color: #FFF;
-    margin-top: 12px;
     border: 1px solid @borderColor;
     border-bottom: none;
     height: 50px;
@@ -794,6 +1028,8 @@ a {
         line-height: 60px;
     }
 }
+
+//类似键值对的组合
 .key-item-box {
     display: inline-block;
     float: left;
@@ -804,6 +1040,11 @@ a {
     }
     .key-value {
         width: 175px;
+    }
+    .select {
+        position: relative;
+        top: -2px;
+        vertical-align: middle;
     }
 }
 
@@ -1159,5 +1400,51 @@ a {
                 top:4px;
             }
         }
+    }
+}
+
+//鼠标移上小提示
+.tips {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #efad4f;
+    color: #FFF;
+    .borderRadius(8px);
+    top: -8px;
+    right: -8px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 16px;
+}
+.tips-area {
+    cursor: pointer;
+}
+.tips-content {
+    display: none;
+    position: absolute;
+    z-index: 999;
+    width: 273px;
+    padding: 4px 20px;
+    background-color: #fcf7e3;
+    border: 1px solid #efad4f;
+    color: #ef810e;
+    line-height: 24px;
+    .borderRadius(3px);
+    .inner {
+        position: absolute;
+        top: -4px;
+        left: 50%;
+        margin-left: -3px;
+        border-width: 6px;
+        border-color: transparent transparent #fcf7e3 transparent;
+    }
+    .outer {
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 8px;
+        border-color: transparent transparent #efad4f transparent;
     }
 }
