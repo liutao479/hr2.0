@@ -691,6 +691,18 @@ a {
         }
     }
 }
+.panel-layout{
+    .layout !important;
+    .panel-title-box{
+        color: @fontColor !important;
+        border: 1px dashed @borderColor;
+        border-width: 1px 0;
+        &:first-child {
+            border-top: none;
+        }
+
+    }
+}
 //上门材料地址栏
 .investigate-address-bar {
     padding: 10px 50px;
@@ -1042,6 +1054,18 @@ a {
 //贷款信息录入
 .loan-info {
     padding: 24px 125px;
+}
+//车商管理
+.carShop-manage {
+    padding: 24px 250px 24px 0;
+    position: relative;
+    .button{
+        position: absolute;
+        top: 34px;
+        right: 150px;
+        height: 30px;
+        line-height: 30px;
+    }
 }
 .info-key-value-box{
     width: calc(~"50% - 2px");
