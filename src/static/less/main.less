@@ -654,7 +654,11 @@ a {
         }
     }
 }
-
+.orders-table-borders{
+    td{
+        border:1px solid @borderColor;
+    }
+}
 
 //边框处理
 .no-top-border {
@@ -826,8 +830,8 @@ a {
         }
     }
     .panel-content {
-        float: left;
-        padding: 0 0 29px 23px;
+//      float: left;
+        padding-left: 23px;
         width: 100%;//ZOU
         .loanman-material-item {
             .box;
@@ -875,10 +879,7 @@ a {
         color: @fontColor !important;
         border: 1px dashed @borderColor;
         border-width: 1px 0;
-        &:first-child {
-            border-top: none;
-        }
-
+        margin-top: 29px; 
     }
 }
 //上门材料地址栏
@@ -1446,5 +1447,54 @@ a {
         margin-left: -5px;
         border-width: 8px;
         border-color: transparent transparent #efad4f transparent;
+    }
+}
+.col-company{
+    &:first-child {
+        .panel-title-box{
+            border-top: none;
+            margin-top: 0;
+        }
+    }
+    &:last-child{
+        padding-bottom: 29px;
+    }
+    .carShop-manage{
+        padding: 24px 250px 0 0;
+    }
+}
+.choose-content{
+    display: flex;
+    text-align: center;
+    justify-content:center;
+    .choose-items{
+        margin: 120px 30px;
+        border: 1px solid @mainColor;
+        width: 240px;
+        height: 240px;
+        color: @fontColor;
+        &-icon{
+            margin-top: 20px;
+            .iconfont{
+                font-size: 60px;
+                color: @mainColor;
+                line-height: 120px;
+                font-weight: bolder;
+            }
+        }
+        &-title{
+            font-size: 18px;
+            font-weight: bolder;
+            line-height: 100px;
+            letter-spacing: 3px;
+            -webkit-font-smoothing:antialiased;
+        }
+        &:hover{
+            background: @mainColor;
+            color: #fff;
+            .iconfont{
+                color: #fff;
+            }
+        }
     }
 }
