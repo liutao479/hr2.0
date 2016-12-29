@@ -669,7 +669,11 @@ a {
         }
     }
 }
-
+.orders-table-borders{
+    td{
+        border:1px solid @borderColor;
+    }
+}
 
 //边框处理
 .no-top-border {
@@ -900,9 +904,7 @@ a {
     }
     //面板详细内容
     .panel-content {
-//      float: left;
         padding: 0 0 29px 23px;
-//      width: 100%;//ZOU
         &.panel-content-layout {
             padding: 20px 17px;
         }
@@ -946,7 +948,15 @@ a {
         }
     }
 }
-
+.panel-layout{
+    .layout !important;
+    .panel-title-box{
+        color: @fontColor !important;
+        border: 1px dashed @borderColor;
+        border-width: 1px 0;
+        margin-top: 29px; 
+    }
+}
 //上门材料地址栏
 .investigate-address-bar {
     padding: 10px 50px;
@@ -1549,6 +1559,18 @@ a {
 .loan-info {
     padding: 24px 125px;
 }
+//车商管理
+.carShop-manage {
+    padding: 24px 250px 24px 0;
+    position: relative;
+    .button{
+        position: absolute;
+        top: 34px;
+        right: 150px;
+        height: 30px;
+        line-height: 30px;
+    }
+}
 .info-key-value-box{
     width: calc(~"50% - 2px");
     display: inline-block;
@@ -1590,6 +1612,9 @@ a {
             display:block;
             width:100%;
         }
+    }
+    .gps{
+        width: 64px !important;
     }
     &:nth-of-type(odd) {
         text-align:left;
@@ -1708,4 +1733,53 @@ a {
         border-color: transparent #efad4f transparent transparent;
     }
     
+}
+.col-company{
+    &:first-child {
+        .panel-title-box{
+            border-top: none;
+            margin-top: 0;
+        }
+    }
+    &:last-child{
+        padding-bottom: 29px;
+    }
+    .carShop-manage{
+        padding: 24px 250px 0 0;
+    }
+}
+.choose-content{
+    display: flex;
+    text-align: center;
+    justify-content:center;
+    .choose-items{
+        margin: 120px 30px;
+        border: 1px solid @mainColor;
+        width: 240px;
+        height: 240px;
+        color: @fontColor;
+        &-icon{
+            margin-top: 20px;
+            .iconfont{
+                font-size: 60px;
+                color: @mainColor;
+                line-height: 120px;
+                font-weight: bolder;
+            }
+        }
+        &-title{
+            font-size: 18px;
+            font-weight: bolder;
+            line-height: 100px;
+            letter-spacing: 3px;
+            -webkit-font-smoothing:antialiased;
+        }
+        &:hover{
+            background: @mainColor;
+            color: #fff;
+            .iconfont{
+                color: #fff;
+            }
+        }
+    }
 }
