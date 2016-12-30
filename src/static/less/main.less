@@ -50,6 +50,54 @@ a {
 .pt24{
     padding-top: 24px;
 }
+.error-input{
+    border: 1px solid @messageNumberBgColor !important;
+}
+.error-input-tip{
+    color: @messageNumberBgColor !important;
+    position: absolute;
+    left: 0;
+    bottom: -16px;
+    font-size: 12px;
+}
+input[type=radio] {
+    width: 15px;
+    height: 15px;
+    display: inline-block; 
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid @borderColor;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    margin-top: -3px;
+    left: 0;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-border-radius: 1em;
+    -moz-border-radius: 1em;
+    border-radius: 1em;
+    &:active {
+        border-color: #c6c6c6;
+        background: #ebebeb;
+    }
+    &:checked {
+        background: #fff;
+        border: 1px solid @mainColor;
+        &:after {
+            content: '';
+            display: block;
+            position: relative;
+            top: 3px;
+            left: 3px;
+            width: 7px;
+            height: 7px;
+            background: @mainColor;
+            border-radius:50%;
+        }
+    }
+}
 
 //顶部导航栏
 .navigator {
@@ -1331,6 +1379,7 @@ a {
     width: calc(~"50% - 2px");
     display: inline-block;
     margin: 10px 0;
+    position: relative;
     i{
         color:@backReasonBorderColor;
     }
@@ -1402,6 +1451,7 @@ a {
         -webkit-box-flex: 1;
         box-flex: 1;
         display: block;
+        position: relative;
         .info-check{
             width:auto;
             float:left;
