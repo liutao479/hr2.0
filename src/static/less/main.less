@@ -30,6 +30,8 @@ i {
 a {
     text-decoration: none;
 }
+
+//通用分离样式 
 .clearfix {
     zoom:1;
     &:before, &:after {
@@ -208,6 +210,7 @@ a {
 	    }
 	}
 }
+//菜单栏
 .menu {
 	position: fixed;
 	left: 0;
@@ -657,6 +660,7 @@ a {
         }
     }
 }
+//带有内部边框线的表格，在原有表格基础加上此属性 zhy
 .orders-table-borders{
     td{
         border:1px solid @borderColor;
@@ -876,6 +880,7 @@ a {
         }
     }
 }
+//特殊的带虚线标题处理 zhy
 .panel-layout{
     .layout !important;
     .panel-title-box{
@@ -1174,7 +1179,7 @@ a {
         }
     }
 }
-//返回列表条目下，贷款材料上传（退回增加XX）
+//返回列表条目下，退回原因（退回增加XX） zhy
 .add-credit-bar {
     .layout;
     border-top:none;
@@ -1188,6 +1193,7 @@ a {
         }
     }
 }
+//通用左右结构的多选checkbox zhy
 .key-value-check-box {
     line-height: 49px;
     margin-right: 20px;
@@ -1274,7 +1280,7 @@ a {
         }
     }
 }    
-//征信退回原因
+//征信退回原因 zhy
 .back-creditRes-bar {
     .backReason;
     padding: 15px 20px;
@@ -1296,11 +1302,11 @@ a {
         }
     }
 }
-//贷款信息录入
+//贷款信息录入 zhy
 .loan-info {
     padding: 24px 125px;
 }
-//车商管理
+//车商管理 zhy
 .carShop-manage {
     padding: 24px 250px 24px 0;
     position: relative;
@@ -1320,6 +1326,7 @@ a {
         }
     }
 }
+//左右结构的输入框及下拉框布局 zhy
 .info-key-value-box{
     width: calc(~"50% - 2px");
     display: inline-block;
@@ -1372,6 +1379,7 @@ a {
         text-align:right;
     }
 }
+//左右结构的输入框及下拉框布局下面的多选check zhy
 .info-key-check-box{
     margin: 10px 0;
     .box;
@@ -1463,6 +1471,7 @@ a {
         border-color: transparent transparent #efad4f transparent;
     }
 }
+//合作机构同类型布局 zhy
 .col-company{
     &:first-child {
         .panel-title-box{
@@ -1477,6 +1486,7 @@ a {
         padding: 24px 250px 0 0;
     }
 }
+//业务模式选择类型，大按钮样式 zhy
 .choose-content{
     display: flex;
     text-align: center;
@@ -1487,6 +1497,7 @@ a {
         width: 240px;
         height: 240px;
         color: @fontColor;
+        cursor: pointer;
         &-icon{
             margin-top: 20px;
             .iconfont{
