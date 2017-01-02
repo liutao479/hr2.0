@@ -45,6 +45,8 @@ a {
 .float-right{
     float: right;
 }
+
+//顶部导航栏
 .navigator {
 	position: fixed;
 	z-index: 999;
@@ -301,9 +303,11 @@ a {
 	overflow: hidden;
 	.container {
 	    .search-bar {
+	        border: 1px solid @borderColor;
+	        border-bottom: none;
 	        position: relative;
-            height: 59px;
-            line-height: 59px;
+            height: 60px;
+            line-height: 60px;
             background-color: #FFF;
             input {
                 margin-left: 24px;
@@ -504,9 +508,24 @@ a {
 //      margin-right: 15px;
     }
 }
-.workplat, .mortgage-handle, .mortgage-progress-query, .mortgage-verify {
-    border: 1px solid @borderColor;
+
+//借款管理
+.loan-manage {
+    .panel {
+        margin-top: 0;
+    }
+    .panel-detail-content {
+        padding: 20px 17px;
+    }
 }
+//运营分析
+.operational-analysis {
+    .panel {
+        margin-top: 0;
+    }
+}
+
+
 
 //待办提醒
 .remind {
@@ -552,6 +571,17 @@ a {
 .select-search-bar {
     padding: 0 20px;
     background-color: #FFF;
+    border: 1px solid @borderColor;
+    border-bottom: none;
+    &.select-search-bar-noborder {
+        border: none;
+    }
+    &.select-search-bar-notopborder {
+        border-top: none;
+    }
+    &.select-search-bar-special {
+        margin-top: 15px;
+    }
     .input-text {
         width: 198px;
         line-height: 60px;
@@ -587,7 +617,12 @@ a {
 }
 //各个订单类表格统一样式
 .orders-table {
+    border: 1px solid @borderColor;
+    border-top: none;
     border-collapse: collapse;
+    &.orders-table-noborder {
+        border: none;
+    }
     .orders-bar-title {
         background-color: #717ea1;
     }
@@ -617,6 +652,9 @@ a {
         border-top:1px dashed #cdd9e9;
         &:nth-of-type(1) {
             border: none;
+        }
+        td.order-item-first {
+            width: 50px; 
         }
         &:nth-of-type(odd) {
             background-color: #FFF;
@@ -648,7 +686,28 @@ a {
         }
     }
 }
+.orders-table-borders{
+    td{
+        border:1px solid @borderColor;
+    }
+}
 
+//边框处理
+.no-top-border {
+    border-top: none;
+}
+.no-bottom-border {
+    border-bottom: none;
+}
+.no-left-border {
+    border-left: none;
+}
+.no-right-border {
+    border-right: none;
+}
+.no-border {
+    border: none;
+}
 //返回列表面板
 .path-back-bar {
     position: relative;
@@ -656,7 +715,7 @@ a {
     padding: 0 15px 0 20px;
     text-align: right;
     .path-back {
-        position: absolute;
+        float: left;
         left: 15px;
         display: block;
         color: @tableActiveColor;
@@ -716,21 +775,66 @@ a {
         margin-left: 162px;
 //      float: left;
     }
-    //工作台有左侧菜单的右侧详细内容区域（title）
+    
+    //订单统计面板
+    .panel-count {
+        .box;
+        padding: 15px 0;
+        .panel-count-item {
+            position: relative;
+            .box-flex(1);
+            text-align: center;
+            .view-interest {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                color: @buttonBgColor;
+            }
+            .panel-count-number-box {
+                position: relative;
+                display: inline-block;
+                margin-bottom: 5px;
+                .panel-count-number {
+                    font-weight: 500;
+                    font-size: 25px;
+                }
+                .tips {
+                    top: -2px;
+                    right: -20px;
+                }
+                .tips-content {
+                    left: 29px;
+                    top: -210%;
+                    text-align: left;
+                }
+            }
+            .panel-count-name {
+                color: @tiperColor;
+            }
+        }
+    }
+    
+    //工作台有左侧菜单的右侧详标题区域（title）
     .panel-content-title {
-        text-align: right;
+        text-align: left;
         padding: 0 15px;
-        height: 60px;
-        line-height: 60px;
         border-top: 1px dashed @borderColor;
         border-bottom: 1px dashed @borderColor;
         &.panel-title-box-special {
             border-top: none;
         }
-        .key-value-box {
-            float: left;
-            margin-right: 24px;
+        &.panel-content-title-special {
+            border-top: 1px solid @borderColor;
         }
+        .key-value-box {
+            margin-right: 24px;
+            line-height: 60px;
+            height: 60px;
+            &.key-value-box-special {
+                float: right;
+            }
+        }
+        
     }
     //工作台有左侧菜单的右侧详细内容区域（content）
     .panel-detail-content {
@@ -741,6 +845,9 @@ a {
         //详细内容区域放图片的区域
         &.panel-detail-imgs {
             padding: 30px 30px 22px 50px;
+        }
+        &.panel-detail-content-catalog {
+            padding: 50px;  
         }
         .panel-item-box {
             .box;
@@ -789,6 +896,7 @@ a {
             }
         }
     }
+    //面板标题行
     .panel-title-box {
         height: 46px;
         line-height: 46px;
@@ -811,10 +919,12 @@ a {
             }
         }
     }
+    //面板详细内容
     .panel-content {
-        float: left;
         padding: 0 0 29px 23px;
-        width: 100%;//ZOU
+        &.panel-content-layout {
+            padding: 20px 17px;
+        }
         .loanman-material-item {
             .box;
             padding-top: 5px;
@@ -855,6 +965,15 @@ a {
         }
     }
 }
+.panel-layout{
+    .layout !important;
+    .panel-title-box{
+        color: @fontColor !important;
+        border: 1px dashed @borderColor;
+        border-width: 1px 0;
+        margin-top: 29px; 
+    }
+}
 //上门材料地址栏
 .investigate-address-bar {
     padding: 10px 50px;
@@ -864,6 +983,186 @@ a {
         line-height: 35px;
         .key {
             color: @tableActiveColor;
+        }
+    }
+}
+
+//订单日志记录表
+.catalog {
+//  border: 1px solid #999;
+    .catalog-item:nth-last-child(1) .catalog-content{
+        border-color: #FFF;
+    }
+    .blue {
+        color: @buttonBgColor;   
+    }
+    .red {
+        color: #ff5c57;
+    }
+    .weight {
+        font-weight: bold;
+    }
+    .catalog-time {
+        text-align: right;
+        width: 190px;
+        float: left;
+        line-height: 20px;
+        padding-right: 24px;
+        .catalog-time-item {
+            display: inline-block;
+            vertical-align: text-top;
+            margin-left: 14px;
+        }
+    }
+    .catalog-content {
+        margin-left: 190px;
+        padding: 3px 25px 25px 25px;
+        border-left: 1px solid @buttonBgColor;
+        .catalog-content-item {
+            position: relative;
+            .catalog-content-text {
+                line-height: 18px;
+            }
+            .pointer {
+                width: 26px;
+                height: 26px;
+                background-color: #FFF;
+                position: absolute;
+                top: -3px;
+                left: -39px;
+                //当前时间的点
+                .current-pointer {
+                    position: relative;
+                    margin: 3px auto;
+                    width: 20px;
+                    height: 20px;
+                    .borderRadius(10px);
+                    background-color: @buttonBgColor;
+                    .current-pointer-inner {
+                        position: absolute;
+                        top: 3px;
+                        left: 9px;
+                        width: 8px;
+                        height: 8px;
+                        background-color: @buttonBgColor;
+                        border: 1px solid #FFFFFF;
+                        border-top: none;
+                        border-right: none;
+                    }
+                }
+                //历史点
+                
+                .pointer1 {
+                    width: 10px;
+                    height: 10px;
+                    background-color: #ff5c57;
+                    .borderRadius(5px);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -5px;
+                    margin-left: -5px;
+                }
+                .pointer2 {
+                    width: 8px;
+                    height: 8px;
+                    background-color: #FFF;
+                    .borderRadius(4px);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -4px;
+                    margin-left: -4px;
+                }
+                .pointer3 {
+                    width: 6px;
+                    height: 6px;
+                    background-color: #ff5c57;
+                    .borderRadius(3px);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -3px;
+                    margin-left: -3px;
+                }
+            }
+        }
+        .catalog-content-tips {
+            position: relative;
+            background-color: #f3f4f9;
+            .borderRadius(5px);
+            color: @tiperColor;
+            padding: 8px 19px;
+            line-height: 24px;
+            margin-top: 12px;
+            .arrow {
+                position: absolute;
+                top: -4px;
+                left: 30px;
+                margin-left: -3px;
+                border-width: 6px;
+                border-color: transparent transparent #f3f4f9 transparent;
+            }
+        }
+    }
+}
+
+//运营分析概览区域
+.operational-item-box {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    .operational-item {
+        display: inline-block;
+        .layout;
+        width: 210px;
+        height: 92px;
+        &:nth-of-type(odd) {
+            .operational-item-top{
+                background-color: @buttonBgColor;
+            }
+            .operational-item-bottom .iconfont{
+                background-color: @buttonBgColor;
+            }
+        }
+        &:nth-of-type(even) {
+            .operational-item-top{
+                background-color: #60c4f4;;
+            }
+            .operational-item-bottom .iconfont-box{
+                background-color: #60c4f4;
+            }
+        }
+        .operational-item-top {
+            color: #FFF;
+            height: 32px;
+            line-height: 32px;
+            padding-left: 10px;
+        }
+        .operational-item-bottom {
+            position: relative;
+            padding: 0 10px;
+            .operational-item-money {
+                float: left;
+                height: 60px;
+                line-height: 60px;
+            }
+            .iconfont-box {
+                position: absolute;
+                margin-top: -15px;
+                top: 50%;
+                right: 10px;
+                width: 30px;
+                height: 30px;
+                color: #FFF;
+                line-height: 30px;
+                .borderRadius(5px);
+                background-color: @buttonBgColor;
+                text-align: center;
+                .iconfont {
+                    font-size: 20px;
+                }
+            }
         }
     }
 }
@@ -888,24 +1187,68 @@ a {
         padding: 15px;
         margin-top: 15px;
     }
-    .commit-item {
-        color: @fontColor;
-        margin-right: 30px;
-        .iconfont {
-            vertical-align: middle;
-            color: @mainColor;
-            margin-right: 3px;
-        }
-        &:hover {
-            color: @mainColor;
-        }
-    }
+    
     .cancel {
         background-color: #efad4f;
     }
 }
+//带图标的可点击元素
+.commit-item {
+    color: @fontColor;
+    margin-right: 30px;
+    .iconfont {
+        vertical-align: middle;
+        color: @mainColor;
+        margin-right: 3px;
+    }
+    &:hover {
+        color: @mainColor;
+    }
+}
+    
+//全选操作框
+.all-select-panel {
+    .layout;
+    padding: 0 15px;
+    &.all-select-panel-nobottomborder {
+        border-bottom: none;
+    }
+    &.all-select-special {
+        border: none;
+        border-top: 1px solid @borderColor; 
+    }
+    .all-check-box {
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        margin-right: 15px;
+        .checkbox {
+            position: relative;
+            top: -2px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .button-special {
+            background-color: @mainColor;
+            color: #FFF;
+        }
+        .tips-area {
+            display: inline-block;
+            padding: 4px 20px;
+            background-color: #fcf7e3;
+            border: 1px solid #efad4f;
+            color: #ef810e;
+            line-height: 24px;
+            .borderRadius(3px);
+        }
+        .all-import {
+            color: @buttonBgColor;
+        }
+    }
+}
 
-//征信材料角色tab切换栏
+
+//tab切换栏
 .tab-bar {
     background-color: #FFF;
     border: 1px solid @borderColor;
@@ -914,6 +1257,9 @@ a {
     line-height: 50px;
     text-align: right;
     padding-right: 20px;
+    &.tab-bar-special {
+        margin-top: 15px;
+    }
     .role-bar-ul {
         position: relative;
         top: -1px;
@@ -1230,6 +1576,18 @@ a {
 .loan-info {
     padding: 24px 125px;
 }
+//车商管理
+.carShop-manage {
+    padding: 24px 250px 24px 0;
+    position: relative;
+    .button{
+        position: absolute;
+        top: 34px;
+        right: 150px;
+        height: 30px;
+        line-height: 30px;
+    }
+}
 .info-key-value-box{
     width: calc(~"50% - 2px");
     display: inline-block;
@@ -1271,6 +1629,9 @@ a {
             display:block;
             width:100%;
         }
+    }
+    .gps{
+        width: 64px !important;
     }
     &:nth-of-type(odd) {
         text-align:left;
@@ -1335,7 +1696,10 @@ a {
     .borderRadius(8px);
     top: -8px;
     right: -8px;
-    font-size: 16px;
+    cursor: pointer;
+    .iconfont {
+        font-size: 16px;
+    }
     text-align: center;
     line-height: 16px;
 }
@@ -1350,10 +1714,11 @@ a {
     padding: 4px 20px;
     background-color: #fcf7e3;
     border: 1px solid #efad4f;
-    color: #ef810e;
+    color: #ef810e; 
     line-height: 24px;
     .borderRadius(3px);
-    .inner {
+    cursor: default;
+    .top-inner {
         position: absolute;
         top: -4px;
         left: 50%;
@@ -1361,12 +1726,77 @@ a {
         border-width: 6px;
         border-color: transparent transparent #fcf7e3 transparent;
     }
-    .outer {
+    .top-outer {
         position: absolute;
         top: -8px;
         left: 50%;
         margin-left: -5px;
         border-width: 8px;
         border-color: transparent transparent #efad4f transparent;
+    }
+    .left-inner {
+        position: absolute;
+        top: 50%;
+        left: -14px;
+        border-width: 7px;
+        border-color: transparent #fcf7e3 transparent transparent;
+    }
+    .left-outer {
+        position: absolute;
+        top: 50%;
+        left: -17px;
+        margin-top: -7px;
+        border-width: 8px;
+        border-color: transparent #efad4f transparent transparent;
+    }
+    
+}
+.col-company{
+    &:first-child {
+        .panel-title-box{
+            border-top: none;
+            margin-top: 0;
+        }
+    }
+    &:last-child{
+        padding-bottom: 29px;
+    }
+    .carShop-manage{
+        padding: 24px 250px 0 0;
+    }
+}
+.choose-content{
+    display: flex;
+    text-align: center;
+    justify-content:center;
+    .choose-items{
+        margin: 120px 30px;
+        border: 1px solid @mainColor;
+        width: 240px;
+        height: 240px;
+        color: @fontColor;
+        &-icon{
+            margin-top: 20px;
+            .iconfont{
+                font-size: 60px;
+                color: @mainColor;
+                line-height: 120px;
+                font-weight: bolder;
+            }
+        }
+        &-title{
+            font-size: 18px;
+            font-weight: bolder;
+            line-height: 100px;
+            letter-spacing: 3px;
+            -webkit-font-smoothing:antialiased;
+        }
+        &:hover{
+            background: @mainColor;
+            color: #fff;
+            .iconfont{
+                color: #fff;
+            }
+        }
     }
 }
