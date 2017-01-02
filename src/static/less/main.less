@@ -217,7 +217,8 @@ a {
 		position: relative;
 		top: 2px;
 	}
-	a.menu-item, a.menu-group-item {
+	a.menu-item, a.menu-group-item, .menu-group-title {
+        position: relative;
 		display: block;
 		cursor: pointer;
 		color: @fontColor;
@@ -230,7 +231,7 @@ a {
 		position: relative;
 		padding-left: 25px;
 	}
-	.menu-item { 
+	.menu-item {
 		height: 55px;
 		line-height: 55px;
 	}
@@ -242,11 +243,34 @@ a {
 		    height: 55px;
             line-height: 55px;
             cursor: pointer;
+            .iconfont-arrow {
+                position: absolute;
+                right: 25px;
+                font-size: 12px;
+                -webkit-transition: all .25s;
+                   -moz-transition: all .25s;
+                    -ms-transition: all .25s;
+                     -o-transition: all .25s;
+                        transition: all .25s;
+                -webkit-transform: rotate(180deg);
+                   -moz-transform: rotate(180deg);
+                    -ms-transform: rotate(180deg);
+                     -o-transform: rotate(180deg);
+                        transform: rotate(180deg);
+            }
             &.menu-group-title-active {
                 background-color: @menuHoverBgColor;
-            }
-		    &:hover {
-                background-color: @menuHoverBgColor;
+                .iconfont-arrow { 
+                    -webkit-transform: rotate(0);
+                   -moz-transform: rotate(0);
+                    -ms-transform: rotate(0);
+                     -o-transform: rotate(0);
+                        transform: rotate(0);
+                }
+                &:hover {
+                    background-color: @menuHoverBgColor;
+                    color: @fontColor;
+                }
             }
 		}
 		.menu-group-item {
@@ -254,24 +278,17 @@ a {
 			line-height: 40px;
 			cursor: pointer;
 		}
-		.menu-group-title {
-			.iconfont-arrow {
-                position: absolute;
-                right: 25px;
-                font-size: 12px;
-			}
-		}
 	}
 	.menu-item-active {
-	    color: @menuActiveColor;
+	    color: @menuActiveColor !important;    
 	    background-color: @menuActiveBgColor;
 	    &:before {
 	        position: absolute;
 	        left: 0;
 	        top: 0;
+            bottom: 0;
 	        content:" ";
 	        width: 4px;
-	        height: 55px;
 	        background-color: @menuActiveColor;
 	    }
 	}
