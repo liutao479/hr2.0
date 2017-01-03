@@ -45,7 +45,6 @@ a {
 .float-right{
     float: right;
 }
-
 //顶部导航栏
 .navigator {
 	position: fixed;
@@ -123,37 +122,8 @@ a {
             }
             .message-area {
                 width: 325px;
-                padding: 5px 20px;
-                .message-panel {
-                    margin: 0 auto;
-                    .message-item {
-                        line-height: 40px;
-                        border-bottom: 1px dashed @borderColor;
-                        &:last-child {
-                            border: none;
-                        }
-                        .message-item-data {
-                            float: left;
-                            display: inline-block;
-                            text-align: left;
-                            width: 205px;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            white-space: nowrap;
-                            a {
-                                color: @fontColor;
-                            }
-                        }
-                        .message-time, .message-more {
-                            float: right;
-                        }
-                        .message-time {
-                            color: #90a4ae;
-                        }
-                        .message-more {
-                            color: #3cb4f3;
-                        }
-                    }
+                .message-item-data {
+                    width: 205px;
                 }
             }
             .user-area {
@@ -252,9 +222,10 @@ a {
             }
 		}
 		.menu-group-item {
-			height: 40px;
-			line-height: 40px;
+			height: 55px;
+			line-height: 55px;
 			cursor: pointer;
+            color: #667183;
 		}
 		.menu-group-title {
 			.iconfont-arrow {
@@ -390,7 +361,14 @@ a {
 	                color: @tiperColor;
 	                .status-value {
 	                    color: @fontColor;
+                        margin-right: 20px;
 	                }
+                    .spread-tips {
+                        color: @fontColor;
+                        display: inline-block;
+                        width: 14px;
+                        height: 14px;
+                    }
 	            }
 	            .td-last {
 	                text-align: center;
@@ -412,9 +390,6 @@ a {
 **/
 //合作机构维护
 .cooperation-maintenance {
-    .panel {
-        margin-top: 0;
-    }
     .cooperation-maintenance-table  .button{
         padding: 0 15px;
 //      margin-right: 15px;
@@ -423,9 +398,6 @@ a {
 
 //借款管理
 .loan-manage {
-    .panel {
-        margin-top: 0;
-    }
     .panel-detail-content {
         padding: 20px 17px;
     }
@@ -433,7 +405,7 @@ a {
 //运营分析
 .operational-analysis {
     .panel {
-        margin-top: 0;
+
     }
 }
 //订单日志
@@ -777,6 +749,9 @@ a {
     margin-top: 15px;
     &.panel-credit {
         margin: 0;
+    }
+    &.panel-nomargintop {
+        margin-top: 0;
     }
     //征信结果录入详细内容面板
     &&-result-typing {
@@ -1208,6 +1183,40 @@ a {
     }
 }
 
+//公告详情
+.news-panel {
+    .layout;
+    margin-top: 15px;
+    padding: 50px 130px 100px 130px;
+    .news-title {
+        font-size: 20px;
+        font-weight: 500;
+        text-align: center;
+    }
+    .news-tips {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 50px;
+        color: #696969;
+        .news-tips-item {
+            margin-right: 10px;
+        }
+    }
+    .news-content {
+        color: #000;
+        p {
+            line-height: 28px;
+        }
+        .news-section {
+            text-indent: 2em;
+        }
+        .news-company, .news-time {
+            text-align: right;
+        }
+
+    }
+} 
+
 //单独一栏提交订单按钮
 .commit-orders-box {
     text-align: right;
@@ -1347,6 +1356,44 @@ a {
     .delete-credit-item {
         float: right;
         line-height: 60px;
+    }
+}
+// 消息列表
+.message-area {
+    padding: 5px 20px;
+    .message-panel {
+        margin: 0 auto;
+        .message-item {
+            line-height: 40px;
+            border-bottom: 1px dashed @borderColor;
+            &:last-child {
+                border: none;
+            }
+            .message-item-data {
+                float: left;
+                display: inline-block;
+                text-align: left;
+                width: 80%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                a {
+                    color: @fontColor;
+                    &:hover {
+                        color: @mainColor;
+                    }
+                }
+            }
+            .message-time, .message-more {
+                float: right;
+            }
+            .message-time {
+                color: #90a4ae;
+            }
+            .message-more {
+                color: #3cb4f3;
+            }
+        }
     }
 }
 
