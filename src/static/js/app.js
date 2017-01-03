@@ -42,9 +42,14 @@ $('.checkbox-normal').on('click', function() {
 	}
 })
 
-
 $(function() {
-	
+	$.ajax({
+		url: $http.api('menu'),
+		success: $http.ok(function(data) {
+			var $menu = new menu('#menu', data, router.render);
+			$menu.setup('loanProcess');
+		})
+	})
 })
 
 
