@@ -55,3 +55,6 @@ $('.tips-area').hover(function() {
 	$(this).find('.tips-content').toggle();
 })
 
+$('.panel-count-number-box').find('.tips').hover(function() {
+	$(this).find('.tips-content').toggle();
+});
