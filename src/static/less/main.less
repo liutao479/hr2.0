@@ -175,6 +175,8 @@ a {
 	    }
 	}
 }
+
+// 左侧菜单栏
 .menu {
 	position: fixed;
 	left: 0;
@@ -332,12 +334,27 @@ a {
 	        border-collapse: collapse;
 	        margin-top: 11px;
 	        text-align: left;
+            -webkit-transition: all .25s;
+               -moz-transition: all .25s;
+                -ms-transition: all .25s;
+                 -o-transition: all .25s;
+                    transition: all .25s;
 	        &:hover {
-	            border-color: @tableActiveColor;
+	           border-color: @mainColor;
+                 -webkit-transform: scale(1.01);
+                    -moz-transform: scale(1.01);
+                     -ms-transform: scale(1.01);
+                      -o-transform: scale(1.01);
+                         transform: scale(1.01);
+                -webkit-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                   -moz-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                    -ms-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                     -o-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                        box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
 	           cursor: pointer;
 	        }
 	        .iconfont {
-	            color: @tableActiveColor;
+	            color: @mainColor;
 	        }
 	        thead {
 	            color: @tiperColor;
@@ -356,6 +373,9 @@ a {
 	            background-color: #FFF;
 	            margin: 13px 0;
 	            tr:nth-of-type(1) td {
+                    &.car-info-box {
+                        padding-top: 0;
+                    }
 	                padding-top: 13px;
 	            }
 	            tr:nth-of-type(3) td {
@@ -374,6 +394,13 @@ a {
 	                display: inline-block;
 	                margin-top: 10px;
 	            }
+                .user-info {
+                    .iconfont {
+                        margin-right: 10px;
+                        position: relative;
+                        top: 1px;
+                    }
+                }
 	            .status-name {
 	                color: @tiperColor;
 	                .status-value {
@@ -390,7 +417,7 @@ a {
 	            .td-last {
 	                text-align: center;
 	                padding-bottom: 5px;
-	                .button {
+	                .button-mini {
 	                   &:hover {
 	                       border-color: @buttonBgColor;
 	                   }   

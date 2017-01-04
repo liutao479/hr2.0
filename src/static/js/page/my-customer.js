@@ -1,3 +1,0 @@
-$('.spread').on('click', function() {
-	
-});

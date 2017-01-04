@@ -73,13 +73,14 @@
 								</tr>
 							</thead>
 							<tbody>
+								{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}}
 								<tr>
-									<td class="orders-item-data">hqdb2016112923573344</td>
-									<td class="orders-item-data">2016-12-10</td>
-									<td class="orders-item-data">2016-12-10</td>
-									<td class="orders-item-data"><span>张三啊</span><br /><span>（412702199102033154）</span></td>
-									<td class="orders-item-data">120000</td>
-									<td class="orders-item-data">广州俊佳智领汽车销售服务有限公司</td>
+									<td class="orders-item-data">{{=it.orderNo}}</td>
+									<td class="orders-item-data">{{=it.applyTime}}</td>
+									<td class="orders-item-data">{{=it.userTime}}</td>
+									<td class="orders-item-data"><span>{{=it.user}}</span><br /><span>（{{=it.idc}}）</span></td>
+									<td class="orders-item-data">{{=it.paidMoney}}</td>
+									<td class="orders-item-data">{{=it.payee}}</td>
 									<td class="orders-item-data">
 										<div class="button button-mini-nowidth">
 											<i class="iconfont">&#xe602;</i>
@@ -87,48 +88,7 @@
 										</div>
 									</td>
 								</tr>
-								<tr>
-									<td class="orders-item-data">hqdb2016112923573344</td>
-									<td class="orders-item-data">2016-12-10</td>
-									<td class="orders-item-data">2016-12-10</td>
-									<td class="orders-item-data"><span>张三啊</span><br /><span>（412702199102033154）</span></td>
-									<td class="orders-item-data">120000</td>
-									<td class="orders-item-data">广州俊佳智领汽车销售服务有限公司</td>
-									<td class="orders-item-data">
-										<div class="button button-mini-nowidth">
-											<i class="iconfont">&#xe602;</i>
-											查看
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td class="orders-item-data">hqdb2016112923573344</td>
-									<td class="orders-item-data">2016-12-10</td>
-									<td class="orders-item-data">2016-12-10</td>
-									<td class="orders-item-data"><span>张三啊</span><br /><span>（412702199102033154）</span></td>
-									<td class="orders-item-data">120000</td>
-									<td class="orders-item-data">广州俊佳智领汽车销售服务有限公司</td>
-									<td class="orders-item-data">
-										<div class="button button-mini-nowidth">
-											<i class="iconfont">&#xe602;</i>
-											查看
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td class="orders-item-data">hqdb2016112923573344</td>
-									<td class="orders-item-data">2016-12-10</td>
-									<td class="orders-item-data">2016-12-10</td>
-									<td class="orders-item-data"><span>张三啊</span><br /><span>（412702199102033154）</span></td>
-									<td class="orders-item-data">120000</td>
-									<td class="orders-item-data">广州俊佳智领汽车销售服务有限公司</td>
-									<td class="orders-item-data">
-										<div class="button button-mini-nowidth">
-											<i class="iconfont">&#xe602;</i>
-											查看
-										</div>
-									</td>
-								</tr>
+								{{ } }}
 							</tbody>
 						</table>
 						<!--借款管理表格  end-->
