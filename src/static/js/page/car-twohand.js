@@ -8,7 +8,7 @@
 		$.ajax({
 			url: $http.api('car/twohand'),
 			success: $http.ok(function(data) {
-				_.compile(_.$console, page.template, data, $scope.async);
+				_.compile(_.$console, page.template, data);
 			})
 		})
 	}	
