@@ -13,20 +13,22 @@
 	var routerMap = {
 		'loanProcess': {
 			title: '车贷办理',
-			refer: ['test'],
+			refer: ['navigator'],
 			page: "loan"
 		},
 		'myCustomer': {
 			title: '我的客户',
+			refer: ['navigator'],
 			page: 'customer'
 		},
-		'creditUpload': {
-			title: "征信材料上传",
-			page: 'credit-upload'
+		'loanManage': {
+			title: '借款管理',
+			refer: ['navigator'],
+			page: 'loanMagage'
 		},
 		'loanInfo': {
-			title: "信息表修改审核",
-			page: 'loan-info'
+			title: '',
+			page: 'loanInfo'
 		}
 	}
 	/**
