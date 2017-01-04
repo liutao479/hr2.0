@@ -36,7 +36,8 @@ gulp.task('less', function() {
 gulp.task('concat', function() {
     return gulp.src([
             path.src.js('core/**/*.js'),
-            path.src.js('componements/**/*.js')
+            path.src.js('componements/**/*.js'),
+            path.src.js('app.js')
         ])
         .pipe($.concat('app.js'))
         .pipe(gulp.dest(path.dist.js()));
@@ -56,7 +57,9 @@ gulp.task('copy', function() {
             path.src.root('templates/**/*.html'),
             path.src.root('app.html'),
             path.src.js('vendor/**/*.js'),
-            path.src.root('static/css/img/**/*')
+            path.src.js('page/**/*.js'),
+            path.src.root('static/css/img/**/*'),
+            path.src.root('iframe/**/*.html')
         ])
         .pipe($.copy('dist', {prefix: 1}))
 })

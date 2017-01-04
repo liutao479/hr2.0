@@ -1,0 +1,144 @@
+	<!--借款管理-->
+			<div class="container loan-manage" id="loan-manage">
+				
+				<!--订单数统计面板-->
+					<div class="panel">
+						<div class="panel-count">
+							<!--今日预计利息-->
+							<div class="panel-count-item today-predict">
+								<span class="panel-count-number-box">
+									<span class="panel-count-number">20.32</span>
+									<span class="tips">
+										<i class="iconfont">&#xe67f;</i>
+										<div class="tips-content">
+											<span class="tips-text">提示：系统计息按打款上传日期开始，还款凭证上传日期结束，实际利息结算，以线下对账为准。</span>
+											<span class="arrow arrow-left left-outer"></span>
+											<span class="arrow arrow-left left-inner"></span>
+										</div>
+									</span>
+								</span>
+								<br />
+								<span class="panel-count-name">今日预计利息（元）</span>
+								<a href="#" class="view-interest">查看利息明细</a>
+							</div>
+							<!--今日提交订单-->
+							<div class="panel-count-item today-commit">
+								<span class="panel-count-number-box">
+									<span class="panel-count-number">64</span>
+								</span>
+								<br />
+								<span class="panel-count-name">今日提交订单（笔）</span>
+							</div>
+							<!--今日打款订单-->
+							<div class="panel-count-item today-curtain">
+								<span class="panel-count-number-box">
+									<span class="panel-count-number">64</span>
+								</span>
+								<br />
+								<span class="panel-count-name">今日打款订单（笔）</span>
+							</div>
+						</div>
+					</div>
+				<!--订单数面板   end-->
+				
+				
+				<!--tab切换栏(借款管理)-->
+				<div class="tab-bar tab-bar-special">
+					<ul class="role-bar-ul clearfix">
+						<li class="role-bar-li"><a href="#" class="role-item role-item-active">待资金方审核</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">待资金垫资</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">待还款</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">所有订单</a></li>
+					</ul>
+					<input type="text" class="input-text" placeholder="订单号/借款人姓名/身份证"/>
+				</div>
+				<!--tab切换栏(借款管理)   end-->
+				
+				<!--面板  -->
+				<div class="panel panel-nomargintop">
+					
+					<div class="panel-content panel-content-layout">
+						
+						<!--借款管理表格  end-->
+						<table border="0" cellpadding="" width="100%" class="orders-table">
+							<thead>
+								<tr class="orders-bar-title">
+									<td class="orders-item-data">订单号</td>
+									<td class="orders-item-data">申请垫资日期</td>
+									<td class="orders-item-data">用款时间</td>
+									<td class="orders-item-data">借款人</td>
+									<td class="orders-item-data">垫资金额（元）</td>
+									<td class="orders-item-data">收款方</td>
+									<td class="orders-item-data">操作</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="orders-item-data">hqdb2016112923573344</td>
+									<td class="orders-item-data">2016-12-10</td>
+									<td class="orders-item-data">2016-12-10</td>
+									<td class="orders-item-data"><span>张三啊</span><br /><span>（412702199102033154）</span></td>
+									<td class="orders-item-data">120000</td>
+									<td class="orders-item-data">广州俊佳智领汽车销售服务有限公司</td>
+									<td class="orders-item-data">
+										<div class="button button-mini-nowidth">
+											<i class="iconfont">&#xe602;</i>
+											查看
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="orders-item-data">hqdb2016112923573344</td>
+									<td class="orders-item-data">2016-12-10</td>
+									<td class="orders-item-data">2016-12-10</td>
+									<td class="orders-item-data"><span>张三啊</span><br /><span>（412702199102033154）</span></td>
+									<td class="orders-item-data">120000</td>
+									<td class="orders-item-data">广州俊佳智领汽车销售服务有限公司</td>
+									<td class="orders-item-data">
+										<div class="button button-mini-nowidth">
+											<i class="iconfont">&#xe602;</i>
+											查看
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="orders-item-data">hqdb2016112923573344</td>
+									<td class="orders-item-data">2016-12-10</td>
+									<td class="orders-item-data">2016-12-10</td>
+									<td class="orders-item-data"><span>张三啊</span><br /><span>（412702199102033154）</span></td>
+									<td class="orders-item-data">120000</td>
+									<td class="orders-item-data">广州俊佳智领汽车销售服务有限公司</td>
+									<td class="orders-item-data">
+										<div class="button button-mini-nowidth">
+											<i class="iconfont">&#xe602;</i>
+											查看
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="orders-item-data">hqdb2016112923573344</td>
+									<td class="orders-item-data">2016-12-10</td>
+									<td class="orders-item-data">2016-12-10</td>
+									<td class="orders-item-data"><span>张三啊</span><br /><span>（412702199102033154）</span></td>
+									<td class="orders-item-data">120000</td>
+									<td class="orders-item-data">广州俊佳智领汽车销售服务有限公司</td>
+									<td class="orders-item-data">
+										<div class="button button-mini-nowidth">
+											<i class="iconfont">&#xe602;</i>
+											查看
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!--借款管理表格  end-->
+						
+					</div>
+				</div>
+				<!--面板  end-->
+				
+			</div>
+			<!--借款管理   end-->
+			
+			<!--分页插件改编（未完成）-->
+			<div id="pageToolbar" class="pageToolbar" data-pages="50" data-current="8"></div>

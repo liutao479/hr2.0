@@ -5,11 +5,13 @@
   "author": "sjdong",
   "license": "ISC",
   "path": {
-    "mock": "http://127.0.0.1:1003/mock/",
+    "mock": "http://127.0.0.1:8020/mock/",
     "src": "src/",
     "dist": "dist/"
   },
   "devDependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "*",

@@ -42,7 +42,10 @@ a {
     	clear: both;
     }
 }
-
+.float-right{
+    float: right;
+}
+//顶部导航栏
 .navigator {
 	position: fixed;
 	z-index: 999;
@@ -71,22 +74,92 @@ a {
 		background-size: 100%;
 	}
 	.user-field {
-	    width: 215px;
+	    width: 235px;
 	    position: absolute;
 	    top: 0;
 	    right: 80px;
 	    padding-right:13px;
-	    li {
+	    .user-li  {
+	        position: relative;
 	        float: left;
 	        height: 60px;
 	        line-height: 60px;
 	        text-align: center;
+	        cursor: pointer;
 	        &.QR-Code,&.message {
-                width: 50px;
+                width: 60px;
                 height: 60px;
                 i {
                     font-size: 21px;
                 }
+            }
+            &.user {
+                width: 102px;
+            }
+            &:hover {
+                background-color: #6347bd;
+            }
+            .QR-Code-area, .message-area, .user-area {
+                position: absolute;
+                display: none;
+                z-index: 999;
+                right: 0;
+                top: 60px;
+                background-color: #FFF;
+                border: 1px solid @borderColor;
+                border-top: none;
+                line-height: normal;
+                cursor: default;
+            } 
+            .QR-Code-area {
+                width: 125px;
+                padding: 15px;
+                text-align: center;
+                color: #90a4ae;
+                .QR-Code-text {
+                    margin-top: 3px;   
+                }
+            }
+            .message-area {
+                width: 325px;
+                .message-item-data {
+                    width: 205px;
+                }
+            }
+            .user-area {
+               width: 300px;
+               text-align: left;
+               .user-area-top {
+                   padding: 10px 15px;
+                   border-bottom: 1px solid @borderColor;
+                   .user-panel {
+                       .user-panel-key {
+                           float: left;
+                           width: 40px;
+                           line-height: 25px;
+                       }
+                       .user-panel-value {
+                           margin-left: 40px;
+                           line-height: 25px;
+                           .phone-bind {
+                               color: #3cb4f3;
+                               margin-left: 16px;
+                           }
+                       }
+                   }
+               }
+               .user-area-bottom {
+                   line-height: 40px;
+                   padding: 0 15px;
+                   .modify-pwd {
+                       float: left;
+                       color: #3cb4f3;
+                   }
+                   .user-quit {
+                       color: #90a4ae;
+                       float: right;
+                   }
+               }
             }
             .message-a{
                 position: relative;
@@ -96,10 +169,7 @@ a {
                     top:-11px;
                 }
             } 
-            &.user {
-                width: 102px;
-            }
-            a {
+            .user-field-item {
                 color: #FFF;
             }
 	    }
@@ -119,19 +189,21 @@ a {
 		position: relative;
 		top: 2px;
 	}
-	a.menu-item, a.menu-group-item {
+	a.menu-item, a.menu-group-item, .menu-group-title {
+        position: relative;
 		display: block;
 		cursor: pointer;
 		color: @fontColor;
 		&:hover {
-			background-color: @menuHoverBgColor;
+		    color: @menuActiveColor;
+			background-color: #f0eefc;
 		}
 	}
 	.menu-item, .menu-group-title {
 		position: relative;
 		padding-left: 25px;
 	}
-	.menu-item { 
+	.menu-item {
 		height: 55px;
 		line-height: 55px;
 	}
@@ -143,213 +215,119 @@ a {
 		    height: 55px;
             line-height: 55px;
             cursor: pointer;
-		    &:hover {
-                background-color: @menuHoverBgColor;
-            }
-		}
-		.menu-group-item {
-			height: 40px;
-			line-height: 40px;
-			cursor: pointer;
-		}
-		.menu-group-title {
-			.iconfont-arrow {
+            .iconfont-arrow {
                 position: absolute;
                 right: 25px;
                 font-size: 12px;
-			}
+                -webkit-transition: all .25s;
+                   -moz-transition: all .25s;
+                    -ms-transition: all .25s;
+                     -o-transition: all .25s;
+                        transition: all .25s;
+                -webkit-transform: rotate(180deg);
+                   -moz-transform: rotate(180deg);
+                    -ms-transform: rotate(180deg);
+                     -o-transform: rotate(180deg);
+                        transform: rotate(180deg);
+            }
+            &.menu-group-title-active {
+                background-color: @menuHoverBgColor;
+                .iconfont-arrow { 
+                    -webkit-transform: rotate(0);
+                   -moz-transform: rotate(0);
+                    -ms-transform: rotate(0);
+                     -o-transform: rotate(0);
+                        transform: rotate(0);
+                }
+                &:hover {
+                    background-color: @menuHoverBgColor;
+                    color: @fontColor;
+                }
+            }
+		}
+		.menu-group-item {
+			height: 55px;
+			line-height: 55px;
+			cursor: pointer;
+            color: #667183;
 		}
 	}
 	.menu-item-active {
-	    color: @menuActiveColor;
+	    color: @menuActiveColor !important;    
 	    background-color: @menuActiveBgColor;
 	    &:before {
 	        position: absolute;
 	        left: 0;
 	        top: 0;
+            bottom: 0;
 	        content:" ";
 	        width: 4px;
-	        height: 55px;
 	        background-color: @menuActiveColor;
 	    }
 	}
 }
-//工作台,
+//工作台
 .console {
-	padding: 20px 60px 100px 39px;
+	padding: 20px 60px 100px 40px;
 	margin: 60px 0 0 200px;
 	background-color: @consoleBgColor;
 	overflow: hidden;
-	.container {
-	    border: 1px solid @borderColor;
-	    .search-bar {
-	        position: relative;
-            height: 59px;
-            line-height: 59px;
-            background-color: #FFF;
-            input {
-                margin-left: 24px;
-                margin-right: 10px;
-            }
-            .drop-down-box .drop-down-text {
-                color: #6b59c9;
-            }
-            .drop-down-box i {
-                color: #2c405a;
-            }
-            .button {
-                position: absolute;
-                top: 50%;
-                right: 24px;
-                margin-top: -20px;
-                background-color: #6b59c9;
-                color: #FFF;
-            }
+    .search-bar {
+        border: 1px solid @borderColor;
+        border-bottom: none;
+        position: relative;
+        height: 60px;
+        line-height: 60px;
+        background-color: #FFF;
+        input {
+            margin-left: 24px;
+            margin-right: 10px;
         }
-        .orders-box {
-            border-collapse: collapse;
+        .drop-down-box .drop-down-text {
+            color: #6b59c9;
         }
-        .orders-bar-title {
-            background-color: #717ea1;
+        .drop-down-box .iconfont {
+            color: #2c405a;
         }
-        .orders-item-data {
-            height: 40px;
+        .button {
+            position: absolute;
+            top: 50%;
+            right: 24px;
+            margin-top: -20px;
+            background-color: #6b59c9;
             color: #FFF;
-            text-align: center;
-            font-size: 14px;
-            &:nth-of-type(1) {
-                a {
-                    color: #FFF;
-                    img {
-                        position: relative;
-                        top: 2px;
-                        left: 5px;
-                        width: 13px;
-                        height: 13px;
-                    }
-                }
-            }
-            .button {
-                background-color: #e9e7f7;
-                color: #6b59c9;
-            }
         }
-        tbody tr {
-            border-top:1px dashed #cdd9e9;
-            &:nth-of-type(1) {
-                border: none;
-            }
-            &:nth-of-type(odd) {
-                background-color: #FFF;
-            }
-            &:nth-of-type(even) {
-                background-color: #f3f4f9;
-            }
-            .orders-item-data {
-                &.status-back {
-                    color: @messageNumberBgColor;
-                }
-                height: 78px;
-                color: @fontColor;
-            }
-        }
-	}
-	.pageToolbar {
-	    height: 48px;
-	    border: 1px solid @borderColor;
-	    background-color: #FFF;
-	    margin-top: 15px;
-	}
-	.custormer {
+    }
+	//我的客户
+	.customer {
 	    .select-search-bar {
-	        .box;
-	        padding: 24px 20px;
-	        border: 1px solid @borderColor;
-	        background-color: #FFF;
-	        .search-item-box {
-	            .box-flex(6);
-	            width: 0;
-	            .search-item {
-                    float: left;
-                    color: @fontColor;
-                    line-height: 30px;
-                    margin: 0 30px 10px 0;
-                }
-                .separator {
-                    margin: 0 5px;
-                    color: @selectBorderColor;
-                }
-	        }
-	        .search-sure-box {
-	            width: 0;
-	            .box-flex(1);
-	            .box;
-	            -webkit-box-align: end;
-	            -webkit-box-pack: end;
-	        }
-	        .button {
-	            background-color: #6b59c9;
-                color: #FFF;
-	        }
-	    }
-	    .page-bar {
-	        position: relative;
-	        margin-top: 15px;
-	        background-color: #FFF;
-	        border: 1px solid @borderColor;
-	        padding: 0 20px;
-	        height: 40px;
-	        line-height: 40px;
-	        .time-sort {
-	            float: left;
-	            color: @fontColor;
-	            img {
-                    position: relative;
-                    top: 2px;
-                    left: 5px;
-                    width: 13px;
-                    height: 13px;
-                }
-	        }
-	        .page-bar-right {
-	            position: absolute;
-	            top: 0;
-	            right: 20px;
-	            bottom: 0;
-	            height: 38px;
-	            line-height: 38px;
-	            .page-count {
-	                float: left;
-	            }
-                .page-change {
-                    float: left;
-                    color: @fontColor;
-                    font-weight: 700;
-                    width: 30px;
-                    height: 30px;
-                    line-height: 30px;
-                    text-align: center;
-                    margin:4px 0 0 5px;
-                    margin-left: 5px;
-                    cursor: pointer;
-                    border:1px solid #cdd9e9;
-                    .borderRadius(3px);
-                    &.disabled {
-                        color: @disabledColor;
-                        cursor: default;
-                        &:hover {
-                            color: @disabledColor;
-                            border-color: #cdd9e9;
-                        }
-                    }
-                    &:hover {
-                        color: #6b59c9;
-                        border-color: #6b59c9;
-                    }
-                }
-	        }
-	    }
-	    .custormer-orders .orders-box {
+	        padding: 15px 20px;
+            .box;
+            border: 1px solid @borderColor;
+            .input-text {
+                width: 348px;
+            }
+            .search-item-box {
+                .box-flex(6);
+                width: 0;
+            }
+            .search-sure-box {
+                width: 0;
+                .box-flex(1);
+                .box;
+                -webkit-box-align: end;
+                -webkit-box-pack: end;
+            }
+            .search-item {
+                line-height: 32px;
+                margin: 0 30px 10px 0;
+            }
+            .separator {
+                margin: 0 5px;
+                color: @selectBorderColor;
+            }
+        }
+	    .customer-orders .orders-box {
 	        border: 1px solid @borderColor;
 	        border-collapse: collapse;
 	        margin-top: 11px;
@@ -400,19 +378,107 @@ a {
 	                color: @tiperColor;
 	                .status-value {
 	                    color: @fontColor;
+                        margin-right: 20px;
 	                }
+                    .spread-tips {
+                        color: @fontColor;
+                        display: inline-block;
+                        width: 14px;
+                        height: 14px;
+                    }
 	            }
 	            .td-last {
 	                text-align: center;
 	                padding-bottom: 5px;
+	                .button {
+	                   &:hover {
+	                       border-color: @buttonBgColor;
+	                   }   
+	                }
 	            }
 	        }
 	    }
 	}
 } 
 
-<<<<<<< HEAD
-=======
+
+/**
+* 页面特殊部分处理
+**/
+//合作机构维护
+.cooperation-maintenance {
+    .cooperation-maintenance-table  .button{
+        padding: 0 15px;
+//      margin-right: 15px;
+    }
+}
+
+//借款管理
+.loan-manage {
+    .panel-detail-content {
+        padding: 20px 17px;
+    }
+}
+//运营分析
+.operational-analysis {
+    .panel {
+
+    }
+}
+//订单日志
+.orders-log {
+    .panel {
+        .panel-detail-content {
+            padding: 20px;
+        }
+    }
+}
+//保证金查询
+.deposit-query {
+    .panel {
+        .panel-content {
+            padding: 0 20px 140px 20px;
+            .table-title {
+                position: relative;
+                .layout;
+                height: 50px;
+                border: 1px solid @borderColor;
+                border-bottom: none;
+                margin-top: 20px;
+                padding: 0 20px;
+                .key-value-box {
+                    height: 50px;
+                    line-height: 50px;
+                    margin-right: 50px;
+                }
+                .new-item {
+                    position: absolute;
+                    top: -1px;
+                    left: -1px;
+                    width: 0;
+                    height: 0;
+                    border: 30px solid transparent;
+                    border-bottom-color: #efad4f;
+                    color: #FFF;
+                    text-align: center;
+                    transform: rotate(-45deg) translate(-8px,-22px);
+                    transform-origin:left;
+                    .new-item-inner {
+                        position: absolute;
+                        top: 10px;
+                        left: -13px;
+                        display: inline-block;
+                        
+                    }
+                }
+            }
+            
+        }
+    }
+    
+}
+
+
 
 //待办提醒
 .remind {
@@ -454,7 +520,218 @@ a {
     }
 }
 
->>>>>>> origin/zhy
+//我的客户翻页
+.page-bar {
+    position: relative;
+    margin-top: 15px;
+    background-color: #FFF;
+    border: 1px solid @borderColor;
+    padding: 0 20px;
+    height: 40px;
+    line-height: 40px;
+    .time-sort {
+        float: left;
+        color: @fontColor;
+        img {
+            position: relative;
+            top: 2px;
+            left: 5px;
+            width: 13px;
+            height: 13px;
+        }
+    }
+    .page-bar-right {
+        position: absolute;
+        top: 0;
+        right: 20px;
+        bottom: 0;
+        height: 38px;
+        line-height: 38px;
+        .page-count {
+            float: left;
+        }
+        .page-change {
+            float: left;
+            color: @fontColor;
+            font-weight: 700;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            margin:4px 0 0 5px;
+            margin-left: 5px;
+            cursor: pointer;
+            border:1px solid #cdd9e9;
+            .borderRadius(3px);
+            &.disabled {
+                color: @disabledColor;
+                cursor: default;
+                &:hover {
+                    color: @disabledColor;
+                    border-color: #cdd9e9;
+                }
+            }
+            &:hover {
+                color: #6b59c9;
+                border-color: #6b59c9;
+            }
+        }
+    }
+}
+
+//分页器外围盒子
+.pageToolbar {
+    height: 48px;
+    border: 1px solid @borderColor;
+    background-color: #FFF;
+    margin-top: 15px;
+}
+
+//有选择功能的搜索栏
+.select-search-bar {
+    padding: 0 20px;
+    background-color: #FFF;
+    border: 1px solid @borderColor;
+    border-bottom: none;
+    &.select-search-bar-noborder {
+        border: none;
+    }
+    &.select-search-bar-notopborder {
+        border-top: none;
+    }
+    &.select-search-bar-special {
+        margin-top: 15px;
+    }
+    .input-text {
+        width: 198px;
+        line-height: 60px;
+    }
+    .search-sure-box {
+        line-height: 60px;
+    }
+    .search-item {
+        float: left;
+        color: @fontColor;
+        line-height: 60px;
+        margin: 0 30px 0 0;
+        .select {
+            position: relative;
+            top: -2px;
+            vertical-align: middle;
+        }
+        .checkbox {
+            position: relative;
+            top: 4px;
+            margin-right: 10px;
+        }
+        &.search-item-checkbox {
+            line-height: 30px;
+        }
+    }
+    .button {
+        background-color: #6b59c9;
+        margin-left: 10px;
+        color: #FFF;
+        padding: 0 25px;
+    }
+}
+//各个订单类表格统一样式
+.orders-table {
+    border: 1px solid @borderColor;
+    border-top: none;
+    border-collapse: collapse;
+    &.orders-table-noborder {
+        border: none;
+    }
+    &.orders-table-borders {
+        .orders-item-data {
+            border:1px solid @borderColor;
+        }
+        tbody tr .orders-item-data {
+            height: 40px;
+        }
+    }
+    .orders-bar-title {
+        background-color: #717ea1;
+    }
+    .orders-item-data {
+        height: 40px;
+        color: #FFF;
+        text-align: center;
+        font-size: 14px;
+        &:nth-of-type(1) {
+            a {
+                color: #FFF;
+                img {
+                    position: relative;
+                    top: 2px;
+                    left: 5px;
+                    width: 13px;
+                    height: 13px;
+                }
+            }
+        }
+        .button {
+            background-color: #e9e7f7;
+            color: #6b59c9;
+        }
+    }
+    tbody tr {
+        border-top:1px dashed #cdd9e9;
+        &:nth-of-type(1) {
+            border: none;
+        }
+        td.order-item-first {
+            width: 50px; 
+        }
+        &:nth-of-type(odd) {
+            background-color: #FFF;
+        }
+        &:nth-of-type(even) {
+            background-color: #f3f4f9;
+        }
+        .orders-item-data {
+            //被退回
+            &.status-back {
+                color: @messageNumberBgColor;
+            }
+            //待审核
+            &.status-wait-verify {
+                color: #ef810e;
+            }
+            //未办理
+            &.status-not-handled {
+                color: #f2bc00;
+            }
+            height: 78px;
+            color: @fontColor;
+        }
+        &.acount-name-data {
+            padding: 10px 0;
+        }
+        .acount-name {
+            line-height: 24px;
+        }
+    }
+}
+
+
+//边框处理
+.no-top-border {
+    border-top: none;
+}
+.no-bottom-border {
+    border-bottom: none;
+}
+.no-left-border {
+    border-left: none;
+}
+.no-right-border {
+    border-right: none;
+}
+.no-border {
+    border: none;
+}
 //返回列表面板
 .path-back-bar {
     position: relative;
@@ -462,7 +739,7 @@ a {
     padding: 0 15px 0 20px;
     text-align: right;
     .path-back {
-        position: absolute;
+        float: left;
         left: 15px;
         display: block;
         color: @tableActiveColor;
@@ -490,7 +767,9 @@ a {
     &.panel-credit {
         margin: 0;
     }
-<<<<<<< HEAD
+    &.panel-nomargintop {
+        margin-top: 0;
+    }
     //征信结果录入详细内容面板
     &&-result-typing {
         margin-top: 0;
@@ -523,21 +802,66 @@ a {
         margin-left: 162px;
 //      float: left;
     }
-    //工作台有左侧菜单的右侧详细内容区域（title）
+    
+    //订单统计面板
+    .panel-count {
+        .box;
+        padding: 15px 0;
+        .panel-count-item {
+            position: relative;
+            .box-flex(1);
+            text-align: center;
+            .view-interest {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                color: @buttonBgColor;
+            }
+            .panel-count-number-box {
+                position: relative;
+                display: inline-block;
+                margin-bottom: 5px;
+                .panel-count-number {
+                    font-weight: 500;
+                    font-size: 25px;
+                }
+                .tips {
+                    top: -2px;
+                    right: -20px;
+                }
+                .tips-content {
+                    left: 29px;
+                    top: -210%;
+                    text-align: left;
+                }
+            }
+            .panel-count-name {
+                color: @tiperColor;
+            }
+        }
+    }
+    
+    //工作台有左侧菜单的右侧详标题区域（title）
     .panel-content-title {
-        text-align: right;
+        text-align: left;
         padding: 0 15px;
-        height: 60px;
-        line-height: 60px;
         border-top: 1px dashed @borderColor;
         border-bottom: 1px dashed @borderColor;
         &.panel-title-box-special {
             border-top: none;
         }
-        .key-value-box {
-            float: left;
-            margin-right: 24px;
+        &.panel-content-title-special {
+            border-top: 1px solid @borderColor;
         }
+        .key-value-box {
+            margin-right: 24px;
+            line-height: 60px;
+            height: 60px;
+            &.key-value-box-special {
+                float: right;
+            }
+        }
+        
     }
     //工作台有左侧菜单的右侧详细内容区域（content）
     .panel-detail-content {
@@ -546,9 +870,11 @@ a {
             padding-top: 25px;
         }
         //详细内容区域放图片的区域
-        .panel-detail-imgs {
-            padding: 10px;
-            background-color: #FFF;
+        &.panel-detail-imgs {
+            padding: 30px 30px 22px 50px;
+        }
+        &.panel-detail-content-catalog {
+            padding: 50px;  
         }
         .panel-item-box {
             .box;
@@ -597,8 +923,7 @@ a {
             }
         }
     }
-=======
->>>>>>> origin/zhy
+    //面板标题行
     .panel-title-box {
         height: 46px;
         line-height: 46px;
@@ -615,22 +940,18 @@ a {
                 margin-left: 7px;
                 font-size: 15px;
             }
-<<<<<<< HEAD
-=======
             .button{
                 float:right;
                 margin:7px 20px 0 0;
             }
->>>>>>> origin/zhy
         }
     }
+    //面板详细内容
     .panel-content {
-        float: left;
         padding: 0 0 29px 23px;
-<<<<<<< HEAD
-=======
-        width: 100%;//ZOU
->>>>>>> origin/zhy
+        &.panel-content-layout {
+            padding: 20px 17px;
+        }
         .loanman-material-item {
             .box;
             padding-top: 5px;
@@ -647,14 +968,39 @@ a {
             .block-item {
                 .box-flex(1);
                 padding-top: 10px;
-                .checkbox {
+                .block-item-data {
+                    position: relative;
+                    display: inline-block;
+                    border: 1px solid #cad2e1;
+                    .borderRadius(4px);
+                    background-color: #FFF;
                     margin: 10px 0 0 10px;
+                    padding: 0 12px;
+                    height: 38px;
+                    line-height: 38px;
+                    color: @fontColor;
+                    &.selected {
+                        color: @tableActiveColor;
+                        border-color: @tableActiveColor;
+                    }
+                    .tips-content {
+                        top: 44px;
+                        left: -70px;
+                    }
                 }
             }
         }
     }
 }
-<<<<<<< HEAD
+.panel-layout{
+    .layout !important;
+    .panel-title-box{
+        color: @fontColor !important;
+        border: 1px dashed @borderColor;
+        border-width: 1px 0;
+        margin-top: 29px; 
+    }
+}
 //上门材料地址栏
 .investigate-address-bar {
     padding: 10px 50px;
@@ -667,43 +1013,320 @@ a {
         }
     }
 }
-=======
 
->>>>>>> origin/zhy
+//订单日志记录表
+.catalog {
+//  border: 1px solid #999;
+    .catalog-item:nth-last-child(1) .catalog-content{
+        border-color: #FFF;
+    }
+    .blue {
+        color: @buttonBgColor;   
+    }
+    .red {
+        color: #ff5c57;
+    }
+    .weight {
+        font-weight: bold;
+    }
+    .catalog-time {
+        text-align: right;
+        width: 190px;
+        float: left;
+        line-height: 20px;
+        padding-right: 24px;
+        .catalog-time-item {
+            display: inline-block;
+            vertical-align: text-top;
+            margin-left: 14px;
+        }
+    }
+    .catalog-content {
+        margin-left: 190px;
+        padding: 3px 25px 25px 25px;
+        min-height: 80px;
+        border-left: 1px solid @buttonBgColor;
+        .catalog-content-item {
+            position: relative;
+            &.catalog-content-item-special .pointer {
+                .pointer1, .pointer3 {
+                    background-color: #ff5c57;
+                }
+            }
+            .catalog-content-text {
+                line-height: 18px;
+            }
+            .pointer {
+                width: 26px;
+                height: 26px;
+                background-color: #FFF;
+                position: absolute;
+                top: -3px;
+                left: -39px;
+                //当前时间的点
+                .current-pointer {
+                    position: relative;
+                    margin: 3px auto;
+                    width: 20px;
+                    height: 20px;
+                    .borderRadius(10px);
+                    background-color: @buttonBgColor;
+                    .current-pointer-inner {
+                        position: absolute;
+                        top: 3px;
+                        left: 9px;
+                        width: 8px;
+                        height: 8px;
+                        background-color: @buttonBgColor;
+                        border: 1px solid #FFFFFF;
+                        border-top: none;
+                        border-right: none;
+                    }
+                }
+                //历史点
+                
+                .pointer1 {
+                    width: 10px;
+                    height: 10px;
+                    background-color: @buttonBgColor;
+                    .borderRadius(5px);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -5px;
+                    margin-left: -5px;
+                }
+                .pointer2 {
+                    width: 8px;
+                    height: 8px;
+                    background-color: #FFF;
+                    .borderRadius(4px);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -4px;
+                    margin-left: -4px;
+                }
+                .pointer3 {
+                    width: 6px;
+                    height: 6px;
+                    background-color: @buttonBgColor;
+                    .borderRadius(3px);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -3px;
+                    margin-left: -3px;
+                }
+            }
+        }
+        .catalog-content-tips {
+            position: relative;
+            background-color: #f3f4f9;
+            .borderRadius(5px);
+            color: @tiperColor;
+            padding: 8px 19px;
+            line-height: 24px;
+            margin-top: 12px;
+            .arrow {
+                position: absolute;
+                top: -4px;
+                left: 30px;
+                margin-left: -3px;
+                border-width: 6px;
+                border-color: transparent transparent #f3f4f9 transparent;
+            }
+        }
+    }
+}
+
+//运营分析概览区域
+.operational-item-box {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    .operational-item {
+        display: inline-block;
+        .layout;
+        width: 210px;
+        height: 92px;
+        &:nth-of-type(odd) {
+            .operational-item-top{
+                background-color: @buttonBgColor;
+            }
+            .operational-item-bottom .iconfont{
+                background-color: @buttonBgColor;
+            }
+        }
+        &:nth-of-type(even) {
+            .operational-item-top{
+                background-color: #60c4f4;;
+            }
+            .operational-item-bottom .iconfont-box{
+                background-color: #60c4f4;
+            }
+        }
+        .operational-item-top {
+            color: #FFF;
+            height: 32px;
+            line-height: 32px;
+            padding-left: 10px;
+        }
+        .operational-item-bottom {
+            position: relative;
+            padding: 0 10px;
+            .operational-item-money {
+                float: left;
+                height: 60px;
+                line-height: 60px;
+            }
+            .iconfont-box {
+                position: absolute;
+                margin-top: -15px;
+                top: 50%;
+                right: 10px;
+                width: 30px;
+                height: 30px;
+                color: #FFF;
+                line-height: 30px;
+                .borderRadius(5px);
+                background-color: @buttonBgColor;
+                text-align: center;
+                .iconfont {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}
+
+//公告详情
+.news-panel {
+    .layout;
+    margin-top: 15px;
+    padding: 50px 130px 100px 130px;
+    .news-title {
+        font-size: 20px;
+        font-weight: 500;
+        text-align: center;
+    }
+    .news-tips {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 50px;
+        color: #696969;
+        .news-tips-item {
+            margin-right: 10px;
+        }
+    }
+    .news-content {
+        color: #000;
+        p {
+            line-height: 28px;
+        }
+        .news-section {
+            text-indent: 2em;
+        }
+        .news-company, .news-time {
+            text-align: right;
+        }
+
+    }
+} 
 
 //单独一栏提交订单按钮
 .commit-orders-box {
     text-align: right;
-    margin-top: 46px;
-<<<<<<< HEAD
+    margin-top: 15px;
+    height: 60px;
+    line-height: 60px;
+    border: 1px solid @borderColor;
+    background-color: #FFF;
+    padding-right: 15px;
     &.commit-orders-box-area {
-        height: 68px;
-        line-height: 68px;
+        height: 51px;
+        line-height: 51px;
         margin-top: 0;
-        border: 1px solid @borderColor;
         border-top: none;
-        background-color: #FFF;
-        padding-right: 15px;
     }
     &.commit-orders-box-layout {
         .layout;
         padding: 15px;
         margin-top: 15px;
     }
-=======
->>>>>>> origin/zhy
+    
+    .cancel {
+        background-color: #efad4f;
+    }
+}
+//带图标的可点击元素
+.commit-item {
+    color: @fontColor;
+    margin-right: 30px;
+    .iconfont {
+        vertical-align: middle;
+        color: @mainColor;
+        margin-right: 3px;
+    }
+    &:hover {
+        color: @mainColor;
+    }
+}
+    
+//全选操作框
+.all-select-panel {
+    .layout;
+    padding: 0 15px;
+    &.all-select-panel-nobottomborder {
+        border-bottom: none;
+    }
+    &.all-select-special {
+        border: none;
+        border-top: 1px solid @borderColor; 
+    }
+    .all-check-box {
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        margin-right: 15px;
+        .checkbox {
+            position: relative;
+            top: -2px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .button-special {
+            background-color: @mainColor;
+            color: #FFF;
+        }
+        .tips-area {
+            display: inline-block;
+            padding: 4px 20px;
+            background-color: #fcf7e3;
+            border: 1px solid #efad4f;
+            color: #ef810e;
+            line-height: 24px;
+            .borderRadius(3px);
+        }
+        .all-import {
+            color: @buttonBgColor;
+        }
+    }
 }
 
-//征信材料角色tab切换栏
-.credit-material-tab-bar {
+
+//tab切换栏
+.tab-bar {
     background-color: #FFF;
-    margin-top: 12px;
     border: 1px solid @borderColor;
     border-bottom: none;
     height: 50px;
     line-height: 50px;
     text-align: right;
     padding-right: 20px;
+    &.tab-bar-special {
+        margin-top: 15px;
+    }
     .role-bar-ul {
         position: relative;
         top: -1px;
@@ -744,11 +1367,54 @@ a {
     &.credit-datas-bar-special {
         border-top: none;
     }
+    .select {
+        line-height: 30px;
+    }
     .delete-credit-item {
         float: right;
         line-height: 60px;
     }
 }
+// 消息列表
+.message-area {
+    padding: 5px 20px;
+    .message-panel {
+        margin: 0 auto;
+        .message-item {
+            line-height: 40px;
+            border-bottom: 1px dashed @borderColor;
+            &:last-child {
+                border: none;
+            }
+            .message-item-data {
+                float: left;
+                display: inline-block;
+                text-align: left;
+                width: 80%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                a {
+                    color: @fontColor;
+                    &:hover {
+                        color: @mainColor;
+                    }
+                }
+            }
+            .message-time, .message-more {
+                float: right;
+            }
+            .message-time {
+                color: #90a4ae;
+            }
+            .message-more {
+                color: #3cb4f3;
+            }
+        }
+    }
+}
+
+//类似键值对的组合
 .key-item-box {
     display: inline-block;
     float: left;
@@ -760,25 +1426,24 @@ a {
     .key-value {
         width: 175px;
     }
+    .select {
+        position: relative;
+        top: -2px;
+        vertical-align: middle;
+    }
 }
 
 .credit-imgs-bar {
     padding: 24px 125px;
 }
-<<<<<<< HEAD
 //图片组件
 .imgs-item-group {
     position: relative;
     display: inline-block;
-=======
-.imgs-item-group {
-    float: left;
->>>>>>> origin/zhy
     width: 224px;
     text-align: center;
     margin-right: 29px;
     margin-bottom: 10px;
-<<<<<<< HEAD
     //图片组件公共部分样式
     .imgs-item-upload, .imgs-item-view {
         display: block;
@@ -834,29 +1499,12 @@ a {
         }
     }
     
-=======
-    .imgs-item {
-        width: 220px;
-        height: 136px;
-        color: #b7bfc5;
-        text-align: center;
-        padding: 20px 0;
-        cursor: pointer;
-        border: 2px solid @borderColor;
-        background-color: #f1f1f2;
-        .borderRadius(3px);
-        .iconfont {
-            font-size: 65px;
-        }
-    }
->>>>>>> origin/zhy
     .imgs-item-p {
         line-height: 42px;
         text-align: center;
     }
 }
 
-<<<<<<< HEAD
 
 //待办提醒
 .remind {
@@ -895,7 +1543,10 @@ a {
             .message-number {
                 margin-left: 10px;
             }
-=======
+        }
+    }
+}
+
 .loan-imgs-bar {
     padding: 24px 0 0 0;
     .imgs-item-group {
@@ -933,12 +1584,10 @@ a {
             width:20px;
             height:20px;
             top:4px;
->>>>>>> origin/zhy
         }
     }
 }
 
-<<<<<<< HEAD
 //右边栏
 .sideBar {
     position: fixed;
@@ -1005,7 +1654,7 @@ a {
             }
         }
     }
-=======
+}    
 //征信退回原因
 .back-creditRes-bar {
     .backReason;
@@ -1032,8 +1681,20 @@ a {
 .loan-info {
     padding: 24px 125px;
 }
+//车商管理
+.carShop-manage {
+    padding: 24px 250px 24px 0;
+    position: relative;
+    .button{
+        position: absolute;
+        top: 34px;
+        right: 150px;
+        height: 30px;
+        line-height: 30px;
+    }
+}
 .info-key-value-box{
-    width: calc(50% - 2px);
+    width: calc(~"50% - 2px");
     display: inline-block;
     margin: 10px 0;
     i{
@@ -1044,6 +1705,7 @@ a {
         display:inline-block;
         width:120px;
         text-align:right;
+        margin-right: 25px;
     }
     .info-value{
         border:1px solid @selectBorderColor;
@@ -1052,6 +1714,14 @@ a {
         border-radius:4px;
         display:inline-block;
         width:200px;
+        position: relative;
+        .unit-text{
+            position: absolute;
+            top:0;
+            right:3px;
+            line-height: 28px;
+            color: @unitTextColor;
+        }
         input{
             border:none;
             outline:none;
@@ -1065,11 +1735,183 @@ a {
             width:100%;
         }
     }
+    .gps{
+        width: 64px !important;
+    }
     &:nth-of-type(odd) {
         text-align:left;
     }
     &:nth-of-type(even) {
         text-align:right;
     }
->>>>>>> origin/zhy
+}
+.info-key-check-box{
+    margin: 10px 0;
+    .box;
+    i{
+        color:@backReasonBorderColor;
+    }
+    .info-key{
+        color: @fontColor;
+        width: 120px;
+        margin-right: 25px;
+        text-align: right;
+        line-height: 30px;
+        display: block;
+//      -moz-box-flex: 1;
+//      -webkit-box-flex: 1;
+//      box-flex: 1;
+    }
+    .info-check-box{
+        -moz-box-flex: 1;
+        -webkit-box-flex: 1;
+        box-flex: 1;
+        display: block;
+        .info-check{
+            width:auto;
+            float:left;
+            margin:0 10px 10px 10px;
+            .check-value{
+                line-height: 30px;
+            }
+        }
+        .check-key{
+            width:20px;
+            height:20px;
+            display:inline-block;
+            position:relative;
+            margin:0 5px 0 10px;
+            .checkbox{
+                position:absolute;
+                width:20px;
+                height:20px;
+                top:4px;
+            }
+        }
+    }
+}
+
+//鼠标移上小提示
+.tips {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #efad4f;
+    color: #FFF;
+    .borderRadius(8px);
+    top: -8px;
+    right: -8px;
+    cursor: pointer;
+    .iconfont {
+        font-size: 16px;
+    }
+    text-align: center;
+    line-height: 16px;
+}
+.tips-area {
+    cursor: pointer;
+}
+.tips-content {
+    display: none;
+    position: absolute;
+    z-index: 999;
+    width: 273px;
+    padding: 4px 20px;
+    background-color: #fcf7e3;
+    border: 1px solid #efad4f;
+    color: #ef810e; 
+    line-height: 24px;
+    .borderRadius(3px);
+    cursor: default;
+    .temp-position {
+        position: absolute;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        top: -10px;
+        left: 0;
+        width: 273px;
+        height: 10px;
+        background-color: red;
+    }
+    .top-inner {
+        position: absolute;
+        top: -4px;
+        left: 50%;
+        margin-left: -3px;
+        border-width: 6px;
+        border-color: transparent transparent #fcf7e3 transparent;
+    }
+    .top-outer {
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 8px;
+        border-color: transparent transparent #efad4f transparent;
+    }
+    .left-inner {
+        position: absolute;
+        top: 50%;
+        left: -14px;
+        border-width: 7px;
+        border-color: transparent #fcf7e3 transparent transparent;
+    }
+    .left-outer {
+        position: absolute;
+        top: 50%;
+        left: -17px;
+        margin-top: -7px;
+        border-width: 8px;
+        border-color: transparent #efad4f transparent transparent;
+    }
+    
+}
+.col-company{
+    &:first-child {
+        .panel-title-box{
+            border-top: none;
+            margin-top: 0;
+        }
+    }
+    &:last-child{
+        padding-bottom: 29px;
+    }
+    .carShop-manage{
+        padding: 24px 250px 0 0;
+    }
+}
+.choose-content{
+    display: flex;
+    text-align: center;
+    justify-content:center;
+    .choose-items{
+        margin: 120px 30px;
+        border: 1px solid @mainColor;
+        width: 240px;
+        height: 240px;
+        color: @fontColor;
+        &-icon{
+            margin-top: 20px;
+            .iconfont{
+                font-size: 60px;
+                color: @mainColor;
+                line-height: 120px;
+                font-weight: bolder;
+            }
+        }
+        &-title{
+            font-size: 18px;
+            font-weight: bolder;
+            line-height: 100px;
+            letter-spacing: 3px;
+            -webkit-font-smoothing:antialiased;
+        }
+        &:hover{
+            background: @mainColor;
+            color: #fff;
+            .iconfont{
+                color: #fff;
+            }
+        }
+    }
 }
