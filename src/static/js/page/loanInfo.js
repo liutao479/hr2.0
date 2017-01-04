@@ -6,7 +6,7 @@
 	page.template = g.router.template('loan-info');
 	$scope.loadCustomerList = function() {
 		$.ajax({
-			url: $http.api($http.apiMap.myCustomer),
+			url: $http.api($http.apiMap.loanInfo),
 			success: $http.ok(function(data) {
 				_.compile(_.$console, page.template, data, $scope.async);
 			})
