@@ -1,5 +1,5 @@
 'use strict';
-(function(global) {
+(function(_) {
 	/**
 	* 添加string.format方法
 	*/
@@ -20,7 +20,40 @@
 		phone: /^1[\d+]{10}$/,
 		idc: /^[\d+]{14|17}[\d+|Xx]{1}$/i
 	};
-	global.regulation = $.extend(global.regulation || {}, regulation);
+	_.regulation = regulation;
+
+	/*****************************************
+	* 全局http请求配置
+	*/
+	_.$http = {};
+	_.$http.api = function(method) {
+		return 'http://127.0.0.1:8083/mock/' + method;
+	}
+	_.$http.authorization = function(key) {
+		$.ajaxSetup({
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader('Authorization', btoa('test'));
+			}		
+		})
+	}
+	/**
+	* 全局ajax success拦截器
+	* @params {function} cb
+	*/
+	_.$http.ok = function(cb) {
+		return function(response) {
+			if(response && !response.code) {
+				cb(response.data);
+			} else {
+				console.log('faile');
+			}
+		}
+	}
+	$(document).ajaxError(function(event, request, settings, error) {
+		//todo show global error
+	});		
+	/*****************http end*******************/
+	
 })(window);
 
 

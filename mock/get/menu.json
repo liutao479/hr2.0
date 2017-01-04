@@ -1,0 +1,16 @@
+{
+	"code": 0,
+	"data": {
+		"loanProcess": [],
+		"myCustomer": [],
+		"orderManage": ["orderModifyAudit", "cancelOrderAudit"],
+		"moneyManage": ["loanManage", "marginManage"],
+		"licenceManage": ["licenceProcess", "licenceAudit", "licenceStatis"],
+		"mortgageManage": ["mortgageProcess", "mortgageAudit", "mortgageStatis"],
+		"expireManage": ["expireInfoInput", "expireProcess"],
+		"archiveDownload": ["creditArchiveDownload", "loadArchiveDownload"],
+		"archivePrint": ["moneyBusinessAuditPrint"],
+		"operationsAnalysis": [],
+		"organizationManage": []
+	}
+}

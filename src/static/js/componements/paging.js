@@ -2,8 +2,8 @@
 /**
 * jQuery分页控件
 * 使用方式 $(element).paging()
-* <ele data-paging="{ajaxLoadingFunctionName}" data-max="{totalCount}" data-pages="{totalPage}" data-size="{pageSize}" data-current="{currentPage}"></ele>
-* data-paging {function} 页面跳转请求函数，用于传递参数从新从服务器获取新的页面数据; 默认参数(page, pageSize, $el, cb)，函数需要绑定到window对象
+* <ele data-request="{ajaxLoadingFunctionName}" data-max="{totalCount}" data-pages="{totalPage}" data-size="{pageSize}" data-current="{currentPage}"></ele>
+* data-request {function} 页面跳转请求函数，用于传递参数从新从服务器获取新的页面数据; 默认参数(page, pageSize, $el, cb)，函数需要绑定到window对象
 * data-max {int} 当前列表最大记录数 默认 0，为0时，分页控件自动移除
 * data-pages {int} 当前最大页数，与data-max二者传其一
 * data-size {int} 每页显示的数量 默认 20
@@ -135,7 +135,7 @@
 		var self = this;
 		if(self.opt.request) {
 			try {
-				self.opt.request = eval(sel.opt.request)
+				self.opt.request = eval(self.opt.request)
 			} catch(err) {
 				self.opt.request = internal.empty;
 			}
