@@ -23,6 +23,10 @@
 		'creditUpload': {
 			title: "征信材料上传",
 			page: 'credit-upload'
+		},
+		'loanInfo': {
+			title: "信息表修改审核",
+			page: 'loan-info'
 		}
 	}
 	/**

@@ -32,96 +32,104 @@
 				</div>
 				
 				<!--面板-->
-				<div class="panel panel-loan">
-					<!--借款人信息填写栏-->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">订单信息</span>
-							<div class="button button-mini-nowidth">
-								保存
+				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+					{{ if(row. == ){ }}
+					<div class="panel panel-loan">
+						<!--借款人信息填写栏-->
+						<div class="panel-title-box">
+							<div class="panel-title">
+								<i class="iconfont">&#xe626;</i>
+								<span class="panel-title-name">订单信息</span>
+								<div class="button button-mini-nowidth">
+									保存
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="panel-detail-content-layout">
-						<div class="loan-info">
-							{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+						<div class="panel-detail-content-layout">
+							<div class="loan-info">
+								{{for(var j = 0, length = row.length; j < length; j++) { var role = row[j]; }}
+									<div class="info-key-value-box">
+										<span class="info-key"><i>*</i>业务来源：</span>
+										{{if(role. == ){ }}
+											<span class="info-value">
+												<select>
+													<option>12</option>
+												</select>
+											</span>
+										{{ }else{ }}
+											<span class="info-value"><input type="text" /></span>
+										{{ } }}
+									</div>
+								{{ } }}
 								<div class="info-key-value-box">
-									<span class="info-key"><i>*</i>业务来源：</span>
+									<span class="info-key"><i>*</i>业务模式：</span>
 									<span class="info-value">
 										<select>
 											<option>12</option>
 										</select>
 									</span>
 								</div>
-							{{ } }}
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>业务模式：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>牌照类型：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>上牌地：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>经办银行：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>业务类型：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>主办人：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>辅办人：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>调查人：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>签单员：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>牌照类型：</span>
+									<span class="info-value"><input type="text" /></span>
+								</div>
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>上牌地：</span>
+									<span class="info-value"><input type="text" /></span>
+								</div>
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>经办银行：</span>
+									<span class="info-value">
+										<select>
+											<option>12</option>
+										</select>
+									</span>
+								</div>
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>业务类型：</span>
+									<span class="info-value">
+										<select>
+											<option>12</option>
+										</select>
+									</span>
+								</div>
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>主办人：</span>
+									<span class="info-value">
+										<select>
+											<option>12</option>
+										</select>
+									</span>
+								</div>
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>辅办人：</span>
+									<span class="info-value">
+										<select>
+											<option>12</option>
+										</select>
+									</span>
+								</div>
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>调查人：</span>
+									<span class="info-value">
+										<select>
+											<option>12</option>
+										</select>
+									</span>
+								</div>
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>签单员：</span>
+									<span class="info-value">
+										<select>
+											<option>12</option>
+										</select>
+									</span>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+					{{ } }}
+				{{ } }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
