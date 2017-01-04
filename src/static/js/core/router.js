@@ -18,8 +18,11 @@
 		},
 		'myCustomer': {
 			title: '我的客户',
-			refer: [],
 			page: 'customer'
+		},
+		'creditUpload': {
+			title: "征信材料上传",
+			page: 'credit-upload'
 		}
 	}
 	/**

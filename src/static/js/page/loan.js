@@ -12,8 +12,15 @@
 			})
 		})
 	}	
+	$scope.listen = function() {
+		_.$console.find('table .button').on('click', function() {
+			var key = $(this).data('href');
+			g.router.render(key);
+		})
+	}
 	$scope.async = function() {
 		$('#pageToolbar').paging();
+		$scope.listen();
 	}
 	$scope.start = function() {
 		$scope.loadLoanList();

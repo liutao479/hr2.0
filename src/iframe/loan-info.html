@@ -45,14 +45,16 @@
 					</div>
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>业务来源：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
+							{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>业务来源：</span>
+									<span class="info-value">
+										<select>
+											<option>12</option>
+										</select>
+									</span>
+								</div>
+							{{ } }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>业务模式：</span>
 								<span class="info-value">
