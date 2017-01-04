@@ -53,7 +53,7 @@
 				}
 				_f.apply();
 			}
-			if(typeof fn == 'boolean') {
+			if(typeof fn == 'boolean' || !fn) {
 				fn = $.noop;
 				raw = fn;
 			}

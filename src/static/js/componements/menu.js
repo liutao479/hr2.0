@@ -204,7 +204,7 @@
 		});
 	};
 
-	menu.prototype._trigger = function(route, $item) {
+	menu.prototype._trigger = function(route, $item, unRouter) {
 		var self = this;
 		if($item.hasClass(self.activeCss)) return;
 		if(self.$selected) {
@@ -213,15 +213,15 @@
 		$item.addClass(self.activeCss);
 		self.selectedKey = route;
 		self.$selected = $item;
-		if(self.router && typeof self.router == 'function') {
+		if(!unRouter && self.router && typeof self.router == 'function') {
 			self.router(route);
 		}
 	};
 
-	menu.prototype.setup = function(key){
+	menu.prototype.setup = function(key, unRouter){
 		var self = this;
 		var $item = self.$dom.find('#menu'+key);
-		self._trigger(key, $item);
+		self._trigger(key, $item, unRouter);
 	};
 
 	w.menu = menu;
