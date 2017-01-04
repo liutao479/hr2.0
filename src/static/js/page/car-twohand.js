@@ -1,29 +1,29 @@
 'use strict';
 (function(g) {
 	var $scope = {};
-	var page = pageCtrl['car-twohand'] = {};
+	var page = pageCtrl['carTwoHand'] = {};
 	var _ = g.render;
-	page.template = g.router.template('main');
-	$scope.loadCarTwohandList = function() {
+	page.template = g.router.template('car-twohand');
+	$scope.loadLoanList = function() {
 		$.ajax({
-			url: 'http://192.168.0.113:8080/loanApproval/usedCarAssess',
-			success: function(data) {
-				_.compile(_.$console, page.template, data);
-			}
+			url: $http.api('car/twohand'),
+			success: $http.ok(function(data) {
+				_.compile(_.$console, page.template, data, $scope.async);
+			})
 		})
 	}	
-//	$scope.listen = function() {
-//		_.$console.find('table .button').on('click', function() {
-//			var key = $(this).data('href');
-//			g.router.render(key);
-//		})
-//	}
+	$scope.listen = function() {
+		_.$console.find('table .button').on('click', function() {
+			var key = $(this).data('href');
+			g.router.render(key);
+		})
+	}
 	$scope.async = function() {
 		$('#pageToolbar').paging();
-//		$scope.listen();
+		$scope.listen();
 	}
 	$scope.start = function() {
-		$scope.loadCarTwohandList();
+		$scope.loadLoanList();
 	}
 	
 	page.paging = function(page, pageSize, $el, cb) {

@@ -27,8 +27,12 @@
 			page: 'loanMagage'
 		},
 		'loanInfo': {
-			title: '',
+			title: '信息表修改',
 			page: 'loanInfo'
+		},
+		'carTwoHand': {
+			title: '二手车信息',
+			page: 'carTwoHand'
 		}
 	}
 	/**
