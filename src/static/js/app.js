@@ -21,15 +21,6 @@ $('#remind-tips').on('click',function (){
 	}
 });
 
-
-//右边栏
-$('.sideBar-item').hover(function() {
-	$(this).find('.sideBar-content').show();	
-},function() {
-	$(this).find('.sideBar-content').hide();		
-});
-
-
 //单选框
 $('.checkbox-normal').on('selectstart', false);
 $('.checkbox-normal').on('click', function() {
@@ -56,11 +47,4 @@ $(function() {
 
 
 
-//测试鼠标移上提示框
-$('.tips-area').hover(function() {
-	$(this).find('.tips-content').toggle();
-})
 
-$('.panel-count-number-box').find('.tips').hover(function() {
-	$(this).find('.tips-content').toggle();
-});

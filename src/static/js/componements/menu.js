@@ -6,12 +6,12 @@
 	var menuMap = {
 		loanProcess: {
 			name: '贷款办理',
-			route: '',
+			route: 'loanProcess',
 			icon: '&#xe6f9;'
 		},
 		myCustomer: {
 			name: '我的客户',
-			route: 'my-customer',
+			route: 'myCustomer',
 			icon: '&#xe6c3;'
 		},
 		orderManage: {
@@ -37,12 +37,12 @@
 		'loanManage': {
 			parent: 'moneyManage',
 			name: '借款管理',
-			route: ''
+			route: 'loanManage'
 		},
 		'marginManage': {
 			parent: 'moneyManage',
 			name: '保证金管理',
-			route: ''
+			route: 'marginManage'
 		},
 		licenceManage: {
 			name: '上牌管理',

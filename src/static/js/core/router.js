@@ -13,13 +13,18 @@
 	var routerMap = {
 		'loanProcess': {
 			title: '车贷办理',
-			refer: ['test'],
+			refer: ['navigator'],
 			page: "loan"
 		},
 		'myCustomer': {
 			title: '我的客户',
-			refer: [],
+			refer: ['navigator'],
 			page: 'customer'
+		},
+		'loanManage': {
+			title: '借款管理',
+			refer: ['navigator'],
+			page: 'loanMagage'
 		}
 	}
 	/**

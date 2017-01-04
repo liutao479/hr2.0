@@ -48,7 +48,10 @@
 				console.log('faile');
 			}
 		}
-	}
+	};
+	_.$http.apiMap = {
+		myCustomer: 'my/customer'
+	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
 	});		

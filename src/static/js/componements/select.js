@@ -12,7 +12,7 @@
 			var per = $el.attr('jq-per');
 			this.$el = $el;
 			options.per = per;
-			$el.html('<select></select>')
+			$el.html('<select></select>');
 		}
 		
 		select.prototype.init = function() {
