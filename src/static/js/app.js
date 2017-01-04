@@ -47,6 +47,7 @@ $(function() {
 		url: $http.api('menu'),
 		success: $http.ok(function(data) {
 			var $menu = new menu('#menu', data, router.render);
+			
 			$menu.setup('loanProcess');
 		})
 	})
