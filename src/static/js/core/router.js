@@ -24,7 +24,22 @@
 		'loanManage': {
 			title: '借款管理',
 			refer: ['navigator'],
-			page: 'loanMagage'
+			page: 'loanManage'
+		},
+		'marginManage': {
+			title: '保证金管理',
+			refer: [],
+			page: 'marginManage'
+		},
+		'operationsAnalysis': {
+			title: '运营分析',
+			refer: [],
+			page: 'operationsAnalysis'
+		},
+		'organizationManage': {
+			title: '合作机构维护',
+			refer: [],
+			page: 'organizationManage'
 		}
 	}
 	/**

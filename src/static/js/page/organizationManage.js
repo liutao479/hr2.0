@@ -1,12 +1,12 @@
 'use strict';
 (function(g) {
 	var $scope = {};
-	var page = pageCtrl['loanManage'] = {};
+	var page = pageCtrl['organizationManage'] = {};
 	var _ = g.render;
-	page.template = g.router.template('loan-manage');
-	$scope.loadLoanManageList = function() {
+	page.template = g.router.template('cooperative-bank');
+	$scope.loadOrganizationBankList = function() {
 		$.ajax({
-			url: $http.api('loan/manage'),
+			url: $http.api('organizationManage'),
 			success: $http.ok(function(data) {
 				_.compile(_.$console, page.template, data, $scope.async);
 			})
@@ -16,7 +16,7 @@
 		$('#pageToolbar').paging();
 	}
 	$scope.start = function() {
-		$scope.loadLoanManageList();
+		$scope.loadOrganizationBankList();
 	}
 	
 	page.paging = function(page, pageSize, $el, cb) {

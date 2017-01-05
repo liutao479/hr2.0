@@ -131,12 +131,12 @@
 		},
 		operationsAnalysis: {
 			name: '运营分析',
-			route: '',
+			route: 'operationsAnalysis',
 			icon: '&#xe603;'
 		},
 		organizationManage: {
 			name: '合作机构维护',
-			route: '',
+			route: 'organizationManage',
 			icon: '&#xe6cb;'
 		}
 	}

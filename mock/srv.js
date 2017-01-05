@@ -15,7 +15,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(bodyParser.urlencoded({extention: true}));
+app.use(bodyParser.urlencoded({ extention: true }));
 
 app.all('/mock/*', function(req, res) {
   var path = api = req.params[0].replace(/\//g, '.'),

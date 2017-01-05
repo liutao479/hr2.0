@@ -45,7 +45,7 @@
 			if(response && !response.code) {
 				cb(response.data);
 			} else {
-				console.log('faile');
+				console.log('failed');
 			}
 		}
 	};

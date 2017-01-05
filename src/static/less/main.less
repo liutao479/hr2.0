@@ -334,11 +334,11 @@ a {
 	        border-collapse: collapse;
 	        margin-top: 11px;
 	        text-align: left;
-            -webkit-transition: all .25s;
-               -moz-transition: all .25s;
-                -ms-transition: all .25s;
-                 -o-transition: all .25s;
-                    transition: all .25s;
+            -webkit-transition: all .1s;
+               -moz-transition: all .1s;
+                -ms-transition: all .1s;
+                 -o-transition: all .1s;
+                    transition: all .1s;
 	        &:hover {
 	           border-color: @mainColor;
                  -webkit-transform: scale(1.01);
@@ -444,12 +444,6 @@ a {
 .loan-manage {
     .panel-detail-content {
         padding: 20px 17px;
-    }
-}
-//运营分析
-.operational-analysis {
-    .panel {
-
     }
 }
 //订单日志
@@ -629,6 +623,10 @@ a {
     &.select-search-bar-special {
         margin-top: 15px;
     }
+    .separator {
+        margin: 0 5px;
+        color: @selectBorderColor;
+    }
     .input-text {
         width: 198px;
         line-height: 60px;
@@ -667,6 +665,7 @@ a {
     border: 1px solid @borderColor;
     border-top: none;
     border-collapse: collapse;
+    empty-cells:show;
     &.orders-table-noborder {
         border: none;
     }
@@ -698,6 +697,9 @@ a {
                 }
             }
         }
+        .orders-item-data-blank {
+            width: 22%;
+        } 
         .button {
             background-color: #e9e7f7;
             color: #6b59c9;
@@ -732,6 +734,15 @@ a {
             }
             height: 78px;
             color: @fontColor;
+            &.orders-item-data-operate {
+                // width: 250px;
+                .button {
+                    margin-right: 15px;
+                }
+            }
+            &.orders-item-data-blank {
+                width: 22%;
+            } 
         }
         &.acount-name-data {
             padding: 10px 0;

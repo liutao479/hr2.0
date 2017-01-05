@@ -1,0 +1,168 @@
+	<!--运营分析-->
+			<div class="container operations-analysis" id="operations-analysis">
+				
+				<!--tab切换栏-->
+				<div class="tab-bar">
+					<ul class="role-bar-ul clearfix">
+						<li class="role-bar-li"><a href="#" class="role-item">业务量日统计</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">业务量区间统计</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">车商银行业务统计</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item role-item-active">放款调度统计</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">逾期情况统计</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">报表下载</a></li>
+					</ul>
+				</div>
+				<!--tab切换栏   end-->
+				
+				
+				<!--面板-->
+				<div class="panel panel-nomargintop">
+					<!--银行汇款日期选择-->
+					<div class="select-search-bar no-border clearfix">
+						<div class="search-item">
+							<span class="select-name">统计日期：</span>
+							<span class="select select-common">
+								<span class="placeholder">2016-12-19</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+							<span class="separator">-</span>
+							<span class="select select-common">
+								<span class="placeholder">2016-12-19</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">分公司：</span>
+							<span class="select select-common">
+								<span class="placeholder">全部</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">银行：</span>
+							<span class="select select-common">
+								<span class="placeholder">全部</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+					</div>
+					<!--银行汇款日期选择  end-->
+					
+					<!--二级标题-->
+					<div class="panel-content-title panel-content-title-special">
+						<div class="key-value-box">
+							<span class="key"><span>2016-11-01</span>至<span>2016-11-07</span>概览</span>
+						</div>
+					</div>
+					<!--二级标题  end-->
+					
+					<!--二级详细内容罗列-->
+					<div class="panel-detail-content">
+						<div class="operational-item-box">
+							<div class="operational-item">
+								<div class="operational-item-top">
+									财务应放未放
+								</div>
+								<div class="operational-item-bottom clearfix">
+									<p class="operational-item-money"><span>64</span>笔<span>320</span>万元</p>
+									<div class="iconfont-box">
+										<i class="iconfont">&#xe623;</i>
+									</div>
+								</div>
+								
+							</div>
+							<div class="operational-item">
+								<div class="operational-item-top">
+									财务应放未放
+								</div>
+								<div class="operational-item-bottom clearfix">
+									<p class="operational-item-money"><span>64</span>笔<span>320</span>万元</p>
+									<div class="iconfont-box">
+										<i class="iconfont">&#xe623;</i>
+									</div>
+								</div>
+								
+							</div>
+							<div class="operational-item">
+								<div class="operational-item-top">
+									财务应放未放
+								</div>
+								<div class="operational-item-bottom clearfix">
+									<p class="operational-item-money"><span>64</span>笔<span>320</span>万元</p>
+									<div class="iconfont-box">
+										<i class="iconfont">&#xe623;</i>
+									</div>
+								</div>
+								
+							</div>
+							<div class="operational-item">
+								<div class="operational-item-top">
+									财务应放未放
+								</div>
+								<div class="operational-item-bottom clearfix">
+									<p class="operational-item-money"><span>64</span>笔<span>320</span>万元</p>
+									<div class="iconfont-box">
+										<i class="iconfont">&#xe623;</i>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<!--二级详细内容罗列  end-->
+					
+					<!--二级标题-->
+					<div class="panel-content-title">
+						<div class="key-value-box">
+							<span class="key"><span>2016-11-01</span>至<span>2016-11-07</span>明细</span>
+						</div>
+					</div>
+					<!--二级标题  end-->
+					
+					<!--二级详细内容罗列-->
+					<div class="panel-content panel-content-layout">
+						<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">
+							<thead>
+								<tr class="orders-bar-title">
+									<td class="orders-item-data">统计日期</td>
+									<td class="orders-item-data">财务应放为放<br />金额（元）</td>
+									<td class="orders-item-data">财务应放未放<br />笔数</td>
+									<td class="orders-item-data">银行放款<br />金额(元)</td>
+									<td class="orders-item-data">银行放款<br />笔数</td>
+									<td class="orders-item-data">银行应放未放<br />金额（元）</td>
+									<td class="orders-item-data">银行应放<br />未放笔数</td>
+									<td class="orders-item-data">垫资总金额<br />（元）</td>
+									<td class="orders-item-data">垫资<br />总笔数</td>
+									<td class="orders-item-data">自行垫资<br />金额（元）</td>
+									<td class="orders-item-data">自行垫资<br />笔数</td>
+								</tr>
+							</thead>
+							<tbody>
+								{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+								<tr>
+									<td class="orders-item-data">{{=row.statisticsTime}}</td>
+									<td class="orders-item-data">{{=row.financeMoney}}</td>
+									<td class="orders-item-data">{{=row.financeNumber}}</td>
+									<td class="orders-item-data">{{=row.bankMoney}}</td>
+									<td class="orders-item-data">{{=row.bankNumber}}</td>
+									<td class="orders-item-data">{{=row.bankShouldBank}}</td>
+									<td class="orders-item-data">{{=row.bankShouldNumber}}</td>
+									<td class="orders-item-data">{{=row.paidMoney}}</td>
+									<td class="orders-item-data">{{=row.paidNumber}}</td>
+									<td class="orders-item-data">{{=row.selfPaidMoney}}</td>
+									<td class="orders-item-data">{{=row.selfPaidNumber}}</td>
+								</tr>
+								{{ } }}
+							</tbody>
+						</table>
+					</div>
+					<!--二级详细内容罗列  end-->
+
+				</div>
+				<!--面板  end-->
+				
+			</div>
+			<!--上牌办理 end-->
+			
+			<!--分页插件改编（未完成）-->
+			<div id="pageToolbar" class="pageToolbar" data-pages="50" data-current="8"></div>
