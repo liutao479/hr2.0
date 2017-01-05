@@ -46,10 +46,10 @@
 	*/
 	page.excute = function(name, params) {
 		var _ctrl = page.ctrl[name],
-			_$scope = page.$scope[name];
+			_$scope = page.$scope[name],
+			args = [];
 		_$scope.$params = params || {};
 		if(_ctrl.refer && _ctrl.refer.length > 0) {
-			var args = [];
 			for(var i = 0, len = _ctrl.refer.length; i < len; i++) {
 				var referName = _ctrl.refer[i];
 				if(!page.refers[referName]) {
@@ -58,14 +58,17 @@
 					args.push($.getScript(referPath));	
 				}
 			}
-			if(!!args.length) {
-				return $.when.apply(args)
-						.done(function() {
-							_ctrl.fn(_$scope);
-						})	
-			}
 		}
-		_ctrl.fn(_$scope);
+		if(!!args.length) {
+			var promise = $.when.apply(args);
+			promise.done(function() {
+				setTimeout(function() {
+					_ctrl.fn(_$scope);
+				}, 0);
+			});
+		} else {
+			_ctrl.fn(_$scope);	
+		}
 	}
 	//Todo 待删除
 	var ctrl = g.pageCtrl = {};
