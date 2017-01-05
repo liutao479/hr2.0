@@ -35,6 +35,7 @@ gulp.task('less', function() {
 })
 gulp.task('concat', function() {
     return gulp.src([
+            path.src.js('plugin/**/*.js'),
             path.src.js('core/**/*.js'),
             path.src.js('componements/**/*.js'),
             path.src.js('app.js')

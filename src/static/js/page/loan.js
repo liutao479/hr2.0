@@ -1,54 +1,59 @@
 'use strict';
 page.ctrl('loan', ['page/test'], function($scope) {
-	var loadLoanList = function() {
+	var $console = render.$console,
+		$params = $scope.$params;
+	var pageSize = 20;
+	/**
+	* 加载车贷办理数据
+	* @params {object} params 请求参数
+	* @params {function} cb 回调函数
+	*/
+	var loadLoanList = function(params, cb) {
 		$.ajax({
-			url: $http.api('loan/list'),
-			success: $http.ok(function(data) {
-				render.compile(render.$console, router.template('main'), data, $scope.async);
+			url: $http.api($http.apiMap.loanList),
+			data: params,
+			success: $http.ok(function(result) {
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				if(cb && typeof cb == 'function') {
+					cb(result.total);
+				}
 			})
 		})
 	}
+	/***
+	* 加载页码模板
+	*/
+	render.$console.load(router.template('main'), function() {
+		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
+		$scope.$el = {
+			$tbl: $console.find('#loanTable'),
+			$paging: $console.find('#pageToolbar')
+		}
+		if($scope.$params.position) {
+			
+		}
+		var params = {
+			page: $params.page || 1,
+			type: $params.processType || 0,
+			pageSize: pageSize
+		}
+		loadLoanList(params, function(total) {
+			$scope.$el.$paging.data({
+				'pages': tool.pages(total || 0, pageSize),
+				'size': pageSize
+			});
+			$('#pageToolbar').paging();
+		});
+	});
 
-	$scope.async = function() {
-		$('#pageToolbar').paging();
+	$scope.paging = function(_page, _size, $el, cb) {
+		loadLoanList({
+			page: _page,
+			pageSize: _size,
+			type: $params.processType || 0
+		}, cb)
 	}
-
-	$scope.paging = function(page, pageSize, $el, cb) {
-		console.log(arguments);
-		cb();
-	}
-
-	loadLoanList();
 });
-/*
-(function(g) {
-	var $scope = {};
-	var page = pageCtrl['loan'] = {};
-	var _ = g.render;
-	page.template = g.router.template('main');
-	$scope.loadLoanList = function() {
-		$.ajax({
-			url: $http.api('loan/list'),
-			success: $http.ok(function(data) {
-				_.compile(_.$console, page.template, data, $scope.async);
-			})
-		})
-	}	
-	$scope.async = function() {
-		$('#pageToolbar').paging();
-	}
-	$scope.start = function() {
-		$scope.loadLoanList();
-	}
-	
-	page.paging = function(page, pageSize, $el, cb) {
-		console.log(arguments);
-		cb();
-	}
-
-	$scope.start();
-})(window)
-*/
 
 
 

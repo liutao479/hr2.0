@@ -37,7 +37,7 @@
 			refer: refer,
 			fn: fn
 		}
-		page.$scope[name] = {};
+		page.$scope[name] = { def: {} };
 	}
 	/**
 	* 加载依赖文件
@@ -119,8 +119,10 @@
 	* 执行渲染
 	* @params {string} key 要渲染的页面键名
 	*/
-	router.render = function(key, params) {
-		g.location.hash = key + (params ? '?' + j2search(params) : '');
+	router.render = function(key, params, static) {
+		if(!static) {
+			g.location.hash = key + (params ? '?' + $.param(params) : '');
+		}
 		var item = g.routerMap[key];
 		if(!item) {
 			return g.location.href = '404.html';
@@ -137,11 +139,15 @@
 	* @params {function} cb 回调函数
 	*/
 	router.init = function(cb) {
-		var hash = g.location.hash;
+		var hash = g.location.hash.replace(/\?+/g, '?').substr(1);
 		if(!hash) { return cb(); }
-		hash = hash.replace(/\?+/g, '?')
-		var loc = hash.replace('#', '').split('/');
-		router.render(loc[loc.length - 1]);
-		cb(loc[0]);
+		var sp = hash.split('?');
+		var _origin = sp[0],
+			_search = '?' + sp[1];
+		var _paths = _origin.split('/'),
+			_params = !!_search ? $.parseParams(_search) : undefined;
+		router.render(_paths[_paths.length - 1], _params, true);
+		cb(_paths[0]);
 	}
-})(window)
+})(window);
+

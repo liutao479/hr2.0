@@ -106,9 +106,9 @@
 			$jumb = self.$el.find('.button');
 		$page.on('click', function() {
 			var $that = $(this),
-				page = $that.data('page');
+				_currentPage = $that.data('page');
 			if($that.hasClass('focus') || $that.hasClass('page-ellipse')) return;
-			self.direct(page);
+			self.direct(_currentPage);
 		});
 		$prev.on('click', function() {
 			if(self.opt.current == 1) return;
@@ -119,19 +119,19 @@
 			self.direct(self.opt.current + 1);
 		})
 		$jumb.on('click', function() {
-			var page = $input.val();
-			if(!regulation.number.test(page)) {
+			var _currentPage = $input.val();
+			if(!regulation.number.test(_currentPage) || _currentPage > self.opt.pages) {
 				alert('无效的页码');
 				return $input.val('');
 			}
-			self.direct(parseInt(page));
+			self.direct(parseInt(_currentPage));
 		})
 	};
 	/**
 	* 指定页
 	* @params {int} page 需要跳转的页码
 	*/
-	paging.prototype.direct = function(page) {
+	paging.prototype.direct = function(_currentPage) {
 		var self = this;
 		if(self.opt.request) {
 			try {
@@ -142,8 +142,8 @@
 		} else {
 			self.opt.request = internal.empty;
 		}
-		self.opt.request(page, self.opt.size, self.$el, function(data) {
-			self.opt.current = page;
+		self.opt.request(_currentPage, self.opt.size, self.$el, function(data) {
+			self.opt.current = _currentPage;
 			self.update();
 		})
 	};
