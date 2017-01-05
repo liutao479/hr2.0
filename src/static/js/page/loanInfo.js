@@ -1,28 +1,22 @@
 'use strict';
-(function(g) {
-	var $scope = {};
-	var page = pageCtrl['loanInfo'] = {};
-	var _ = g.render;
-	page.template = g.router.template('loan-info');
-	$scope.loadCustomerList = function() {
+page.ctrl('loanInfo', ['page/test'], function($scope) {
+	var loadloanInfo = function() {
 		$.ajax({
 			url: $http.api($http.apiMap.loanInfo),
 			success: $http.ok(function(data) {
-				_.compile(_.$console, page.template, data, $scope.async);
+				render.compile(render.$console, router.template('loan-info'), data, $scope.async);
 			})
 		})
-	}	
+	}
+
 	$scope.async = function() {
 		$('#pageToolbar').paging();
 	}
-	$scope.start = function() {
-		$scope.loadCustomerList();
-	}
-	
-	page.paging = function(page, pageSize, $el, cb) {
+
+	$scope.paging = function(page, pageSize, $el, cb) {
 		console.log(arguments);
 		cb();
 	}
 
-	$scope.start();
-})(window)
+	loadloanInfo();
+});

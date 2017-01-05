@@ -64,7 +64,8 @@
 		}
 	};
 	_.$http.apiMap = {
-		myCustomer: 'my/customer'
+		myCustomer: 'my/customer',
+		loanInfo: 'loan/info'
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
