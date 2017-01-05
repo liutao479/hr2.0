@@ -38,11 +38,13 @@ $(function() {
 		url: $http.api('menu'),
 		success: $http.ok(function(data) {
 			var $menu = new menu('#menu', data, router.render);
-			
-			$menu.setup('loanProcess');
+			router.init(function(menuId) {
+				if(!menuId) { return $menu.setup('loanProcess'); }
+				$menu.setup(menuId, true);
+			})
 		})
 	})
-})
+});
 
 
 

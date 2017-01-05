@@ -12,6 +12,20 @@
 		    });
 		};
 	}
+	_.query = function(name, source) {
+
+	}
+	/**
+	* json 转 search
+	*/
+	_.j2search = function(o) {
+		if(!o || toString.call(o) != '[object Object]') return '';
+		var arr = [];
+		Object.keys(o).map(function(key) {
+			arr.push(key + '=' + o[key]);
+		})
+		return arr.join('&');
+	}
 	/*
 	* 本地验证规则
 	*/
@@ -54,6 +68,7 @@
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
+		console.log(arguments);
 	});		
 	/*****************http end*******************/
 
