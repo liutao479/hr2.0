@@ -54,121 +54,31 @@
 				<!--工作台左侧菜单面板 end-->
 				
 				<!--面板-->
+				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 				<div class="panel panel-loan panel-detail">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">评估对象</span>
+							<span class="panel-title-name">{{= row.model}}</span>
 						</div>
 					</div>
 					<div class="panel-detail-content panel-detail-layout">
 						<div class="loan-info">
+							{{for(var j = 0, len2 = row.modelcontent.length; j < len2; j++) { var role = row.modelcontent[j]; }}
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>车辆型号：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>车架号：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>厂牌型号：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>车牌号：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>发动机号：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>公路规费交至何时：</span>
+								<span class="info-key"><i>*</i>{{= role.name}}：</span>
+								{{ if(role.type == '1'){ }}
 								<span class="info-value">
 									<select>
 										<option>12</option>
 									</select>
 								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>年审检验合格截止日期：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>车船使用税是否缴纳：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>购置附加税费：</span>
+								{{ }else{ }}
 								<span class="info-value"><input type="text" /></span>
+								{{ } }}
 							</div>
+							{{ } }}
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan panel-detail">
-					<!--借款人信息填写栏-->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">评估依据</span>
-						</div>
-					</div>
-					<div class="panel-detail-content panel-detail-layout">
-						<div class="loan-info">
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>车辆登记证编号：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>同型号新车销售价格：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>首次上牌时间：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>行驶里程：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-loan panel-detail">
-					<!--借款人信息填写栏-->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">评估结果</span>
-						</div>
-					</div>
-					<div class="panel-detail-content panel-detail-layout">
-						<div class="loan-info">
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>车辆评估价格：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>鉴定评估基准日：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
+				{{ } }}
