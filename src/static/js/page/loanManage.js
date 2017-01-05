@@ -1,28 +1,27 @@
 'use strict';
-(function(g) {
-	var $scope = {};
-	var page = pageCtrl['loanManage'] = {};
-	var _ = g.render;
-	page.template = g.router.template('loan-manage');
-	$scope.loadLoanManageList = function() {
+page.ctrl('loanManage', [], function($scope) {
+	var loadLoanManageList = function() {
 		$.ajax({
 			url: $http.api('loan/manage'),
 			success: $http.ok(function(data) {
-				_.compile(_.$console, page.template, data, $scope.async);
+				render.compile(render.$console, router.template('loan-manage'), data, $scope.async);
 			})
 		})
-	}	
+	}
+
 	$scope.async = function() {
+		// 分页器
 		$('#pageToolbar').paging();
+		// 今日预计利息提示框
+		$('.panel-count-number-box').find('.tips').hover(function() {
+			$(this).find('.tips-content').toggle();
+		});
 	}
-	$scope.start = function() {
-		$scope.loadLoanManageList();
-	}
-	
-	page.paging = function(page, pageSize, $el, cb) {
+
+	$scope.paging = function(page, pageSize, $el, cb) {
 		console.log(arguments);
 		cb();
 	}
 
-	$scope.start();
-})(window)
+	loadLoanManageList();
+});

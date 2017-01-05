@@ -99,6 +99,46 @@
 			refer: [],
 			page: 'marginManage'
 		},
+		'licenceProcess': {
+			title: '上牌办理',
+			refer: [],
+			page: 'licenceProcess'
+		},
+		'licenceAudit': {
+			title: '上牌审核',
+			refer: [],
+			page: 'licenceAudit'
+		},
+		'licenceStatis': {
+			title: '上牌进度统计',
+			refer: [],
+			page: 'licenceStatis'
+		},
+		'mortgageProcess': {
+			title: '抵押办理',
+			refer: [],
+			page: 'mortgageProcess'
+		},
+		'mortgageAudit': {
+			title: '抵押审核',
+			refer: [],
+			page: 'mortgageAudit'
+		},
+		'mortgageStatis': {
+			title: '抵押进度统计',
+			refer: [],
+			page: 'mortgageStatis'
+		},
+		'moneyBusinessAuditPrint': {
+			title: '财务业务审批表',
+			refer: [],
+			page: 'moneyBusinessAuditPrint'
+		},
+		'auditPrint': {
+			title: '审批表',
+			refer: [],
+			page: 'auditPrint'
+		},
 		'operationsAnalysis': {
 			title: '运营分析',
 			refer: [],

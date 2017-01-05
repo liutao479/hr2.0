@@ -52,17 +52,17 @@
 		'licenceProcess': {
 			parent: 'licenceManage',
 			name: '上牌办理',
-			route: ''
+			route: 'licenceProcess'
 		},
 		'licenceAudit': {
 			key: 'licenceManage',
 			name: '上牌审核',
-			route: ''
+			route: 'licenceAudit'
 		},
 		'licenceStatis': {
 			key: 'licenceManage',
 			name: '上牌进度统计',
-			route: ''
+			route: 'licenceStatis'
 		},
 		mortgageManage: {
 			name: '抵押管理',
@@ -72,17 +72,17 @@
 		'mortgageProcess': {
 			parent: 'mortgageManage',
 			name: '抵押办理',
-			route: ''
+			route: 'mortgageProcess'
 		},
 		'mortgageAudit': {
 			key: 'mortgageManage',
 			name: '抵押审核',
-			route: ''
+			route: 'mortgageAudit'
 		},
 		'mortgageStatis': {
 			key: 'mortgageManage',
 			name: '抵押进度统计',
-			route: ''
+			route: 'mortgageStatis'
 		},
 		expireManage: {
 			name: '逾期管理',
@@ -122,12 +122,12 @@
 		'moneyBusinessAuditPrint': {
 			parent: 'archivePrint',
 			name: '财务业务审批表',
-			route: ''
+			route: 'moneyBusinessAuditPrint'
 		},
-		'print.audit': {
+		'auditPrint': {
 			parent: 'archivePrint',
 			name: '审批表',
-			route: ''
+			route: 'auditPrint'
 		},
 		operationsAnalysis: {
 			name: '运营分析',

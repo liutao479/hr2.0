@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('customer', ['page/test'], function($scope) {
+page.ctrl('customer', [], function($scope) {
 	var loadCustomerList = function() {
 		$.ajax({
 			url: $http.api($http.apiMap.myCustomer),

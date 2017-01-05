@@ -1,4 +1,29 @@
 'use strict';
+page.ctrl('organizationManage', [], function($scope) {
+	var loadOrganizationBankList = function() {
+		$.ajax({
+			url: $http.api('organizationManage'),
+			success: $http.ok(function(data) {
+				render.compile(render.$console, router.template('cooperative-bank'), data, $scope.async);
+			})
+		})
+	}
+
+	$scope.async = function() {
+		$('#pageToolbar').paging();
+	}
+
+	$scope.paging = function(page, pageSize, $el, cb) {
+		console.log(arguments);
+		cb();
+	}
+
+	loadOrganizationBankList();
+});
+
+
+/*
+'use strict';
 (function(g) {
 	var $scope = {};
 	var page = pageCtrl['organizationManage'] = {};
@@ -26,3 +51,5 @@
 
 	$scope.start();
 })(window)
+
+*/
