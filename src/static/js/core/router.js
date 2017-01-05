@@ -30,6 +30,9 @@
 			fn = refer; 
 			refer = []; 
 		}
+		if(typeof fn != 'function') {
+			fn = $.noop;
+		}
 		page.ctrl[name] = {
 			refer: refer,
 			fn: fn
@@ -50,7 +53,7 @@
 			for(var i = 0, len = _ctrl.refer.length; i < len; i++) {
 				var referName = _ctrl.refer[i];
 				if(!page.refers[referName]) {
-					var referPath = internal.script(referName);
+					var referPath = internal.script(referName, true);
 					page.refers[referName] = referPath;
 					args.push($.getScript(referPath));	
 				}
@@ -58,7 +61,7 @@
 			if(!!args.length) {
 				return $.when.apply(args)
 						.done(function() {
-							_ctrl.fn.apply(_$scope);
+							_ctrl.fn(_$scope);
 						})	
 			}
 		}
@@ -77,17 +80,14 @@
 	g.routerMap = {
 		'loanProcess': {
 			title: '车贷办理',
-			refer: ['navigator'],
 			page: "loan"
 		},
 		'myCustomer': {
 			title: '我的客户',
-			refer: ['navigator'],
 			page: 'customer'
 		},
 		'loanManage': {
 			title: '借款管理',
-			refer: ['navigator'],
 			page: 'loanMagage'
 		},
 		creditInput: {
@@ -98,8 +98,13 @@
 	* router 内部方法
 	*/
 	var internal = {}
-	internal.script = function(name) {
-		return 'static/js/page/' + name + '.js';
+	internal.script = function(name, refer) {
+		if(refer) {
+			return 'static/js/' + name + '.js';
+		}
+		else {
+			return 'static/js/page/' + name + '.js';
+		}
 	}; 
 	/**
 	* 获取路由模板
@@ -123,22 +128,6 @@
 			.done(function() {
 				page.excute(__currentPage, params);
 			});
-		/*
-		var refer = item.refer,
-			loadpage = function() {
-				$.getScript(internal.script(item.page));
-			};
-		if(refer && !!refer.length) {
-			var args = [];
-			for(var i = 0, len = refer.length; i < len; i++) {
-				args.push($.getScript(internal.script(refer[i])));
-			}
-			$.when.apply(args)
-			.done(loadpage)
-		} else {
-			loadpage();
-		}
-		*/
 	}
 	/**
 	* 初始化界面
@@ -147,6 +136,7 @@
 	router.init = function(cb) {
 		var hash = g.location.hash;
 		if(!hash) { return cb(); }
+		hash = hash.replace(/\?+/g, '?')
 		var loc = hash.replace('#', '').split('/');
 		router.render(loc[loc.length - 1]);
 		cb(loc[0]);

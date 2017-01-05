@@ -1,11 +1,10 @@
 'use strict';
-page.ctrl('loan', function($scope) {
-	var _ = render;
+page.ctrl('loan', ['page/test'], function($scope) {
 	var loadLoanList = function() {
 		$.ajax({
 			url: $http.api('loan/list'),
 			success: $http.ok(function(data) {
-				_.compile(_.$console, router.template('main'), data, $scope.async);
+				render.compile(render.$console, router.template('main'), data, $scope.async);
 			})
 		})
 	}

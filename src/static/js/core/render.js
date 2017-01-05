@@ -46,14 +46,13 @@
 			function _render(_$el, _t, _d, _f) {
 				try {
 					var c = doT.template(_t);	
-					console.log(_d);
 					_$el.html(c(_d));
 				} catch(err) {
 					_$el.html('模板文件编译错误：' + err.message);
 				}
 				_f.apply();
 			}
-			if(typeof fn == 'boolean' || !fn) {
+			if(typeof fn == 'boolean') {
 				fn = $.noop;
 				raw = fn;
 			}
