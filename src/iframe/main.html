@@ -25,7 +25,7 @@
 	<table border="0" cellpadding="" width="100%" class="orders-table">
 		<thead>
 			<tr class="orders-bar-title">
-				<td class="orders-item-data"><a href="javascript:;">创建时间<img src="static/css/img/sort-up.png" alt="" title="时间升序" /></a></td>
+				<td class="orders-item-data"><a href="javascript:;" class="sort-arrow">创建时间<img src="static/css/img/sort-up.png" alt="" style="width:13px;height:13px;overflow: hidden;" title="时间升序" /></a></td>
 				<td class="orders-item-data">订单号</td>
 				<td class="orders-item-data">借款人</td>
 				<td class="orders-item-data">任务类型</td>
@@ -40,6 +40,7 @@
 
 <!--分页插件-->
 <div id="pageToolbar" class="pageToolbar" data-request="page.$scope['loan'].paging" data-pages="0" data-current="1"></div>
+
 
 <script type="text/x-dot-template" id="loanlisttmpl">
 	{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}

@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('loan', ['page/test'], function($scope) {
+page.ctrl('loanInfo', ['page/test'], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
@@ -16,8 +16,6 @@ page.ctrl('loan', ['page/test'], function($scope) {
 		$.ajax({
 			url: $http.api($http.apiMap.loanList),
 			data: params,
-			dataType: 'jsonp',
-			jsonpCallback: 'cb',
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				setupPaging(result.page.pages, true);

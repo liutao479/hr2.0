@@ -152,6 +152,10 @@
 		'loanProcess/creditUpload': {
 			title: '征信结果录入',
 			page: 'creditUpload'
+		},
+		'loanProcess/creditUpload': {
+			title: '信息表修改',
+			page: 'loanInfo'
 		}
 	}
 	/**

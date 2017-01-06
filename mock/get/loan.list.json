@@ -1,4 +1,4 @@
-{
+cb({
 	"code": 0,
 	"page":{
         "pageNum":1,
@@ -162,4 +162,4 @@
 			"typeKey": "carAudit"
 		}
 	]
-}
+})
