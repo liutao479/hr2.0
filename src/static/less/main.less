@@ -756,10 +756,74 @@ a {
 // 特殊类表格
 .expire-orders-table {
     border: 1px solid @borderColor;
-    border-top: none;
     background-color: #FFFFFF;
+    margin-top: 15px;
+    &.expire-orders-table-special {
+        border-top: none;
+        margin-top: 0;
+    }
+    .expire-title {
+        height: 50px;
+        background-color: #f3f4f9;
+        line-height: 50px;
+        border-bottom: 1px solid @borderColor;
+        .checkbox {
+            position: relative;
+            top: 4px;
+            margin-left: 20px;
+        }
+        .iconfont-man {
+            position: relative;
+            top: 2px;
+            font-size: 20px;
+            color: @mainColor;
+            margin: 0 5px 0 16px;
+        }
+        .userName {
+            margin-right: 10px;
+            font-weight: 700;
+        }
+        .key-value-box {
+            float: right;
+            margin-right: 20px;
+        }
+    }
+    .expire-content {
+        display: flex;
+        justify-content: space-between;
+        &.no-match {
+            padding: 25px 125px;
+        }
+        &.match-fail {
+            padding: 16px 20px;
+        }
+        &.match-success {
+            padding: 16px 20px;
+            .match-status {
+                color: #7cd260;
+            }
+        }
+        &.expire-end {
+            padding: 16px 20px;
+            .match-status {
+                color: @mainColor;
+            }
+        }
+        .key-value-box {
+            display: block;
+            line-height: 25px;
+            .key {
+                display: inline-block;
+                width: 125px;
+                text-align: right;
+            }
+        }
+        .expire-content-item-last {
+            .box;
+            -webkit-box-align: center;
+        }
+    }
 }
-
 
 //边框处理
 .no-top-border {
@@ -1428,7 +1492,7 @@ a {
 
 // 特殊突出表现颜色字体 
 .special-word {
-    color: #ef810e;
+    color: #ef810e !important;
 }
     
 //全选操作框
