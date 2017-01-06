@@ -93,17 +93,13 @@
 			title: '借款管理',
 			page: 'loanMagage'
 		},
-		'loanInfo': {
-			title: '信息表修改',
-			page: 'loanInfo'
-		},
-		'carTwoHand': {
-			title: '二手车信息',
-			page: 'carTwoHand'
-		},
 		'loanProcess/creditUpload': {
 			title: '征信结果录入',
 			page: 'creditUpload'
+		},
+		'loanProcess/creditUpload': {
+			title: '信息表修改',
+			page: 'loanInfo'
 		}
 	}
 	/**

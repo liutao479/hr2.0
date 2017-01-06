@@ -16,7 +16,7 @@
 		* 渲染标题
 		*/
 		renderTitle: function(title) {
-			$('title').html(titlePrefix + '-' + title);
+			//$('title').html(titlePrefix + '-' + title);
 		},
 		/**
 		* 加载模板

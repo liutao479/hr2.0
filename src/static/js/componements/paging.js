@@ -60,7 +60,7 @@
 	*/
 	paging.prototype.render = function(it) {
 		var arr = [];
-		arr.push('	<ul class="paginator clearfix">');
+		arr.push('	<ul class="paginator">');
 		arr.push('		<li class="page page-prev"><i class="iconfont">&#xe601;</i></li>');
 		if(it.max < 8) {
 			arr.push(internal.renderFull(1, it.max, it.current));

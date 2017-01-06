@@ -36,16 +36,27 @@ $('.checkbox-normal').on('click', function() {
 $(function() {
 	$.ajax({
 		url: $http.api('menu'),
-		success: $http.ok(function(result) {
+		crossDomain: true,
+		dataType: 'jsonp',
+		jsonpCallback: 'cb',
+		success: function(result) {
 			var $menu = new menu('#menu', result.data, router.render);
 			router.init(function(menuId) {
 				if(!menuId) { return $menu.setup('loanProcess'); }
 				$menu.setup(menuId, true);
 			})
-		})
+		},
+		error: function(err) {
+			console.log(err);
+		}/*$http.ok(function(result) {
+			var $menu = new menu('#menu', result.data, router.render);
+			router.init(function(menuId) {
+				if(!menuId) { return $menu.setup('loanProcess'); }
+				$menu.setup(menuId, true);
+			})
+		})*/
 	})
 });
-
 
 
 

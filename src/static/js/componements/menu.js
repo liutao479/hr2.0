@@ -22,7 +22,7 @@
 		'orderModifyAudit': {
 			parent: 'orderManage',
 			name: '信息修改审核',
-			route: 'loanInfo'
+			route: ''
 		},
 		'cancelOrderAudit': {
 			parent: 'orderManage',
