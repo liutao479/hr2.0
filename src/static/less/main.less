@@ -753,6 +753,13 @@ a {
     }
 }
 
+// 特殊类表格
+.expire-orders-table {
+    border: 1px solid @borderColor;
+    border-top: none;
+    background-color: #FFFFFF;
+}
+
 
 //边框处理
 .no-top-border {
@@ -904,6 +911,9 @@ a {
     //工作台有左侧菜单的右侧详细内容区域（content）
     .panel-detail-content {
         padding: 0 15px 22px 41px;
+        &.panel-import-doc {
+            padding: 10px 20px 175px 41px;
+        }
         &.panel-detail-layout {
             padding-top: 25px;
         }
@@ -913,6 +923,52 @@ a {
         }
         &.panel-detail-content-catalog {
             padding: 50px;  
+        }
+        .import-result-box {
+            .import-dl {
+                margin: 57px auto;
+                width: 390px;
+                .import-icon-box {
+                    float: left;
+                    .import-icon {
+                        margin-top: 10px;
+                        width: 50px;
+                        height: 50px;
+                        line-height: 50px;
+                        text-align: center;
+                        .borderRadius(25px);
+                        background-color: @successColor;
+                        color: #FFF;
+                        .iconfont {
+                            font-size: 30px !important;
+                            font-weight: 600;
+                        }
+                    }
+                }
+                .import-msg-box {
+                    float: left;
+                    margin-left: 22px;
+                    .import-result {
+                        line-height: 32px;
+                        color: @successColor;
+                        font-size: 20px;
+                    }
+                    .import-text {
+                        line-height: 40px;
+                    }
+                    .import-preview {
+                        margin-top: 23px;
+                        .button {
+                            background-color: #FFF;
+                            border: 1px solid @buttonBgColor;
+                            color: @buttonBgColor;  
+                            height: 32px;
+                            line-height: 32px;  
+                        }
+                        
+                    }
+                }
+            }
         }
         .panel-item-box {
             .box;
@@ -960,6 +1016,13 @@ a {
                 }
                 .remark {
                     line-height: 25px;
+                }
+                .import-doc {
+                    margin-top: 30px;
+                    .button {
+                        height: 32px;
+                        line-height: 32px;
+                    }
                 }
             }
         }
@@ -1362,6 +1425,11 @@ a {
         color: @mainColor;
     }
 }
+
+// 特殊突出表现颜色字体 
+.special-word {
+    color: #ef810e;
+}
     
 //全选操作框
 .all-select-panel {
@@ -1754,8 +1822,9 @@ a {
     .backReason;
     padding: 15px 20px;
     margin: 10px 0;
-    color: @backReasonBorderColor;
+    .borderRadius(3px); 
     .back-credit {
+        color: @backReasonBorderColor;
         display: block;
         line-height: 49px;
         .key-value-box {
@@ -1769,6 +1838,9 @@ a {
                 color: @backReasonBorderColor;
             }
         }
+    }
+    .back-expire {
+        color: @fontColor;
     }
 }
 //贷款信息录入
