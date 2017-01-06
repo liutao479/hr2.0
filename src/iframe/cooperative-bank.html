@@ -1,18 +1,18 @@
 	<!--合作机构维护（合作银行）-->
 			<div class="container cooperation-maintenance" id="cooperation-bank">
 				
-				<!--tab切换栏(征信材料角色)-->
+				<!--tab切换栏(合作银行及车商)-->
 				<div class="tab-bar">
 					<ul class="role-bar-ul clearfix">
-						<li class="role-bar-li"><a href="#" class="role-item">合作银行管理</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item role-item-active">合作车商管理</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item role-item-active">合作银行管理</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">合作车商管理</a></li>
 					</ul>
 					<div class="button button-nowidth">
 						<i class="iconfont">&#xe615;</i>
-						新建合作车商
+						新建合作银行
 					</div>
 				</div>
-				<!--tab切换栏(征信材料角色)   end-->
+				<!--tab切换栏(合作银行及车商)   end-->
 				
 				<!--面板  -->
 				<div class="panel panel-nomargintop">
@@ -28,27 +28,26 @@
 								<td class="orders-item-data">银行名称</td>
 								<td class="orders-item-data">开户账号-户名</td>
 								<td class="orders-item-data">费率表</td>
+								<td class="orders-item-data orders-item-data-blank"></td>
 								<td class="orders-item-data">操作</td>
 							</tr>
 						</thead>
 						<tbody>
+							{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 							<tr>
-								<td class="orders-item-data">浙江工行</td>
+								<td class="orders-item-data">{{=row.bankName}}</td>
 								<td class="orders-item-data acount-name-data">
+									{{for(var j = 0, len2 = row.userInfo.length; j < len2; j++) { var col = row.userInfo[j]; }}
 									<p class="acount-name">
-										<span>6237132182371234565</span>-<span>周易</span><br />
+										<span>{{=col.bankc}}</span>-<span>{{=col.user}}</span><br />
 									</p>
-									<p class="acount-name">
-										<span>6237132182371234565</span>-<span>张凤</span><br />
-									</p>
-									<p class="acount-name">
-										<span>6237132182371234565</span>-<span>张凤</span><br />
-									</p>
+									{{ } }}
 								</td>
-								<td class="orders-item-data">
+								<td class="orders-item-data orders-item-data-view">
 									<a href="javascript:;" class="view-fee">查看</a>
 								</td>
-								<td class="orders-item-data">
+								<td class="orders-item-data orders-item-data-blank"></td>
+								<td class="orders-item-data orders-item-data-operate">
 									<div class="button button-mini-nowidth">
 										<i class="iconfont">&#xe640;</i>
 										编辑
@@ -59,72 +58,7 @@
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<td class="orders-item-data">浙江工行</td>
-								<td class="orders-item-data">
-									<p class="acount-name acount-name-data">
-										<span>6237132182371234565</span>-<span>周易</span><br />
-									</p>
-								</td>
-								<td class="orders-item-data">
-									<a href="javascript:;" class="view-fee">查看</a>
-								</td>
-								<td class="orders-item-data">
-									<div class="button button-mini-nowidth">
-										<i class="iconfont">&#xe640;</i>
-										编辑
-									</div>
-									<div class="button button-mini-nowidth">
-										<i class="iconfont">&#xe602;</i>
-										删除
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td class="orders-item-data">浙江工行</td>
-								<td class="orders-item-data acount-name-data">
-									<p class="acount-name">
-										<span>6237132182371234565</span>-<span>周易</span><br />
-									</p>
-								</td>
-								<td class="orders-item-data">
-									<a href="javascript:;" class="view-fee">查看</a>
-								</td>
-								<td class="orders-item-data">
-									<div class="button button-mini-nowidth">
-										<i class="iconfont">&#xe640;</i>
-										编辑
-									</div>
-									<div class="button button-mini-nowidth">
-										<i class="iconfont">&#xe602;</i>
-										删除
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td class="orders-item-data">浙江工行</td>
-								<td class="orders-item-data">
-									<p class="acount-name acount-name-data">
-										<span>6237132182371234565</span>-<span>周易</span><br />
-									</p>
-									<p class="acount-name">
-										<span>6237132182371234565</span>-<span>张凤</span><br />
-									</p>
-								</td>
-								<td class="orders-item-data">
-									<a href="javascript:;" class="view-fee">查看</a>
-								</td>
-								<td class="orders-item-data">
-									<div class="button button-mini-nowidth">
-										<i class="iconfont">&#xe640;</i>
-										编辑
-									</div>
-									<div class="button button-mini-nowidth">
-										<i class="iconfont">&#xe602;</i>
-										删除
-									</div>
-								</td>
-							</tr>
+							{{ } }}
 						</tbody>
 					</table>
 				</div>

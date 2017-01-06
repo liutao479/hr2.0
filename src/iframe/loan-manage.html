@@ -73,19 +73,16 @@
 								</tr>
 							</thead>
 							<tbody>
-								{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}}
+								{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 								<tr>
-									<td class="orders-item-data">{{=it.orderNo}}</td>
-									<td class="orders-item-data">{{=it.applyTime}}</td>
-									<td class="orders-item-data">{{=it.userTime}}</td>
-									<td class="orders-item-data"><span>{{=it.user}}</span><br /><span>（{{=it.idc}}）</span></td>
-									<td class="orders-item-data">{{=it.paidMoney}}</td>
-									<td class="orders-item-data">{{=it.payee}}</td>
+									<td class="orders-item-data">{{=row.orderNo}}</td>
+									<td class="orders-item-data">{{=row.applyTime}}</td>
+									<td class="orders-item-data">{{=row.useTime}}</td>
+									<td class="orders-item-data"><span>{{=row.user}}</span><br /><span>（{{=row.idc}}）</span></td>
+									<td class="orders-item-data">{{=row.paidMoney}}</td>
+									<td class="orders-item-data">{{=row.payee}}</td>
 									<td class="orders-item-data">
-										<div class="button button-mini-nowidth">
-											<i class="iconfont">&#xe602;</i>
-											查看
-										</div>
+										<div class="button button-mini-nowidth">查看</div>
 									</td>
 								</tr>
 								{{ } }}
@@ -100,5 +97,5 @@
 			</div>
 			<!--借款管理   end-->
 			
-			<!--分页插件改编（未完成）-->
-			<div id="pageToolbar" class="pageToolbar" data-pages="50" data-current="8"></div>
+			<!--分页插件-->
+			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['loan'].paging" data-pages="50" data-current="8"></div>

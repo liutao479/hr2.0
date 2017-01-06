@@ -400,6 +400,11 @@ input[type=radio] {
 	        border-collapse: collapse;
 	        margin-top: 11px;
 	        text-align: left;
+            -webkit-transition: all .1s;
+               -moz-transition: all .1s;
+                -ms-transition: all .1s;
+                 -o-transition: all .1s;
+                    transition: all .1s;
 	        &:hover {
 	            border-color: @tableActiveColor;
 	           cursor: pointer;
@@ -485,12 +490,6 @@ input[type=radio] {
 .loan-manage {
     .panel-detail-content {
         padding: 20px 17px;
-    }
-}
-//运营分析
-.operational-analysis {
-    .panel {
-
     }
 }
 //订单日志
@@ -670,6 +669,10 @@ input[type=radio] {
     &.select-search-bar-special {
         margin-top: 15px;
     }
+    .separator {
+        margin: 0 5px;
+        color: @selectBorderColor;
+    }
     .input-text {
         width: 198px;
         line-height: 60px;
@@ -709,6 +712,7 @@ input[type=radio] {
     border: 1px solid @borderColor;
     border-top: none;
     border-collapse: collapse;
+    empty-cells:show;
     &.orders-table-noborder {
         border: none;
     }
@@ -739,7 +743,9 @@ input[type=radio] {
                 border: none;
             }
         }
-        
+        .orders-item-data-blank {
+            width: 22%;
+        } 
         .button {
             background-color: #e9e7f7;
             color: #6b59c9;
@@ -774,12 +780,93 @@ input[type=radio] {
             }
             height: 78px;
             color: @fontColor;
+            &.orders-item-data-operate {
+                // width: 250px;
+                .button {
+                    margin-right: 15px;
+                }
+            }
+            &.orders-item-data-blank {
+                width: 22%;
+            } 
         }
         &.acount-name-data {
             padding: 10px 0;
         }
         .acount-name {
             line-height: 24px;
+        }
+    }
+}
+
+// 特殊类表格
+.expire-orders-table {
+    border: 1px solid @borderColor;
+    background-color: #FFFFFF;
+    margin-top: 15px;
+    &.expire-orders-table-special {
+        border-top: none;
+        margin-top: 0;
+    }
+    .expire-title {
+        height: 50px;
+        background-color: #f3f4f9;
+        line-height: 50px;
+        border-bottom: 1px solid @borderColor;
+        .checkbox {
+            position: relative;
+            top: 4px;
+            margin-left: 20px;
+        }
+        .iconfont-man {
+            position: relative;
+            top: 2px;
+            font-size: 20px;
+            color: @mainColor;
+            margin: 0 5px 0 16px;
+        }
+        .userName {
+            margin-right: 10px;
+            font-weight: 700;
+        }
+        .key-value-box {
+            float: right;
+            margin-right: 20px;
+        }
+    }
+    .expire-content {
+        display: flex;
+        justify-content: space-between;
+        &.no-match {
+            padding: 25px 125px;
+        }
+        &.match-fail {
+            padding: 16px 20px;
+        }
+        &.match-success {
+            padding: 16px 20px;
+            .match-status {
+                color: #7cd260;
+            }
+        }
+        &.expire-end {
+            padding: 16px 20px;
+            .match-status {
+                color: @mainColor;
+            }
+        }
+        .key-value-box {
+            display: block;
+            line-height: 25px;
+            .key {
+                display: inline-block;
+                width: 125px;
+                text-align: right;
+            }
+        }
+        .expire-content-item-last {
+            .box;
+            -webkit-box-align: center;
         }
     }
 }
@@ -941,6 +1028,9 @@ input[type=radio] {
     //工作台有左侧菜单的右侧详细内容区域（content）
     .panel-detail-content {
         padding: 0 15px 22px 41px;
+        &.panel-import-doc {
+            padding: 10px 20px 175px 41px;
+        }
         &.panel-detail-layout {
             padding-top: 25px;
         }
@@ -951,6 +1041,52 @@ input[type=radio] {
         &.panel-detail-content-catalog {
             padding: 50px;  
         }
+        .import-result-box {
+            .import-dl {
+                margin: 57px auto;
+                width: 390px;
+                .import-icon-box {
+                    float: left;
+                    .import-icon {
+                        margin-top: 10px;
+                        width: 50px;
+                        height: 50px;
+                        line-height: 50px;
+                        text-align: center;
+                        .borderRadius(25px);
+                        background-color: @successColor;
+                        color: #FFF;
+                        .iconfont {
+                            font-size: 30px !important;
+                            font-weight: 600;
+                        }
+                    }
+                }
+                .import-msg-box {
+                    float: left;
+                    margin-left: 22px;
+                    .import-result {
+                        line-height: 32px;
+                        color: @successColor;
+                        font-size: 20px;
+                    }
+                    .import-text {
+                        line-height: 40px;
+                    }
+                    .import-preview {
+                        margin-top: 23px;
+                        .button {
+                            background-color: #FFF;
+                            border: 1px solid @buttonBgColor;
+                            color: @buttonBgColor;  
+                            height: 32px;
+                            line-height: 32px;  
+                        }
+                        
+                    }
+                }
+            }
+        }
         .panel-item-box {
             .box;
             margin-top: 25px;
@@ -958,6 +1094,9 @@ input[type=radio] {
                 text-align: right;
                 width: 100px;
                 line-height: 25px;
+                &.panel-key-area-special {
+                    width: 190px;
+                }
             }
             .panel-value-area {
                 .box-flex(1);
@@ -994,6 +1133,13 @@ input[type=radio] {
                 }
                 .remark {
                     line-height: 25px;
+                }
+                .import-doc {
+                    margin-top: 30px;
+                    .button {
+                        height: 32px;
+                        line-height: 32px;
+                    }
                 }
             }
         }
@@ -1062,6 +1208,55 @@ input[type=radio] {
                         top: 44px;
                         left: -70px;
                     }
+                }
+            }
+        }
+    }
+    // 导入流程
+    .import-process-box {
+        .box;
+        background-color: #f3f4f9;
+        border-bottom: 1px solid @borderColor;
+        .download-box {
+            width: 160px;
+            line-height: 123px;
+            .button {
+                height: 32px;
+                line-height: 32px;
+            }
+        }
+        .process-box {
+            .box-flex(1);
+            display: -webkit-flex;  
+            display: flex;
+            justify-content: space-between;
+            height: 123px;
+            background: url(/hr2.0/src/static/css/img/dotted.png) 0 43px repeat-x;
+            background-size: 65%;
+            position: relative;
+            margin: 0 48px;
+            .process-item {
+                width: 120px;
+                margin-top: 25px;
+                text-align: center;
+                .iconfont-box {
+                    display: inline-block;
+                    text-align: center;
+                    line-height: 40px;
+                    width: 40px;
+                    height: 40px;
+                    color: #FFF;
+                    .borderRadius(20px);
+                    font-size: 25px;
+                }
+                &:nth-of-type(odd) .iconfont-box {
+                    background-color: #5084fc;
+                }
+                &:nth-of-type(even) .iconfont-box {
+                    background-color: #60c4f4;
+                }
+                p {
+                    margin-top: 15px;
                 }
             }
         }
@@ -1348,6 +1543,11 @@ input[type=radio] {
         color: @mainColor;
     }
 }
+
+// 特殊突出表现颜色字体 
+.special-word {
+    color: #ef810e !important;
+}
     
 //全选操作框
 .all-select-panel {
@@ -1433,6 +1633,10 @@ input[type=radio] {
     }
     .button {
         margin-left: 10px;
+    }
+    .import-time {
+        color: @tiperColor;
+        margin-right: 10px;
     }
 }
 
@@ -1695,8 +1899,9 @@ input[type=radio] {
     .backReason;
     padding: 15px 20px;
     margin: 10px 0;
-    color: @backReasonBorderColor;
+    .borderRadius(3px); 
     .back-credit {
+        color: @backReasonBorderColor;
         display: block;
         line-height: 49px;
         .key-value-box {
@@ -1710,6 +1915,9 @@ input[type=radio] {
                 color: @backReasonBorderColor;
             }
         }
+    }
+    .back-expire {
+        color: @fontColor;
     }
 }
 //贷款信息录入 zhy

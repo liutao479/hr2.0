@@ -1,0 +1,78 @@
+	<!--业务审批表-->
+			<div class="container financial-affairs-examine" id="financial-affairs-examine">
+				
+				<!--用款时间选择-->
+				<div class="select-search-bar no-bottom-border clearfix">
+					<div class="search-item">
+						<span class="select-name">银行回款日期：</span>
+						<span class="select select-common">
+							<span class="placeholder">2016-12-19</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+					<div class="search-item">
+						<span class="select-name">分公司：</span>
+						<span class="select select-common">
+							<span class="placeholder">全部</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+					<div class="search-item">
+						<input type="text" name="" id="" value="" placeholder="订单号\借款人姓名\身份证号" class="input-text" />
+					</div>
+					<div class="search-item">
+						<a href="javascript:;">重置</a>
+						<div id="" class="button button-mini-nowidth">搜索</div>
+					</div>
+				</div>
+				<!--银行汇款日期选择  end-->
+				
+				<!--全选删除框-->
+				<div class="all-select-panel all-select-panel-nobottomborder clearfix">
+					<div class="all-check-box">
+						<div class="checkbox checkbox-normal"></div>
+						<span>全选</span>
+					</div>
+					<div class="all-check-box">
+						<div class="button button-mini-nowidth button-special">批量打印</div>
+					</div>
+				</div>
+				<!--全选删除框  end-->
+				
+				
+				<!--业务审批表格-->
+				<table border="0" cellpadding="" width="100%" class="orders-table">
+					<thead>
+						<tr class="orders-bar-title">
+							<td class="orders-item-data order-item-first"></td>
+							<td class="orders-item-data">创建时间</td>
+							<td class="orders-item-data">订单号</td>
+							<td class="orders-item-data">借款人</td>
+							<td class="orders-item-data">业务来源方名称</td>
+							<td class="orders-item-data">分期金额（元）</td>
+							<td class="orders-item-data">操作</td>
+						</tr>
+					</thead>
+					<tbody>
+						{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+						<tr>
+							<td class="orders-item-data order-item-first">
+								<div class="checkbox checkbox-normal"></div>
+							</td>
+							<td class="orders-item-data">{{=row.createTime}}</td>
+							<td class="orders-item-data">{{=row.orderNo}}</td>
+							<td class="orders-item-data">{{=row.user}}（{{=row.idc}}）</td>
+							<td class="orders-item-data">{{=row.company}}</td>
+							<td class="orders-item-data">{{=row.stagesMoney}}</td>
+							<td class="orders-item-data"><div class="button button-mini-nowidth">修改</div></td>
+						</tr>
+						{{ } }}
+					</tbody>
+				</table>
+				<!--业务审批表格 end-->
+				
+			</div>
+			<!--上牌办理 end-->
+			
+			<!--分页插件改编（未完成）-->
+			<div id="pageToolbar" class="pageToolbar" data-pages="50" data-current="8"></div>

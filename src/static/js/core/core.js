@@ -46,7 +46,7 @@
 				cb(response);
 			} else {
 				//统一的失败处理
-				console.log('faile');
+				console.log('failed');
 			}
 		}
 	};
