@@ -12,20 +12,6 @@
 		    });
 		};
 	}
-	_.query = function(name, source) {
-
-	}
-	/**
-	* json 转 search
-	*/
-	_.j2search = function(o) {
-		if(!o || toString.call(o) != '[object Object]') return '';
-		var arr = [];
-		Object.keys(o).map(function(key) {
-			arr.push(key + '=' + o[key]);
-		})
-		return arr.join('&');
-	}
 	/*
 	* 本地验证规则
 	*/
@@ -57,21 +43,32 @@
 	_.$http.ok = function(cb) {
 		return function(response) {
 			if(response && !response.code) {
-				cb(response.data);
+				cb(response);
 			} else {
+				//统一的失败处理
 				console.log('failed');
 			}
 		}
 	};
 	_.$http.apiMap = {
-		myCustomer: 'my/customer'
+		menu: 'menu',
+		loanList: 'loan.list',
+		myCustomer: 'my/customer',
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
 		console.log(arguments);
 	});		
 	/*****************http end*******************/
-
+	/************功能辅助类 begin************/
+	var tool = _.tool = {};
+	/**
+	* 获取页码 
+	*/
+	tool.pages = function(total, pageSize) {
+		if(!total) return 0;
+		return Math.floor(total / pageSize) + (total % pageSize == 0 ? 0 : 1);
+	}
 })(window);
 
 
