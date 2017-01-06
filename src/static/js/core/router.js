@@ -37,18 +37,20 @@
 			refer: refer,
 			fn: fn
 		}
-		page.$scope[name] = {};
+		page.$scope[name] = { def: {} };
 	}
 	/**
 	* 加载依赖文件
 	* @params {string} name 控制器名称
+	* @params {stirng} 当前路由地址
 	* @params {object} params 参数
 	*/
-	page.excute = function(name, params) {
+	page.excute = function(name, path, params) {
 		var _ctrl = page.ctrl[name],
 			_$scope = page.$scope[name],
 			args = [];
 		_$scope.$params = params || {};
+		_$scope.$path = path;
 		if(_ctrl.refer && _ctrl.refer.length > 0) {
 			for(var i = 0, len = _ctrl.refer.length; i < len; i++) {
 				var referName = _ctrl.refer[i];
@@ -70,8 +72,6 @@
 			_ctrl.fn(_$scope);	
 		}
 	}
-	//Todo 待删除
-	var ctrl = g.pageCtrl = {};
 	/**
 	* 页面路由
 	* routerKey: {
@@ -100,6 +100,10 @@
 		'carTwoHand': {
 			title: '二手车信息',
 			page: 'carTwoHand'
+		},
+		'loanProcess/creditUpload': {
+			title: '征信结果录入',
+			page: 'creditUpload'
 		}
 	}
 	/**
@@ -124,8 +128,11 @@
 	* 执行渲染
 	* @params {string} key 要渲染的页面键名
 	*/
-	router.render = function(key, params) {
-		g.location.hash = key + (params ? '?' + j2search(params) : '');
+	router.render = function(key, params, static) {
+		render.$console.html('');
+		if(!static) {
+			g.location.hash = key + (params ? '?' + $.param(params) : '');
+		}
 		var item = g.routerMap[key];
 		if(!item) {
 			return g.location.href = '404.html';
@@ -134,19 +141,30 @@
 		var __currentPage = item.page;
 		$.getScript(internal.script(__currentPage))
 			.done(function() {
-				page.excute(__currentPage, params);
+				page.excute(__currentPage, key, params);
 			});
+	}
+	/**
+	* 更新hash
+	* @params {object} params hash内的搜索参数
+	*/
+	router.updateQuery = function(path, params) {
+		g.location.hash = path + (params ? '?' + $.param(params) : '');
 	}
 	/**
 	* 初始化界面
 	* @params {function} cb 回调函数
 	*/
 	router.init = function(cb) {
-		var hash = g.location.hash;
+		var hash = g.location.hash.replace(/\?+/g, '?').substr(1);
 		if(!hash) { return cb(); }
-		hash = hash.replace(/\?+/g, '?')
-		var loc = hash.replace('#', '').split('/');
-		router.render(loc[loc.length - 1]);
-		cb(loc[0]);
+		var sp = hash.split('?');
+		var _origin = sp[0],
+			_search = !!sp[1] ? ('?' + sp[1]) : undefined;
+		var _paths = _origin.split('/'),
+			_params = !!_search ? $.parseParams(_search) : undefined;
+		router.render(_origin, _params, true);
+		cb(_paths[0]);
 	}
-})(window)
+})(window);
+

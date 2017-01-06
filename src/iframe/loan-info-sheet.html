@@ -16,20 +16,22 @@
 						<span class="value">2016-11-03 14:02</span>
 					</div>
 				</div>
-				<!--增加征信人员-->
-				<div class="add-credit-bar">
-					<div class="add-credit">
-						<span class="current-page">增加征信人员：</span>
-						<div class="key-value-check-box">
-							<span class="check-key"><div class="checkbox"></div></span>
-							<span class="check-value">增加共同还款人</span>
-						</div>
-						<div class="key-value-check-box">
-							<span class="check-key"><div class="checkbox"></div></span>
-							<span class="check-value">增加反担保人</span>
-						</div>
-					</div>
+				<!--提交修改等等按钮-->
+				<div class="commit-orders-box commit-orders-box-area mb15">
+					<a href="javascript:;" class="commit-item">
+						<i class="iconfont">&#xe614;</i>
+						<span>放款预约</span>
+					</a>
+					<a href="javascript:;" class="commit-item">
+						<i class="iconfont">&#xe6fd;</i>
+						<span>申请终止订单</span>
+					</a>
+					<a href="javascript:;" class="commit-item">
+						<i class="iconfont">&#xe640;</i>
+						<span>申请修改分期信息</span>
+					</a>
 				</div>
+				<!--提交修改等等按钮   end-->
 				<!--工作台左侧菜单面板-->
 				<div class="panel panel-menu">
 					<a class="panel-menu-item" href="#">贷款信息表</a>
@@ -66,7 +68,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="panel-detail-content panel-detail-layout">
+					<div class="panel-detail-content panel-detail-layout padding0">
 						<div class="loan-info">
 							{{for(var j = 0, len2 = row.modelcontent.length; j < len2; j++) { var role = row.modelcontent[j]; }}
 							<div class="info-key-value-box">

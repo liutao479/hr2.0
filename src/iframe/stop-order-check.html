@@ -1,11 +1,11 @@
-	<!--提车审核zhy-->
-			<div class="container pick-car-check" id="pick-car-check">
+	<!--贷款信息录入zhy-->
+			<div class="container" id="loan-info">
 				<!--返回列表-->
 				<div class="path-back-bar">
 					<div class="path-back">
 						<i class="iconfont">&#xe626;</i>
-						<a href="#">返回列表</a>&nbsp;&gt;
-						<span class="current-page">提车审核</span>
+						<a href="#">终止订单审核</a>&nbsp;&gt;
+						<span class="current-page">终止订单审核详情</span>
 					</div>
 					<div class="key-value-box">
 						<span class="key">借款人：</span>
@@ -21,13 +21,10 @@
 				<div class="tab-bar tab-bar-special">
 					<ul class="role-bar-ul clearfix">
 						<li class="role-bar-li"><a href="#" class="role-item role-item-active">贷款信息表</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">提车材料</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">材料验真</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">数据辅证</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">材料交叉校验</a></li>
 						<li class="role-bar-li"><a href="#" class="role-item">订单日志</a></li>
 					</ul>
 				</div>
+				
 				<!--面板-->
 				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 				<div class="panel panel-loan">
@@ -60,6 +57,7 @@
 					</div>
 				</div>
 				{{ } }}
+				
 				
 				<!--提交订单按钮-->
 				<div class="commit-orders-box">
