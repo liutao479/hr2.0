@@ -142,7 +142,7 @@
 		} else {
 			self.opt.request = internal.empty;
 		}
-		self.opt.request(_currentPage, self.opt.size, self.$el, function(data) {
+		self.opt.request(_currentPage, self.opt.size, self.$el, function() {
 			self.opt.current = _currentPage;
 			self.update();
 		})

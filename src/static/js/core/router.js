@@ -42,13 +42,15 @@
 	/**
 	* 加载依赖文件
 	* @params {string} name 控制器名称
+	* @params {stirng} 当前路由地址
 	* @params {object} params 参数
 	*/
-	page.excute = function(name, params) {
+	page.excute = function(name, path, params) {
 		var _ctrl = page.ctrl[name],
 			_$scope = page.$scope[name],
 			args = [];
 		_$scope.$params = params || {};
+		_$scope.$path = path;
 		if(_ctrl.refer && _ctrl.refer.length > 0) {
 			for(var i = 0, len = _ctrl.refer.length; i < len; i++) {
 				var referName = _ctrl.refer[i];
@@ -70,8 +72,6 @@
 			_ctrl.fn(_$scope);	
 		}
 	}
-	//Todo 待删除
-	var ctrl = g.pageCtrl = {};
 	/**
 	* 页面路由
 	* routerKey: {
@@ -93,8 +93,9 @@
 			title: '借款管理',
 			page: 'loanMagage'
 		},
-		creditInput: {
-			title: '征信结果录入'
+		'loanProcess/creditUpload': {
+			title: '征信结果录入',
+			page: 'creditUpload'
 		}
 	}
 	/**
@@ -120,6 +121,7 @@
 	* @params {string} key 要渲染的页面键名
 	*/
 	router.render = function(key, params, static) {
+		render.$console.html('');
 		if(!static) {
 			g.location.hash = key + (params ? '?' + $.param(params) : '');
 		}
@@ -131,8 +133,15 @@
 		var __currentPage = item.page;
 		$.getScript(internal.script(__currentPage))
 			.done(function() {
-				page.excute(__currentPage, params);
+				page.excute(__currentPage, key, params);
 			});
+	}
+	/**
+	* 更新hash
+	* @params {object} params hash内的搜索参数
+	*/
+	router.updateQuery = function(path, params) {
+		g.location.hash = path + (params ? '?' + $.param(params) : '');
 	}
 	/**
 	* 初始化界面
@@ -143,10 +152,10 @@
 		if(!hash) { return cb(); }
 		var sp = hash.split('?');
 		var _origin = sp[0],
-			_search = '?' + sp[1];
+			_search = !!sp[1] ? ('?' + sp[1]) : undefined;
 		var _paths = _origin.split('/'),
 			_params = !!_search ? $.parseParams(_search) : undefined;
-		router.render(_paths[_paths.length - 1], _params, true);
+		router.render(_origin, _params, true);
 		cb(_paths[0]);
 	}
 })(window);

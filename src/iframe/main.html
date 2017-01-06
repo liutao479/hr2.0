@@ -2,8 +2,8 @@
 <!--订单表格-->
 <div class="container workplat">
 	<div class="search-bar">
-		<input type="text" name="" id="search" value="" placeholder="订单号\借款人姓名\身份证号\手机号" class="input-text" />
-		<a class="location-tag" onclick="page.$scope['loan']"></a>
+		<input type="text" name="" autocomplete="off" id="search" value="" placeholder="订单号\借款人姓名\身份证号\手机号" class="input-text" />
+		<a id="processTag" class="location-tag" onclick="page.$scope['loan']"></a>
 		<!---
 		<div id="" class="drop-down-box">
 			<a href="#" class="drop-down-a">
@@ -53,7 +53,7 @@
 		{{ } else { }}
 		<td class="orders-item-data status-back">审核退回</td>
 		{{ } }}
-		<td class="orders-item-data"><a data-href="{{=row.typeKey}}" class="button">立即处理</a></td>
+		<td class="orders-item-data"><a data-href="loanProcess/{{=row.typeKey}}" class="button">立即处理</a></td>
 	</tr>
 	{{ } }}
 </script>
