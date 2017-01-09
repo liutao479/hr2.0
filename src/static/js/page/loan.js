@@ -51,7 +51,7 @@ page.ctrl('loan', ['page/test'], function($scope) {
 			apiParams.page = 1;
 			$params.page = 1;
 			loadLoanList(apiParams);
-			router.updateQuery($scope.$path, $params);
+			// router.updateQuery($scope.$path, $params);
 		}
 	});
 	/**
@@ -59,7 +59,7 @@ page.ctrl('loan', ['page/test'], function($scope) {
 	*/
 	$(document).on('click', '#loanTable .button', function() {
 		var that = $(this);
-		router.render(that.data('href'));
+		router.render(that.data('href'), {orderNo: that.data('id')});
 	});
 
 	/***
@@ -80,7 +80,7 @@ page.ctrl('loan', ['page/test'], function($scope) {
 	$scope.paging = function(_page, _size, $el, cb) {
 		apiParams.page = _page;
 		$params.page = _page;
-		router.updateQuery($scope.$path, $params);
+		// router.updateQuery($scope.$path, $params);
 		loadLoanList(apiParams);
 		cb();
 	}

@@ -34,10 +34,11 @@ $('.checkbox-normal').on('click', function() {
 })
 
 $(function() {
+	var $menu;
 	$.ajax({
 		url: $http.api('menu'),
 		success: $http.ok(function(result) {
-			var $menu = new menu('#menu', result.data, router.render);
+			$menu = new menu('#menu', result.data, router.render);
 			router.init(function(menuId) {
 				if(!menuId) { return $menu.setup('loanProcess'); }
 				$menu.setup(menuId, true);
