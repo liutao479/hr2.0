@@ -353,8 +353,8 @@
     color: #97a1b5;
     li {
         display: inline-block;
-        *float: left;
-        margin: 9px 0;
+        float: left;
+        margin: 8px 0;
         height: 30px;
         overflow: hidden;
         &.page {
@@ -383,27 +383,27 @@
             cursor: default;
         }
         &.page-jump-area {
-            * {
-                *float: left;
-            }
+            height: 32px;
             span {
-                height: 30px;
+                float: left;
+                height: 32px;
                 display: inline-block;
                 margin: 0 5px;
-                line-height: 30px;
+                line-height: 32px;
             }
             .input-text {
+                float: left;
                 width: 48px;
-                height: 28px;
+                height: 30px;
             }
-            .button {
-                overflow: hidden;
+            .button  {
+                float: left;
                 background-color: #FFF;
-                color: #000;
+                color: @fontColor;
                 font-size: 14px;
                 border: 1px solid #cdd9e9;
-                height: 28px;
-                line-height: 28px;
+                height: 30px;
+                line-height: 30px;
             }
         }
         &.page-jump-area:hover {

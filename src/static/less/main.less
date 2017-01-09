@@ -32,6 +32,9 @@ i {
 a {
     text-decoration: none;
 }
+img {
+    border: none;
+}
 
 //通用分离样式 
 .clearfix {
@@ -157,6 +160,10 @@ input[type=radio] {
             }
             &.user {
                 width: 102px;
+                height: 60px;
+                .drop-down-box {
+                    margin: 15px auto; 
+                }
             }
             &:hover {
                 background-color: #6347bd;
@@ -282,6 +289,7 @@ input[type=radio] {
             .iconfont-arrow {
                 position: absolute;
                 right: 25px;
+                top: 0;
                 font-size: 12px;
                 -webkit-transition: all .25s;
                    -moz-transition: all .25s;

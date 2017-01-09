@@ -19,7 +19,7 @@
 // });
 
 'use strict';
-page.ctrl('customer', [], function($scope) {
+page.ctrl('myCustomer', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
@@ -39,6 +39,7 @@ page.ctrl('customer', [], function($scope) {
 			dataType: 'jsonp',
 			jsonpCallback: 'cb',
 			success: $http.ok(function(result) {
+				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				setupPaging(result.page.pages, true);
 				if(cb && typeof cb == 'function') {
