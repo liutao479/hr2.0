@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('carTwohand', function($scope) {
+page.ctrl('electricCheck', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
@@ -14,7 +14,7 @@ page.ctrl('carTwohand', function($scope) {
 	*/
 	var loadLoanList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.carTwohand),
+			url: $http.api($http.apiMap.eleCheck),
 			data: params,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
@@ -27,10 +27,10 @@ page.ctrl('carTwohand', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('car-twohand'), function() {
-		$scope.def.listTmpl = render.$console.find('#carTwohandtmpl').html();
+	render.$console.load(router.template('electric-check'), function() {
+		$scope.def.listTmpl = render.$console.find('#eleChecktmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#carTwohand'),
+			$tbl: $console.find('#eleCheck'),
 		}
 		if($params.process) {
 			

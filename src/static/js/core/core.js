@@ -53,6 +53,12 @@
 	_.$http.apiMap = {
 		menu: 'menu',
 		loanList: 'loan.list',
+		loanInfo: 'loan.info',
+		loanAudit: 'loan.info',
+		cardAudit: 'loan.info',
+		lendAudit: 'loan.info',
+		eleCheck: 'loan.info',
+		carTwohand: 'car.towhand',
 		myCustomer: 'my.customer'
 	};
 	$(document).ajaxError(function(event, request, settings, error) {

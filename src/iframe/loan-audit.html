@@ -5,7 +5,7 @@
 					<div class="path-back">
 						<i class="iconfont">&#xe626;</i>
 						<a href="#">返回列表</a>&nbsp;&gt;
-						<span class="current-page">放款审核</span>
+						<span class="current-page">贷款信息审核</span>
 					</div>
 					<div class="key-value-box">
 						<span class="key">借款人：</span>
@@ -25,6 +25,15 @@
 				</div>
 				
 				<!--面板-->
+				<div id="loanAudit"></div>
+				
+				<!--提交订单按钮-->
+				<div class="commit-orders-box">
+					<div id="" class="button">提交订单</div>
+				</div>
+			</div>
+			
+			<script type="text/x-dot-template" id="loanAudittmpl">
 				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
@@ -56,9 +65,4 @@
 					</div>
 				</div>
 				{{ } }}
-				
-				<!--提交订单按钮-->
-				<div class="commit-orders-box">
-					<div id="" class="button">提交订单</div>
-				</div>
-			</div>
+			</script>

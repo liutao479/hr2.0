@@ -154,8 +154,28 @@
 			page: 'creditUpload'
 		},
 		'loanProcess/loanInfo': {
-			title: '信息表修改',
+			title: '贷款信息表录入',
 			page: 'loanInfo'
+		},
+		'loanProcess/secondhandInput': {
+			title: '二手车评估信息录入',
+			page: 'carTwohand'
+		},
+		'loanProcess/phoneAudit': {
+			title: '电审',
+			page: 'electricCheck'
+		},
+		'loanProcess/loanAudit': {
+			title: '贷款审核',
+			page: 'loanAudit'
+		},
+		'loanProcess/lendAudit': {
+			title: '放款审核',
+			page: 'lendAudit'
+		},
+		'loanProcess/cardAudit': {
+			title: '开卡审核',
+			page: 'cardAudit'
 		}
 		
 	}
