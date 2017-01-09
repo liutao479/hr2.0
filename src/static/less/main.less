@@ -13,6 +13,7 @@ body, input, textarea, a, select {
 }
 
 body {
+    padding-top: 60px;
 	*, *:after, *:before {
 		box-sizing: border-box;
     	-webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;	
@@ -21,6 +22,10 @@ body {
 
 *:focus, *:active, a:linked {
 	outline: 0 !important;
+}
+input,
+textarea {
+    outline: 0 !important;
 }
 ul,
 li {
@@ -342,7 +347,7 @@ input[type=radio] {
 //工作台
 .console {
 	padding: 20px 60px 100px 40px;
-	margin: 60px 0 0 200px;
+    margin-left: 200px;
 	background-color: @consoleBgColor;
 	overflow: hidden;
     .search-bar {
@@ -377,31 +382,28 @@ input[type=radio] {
 	//我的客户
 	.customer {
 	    .select-search-bar {
+            position: relative;
 	        padding: 15px 20px;
-            .box;
             border: 1px solid @borderColor;
-            .input-text {
-                width: 348px;
-            }
-            .search-item-box {
-                .box-flex(6);
-                width: 0;
-            }
-            .search-sure-box {
-                width: 0;
-                .box-flex(1);
-                .box;
-                -webkit-box-align: end;
-                -webkit-box-pack: end;
-            }
+            
             .search-item {
+                float: left;
                 line-height: 32px;
                 margin: 0 30px 10px 0;
+                &.search-item-last {
+                    position: absolute;
+                    bottom: 15px;
+                    right: 0;
+                }
+                .input-text {
+                    width: 348px;
+                }
+                .separator {
+                    margin: 0 5px;
+                    color: @selectBorderColor;
+                }
             }
-            .separator {
-                margin: 0 5px;
-                color: @selectBorderColor;
-            }
+            
         }
         .customer-orders {
             margin-top: 10px;

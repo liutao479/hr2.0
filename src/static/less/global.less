@@ -102,12 +102,22 @@
 //输入框
 .input-text {
     width: 348px;
-    height: 30px;
-    line-height: 30px;
+    height: 32px;
+    line-height: 32px;
     padding: 0 10px;
     border: 1px solid @borderColor;
     .borderRadius(3px);
     outline: none;
+    input {
+        float: left;
+        display: inline-block;
+        width: 100%;
+        height: 30px;
+        line-height: 30px !important;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
 }
 //图片上传
 
