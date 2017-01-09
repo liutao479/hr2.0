@@ -153,10 +153,11 @@
 			title: '征信结果录入',
 			page: 'creditUpload'
 		},
-		'loanProcess/creditUpload': {
+		'loanProcess/loanInfo': {
 			title: '信息表修改',
 			page: 'loanInfo'
 		}
+		
 	}
 	/**
 	* router 内部方法
