@@ -70,5 +70,3 @@
 		return Math.floor(total / pageSize) + (total % pageSize == 0 ? 0 : 1);
 	}
 })(window);
-
-
