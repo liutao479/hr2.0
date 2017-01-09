@@ -1,5 +1,6 @@
 @import (reference) "defined.less";
 @import (less) "global.less";
+@import (less) "media.less";
 
 html,body,p,div,a,ul,li,dl,dt,dd,span,em,h2,h3,h4,i {
 	margin:0;
@@ -10,14 +11,14 @@ body, input, textarea, a, select {
     font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", STHeiti, Arial, SimSun, sans-serif;
 	font-size: 13px;
 }
-/*
+
 body {
 	*, *:after, *:before {
 		box-sizing: border-box;
     	-webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;	
 	}
 }
-*/
+
 *:focus, *:active, a:linked {
 	outline: 0 !important;
 }
@@ -402,11 +403,13 @@ input[type=radio] {
                 color: @selectBorderColor;
             }
         }
-       
+        .customer-orders {
+            margin-top: 10px;
+        }
 	    .customer-orders .orders-box {
 	        border: 1px solid @borderColor;
 	        border-collapse: collapse;
-	        margin-top: 11px;
+	        margin-top: 10px;
 	        text-align: left;
             -webkit-transition: all .1s;
                -moz-transition: all .1s;
@@ -414,11 +417,21 @@ input[type=radio] {
                  -o-transition: all .1s;
                     transition: all .1s;
 	        &:hover {
-	            border-color: @tableActiveColor;
-	           cursor: pointer;
+	            border-color: @mainColor;
+                cursor: pointer;
+                -webkit-transform: scale(1.01);
+                   -moz-transform: scale(1.01);
+                    -ms-transform: scale(1.01);
+                     -o-transform: scale(1.01);
+                        transform: scale(1.01);
+                -webkit-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                   -moz-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                    -ms-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                     -o-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                        box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2);
 	        }
 	        .iconfont {
-	            color: @tableActiveColor;
+	            color: @mainColor;
 	        }
 	        thead {
 	            color: @tiperColor;
@@ -437,10 +450,20 @@ input[type=radio] {
 	            background-color: #FFF;
 	            margin: 13px 0;
 	            tr:nth-of-type(1) td {
+                    &.car-info-box {
+                        padding-top: 0;
+                    }
 	                padding-top: 13px;
 	            }
 	            tr:nth-of-type(3) td {
                     padding-bottom: 13px;
+                }
+                .user-info {
+                    .iconfont {
+                        margin-right: 10px;
+                        position: relative;
+                        top: 1px;
+                    }
                 }
 	            .car-logo {
 	                width: 71px;

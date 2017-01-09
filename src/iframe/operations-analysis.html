@@ -137,22 +137,8 @@
 									<td class="orders-item-data">自行垫资<br />笔数</td>
 								</tr>
 							</thead>
-							<tbody>
-								{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
-								<tr>
-									<td class="orders-item-data">{{=row.statisticsTime}}</td>
-									<td class="orders-item-data">{{=row.financeMoney}}</td>
-									<td class="orders-item-data">{{=row.financeNumber}}</td>
-									<td class="orders-item-data">{{=row.bankMoney}}</td>
-									<td class="orders-item-data">{{=row.bankNumber}}</td>
-									<td class="orders-item-data">{{=row.bankShouldBank}}</td>
-									<td class="orders-item-data">{{=row.bankShouldNumber}}</td>
-									<td class="orders-item-data">{{=row.paidMoney}}</td>
-									<td class="orders-item-data">{{=row.paidNumber}}</td>
-									<td class="orders-item-data">{{=row.selfPaidMoney}}</td>
-									<td class="orders-item-data">{{=row.selfPaidNumber}}</td>
-								</tr>
-								{{ } }}
+							<tbody id="operationsAnalysisTable">
+								
 							</tbody>
 						</table>
 					</div>
@@ -164,5 +150,23 @@
 			</div>
 			<!--上牌办理 end-->
 			
-			<!--分页插件改编（未完成）-->
-			<div id="pageToolbar" class="pageToolbar" data-pages="50" data-current="8"></div>
+			<!--分页器-->
+			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['operationsAnalysis'].paging" data-pages="50" data-current="3"></div>
+
+			<script type="text/x-dot-template" id="operationsAnalysisListTmpl">
+				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+				<tr>
+					<td class="orders-item-data">{{=row.statisticsTime}}</td>
+					<td class="orders-item-data">{{=row.financeMoney}}</td>
+					<td class="orders-item-data">{{=row.financeNumber}}</td>
+					<td class="orders-item-data">{{=row.bankMoney}}</td>
+					<td class="orders-item-data">{{=row.bankNumber}}</td>
+					<td class="orders-item-data">{{=row.bankShouldBank}}</td>
+					<td class="orders-item-data">{{=row.bankShouldNumber}}</td>
+					<td class="orders-item-data">{{=row.paidMoney}}</td>
+					<td class="orders-item-data">{{=row.paidNumber}}</td>
+					<td class="orders-item-data">{{=row.selfPaidMoney}}</td>
+					<td class="orders-item-data">{{=row.selfPaidNumber}}</td>
+				</tr>
+				{{ } }}
+			</script>

@@ -28,7 +28,7 @@ page.ctrl('myCustomer', [], function($scope) {
 			pageSize: 20
 		};
 	/**
-	* 加载车贷办理数据
+	* 加载我的客户数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
@@ -36,8 +36,11 @@ page.ctrl('myCustomer', [], function($scope) {
 		$.ajax({
 			url: $http.api($http.apiMap.myCustomer),
 			data: params,
-			dataType: 'jsonp',
-			jsonpCallback: 'cb',
+			// url: 'http://192.168.0.119:8080/LoanOrder/getMyCustomer',
+			// data: {
+			// 	loanOrderQuery : {},
+			// 	page: 1
+			// },
 			success: $http.ok(function(result) {
 				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
@@ -62,16 +65,16 @@ page.ctrl('myCustomer', [], function($scope) {
 	/**
 	* 绑定立即处理事件
 	*/
-	$(document).on('click', '#loanTable .button', function() {
-		var that = $(this);
-		router.render(that.data('href'));
-	});
+	// $(document).on('click', '#myCustomerTable .button', function() {
+	// 	var that = $(this);
+	// 	router.render(that.data('href'));
+	// });
 
 	/***
 	* 加载页面模板
 	*/
 	render.$console.load(router.template('my-customer'), function() {
-		$scope.def.listTmpl = render.$console.find('#myCustomerTable').html();
+		$scope.def.listTmpl = render.$console.find('#myCustomerListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#myCustomerTable'),
 			$paging: $console.find('#pageToolbar')

@@ -38,27 +38,31 @@
 							<td class="orders-item-data">操作</td>
 						</tr>
 					</thead>
-					<tbody>
-						{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
-						<tr>
-							<td class="orders-item-data">{{=row.orderNo}}</td>
-							<td class="orders-item-data">{{=row.user}}</td>
-							<td class="orders-item-data">{{=row.company}}</td>
-							<td class="orders-item-data">{{=row.bank}}</td>
-							<td class="orders-item-data">{{=row.carTime}}</td>
-							<td class="orders-item-data">{{=row.licenceTime}}</td>
-							{{ if(row.countDown == "已超期"){ }}
-							<td class="orders-item-data status-back">已超期</td>
-							{{ } else { }}
-							<td class="orders-item-data">{{=row.countDown}}</td>
-							{{ } }}
-							<td class="orders-item-data"><div class="button">立即处理</div></td>
-						</tr>
-						{{ } }}
+					<tbody id="mortgageAuditTable">
+						
 					</tbody>
 				</table>
 			</div>
 			<!--抵押审核 end-->
 			
 			<!--分页插件改编（未完成）-->
-			<div id="pageToolbar" class="pageToolbar" data-pages="50" data-current="8"></div>
+			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['mortgageAudit'].paging" data-pages="50" data-current="3"></div>
+
+			<script type="text/x-dot-template" id="mortgageAuditListTmpl">
+				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+				<tr>
+					<td class="orders-item-data">{{=row.orderNo}}</td>
+					<td class="orders-item-data">{{=row.user}}</td>
+					<td class="orders-item-data">{{=row.company}}</td>
+					<td class="orders-item-data">{{=row.bank}}</td>
+					<td class="orders-item-data">{{=row.carTime}}</td>
+					<td class="orders-item-data">{{=row.licenceTime}}</td>
+					{{ if(row.countDown == "已超期"){ }}
+					<td class="orders-item-data status-back">已超期</td>
+					{{ } else { }}
+					<td class="orders-item-data">{{=row.countDown}}</td>
+					{{ } }}
+					<td class="orders-item-data"><div class="button">立即处理</div></td>
+				</tr>
+				{{ } }}
+			</script>

@@ -16,8 +16,6 @@ page.ctrl('loan', ['page/test'], function($scope) {
 		$.ajax({
 			url: $http.api($http.apiMap.loanList),
 			data: params,
-			dataType: 'jsonp',
-			jsonpCallback: 'cb',
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				setupPaging(result.page.pages, true);
@@ -43,6 +41,7 @@ page.ctrl('loan', ['page/test'], function($scope) {
 	**/
 	$(document).on('keydown', '#search', function(evt) {
 		if(evt.which == 13) {
+			alert("查询");
 			var that = $(this),
 				searchText = $.trim(that.val());
 			if(!searchText) {

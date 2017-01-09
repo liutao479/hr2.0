@@ -1,5 +1,5 @@
-cb({
-	"code": "0",
+{
+	"code": 0,
 	"data": {
 		"loanProcess": [],
 		"myCustomer": [],
@@ -13,4 +13,4 @@ cb({
 		"operationsAnalysis": [],
 		"organizationManage": []
 	}
-})
+}

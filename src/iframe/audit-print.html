@@ -53,20 +53,8 @@
 							<td class="orders-item-data">操作</td>
 						</tr>
 					</thead>
-					<tbody>
-						{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
-						<tr>
-							<td class="orders-item-data order-item-first">
-								<div class="checkbox checkbox-normal"></div>
-							</td>
-							<td class="orders-item-data">{{=row.createTime}}</td>
-							<td class="orders-item-data">{{=row.orderNo}}</td>
-							<td class="orders-item-data">{{=row.user}}（{{=row.idc}}）</td>
-							<td class="orders-item-data">{{=row.company}}</td>
-							<td class="orders-item-data">{{=row.stagesMoney}}</td>
-							<td class="orders-item-data"><div class="button button-mini-nowidth">修改</div></td>
-						</tr>
-						{{ } }}
+					<tbody id="auditPrintTable">
+						
 					</tbody>
 				</table>
 				<!--业务审批表格 end-->
@@ -74,5 +62,21 @@
 			</div>
 			<!--上牌办理 end-->
 			
-			<!--分页插件改编（未完成）-->
-			<div id="pageToolbar" class="pageToolbar" data-pages="50" data-current="8"></div>
+			<!--分页器-->
+			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['auditPrint'].paging" data-pages="50" data-current="3"></div>
+
+			<script type="text/x-dot-template" id="auditPrintListTmpl">
+				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+				<tr>
+					<td class="orders-item-data order-item-first">
+						<div class="checkbox checkbox-normal"></div>
+					</td>
+					<td class="orders-item-data">{{=row.createTime}}</td>
+					<td class="orders-item-data">{{=row.orderNo}}</td>
+					<td class="orders-item-data">{{=row.user}}（{{=row.idc}}）</td>
+					<td class="orders-item-data">{{=row.company}}</td>
+					<td class="orders-item-data">{{=row.stagesMoney}}</td>
+					<td class="orders-item-data"><div class="button button-mini-nowidth">修改</div></td>
+				</tr>
+				{{ } }}
+			</script>
