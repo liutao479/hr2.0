@@ -6,6 +6,7 @@
 //$('#pageToolbar').Paging({pagesize:10,count:85,toolbar:true});	
 
 $(function() {
+	var $menu;
 	$.ajax({
 		url: $http.api('menu'),
 		crossDomain: true,
@@ -20,12 +21,6 @@ $(function() {
 		},
 		error: function(err) {
 			console.log(err);
-		}/*$http.ok(function(result) {
-			var $menu = new menu('#menu', result.data, router.render);
-			router.init(function(menuId) {
-				if(!menuId) { return $menu.setup('loanProcess'); }
-				$menu.setup(menuId, true);
-			})
-		})*/
+		}
 	})
 });

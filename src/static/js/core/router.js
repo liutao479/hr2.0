@@ -176,14 +176,19 @@
 	router.template = function(key) {
 		return 'iframe/' + key + '.html';
 	}
+	router.closeRefresh = false;
 	/**
 	* 执行渲染
 	* @params {string} key 要渲染的页面键名
+	* @params {object} params 要传递的参数
+	* @params {object} opts 参数
+	* --@opts.bStatic 是否更新路由
 	*/
-	router.render = function(key, params, static) {
+	router.render = function(key, params, opts) {
 		render.$console.html('');
-		if(!static) {
-			g.location.hash = key + (params ? '?' + $.param(params) : '');
+		router.closeRefresh = true;
+		if(!opts || !opts.bStatic) {
+			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + $.param(params) : '');
 		}
 		var item = g.routerMap[key];
 		if(!item) {
@@ -197,13 +202,6 @@
 			});
 	}
 	/**
-	* 更新hash
-	* @params {object} params hash内的搜索参数
-	*/
-	router.updateQuery = function(path, params) {
-		g.location.hash = path + (params ? '?' + $.param(params) : '');
-	}
-	/**
 	* 初始化界面
 	* @params {function} cb 回调函数
 	*/
@@ -215,8 +213,18 @@
 			_search = !!sp[1] ? ('?' + sp[1]) : undefined;
 		var _paths = _origin.split('/'),
 			_params = !!_search ? $.parseParams(_search) : undefined;
-		router.render(_origin, _params, true);
-		cb(_paths[0]);
+		router.render(_origin, _params);
+		cb && typeof cb == 'function' && cb(_paths[0]);
 	}
+	$(window).bind('hashchange', function() {
+		var path = g.location.hash.substr(1).split('?')[0];
+		if(!path) return false;
+		if(router.closeRefresh) {
+			router.closeRefresh = false;	
+			return false;
+		}
+		g.location.reload();
+		
+	});
 })(window);
 
