@@ -87,7 +87,7 @@
 		},
 		'myCustomer': {
 			title: '我的客户',
-			page: 'customer'
+			page: 'myCustomer'
 		},
 		'loanManage': {
 			title: '借款管理',
