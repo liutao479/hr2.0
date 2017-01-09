@@ -22,6 +22,7 @@
 							</div>
 							<!--是否是新表格 若是加上此项 end-->
 							
+							{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 							<div class="key-value-box">
 								<span class="key">查询时间：</span>
 								<span class="value">
@@ -31,7 +32,7 @@
 							</div>
 							<div class="key-value-box">
 								<span class="key">保证金总余额：</span>
-								<span class="value">20256.00元</span>
+								<span class="value">{{=row.totalMoney}}元</span>
 							</div>
 						</div>
 						<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">
@@ -44,26 +45,17 @@
 								</tr>
 							</thead>
 							<tbody>
+								{{for(var j = 0, len2 = it[i].result.length; j < len2; j++) { var col = it[i].result[j]; }}
 								<tr>
-									<td class="orders-item-data">2016/11/24</td>
-									<td class="orders-item-data">中国工商银行</td>
-									<td class="orders-item-data">12092938475868769878</td>
-									<td class="orders-item-data">20256.00</td>
+									<td class="orders-item-data">{{=col.queryTime}}</td>
+									<td class="orders-item-data">{{=col.bank}}</td>
+									<td class="orders-item-data">{{=col.bankc}}</td>
+									<td class="orders-item-data">{{=col.depositBalance}}</td>
 								</tr>
-								<tr>
-									<td class="orders-item-data">2016/11/24</td>
-									<td class="orders-item-data">中国工商银行</td>
-									<td class="orders-item-data">12092938475868769878</td>
-									<td class="orders-item-data">20256.00</td>
-								</tr>
-								<tr>
-									<td class="orders-item-data">2016/11/24</td>
-									<td class="orders-item-data">中国工商银行</td>
-									<td class="orders-item-data">12092938475868769878</td>
-									<td class="orders-item-data">20256.00</td>
-								</tr>
+								{{ } }}
 							</tbody>
 						</table>
+						{{ } }}
 						<div class="table-title">
 							<div class="key-value-box">
 								<span class="key">查询时间：</span>

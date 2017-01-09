@@ -1,0 +1,95 @@
+{
+	"code": 0,
+	"data": [
+		{
+			"statisticsTime": "2016-10-11 12:00",
+			"financeMoney": "5000000",
+			"financeNumber": "30",
+			"bankMoney": "5000000",
+			"bankNumber": "30",
+			"bankShouldBank": "500000",
+			"bankShouldNumber": "30",
+			"paidMoney": "500000",
+			"paidNumber": "30",
+			"selfPaidMoney": "500000",
+			"selfPaidNumber": "30"
+		},{
+			"statisticsTime": "2016-10-11 12:00",
+			"financeMoney": "5000000",
+			"financeNumber": "30",
+			"bankMoney": "5000000",
+			"bankNumber": "30",
+			"bankShouldBank": "500000",
+			"bankShouldNumber": "30",
+			"paidMoney": "500000",
+			"paidNumber": "30",
+			"selfPaidMoney": "500000",
+			"selfPaidNumber": "30"
+		},
+		{
+			"statisticsTime": "2016-10-11 12:00",
+			"financeMoney": "5000000",
+			"financeNumber": "30",
+			"bankMoney": "5000000",
+			"bankNumber": "30",
+			"bankShouldBank": "500000",
+			"bankShouldNumber": "30",
+			"paidMoney": "500000",
+			"paidNumber": "30",
+			"selfPaidMoney": "500000",
+			"selfPaidNumber": "30"
+		},
+		{
+			"statisticsTime": "2016-10-11 12:00",
+			"financeMoney": "5000000",
+			"financeNumber": "30",
+			"bankMoney": "5000000",
+			"bankNumber": "30",
+			"bankShouldBank": "500000",
+			"bankShouldNumber": "30",
+			"paidMoney": "500000",
+			"paidNumber": "30",
+			"selfPaidMoney": "500000",
+			"selfPaidNumber": "30"
+		},
+		{
+			"statisticsTime": "2016-10-11 12:00",
+			"financeMoney": "5000000",
+			"financeNumber": "30",
+			"bankMoney": "5000000",
+			"bankNumber": "30",
+			"bankShouldBank": "500000",
+			"bankShouldNumber": "30",
+			"paidMoney": "500000",
+			"paidNumber": "30",
+			"selfPaidMoney": "500000",
+			"selfPaidNumber": "30"
+		},
+		{
+			"statisticsTime": "2016-10-11 12:00",
+			"financeMoney": "5000000",
+			"financeNumber": "30",
+			"bankMoney": "5000000",
+			"bankNumber": "30",
+			"bankShouldBank": "500000",
+			"bankShouldNumber": "30",
+			"paidMoney": "500000",
+			"paidNumber": "30",
+			"selfPaidMoney": "500000",
+			"selfPaidNumber": "30"
+		},
+		{
+			"statisticsTime": "2016-10-11 12:00",
+			"financeMoney": "5000000",
+			"financeNumber": "30",
+			"bankMoney": "5000000",
+			"bankNumber": "30",
+			"bankShouldBank": "500000",
+			"bankShouldNumber": "30",
+			"paidMoney": "500000",
+			"paidNumber": "30",
+			"selfPaidMoney": "500000",
+			"selfPaidNumber": "30"
+		}
+	]
+}

@@ -46,14 +46,14 @@
 				cb(response);
 			} else {
 				//统一的失败处理
-				console.log('faile');
+				console.log('failed');
 			}
 		}
 	};
 	_.$http.apiMap = {
 		menu: 'menu',
 		loanList: 'loan.list',
-		myCustomer: 'my/customer',
+		myCustomer: 'my/customer'
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error

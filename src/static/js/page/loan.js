@@ -16,6 +16,8 @@ page.ctrl('loan', ['page/test'], function($scope) {
 		$.ajax({
 			url: $http.api($http.apiMap.loanList),
 			data: params,
+			dataType: 'jsonp',
+			jsonpCallback: 'cb',
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				setupPaging(result.page.pages, true);

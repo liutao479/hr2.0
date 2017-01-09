@@ -1,0 +1,77 @@
+{
+	"code": 0,
+	"data": [
+		{
+			"createTime": "2016-10-11",
+			"orderNo": "98765432123456789",
+			"user": "王兴霖",
+			"idc": "412702199302063154",
+			"company": "xxxx公司",
+			"stagesMoney": "10000"
+		},
+		{
+			"createTime": "2016-10-11",
+			"orderNo": "98765432123456789",
+			"user": "小明",
+			"idc": "412702199302063154",
+			"company": "xxxx公司",
+			"stagesMoney": "20000"
+		},
+		{
+			"createTime": "2016-10-11",
+			"orderNo": "98765432123456789",
+			"user": "小红",
+			"idc": "412702199302063154",
+			"company": "xxxx公司",
+			"stagesMoney": "30000"
+		},
+		{
+			"createTime": "2016-10-11",
+			"orderNo": "98765432123456789",
+			"user": "王兴霖",
+			"idc": "412702199302063154",
+			"company": "xxxx公司",
+			"stagesMoney": "10000"
+		},
+		{
+			"createTime": "2016-10-11",
+			"orderNo": "98765432123456789",
+			"user": "小明",
+			"idc": "412702199302063154",
+			"company": "xxxx公司",
+			"stagesMoney": "20000"
+		},
+		{
+			"createTime": "2016-10-11",
+			"orderNo": "98765432123456789",
+			"user": "小红",
+			"idc": "412702199302063154",
+			"company": "xxxx公司",
+			"stagesMoney": "30000"
+		},
+		{
+			"createTime": "2016-10-11",
+			"orderNo": "98765432123456789",
+			"user": "王兴霖",
+			"idc": "412702199302063154",
+			"company": "xxxx公司",
+			"stagesMoney": "10000"
+		},
+		{
+			"createTime": "2016-10-11",
+			"orderNo": "98765432123456789",
+			"user": "小明",
+			"idc": "412702199302063154",
+			"company": "xxxx公司",
+			"stagesMoney": "20000"
+		},
+		{
+			"createTime": "2016-10-11",
+			"orderNo": "98765432123456789",
+			"user": "小红",
+			"idc": "412702199302063154",
+			"company": "xxxx公司",
+			"stagesMoney": "30000"
+		}
+	]
+}

@@ -16,6 +16,22 @@
 						<span class="value">2016-11-03 14:02</span>
 					</div>
 				</div>
+				<!--提交修改等等按钮-->
+				<div class="commit-orders-box commit-orders-box-area mb15">
+					<a href="javascript:;" class="commit-item">
+						<i class="iconfont">&#xe614;</i>
+						<span>放款预约</span>
+					</a>
+					<a href="javascript:;" class="commit-item">
+						<i class="iconfont">&#xe6fd;</i>
+						<span>申请终止订单</span>
+					</a>
+					<a href="javascript:;" class="commit-item">
+						<i class="iconfont">&#xe640;</i>
+						<span>申请修改分期信息</span>
+					</a>
+				</div>
+				<!--提交修改等等按钮   end-->
 				<!--工作台左侧菜单面板-->
 				<div class="panel panel-menu">
 					<a class="panel-menu-item" href="#">贷款信息表</a>
@@ -40,270 +56,34 @@
 				<!--工作台左侧菜单面板 end-->
 				
 				<!--面板-->
+				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 				<div class="panel panel-loan panel-detail">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">购车信息</span>
+							<span class="panel-title-name">{{= row.model}}</span>
 						</div>
 					</div>
-					<div class="panel-detail-content panel-detail-layout">
+					<div class="panel-detail-content panel-detail-layout padding0">
 						<div class="loan-info">
+							{{for(var j = 0, len2 = row.modelcontent.length; j < len2; j++) { var role = row.modelcontent[j]; }}
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>经销商名称：</span>
+								<span class="info-key"><i>*</i>{{= role.name}}：</span>
+								{{ if(role.type == '1'){ }}
 								<span class="info-value">
 									<select>
 										<option>12</option>
 									</select>
 								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>上牌地：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>年收入：</span>
+								{{ }else{ }}
 								<span class="info-value"><input type="text" /></span>
+								{{ } }}
 							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>贷款金额：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>手续费率：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>手续费：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>调额额度：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>车辆价格：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>贷款成数：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
+							{{ } }}
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan panel-detail">
-					<!--借款人信息填写栏-->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">您的基本资料</span>
-						</div>
-					</div>
-					<div class="panel-detail-content panel-detail-layout">
-						<div class="loan-info">
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>中文名：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>手机：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>性别：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>住宅：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>证件号码：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>住宅电话：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>发证机关：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>邮政编码：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>证件有效截止日期：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>入住日期：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>婚姻状况：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-loan panel-detail">
-					<!--借款人信息填写栏-->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">您的职业资料</span>
-						</div>
-					</div>
-					<div class="panel-detail-content panel-detail-layout">
-						<div class="loan-info">
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位名称：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>职业：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位地址：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>邮政编码：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位电话：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>何时进入现单位工作：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位性质：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-loan panel-detail">
-					<!--借款人信息填写栏-->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">您的联系人资料</span>
-						</div>
-					</div>
-					<div class="panel-detail-content panel-detail-layout">
-						<div class="loan-info">
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>亲属联系人姓名：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>与您的关系：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>手机：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>联系电话：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>其他联系人姓名：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>与您的关系：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>手机：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>联系电话：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-loan panel-detail">
-					<!--借款人信息填写栏-->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">定制个性服务</span>
-						</div>
-					</div>
-					<div class="panel-detail-content panel-detail-layout">
-						<div class="loan-info">
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>卡片领取方式：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>E-mail地址(对账服务)：</span>
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>短信余额变动提醒：</span>
-								<span class="info-value"><input type="text" /></span>
-							</div>
-						</div>
-					</div>
-				</div>
+				{{ } }}
 				<div class="panel panel-loan panel-detail">
 					<!--借款人信息填写栏-->
 					<div class="panel-title-box">

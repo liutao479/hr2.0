@@ -20,25 +20,33 @@
 				<!--面板-->
 				<div class="panel panel-loan panel-layout clearfix">
 					<!--合作机构维护单个循环div-->
+				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 					<div class="col-company">
 						<div class="panel-title-box">
 							<div class="panel-title">
-								<span class="panel-title-name">银行资料</span>
+								<span class="panel-title-name">{{= row.model}}</span>
 							</div>
 						</div>
 						<div class="panel-content clearfix">
 							<div class="carShop-manage">
+							{{for(var j = 0, len2 = row.modelcontent.length; j < len2; j++) { var role = row.modelcontent[j]; }}
 								<div class="info-key-value-box">
-									<span class="info-key"><i>*</i>银行名称：</span>
+									<span class="info-key"><i>*</i>{{= role.name}}：</span>
+								{{ if(role.type == '1'){ }}
 									<span class="info-value">
 										<select>
 											<option>12</option>
 										</select>
 									</span>
+								{{ }else{ }}
+									<span class="info-value"><input type="text" /></span>
+								{{ } }}
 								</div>
+							{{ } }}
 							</div>
 						</div>
 					</div>
+				{{ } }}
 					<div class="col-company">
 						<div class="panel-title-box">
 							<div class="panel-title">
@@ -78,13 +86,14 @@
 								<span class="panel-title-name">银行费率表</span>
 							</div>
 						</div>
-						<div class="panel-content clearfix">
-							<div class="carShop-manage">
+						<div class="panel-content pt24 clearfix">
+							<div class="carShop-manage-fee">
 								<div class="info-key-value-box">
 									<span class="info-key"><i>*</i>费率1：</span>
 									<span class="info-value"><input type="text" /></span>
+									<div id="" class="button">此处为表格</div>
 								</div>
-								<div id="" class="button">此处为表格</div>
+								
 							</div>
 						</div>
 					</div>

@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_k5pis6eka7yl23xr.eot');
-  src: url('//at.alicdn.com/t/font_k5pis6eka7yl23xr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_k5pis6eka7yl23xr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_k5pis6eka7yl23xr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_k5pis6eka7yl23xr.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_e74b5pccutgiizfr.eot');
+  src: url('//at.alicdn.com/t/font_e74b5pccutgiizfr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_e74b5pccutgiizfr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_e74b5pccutgiizfr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_e74b5pccutgiizfr.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -198,6 +198,12 @@
     &&-car {
         width: 248px;
     }
+    &&-bank {
+        width: 350px;
+        .placeholder {
+            width: 285px;
+        }
+    }
     .arrow {
         cursor: pointer;
     }
@@ -342,15 +348,17 @@
 //分页器
 .paginator {
     font-size: 12px;
-    line-height: 48px;
     float: right;
     margin-right: 30px;
     color: #97a1b5;
     li {
         display: inline-block;
+        *float: left;
+        margin: 9px 0;
+        height: 30px;
+        overflow: hidden;
         &.page {
             width: 30px;
-            height: 30px;
             line-height: 30px;
             text-align: center;
             margin-left: 5px;
@@ -375,17 +383,27 @@
             cursor: default;
         }
         &.page-jump-area {
+            * {
+                *float: left;
+            }
+            span {
+                height: 30px;
+                display: inline-block;
+                margin: 0 5px;
+                line-height: 30px;
+            }
             .input-text {
                 width: 48px;
-                height: 30px;
+                height: 28px;
             }
             .button {
+                overflow: hidden;
                 background-color: #FFF;
                 color: #000;
                 font-size: 14px;
                 border: 1px solid #cdd9e9;
-                height: 30px;
-                line-height: 30px;
+                height: 28px;
+                line-height: 28px;
             }
         }
         &.page-jump-area:hover {
