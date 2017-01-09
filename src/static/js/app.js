@@ -15,6 +15,6 @@ $(function() {
 				if(!menuId) { return $menu.setup('loanProcess'); }
 				$menu.setup(menuId, true);
 			})
-		})*/
+		})
 	})
 });
