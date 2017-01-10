@@ -98,12 +98,18 @@
 					</thead>
 					<tbody>
 						{{for(var j = 0, len2 = it[i].result.length; j < len2; j++) { var col = it[i].result[j]; }}
-						<tr>
-							<td class="orders-item-data">{{=col.queryTime}}</td>
-							<td class="orders-item-data">{{=col.bank}}</td>
-							<td class="orders-item-data">{{=col.bankc}}</td>
-							<td class="orders-item-data">{{=col.depositBalance}}</td>
-						</tr>
+							{{ if(j % 2 !== 0) { }}
+							<tr class="tr-even">
+							{{ } else if(j % 2 == 0 && j == 0) { }}
+							<tr class="tr-odd tr-noborder">
+							{{ } else { }}
+							<tr class="tr-odd">
+							{{ } }}
+								<td class="orders-item-data">{{=col.queryTime}}</td>
+								<td class="orders-item-data">{{=col.bank}}</td>
+								<td class="orders-item-data">{{=col.bankc}}</td>
+								<td class="orders-item-data">{{=col.depositBalance}}</td>
+							</tr>
 						{{ } }}
 					</tbody>
 				</table>

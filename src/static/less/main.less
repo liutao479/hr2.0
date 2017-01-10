@@ -6,6 +6,9 @@ html,body,p,div,a,ul,li,dl,dt,dd,span,em,h2,h3,h4,i {
 	margin:0;
 	padding: 0;
 }
+html,body {
+    border: 0;
+}
 body, input, textarea, a, select {
 	-webkit-font-smoothing: antialiased;
     font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", STHeiti, Arial, SimSun, sans-serif;
@@ -431,6 +434,7 @@ input[type=radio] {
                     -ms-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
                      -o-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
                         box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2);
+                        filter:progid:DXImageTransform.Microsoft.Shadow(color=rgba(0, 0, 0, 0.2),direction=100,strength=4);
 	        }
 	        .iconfont {
 	            color: @mainColor;
@@ -786,17 +790,17 @@ input[type=radio] {
     }
     tbody tr {
         border-top:1px dashed #cdd9e9;
-        &:nth-of-type(1) {
+        &.tr-noborder {
             border: none;
+        }
+        &.tr-odd {
+            background-color: #FFF;
+        }
+        &.tr-even {
+            background-color: #f3f4f9;
         }
         td.order-item-first {
             width: 50px; 
-        }
-        &:nth-of-type(odd) {
-            background-color: #FFF;
-        }
-        &:nth-of-type(even) {
-            background-color: #f3f4f9;
         }
         .orders-item-data {
             //被退回
@@ -957,7 +961,6 @@ input[type=radio] {
 .panel {
     .layout;
     border-top: 3px solid @blue;
-//  margin-top: 15px;
     margin-bottom: 15px;
     &.panel-credit {
         margin: 0;
@@ -995,7 +998,6 @@ input[type=radio] {
     //工作台有左侧菜单的右侧详细内容区域
     &&-detail {
         margin-left: 162px;
-//      float: left;
     }
     
     //订单统计面板
@@ -1060,7 +1062,7 @@ input[type=radio] {
     }
     //工作台有左侧菜单的右侧详细内容区域（content）
     .panel-detail-content {
-        padding: 0 15px 22px 41px;
+        padding: 0 15px 25px 40px;
         &.panel-import-doc {
             padding: 10px 20px 175px 41px;
         }
@@ -1121,9 +1123,9 @@ input[type=radio] {
             }
         }
         .panel-item-box {
-            .box;
             margin-top: 25px;
             .panel-key-area {
+                float: left;
                 text-align: right;
                 width: 100px;
                 line-height: 25px;
@@ -1132,8 +1134,7 @@ input[type=radio] {
                 }
             }
             .panel-value-area {
-                .box-flex(1);
-                margin-left: 20px;
+                margin-left: 120px;
                 //文字元素给行高保持与左侧水平
                 .panel-value-item {
                     line-height: 25px;
@@ -1150,7 +1151,6 @@ input[type=radio] {
                 //征信字段的表格
                 .field-table {
                     width: 100%;
-                    border: 1px solid @borderColor;
                     border-collapse: collapse;
                     tr:nth-of-type(odd) {
                         background-color: #f3f4f9;
@@ -1160,6 +1160,7 @@ input[type=radio] {
                     }
                     td {
                         padding: 0 37px;
+                        border: 1px solid @borderColor;
                         text-align: center;
                         height: 40px;
                     }
@@ -1753,9 +1754,9 @@ input[type=radio] {
 .imgs-item-group {
     position: relative;
     display: inline-block;
-    width: 224px;
+    width: 220px;
     text-align: center;
-    margin-right: 29px;
+    margin-right: 30px;
     margin-bottom: 10px;
     //图片组件公共部分样式
     .imgs-item-upload, .imgs-item-view {
@@ -1768,6 +1769,8 @@ input[type=radio] {
     }
     //图片上传样式
     .imgs-item-upload {
+        position: relative;
+        z-index: 999;
         background-color: #f1f1f2;
         text-align: center;
         color: #b7bfc5;
@@ -1780,14 +1783,17 @@ input[type=radio] {
             font-size: 65px;
         }
         .input-file {
+            display: block;
             position: absolute;
-            left: 0;
             top: 0;
             right: 0;
             bottom: 0;
+            left: 0;
+            z-index: 998;
             opacity: 0;
-            width: 220px;
             filter: alpha(opacity=0);
+            width: 216px;
+            height: 100%;
             cursor: pointer;
             border: none;
         }

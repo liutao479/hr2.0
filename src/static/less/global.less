@@ -422,55 +422,20 @@
     }
 }
 
-
-
-//改编分页样式
-.ui-paging-container {
-    color:#666;
-    font-size: 12px;
-    ul {
-        overflow: hidden;
-        float: right;
-        line-height: 30px;
-        li {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            margin-left: 5px;
-            color:#97a1b5;
-            &.ui-pager{
-                cursor: pointer; 
-                border:1px solid #cdd9e9;
-                .borderRadius(3px);
-            }
-            &:hover {
-                color: #6b59c9;
-                border-color: #6b59c9;
-            }
-            &.focus {
-                background-color: #6b59c9;
-                color:#FFFFFF;
-                border-color: #6b59c9;
-            }
-            &.ui-paging-ellipse{
-                border:none;
-            }
-            &.ui-paging-toolbar{
-                width: 156px;
-                text-align: left;
-            }
-            &.ui-paging-toolbar input{
-                
-            }
-            &.ui-paging-toolbar a{
-                
-            }
-            &.ui-pager-disabled,&.ui-pager-disabled:hover {
-                
-            }
-            
-        }
+//表格内空白部分
+.blank-box {
+    width: 155px;
+    height: 220px;
+    margin: 143px auto;
+    img {
+        display: block;
+        width: 155px;
+        height: 175px;
+        margin: 0 auto;
+    }
+    p {
+        margin-top: 24px;
+        text-align: center;
+        color: @fontColor;
     }
 }

@@ -49,20 +49,37 @@
 			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['mortgageAudit'].paging" data-pages="50" data-current="3"></div>
 
 			<script type="text/x-dot-template" id="mortgageAuditListTmpl">
-				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
-				<tr>
-					<td class="orders-item-data">{{=row.orderNo}}</td>
-					<td class="orders-item-data">{{=row.user}}</td>
-					<td class="orders-item-data">{{=row.company}}</td>
-					<td class="orders-item-data">{{=row.bank}}</td>
-					<td class="orders-item-data">{{=row.carTime}}</td>
-					<td class="orders-item-data">{{=row.licenceTime}}</td>
-					{{ if(row.countDown == "已超期"){ }}
-					<td class="orders-item-data status-back">已超期</td>
-					{{ } else { }}
-					<td class="orders-item-data">{{=row.countDown}}</td>
+				{{ var len = it.length; if(len) { }}
+					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
+						{{ if(i % 2 !== 0) { }}
+						<tr class="tr-even">
+						{{ } else if(i % 2 == 0 && i == 0) { }}
+						<tr class="tr-odd tr-noborder">
+						{{ } else { }}
+						<tr class="tr-odd">
+						{{ } }}
+							<td class="orders-item-data">{{=row.orderNo}}</td>
+							<td class="orders-item-data">{{=row.user}}</td>
+							<td class="orders-item-data">{{=row.company}}</td>
+							<td class="orders-item-data">{{=row.bank}}</td>
+							<td class="orders-item-data">{{=row.carTime}}</td>
+							<td class="orders-item-data">{{=row.licenceTime}}</td>
+							{{ if(row.countDown == "已超期"){ }}
+							<td class="orders-item-data status-back">已超期</td>
+							{{ } else { }}
+							<td class="orders-item-data">{{=row.countDown}}</td>
+							{{ } }}
+							<td class="orders-item-data"><div class="button">立即处理</div></td>
+						</tr>
 					{{ } }}
-					<td class="orders-item-data"><div class="button">立即处理</div></td>
-				</tr>
+				{{ } else { }}
+				<tr class="tr-noborder">
+					<td colspan="8" class="orders-blank">
+						<div class="blank-box">
+							<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+							<p>暂无待办任务！</p>
+						</div>
+					</td>
+				</tr>	
 				{{ } }}
 			</script>
