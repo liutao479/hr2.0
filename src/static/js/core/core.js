@@ -28,6 +28,7 @@
 	_.$http = {};
 	_.$http.api = function(method) {
 		return 'http://127.0.0.1:8083/mock/' + method;
+		// return 'http://192.168.0.113:8080/' + method;
 	}
 	_.$http.authorization = function(key) {
 		$.ajaxSetup({
@@ -53,17 +54,32 @@
 	_.$http.apiMap = {
 		menu: 'menu',
 		loanList: 'loan.list',
+		myCustomer: 'myCustomer',
+		loanManage: 'loan.manage',
+		marginManage: 'marginManage',
+		moneyBussinessAuditPrint: 'moneyBussinessAuditPrint',
+		mortgageProcess: 'mortgage.process',
+		mortgageAudit: 'mortgage.audit',
+		mortgageStatis: 'mortgage.statis',
+		operationsAnalysis: 'operationsAnalysis',
+		organizationManage: 'organizationManage',
+		licenceProcess: 'licence.process',
+		licenceAudit: 'licence.audit',
+		licenceStatis: 'licence.statis',
+		moneyBusinessAuditPrint: 'moneyBusinessAuditPrint',
+		auditPrint: 'auditPrint',
+		operationsAnalysis: 'operationsAnalysis',
+		organizationManage: 'organizationManage'
 		loanInfo: 'loan.info',
 		loanAudit: 'loan.info',
 		cardAudit: 'loan.info',
 		lendAudit: 'loan.info',
 		eleCheck: 'loan.info',
 		carTwohand: 'car.towhand',
-		myCustomer: 'my.customer'
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
-		console.log(arguments);
+		// console.log(arguments);
 	});		
 	/*****************http end*******************/
 	/************功能辅助类 begin************/

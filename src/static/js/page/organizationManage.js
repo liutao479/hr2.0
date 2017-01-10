@@ -1,55 +1,70 @@
 'use strict';
 page.ctrl('organizationManage', [], function($scope) {
-	var loadOrganizationBankList = function() {
+	var $console = render.$console,
+		$params = $scope.$params,
+		apiParams = {
+			process: $params.process || 0,
+			page: $params.page || 1,
+			pageSize: 20
+		};
+	/**
+	* 加载运营分析信息表数据
+	* @params {object} params 请求参数
+	* @params {function} cb 回调函数
+	*/
+	var loadOrganizationManageList = function(params, cb) {
 		$.ajax({
-			url: $http.api('organizationManage'),
-			success: $http.ok(function(data) {
-				render.compile(render.$console, router.template('cooperative-bank'), data, $scope.async);
+			url: $http.api($http.apiMap.organizationManage),
+			data: params,
+			success: $http.ok(function(result) {
+				console.log(result);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				setupPaging(result.page.pages, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
 			})
-		})
+		});
 	}
-
-	$scope.async = function() {
+	/**
+	* 构造分页
+	*/
+	var setupPaging = function(count, isPage) {
+		$scope.$el.$paging.data({
+			current: parseInt(apiParams.page),
+			pages: isPage ? count : (tool.pages(count || 0, apiParams.pageSize)),
+			size: apiParams.pageSize
+		});
 		$('#pageToolbar').paging();
 	}
+	/**
+	* 绑定立即处理事件
+	*/
+	// $(document).on('click', '#myCustomerTable .button', function() {
+	// 	var that = $(this);
+	// 	router.render(that.data('href'));
+	// });
 
-	$scope.paging = function(page, pageSize, $el, cb) {
-		console.log(arguments);
+	/***
+	* 加载页面模板
+	*/
+	render.$console.load(router.template('cooperative-bank'), function() {
+		$scope.def.listTmpl = render.$console.find('#organizationManageListTmpl').html();
+		$scope.$el = {
+			$tbl: $console.find('#organizationManageTable'),
+			$paging: $console.find('#pageToolbar')
+		}
+		if($params.process) {
+			
+		}
+		loadOrganizationManageList(apiParams);
+	});
+
+	$scope.paging = function(_page, _size, $el, cb) {
+		apiParams.page = _page;
+		$params.page = _page;
+		router.updateQuery($scope.$path, $params);
+		loadOrganizationManageList(apiParams);
 		cb();
 	}
-
-	loadOrganizationBankList();
 });
-
-
-/*
-'use strict';
-(function(g) {
-	var $scope = {};
-	var page = pageCtrl['organizationManage'] = {};
-	var _ = g.render;
-	page.template = g.router.template('cooperative-bank');
-	$scope.loadOrganizationBankList = function() {
-		$.ajax({
-			url: $http.api('organizationManage'),
-			success: $http.ok(function(data) {
-				_.compile(_.$console, page.template, data, $scope.async);
-			})
-		})
-	}	
-	$scope.async = function() {
-		$('#pageToolbar').paging();
-	}
-	$scope.start = function() {
-		$scope.loadOrganizationBankList();
-	}
-	
-	page.paging = function(page, pageSize, $el, cb) {
-		console.log(arguments);
-		cb();
-	}
-
-	$scope.start();
-})(window)
-
-*/

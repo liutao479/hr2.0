@@ -13,50 +13,9 @@
 					<!--面板标题 end-->
 					
 					<!--面板内容-->
-					<div class="panel-content">
-						<div class="table-title">
-							
-							<!--是否是新表格 若是加上此项-->
-							<div class="new-item">
-								<span class="new-item-inner">new</span>
-							</div>
-							<!--是否是新表格 若是加上此项 end-->
-							
-							{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
-							<div class="key-value-box">
-								<span class="key">查询时间：</span>
-								<span class="value">
-									<span>2016-11-30</span>&nbsp;
-									<span>17:23</span>
-								</span>
-							</div>
-							<div class="key-value-box">
-								<span class="key">保证金总余额：</span>
-								<span class="value">{{=row.totalMoney}}元</span>
-							</div>
-						</div>
-						<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">
-							<thead>
-								<tr class="orders-bar-title">
-									<td class="orders-item-data">查询时间</td>
-									<td class="orders-item-data">开户网点</td>
-									<td class="orders-item-data">账号</td>
-									<td class="orders-item-data">保证金总额</td>
-								</tr>
-							</thead>
-							<tbody>
-								{{for(var j = 0, len2 = it[i].result.length; j < len2; j++) { var col = it[i].result[j]; }}
-								<tr>
-									<td class="orders-item-data">{{=col.queryTime}}</td>
-									<td class="orders-item-data">{{=col.bank}}</td>
-									<td class="orders-item-data">{{=col.bankc}}</td>
-									<td class="orders-item-data">{{=col.depositBalance}}</td>
-								</tr>
-								{{ } }}
-							</tbody>
-						</table>
-						{{ } }}
-						<div class="table-title">
+					<div class="panel-content" id="marginManageTable">
+						
+						<!-- <div class="table-title">
 							<div class="key-value-box">
 								<span class="key">查询时间：</span>
 								<span class="value">
@@ -98,10 +57,55 @@
 									<td class="orders-item-data">20256.00</td>
 								</tr>
 							</tbody>
-						</table>
+						</table> -->
 					</div>
 					<!--面板内容  end-->
 				</div>
 				<!--面板  end-->
 			</div>
 			<!--保证金查询 end-->
+
+			<script type="text/x-dot-template" id="marginManageListTmpl">
+				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+				<div class="table-title">
+								
+					<!--是否是新表格 若是加上此项-->
+					<div class="new-item">
+						<span class="new-item-inner">new</span>
+					</div>
+					<!--是否是新表格 若是加上此项 end-->
+					
+					<div class="key-value-box">
+						<span class="key">查询时间：</span>
+						<span class="value">
+							<span>2016-11-30</span>&nbsp;
+							<span>17:23</span>
+						</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">保证金总余额：</span>
+						<span class="value">{{=row.totalMoney}}元</span>
+					</div>
+				</div>
+				<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">
+					<thead>
+						<tr class="orders-bar-title">
+							<td class="orders-item-data">查询时间</td>
+							<td class="orders-item-data">开户网点</td>
+							<td class="orders-item-data">账号</td>
+							<td class="orders-item-data">保证金总额</td>
+						</tr>
+					</thead>
+					<tbody>
+						{{for(var j = 0, len2 = it[i].result.length; j < len2; j++) { var col = it[i].result[j]; }}
+						<tr>
+							<td class="orders-item-data">{{=col.queryTime}}</td>
+							<td class="orders-item-data">{{=col.bank}}</td>
+							<td class="orders-item-data">{{=col.bankc}}</td>
+							<td class="orders-item-data">{{=col.depositBalance}}</td>
+						</tr>
+						{{ } }}
+					</tbody>
+				</table>
+				{{ } }}
+			</script>

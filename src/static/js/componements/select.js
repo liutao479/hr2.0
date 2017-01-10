@@ -24,7 +24,6 @@
 					self.render(data);	
 				}
 			})
-			
 		}
 		
 		select.prototype.render = function(data) {

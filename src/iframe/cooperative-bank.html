@@ -32,33 +32,8 @@
 								<td class="orders-item-data">操作</td>
 							</tr>
 						</thead>
-						<tbody>
-							{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
-							<tr>
-								<td class="orders-item-data">{{=row.bankName}}</td>
-								<td class="orders-item-data acount-name-data">
-									{{for(var j = 0, len2 = row.userInfo.length; j < len2; j++) { var col = row.userInfo[j]; }}
-									<p class="acount-name">
-										<span>{{=col.bankc}}</span>-<span>{{=col.user}}</span><br />
-									</p>
-									{{ } }}
-								</td>
-								<td class="orders-item-data orders-item-data-view">
-									<a href="javascript:;" class="view-fee">查看</a>
-								</td>
-								<td class="orders-item-data orders-item-data-blank"></td>
-								<td class="orders-item-data orders-item-data-operate">
-									<div class="button button-mini-nowidth">
-										<i class="iconfont">&#xe640;</i>
-										编辑
-									</div>
-									<div class="button button-mini-nowidth">
-										<i class="iconfont">&#xe602;</i>
-										删除
-									</div>
-								</td>
-							</tr>
-							{{ } }}
+						<tbody id="organizationManageTable">
+							
 						</tbody>
 					</table>
 				</div>
@@ -67,5 +42,34 @@
 			</div>
 			<!--上牌办理   end-->
 			
-			<!--分页插件改编（未完成）-->
-			<div id="pageToolbar" class="pageToolbar" data-pages="50" data-current="8"></div>
+			<!--分页器-->
+			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['organizationManage'].paging" data-pages="50" data-current="3"></div>
+
+			<script type="text/x-dot-template" id="organizationManageListTmpl">
+				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+				<tr>
+					<td class="orders-item-data">{{=row.bankName}}</td>
+					<td class="orders-item-data acount-name-data">
+						{{for(var j = 0, len2 = row.userInfo.length; j < len2; j++) { var col = row.userInfo[j]; }}
+						<p class="acount-name">
+							<span>{{=col.bankc}}</span>-<span>{{=col.user}}</span><br />
+						</p>
+						{{ } }}
+					</td>
+					<td class="orders-item-data orders-item-data-view">
+						<a href="javascript:;" class="view-fee">查看</a>
+					</td>
+					<td class="orders-item-data orders-item-data-blank"></td>
+					<td class="orders-item-data orders-item-data-operate">
+						<div class="button button-mini-nowidth">
+							<i class="iconfont">&#xe640;</i>
+							编辑
+						</div>
+						<div class="button button-mini-nowidth">
+							<i class="iconfont">&#xe602;</i>
+							删除
+						</div>
+					</td>
+				</tr>
+				{{ } }}
+			</script>

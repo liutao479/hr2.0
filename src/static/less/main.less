@@ -1,5 +1,6 @@
 @import (reference) "defined.less";
 @import (less) "global.less";
+@import (less) "media.less";
 
 html,body,p,div,a,ul,li,dl,dt,dd,span,em,h2,h3,h4,i {
 	margin:0;
@@ -11,6 +12,7 @@ body, input, textarea, a, select {
 	font-size: 13px;
 }
 body {
+    padding-top: 60px;
 	*, *:after, *:before {
 		box-sizing: border-box;
     	-webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;	
@@ -18,6 +20,10 @@ body {
 }
 *:focus, *:active, a:linked {
 	outline: 0 !important;
+}
+input,
+textarea {
+    outline: 0 !important;
 }
 ul,
 li {
@@ -29,6 +35,9 @@ i {
 }
 a {
     text-decoration: none;
+}
+img {
+    border: none;
 }
 
 //通用分离样式 
@@ -155,6 +164,10 @@ input[type=radio] {
             }
             &.user {
                 width: 102px;
+                height: 60px;
+                .drop-down-box {
+                    margin: 15px auto; 
+                }
             }
             &:hover {
                 background-color: #6347bd;
@@ -280,6 +293,7 @@ input[type=radio] {
             .iconfont-arrow {
                 position: absolute;
                 right: 25px;
+                top: 0;
                 font-size: 12px;
                 -webkit-transition: all .25s;
                    -moz-transition: all .25s;
@@ -331,7 +345,7 @@ input[type=radio] {
 //工作台
 .console {
 	padding: 20px 60px 100px 40px;
-	margin: 60px 0 0 200px;
+    margin-left: 200px;
 	background-color: @consoleBgColor;
 	overflow: hidden;
     .search-bar {
@@ -366,37 +380,36 @@ input[type=radio] {
 	//我的客户
 	.customer {
 	    .select-search-bar {
+            position: relative;
 	        padding: 15px 20px;
-            .box;
             border: 1px solid @borderColor;
-            .input-text {
-                width: 348px;
-            }
-            .search-item-box {
-                .box-flex(6);
-                width: 0;
-            }
-            .search-sure-box {
-                width: 0;
-                .box-flex(1);
-                .box;
-                -webkit-box-align: end;
-                -webkit-box-pack: end;
-            }
+            
             .search-item {
+                float: left;
                 line-height: 32px;
                 margin: 0 30px 10px 0;
+                &.search-item-last {
+                    position: absolute;
+                    bottom: 15px;
+                    right: 0;
+                }
+                .input-text {
+                    width: 348px;
+                }
+                .separator {
+                    margin: 0 5px;
+                    color: @selectBorderColor;
+                }
             }
-            .separator {
-                margin: 0 5px;
-                color: @selectBorderColor;
-            }
+            
         }
-       
+        .customer-orders {
+            margin-top: 10px;
+        }
 	    .customer-orders .orders-box {
 	        border: 1px solid @borderColor;
 	        border-collapse: collapse;
-	        margin-top: 11px;
+	        margin-top: 10px;
 	        text-align: left;
             -webkit-transition: all .1s;
                -moz-transition: all .1s;
@@ -404,11 +417,21 @@ input[type=radio] {
                  -o-transition: all .1s;
                     transition: all .1s;
 	        &:hover {
-	            border-color: @tableActiveColor;
-	           cursor: pointer;
+	            border-color: @mainColor;
+                cursor: pointer;
+                -webkit-transform: scale(1.01);
+                   -moz-transform: scale(1.01);
+                    -ms-transform: scale(1.01);
+                     -o-transform: scale(1.01);
+                        transform: scale(1.01);
+                -webkit-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                   -moz-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                    -ms-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                     -o-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                        box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2);
 	        }
 	        .iconfont {
-	            color: @tableActiveColor;
+	            color: @mainColor;
 	        }
 	        thead {
 	            color: @tiperColor;
@@ -427,10 +450,20 @@ input[type=radio] {
 	            background-color: #FFF;
 	            margin: 13px 0;
 	            tr:nth-of-type(1) td {
+                    &.car-info-box {
+                        padding-top: 0;
+                    }
 	                padding-top: 13px;
 	            }
 	            tr:nth-of-type(3) td {
                     padding-bottom: 13px;
+                }
+                .user-info {
+                    .iconfont {
+                        margin-right: 10px;
+                        position: relative;
+                        top: 1px;
+                    }
                 }
 	            .car-logo {
 	                width: 71px;
