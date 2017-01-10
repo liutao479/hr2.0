@@ -69,13 +69,13 @@
 		moneyBusinessAuditPrint: 'moneyBusinessAuditPrint',
 		auditPrint: 'auditPrint',
 		operationsAnalysis: 'operationsAnalysis',
-		organizationManage: 'organizationManage'
+		organizationManage: 'organizationManage',
 		loanInfo: 'loan.info',
 		loanAudit: 'loan.info',
 		cardAudit: 'loan.info',
 		lendAudit: 'loan.info',
 		eleCheck: 'loan.info',
-		carTwohand: 'car.towhand',
+		carTwohand: 'car.towhand'
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
