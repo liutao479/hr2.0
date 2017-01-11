@@ -48,20 +48,17 @@ $('.tips-area').hover(function() {
 **/
 
 //二维码
-$('#QR-Code').hover(function() {
+$(document).on('hover', '#navigator .QR-Code', function() {
 	$(this).find('.QR-Code-area').toggle();
-})
+});
 
 //消息
-$('#message').hover(function() {
-	$(this).find('.message-area').show();
-},function() {
-	$(this).find('.message-area').hide();
+$(document).on('hover', '#navigator .message', function() {
+	$(this).find('.message-area').toggle();
 });
 
 //用户名
-$('#user').hover(function() {
-	$(this).find('.user-area').show();
-},function() {
-	$(this).find('.user-area').hide();
+$(document).on('hover', '#navigator .user', function() {
+	$(this).find('.user-area').toggle();
+	$(this).find('.user-field-item').toggleClass('user-field-item-active');
 });

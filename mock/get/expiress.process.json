@@ -1,0 +1,132 @@
+{
+    "code": 0,
+    "page":{
+        "pageNum":1,
+        "pageSize":5,
+        "pages":12,
+        "startRow":0,
+        "total":7
+    },
+    "data": [
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 11:11",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        },
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 22:23",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        },
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 22:23",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        },
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 22:23",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        },
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 22:23",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        },
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 22:23",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        },
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 22:23",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        },
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 22:23",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        },
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 22:23",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        },
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 22:23",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        },
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 22:23",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        },
+        {
+            "expireStatus": "电话催收中",
+            "date": "2016-10-11 22:23",
+            "user": "张三",
+            "everyRepayment": "7.000.00",
+            "currentRepayment": "7.000.00",
+            "currentExpiress": "3",
+            "totleExpiress": "3",
+            "lastTime": "2016-10-11 22:23"
+        }
+    ]
+}

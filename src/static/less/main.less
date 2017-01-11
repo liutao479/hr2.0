@@ -8,6 +8,7 @@ html,body,p,div,a,ul,li,dl,dt,dd,span,em,h2,h3,h4,i {
 }
 html,body {
     border: 0;
+    color: @fontColor;
 }
 body, input, textarea, a, select {
 	-webkit-font-smoothing: antialiased;
@@ -81,8 +82,8 @@ img {
     font-size: 12px;
 }
 input[type=radio] {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     display: inline-block; 
     cursor: pointer;
     background: #fff;
@@ -90,8 +91,9 @@ input[type=radio] {
     box-sizing: border-box;
     position: absolute;
     top: 50%;
-    margin-top: -3px;
-    left: 0;
+    margin-top: -10px;
+    left: 50%;
+    margin-left: -10px;
     outline: none;
     -webkit-appearance: none;
     appearance: none;
@@ -109,10 +111,10 @@ input[type=radio] {
             content: '';
             display: block;
             position: relative;
-            top: 3px;
-            left: 3px;
-            width: 7px;
-            height: 7px;
+            top: 4px;
+            left: 4px;
+            width: 10px;
+            height: 10px;
             background: @mainColor;
             border-radius:50%;
         }
@@ -172,8 +174,29 @@ input[type=radio] {
                 height: 60px;
                 .drop-down-box {
                     margin: 15px auto; 
+                    .user-field-item {
+                        .iconfont-arrow {
+                            -webkit-transition: all .25s;
+                               -moz-transition: all .25s;
+                                -ms-transition: all .25s;
+                                 -o-transition: all .25s;
+                                    transition: all .25s;
+                        }
+                        &.user-field-item-active {
+                            .iconfont-arrow { 
+                                -webkit-transform: rotate(180deg);
+                                   -moz-transform: rotate(180deg);
+                                    -ms-transform: rotate(180deg);
+                                     -o-transform: rotate(180deg);
+                                        transform: rotate(180deg);
+                            }
+                        }
+                    }
+
                 }
+                
             }
+            
             &:hover {
                 background-color: #6347bd;
             }
@@ -315,10 +338,10 @@ input[type=radio] {
                 background-color: @menuHoverBgColor;
                 .iconfont-arrow { 
                     -webkit-transform: rotate(0);
-                   -moz-transform: rotate(0);
-                    -ms-transform: rotate(0);
-                     -o-transform: rotate(0);
-                        transform: rotate(0);
+                       -moz-transform: rotate(0);
+                        -ms-transform: rotate(0);
+                         -o-transform: rotate(0);
+                            transform: rotate(0);
                 }
                 &:hover {
                     background-color: @menuHoverBgColor;
@@ -411,103 +434,6 @@ input[type=radio] {
         .customer-orders {
             margin-top: 10px;
         }
-	    .customer-orders .orders-box {
-	        border: 1px solid @borderColor;
-	        border-collapse: collapse;
-	        margin-top: 10px;
-	        text-align: left;
-            -webkit-transition: all .1s;
-               -moz-transition: all .1s;
-                -ms-transition: all .1s;
-                 -o-transition: all .1s;
-                    transition: all .1s;
-	        &:hover {
-	            border-color: @mainColor;
-                cursor: pointer;
-                -webkit-transform: scale(1.01);
-                   -moz-transform: scale(1.01);
-                    -ms-transform: scale(1.01);
-                     -o-transform: scale(1.01);
-                        transform: scale(1.01);
-                -webkit-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
-                   -moz-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
-                    -ms-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
-                     -o-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
-                        box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2);
-                        filter:progid:DXImageTransform.Microsoft.Shadow(color=rgba(0, 0, 0, 0.2),direction=100,strength=4);
-	        }
-	        .iconfont {
-	            color: @mainColor;
-	        }
-	        thead {
-	            color: @tiperColor;
-	            background-color: #f3f4f9;
-	            height: 43px;
-	            line-height: 43px;
-	            td {
-	                &:nth-of-type(1) {
-	                    width: 240px;
-	                }
-	                text-align: left;
-	                padding-left: 20px;
-	            }
-	        }
-	        tbody {
-	            background-color: #FFF;
-	            margin: 13px 0;
-	            tr:nth-of-type(1) td {
-                    &.car-info-box {
-                        padding-top: 0;
-                    }
-	                padding-top: 13px;
-	            }
-	            tr:nth-of-type(3) td {
-                    padding-bottom: 13px;
-                }
-                .user-info {
-                    .iconfont {
-                        margin-right: 10px;
-                        position: relative;
-                        top: 1px;
-                    }
-                }
-	            .car-logo {
-	                width: 71px;
-	                height: 71px;
-	                display: block;
-	                float: left;
-	                margin: 0 10px 0 15px;
-	            }
-	            .car-name {
-	                width: 120px;
-	                float: left;
-	                display: inline-block;
-	                margin-top: 10px;
-	            }
-	            .status-name {
-	                color: @tiperColor;
-	                .status-value {
-	                    color: @fontColor;
-                        margin-right: 20px;
-	                }
-                    .spread-tips {
-                        color: @fontColor;
-                        display: inline-block;
-                        width: 14px;
-                        height: 14px;
-                    }
-	            }
-	            .td-last {
-	                text-align: center;
-	                padding-bottom: 5px;
-	                .button {
-	                   &:hover {
-	                       border-color: @buttonBgColor;
-	                   }   
-	                }
-	            }
-	        }
-	    }
 	}
 } 
 
@@ -800,6 +726,7 @@ input[type=radio] {
             background-color: #f3f4f9;
         }
         td.order-item-first {
+            position: relative;
             width: 50px; 
         }
         .orders-item-data {
@@ -836,11 +763,110 @@ input[type=radio] {
     }
 }
 
+.orders-box {
+    border: 1px solid @borderColor;
+    border-collapse: collapse;
+    margin-top: 10px;
+    text-align: left;
+    -webkit-transition: all .1s;
+       -moz-transition: all .1s;
+        -ms-transition: all .1s;
+         -o-transition: all .1s;
+            transition: all .1s;
+    &:hover {
+        border-color: @mainColor;
+        cursor: pointer;
+        -webkit-transform: scale(1.01);
+           -moz-transform: scale(1.01);
+            -ms-transform: scale(1.01);
+             -o-transform: scale(1.01);
+                transform: scale(1.01);
+        -webkit-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+           -moz-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+            -ms-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+             -o-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2);
+                filter:progid:DXImageTransform.Microsoft.Shadow(color=rgba(0, 0, 0, 0.2),direction=100,strength=4);
+    }
+    .iconfont {
+        color: @mainColor;
+    }
+    thead {
+        color: @tiperColor;
+        background-color: #f3f4f9;
+        height: 43px;
+        line-height: 43px;
+        td {
+            &:nth-of-type(1) {
+                width: 240px;
+            }
+            text-align: left;
+            padding-left: 20px;
+        }
+    }
+    tbody {
+        background-color: #FFF;
+        margin: 13px 0;
+        tr:nth-of-type(1) td {
+            &.car-info-box {
+                padding-top: 0;
+            }
+            padding-top: 13px;
+        }
+        tr:nth-of-type(3) td {
+            padding-bottom: 13px;
+        }
+        .user-info {
+            .iconfont {
+                margin-right: 10px;
+                position: relative;
+                top: 1px;
+            }
+        }
+        .car-logo {
+            width: 71px;
+            height: 71px;
+            display: block;
+            float: left;
+            margin: 0 10px 0 15px;
+        }
+        .car-name {
+            width: 120px;
+            float: left;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .status-name {
+            color: @tiperColor;
+            .status-value {
+                color: @fontColor;
+                margin-right: 20px;
+            }
+            .spread-tips {
+                color: @fontColor;
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+            }
+        }
+        .td-last {
+            text-align: center;
+            padding-bottom: 5px;
+            .button {
+               &:hover {
+                   border-color: @buttonBgColor;
+               }   
+            }
+        }
+    }
+}
+
 // 特殊类表格
 .expire-orders-table {
     border: 1px solid @borderColor;
     background-color: #FFFFFF;
     margin-top: 15px;
+    border-collapse: collapse;
     &.expire-orders-table-special {
         border-top: none;
         margin-top: 0;
@@ -872,8 +898,6 @@ input[type=radio] {
         }
     }
     .expire-content {
-        display: flex;
-        justify-content: space-between;
         &.no-match {
             padding: 25px 125px;
         }
@@ -892,12 +916,15 @@ input[type=radio] {
                 color: @mainColor;
             }
         }
+        .expire-content-tr td {
+            padding: 20px 0;
+        }
         .key-value-box {
             display: block;
+            text-align: center;
             line-height: 25px;
             .key {
                 display: inline-block;
-                width: 125px;
                 text-align: right;
             }
         }
@@ -965,12 +992,15 @@ input[type=radio] {
     &.panel-credit {
         margin: 0;
     }
-    &.panel-nomargintop {
-        margin-top: 0;
+    &.panel-mb0 {
+        margin-bottom: 0;
     }
     //征信结果录入详细内容面板
     &&-result-typing {
         margin-top: 0;
+    }
+    &.panel-min-h {
+        min-height: 614px;
     }
     //工作台左侧菜单
     &&-menu {
@@ -1002,12 +1032,24 @@ input[type=radio] {
     
     //订单统计面板
     .panel-count {
-        .box;
+        position: relative;
         padding: 15px 0;
         .panel-count-item {
-            position: relative;
-            .box-flex(1);
+            width: 33.3%;
             text-align: center;
+            &.today-predict {
+                position: absolute;
+                top: 15px;
+                left: 0;
+            }
+            &.today-curtain {
+                position: absolute;
+                top: 15px;
+                right: 0;
+            }
+            &.today-commit {
+                margin: 0 auto;
+            }
             .view-interest {
                 position: absolute;
                 bottom: 0;
@@ -1246,12 +1288,61 @@ input[type=radio] {
             }
         }
     }
+    // 逾期分析搜索框
+    .search-box {
+        position: relative;
+        width: 500px;
+        height: 40px;
+        margin: 75px auto;
+        .borderRadius(3px);
+        border: 1px solid @mainColor;
+        input {
+            float: left;
+            color: @fontColor;
+            width: 424px;
+            height: 38px;
+            line-height: 38px;
+            border: none;
+            padding: 0 7px;
+            margin: 0 3px;
+        }
+        .button  {
+            height: 40px;
+            line-height: 40px;
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            // -webkit-border-radius: 0;
+            //    -moz-border-radius: 0; 
+            //     -ms-border-radius: 0;
+            //      -o-border-radius: 0;
+            //         border-radius: 0;
+        }
+    }
+    // 逾期分析搜索结果框
+    .search-result {
+        margin: 0 20px;
+        .search-result-title {
+            line-height: 23px;
+            margin-bottom: 15px;
+        }
+        .search-result-commit {
+            text-align: center;
+            margin-top: 20px;
+            .button-empty {
+                background-color: #FFF;
+                color: @buttonBgColor;
+                border: 1px solid @buttonBgColor;
+            }
+        }
+    }
+
     // 导入流程
     .import-process-box {
-        .box;
         background-color: #f3f4f9;
         border-bottom: 1px solid @borderColor;
         .download-box {
+            float: right;
             width: 160px;
             line-height: 123px;
             .button {
@@ -1260,16 +1351,15 @@ input[type=radio] {
             }
         }
         .process-box {
-            .box-flex(1);
-            display: -webkit-flex;  
-            display: flex;
-            justify-content: space-between;
+            float: left;
             height: 123px;
             background: url(/hr2.0/src/static/css/img/dotted.png) 0 43px repeat-x;
             background-size: 65%;
             position: relative;
             margin: 0 48px;
             .process-item {
+                float: left;
+                margin-right: 80px;
                 width: 120px;
                 margin-top: 25px;
                 text-align: center;

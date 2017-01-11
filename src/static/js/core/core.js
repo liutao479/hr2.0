@@ -66,6 +66,7 @@
 		licenceProcess: 'licence.process',
 		licenceAudit: 'licence.audit',
 		licenceStatis: 'licence.statis',
+		expireProcess: 'expire.process',
 		moneyBusinessAuditPrint: 'moneyBusinessAuditPrint',
 		auditPrint: 'auditPrint',
 		operationsAnalysis: 'operationsAnalysis',
