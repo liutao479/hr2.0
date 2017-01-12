@@ -176,6 +176,10 @@
 		'loanProcess/cardAudit': {
 			title: '开卡审核',
 			page: 'cardAudit'
+		},
+		'loanProcess/creditAudit':{
+			title: '开卡审核',
+			page: 'operateAnalysis'
 		}
 		
 	}

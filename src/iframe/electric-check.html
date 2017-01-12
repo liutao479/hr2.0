@@ -20,7 +20,8 @@
 				<!--tab切换-->
 				<div class="tab-bar tab-bar-special">
 					<ul class="role-bar-ul clearfix">
-						<li class="role-bar-li"><a href="#" class="role-item role-item-active">贷款信息表</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item role-item-active">电话审核表</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">贷款信息表</a></li>
 						<li class="role-bar-li"><a href="#" class="role-item">征信结果</a></li>
 						<li class="role-bar-li"><a href="#" class="role-item">贷款材料</a></li>
 						<li class="role-bar-li"><a href="#" class="role-item">上门材料</a></li>
@@ -50,19 +51,35 @@
 					</div>
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
+							{{ if(row.type == '0'){ }}
 							{{for(var j = 0, len2 = row.modelcontent.length; j < len2; j++) { var role = row.modelcontent[j]; }}
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>{{= role.name}}：</span>
-								{{ if(role.type == '1'){ }}
-								<span class="info-value">
-									<select>
-										<option>12</option>
-									</select>
-								</span>
-								{{ }else{ }}
+								<span class="info-key">{{= role.name}}：</span>
 								<span class="info-value"><input type="text" value="{{= role.value}}" /></span>
-								{{ } }}
 							</div>
+							{{ } }}
+							{{ }else{ }}
+							{{for(var j = 0, len2 = row.modelcontent.length; j < len2; j++) { var role = row.modelcontent[j]; }}
+							<div class="question-box">
+								<div class="question-box-title">
+									<span class="que">{{= j+1}}.{{= role.question}}</span>
+									<span class="ans">({{= role.anwser}})</span>
+								</div>
+								<div class="question-box-cont">
+									<span class="info-key">客户回答：{{= role.value}}</span>
+									<span class="info-value">
+										<select>
+											<option {{=(role.value==1?"selected":"")}}>是</option>
+											<option {{=(role.value==1?"selected":"")}}>否</option>
+										</select>
+									</span>
+								</div>
+								<div class="question-box-cont">
+									<span class="info-key">备注：</span>
+									<span class="info-value info-value-long"><input type="text" value="{{= role.editInfo}}" /></span>
+								</div>
+							</div>
+							{{ } }}
 							{{ } }}
 						</div>
 					</div>

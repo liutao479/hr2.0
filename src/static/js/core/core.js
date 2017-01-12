@@ -70,11 +70,11 @@
 		auditPrint: 'auditPrint',
 		operationsAnalysis: 'operationsAnalysis',
 		organizationManage: 'organizationManage',
-		loanInfo: 'loan.info',
+		loanInfo: 'loan.infoBak',
 		loanAudit: 'loan.info',
 		cardAudit: 'loan.info',
 		lendAudit: 'loan.info',
-		eleCheck: 'loan.info',
+		eleCheck: 'electric.check',
 		carTwohand: 'car.towhand'
 	};
 	$(document).ajaxError(function(event, request, settings, error) {

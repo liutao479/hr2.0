@@ -39,7 +39,9 @@ a {
 img {
     border: none;
 }
-
+input[disabled]{
+    background-color:#fff;
+}
 //通用分离样式 
 .clearfix {
     zoom:1;
@@ -504,7 +506,6 @@ input[type=radio] {
 	    }
 	}
 } 
-
 
 /**
 * 页面特殊部分处理
@@ -2200,6 +2201,139 @@ input[type=radio] {
             color: #fff;
             .iconfont{
                 color: #fff;
+            }
+        }
+    }
+}
+//电审类型问题板块样式 zhy
+.question-box{
+    line-height: 30px;
+    margin: 10px 0;
+    &:first-child{
+        margin-top: -15px;
+    }
+    .info-key{
+        color:@fontColor;
+        display:inline-block;
+        width:120px;
+        text-align:right;
+        margin-right: 25px;
+    }
+    .info-value{
+        border:1px solid @selectBorderColor;
+        height:30px;
+        padding:5px;
+        border-radius:4px;
+        display:inline-block;
+        width:200px;
+        position: relative;
+        .unit-text{
+            position: absolute;
+            top:0;
+            right:3px;
+            line-height: 28px;
+            color: @unitTextColor;
+        }
+        input{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+        select{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+        &-long{
+            width: calc(~"100% - 150px");
+        }
+    }
+    &-title{
+        line-height: 50px;
+        .que{
+            margin-left: 43px;
+        }
+        .ans{
+            color: @orange;
+        }
+    }
+    &-cont{
+        margin: 10px 0 0 0;
+    }
+}
+//逾期里面运营分析
+.anasis-box {
+    border: 1px solid @borderColor;
+    border-collapse: collapse;
+    text-align: left;
+    margin-top: 15px;
+//  &:first-child{
+//      margin-top: 0;
+//  }
+    .iconfont {
+        color: @mainColor;
+    }
+    thead {
+        background-color: #f3f4f9;
+        height: 50px;
+        line-height: 50px;
+        td {
+            &:nth-of-type(1) {
+                width: 240px;
+                font-weight: bold;
+                color: @fontColor;
+            }
+            text-align: left;
+            padding-left: 20px;
+        }
+        .box-title-right{
+            span{
+                margin: 0 20px;
+                color: #999; 
+                &:first-child{
+                    a{
+                        color: @blue;
+                    }
+                }
+            }
+            a{
+                color: @fontColor;
+            }
+            i{
+                font-size: 24px;
+            }
+        }
+    }
+    tbody {
+        background-color: #FFF;
+        margin: 13px 0;
+        tr td {
+            padding: 20px 0;
+            ul li{
+                width: 25%;
+                box-sizing: border-box;
+                padding: 0 20px;
+                float: left;
+                border-right: 1px solid #d6dbdf;
+                &:last-child{
+                    border: none;
+                }
+            }
+        }
+        .box-title-right{
+            margin-top: 30px;
+            span{
+                color: #999; 
+                &:first-child{
+                    a{
+                        color: @blue;
+                    }
+                }
+            }
+            a{
+                color: @fontColor;
             }
         }
     }

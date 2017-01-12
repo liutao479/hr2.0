@@ -18,6 +18,15 @@
 				</div>
 				
 				<!--面板-->
+				<div id="mLoanCheck"></div>
+				
+				<!--提交订单按钮-->
+				<div class="commit-orders-box">
+					<div id="" class="button">提交订单</div>
+				</div>
+			</div>
+			
+			<script type="text/x-dot-template" id="mLoanChecktmpl">
 				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 				<div class="panel panel-loan clearfix">
 					<!--借款人信息填写栏-->
@@ -50,9 +59,4 @@
 					</div>
 				</div>
 				{{ } }}
-				
-				<!--提交订单按钮-->
-				<div class="commit-orders-box">
-					<div id="" class="button">提交订单</div>
-				</div>
-			</div>
+			</script>

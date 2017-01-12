@@ -29,6 +29,16 @@
 					</ul>
 				</div>
 				<!--面板-->
+				<div id="pickCarcheck"></div>
+				
+				<!--提交订单按钮-->
+				<div class="commit-orders-box">
+					<div id="" class="button">提交订单</div>
+				</div>
+			</div>
+			
+
+			<script type="text/x-dot-template" id="pickCarchecktmpl">
 				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
@@ -60,9 +70,4 @@
 					</div>
 				</div>
 				{{ } }}
-				
-				<!--提交订单按钮-->
-				<div class="commit-orders-box">
-					<div id="" class="button">提交订单</div>
-				</div>
-			</div>
+			</script>
