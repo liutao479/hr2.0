@@ -22,7 +22,39 @@
 	* @params {object} options 配置参数
 	*/
 	function dropdown($el, options) {
+		var self = this,
+			opts = {
+				dropdown: $.noop,
+				level: 1,
+				trigger: $.noop,
+				search: undefined
+			};
 
+		self.$el = $el;
+		self.opts = $.extend(opts, options || {});
+		self.
 		return this;
 	}
+	/**
+	* 构造dropdown
+	*/
+	dropdown.prototype.setup = function(){
+		
+	};
+	/**
+	* 展开dropdown
+	*/
+	dropdown.prototype.open = function() {
+		
+	};
+	/**
+	* 关闭dropdown
+	*/
+	dropdown.prototype.close = function() {
+
+	}
+
+	var internal = {};
+	internal.template = {};
+	internal.template.fields = ''
 })(jQuery);
