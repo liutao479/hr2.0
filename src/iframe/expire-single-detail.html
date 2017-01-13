@@ -1,31 +1,14 @@
 	<!--逾期信息录入详情(单笔录入)-->
 			<div class="container expire-info-input" id="expire-info-input">
-				<!-- 返回列表 -->
-				<div class="path-back-bar">
+				<!-- 面包屑 返回列表 -->
+				<div class="path-back-bar clearfix">
 					<div class="path-back">
 						<i class="iconfont">&#xe626;</i>
 						<a href="#">逾期信息录入</a>&nbsp;&gt;
 						<span class="current-page">逾期记录</span>
 					</div>
-					<div class="key-value-box">
-						<span class="key">借款人：</span>
-						<span class="value">张三</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">当前操作人：</span>
-						<span class="value">程辉</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">角色：</span>
-						<span class="value">客户经理</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">订单生成时间：</span>
-						<span class="value">2016-11-03 14:02</span>
-					</div>
-					
 				</div>
-				<!-- 返回列表 end-->
+				<!-- 面包屑 返回列表 end-->
 
 				<!--提交修改等等按钮-->
 				<div class="commit-orders-box commit-orders-box-area mb15">
@@ -41,55 +24,177 @@
 					<tbody class="expire-content match-fail">
 						<tr class="expire-content-tr">
 							<td class="expire-content-item">
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">记录生成时间：</span>
 									<span class="value">2016-09-06 11:34</span>
 								</div>
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">卡号：</span>
 									<span class="value">621226 621226245678</span>
 								</div>
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">账单日：</span>
 									<span class="value">2016/12/13</span>
 								</div>
 							</td>
 							<td class="expire-content-item">
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">卡余额：</span>
 									<span class="value">40000元</span>
 								</div>
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">公司垫款：</span>
 									<span class="value">40000元</span>
 								</div>
 							</td>
 							<td class="expire-content-item">
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">当前逾期金额：</span>
 									<span class="value">621.226.00元</span>
 								</div>
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">每期应还：</span>
 									<span class="value special-word">2944元</span>
 								</div>
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">当前逾期金额/每期应还：</span>
 									<span class="value special-word">100元</span>
 								</div>
 							</td>
 							<td class="expire-content-item">
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
+									<span class="key">连续逾期次数：</span>
+									<span class="value">2次</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">累计逾期次数：</span>
+									<span class="value">2次</span>
+								</div>
+							</td>
+							<td class="expire-content-item expire-content-item-last">
+								<a class="button button-mini">逾期结清</a>
+								<br>
+								<a class="button button-mini">删除</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="expire-orders-table" width="100%">
+					<tbody class="expire-content match-fail">
+						<tr class="expire-content-tr">
+							<td class="expire-content-item">
+								<div class="key-value-box clearfix">
+									<span class="key">记录生成时间：</span>
+									<span class="value">2016-09-06 11:34</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">卡号：</span>
+									<span class="value">621226 621226245678</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">账单日：</span>
+									<span class="value">2016/12/13</span>
+								</div>
+							</td>
+							<td class="expire-content-item">
+								<div class="key-value-box clearfix">
 									<span class="key">卡余额：</span>
 									<span class="value">40000元</span>
 								</div>
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">公司垫款：</span>
 									<span class="value">40000元</span>
 								</div>
 							</td>
+							<td class="expire-content-item">
+								<div class="key-value-box clearfix">
+									<span class="key">当前逾期金额：</span>
+									<span class="value">621.226.00元</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">每期应还：</span>
+									<span class="value special-word">2944元</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">当前逾期金额/每期应还：</span>
+									<span class="value special-word">100元</span>
+								</div>
+							</td>
+							<td class="expire-content-item">
+								<div class="key-value-box clearfix">
+									<span class="key">连续逾期次数：</span>
+									<span class="value">2次</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">累计逾期次数：</span>
+									<span class="value">2次</span>
+								</div>
+							</td>
 							<td class="expire-content-item expire-content-item-last">
-								<div class="button button-mini">选择订单</div>
+								<a class="button button-mini">逾期结清</a>
+								<br>
+								<a class="button button-mini">删除</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="expire-orders-table" width="100%">
+					<tbody class="expire-content match-fail">
+						<tr class="expire-content-tr">
+							<td class="expire-content-item">
+								<div class="key-value-box clearfix">
+									<span class="key">记录生成时间：</span>
+									<span class="value">2016-09-06 11:34</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">卡号：</span>
+									<span class="value">621226 621226245678</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">账单日：</span>
+									<span class="value">2016/12/13</span>
+								</div>
+							</td>
+							<td class="expire-content-item">
+								<div class="key-value-box clearfix">
+									<span class="key">卡余额：</span>
+									<span class="value">40000元</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">公司垫款：</span>
+									<span class="value">40000元</span>
+								</div>
+							</td>
+							<td class="expire-content-item">
+								<div class="key-value-box clearfix">
+									<span class="key">当前逾期金额：</span>
+									<span class="value">621.226.00元</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">每期应还：</span>
+									<span class="value special-word">2944元</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">当前逾期金额/每期应还：</span>
+									<span class="value special-word">100元</span>
+								</div>
+							</td>
+							<td class="expire-content-item">
+								<div class="key-value-box clearfix">
+									<span class="key">连续逾期次数：</span>
+									<span class="value">2次</span>
+								</div>
+								<div class="key-value-box clearfix">
+									<span class="key">累计逾期次数：</span>
+									<span class="value">2次</span>
+								</div>
+							</td>
+							<td class="expire-content-item expire-content-item-last">
+								<a class="button button-mini">逾期结清</a>
+								<br>
+								<a class="button button-mini">删除</a>
 							</td>
 						</tr>
 					</tbody>

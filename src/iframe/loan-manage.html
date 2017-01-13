@@ -54,10 +54,10 @@
 				</div>
 				<!--tab切换栏(借款管理)   end-->
 				
-				<!--面板  -->
-				<div class="panel panel-nomargintop">
+				<!--tab对应栏  -->
+				<div class="tab-content">
 					
-					<div class="panel-content panel-content-layout">
+					<div class="tab-content-item layout no-top-border tab-content-item-layout">
 						
 						<!--借款管理表格  end-->
 						<table border="0" cellpadding="" width="100%" class="orders-table">
@@ -80,7 +80,7 @@
 						
 					</div>
 				</div>
-				<!--面板  end-->
+				<!--tab对应栏  end-->
 				
 			</div>
 			<!--借款管理   end-->
@@ -103,7 +103,7 @@
 							<td class="orders-item-data">{{=row.paidMoney}}</td>
 							<td class="orders-item-data">{{=row.payee}}</td>
 							<td class="orders-item-data">
-								<a data-href="loanManage/ordersDetail" data-id="{{=row.orderNo}}" class="button button-mini-nowidth">查看</a>
+								<a data-href="loanManage/ordersDetail" data-id="{{=row.orderNo}}" class="button button-mini button-gray">查看</a>
 							</td>
 						</tr>
 					{{ } }}

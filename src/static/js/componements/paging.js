@@ -90,7 +90,7 @@
 			}
 		}
 		arr.push('		<li class="page page-next"><i class="iconfont">&#xe670;</i></li>');
-		arr.push('		<li class="page-jump-area"><span>到第</span> <input type="text" class="input-text"> <span>页</span> <a class="button">确定</a></li>');
+		arr.push('		<li class="page-jump-area"><span>到第</span> <input type="text" class="input-text"> <span>页</span> <a class="button button-empty">确定</a></li>');
 		arr.push('	</ul>');
 		return arr.join('');
 	};

@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('licenceProcess', [], function($scope) {
+page.ctrl('licenceProcess', ['page/test'], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {

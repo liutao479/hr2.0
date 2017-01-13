@@ -62,3 +62,20 @@ $(document).on('hover', '#navigator .user', function() {
 	$(this).find('.user-area').toggle();
 	$(this).find('.user-field-item').toggleClass('user-field-item-active');
 });
+
+
+
+/**
+ * 排序
+ */
+ $(document).on('click', '.time-sort', function() {
+ 	// 数据更新
+ 	
+ 	// 箭头更新
+ 	if( $(this).hasClass('time-sort-up') ) {
+ 		$(this).removeClass('time-sort-up').addClass('time-sort-down');	
+ 	} else if ( $(this).hasClass('time-sort-down') ) {
+ 		$(this).removeClass('time-sort-down').addClass('time-sort-up');	
+ 	}
+	
+});
