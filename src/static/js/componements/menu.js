@@ -97,7 +97,7 @@
 		'expireProcess': {
 			parent: 'expireManage',
 			name: '逾期处理',
-			route: ''
+			route: 'expireProcess'
 		},
 		archiveDownload: {
 			name: '资料下载',

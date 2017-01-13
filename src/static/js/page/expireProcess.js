@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('loanManage', [], function($scope) {
+page.ctrl('expireProcess', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
@@ -8,16 +8,15 @@ page.ctrl('loanManage', [], function($scope) {
 			pageSize: 20
 		};
 	/**
-	* 加载借款管理信息表数据
+	* 加载车贷办理数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadLoanManageList = function(params, cb) {
+	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.loanManage),
+			url: $http.api($http.apiMap.expireProcess),
 			data: params,
 			success: $http.ok(function(result) {
-				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				setupPaging(result.page.pages, true);
 				if(cb && typeof cb == 'function') {
@@ -37,14 +36,29 @@ page.ctrl('loanManage', [], function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
+ 	/**
+	* 绑定搜索事件
+	**/
+	$(document).on('keydown', '#search', function(evt) {
+		if(evt.which == 13) {
+			alert("查询");
+			var that = $(this),
+				searchText = $.trim(that.val());
+			if(!searchText) {
+				return false;
+			}
+			apiParams.search = searchText;
+			$params.search = searchText;
+			apiParams.page = 1;
+			$params.page = 1;
+			loadExpireProcessList(apiParams);
+			// router.updateQuery($scope.$path, $params);
+		}
+	});
 	/**
 	* 绑定立即处理事件
 	*/
-	$(document).on('hover', '#loan-manage .tips', function() {
-		console.log(this);
-		$(this).find('.tips-content').toggle();	
-	});
-	$(document).on('click', '#loanManegeTable .button', function() {
+	$(document).on('click', '#expireProcessTable .button', function() {
 		var that = $(this);
 		router.render(that.data('href'), {orderNo: that.data('id')});
 	});
@@ -52,23 +66,26 @@ page.ctrl('loanManage', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('loan-manage'), function() {
-		$scope.def.listTmpl = render.$console.find('#loanManageListTmpl').html();
+	render.$console.load(router.template('expire-process'), function() {
+		$scope.def.listTmpl = render.$console.find('#expireProcessTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#loanManageTable'),
+			$tbl: $console.find('#expireProcessTable'),
 			$paging: $console.find('#pageToolbar')
 		}
 		if($params.process) {
 			
 		}
-		loadLoanManageList(apiParams);
+		loadExpireProcessList(apiParams);
 	});
 
 	$scope.paging = function(_page, _size, $el, cb) {
 		apiParams.page = _page;
 		$params.page = _page;
-		router.updateQuery($scope.$path, $params);
-		loadLoanManageList(apiParams);
+		// router.updateQuery($scope.$path, $params);
+		loadExpireProcessList(apiParams);
 		cb();
 	}
 });
+
+
+

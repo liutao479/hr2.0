@@ -141,6 +141,11 @@
 			refer: [],
 			page: 'auditPrint'
 		},
+		'expireProcess': {
+			title: '逾期处理',
+			refer: [],
+			page: 'expireProcess'
+		},
 		'operationsAnalysis': {
 			title: '运营分析',
 			refer: [],
@@ -155,10 +160,15 @@
 			title: '征信结果录入',
 			page: 'creditUpload'
 		},
-		'loanProcess/loaninfo': {
+		'loanProcess/loanInfo': {
 			title: '信息表修改',
 			page: 'loanInfo'
+		},
+		'loanManage/ordersDetail': {
+			title: '订单详情',
+			page: 'ordersDetail'
 		}
+
 	}
 	/**
 	* router 内部方法

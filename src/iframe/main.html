@@ -22,7 +22,7 @@
 			<i class="iconfont">&#xe615;</i>新建业务
 		</div>
 	</div>
-	<table border="0" cellpadding="" width="100%" class="orders-table">
+	<table border="0" cellpadding="" width="100%" class="orders-table" >
 		<thead>
 			<tr class="orders-bar-title">
 				<td class="orders-item-data"><a href="javascript:;" class="sort-arrow">创建时间<img src="static/css/img/sort-up.png" alt="" style="width:13px;height:13px;overflow: hidden;" title="时间升序" /></a></td>
@@ -33,7 +33,9 @@
 				<td class="orders-item-data">操作</td>
 			</tr>
 		</thead>
-		<tbody id="loanTable"></tbody>
+		<tbody id="loanTable">
+			
+		</tbody>
 	</table>
 </div>
 <!--订单列表 end-->
@@ -43,18 +45,35 @@
 
 
 <script type="text/x-dot-template" id="loanlisttmpl">
-	{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
-	<tr>
-		<td class="orders-item-data">{{=row.date}}</td>
-		<td class="orders-item-data">{{=row.orderNo}}</td>
-		<td class="orders-item-data">{{=row.user}}<br>({{=row.idc}})</td>
-		<td class="orders-item-data">{{=row.type}}</td>
-		{{ if(row.status == 0) { }}
-		<td class="orders-item-data">未处理</td>
-		{{ } else { }}
-		<td class="orders-item-data status-back">审核退回</td>
+	{{ var len = it.length; if(len) { }}
+		{{for(var i = 0; i < len; i++) { var row = it[i]; }}
+			{{ if(i % 2 !== 0) { }}
+			<tr class="tr-even">
+			{{ } else if(i % 2 == 0 && i == 0) { }}
+			<tr class="tr-odd tr-noborder">
+			{{ } else { }}
+			<tr class="tr-odd">
+			{{ } }}
+				<td class="orders-item-data">{{=row.date}}</td>
+				<td class="orders-item-data">{{=row.orderNo}}</td>
+				<td class="orders-item-data">{{=row.user}}<br>({{=row.idc}})</td>
+				<td class="orders-item-data">{{=row.type}}</td>
+				{{ if(row.status == 0) { }}
+				<td class="orders-item-data">未处理</td>
+				{{ } else { }}
+				<td class="orders-item-data status-back">审核退回</td>
+				{{ } }}
+				<td class="orders-item-data"><a data-href="loanProcess/{{=row.typeKey}}" data-id="{{=row.orderNo}}" class="button">立即处理</a></td>
+			</tr>
 		{{ } }}
-		<td class="orders-item-data"><a data-href="loanProcess/{{=row.typeKey}}" data-id="{{=row.orderNo}}" class="button">立即处理</a></td>
-	</tr>
+	{{ } else { }}
+	<tr class="tr-noborder">
+		<td colspan="6" class="orders-blank">
+			<div class="blank-box">
+				<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+				<p>暂无待办任务！</p>
+			</div>
+		</td>
+	</tr>	
 	{{ } }}
 </script>
