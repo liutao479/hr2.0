@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('loan', ['page/test'], function($scope) {
+page.ctrl('loan', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
@@ -60,7 +60,7 @@ page.ctrl('loan', ['page/test'], function($scope) {
 	*/
 	$(document).on('click', '#loanTable .button', function() {
 		var that = $(this);
-		router.render(that.data('href'), {orderNo: that.data('id')});
+		router.render(that.data('href'), {orderNo: that.data('id'), path: 'loanProcess'});
 	});
 
 	/***
