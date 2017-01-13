@@ -1,0 +1,64 @@
+
+<!--订单表格-->
+<div class="container">
+	<div class="search-bar">
+		<input type="text" name="" autocomplete="off" id="search" value="" placeholder="订单号\借款人姓名\身份证号\手机号" class="input-text" />
+		<a id="processTag" class="location-tag" onclick="page.$scope['expireProcess']"></a>
+	</div>
+	<table width="100%" class="orders-table" >
+		<thead>
+			<tr class="orders-bar-title">
+				<td class="orders-item-data">逾期状态</td>
+				<td class="orders-item-data">逾期状态更新时间</td>
+				<td class="orders-item-data">申请人姓名</td>
+				<td class="orders-item-data">每期应还</td>
+				<td class="orders-item-data">当前逾期金额（元）</td>
+				<td class="orders-item-data">当前连续逾期</td>
+				<td class="orders-item-data">累计连续逾期</td>
+				<td class="orders-item-data">上次发表意见时间</td>
+				<td class="orders-item-data">操作</td>
+			</tr>
+		</thead>
+		<tbody id="expireProcessTable">
+			
+		</tbody>
+	</table>
+</div>
+<!--订单列表 end-->
+
+<!--分页插件-->
+<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['expireProcess'].paging" data-pages="0" data-current="1"></div>
+
+
+<script type="text/x-dot-template" id="expireProcessTmpl">
+	{{ var len = it.length; if(len) { }}
+		{{for(var i = 0; i < len; i++) { var row = it[i]; }}
+			{{ if(i % 2 !== 0) { }}
+			<tr class="tr-even">
+			{{ } else if(i % 2 == 0 && i == 0) { }}
+			<tr class="tr-odd tr-noborder">
+			{{ } else { }}
+			<tr class="tr-odd">
+			{{ } }}
+				<td class="orders-item-data">{{=row.expireStatus}}</td>
+				<td class="orders-item-data">{{=row.date}}</td>
+				<td class="orders-item-data">{{=row.user}}</td>
+				<td class="orders-item-data">{{=row.everyRepayment}}</td>
+				<td class="orders-item-data">{{=row.currentRepayment}}</td>
+				<td class="orders-item-data">{{=row.currentExpiress}}</td>
+				<td class="orders-item-data">{{=row.totleExpiress}}</td>
+				<td class="orders-item-data">{{=row.lastTime}}</td>
+				<td class="orders-item-data"><div class="button button-mini-nowidth">查看</div></td>
+			</tr>
+		{{ } }}
+	{{ } else { }}
+	<tr class="tr-noborder">
+		<td colspan="6" class="orders-blank">
+			<div class="blank-box">
+				<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+				<p>暂无待办任务！</p>
+			</div>
+		</td>
+	</tr>	
+	{{ } }}
+</script>

@@ -1,0 +1,134 @@
+{
+    "code": 0,
+    "data": {
+        "loanTask": {},
+        "demandMaterials": [
+            {
+                "cataId": 1,//材料类别（1：婚姻状况证明，2：户口本，3：收入证明，4：银行流水，5:产证明，6：车辆驾驶证明，7：公牌资料，8：身份证，9：征信授权书）
+                "cataName": "婚姻状况证明",//材料类别名称
+                "deptId": 282,//机构ID
+                "isChecked": 1,//是否已选（0：未选，1：已选，需check）
+                "materialsId": 8, //材料ID
+                "materialsCode": "sbzjgz",//材料编码
+                "materialsName": "士兵证/军官证",//材料名称
+                "materialsOwner": 1, //材料归属（1：借款人，2：共同还款人，3：反担保人，4：企业材料）
+                "materialsOwnerCode":"jkr",//材料归属编码
+                "materialsType": 2,//材料类型（1：征信材料，2：贷款材料，3：上门材料，4：签约材料，5：垫资材料，6：提车材料）
+                "ownerName": "借款人",//材料归属名称
+                "serviceType": "1"//业务类型
+            }, {
+                "cataId": 2,
+                "cataName": "户口本",
+                "code": "maritalStatus",
+                "codeKey": 1,
+                "deptId": 282,
+                "isChecked": 0,
+                "materialsId": 9,
+                "materialsName": "结婚证",
+                "materialsOwner": 1,
+                "materialsType": 2,
+                "ownerName": "借款人",
+                "serviceType": "1"
+            },
+            {
+                "cataId": 3,
+                "cataName": "收入证明",
+                "code": "maritalStatus",
+                "codeKey": 0,
+                "deptId": 282,
+                "isChecked": 1,
+                "materialsId": 9,
+                "materialsName": "结婚证",
+                "materialsOwner": 1,
+                "materialsType": 2,
+                "ownerName": "借款人",
+                "serviceType": "1"
+            },
+            {
+                "cataId": 4,
+                "cataName": "银行流水",
+                "code": "maritalStatus",
+                "codeKey": 1,
+                "deptId": 282,
+                "isChecked": 0,
+                "materialsId": 9,
+                "materialsName": "结婚证",
+                "materialsOwner": 1,
+                "materialsType": 2,
+                "ownerName": "借款人",
+                "serviceType": "1"
+            },
+            {
+                "cataId": 5,
+                "cataName": "房产证明",
+                "code": "maritalStatus",
+                "codeKey": 1,
+                "deptId": 282,
+                "isChecked": 0,
+                "materialsId": 9,
+                "materialsName": "结婚证",
+                "materialsOwner": 1,
+                "materialsType": 2,
+                "ownerName": "借款人",
+                "serviceType": "1"
+            },
+            {
+                "cataId": 6,
+                "cataName": "车辆驾驶证明",
+                "code": "maritalStatus",
+                "codeKey": 1,
+                "deptId": 282,
+                "isChecked": 0,
+                "materialsId": 9,
+                "materialsName": "结婚证",
+                "materialsOwner": 1,
+                "materialsType": 2,
+                "ownerName": "借款人",
+                "serviceType": "1"
+            },
+            {
+                "cataId": 7,
+                "cataName": "",
+                "code": "maritalStatus",
+                "codeKey": 1,
+                "deptId": 282,
+                "isChecked": 0,
+                "materialsId": 9,
+                "materialsName": "结婚证",
+                "materialsOwner": 1,
+                "materialsType": 2,
+                "ownerName": "借款人",
+                "serviceType": "1"
+            },
+            {
+                "cataId": 8,
+                "cataName": "婚姻状况证明",
+                "code": "maritalStatus",
+                "codeKey": 1,
+                "deptId": 282,
+                "isChecked": 0,
+                "materialsId": 9,
+                "materialsName": "结婚证",
+                "materialsOwner": 1,
+                "materialsType": 2,
+                "ownerName": "借款人",
+                "serviceType": "1"
+            },
+            {
+                "cataId": 9,
+                "cataName": "婚姻状况证明",
+                "code": "maritalStatus",
+                "codeKey": 1,
+                "deptId": 282,
+                "isChecked": 0,
+                "materialsId": 9,
+                "materialsName": "结婚证",
+                "materialsOwner": 1,
+                "materialsType": 2,
+                "ownerName": "借款人",
+                "serviceType": "1"
+            }
+        ]
+    },
+    "msg": "success"
+}

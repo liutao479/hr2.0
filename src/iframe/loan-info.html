@@ -388,6 +388,7 @@
 						</div>
 					</div>
 				</div>
+				{{for(var a = 0, lenth1 = it.loanUser.length; a < lenth1; a++) { var mainPerson = it.loanUser[a];if(mainPerson.userType == 0){ }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
@@ -398,6 +399,7 @@
 							</div>
 						</div>
 					</div>
+					
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
@@ -405,8 +407,10 @@
 								<span class="info-value">
 									<select>
 										<option>请选择</option>
-										<option {{=(it.loanUserStage.businessModel==0?"selected":"")}}>不知道</option>
-										<option {{=(it.loanUserStage.businessModel==1?"selected":"")}}>私牌</option>
+										<option {{=(mainPerson.maritalStatus==0?"selected":"")}}>未婚</option>
+										<option {{=(mainPerson.maritalStatus==1?"selected":"")}}>已婚</option>
+										<option {{=(mainPerson.maritalStatus==2?"selected":"")}}>单身离婚</option>
+										<option {{=(mainPerson.maritalStatus==3?"selected":"")}}>丧偶</option>
 									</select>
 								</span>
 							</div>
@@ -415,8 +419,9 @@
 								<span class="info-value">
 									<select>
 										<option>请选择</option>
-										<option {{=(it.loanUserStage.businessModel==0?"selected":"")}}>不知道</option>
-										<option {{=(it.loanUserStage.businessModel==1?"selected":"")}}>私牌</option>
+										<option {{=(mainPerson.houseStatus==0?"selected":"")}}>无房</option>
+										<option {{=(mainPerson.houseStatus==1?"selected":"")}}>有商品房</option>
+										<option {{=(mainPerson.houseStatus==2?"selected":"")}}>有自建房</option>
 									</select>
 								</span>
 							</div>
@@ -425,80 +430,86 @@
 								<span class="info-value">
 									<select>
 										<option>请选择</option>
-										<option {{=(it.loanUserStage.businessModel==0?"selected":"")}}>不知道</option>
-										<option {{=(it.loanUserStage.businessModel==1?"selected":"")}}>私牌</option>
+										<option {{=(mainPerson.isEnterprise==0?"selected":"")}}>否</option>
+										<option {{=(mainPerson.isEnterprise==1?"selected":"")}}>是</option>
 									</select>
 								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>户籍：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.sfMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.accountLocation }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>姓名：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.sfProportion }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.userName }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>性别：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.commissionFeeRate }}" /></span>
+								<span class="info-value">
+									<select>
+										<option>请选择</option>
+										<option {{=(mainPerson.sex==0?"selected":"")}}>男</option>
+										<option {{=(mainPerson.sex==1?"selected":"")}}>女</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>身份证号码：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.loanMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.idCard }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>联系电话：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.stageMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.mobile }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>申请时年龄：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.age }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭电话：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.familyTel }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭地址：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.familyAddress }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭地址邮编：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.familyZipcode }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位名称：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.company }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位电话：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.companyTel }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.companyAddress }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址邮编：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.companyZipcode }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>税后月收入：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.bankBaseRates }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.monthIncomeMoney }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>存款余额：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.bankFeeMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.balance }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>日均存款余额：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.contractSfMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.averageDailyBalance }}" /></span>
 							</div>
 							<div class="info-key-check-box">
 								<span class="info-key"><i>*</i>本地常住类型：</span>
 								<span class="info-check-box">
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-key"><div class="checkbox {{=(mainPerson.residentType==0?"checked":"")}}"></div></span>
 										<span class="check-value">本地户口</span>
 									</div>
 									<div class="info-check">
@@ -538,11 +549,14 @@
 						</div>
 					</div>
 				</div>
+				{{ } }}
+				{{ } }}
+				{{for(var a = 0, lenth1 = it.loanUser.length; a < lenth1; a++) { var mainPerson = it.loanUser[a];if(mainPerson.userType == 1){ }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">共同还款人1信息</span>
+							<span class="panel-title-name">共同还款人{{= a}}信息</span>
 							<div class="button button-mini-nowidth">
 								保存
 							</div>
@@ -555,80 +569,89 @@
 								<span class="info-value">
 									<select>
 										<option>请选择</option>
-										<option {{=(it.loanUserStage.businessModel==0?"selected":"")}}>不知道</option>
-										<option {{=(it.loanUserStage.businessModel==1?"selected":"")}}>私牌</option>
+										<option {{=(mainPerson.userRelationship==0?"selected":"")}}>本人</option>
+										<option {{=(mainPerson.userRelationship==1?"selected":"")}}>配偶</option>
+										<option {{=(mainPerson.userRelationship==2?"selected":"")}}>父母</option>
+										<option {{=(mainPerson.userRelationship==3?"selected":"")}}>子女</option>
+										<option {{=(mainPerson.userRelationship==4?"selected":"")}}>其他</option>
 									</select>
 								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>户籍：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.sfMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.accountLocation }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>姓名：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.sfProportion }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.userName }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>性别：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.commissionFeeRate }}" /></span>
+								<span class="info-value">
+									<select>
+										<option>请选择</option>
+										<option {{=(mainPerson.sex==0?"selected":"")}}>男</option>
+										<option {{=(mainPerson.sex==1?"selected":"")}}>女</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>身份证号码：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.loanMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.idCard }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>联系电话：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.stageMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.mobile }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>申请时年龄：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.age }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭电话：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.familyTel }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭地址：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.familyAddress }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭地址邮编：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.familyZipcode }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位名称：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.company }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位电话：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.companyTel }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.companyAddress }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址邮编：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.companyZipcode }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>税后月收入：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.bankBaseRates }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.monthIncomeMoney }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>存款余额：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.bankFeeMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.balance }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>日均存款余额：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.contractSfMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.averageDailyBalance }}" /></span>
 							</div>
 							<div class="info-key-check-box">
 								<span class="info-key"><i>*</i>本地常住类型：</span>
 								<span class="info-check-box">
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-key"><div class="checkbox {{=(mainPerson.residentType==0?"checked":"")}}"></div></span>
 										<span class="check-value">本地户口</span>
 									</div>
 									<div class="info-check">
@@ -668,11 +691,14 @@
 						</div>
 					</div>
 				</div>
+				{{ } }}
+				{{ } }}
+				{{for(var a = 0, lenth1 = it.loanUser.length; a < lenth1; a++) { var mainPerson = it.loanUser[a];if(mainPerson.userType == 2){ }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">反担保人1信息</span>
+							<span class="panel-title-name">反担保人{{= a}}信息</span>
 							<div class="button button-mini-nowidth">
 								保存
 							</div>
@@ -685,80 +711,89 @@
 								<span class="info-value">
 									<select>
 										<option>请选择</option>
-										<option {{=(it.loanUserStage.businessModel==0?"selected":"")}}>不知道</option>
-										<option {{=(it.loanUserStage.businessModel==1?"selected":"")}}>私牌</option>
+										<option {{=(mainPerson.userRelationship==0?"selected":"")}}>本人</option>
+										<option {{=(mainPerson.userRelationship==1?"selected":"")}}>配偶</option>
+										<option {{=(mainPerson.userRelationship==2?"selected":"")}}>父母</option>
+										<option {{=(mainPerson.userRelationship==3?"selected":"")}}>子女</option>
+										<option {{=(mainPerson.userRelationship==4?"selected":"")}}>其他</option>
 									</select>
 								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>户籍：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.sfMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.accountLocation }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>姓名：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.sfProportion }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.userName }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>性别：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.commissionFeeRate }}" /></span>
+								<span class="info-value">
+									<select>
+										<option>请选择</option>
+										<option {{=(mainPerson.sex==0?"selected":"")}}>男</option>
+										<option {{=(mainPerson.sex==1?"selected":"")}}>女</option>
+									</select>
+								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>身份证号码：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.loanMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.idCard }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>联系电话：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.stageMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.mobile }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>申请时年龄：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.age }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭电话：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.familyTel }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭地址：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.familyAddress }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭地址邮编：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.familyZipcode }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位名称：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.company }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位电话：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.companyTel }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.companyAddress }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址邮编：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.advancedMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.companyZipcode }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>税后月收入：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.bankBaseRates }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.monthIncomeMoney }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>存款余额：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.bankFeeMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.balance }}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>日均存款余额：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanUserStage.contractSfMoney }}" /></span>
+								<span class="info-value"><input type="text" value="{{= mainPerson.averageDailyBalance }}" /></span>
 							</div>
 							<div class="info-key-check-box">
 								<span class="info-key"><i>*</i>本地常住类型：</span>
 								<span class="info-check-box">
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-key"><div class="checkbox {{=(mainPerson.residentType==0?"checked":"")}}"></div></span>
 										<span class="check-value">本地户口</span>
 									</div>
 									<div class="info-check">
@@ -798,6 +833,8 @@
 						</div>
 					</div>
 				</div>
+				{{ } }}
+				{{ } }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
@@ -809,28 +846,30 @@
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
-						{{for(var j = 0, len2 = it.loanEmergencyConact.length; j < len2; j++) { var role = it.loanEmergencyConact[j]; }}
 						<div class="loan-info">
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>联系人{{= j+1 }}&nbsp;姓名：</span>
-								<span class="info-value"><input type="text" value="{{= role.name }}" /></span>
+						{{for(var j = 0, len2 = it.loanEmergencyConact.length; j < len2; j++) { var role = it.loanEmergencyConact[j]; }}
+							<div>
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>联系人{{= j+1 }}&nbsp;姓名：</span>
+									<span class="info-value"><input type="text" value="{{= role.name }}" /></span>
+								</div>
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>联系人{{= j+1 }}&nbsp;关系：</span>
+									<span class="info-value">
+										<select>
+											<option>请选择</option>
+											<option {{=(role.relationship==0?"selected":"")}}>不知道</option>
+											<option {{=(role.relationship==1?"selected":"")}}>私牌</option>
+										</select>
+									</span>
+								</div>
+								<div class="info-key-value-box">
+									<span class="info-key"><i>*</i>联系人{{= j+1 }}&nbsp;电话：</span>
+									<span class="info-value"><input type="text" value="{{= role.phone }}" /></span>
+								</div>
 							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>联系人{{= j+1 }}&nbsp;关系：</span>
-								<span class="info-value">
-									<select>
-										<option>请选择</option>
-										<option {{=(role.relationship==0?"selected":"")}}>不知道</option>
-										<option {{=(role.relationship==1?"selected":"")}}>私牌</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>联系人{{= j+1 }}&nbsp;电话：</span>
-								<span class="info-value"><input type="text" value="{{= role.phone }}" /></span>
-							</div>
-						</div>
 						{{ } }}
+						</div>
 					</div>
 				</div>
 				<div class="panel panel-loan">
@@ -874,18 +913,24 @@
 						<div class="loan-info">
 							{{for(var k = 0, len3 = it.loanFee.length; k < len3; k++) { var role = it.loanFee[k]; }}
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>{{= role.fieldName }}</span>
+								<span class="info-key">
+									{{ if(role.required == 1){ }}
+									<i>*</i>
+									{{ } }}
+									{{= role.fieldName }}：
+								</span>
 								<span class="info-value"><input type="text" name="{{= role.fieldCode }}" value="{{= role.value }}" /></span>
 							</div>
 							{{ } }}
 						</div>
 					</div>
 				</div>
+				{{for(var b = 0, lenthb = it.otherInfo.length; b < lenthb; b++) { var other = it.otherInfo[b]; }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">其他信息</span>
+							<span class="panel-title-name">{{= other.groupName}}</span>
 							<div class="button button-mini-nowidth">
 								保存
 							</div>
@@ -893,19 +938,19 @@
 					</div>
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
+							{{for(var c = 0, lenthc = other.cIndividuationFieldList.length; c < lenthc; c++) { var otherInfo = other.cIndividuationFieldList[c]; }}
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>账号：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanPayCard.accountNumber }}" /></span>
+								<span class="info-key">
+									{{ if(otherInfo.required == 1){ }}
+									<i>*</i>
+									{{ } }}
+									{{= otherInfo.name }}：
+								</span>
+								<span class="info-value"><input type="text" value="{{= otherInfo.value }}" /></span>
 							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>开户行：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanPayCard.bankName }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>帐户名：</span>
-								<span class="info-value"><input type="text" value="{{= it.loanPayCard.accountName }}" /></span>
-							</div>
+							{{ } }}
 						</div>
 					</div>
 				</div>
+				{{ } }}
 			</script>

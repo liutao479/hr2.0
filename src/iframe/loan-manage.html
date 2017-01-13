@@ -86,20 +86,35 @@
 			<!--借款管理   end-->
 			
 			<!--分页插件-->
-			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['loanManage'].paging" data-pages="50" data-current="3"></div>
+			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['loanManage'].paging" data-pages="50" data-current="1"></div>
 
 			<script type="text/x-dot-template" id="loanManageListTmpl">
-				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
-				<tr>
-					<td class="orders-item-data">{{=row.orderNo}}</td>
-					<td class="orders-item-data">{{=row.applyTime}}</td>
-					<td class="orders-item-data">{{=row.useTime}}</td>
-					<td class="orders-item-data"><span>{{=row.user}}</span><br /><span>（{{=row.idc}}）</span></td>
-					<td class="orders-item-data">{{=row.paidMoney}}</td>
-					<td class="orders-item-data">{{=row.payee}}</td>
-					<td class="orders-item-data">
-						<div class="button button-mini-nowidth">查看</div>
+				{{ var len = it.length; if(len) { }}
+					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
+						{{ if(i == 0) { }}
+						<tr class="tr-noborder">
+						{{ } else { }}
+						<tr>
+						{{ } }}
+							<td class="orders-item-data">{{=row.orderNo}}</td>
+							<td class="orders-item-data">{{=row.applyTime}}</td>
+							<td class="orders-item-data">{{=row.useTime}}</td>
+							<td class="orders-item-data"><span>{{=row.user}}</span><br /><span>（{{=row.idc}}）</span></td>
+							<td class="orders-item-data">{{=row.paidMoney}}</td>
+							<td class="orders-item-data">{{=row.payee}}</td>
+							<td class="orders-item-data">
+								<a data-href="loanManage/ordersDetail" data-id="{{=row.orderNo}}" class="button button-mini-nowidth">查看</a>
+							</td>
+						</tr>
+					{{ } }}
+				{{ } else { }}
+				<tr class="tr-noborder">
+					<td colspan="7" class="orders-blank">
+						<div class="blank-box">
+							<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+							<p>暂无待办任务！</p>
+						</div>
 					</td>
-				</tr>
+				</tr>	
 				{{ } }}
 			</script>
