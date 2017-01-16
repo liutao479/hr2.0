@@ -73,6 +73,7 @@
 		organizationManage: 'organizationManage',
 		loanInfo: 'loan.infoBak',
 		serviceType: 'serviceType',
+		shangpaidi: 'shangpaidi',
 		loanAudit: 'loan.info',
 		cardAudit: 'loan.info',
 		lendAudit: 'loan.info',

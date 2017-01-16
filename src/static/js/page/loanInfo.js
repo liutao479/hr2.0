@@ -25,7 +25,7 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		})
 	}
-	
+//业务类型	
 	$(document).on('click', '#selectType', function() {
 		var that = $(this);
 //		if($source.selectType) {
@@ -57,6 +57,32 @@ page.ctrl('loanInfo', function($scope) {
 		}
 		return false;
 	})
+//上牌地	
+	$(document).on('click', '#selectType', function() {
+		var that = $(this);
+		$.ajax({
+			url: $http.api($http.apiMap.serviceType),
+			success: $http.ok(function(result) {
+				render.compile(that, $scope.def.selectTypeTmpl, result.data, true);
+				$source.selectType = result.data;
+				$('#selectTypeIH').val('');
+				return false;
+			})
+		})
+	})
+	$(document).on('click', '#selectTypeOpt option', function() {
+		var value = $(this).val();
+		var text = $(this).text();
+		$('#selectTypeIH').val(value);
+		$('#selectType').html(text);
+		var value1 = $('#selectTypeIH').val();
+		if(value1 == 0){
+			$('#selectType').html("请选择");
+		}
+		return false;
+	})
+	
+//点击下拉消失	
 	$(document).bind("click",function(e){ 
 		var target = $(e.target); 
 		if(target.closest("#selectTypeOpt").length == 0){ 
@@ -67,7 +93,24 @@ page.ctrl('loanInfo', function($scope) {
 			}
 			return false;
 		} 
-	}) 	
+	})
+	/***
+	* 保存按钮
+	*/
+	$(document).on('click', '#saveOrderInfo', function() {
+        var data = $('#orderInfoForm').serializeArray();
+        console.log(data);
+//		$.ajax({
+//			type: 'GET',
+//			url: '',
+//			data: data,
+//			dataType: 'text',
+//			success: function(result){
+//				console.log("success");
+//			}
+//		});
+	})
+	
 	/***
 	* 加载页面模板
 	*/
