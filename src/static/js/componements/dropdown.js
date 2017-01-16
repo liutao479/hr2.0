@@ -32,7 +32,7 @@
 
 		self.$el = $el;
 		self.opts = $.extend(opts, options || {});
-		self.
+
 		return this;
 	}
 	/**

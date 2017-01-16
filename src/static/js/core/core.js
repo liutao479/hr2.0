@@ -72,6 +72,7 @@
 		operationsAnalysis: 'operationsAnalysis',
 		organizationManage: 'organizationManage',
 		loanInfo: 'loan.infoBak',
+		serviceType: 'serviceType',
 		loanAudit: 'loan.info',
 		cardAudit: 'loan.info',
 		lendAudit: 'loan.info',

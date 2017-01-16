@@ -2,6 +2,7 @@
 page.ctrl('loanInfo', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
+		$source = $scope.$source = {},
 		apiParams = {
 			process: $params.process || 0,
 			page: $params.page || 1,
@@ -24,13 +25,29 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		})
 	}
+	
+	$(document).on('click', '#selectType', function() {
+		var that = $(this);
+		if($source.selectType) {
+			return true;
+		}
+		$.ajax({
+			url: $http.api($http.apiMap.serviceType),
+			success: $http.ok(function(result) {
+				render.compile(that, $scope.def.selectTypeTmpl, result.data, true);
+				$source.selectType = result.data;
+			})
+		})
+	})
 	/***
 	* 加载页面模板
 	*/
 	render.$console.load(router.template('loan-info'), function() {
 		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
+		$scope.def.selectTypeTmpl =  render.$console.find('#selectTypetmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#loanInfoTable'),
+				  
 		}
 		if($params.process) {
 			
