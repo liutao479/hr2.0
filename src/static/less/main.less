@@ -2088,6 +2088,40 @@ input[type=radio] {
         text-align:right;
         margin-right: 25px;
     }
+    .selecter{
+        .arrow{
+            right: 10px;
+        }
+    }
+    .selecter .placeholder {
+        width: 100%;
+        display: inline-block;
+        line-height: 16px;
+        height: 16px;
+        padding: 0 20px 0 0;
+        text-align: left;
+        cursor: pointer;
+    }
+    .selectOpt{
+        position: absolute;
+        left: 0;
+        top: 25px;
+        width: 100%;
+        border: 1px solid #5084FC;
+        border-radius: 3px;
+        background: #fff;
+        z-index: 9;
+        max-height: 300px;
+        overflow-y: scroll;
+        li{
+            line-height: 30px;
+            padding: 0 10px;
+        }
+        li:hover{
+            color: #fff;
+            background: #5084fc;
+        }
+    }
     .info-value{
         border:1px solid @selectBorderColor;
         height:30px;
@@ -2117,7 +2151,10 @@ input[type=radio] {
         }
     }
     .gps{
-        width: 64px !important;
+        width: 62px;
+    }
+    .gpssel{
+        width: 75px;
     }
     &:nth-of-type(odd) {
         text-align:left;

@@ -28,17 +28,46 @@ page.ctrl('loanInfo', function($scope) {
 	
 	$(document).on('click', '#selectType', function() {
 		var that = $(this);
-		if($source.selectType) {
-			return true;
-		}
+//		if($source.selectType) {
+//			alert(1);
+////			$('#selectTypeOpt').show();
+//			return true;
+//		}
 		$.ajax({
 			url: $http.api($http.apiMap.serviceType),
 			success: $http.ok(function(result) {
 				render.compile(that, $scope.def.selectTypeTmpl, result.data, true);
 				$source.selectType = result.data;
+//				$('#selectTypeOpt').show();
+//				$('#selectType').text("请选择");
+				$('#selectTypeIH').val('');
+				return false;
 			})
 		})
+//		$('#selectTypeOpt').show();
 	})
+	$(document).on('click', '#selectTypeOpt li', function() {
+		var value = $(this).val();
+		var text = $(this).text();
+		$('#selectTypeIH').val(value);
+		$('#selectType').html(text);
+		var value1 = $('#selectTypeIH').val();
+		if(value1 == 0){
+			$('#selectType').html("请选择");
+		}
+		return false;
+	})
+	$(document).bind("click",function(e){ 
+		var target = $(e.target); 
+		if(target.closest("#selectTypeOpt").length == 0){ 
+			$("#selectTypeOpt").hide(); 
+			var value1 = $('#selectTypeIH').val();
+			if(value1 == 0){
+				$('#selectType').html("请选择");
+			}
+			return false;
+		} 
+	}) 	
 	/***
 	* 加载页面模板
 	*/

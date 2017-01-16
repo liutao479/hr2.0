@@ -70,14 +70,19 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>业务类型：</span>
-								<span class="info-value">
+								<!--<span class="info-value">
 									<select id="selectType">
-										<!--<option {{=(it.loanOrder.serviceTypeCode==1?"selected":"")}}>信用</option>
+										<option {{=(it.loanOrder.serviceTypeCode==1?"selected":"")}}>信用</option>
 										<option {{=(it.loanOrder.serviceTypeCode==2?"selected":"")}}>担保</option>
 										<option {{=(it.loanOrder.serviceTypeCode==3?"selected":"")}}>抵押</option>
 										<option {{=(it.loanOrder.serviceTypeCode==4?"selected":"")}}>正租</option>
-										<option {{=(it.loanOrder.serviceTypeCode==5?"selected":"")}}>反租</option>-->
+										<option {{=(it.loanOrder.serviceTypeCode==5?"selected":"")}}>反租</option>
 									</select>
+								</span>-->
+								<span class="info-value selecter">
+									<span class="placeholder" id="selectType">请选择</span>
+									<span class="arrow arrow-bottom"></span>
+									<input type="hidden" name="selectTypeIH" id="selectTypeIH" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
@@ -229,7 +234,7 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>是否加装GPS：</span>
-								<span class="info-value gps">
+								<span class="info-value gps gpssel">
 									<select>
 										<option>请选择</option>
 										<option {{=(it.loanUserCar.carMode==1?"selected":"")}}>是</option>
@@ -954,9 +959,13 @@
 				{{ } }}
 			</script>
 			<script type="text/x-dot-template" id="selectTypetmpl">
+				<ul id="selectTypeOpt" class="selectOpt">
+					<li value="">请选择</li>
 				{{for(var a = 0, lenth1 = it.length; a < lenth1; a++) { var op1 = it[a]; }}
 					{{for(var b = 0, lenth2 = op1.configFieldItem.length; b < lenth2; b++) { var opt = op1.configFieldItem[b]; }}
-					<option value="{{= opt.value}}">{{= opt.name}}</option>
+					<!--<option value="{{= opt.value}}">{{= opt.name}}</option>-->
+						<li value="{{= opt.value}}">{{= opt.name}}</li>
 					{{ } }}
 				{{ } }}
+				</ul>
 			</script>
