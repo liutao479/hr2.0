@@ -94,21 +94,41 @@ page.ctrl('loanInfo', function($scope) {
 			return false;
 		} 
 	})
-	/***
+//点击本地常驻类型复选框
+	//主申请人
+	$(document).on('click', '#mainPersonRdtype .checkbox', function() {
+		$(this).toggleClass('checked');
+		returnCheckboxVal();
+	})
+	function returnCheckboxVal(){
+		var data="";
+		$('#mainPersonRdtype .checked').each(function(){
+			data += $(this).attr("data-value")+",";
+		});
+		var value = data.substring(0,data.length-1);
+		$("#mainPersonTp").val(value);
+		console.log($("#mainPersonTp").val());
+		return;
+	}
+	//共同还款人，反担保人
+
+
+
+/***
 	* 保存按钮
 	*/
 	$(document).on('click', '#saveOrderInfo', function() {
         var data = $('#orderInfoForm').serializeArray();
         console.log(data);
-//		$.ajax({
-//			type: 'GET',
-//			url: '',
-//			data: data,
-//			dataType: 'text',
-//			success: function(result){
-//				console.log("success");
-//			}
-//		});
+		$.ajax({
+			type: 'POST',
+			url: 'http://192.168.0.107',
+			data: data,
+			dataType: 'text',
+			success: function(result){
+				console.log("success");
+			}
+		});
 	})
 	$(document).on('click', '#saveCarInfo', function() {
         var data = $('#carInfoForm').serializeArray();
@@ -191,15 +211,15 @@ page.ctrl('loanInfo', function($scope) {
 	$(document).on('click', '#saveloanPayCardInfo', function() {
         var data = $('#loanPayCardInfoForm').serializeArray();
         console.log(data);
-//		$.ajax({
-//			type: 'GET',
-//			url: '',
-//			data: data,
-//			dataType: 'text',
-//			success: function(result){
-//				console.log("success");
-//			}
-//		});
+		$.ajax({
+			type: 'POST',
+			url: 'http://192.168.0.107',
+			data: data,
+			dataType: 'text',
+			success: function(result){
+				console.log("success");
+			}
+		});
 	})
 	$(document).on('click', '#saveLoanFeeInfo', function() {
         var data = $('#loanFeeInfoForm').serializeArray();

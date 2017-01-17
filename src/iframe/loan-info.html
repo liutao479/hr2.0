@@ -64,7 +64,7 @@
 								<span class="info-key"><i>*</i>新车还是二手车：</span>
 								<span class="info-value">
 									<select name="isSecond">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(it.loanOrder.isSecond==0?"selected":"")}}>新车</option>
 										<option value="1" {{=(it.loanOrder.isSecond==1?"selected":"")}}>二手车</option>
 									</select>
@@ -90,8 +90,8 @@
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>经办银行：</span>
 								<span class="info-value">
-									<select>
-										<option>请选择</option>
+									<select name="bankId">
+										<option value=''>请选择</option>
 										<option {{=(it.loanOrder.bankId==1?"selected":"")}}>信用</option>
 										<option {{=(it.loanOrder.bankId==2?"selected":"")}}>担保</option>
 										<option {{=(it.loanOrder.bankId==3?"selected":"")}}>抵押</option>
@@ -103,8 +103,8 @@
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>业务来源类型：</span>
 								<span class="info-value">
-									<select>
-										<option>请选择</option>
+									<select name="busiSourceTypeCode">
+										<option value=''>请选择</option>
 										<option {{=(it.loanOrder.busiSourceTypeCode==1?"selected":"")}}>信用</option>
 										<option {{=(it.loanOrder.busiSourceTypeCode==2?"selected":"")}}>担保</option>
 										<option {{=(it.loanOrder.busiSourceTypeCode==3?"selected":"")}}>抵押</option>
@@ -116,8 +116,8 @@
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>业务区域：</span>
 								<span class="info-value">
-									<select>
-										<option>请选择</option>
+									<select name="busiAreaCode">
+										<option value=''>请选择</option>
 										<option {{=(it.loanOrder.busiAreaCode==1?"selected":"")}}>信用</option>
 										<option {{=(it.loanOrder.busiAreaCode==2?"selected":"")}}>担保</option>
 										<option {{=(it.loanOrder.busiAreaCode==3?"selected":"")}}>抵押</option>
@@ -129,8 +129,8 @@
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>业务来源方名称：</span>
 								<span class="info-value">
-									<select>
-										<option>请选择</option>
+									<select name="busiSourceId">
+										<option value=''>请选择</option>
 										<option {{=(it.loanOrder.busiSourceId==1?"selected":"")}}>信用</option>
 										<option {{=(it.loanOrder.busiSourceId==2?"selected":"")}}>担保</option>
 										<option {{=(it.loanOrder.busiSourceId==3?"selected":"")}}>抵押</option>
@@ -174,7 +174,7 @@
 								<span class="info-key"><i>*</i>车辆上公牌还是私牌：</span>
 								<span class="info-value">
 									<select name="licenseType">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(it.loanUserCar.licenseType==0?"selected":"")}}>公牌</option>
 										<option value="1" {{=(it.loanUserCar.licenseType==1?"selected":"")}}>私牌</option>
 									</select>
@@ -184,7 +184,7 @@
 								<span class="info-key"><i>*</i>车辆是否为融资租赁的乘用车：</span>
 								<span class="info-value">
 									<select name="isFinanceLeaseVehicle">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(it.loanUserCar.isFinanceLeaseVehicle==0?"selected":"")}}>否</option>
 										<option value="1" {{=(it.loanUserCar.isFinanceLeaseVehicle==1?"selected":"")}}>是</option>
 									</select>
@@ -194,7 +194,7 @@
 								<span class="info-key"><i>*</i>车辆是否为营运车：</span>
 								<span class="info-value">
 									<select name="isOperationVehicle">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(it.loanUserCar.isOperationVehicle==0?"selected":"")}}>否</option>
 										<option value="1" {{=(it.loanUserCar.isOperationVehicle==1?"selected":"")}}>是</option>
 									</select>
@@ -216,7 +216,7 @@
 								<span class="info-key"><i>*</i>车辆型号：</span>
 								<span class="info-value">
 									<select>
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option {{=(it.loanUserCar.carMode==1?"selected":"")}}>车型</option>
 										<option {{=(it.loanUserCar.carMode==2?"selected":"")}}>担保</option>
 										<option {{=(it.loanUserCar.carMode==3?"selected":"")}}>抵押</option>
@@ -237,7 +237,7 @@
 								<span class="info-key"><i>*</i>是否加装GPS：</span>
 								<span class="info-value gps gpssel">
 									<select name="isInstallGps">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option {{=(it.loanUserCar.isInstallGps==1?"selected":"")}}>是</option>
 										<option {{=(it.loanUserCar.isInstallGps==0?"selected":"")}}>否</option>
 									</select>
@@ -279,7 +279,7 @@
 								<span class="info-key"><i>*</i>业务模式：</span>
 								<span class="info-value">
 									<select>
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option {{=(it.loanUserStage.businessModel==0?"selected":"")}}>不知道</option>
 										<option {{=(it.loanUserStage.businessModel==1?"selected":"")}}>私牌</option>
 									</select>
@@ -313,7 +313,7 @@
 								<span class="info-key"><i>*</i>还款期限：</span>
 								<span class="info-value">
 									<select name="repayPeriod">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="6" {{=(it.loanUserStage.repayPeriod==6?"selected":"")}}>6</option>
 										<option value="12" {{=(it.loanUserStage.repayPeriod==12?"selected":"")}}>12</option>
 										<option value="18" {{=(it.loanUserStage.repayPeriod==18?"selected":"")}}>18</option>
@@ -354,7 +354,7 @@
 								<span class="info-key"><i>*</i>是否贴息：</span>
 								<span class="info-value">
 									<select name="isDiscount">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(it.loanUserStage.isDiscount==0?"selected":"")}}>否</option>
 										<option value="1" {{=(it.loanUserStage.isDiscount==1?"selected":"")}}>是</option>
 									</select>
@@ -372,7 +372,7 @@
 								<span class="info-key"><i>*</i>保险续保：</span>
 								<span class="info-value">
 									<select>
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option {{=(it.loanUserStage.renewalMode==0?"selected":"")}}>自行办理</option>
 										<option {{=(it.loanUserStage.renewalMode==1?"selected":"")}}>单位承保</option>
 									</select>
@@ -386,7 +386,7 @@
 								<span class="info-key"><i>*</i>是否需要垫资：</span>
 								<span class="info-value">
 									<select name="isAdvanced">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(it.loanUserStage.isAdvanced==0?"selected":"")}}>否</option>
 										<option value="1" {{=(it.loanUserStage.isAdvanced==1?"selected":"")}}>是</option>
 									</select>
@@ -419,7 +419,7 @@
 								<span class="info-key"><i>*</i>主借款人目前婚姻状况：</span>
 								<span class="info-value">
 									<select name="maritalStatus">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(mainPerson.maritalStatus==0?"selected":"")}}>未婚</option>
 										<option value="1" {{=(mainPerson.maritalStatus==1?"selected":"")}}>已婚</option>
 										<option value="2" {{=(mainPerson.maritalStatus==2?"selected":"")}}>单身离婚</option>
@@ -431,7 +431,7 @@
 								<span class="info-key"><i>*</i>购车地房屋所有权情况：</span>
 								<span class="info-value">
 									<select name="houseStatus">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(mainPerson.houseStatus==0?"selected":"")}}>无房</option>
 										<option value="1" {{=(mainPerson.houseStatus==1?"selected":"")}}>有商品房</option>
 										<option value="2" {{=(mainPerson.houseStatus==2?"selected":"")}}>有自建房</option>
@@ -442,7 +442,7 @@
 								<span class="info-key"><i>*</i>是否企业法人：</span>
 								<span class="info-value">
 									<select name="isEnterprise">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(mainPerson.isEnterprise==0?"selected":"")}}>否</option>
 										<option value="1" {{=(mainPerson.isEnterprise==1?"selected":"")}}>是</option>
 									</select>
@@ -460,7 +460,7 @@
 								<span class="info-key"><i>*</i>性别：</span>
 								<span class="info-value">
 									<select name="sex">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(mainPerson.sex==0?"selected":"")}}>男</option>
 										<option value="1" {{=(mainPerson.sex==1?"selected":"")}}>女</option>
 									</select>
@@ -518,46 +518,46 @@
 								<span class="info-key"><i>*</i>日均存款余额：</span>
 								<span class="info-value"><input type="text" name="averageDailyBalance" value="{{= mainPerson.averageDailyBalance }}" /></span>
 							</div>
-							<div class="info-key-check-box">
+							<div class="info-key-check-box" id="mainPersonRdtype">
 								<span class="info-key"><i>*</i>本地常住类型：</span>
 								<span class="info-check-box">
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox {{=(mainPerson.residentType==0?"checked":"")}}"></div></span>
+										<span class="check-key"><div data-value = "553" class="checkbox {{=(mainPerson.residentType==553?"checked":"")}}"></div></span>
 										<span class="check-value">本地户口</span>
 									</div>
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-key"><div data-value = "563" class="checkbox {{=(mainPerson.residentType==563?"checked":"")}}"></div></span>
 										<span class="check-value">本地工作</span>
 									</div>
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-key"><div data-value = "573" class="checkbox {{=(mainPerson.residentType==573?"checked":"")}}"></div></span>
 										<span class="check-value">本地居住</span>
 									</div>
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-key"><div data-value = "574" class="checkbox {{=(mainPerson.residentType==574?"checked":"")}}"></div></span>
 										<span class="check-value">1年社保或工资流水</span>
 									</div>
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-key"><div data-value = "554" class="checkbox {{=(mainPerson.residentType==554?"checked":"")}}"></div></span>
 										<span class="check-value">非本地户口</span>
 									</div>
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-key"><div data-value = "593" class="checkbox {{=(mainPerson.residentType==593?"checked":"")}}"></div></span>
 										<span class="check-value">1年本地房产</span>
 									</div>
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-key"><div data-value = "564" class="checkbox {{=(mainPerson.residentType==564?"checked":"")}}"></div></span>
 										<span class="check-value">异地工作</span>
 									</div>
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-key"><div data-value = "583" class="checkbox {{=(mainPerson.residentType==583?"checked":"")}}"></div></span>
 										<span class="check-value">企业成立1年</span>
 									</div>
 									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-key"><div data-value = "603" class="checkbox {{=(mainPerson.residentType==603?"checked":"")}}"></div></span>
 										<span class="check-value">其他</span>
 									</div>
-									<input type="hidden" name="" value="" />
+									<input type="hidden" id="mainPersonTp" name="residentType" value="{{= mainPerson.residentType }}" />
 								</span>
 							</div>
 						</div>
@@ -584,7 +584,7 @@
 								<span class="info-key"><i>*</i>与借款人关系：</span>
 								<span class="info-value">
 									<select name="userRelationship">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(mainPerson.userRelationship==0?"selected":"")}}>本人</option>
 										<option value="1" {{=(mainPerson.userRelationship==1?"selected":"")}}>配偶</option>
 										<option value="2" {{=(mainPerson.userRelationship==2?"selected":"")}}>父母</option>
@@ -605,7 +605,7 @@
 								<span class="info-key"><i>*</i>性别：</span>
 								<span class="info-value">
 									<select name="sex">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(mainPerson.sex==0?"selected":"")}}>男</option>
 										<option value="1" {{=(mainPerson.sex==1?"selected":"")}}>女</option>
 									</select>
@@ -729,7 +729,7 @@
 								<span class="info-key"><i>*</i>与借款人关系：</span>
 								<span class="info-value">
 									<select name="userRelationship">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(mainPerson.userRelationship==0?"selected":"")}}>本人</option>
 										<option value="1" {{=(mainPerson.userRelationship==1?"selected":"")}}>配偶</option>
 										<option value="2" {{=(mainPerson.userRelationship==2?"selected":"")}}>父母</option>
@@ -750,7 +750,7 @@
 								<span class="info-key"><i>*</i>性别：</span>
 								<span class="info-value">
 									<select name="sex">
-										<option>请选择</option>
+										<option value=''>请选择</option>
 										<option value="0" {{=(mainPerson.sex==0?"selected":"")}}>男</option>
 										<option value="1" {{=(mainPerson.sex==1?"selected":"")}}>女</option>
 									</select>
@@ -879,7 +879,7 @@
 									<span class="info-key"><i>*</i>联系人{{= j+1 }}&nbsp;关系：</span>
 									<span class="info-value">
 										<select>
-											<option>请选择</option>
+											<option value=''>请选择</option>
 											<option {{=(role.relationship==0?"selected":"")}}>不知道</option>
 											<option {{=(role.relationship==1?"selected":"")}}>私牌</option>
 										</select>
