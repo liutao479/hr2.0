@@ -68,6 +68,9 @@ img {
 .mb15{
     margin-bottom: 15px;
 }
+.mt15 {
+    margin-top: 15px;
+}
 .padding0{
     padding: 0 !important;
 }
@@ -124,7 +127,7 @@ input[type=radio] {
 //顶部导航栏
 .navigator {
 	position: fixed;
-	z-index: 999;
+	z-index: 1000;
 	left: 0;
 	right: 0;
 	top: 0;
@@ -146,8 +149,11 @@ input[type=radio] {
 		top: 17px;
 		width: 25px;
 		height: 25px;
-		background: url(img/logo.png);
-		background-size: 100%;
+		img {
+            display: block;
+            width: 25px;
+            height: 25px;
+        }
 	}
 	.user-field {
 	    width: 235px;
@@ -398,8 +404,6 @@ input[type=radio] {
             top: 50%;
             right: 24px;
             margin-top: -20px;
-            background-color: #6b59c9;
-            color: #FFF;
         }
     }
      .orders-table {
@@ -407,30 +411,6 @@ input[type=radio] {
         }
 	//我的客户
 	.customer {
-	    .select-search-bar {
-            position: relative;
-	        padding: 15px 20px;
-            border: 1px solid @borderColor;
-            
-            .search-item {
-                float: left;
-                line-height: 32px;
-                margin: 0 30px 10px 0;
-                &.search-item-last {
-                    position: absolute;
-                    bottom: 15px;
-                    right: 0;
-                }
-                .input-text {
-                    width: 348px;
-                }
-                .separator {
-                    margin: 0 5px;
-                    color: @selectBorderColor;
-                }
-            }
-            
-        }
         .customer-orders {
             margin-top: 10px;
         }
@@ -561,14 +541,6 @@ input[type=radio] {
     line-height: 40px;
     .time-sort {
         float: left;
-        color: @fontColor;
-        img {
-            position: relative;
-            top: 2px;
-            left: 5px;
-            width: 13px;
-            height: 13px;
-        }
     }
     .page-bar-right {
         position: absolute;
@@ -609,6 +581,78 @@ input[type=radio] {
     }
 }
 
+// 排序
+.time-sort {
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    position: relative;
+    color: @fontColor;
+    margin-right: 25px;
+    padding-right: 20px;
+    &.time-sort-special {
+        color: #FFF;
+        &.time-sort-up {
+            &:before {
+                color: #FFF;
+            }
+            &:after {
+                color: #b8bfd0;
+            }
+        }
+        &.time-sort-down {
+            &:before {
+                color: #b8bfd0;
+            }
+            &:after {
+                color: #FFF;
+            }
+        }
+    }
+    &.time-sort-up {
+        &:before {
+            color: @fontColor;
+        }
+        &:after {
+            color: #b8bfd0;
+        }
+    }
+    &.time-sort-down {
+        &:before {
+            color: #b8bfd0;
+        }
+        &:after {
+            color: @fontColor;
+        }
+    }
+    &:before {
+        font-family: "iconfont";
+        content: "\e60f";
+        font-size: 12px;
+        line-height: 12px;
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        position: absolute;
+        top: 50%;
+        margin-top: -9px;
+        right: 0;
+    }
+    &:after {
+        font-family: "iconfont";
+        content: "\e611";
+        font-size: 12px;
+        line-height: 12px;
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        position: absolute;
+        top: 50%;
+        margin-top: -2px;
+        right: 0;
+    }
+}
+
 //分页器外围盒子
 .pageToolbar {
     height: 48px;
@@ -616,13 +660,32 @@ input[type=radio] {
     background-color: #FFF;
     margin-top: 15px;
 }
+// .select-search-bar {
+//     position: relative;
+//     padding: 15px 20px;
+//     border: 1px solid @borderColor;
+    
+//     .search-item {
+//         float: left;
+//         line-height: 32px;
+//         margin: 0 30px 10px 0;
+//         &.search-item-last {
+//             position: absolute;
+//             bottom: 15px;
+//             right: 0;
+//         }
+//         .separator {
+//             margin: 0 5px;
+//             color: @selectBorderColor;
+//         }
+//     }
+// }
 
 //有选择功能的搜索栏
 .select-search-bar {
-    padding: 0 20px;
+    padding: 10px 20px;
     background-color: #FFF;
     border: 1px solid @borderColor;
-    border-bottom: none;
     &.select-search-bar-noborder {
         border: none;
     }
@@ -636,22 +699,25 @@ input[type=radio] {
         margin: 0 5px;
         color: @selectBorderColor;
     }
-    .input-text {
-        width: 198px;
-        line-height: 60px;
-    }
     .search-sure-box {
-        line-height: 60px;
+        line-height: 52px;
     }
     .search-item {
+        position: relative;
         float: left;
         color: @fontColor;
-        line-height: 60px;
+        height: 52px;
+        line-height: 52px;
         margin: 0 30px 0 0;
+        vertical-align: middle;
         .select {
             position: relative;
             top: -2px;
             vertical-align: middle;
+        }
+        .select-name {
+            float: left;
+            margin-right: 10px;
         }
         .checkbox {
             position: relative;
@@ -660,6 +726,11 @@ input[type=radio] {
         }
         &.search-item-checkbox {
             line-height: 30px;
+        }
+        .input-text {
+            float: left;
+            margin-top: 10px;
+            margin-right: 10px;
         }
     }
     .button {
@@ -695,17 +766,6 @@ input[type=radio] {
         color: #FFF;
         text-align: center;
         font-size: 14px;
-        .sort-arrow {
-            color: #FFF;
-            img {
-                position: relative;
-                top: 2px;
-                left: 5px;
-                width: 13px;
-                height: 13px;
-                border: none;
-            }
-        }
         .orders-item-data-blank {
             width: 22%;
         } 
@@ -861,12 +921,35 @@ input[type=radio] {
     }
 }
 
-// 特殊类表格
+// 特殊类表格（逾期信息历史导入详情）
 .expire-orders-table {
     border: 1px solid @borderColor;
     background-color: #FFFFFF;
     margin-top: 15px;
     border-collapse: collapse;
+    &&-hover {
+        -webkit-transition: all .1s;
+           -moz-transition: all .1s;
+            -ms-transition: all .1s;
+             -o-transition: all .1s;
+                transition: all .1s;
+        &:hover {
+            border-color: @mainColor;
+            cursor: pointer;
+            -webkit-transform: scale(1.01);
+               -moz-transform: scale(1.01);
+                -ms-transform: scale(1.01);
+                 -o-transform: scale(1.01);
+                    transform: scale(1.01);
+            -webkit-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+               -moz-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                -ms-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                 -o-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                    box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2);
+                    filter:progid:DXImageTransform.Microsoft.Shadow(color=rgba(0, 0, 0, 0.2),direction=100,strength=4);
+        }
+    }
+    
     &.expire-orders-table-special {
         border-top: none;
         margin-top: 0;
@@ -916,21 +999,31 @@ input[type=radio] {
                 color: @mainColor;
             }
         }
-        .expire-content-tr td {
-            padding: 20px 0;
-        }
-        .key-value-box {
-            display: block;
-            text-align: center;
-            line-height: 25px;
-            .key {
-                display: inline-block;
-                text-align: right;
+        .expire-content-tr .expire-content-item {
+            padding: 15px 10px;
+            vertical-align: top;
+            &.expire-content-item-last {
+                vertical-align: middle;
+                .button {
+                    margin-bottom: 5px;
+                }
             }
-        }
-        .expire-content-item-last {
-            .box;
-            -webkit-box-align: center;
+            // td中的表格
+            .table-inner {
+                margin: 0 auto;
+                .table-inner-tr {
+                    .key {
+                        color: @tiperColor;
+                        text-align: right;
+                        line-height: 24px;
+                    }
+                    .value {
+                        color: @fontColor;
+                        text-align: left;
+                        line-height: 24px;
+                    }
+                }
+            }
         }
     }
 }
@@ -943,19 +1036,19 @@ input[type=radio] {
 
 //边框处理
 .no-top-border {
-    border-top: none;
+    border-top: none !important;
 }
 .no-bottom-border {
-    border-bottom: none;
+    border-bottom: none !important;
 }
 .no-left-border {
-    border-left: none;
+    border-left: none !important;
 }
 .no-right-border {
-    border-right: none;
+    border-right: none !important;
 }
 .no-border {
-    border: none;
+    border: none !important;
 }
 //返回列表面板
 .path-back-bar {
@@ -994,6 +1087,15 @@ input[type=radio] {
     }
     &.panel-mb0 {
         margin-bottom: 0;
+    }
+    &.panel-bottom {
+        padding-bottom: 180px;
+    }
+    &.panel-no-layout {
+        border-right: none;
+        border-bottom: none;
+        border-left: none;
+        background-color: transparent;
     }
     //征信结果录入详细内容面板
     &&-result-typing {
@@ -1164,23 +1266,41 @@ input[type=radio] {
                 }
             }
         }
+
+        // 征信结果录入以及征信结果
         .panel-item-box {
             margin-top: 25px;
             .panel-key-area {
                 float: left;
                 text-align: right;
                 width: 100px;
-                line-height: 25px;
+                line-height: 32px;
                 &.panel-key-area-special {
                     width: 190px;
                 }
             }
             .panel-value-area {
+                overflow: hidden;
                 margin-left: 120px;
                 //文字元素给行高保持与左侧水平
                 .panel-value-item {
-                    line-height: 25px;
+                    float: left;
+                    line-height: 32px;
+                    margin-right: 10px;
+                    .input-text {
+                        width: 250px;
+                    }
                 }
+                //备注信息
+                .remarks-box {
+                    width: 100%;
+                    .borderRadius(3px);
+                    border: 1px solid @borderColor;
+                    resize:none;
+                    padding: 7px;
+                    color: @fontColor; 
+                }
+
                 //图片展示（可点击）
                 .imgs-item {
                     display: inline-block;
@@ -1632,7 +1752,6 @@ input[type=radio] {
 //单独一栏提交订单按钮
 .commit-orders-box {
     text-align: right;
-    margin-top: 15px;
     height: 60px;
     line-height: 60px;
     border: 1px solid @borderColor;
@@ -1676,7 +1795,7 @@ input[type=radio] {
 //全选操作框
 .all-select-panel {
     .layout;
-    padding: 0 15px;
+    padding: 0 20px;
     &.all-select-panel-nobottomborder {
         border-bottom: none;
     }
@@ -1689,6 +1808,10 @@ input[type=radio] {
         height: 50px;
         line-height: 50px;
         margin-right: 15px;
+        strong {
+            color: @mainColor;
+            font-size: 15px;
+        }
         .checkbox {
             position: relative;
             top: -2px;
@@ -1713,13 +1836,32 @@ input[type=radio] {
         }
     }
 }
-
+// 逾期意见栏
+.expire-opinion {
+    margin: 10px 20px; 
+    padding-bottom: 20px;
+    border-bottom: 1px solid @borderColor;
+    dt {
+        line-height: 40px;
+        color: @tiperColor;
+        .expire-left {
+            float: left;
+        }
+        .expire-right {
+            float: right;
+        }
+    }
+    dd {
+        line-height: 25px;
+        text-indent: 2em;
+    }
+}
 
 //tab切换栏
 .tab-bar {
     background-color: #FFF;
     border: 1px solid @borderColor;
-    border-bottom: none;
+    border-bottom: 3px solid @blue;;
     height: 50px;
     line-height: 50px;
     text-align: right;
@@ -1733,18 +1875,18 @@ input[type=radio] {
         left: -1px;
         float: left;
         .role-bar-li {
-            height: 49px;
+            height: 47px;
             float: left;
             &:last-child .role-item{
                 border-right: 1px solid @borderColor;
             }
             .role-item {
                 display: inline-block;
-                line-height: 49px;
+                line-height: 47px;
                 padding: 0 20px;
+                float: left;
                 color: @fontColor;
                 border-left: 1px solid @borderColor;
-                border-top: 1px solid @borderColor;
                 &.role-item-active {
                     background-color: @buttonBgColor;
                     color: #FFF;
@@ -1761,6 +1903,46 @@ input[type=radio] {
     .import-time {
         color: @tiperColor;
         margin-right: 10px;
+    }
+}
+
+// tab切换栏对应信息
+.tab-content {
+    .tab-content-item {
+        overflow: hidden;
+        &.tab-content-item-layout {
+            padding: 15px 20px;
+        }
+    }
+}
+
+// 逾期信息tab切换
+.tab-bar-mini {
+    padding: 14px 20px; 
+    text-align: right;
+    .tab-bar-ul {
+        float: left;
+        .tab-bar-li {
+            height: 32px;
+            float: left;
+            .tab-item {
+                display: inline-block;
+                float: left;
+                padding: 0 20px;
+                height: 32px;
+                line-height: 32px;
+                background-color: #FFF;
+                .borderRadius(16px);
+                color: @fontColor;
+                &.tab-item-active {
+                    background-color: @buttonBgColor;
+                    color: #FFF;
+                }
+            }
+        }
+    }
+    .button {
+        margin-left: 15px;
     }
 }
 

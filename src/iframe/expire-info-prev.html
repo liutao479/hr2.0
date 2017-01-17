@@ -1,47 +1,46 @@
 	<!--逾期信息（预览）-->
 			<div class="container expire-info-prev" id="expire-info-prev">
-				
-				<!--面包屑 返回列表-->
-				<div class="path-back-bar clearfix">
-					<div class="path-back">
-						<i class="iconfont">&#xe626;</i>
-						<a href="#">逾期信息录入</a>&nbsp;&gt;
-						<span class="current-page">逾期记录预览</span>
-					</div>
-					<div class="key-value-box">
-						<div class="button">确认并更新</div>
-					</div>
-					
-				</div>
-				<!--面包屑 返回列表 end-->
-				
-				<!--橙色提示栏-->
-				<div class="back-creditRes-bar">
-					<div class="back-expire">
-						<span class="special-word">提示：</span>选中<span class="special-word">【无匹配订单】、【匹配冲突】、【匹配成功】、【逾期将结清】</span>里的所有正确订单，点击<span class="special-word">【确认并更新】</span>统一更新逾期数据。
-					</div>
-				</div>
-				<!--橙色提示栏  end-->
 
 				<!--tab切换栏-->
-				<div class="tab-bar tab-bar-special">
+				<div class="tab-bar">
 					<ul class="role-bar-ul clearfix">
-						<li class="role-bar-li"><a href="#" class="role-item role-item-active">无匹配订单</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">匹配冲突</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">匹配成功</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">逾期将结清</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item role-item-active">批量导入</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">单笔录入</a></li>
 					</ul>
 				</div>
 				<!--tab切换栏 end-->
 				
 				<!-- 面板 -->
 				<div class="panel panel-mb0">
-					
+					<!-- mini-tab切换 -->
+					<div class="tab-bar-mini clearfix">
+						<ul class="tab-bar-ul clearfix">
+							<li class="tab-bar-li"><a href="javascript:;" class="tab-item tab-item-active">无匹配订单</a></li>
+							<li class="tab-bar-li"><a href="javascript:;" class="tab-item">匹配冲突</a></li>
+							<li class="tab-bar-li"><a href="javascript:;" class="tab-item">匹配成功</a></li>
+							<li class="tab-bar-li"><a href="javascript:;" class="tab-item">逾期将结清</a></li>
+						</ul>
+						<div class="button button-mini-nowidth">取消导入</div>
+						<div class="button button-mini-nowidth">确认并更新</div>
+					</div>
+					<!-- mini-tab切换 end-->
 				</div>
 				<!-- 面板 end-->
 
+				<!-- 全选栏 -->
+				<div class="all-select-panel no-top-border mb15 clearfix" >
+					<div class="all-check-box">
+						<div class="checkbox checkbox-normal"></div>
+						<span>全选</span>
+					</div>
+					<div class="all-check-box">
+						创建新逾期客户<strong class="">12</strong>人
+					</div>
+				</div>
+				<!-- 全选栏 end-->
+
 				<!--订单表格 （无匹配订单）-->
-				<table class="expire-orders-table expire-orders-table-special" width="100%">
+				<table class="expire-orders-table" width="100%">
 					<thead class="expire-title">
 						<tr>
 							<td colspan="3">
@@ -49,7 +48,7 @@
 								<i class="iconfont iconfont-man">&#xe656;</i>
 								<span class="userName">韩梅梅</span>
 								<span>412702 19930206 3154</span>
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">解析时间：</span>
 									<span class="value">2016/12/13</span>
 								</div>
@@ -59,42 +58,48 @@
 					<tbody class="expire-content">
 						<tr class="expire-content-tr">
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">卡号：</span>
-									<span class="value">261736726483478347364</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">卡余额：</span>
-									<span class="value">110,022,00元</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">账单日：</span>
-									<span class="value">2016/12/13</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">卡号：</td>
+										<td class="value">261736726483478347364</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">卡余额：</td>
+										<td class="value">110,022,00元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">账单日：</td>
+										<td class="value">2016/12/13</td>
+									</tr>
+								</table>
 							</td>
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">当前逾期金额：</span>
-									<span class="value">621,226.00元</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">当前连续违约次数：</span>
-									<span class="value">3次</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">历史累计违约次数：</span>
-									<span class="value">3次</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">当前逾期金额：</td>
+										<td class="value">621,226.00元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">当前连续违约次数：</td>
+										<td class="value">3次</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">历史累计违约次数：</td>
+										<td class="value">3次</td>
+									</tr>
+								</table>
 							</td>
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">分期金额：</span>
-									<span class="value">110,022.00</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">备注：</span>
-									<span class="value special-word">未在系统内找到该订单</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">分期金额：</td>
+										<td class="value">110,022.00</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">备注：</td>
+										<td class="value special-word">未在系统内找到该订单</td>
+									</tr>
+								</table>
 							</td>
 						</tr>
 					</tbody>
@@ -109,7 +114,7 @@
 								<i class="iconfont iconfont-man">&#xe656;</i>
 								<span class="userName">韩梅梅</span>
 								<span>412702 19930206 3154</span>
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">解析时间：</span>
 									<span class="value">2016/12/13</span>
 								</div>
@@ -119,42 +124,48 @@
 					<tbody class="expire-content match-fail">
 						<tr class="expire-content-tr">
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">卡号：</span>
-									<span class="value">261736726483478347364</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">卡余额：</span>
-									<span class="value">110,022,00元</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">账单日：</span>
-									<span class="value">2016/12/13</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">卡号：</td>
+										<td class="value">261736726483478347364</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">卡余额：</td>
+										<td class="value">110,022,00元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">账单日：</td>
+										<td class="value">2016/12/13</td>
+									</tr>
+								</table>
 							</td>
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">当前逾期金额：</span>
-									<span class="value">621,226.00元</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">当前连续违约次数：</span>
-									<span class="value">3次</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">历史累计违约次数：</span>
-									<span class="value">3次</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">当前逾期金额：</td>
+										<td class="value">621,226.00元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">当前连续违约次数：</td>
+										<td class="value">3次</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">历史累计违约次数：</td>
+										<td class="value">3次</td>
+									</tr>
+								</table>
 							</td>
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">分期金额：</span>
-									<span class="value">110,022.00</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">备注：</span>
-									<span class="value special-word">未在系统内找到该订单</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">分期金额：</td>
+										<td class="value">110,022.00</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">备注：</td>
+										<td class="value special-word">未在系统内找到该订单</td>
+									</tr>
+								</table>
 							</td>
 							<td class="expire-content-item expire-content-item-last">
 								<div class="button button-mini">选择订单</div>
@@ -175,7 +186,7 @@
 								<i class="iconfont iconfont-man">&#xe656;</i>
 								<span class="userName">韩梅梅</span>
 								<span>412702 19930206 3154</span>
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">解析时间：</span>
 									<span class="value">2016/12/13</span>
 								</div>							
@@ -185,42 +196,48 @@
 					<tbody class="expire-content match-success">
 						<tr class="expire-content-tr">
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">卡号：</span>
-									<span class="value">261736726483478347364</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">卡余额：</span>
-									<span class="value">110,022,00元</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">账单日：</span>
-									<span class="value">2016/12/13</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">卡号：</td>
+										<td class="value">261736726483478347364</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">卡余额：</td>
+										<td class="value">110,022,00元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">账单日：</td>
+										<td class="value">2016/12/13</td>
+									</tr>
+								</table>
 							</td>
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">当前逾期金额：</span>
-									<span class="value">621,226.00元</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">当前连续违约次数：</span>
-									<span class="value">3次</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">历史累计违约次数：</span>
-									<span class="value">3次</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">当前逾期金额：</td>
+										<td class="value">621,226.00元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">当前连续违约次数：</td>
+										<td class="value">3次</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">历史累计违约次数：</td>
+										<td class="value">3次</td>
+									</tr>
+								</table>
 							</td>
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">分期金额：</span>
-									<span class="value">110,022.00</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">备注：</span>
-									<span class="value special-word">未在系统内找到该订单</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">分期金额：</td>
+										<td class="value">110,022.00</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">备注：</td>
+										<td class="value special-word">未在系统内找到该订单</td>
+									</tr>
+								</table>
 							</td>
 							<td class="expire-content-item expire-content-item-last">
 								<div class="match-status">匹配成功</div>
@@ -241,7 +258,7 @@
 								<i class="iconfont iconfont-man">&#xe656;</i>
 								<span class="userName">韩梅梅</span>
 								<span>412702 19930206 3154</span>
-								<div class="key-value-box">
+								<div class="key-value-box clearfix">
 									<span class="key">解析时间：</span>
 									<span class="value">2016/12/13</span>
 								</div>
@@ -251,42 +268,48 @@
 					<tbody class="expire-content expire-end">
 						<tr class="expire-content-tr">
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">卡号：</span>
-									<span class="value">261736726483478347364</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">卡余额：</span>
-									<span class="value">110,022,00元</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">账单日：</span>
-									<span class="value">2016/12/13</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">卡号：</td>
+										<td class="value">261736726483478347364</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">卡余额：</td>
+										<td class="value">110,022,00元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">账单日：</td>
+										<td class="value">2016/12/13</td>
+									</tr>
+								</table>
 							</td>
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">当前逾期金额：</span>
-									<span class="value">621,226.00元</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">当前连续违约次数：</span>
-									<span class="value">3次</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">历史累计违约次数：</span>
-									<span class="value">3次</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">当前逾期金额：</td>
+										<td class="value">621,226.00元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">当前连续违约次数：</td>
+										<td class="value">3次</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">历史累计违约次数：</td>
+										<td class="value">3次</td>
+									</tr>
+								</table>
 							</td>
 							<td class="expire-content-item">
-								<div class="key-value-box">
-									<span class="key">分期金额：</span>
-									<span class="value">110,022.00</span>
-								</div>
-								<div class="key-value-box">
-									<span class="key">备注：</span>
-									<span class="value special-word">未在系统内找到该订单</span>
-								</div>
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">分期金额：</td>
+										<td class="value">110,022.00</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">备注：</td>
+										<td class="value special-word">未在系统内找到该订单</td>
+									</tr>
+								</table>
 							</td>
 							<td class="expire-content-item expire-content-item-last">
 								<div class="match-status">匹配成功</div>
