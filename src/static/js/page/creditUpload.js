@@ -32,7 +32,7 @@ page.ctrl('creditUpload', function($scope) {
 	}
 
 	var setupCreditPanel = function() {
-		
+		$('.select').dropdown($scope);
 	}
 
 	var loadOrderInfo = function() {
@@ -50,8 +50,11 @@ page.ctrl('creditUpload', function($scope) {
 
 	})
 
+
+
 	$console.load(router.template('credit-material-upload'), function() {
 		$scope.def.creditPanel = $console.find('#tplCreditPanel').html();
+		$scope.def.tab = $console.find('#tplTabItem').html();
 		loadOrderInfo();
 	})
 });
