@@ -161,12 +161,14 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">车辆信息</span>
-							<div class="button button-mini-nowidth">
+							<div class="button button-mini-nowidth" id="saveCarInfo">
 								保存
 							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
+						<form id="carInfoForm">
+							
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>车辆上公牌还是私牌：</span>
@@ -256,6 +258,8 @@
 								<span class="info-value"><input type="text" name="billingDeptName" value="{{= it.loanUserCar.billingDeptName}}" /></span>
 							</div>
 						</div>
+						</form>
+
 					</div>
 				</div>
 				<div class="panel panel-loan">
@@ -263,12 +267,13 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">分期信息</span>
-							<div class="button button-mini-nowidth">
+							<div class="button button-mini-nowidth" id="saveStageInfo">
 								保存
 							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
+						<form id="stageInfoForm">
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>业务模式：</span>
@@ -392,6 +397,7 @@
 								<span class="info-value"><input type="text" name="utilityTime" value="{{= it.loanUserStage.utilityTime}}" /></span>
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
 				{{for(var a = 0, lenth1 = it.loanUser.length; a < lenth1; a++) { var mainPerson = it.loanUser[a];if(mainPerson.userType == 0){ }}
@@ -400,13 +406,14 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">主借款人信息</span>
-							<div class="button button-mini-nowidth">
+							<div class="button button-mini-nowidth" id="saveMainInfo">
 								保存
 							</div>
 						</div>
 					</div>
 					
 					<div class="panel-detail-content-layout">
+						<form id="mainPersonInfoForm">
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>主借款人目前婚姻状况：</span>
@@ -550,9 +557,11 @@
 										<span class="check-key"><div class="checkbox"></div></span>
 										<span class="check-value">其他</span>
 									</div>
+									<input type="hidden" name="" value="" />
 								</span>
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
 				{{ } }}
@@ -563,12 +572,13 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">共同还款人{{= a}}信息</span>
-							<div class="button button-mini-nowidth">
+							<div class="button button-mini-nowidth" id="saveCommonInfo_{{= a}}">
 								保存
 							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
+						<form id="commonPersonInfoForm_{{= a}}">
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>与借款人关系：</span>
@@ -692,9 +702,11 @@
 										<span class="check-key"><div class="checkbox"></div></span>
 										<span class="check-value">其他</span>
 									</div>
+									<input type="hidden" name="" value="" />
 								</span>
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
 				{{ } }}
@@ -705,12 +717,13 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">反担保人{{= a}}信息</span>
-							<div class="button button-mini-nowidth">
+							<div class="button button-mini-nowidth" id="saveGuaInfo_{{= a}}">
 								保存
 							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
+						<form id="guaPersonInfoForm_{{= a}}">
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>与借款人关系：</span>
@@ -834,9 +847,11 @@
 										<span class="check-key"><div class="checkbox"></div></span>
 										<span class="check-value">其他</span>
 									</div>
+									<input type="hidden" name="" value="" />
 								</span>
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
 				{{ } }}
@@ -846,12 +861,13 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">紧急联系人信息</span>
-							<div class="button button-mini-nowidth">
+							<div class="button button-mini-nowidth" id="saveEmergencyInfo">
 								保存
 							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
+						<form id="emergencyInfoForm">
 						<div class="loan-info">
 						{{for(var j = 0, len2 = it.loanEmergencyConact.length; j < len2; j++) { var role = it.loanEmergencyConact[j]; }}
 							<div>
@@ -876,6 +892,7 @@
 							</div>
 						{{ } }}
 						</div>
+						</form>
 					</div>
 				</div>
 				<div class="panel panel-loan">
@@ -883,12 +900,13 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">还款卡信息</span>
-							<div class="button button-mini-nowidth">
+							<div class="button button-mini-nowidth" id="saveloanPayCardInfo">
 								保存
 							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
+						<form id="loanPayCardInfoForm">
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>账号：</span>
@@ -903,6 +921,7 @@
 								<span class="info-value"><input type="text" name="accountName" value="{{= it.loanPayCard.accountName }}" /></span>
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
 				<div class="panel panel-loan">
@@ -910,12 +929,13 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">费用信息</span>
-							<div class="button button-mini-nowidth">
+							<div class="button button-mini-nowidth" id="saveLoanFeeInfo">
 								保存
 							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
+						<form id="loanFeeInfoForm">
 						<div class="loan-info">
 							{{for(var k = 0, len3 = it.loanFee.length; k < len3; k++) { var role = it.loanFee[k]; }}
 							<div class="info-key-value-box">
@@ -929,6 +949,7 @@
 							</div>
 							{{ } }}
 						</div>
+						</form>
 					</div>
 				</div>
 				{{for(var b = 0, lenthb = it.otherInfo.length; b < lenthb; b++) { var other = it.otherInfo[b]; }}
@@ -937,12 +958,13 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">{{= other.groupName}}</span>
-							<div class="button button-mini-nowidth">
+							<div class="button button-mini-nowidth" id="saveOtherInfo">
 								保存
 							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
+						<form id="otherInfoForm">
 						<div class="loan-info">
 							{{for(var c = 0, lenthc = other.cIndividuationFieldList.length; c < lenthc; c++) { var otherInfo = other.cIndividuationFieldList[c]; }}
 							<div class="info-key-value-box">
@@ -956,18 +978,19 @@
 							</div>
 							{{ } }}
 						</div>
+						</form>
 					</div>
 				</div>
 				{{ } }}
 			</script>
 			<script type="text/x-dot-template" id="selectTypetmpl">
-				<div id="selectTypeOpt" class="selectOpt">
-					<option value="">请选择</option>
+				<ul id="selectTypeOpt" class="selectOpt">
+					<li value="">请选择</li>
 				{{for(var a = 0, lenth1 = it.length; a < lenth1; a++) { var op1 = it[a]; }}
 					{{for(var b = 0, lenth2 = op1.configFieldItem.length; b < lenth2; b++) { var opt = op1.configFieldItem[b]; }}
 					<!--<option value="{{= opt.value}}">{{= opt.name}}</option>-->
-						<option value="{{= opt.value}}" {{=(loanOrder.serviceTypeCode==opt.value?"selected":"")}}>{{= opt.name}}</option>
+						<li value="{{= opt.value}}">{{= opt.name}}</li>
 					{{ } }}
 				{{ } }}
-				</div>
+				</ul>
 			</script>

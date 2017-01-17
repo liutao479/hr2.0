@@ -57,7 +57,7 @@ page.ctrl('loanInfo', function($scope) {
 		}
 		return false;
 	})
-//上牌地	
+//上牌地
 	$(document).on('click', '#selectType', function() {
 		var that = $(this);
 		$.ajax({
@@ -99,6 +99,123 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	$(document).on('click', '#saveOrderInfo', function() {
         var data = $('#orderInfoForm').serializeArray();
+        console.log(data);
+//		$.ajax({
+//			type: 'GET',
+//			url: '',
+//			data: data,
+//			dataType: 'text',
+//			success: function(result){
+//				console.log("success");
+//			}
+//		});
+	})
+	$(document).on('click', '#saveCarInfo', function() {
+        var data = $('#carInfoForm').serializeArray();
+        console.log(data);
+//		$.ajax({
+//			type: 'GET',
+//			url: '',
+//			data: data,
+//			dataType: 'text',
+//			success: function(result){
+//				console.log("success");
+//			}
+//		});
+	})
+	$(document).on('click', '#saveStageInfo', function() {
+        var data = $('#stageInfoForm').serializeArray();
+        console.log(data);
+//		$.ajax({
+//			type: 'GET',
+//			url: '',
+//			data: data,
+//			dataType: 'text',
+//			success: function(result){
+//				console.log("success");
+//			}
+//		});
+	})
+	$(document).on('click', '#saveMainInfo', function() {
+        var data = $('#mainPersonInfoForm').serializeArray();
+        console.log(data);
+//		$.ajax({
+//			type: 'GET',
+//			url: '',
+//			data: data,
+//			dataType: 'text',
+//			success: function(result){
+//				console.log("success");
+//			}
+//		});
+	})
+//	$(document).on('click', '#saveCommonInfo_'+i, function(i) {
+//      var data = $('#commonPersonInfoForm_'+i).serializeArray();
+//      console.log(data);
+//		$.ajax({
+//			type: 'GET',
+//			url: '',
+//			data: data,
+//			dataType: 'text',
+//			success: function(result){
+//				console.log("success");
+//			}
+//		});
+//	})
+//	$(document).on('click', '#saveGuaInfo_'+i, function(i) {
+//      var data = $('#guaPersonInfoForm_'+i).serializeArray();
+//      console.log(data);
+//		$.ajax({
+//			type: 'GET',
+//			url: '',
+//			data: data,
+//			dataType: 'text',
+//			success: function(result){
+//				console.log("success");
+//			}
+//		});
+//	})
+	$(document).on('click', '#saveEmergencyInfo', function() {
+        var data = $('#emergencyInfoForm').serializeArray();
+        console.log(data);
+//		$.ajax({
+//			type: 'GET',
+//			url: '',
+//			data: data,
+//			dataType: 'text',
+//			success: function(result){
+//				console.log("success");
+//			}
+//		});
+	})
+	$(document).on('click', '#saveloanPayCardInfo', function() {
+        var data = $('#loanPayCardInfoForm').serializeArray();
+        console.log(data);
+//		$.ajax({
+//			type: 'GET',
+//			url: '',
+//			data: data,
+//			dataType: 'text',
+//			success: function(result){
+//				console.log("success");
+//			}
+//		});
+	})
+	$(document).on('click', '#saveLoanFeeInfo', function() {
+        var data = $('#loanFeeInfoForm').serializeArray();
+        console.log(data);
+//		$.ajax({
+//			type: 'GET',
+//			url: '',
+//			data: data,
+//			dataType: 'text',
+//			success: function(result){
+//				console.log("success");
+//			}
+//		});
+	})
+	$(document).on('click', '#saveOtherInfo', function() {
+        var data = $('#otherInfoForm').serializeArray();
         console.log(data);
 //		$.ajax({
 //			type: 'GET',
