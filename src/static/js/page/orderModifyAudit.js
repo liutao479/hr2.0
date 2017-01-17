@@ -1,24 +1,25 @@
 'use strict';
-page.ctrl('licenceProcess', ['page/test'], function($scope) {
+page.ctrl('orderModifyAudit', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			pageNum: $params.pageNum || 1
+			process: $params.process || 0,
+			page: $params.page || 1,
+			pageSize: 20
 		};
 	/**
-	* 加载上牌办理信息表数据
+	* 加载订单修改审核数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadLicenceProcessList = function(params, cb) {
+	var loadOrderModifyList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.licenceProcess',
+			url: $http.api($http.apiMap.orderModifyAudit),
 			data: params,
-			dateType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
-				setupPaging(result.page, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				setupPaging(result.page.pages, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -31,7 +32,7 @@ page.ctrl('licenceProcess', ['page/test'], function($scope) {
 	var setupPaging = function(count, isPage) {
 		$scope.$el.$paging.data({
 			current: parseInt(apiParams.page),
-			pages: isPage ? count : (tool.pages(count  || 0, apiParams.pageSize)),
+			pages: isPage ? count : (tool.pages(count || 0, apiParams.pageSize)),
 			size: apiParams.pageSize
 		});
 		$('#pageToolbar').paging();
@@ -47,23 +48,26 @@ page.ctrl('licenceProcess', ['page/test'], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('licence-process'), function() {
-		$scope.def.listTmpl = render.$console.find('#licenceProcessListTmpl').html();
+	render.$console.load(router.template('order-modify-audit'), function() {
+		$scope.def.listTmpl = render.$console.find('#orderModifyListTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#licenceProcessTable'),
+			$tbl: $console.find('#orderModifyTable'),
 			$paging: $console.find('#pageToolbar')
 		}
 		if($params.process) {
 			
 		}
-		loadLicenceProcessList(apiParams);
+		loadOrderModifyList(apiParams);
 	});
 
-	$scope.paging = function(_pageNum, _size, $el, cb) {
-		apiParams.pageNum = _pageNum;
-		$params.pageNum = _pageNum;
+	$scope.paging = function(_page, _size, $el, cb) {
+		apiParams.page = _page;
+		$params.page = _page;
 		router.updateQuery($scope.$path, $params);
-		loadLicenceProcessList(apiParams);
+		loadOrderModifyList(apiParams);
 		cb();
 	}
 });
+
+
+

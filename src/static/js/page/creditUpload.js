@@ -1,4 +1,2 @@
-'use strict';
-page.ctrl('creditUpload', function($scope) {
-	
-});
+var _ = window.render;
+_.compile(_.$console, window.router.template('credit-material-upload'), {});

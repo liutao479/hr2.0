@@ -8,7 +8,7 @@
 $(function() {
 	var $menu;
 	$.ajax({
-		url: $http.api('menu'),
+		url: $http.apiMap.menu,
 		success: $http.ok(function(result) {
 			$menu = new menu('#menu', result.data, router.render);
 			router.init(function(menuId) {

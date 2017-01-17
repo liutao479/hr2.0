@@ -43,7 +43,8 @@
         text-align: center;
         font-size: 13px;
         &.button-mini-width {
-            width: 124px;
+            width: 126px;
+            padding: 0;
         }
     }
     &&-gray {
@@ -76,8 +77,9 @@
         }
     }
     &&-width {
-        width: 124px;
+        width: 126px;
         text-align: center;
+        padding: 0;
     }
     &&-deep {
         background-color: @mainColor;
@@ -97,12 +99,22 @@
             background-color: lighten(@orangeColor, 1%) !important;
         }
     }
+    &&-special {
+        background-color: transparent;
+        color: @buttonBgColor;
+        &:hover {
+            color: darken(@buttonBgColor, 10%) !important;
+        }
+        &:active {
+            color: @orangeColor !important;
+        }
+    }
     i {
         margin-right: 7px;
     }
 }
 
-//单选框
+//复选框
 .checkbox {
     display: inline-block;
     border: 1px solid #cad2e1;
@@ -141,6 +153,32 @@
         line-height: 18px;
     }
 }
+
+//单选框 
+.radio {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid @borderColor;
+    .borderRadius(10px);
+    cursor: pointer;
+    &.checked {
+        background: #fff;
+        border: 1px solid @mainColor;
+        &:after {
+            content: '';
+            display: block;
+            position: relative;
+            top: 4px;
+            left: 4px;
+            width: 10px;
+            height: 10px;
+            background: @mainColor;
+            border-radius:50%;
+        }
+    }
+}
+
 //输入框
 .input-text {
     display: inline-block;
@@ -151,7 +189,7 @@
     border: 1px solid @borderColor;
     .borderRadius(3px);
     &.input-text-mini {
-        width: 50px;
+        width: 250px;
     }
     input {
         float: left;

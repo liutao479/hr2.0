@@ -26,8 +26,9 @@
 	* 全局http请求配置
 	*/
 	_.$http = {};
-	_.$http.api = function(method) {
-		return 'http://127.0.0.1:8083/mock/' + method;
+	_.$http.api = function(url) {
+		return url;
+		//Todo 发布时增加prefix
 		// return 'http://192.168.0.113:8080/' + method;
 	}
 	_.$http.authorization = function(key) {
@@ -52,20 +53,22 @@
 		}
 	};
 	_.$http.apiMap = {
-		menu: 'menu',
-		loanList: 'loan.list',
-		myCustomer: 'myCustomer',
+		menu: 'http://127.0.0.1:8083/mock/menu',
+		loanList: 'http://127.0.0.1:8083/mock/loan.list',
+		myCustomer: 'http://192.168.0.122:8080/loanOrder/getMyCustomer',
+		orderModifyAudit: 'orderModifyAudit',
+		cancelOrderAudit: 'cancelOrderAudit',
 		loanManage: 'loan.manage',
 		marginManage: 'marginManage',
 		moneyBussinessAuditPrint: 'moneyBussinessAuditPrint',
 		mortgageProcess: 'mortgage.process',
 		mortgageAudit: 'mortgage.audit',
-		mortgageStatis: 'mortgage.statis',
+		mortgageStatis: 'http://192.168.0.122:8080/loanPledge/getLoanPledgeList',
 		operationsAnalysis: 'operationsAnalysis',
 		organizationManage: 'organizationManage',
 		licenceProcess: 'licence.process',
 		licenceAudit: 'licence.audit',
-		licenceStatis: 'licence.statis',
+		licenceStatis: 'http://192.168.0.122:8080/loanRegistration/getLoanRegistrationList',
 		expireProcess: 'expire.process',
 		moneyBusinessAuditPrint: 'moneyBusinessAuditPrint',
 		auditPrint: 'auditPrint',
@@ -85,6 +88,24 @@
 	tool.pages = function(total, pageSize) {
 		if(!total) return 0;
 		return Math.floor(total / pageSize) + (total % pageSize == 0 ? 0 : 1);
+	}
+	/**
+	 * 添加日期格式化方法
+	 */
+	tool.formatDate = function(_time) {
+		var cDate = new Date(_time);
+		return cDate.getFullYear() + '-' + tool.leftPad(cDate.getMonth() + 1, 2) + '-' + tool.leftPad(cDate.getDate(), 2);
+	}
+	tool.leftPad = function (s, n) {
+		var l = '';
+		s = s + '';
+		if(s.length < n) {
+			for(var i = 0, len = n - s.length; i < len; i++) {
+				l += "0";
+			}
+			return l + s;
+		}
+		return s;
 	}
 })(window);
 

@@ -44,7 +44,7 @@
 			<!--订单列表 end-->
 			
 			<!--分页插件改编（未完成）-->
-			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['mortgageStatis'].paging" data-pages="50" data-current="3"></div>
+			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['mortgageStatis'].paging"></div>
 
 			<script type="text/x-dot-template" id="mortgageStatisListTmpl">
 				{{ var len = it.length; if(len) { }}
@@ -75,7 +75,7 @@
 							{{ } else { }}
 							<td class="orders-item-data">{{=row.countDown}}</td>
 							{{ } }}
-							<td class="orders-item-data"><div class="button">查看</div></td>
+							<td class="orders-item-data"><div class="button button-gray">查看</div></td>
 						</tr>
 					{{ } }}
 				{{ } else { }}

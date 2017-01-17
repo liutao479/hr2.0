@@ -89,6 +89,14 @@
 			title: '我的客户',
 			page: 'myCustomer'
 		},
+		'orderModifyAudit': {
+			title: '订单修改审核',
+			page: 'orderModifyAudit'
+		},
+		'cancelOrderAudit': {
+			title: '订单修改审核',
+			page: 'cancelOrderAudit'
+		},
 		'loanManage': {
 			title: '借款管理',
 			refer: ['navigator'],

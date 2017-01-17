@@ -22,12 +22,12 @@
 		'orderModifyAudit': {
 			parent: 'orderManage',
 			name: '信息修改审核',
-			route: ''
+			route: 'orderModifyAudit'
 		},
 		'cancelOrderAudit': {
 			parent: 'orderManage',
 			name: '终止订单审核',
-			route: ''
+			route: 'cancelOrderAudit'
 		},
 		moneyManage: {
 			name: '财务管理',

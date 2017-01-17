@@ -282,6 +282,7 @@ input[type=radio] {
 	    }
 	}
 }
+
 //菜单栏
 .menu {
 	position: fixed;
@@ -406,9 +407,9 @@ input[type=radio] {
             margin-top: -20px;
         }
     }
-     .orders-table {
-            background: #fff;
-        }
+    .orders-table {
+        background: #fff;
+    }
 	//我的客户
 	.customer {
         .customer-orders {
@@ -727,6 +728,11 @@ input[type=radio] {
         &.search-item-checkbox {
             line-height: 30px;
         }
+        .radio {
+            position: relative;
+            top: 5px;
+            margin-right: 8px;
+        }
         .input-text {
             float: left;
             margin-top: 10px;
@@ -734,10 +740,7 @@ input[type=radio] {
         }
     }
     .button {
-        background-color: #6b59c9;
         margin-left: 10px;
-        color: #FFF;
-        padding: 0 25px;
     }
 }
 
@@ -769,10 +772,6 @@ input[type=radio] {
         .orders-item-data-blank {
             width: 22%;
         } 
-        .button {
-            background-color: #e9e7f7;
-            color: #6b59c9;
-        }
     }
     tbody tr {
         border-top:1px dashed #cdd9e9;
@@ -790,6 +789,8 @@ input[type=radio] {
             width: 50px; 
         }
         .orders-item-data {
+            height: 78px;
+            color: @fontColor;
             //被退回
             &.status-back {
                 color: @messageNumberBgColor;
@@ -802,8 +803,6 @@ input[type=radio] {
             &.status-not-handled {
                 color: #f2bc00;
             }
-            height: 78px;
-            color: @fontColor;
             &.orders-item-data-operate {
                 // width: 250px;
                 .button {
@@ -857,7 +856,7 @@ input[type=radio] {
         height: 43px;
         line-height: 43px;
         td {
-            &:nth-of-type(1) {
+            &.first-td {
                 width: 240px;
             }
             text-align: left;
@@ -866,15 +865,14 @@ input[type=radio] {
     }
     tbody {
         background-color: #FFF;
-        margin: 13px 0;
-        tr:nth-of-type(1) td {
-            &.car-info-box {
-                padding-top: 0;
-            }
+        td {
+            line-height: 30px;
+        }
+        .first-tr td{
             padding-top: 13px;
         }
-        tr:nth-of-type(3) td {
-            padding-bottom: 13px;
+        .last-tr td{
+            padding-bottom: 16px;
         }
         .user-info {
             .iconfont {
@@ -886,15 +884,14 @@ input[type=radio] {
         .car-logo {
             width: 71px;
             height: 71px;
-            display: block;
-            float: left;
             margin: 0 10px 0 15px;
+            vertical-align: middle;
         }
         .car-name {
             width: 120px;
-            float: left;
+            line-height: 20px;
             display: inline-block;
-            margin-top: 10px;
+            vertical-align: middle;
         }
         .status-name {
             color: @tiperColor;
@@ -912,11 +909,6 @@ input[type=radio] {
         .td-last {
             text-align: center;
             padding-bottom: 5px;
-            .button {
-               &:hover {
-                   border-color: @buttonBgColor;
-               }   
-            }
         }
     }
 }
@@ -1049,6 +1041,21 @@ input[type=radio] {
 }
 .no-border {
     border: none !important;
+}
+.top-border {
+    border-top: 1px solid @borderColor !important;
+}
+.bottom-border {
+    border-bottom: 1px solid @borderColor !important;
+}
+.left-border {
+    border-left: 1px solid @borderColor !important;
+}
+.right-border {
+    border-right: 1px solid @borderColor !important;
+}
+.border {
+    border: 1px solid @borderColor !important;
 }
 //返回列表面板
 .path-back-bar {
@@ -1185,7 +1192,7 @@ input[type=radio] {
     //工作台有左侧菜单的右侧详标题区域（title）
     .panel-content-title {
         text-align: left;
-        padding: 0 15px;
+        padding: 0 20px;
         border-top: 1px dashed @borderColor;
         border-bottom: 1px dashed @borderColor;
         &.panel-title-box-special {
@@ -1202,16 +1209,29 @@ input[type=radio] {
                 float: right;
             }
         }
+        .panel-title {
+            height: 50px;
+            line-height: 50px;
+        }
         
     }
     //工作台有左侧菜单的右侧详细内容区域（content）
     .panel-detail-content {
-        padding: 0 15px 25px 40px;
+        // 业务量区间统计
+        &.panel-task-count {
+            padding: 10px 15px 62px 20px;
+        }
         &.panel-import-doc {
             padding: 10px 20px 175px 41px;
         }
         &.panel-detail-layout {
             padding-top: 25px;
+        }
+        &.panel-detail-bank {
+            padding-left: 92px;
+        }
+        &.panel-detail-table {
+            padding: 20px;
         }
         //详细内容区域放图片的区域
         &.panel-detail-imgs {
@@ -1219,6 +1239,12 @@ input[type=radio] {
         }
         &.panel-detail-content-catalog {
             padding: 50px;  
+        }
+        .key-value-box {
+            line-height: 73px;
+            .key {
+                float: left;
+            }
         }
         .import-result-box {
             .import-dl {
@@ -1342,8 +1368,8 @@ input[type=radio] {
     }
     //面板标题行
     .panel-title-box {
-        height: 46px;
-        line-height: 46px;
+        height: 47px;
+        line-height: 47px;
         color: @blue;
         border-bottom: 1px solid @borderColor;
         .panel-title {
@@ -1768,7 +1794,9 @@ input[type=radio] {
         padding: 15px;
         margin-top: 15px;
     }
-    
+    .button {
+        margin-left: 15px;
+    }
     .cancel {
         background-color: #efad4f;
     }
@@ -1862,8 +1890,8 @@ input[type=radio] {
     background-color: #FFF;
     border: 1px solid @borderColor;
     border-bottom: 3px solid @blue;;
-    height: 50px;
-    line-height: 50px;
+    height: 53px;
+    line-height: 53px;
     text-align: right;
     padding-right: 20px;
     &.tab-bar-special {
@@ -1875,14 +1903,14 @@ input[type=radio] {
         left: -1px;
         float: left;
         .role-bar-li {
-            height: 47px;
+            height: 50px;
             float: left;
             &:last-child .role-item{
                 border-right: 1px solid @borderColor;
             }
             .role-item {
                 display: inline-block;
-                line-height: 47px;
+                line-height: 50px;
                 padding: 0 20px;
                 float: left;
                 color: @fontColor;
@@ -2030,6 +2058,30 @@ input[type=radio] {
     text-align: center;
     margin-right: 30px;
     margin-bottom: 10px;
+    .imgs-upload, .imgs-delete {
+        position: absolute;
+        top: 2px;
+        z-index: 1000;
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        color: #FFF;
+        text-align: center;
+        background-color: #919191;
+        cursor: pointer;
+    }
+    .imgs-upload {
+        right: 40px;
+        &:hover {
+            background-color: #60c4f4;
+        }
+    }
+    .imgs-delete {
+        right: 2px;
+        &:hover {
+            background-color: #5084fc;
+        }
+    }
     //图片组件公共部分样式
     .imgs-item-upload, .imgs-item-view {
         display: block;
@@ -2051,7 +2103,7 @@ input[type=radio] {
         &:hover {
             background-color: darken(#f1f1f2,5%);
         }
-        .iconfont {
+        .iconfont-upload {
             font-size: 65px;
         }
         .input-file {

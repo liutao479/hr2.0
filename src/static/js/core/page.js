@@ -17,7 +17,7 @@ $('#remind-tips').on('click',function (){
 	}
 });
 
-//单选框
+//复选框
 $('.checkbox-normal').on('selectstart', false);
 $('.checkbox-normal').on('click', function() {
 	if(!$(this).attr('checked')) {
@@ -26,6 +26,16 @@ $('.checkbox-normal').on('click', function() {
 	} else {
 		$(this).removeClass('checked').attr('checked',false);
 		$(this).html('');
+	}
+})
+
+//单选框
+$('.radio').on('selectstart', false);
+$('.radio').on('click', function() {
+	if(!$(this).attr('checked')) {
+		$(this).addClass('checked').attr('checked',true);
+	} else {
+		$(this).removeClass('checked').attr('checked',false);
 	}
 })
 
