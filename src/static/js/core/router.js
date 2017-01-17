@@ -49,6 +49,8 @@
 		var _ctrl = page.ctrl[name],
 			_$scope = page.$scope[name],
 			args = [];
+		router.closeRefresh = false;
+		if(!_$scope) return false;
 		_$scope.$params = params || {};
 		_$scope.$path = path;
 		if(_ctrl.refer && _ctrl.refer.length > 0) {
@@ -242,7 +244,6 @@
 			return false;
 		}
 		g.location.reload();
-		
 	});
 })(window);
 

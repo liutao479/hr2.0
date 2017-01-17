@@ -280,7 +280,6 @@
     height: 32px;
     line-height: 32px;
     .borderRadius(3px);
-    padding: 0 10px;
     border: 1px solid @selectBorderColor;
     font-size: 12px;
     color: @tiperColor;
@@ -305,28 +304,71 @@
             width: 285px;
         }
     }
+    
     .arrow {
         cursor: pointer;
     }
-    .placeholder {
-        float: left;
-        width: 200px;
+    .select-field {
+        position: relative;
         height: 30px;
+        z-index: 99;
+        overflow: hidden;
+        .select-text {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 30px;
+            width: 100%;
+            .borderRadius(3px 3px 0 0);
+            border: none;
+            outline: none;
+            line-height: 30px;
+            padding: 0 30px 0 10px;
+        }
+        .arrow-trigger {
+            position: absolute;
+            left: auto;
+            width: 30px;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            cursor: pointer;
+        }
+        &.readonly {
+            .arrow-trigger {
+                left: 0;
+                width: auto;
+            }
+        }
+    }
+    .placeholder {
+        position: absolute;
+        left: 0;
+        right: 0;
+        display: block;
+        height: 30px;
+        .borderRadius(3px 3px 0 0);
         border: none;
         outline: none;
+        padding: 0 10px;
     }
     .select-box {
+        display: none;
         cursor: default;
         position: absolute;
+        z-index: 90;
         top: -1px;
         left: -1px;
-        border: 1px solid @buttonBgColor;
+        right: -1px;
         .borderRadius(3px);
+        border: 1px solid @buttonBgColor;
+        padding-top: 30px;
+        /*
         width: 248px;
+        */
         .select-tab {
             width: 248px;
-            height: 30px;
-            margin-top: 28px;
+            height: 29px;
             .select-tab-item {
                 position: relative;
                 float: left; 
@@ -422,7 +464,14 @@
         
     }
     .arrow {
+        cursor: pointer;
         right: 10px;         
+    }
+    &&-open {
+        border-color: @buttonBgColor;
+        .select-box {
+            display: block;
+        }
     }
 }
 

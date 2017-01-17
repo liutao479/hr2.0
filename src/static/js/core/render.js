@@ -8,6 +8,7 @@
 (function(global) {
 	var titlePrefix = '惠融车贷业务云';
 	var render = global.render = {
+		def: {},
 		/**
 		* router内容绑定对象
 		*/
