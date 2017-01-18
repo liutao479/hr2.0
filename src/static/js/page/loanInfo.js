@@ -18,7 +18,7 @@ page.ctrl('loanInfo', function($scope) {
 			url: $http.api($http.apiMap.loanInfo),
 			data: params,
 			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
