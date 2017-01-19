@@ -27,7 +27,7 @@
 		'cancelOrderAudit': {
 			parent: 'orderManage',
 			name: '终止订单审核',
-			route: 'cancelOrderAudit'
+			route: ''
 		},
 		moneyManage: {
 			name: '财务管理',
@@ -107,12 +107,12 @@
 		'creditArchiveDownload': {
 			parent: 'archiveDownload',
 			name: '征信资料',
-			route: ''
+			route: 'creditArchiveDownload'
 		},
 		'loadArchiveDownload': {
 			parent: 'archiveDownload',
 			name: '贷款资料',
-			route: ''
+			route: 'loadArchiveDownload'
 		},
 		archivePrint: {
 			name: '资料打印',

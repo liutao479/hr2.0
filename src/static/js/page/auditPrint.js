@@ -1,35 +1,9 @@
 'use strict';
 page.ctrl('auditPrint', [], function($scope) {
-	var loadAuditPrintList = function() {
-		$.ajax({
-			url: $http.api('auditPrint'),
-			success: $http.ok(function(data) {
-				render.compile(render.$console, router.template('audit-print'), data, $scope.async);
-			})
-		})
-	}
-
-	$scope.async = function() {
-		// 分页器
-		$('#pageToolbar').paging();
-	}
-
-	$scope.paging = function(page, pageSize, $el, cb) {
-		console.log(arguments);
-		cb();
-	}
-
-	loadAuditPrintList();
-});
-
-'use strict';
-page.ctrl('auditPrint', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
+			pageNum: $params.page || 1
 		};
 	/**
 	* 加载抵押办理信息表数据
@@ -38,12 +12,14 @@ page.ctrl('auditPrint', [], function($scope) {
 	*/
 	var loadAuditPrintList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.auditPrint),
+			url: $http.apiMap.auditPrint,
+			type: 'post',
 			data: params,
+			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
+				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -85,8 +61,8 @@ page.ctrl('auditPrint', [], function($scope) {
 	});
 
 	$scope.paging = function(_page, _size, $el, cb) {
-		apiParams.page = _page;
-		$params.page = _page;
+		apiParams.pageNum = _page;
+		$params.pageNum = _page;
 		router.updateQuery($scope.$path, $params);
 		loadAuditPrintList(apiParams);
 		cb();

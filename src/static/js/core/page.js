@@ -1,7 +1,7 @@
 
 // 待办提醒框
 var isOpen = false; 
-$('#remind-tips').on('click',function (){
+$(document).on('click', '#remind-tips', function (){
 	if(!isOpen) {
 		$('#remind').animate({
 			right: '155px'
@@ -18,8 +18,8 @@ $('#remind-tips').on('click',function (){
 });
 
 //复选框
-$('.checkbox-normal').on('selectstart', false);
-$('.checkbox-normal').on('click', function() {
+$(document).on('selectstart', '.checkbox-normal', false);
+$(document).on('click', '.checkbox-normal', function() {
 	if(!$(this).attr('checked')) {
 		$(this).addClass('checked').attr('checked',true);
 		$(this).html('<i class="iconfont">&#xe659;</i>');
@@ -30,8 +30,8 @@ $('.checkbox-normal').on('click', function() {
 })
 
 //单选框
-$('.radio').on('selectstart', false);
-$('.radio').on('click', function() {
+$(document).on('selectstart', '.radio', false);
+$(document).on('click', '.radio', function() {
 	if(!$(this).attr('checked')) {
 		$(this).addClass('checked').attr('checked',true);
 	} else {

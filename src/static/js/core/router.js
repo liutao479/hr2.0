@@ -97,7 +97,7 @@
 		},
 		'cancelOrderAudit': {
 			title: '订单修改审核',
-			page: 'cancelOrderAudit'
+			page: 'creditResult'
 		},
 		'loanManage': {
 			title: '借款管理',
@@ -153,6 +153,16 @@
 			title: '逾期处理',
 			refer: [],
 			page: 'expireProcess'
+		},
+		'creditArchiveDownload': {
+			title: '征信资料下载',
+			refer: [],
+			page: 'creditArchiveDownload'
+		},
+		'loadArchiveDownload': {
+			title: '贷款资料下载',
+			refer: [],
+			page: 'loadArchiveDownload'
 		},
 		'operationsAnalysis': {
 			title: '运营分析',

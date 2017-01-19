@@ -1,3 +1,4 @@
+'use strict';
 page.ctrl('creditUpload', function($scope) {
 	var $console = render.$console,
 		userMap = {
@@ -27,7 +28,7 @@ page.ctrl('creditUpload', function($scope) {
 			backspace: $scope.$params.path,
 			current: '征信材料上传',
 			orderDate: orderDate
-		})
+		});
 		$location.location();
 	}
 
@@ -37,9 +38,10 @@ page.ctrl('creditUpload', function($scope) {
 
 	var loadOrderInfo = function() {
 		$.ajax({
-			url: $http.api('credit/upload'),
+			url: 'http://127.0.0.1:8083/mock/creditUpload',
 			data: {orderNo: $scope.$params.orderNo},
 			success: $http.ok(function(result) {
+				console.log(result);
 				setupLocation(result.data.orderDate);
 				setupCreditPanel(result.data);
 			})

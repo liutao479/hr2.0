@@ -810,8 +810,45 @@ input[type=radio] {
                 }
             }
             &.orders-item-data-blank {
-                width: 22%;
-            } 
+                width: 20%;
+            }
+            &.orders-item-data-blank-mini {
+                width: 10%;
+            }
+            .table-inner {
+                min-width: 275px;
+                td {
+                    text-align: center;
+                    padding: 0 15px;
+                    .download-trigger {
+                        display: inline-block;
+                        color: @fontColor;
+                        -webkit-transition: all .05s;
+                           -moz-transition: all .05s;
+                            -ms-transition: all .05s;
+                             -o-transition: all .05s;
+                                transition: all .05s;
+                        .iconfont {
+                            font-size: 21px;
+                            color: @mainColor;
+                        }
+                        .download-text {
+                            display: inline-block;
+                            margin-top: 7px;
+                        }
+                        &:hover {
+                            -webkit-transform: scale(1.2);
+                               -moz-transform: scale(1.2);
+                                -ms-transform: scale(1.2);
+                                 -o-transform: scale(1.2);
+                                    transform: scale(1.2);
+                            .download-text {
+                                color: @mainColor;
+                            }
+                        }
+                    }
+                }
+            }
         }
         &.acount-name-data {
             padding: 10px 0;
@@ -1063,12 +1100,12 @@ input[type=radio] {
     .layout;
     padding: 0 15px 0 20px;
     text-align: right;
+    line-height: 50px;
     .path-back {
         float: left;
-        left: 15px;
-        display: block;
-        color: @tableActiveColor;
-        line-height: 49px;
+        color: @mainColor;
+        height: 50px;
+        line-height: 50px;
         .iconfont {
             position: relative;
             top: 3px;
@@ -1079,7 +1116,7 @@ input[type=radio] {
         }
     }
     .key-value-box {
-        line-height: 49px;
+        line-height: 50px;
         margin-left: 40px;
     }
 }
@@ -1797,9 +1834,6 @@ input[type=radio] {
     .button {
         margin-left: 15px;
     }
-    .cancel {
-        background-color: #efad4f;
-    }
 }
 //带图标的可点击元素
 .commit-item {
@@ -1845,10 +1879,6 @@ input[type=radio] {
             top: -2px;
             vertical-align: middle;
             margin-right: 10px;
-        }
-        .button-special {
-            background-color: @mainColor;
-            color: #FFF;
         }
         .tips-area {
             display: inline-block;

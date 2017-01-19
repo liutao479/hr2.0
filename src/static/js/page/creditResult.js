@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('mortgageProcess', [], function($scope) {
+page.ctrl('creditResult', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
@@ -8,16 +8,15 @@ page.ctrl('mortgageProcess', [], function($scope) {
 			pageSize: 20
 		};
 	/**
-	* 加载抵押办理信息表数据
+	* 加载车贷办理数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadMortgageProcessList = function(params, cb) {
+	var loadLoanList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.mortgageProcess,
+			url: 'http://127.0.0.1:8083/mock/creditResult',
 			data: params,
 			success: $http.ok(function(result) {
-				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				setupPaging(result.page.pages, true);
 				if(cb && typeof cb == 'function') {
@@ -37,34 +36,53 @@ page.ctrl('mortgageProcess', [], function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
+ 	/**
+	* 绑定搜索事件
+	**/
+	$(document).on('keydown', '#search', function(evt) {
+		if(evt.which == 13) {
+			alert("查询");
+			var that = $(this),
+				searchText = $.trim(that.val());
+			if(!searchText) {
+				return false;
+			}
+			apiParams.search = searchText;
+			$params.search = searchText;
+			apiParams.page = 1;
+			$params.page = 1;
+			loadLoanList(apiParams);
+			// router.updateQuery($scope.$path, $params);
+		}
+	});
 	/**
 	* 绑定立即处理事件
 	*/
-	// $(document).on('click', '#myCustomerTable .button', function() {
-	// 	var that = $(this);
-	// 	router.render(that.data('href'));
-	// });
+	$(document).on('click', '#loanTable .button', function() {
+		var that = $(this);
+		router.render(that.data('href'), {orderNo: that.data('id'), path: 'loanProcess'});
+	});
 
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('mortgage-process'), function() {
-		$scope.def.listTmpl = render.$console.find('#mortgageProcessListTmpl').html();
+	render.$console.load(router.template('credit-result-typing'), function() {
+		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#mortgageProcessTable'),
+			$tbl: $console.find('#loanTable'),
 			$paging: $console.find('#pageToolbar')
 		}
 		if($params.process) {
 			
 		}
-		loadMortgageProcessList(apiParams);
+		loadLoanList(apiParams);
 	});
 
 	$scope.paging = function(_page, _size, $el, cb) {
 		apiParams.page = _page;
 		$params.page = _page;
-		router.updateQuery($scope.$path, $params);
-		loadMortgageProcessList(apiParams);
+		// router.updateQuery($scope.$path, $params);
+		loadLoanList(apiParams);
 		cb();
 	}
 });

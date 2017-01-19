@@ -12,12 +12,12 @@ page.ctrl('licenceProcess', ['page/test'], function($scope) {
 	*/
 	var loadLicenceProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.licenceProcess',
+			url: $http.apiMap.licenceProcess,
 			data: params,
 			dateType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();

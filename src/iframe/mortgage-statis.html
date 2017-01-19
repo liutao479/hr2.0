@@ -18,7 +18,7 @@
 					</div>
 					<div class="search-item">
 						<a href="javascript:;">重置</a>
-						<div id="" class="button button-mini-nowidth">搜索</div>
+						<div id="" class="button button-mini">搜索</div>
 					</div>
 				</div>
 				<table border="0" cellpadding="" width="100%" class="orders-table">
@@ -57,25 +57,27 @@
 						<tr class="tr-odd">
 						{{ } }}
 							<td class="orders-item-data">{{=row.orderNo}}</td>
-							<td class="orders-item-data">{{=row.handleMan}}</td>
-							<td class="orders-item-data">{{=row.user}}</td>
-							<td class="orders-item-data">{{=row.company}}</td>
-							<td class="orders-item-data">{{=row.bank}}</td>
-							{{ if(row.licenceStatus == 0){ }}
+							<td class="orders-item-data">{{=row.acceptName}}</td>
+							<td class="orders-item-data">{{=row.realName}}</td>
+							<td class="orders-item-data">{{=row.acceptCompany}}</td>
+							<td class="orders-item-data">{{=row.bankName}}</td>
+							{{ if(row.status == 0){ }}
 							<td class="orders-item-data status-wait-verify">未办理</td>
-							{{ } else if(row.licenceStatus == 1) { }}
+							{{ } else if(row.status == 1) { }}
 							<td class="orders-item-data status-not-handled">待审核</td>
-							{{ } else if(row.licenceStatus == 2) { }}
+							{{ } else if(row.status == 2) { }}
 							<td class="orders-item-data">已完成</td>
+							{{ } else if(row.status == 4) { }}
+							<td class="orders-item-data status-back">被退回</td>
 							{{ } }}
-							<td class="orders-item-data">{{=row.carTime}}</td>
-							<td class="orders-item-data">{{=row.licenceTime}}</td>
+							<td class="orders-item-data">{{=tool.formatDate(row.pickDate)}}</td>
+							<td class="orders-item-data">{{=tool.formatDate(row.deadline)}}</td>
 							{{ if(row.countDown == "已超期"){ }}
 							<td class="orders-item-data status-back">已超期</td>
 							{{ } else { }}
-							<td class="orders-item-data">{{=row.countDown}}</td>
+							<td class="orders-item-data">24小时</td>
 							{{ } }}
-							<td class="orders-item-data"><div class="button button-gray">查看</div></td>
+							<td class="orders-item-data"><div class="button button-mini button-gray">查看</div></td>
 						</tr>
 					{{ } }}
 				{{ } else { }}

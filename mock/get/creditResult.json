@@ -1,0 +1,691 @@
+{
+	"cfgData": {
+		"code": "creditInput",
+		"frames": [
+			{
+				"code": "T0001",
+				"name": "借款人",
+				"orderBy": 0,
+				"sections": [
+					{
+						"code": "ZXBGB",
+						"name": "征信报告编号",
+						"orderBy": 0,
+						"segments": [
+							{
+								"code": "creditReportId",
+								"empty": 0,
+								"fieldName": "creditReportId",
+								"name": "征信报告编号",
+								"orderBy": 0,
+								"type": 0
+							}
+						]
+					}, {
+						"code": "ZXBGP",
+						"name": "征信报告照片",
+						"orderBy": 1,
+						"segments": [
+							{
+								"code": "zx_picture",
+								"empty": 0,
+								"fieldName": "zx_picture",
+								"name": "征信报告照片",
+								"orderBy": 0,
+								"type": 1
+							}
+						]
+					}, {
+						"code": "ZXZD",
+						"name": "征信字段",
+						"orderBy": 2,
+						"segments": [
+							{
+								"code": "userName",
+								"empty": 0,
+								"fieldName": "userName",
+								"name": "姓名",
+								"orderBy": 0,
+								"type": 0
+							}
+						]
+					}
+				]
+			}, {
+				"code": "T0002",
+				"name": "共同还款人",
+				"orderBy": 1,
+				"sections": [
+					{
+						"code": "ZXBGB",
+						"name": "征信报告编号",
+						"orderBy": 0,
+						"segments": [
+							{
+								"code": "zx_code",
+								"empty": 0,
+								"fieldName": "zx_code",
+								"name": "征信报告编号",
+								"orderBy": 0,
+								"type": 0
+							}
+						]
+					}
+				]
+			}, {
+				"code": "T0003",
+				"name": "反担保人",
+				"orderBy": 2
+			}
+		],
+		"name": "征信结果录入"
+	},
+	"code": 0,
+	"data": {//征信结果数据
+		"loanUserCredits": [
+					{
+						"creditId": 100005, //征信ID
+						"creditInputId": 11,// 征信录入人
+						"creditLevel": 1,// 客户信用等级(1=正常;2=关注;3=禁入)
+						"creditMaterials": [//用户征信材料
+							{
+								"id": 1,//ID
+								"materialsCode": "sfzzm",//材料编码
+								"materialsName": "身份证正面",
+								"materialsPic": "/materials/334332/1.jpg",//材料图片地址
+								"thumnailPic": "/materials/334332/11.jpg"//材料图片缩略图
+							}, {
+								"id": 6,
+								"materialsCode": "sfzfm",
+								"materialsName": "身份证反面",
+								"materialsPic": "/materials/334332/11.jpg",
+								"thumnailPic": "/materials/334332/111.jpg"
+							}, {
+								"id": 11,
+								"materialsCode": "zxsqs",
+								"materialsName": "征信授权书",
+								"materialsPic": "/materials/334332/111.jpg",
+								"thumnailPic": "/materials/334332/111-1.jpg"
+							}
+						],
+						"creditReportId": "100001",//征信报告编号
+						"creditStatus": 0,// 征信结果状态(0:未查询 1:查询失败 2:查询成功 3:查询失败修改材料  4:银行征信退回)
+						"creditWay": 0,// 征信方式:0手动1内部api2外部api
+						"idCard": "110000198902281234",//身份证号
+						"loanCreditReportList": [
+							{
+								"id": 1,//ID
+								"materialsAduitOpinion": "",//材料审核意见
+								"materialsAduitResult": 0,// 材料审核结果
+								"materialsPic": "/image/100005-1.jpg",//材料地址
+								"thumbnailPic": "/image/100005-2.jpg"//材料缩略图地址
+							}, {
+								"id": 2,
+								"materialsAduitOpinion": "",
+								"materialsAduitResult": 0,
+								"materialsPic": "/image/100005-3.jpg",
+								"thumbnailPic": "/image/100005-4.jpg"
+							}
+						],
+						"loanCreditResultList": [
+							{
+								"creditKey": "userName",//征信字段code
+								"creditVal": "ccufo",//征信字段值
+								"fieldName": "姓名",//显示字段名
+								"fieldType": 1,// 表单类型
+                                 "fieldUnit": "",//单位
+								"id": 9,//id
+								"required": 0//是否必填，0：否，1：是
+							}, {
+								"creditKey": "education",
+								"creditVal": "2次",
+								"fieldName": "学历",
+								"fieldType": 1,
+                                 "fieldUnit": "",
+								"id": 10,
+								"required": 0
+							}, {
+								"creditKey": "maritalStatus",
+								"creditVal": "",
+								"fieldName": "婚姻状况",
+								"fieldType": 1,
+                                 "fieldUnit": "",
+								"required": 0
+							}, {
+								"creditKey": "houseHoldRegister",
+								"creditVal": "",
+								"fieldName": "户籍",
+								"fieldType": 1,
+                                 "fieldUnit": "",
+								"required": 0
+							}, {
+								"creditKey": "familyAddress",
+								"creditVal": "",
+								"fieldName": "现住址",
+								"fieldType": 1,
+                                 "fieldUnit": "",
+								"required": 0
+							}, {
+								"creditKey": "liveStatus",
+								"creditVal": "",
+								"fieldName": "居住状况",
+								"fieldType": 1,
+                                 "fieldUnit": "",
+								"required": 0
+							}, {
+								"creditKey": "company",
+								"creditVal": "",
+								"fieldName": "单位名称",
+								"fieldType": 1,
+                                 "fieldUnit": "",
+								"required": 0
+							}, {
+								"creditKey": "companyAddress",
+								"creditVal": "",
+								"fieldName": "单位地址",
+								"fieldType": 1,
+                                 "fieldUnit": "",
+								"required": 0
+							}, {
+								"creditKey": "mobile",
+								"creditVal": "",
+								"fieldName": "手机号码",
+								"fieldType": 1,
+                                 "fieldUnit": "",
+								"required": 0
+							}, {
+								"creditKey": "fixedPhone",
+								"creditVal": "",
+								"fieldName": "固定号码",
+								"fieldType": 1,
+                                 "fieldUnit": "",
+								"required": 0
+							}
+						],
+						"orderNo": "nfdb2016102421082285",
+						"orgId": 62,
+						"remark": "备注001",
+						"submitDate": 1481768944000,
+						"userId": 334322,
+						"userName": "蒋贵燕"
+					}
+				],
+				"userType": 0, 用户类型(0本人1共同还款人2反担保人)
+				"userTypeName": "借款人"
+			}, {
+				"loanUserCredits": [
+					{
+						"creditId": 100006,
+						"creditInputId": 12,
+						"creditLevel": 1,
+						"creditMaterials": [
+							{
+								"id": 2,
+								"materialsCode": "sfzzm",
+								"materialsName": "身份证正面",
+								"materialsPic": "/materials/1000002/21.jpg",
+								"thumnailPic": "/materials/1000002/211.jpg"
+							}, {
+								"id": 7,
+								"materialsCode": "sfzfm",
+								"materialsName": "身份证反面",
+								"materialsPic": "/materials/1000002/31.jpg",
+								"thumnailPic": "/materials/1000002/311.jpg"
+							}, {
+								"id": 17,
+								"materialsCode": "zxsqs",
+								"materialsName": "征信授权书",
+								"materialsPic": "/materials/1000002/121.jpg",
+								"thumnailPic": "/materials/1000002/121-1.jpg"
+							}
+						],
+						"creditReportId": "100002",
+						"creditStatus": 0,
+						"creditWay": 0,
+						"idCard": "513029197305261956",
+						"loanCreditReportList": [
+							{
+								"id": 3,
+								"materialsAduitOpinion": "",
+								"materialsAduitResult": 0,
+								"materialsPic": "/image/100006-1.jpg",
+								"thumbnailPic": "/image/100006-2.jpg"
+							}, {
+								"id": 4,
+								"materialsAduitOpinion": "",
+								"materialsAduitResult": 0,
+								"materialsPic": "/image/100006-3.jpg",
+								"thumbnailPic": "/image/100006-4.jpg"
+							}
+						],
+						"loanCreditResultList": [
+							{
+								"creditKey": "userName",
+								"creditVal": "12300元",
+								"fieldName": "姓名",
+								"fieldType": 1,
+								"id": 11,
+								"required": 0
+							}, {
+								"creditKey": "education",
+								"creditVal": "12303元",
+								"fieldName": "学历",
+								"fieldType": 1,
+								"id": 12,
+								"required": 0
+							}, {
+								"creditKey": "maritalStatus",
+								"creditVal": "",
+								"fieldName": "婚姻状况",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "houseHoldRegister",
+								"creditVal": "",
+								"fieldName": "户籍",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "familyAddress",
+								"creditVal": "",
+								"fieldName": "现住址",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "liveStatus",
+								"creditVal": "",
+								"fieldName": "居住状况",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "company",
+								"creditVal": "",
+								"fieldName": "单位名称",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "companyAddress",
+								"creditVal": "",
+								"fieldName": "单位地址",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "mobile",
+								"creditVal": "",
+								"fieldName": "手机号码",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "fixedPhone",
+								"creditVal": "",
+								"fieldName": "固定号码",
+								"fieldType": 1,
+								"required": 0
+							}
+						],
+						"orderNo": "nfdb2016102421082285",
+						"orgId": 62,
+						"remark": "备注002",
+						"submitDate": 1481768953000,
+						"userId": 1000002,
+						"userName": "关云长"
+					}, {
+						"creditBatchNo": "10001",
+						"creditId": 100007,
+						"creditInputId": 13,
+						"creditLevel": 1,
+						"creditMaterials": [
+							{
+								"id": 3,
+								"materialsCode": "sfzzm",
+								"materialsName": "身份证正面",
+								"materialsPic": "/materials/1000003/21.jpg",
+								"thumnailPic": "/materials/1000003/211.jpg"
+							}, {
+								"id": 8,
+								"materialsCode": "sfzfm",
+								"materialsName": "身份证反面",
+								"materialsPic": "/materials/1000003/31.jpg",
+								"thumnailPic": "/materials/1000003/311.jpg"
+							}, {
+								"id": 18,
+								"materialsCode": "zxsqs",
+								"materialsName": "征信授权书",
+								"materialsPic": "/materials/1000003/121.jpg",
+								"thumnailPic": "/materials/1000003/121-1.jpg"
+							}
+						],
+						"creditReportId": "100003",
+						"creditStatus": 0,
+						"creditWay": 0,
+						"idCard": "513029197305261957",
+						"loanCreditReportList": [
+							{
+								"id": 5,
+								"materialsAduitOpinion": "",
+								"materialsAduitResult": 0,
+								"materialsPic": "/image/100007-1.jpg",
+								"thumbnailPic": "/image/100007-2.jpg"
+							}, {
+								"id": 6,
+								"materialsAduitOpinion": "",
+								"materialsAduitResult": 0,
+								"materialsPic": "/image/100007-3.jpg",
+								"thumbnailPic": "/image/100007-4.jpg"
+							}
+						],
+						"loanCreditResultList": [
+							{
+								"creditKey": "userName",
+								"creditVal": "17703元",
+								"fieldName": "姓名",
+								"fieldType": 1,
+								"id": 13,
+								"required": 0
+							}, {
+								"creditKey": "education",
+								"creditVal": "1次",
+								"fieldName": "学历",
+								"fieldType": 1,
+								"id": 14,
+								"required": 0
+							}, {
+								"creditKey": "maritalStatus",
+								"creditVal": "",
+								"fieldName": "婚姻状况",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "houseHoldRegister",
+								"creditVal": "",
+								"fieldName": "户籍",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "familyAddress",
+								"creditVal": "",
+								"fieldName": "现住址",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "liveStatus",
+								"creditVal": "",
+								"fieldName": "居住状况",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "company",
+								"creditVal": "",
+								"fieldName": "单位名称",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "companyAddress",
+								"creditVal": "",
+								"fieldName": "单位地址",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "mobile",
+								"creditVal": "",
+								"fieldName": "手机号码",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "fixedPhone",
+								"creditVal": "",
+								"fieldName": "固定号码",
+								"fieldType": 1,
+								"required": 0
+							}
+						],
+						"orderNo": "nfdb2016102421082285",
+						"orgId": 62,
+						"remark": "备注003",
+						"submitDate": 1481768956000,
+						"userId": 1000003,
+						"userName": "张翼德"
+					}
+				],
+				"userType": 1,
+				"userTypeName": "共同还款人"
+			}, {
+				"loanUserCredits": [
+					{
+						"creditId": 100008,
+						"creditInputId": 14,
+						"creditLevel": 1,
+						"creditMaterials": [
+							{
+								"id": 4,
+								"materialsCode": "sfzzm",
+								"materialsName": "身份证正面",
+								"materialsPic": "/materials/1000004/41.jpg",
+								"thumnailPic": "/materials/1000004/411.jpg"
+							}, {
+								"id": 9,
+								"materialsCode": "sfzfm",
+								"materialsName": "身份证反面",
+								"materialsPic": "/materials/1000004/51.jpg",
+								"thumnailPic": "/materials/1000004/511.jpg"
+							}, {
+								"id": 24,
+								"materialsCode": "zxsqs",
+								"materialsName": "征信授权书",
+								"materialsPic": "/materials/1000004/131.jpg",
+								"thumnailPic": "/materials/1000004/131-1.jpg"
+							}
+						],
+						"creditReportId": "100004",
+						"creditStatus": 0,
+						"creditWay": 0,
+						"idCard": "513029197305261958",
+						"loanCreditReportList": [
+							{
+								"id": 7,
+								"materialsAduitOpinion": "",
+								"materialsAduitResult": 0,
+								"materialsPic": "/image/100008-1.jpg",
+								"thumbnailPic": "/image/100008-2.jpg"
+							}, {
+								"id": 8,
+								"materialsAduitOpinion": "",
+								"materialsAduitResult": 0,
+								"materialsPic": "/image/100008-3.jpg",
+								"thumbnailPic": "/image/100008-4.jpg"
+							}
+						],
+						"loanCreditResultList": [
+							{
+								"creditKey": "userName",
+								"creditVal": "10000元",
+								"fieldName": "姓名",
+								"fieldType": 1,
+								"id": 15,
+								"required": 0
+							}, {
+								"creditKey": "education",
+								"creditVal": "3次",
+								"fieldName": "学历",
+								"fieldType": 1,
+								"id": 16,
+								"required": 0
+							}, {
+								"creditKey": "maritalStatus",
+								"creditVal": "",
+								"fieldName": "婚姻状况",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "houseHoldRegister",
+								"creditVal": "",
+								"fieldName": "户籍",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "familyAddress",
+								"creditVal": "",
+								"fieldName": "现住址",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "liveStatus",
+								"creditVal": "",
+								"fieldName": "居住状况",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "company",
+								"creditVal": "",
+								"fieldName": "单位名称",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "companyAddress",
+								"creditVal": "",
+								"fieldName": "单位地址",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "mobile",
+								"creditVal": "",
+								"fieldName": "手机号码",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "fixedPhone",
+								"creditVal": "",
+								"fieldName": "固定号码",
+								"fieldType": 1,
+								"required": 0
+							}
+						],
+						"orderNo": "nfdb2016102421082285",
+						"orgId": 62,
+						"remark": "备注004",
+						"submitDate": 1481768960000,
+						"userId": 1000004,
+						"userName": "诸葛孔明"
+					}, {
+						"creditId": 100009,
+						"creditInputId": 15,
+						"creditLevel": 1,
+						"creditMaterials": [
+							{
+								"id": 5,
+								"materialsCode": "sfzzm",
+								"materialsName": "身份证正面",
+								"materialsPic": "/materials/1000005/41.jpg",
+								"thumnailPic": "/materials/1000005/411.jpg"
+							}, {
+								"id": 10,
+								"materialsCode": "sfzfm",
+								"materialsName": "身份证反面",
+								"materialsPic": "/materials/1000005/51.jpg",
+								"thumnailPic": "/materials/1000005/511.jpg"
+							}, {
+								"id": 25,
+								"materialsCode": "zxsqs",
+								"materialsName": "征信授权书",
+								"materialsPic": "/materials/1000005/131.jpg",
+								"thumnailPic": "/materials/1000005/131-1.jpg"
+							}
+						],
+						"creditReportId": "100005",
+						"creditStatus": 0,
+						"creditWay": 0,
+						"idCard": "513029197305261959",
+						"loanCreditReportList": [
+							{
+								"id": 9,
+								"materialsAduitOpinion": "",
+								"materialsAduitResult": 0,
+								"materialsPic": "/image/100009-1.jpg",
+								"thumbnailPic": "/image/100009-2.jpg"
+							}, {
+								"id": 10,
+								"materialsAduitOpinion": "",
+								"materialsAduitResult": 0,
+								"materialsPic": "/image/100009-3.jpg",
+								"thumbnailPic": "/image/100009-4.jpg"
+							}
+						],
+						"loanCreditResultList": [
+							{
+								"creditKey": "userName",
+								"creditVal": "AAAAA",
+								"fieldName": "姓名",
+								"fieldType": 1,
+								"id": 17,
+								"required": 0
+							}, {
+								"creditKey": "education",
+								"creditVal": "AAAAAA",
+								"fieldName": "学历",
+								"fieldType": 1,
+								"id": 18,
+								"required": 0
+							}, {
+								"creditKey": "maritalStatus",
+								"creditVal": "",
+								"fieldName": "婚姻状况",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "houseHoldRegister",
+								"creditVal": "",
+								"fieldName": "户籍",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "familyAddress",
+								"creditVal": "",
+								"fieldName": "现住址",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "liveStatus",
+								"creditVal": "",
+								"fieldName": "居住状况",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "company",
+								"creditVal": "",
+								"fieldName": "单位名称",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "companyAddress",
+								"creditVal": "",
+								"fieldName": "单位地址",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "mobile",
+								"creditVal": "",
+								"fieldName": "手机号码",
+								"fieldType": 1,
+								"required": 0
+							}, {
+								"creditKey": "fixedPhone",
+								"creditVal": "",
+								"fieldName": "固定号码",
+								"fieldType": 1,
+								"required": 0
+							}
+						],
+						"orderNo": "nfdb2016102421082285",
+						"orgId": 62,
+						"remark": "备注005",
+						"submitDate": 1481768962000,
+						"userId": 1000005,
+						"userName": "赵常山"
+					}
+				],
+				"userType": 2,
+				"userTypeName": "反担保人"
+			}
+		],
+	"msg": "success"
+}
