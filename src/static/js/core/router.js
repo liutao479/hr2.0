@@ -97,7 +97,7 @@
 		},
 		'cancelOrderAudit': {
 			title: '订单修改审核',
-			page: 'creditResult'
+			page: 'cancelOrderAudit'
 		},
 		'loanManage': {
 			title: '借款管理',

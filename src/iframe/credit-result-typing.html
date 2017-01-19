@@ -18,6 +18,17 @@
 				</div>
 				<!--返回列表 end-->
 				
+				<div class="creditResultPanel" id="creditResultPanel">
+
+				</div>
+				
+
+
+				<script type="text/x-dot-template" id="creditResultListTmpl">
+					{{ console.log(it); }}
+					{{  }}
+				</script>
+				<script type="text/x-dot-template" id="creditResultListTmpl1">
 				<!--征信材料角色tab切换栏-->
 				<div class="tab-bar mt15">
 					<ul class="role-bar-ul clearfix">
@@ -49,23 +60,18 @@
 							<span class="value">2016-11-01 12:00</span>
 						</div>
 						<div class="key-value-box key-value-box-special">
-							<div class="button button-mini-nowidth">查看征信材料</div>
+							<div class="button button-mini">查看征信材料</div>
 						</div>
 					</div>
 					<!--二级标题（姓名，身份证等等...） end-->
 					<!--详细内容罗列-->
-					<div class="panel-detail-content">
+					<div class="panel-detail-content panel-detail-table">
 						<!-- 征信报告照片 -->
-						<div class="panel-item-box">
+						<div class="panel-item-box mt15">
 							<div class="panel-key-area">征信报告文件：</div>
 							<div class="panel-value-area clearfix">
 								<div class="panel-value-item">
-									<div class="input-text">
-										<input type="text" />	
-									</div>
-								</div>
-								<div class="panel-value-item">
-									<div class="button button-mini-nowidth">上传文件</div>	
+									<div class="button button-mini">上传文件</div>	
 								</div>
 								<div class="panel-value-item">
 									<span class="color-tiper">文件格式：*.pdf</span>
@@ -94,14 +100,14 @@
 							<div class="panel-value-area">
 								<div class="imgs-item-group">
 									<div class="imgs-item-upload">
-										<i class="iconfont">&#xe61f;</i><br />
+										<i class="iconfont iconfont-upload">&#xe61f;</i><br />
 										<span class="imgs-describe">点击或拖拽上传图片</span>
 										<input type="file" id="" class="input-file" />
 									</div>
 								</div>
 								<div class="imgs-item-group">
 									<div class="imgs-item-upload">
-										<i class="iconfont">&#xe61f;</i><br />
+										<i class="iconfont iconfont-upload">&#xe61f;</i><br />
 										<span class="imgs-describe">点击或拖拽上传图片</span>
 										<input type="file" id="" class="input-file" />
 									</div>
@@ -154,7 +160,7 @@
 					</div>
 					<!--详细内容罗列 end-->
 					<!--二级标题（姓名，身份证等等...）-->
-					<div class="panel-content-title">
+					<div class="panel-content-title ">
 						<div class="key-value-box">
 							<span class="key">姓名：</span>
 							<span class="value">北上</span>
@@ -172,23 +178,18 @@
 							<span class="value">2016-11-01 12:00</span>
 						</div>
 						<div class="key-value-box key-value-box-special">
-							<div class="button button-mini-nowidth">查看征信材料</div>
+							<div class="button button-mini">查看征信材料</div>
 						</div>
 					</div>
 					<!--二级标题（姓名，身份证等等...） end-->
 					<!--详细内容罗列-->
-					<div class="panel-detail-content">
+					<div class="panel-detail-content panel-detail-table">
 						<!-- 征信报告照片 -->
-						<div class="panel-item-box">
+						<div class="panel-item-box mt15">
 							<div class="panel-key-area">征信报告文件：</div>
 							<div class="panel-value-area clearfix">
 								<div class="panel-value-item">
-									<div class="input-text">
-										<input type="text" />	
-									</div>
-								</div>
-								<div class="panel-value-item">
-									<div class="button button-mini-nowidth">上传文件</div>	
+									<div class="button button-mini">上传文件</div>	
 								</div>
 								<div class="panel-value-item">
 									<span class="color-tiper">文件格式：*.pdf</span>
@@ -217,14 +218,14 @@
 							<div class="panel-value-area">
 								<div class="imgs-item-group">
 									<div class="imgs-item-upload">
-										<i class="iconfont">&#xe61f;</i><br />
+										<i class="iconfont iconfont-upload">&#xe61f;</i><br />
 										<span class="imgs-describe">点击或拖拽上传图片</span>
 										<input type="file" id="" class="input-file" />
 									</div>
 								</div>
 								<div class="imgs-item-group">
 									<div class="imgs-item-upload">
-										<i class="iconfont">&#xe61f;</i><br />
+										<i class="iconfont iconfont-upload">&#xe61f;</i><br />
 										<span class="imgs-describe">点击或拖拽上传图片</span>
 										<input type="file" id="" class="input-file" />
 									</div>
@@ -284,3 +285,4 @@
 				</div>
 				<!-- 提交订单按钮区域 end-->
 			</div>
+			</script>
