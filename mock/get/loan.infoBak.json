@@ -466,7 +466,7 @@
                                 "type":2
                             },
                             {
-                                "code":"xx4familyZipcode",
+                                "code":"familyZipcode",
                                 "empty":0,
                                 "fieldName":"familyZipcode",
                                 "name":"家庭地址邮编",
@@ -514,14 +514,6 @@
                                 "type":2
                             },
                             {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
                                 "code":"monthIncomeMoney",
                                 "empty":0,
                                 "fieldName":"monthIncomeMoney",
@@ -544,6 +536,14 @@
                                 "name":"存款余额",
                                 "orderBy":0,
                                 "type":2
+                            },
+                            {
+                                "code":"residentType",
+                                "empty":0,
+                                "fieldName":"residentType",
+                                "name":"本地常驻类型",
+                                "orderBy":0,
+                                "type":3
                             }
                         ]
                     },
@@ -609,7 +609,7 @@
                                 "type":2
                             },
                             {
-                                "code":"xx24",
+                                "code":"familyZipcode",
                                 "empty":0,
                                 "fieldName":"familyZipcode",
                                 "name":"家庭地址邮编",
@@ -657,14 +657,6 @@
                                 "type":2
                             },
                             {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
                                 "code":"monthIncomeMoney",
                                 "empty":0,
                                 "fieldName":"monthIncomeMoney",
@@ -695,6 +687,14 @@
                                 "name":"与借款人关系",
                                 "orderBy":0,
                                 "type":2
+                            },
+                            {
+                                "code":"residentType",
+                                "empty":0,
+                                "fieldName":"residentType",
+                                "name":"本地常驻类型",
+                                "orderBy":0,
+                                "type":3
                             }
                         ]
                     },
@@ -808,14 +808,6 @@
                                 "type":2
                             },
                             {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
                                 "code":"monthIncomeMoney",
                                 "empty":0,
                                 "fieldName":"monthIncomeMoney",
@@ -846,6 +838,14 @@
                                 "name":"与借款人关系",
                                 "orderBy":0,
                                 "type":2
+                            },
+                            {
+                                "code":"residentType",
+                                "empty":0,
+                                "fieldName":"residentType",
+                                "name":"本地常驻类型",
+                                "orderBy":0,
+                                "type":3
                             }
                         ]
                     },

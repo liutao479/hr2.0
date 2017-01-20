@@ -820,6 +820,7 @@
 					<div class="panel-detail-content-layout">
 						<form id="guaPersonInfoForm_{{= m+1}}">
 						<div class="loan-info">
+							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'userRelationship'){ }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>与借款人关系：</span>
 								<span class="info-value">
@@ -833,14 +834,17 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'accountLocation'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>户籍：</span>
 								<span class="info-value"><input type="text" name="accountLocation" value="{{= mainPerson.accountLocation }}" /></span>
 							</div>
+							{{  };if(seg.code == 'userName'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>姓名：</span>
 								<span class="info-value"><input type="text" name="userName" value="{{= mainPerson.userName }}" /></span>
 							</div>
+							{{  };if(seg.code == 'sex'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>性别：</span>
 								<span class="info-value">
@@ -851,58 +855,72 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'idCard'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>身份证号码：</span>
 								<span class="info-value"><input type="text" name="idCard" value="{{= mainPerson.idCard }}" /></span>
 							</div>
+							{{  };if(seg.code == 'mobile'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>联系电话：</span>
 								<span class="info-value"><input type="text" name="mobile" value="{{= mainPerson.mobile }}" /></span>
 							</div>
+							{{  };if(seg.code == 'age'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>申请时年龄：</span>
 								<span class="info-value"><input type="text" name="age" value="{{= mainPerson.age }}" /></span>
 							</div>
+							{{  };if(seg.code == 'familyTel'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭电话：</span>
 								<span class="info-value"><input type="text" name="familyTel" value="{{= mainPerson.familyTel }}" /></span>
 							</div>
+							{{  };if(seg.code == 'familyAddress'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭地址：</span>
 								<span class="info-value"><input type="text" name="familyAddress" value="{{= mainPerson.familyAddress }}" /></span>
 							</div>
+							{{  };if(seg.code == 'familyZipcode'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭地址邮编：</span>
 								<span class="info-value"><input type="text" name="familyZipcode" value="{{= mainPerson.familyZipcode }}" /></span>
 							</div>
+							{{  };if(seg.code == 'campany'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位名称：</span>
 								<span class="info-value"><input type="text" name="company" value="{{= mainPerson.company }}" /></span>
 							</div>
+							{{  };if(seg.code == 'campanyTel'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位电话：</span>
 								<span class="info-value"><input type="text" name="companyTel" value="{{= mainPerson.companyTel }}" /></span>
 							</div>
+							{{  };if(seg.code == 'campanyAddress'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址：</span>
 								<span class="info-value"><input type="text" name="companyAddress" value="{{= mainPerson.companyAddress }}" /></span>
 							</div>
+							{{  };if(seg.code == 'campanyZipcode'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址邮编：</span>
 								<span class="info-value"><input type="text" name="companyZipcode" value="{{= mainPerson.companyZipcode }}" /></span>
 							</div>
+							{{  };if(seg.code == 'monthIncomeMoney'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>税后月收入：</span>
 								<span class="info-value"><input type="text" name="monthIncomeMoney" value="{{= mainPerson.monthIncomeMoney }}" /></span>
 							</div>
+							{{  };if(seg.code == 'balance'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>存款余额：</span>
 								<span class="info-value"><input type="text" name="balance" value="{{= mainPerson.balance }}" /></span>
 							</div>
+							{{  };if(seg.code == 'averageDailyBalance'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>日均存款余额：</span>
 								<span class="info-value"><input type="text" name="averageDailyBalance" value="{{= mainPerson.averageDailyBalance }}" /></span>
 							</div>
+							{{  };if(seg.code == 'residentType'){  }}
 							<div class="info-key-check-box">
 								<span class="info-key"><i>*</i>本地常住类型：</span>
 								<span class="info-check-box">
@@ -945,6 +963,8 @@
 									<input type="hidden" name="" value="" />
 								</span>
 							</div>
+							{{ } }}
+							{{ } }}
 						</div>
 						</form>
 					</div>
@@ -966,10 +986,12 @@
 						<div class="loan-info">
 						{{for(var j = 0, len2 = it.data.loanEmergencyConact.length; j < len2; j++) { var role = it.data.loanEmergencyConact[j]; }}
 							<div>
+							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'name'){ }}
 								<div class="info-key-value-box">
 									<span class="info-key"><i>*</i>联系人{{= j+1 }}&nbsp;姓名：</span>
 									<span class="info-value"><input type="text" name="name" value="{{= role.name }}" /></span>
 								</div>
+							{{  };if(seg.code == 'relationship'){  }}
 								<div class="info-key-value-box">
 									<span class="info-key"><i>*</i>联系人{{= j+1 }}&nbsp;关系：</span>
 									<span class="info-value">
@@ -980,10 +1002,13 @@
 										</select>
 									</span>
 								</div>
+							{{  };if(seg.code == 'phone'){  }}
 								<div class="info-key-value-box">
 									<span class="info-key"><i>*</i>联系人{{= j+1 }}&nbsp;电话：</span>
 									<span class="info-value"><input type="text" name="phone" value="{{= role.phone }}" /></span>
 								</div>
+							{{ } }}
+							{{ } }}
 							</div>
 						{{ } }}
 						</div>
@@ -1004,18 +1029,23 @@
 					<div class="panel-detail-content-layout">
 						<form id="loanPayCardInfoForm">
 						<div class="loan-info">
+							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'accountNumber'){ }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>账号：</span>
 								<span class="info-value"><input type="text" name="accountNumber" value="{{= it.data.loanPayCard.accountNumber }}" /></span>
 							</div>
+							{{  };if(seg.code == 'bankName'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>开户行：</span>
 								<span class="info-value"><input type="text" name="bankName" value="{{= it.data.loanPayCard.bankName }}" /></span>
 							</div>
+							{{  };if(seg.code == 'accountName'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>帐户名：</span>
 								<span class="info-value"><input type="text" name="accountName" value="{{= it.data.loanPayCard.accountName }}" /></span>
 							</div>
+							{{ } }}
+							{{ } }}
 						</div>
 						</form>
 					</div>
@@ -1035,6 +1065,7 @@
 						<form id="loanFeeInfoForm">
 						<div class="loan-info">
 							{{for(var k = 0, len3 = it.data.loanFee.length; k < len3; k++) { var role = it.data.loanFee[k]; }}
+							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'feeField'){ }}
 							<div class="info-key-value-box">
 								<span class="info-key">
 									{{ if(role.required == 1){ }}
@@ -1044,6 +1075,8 @@
 								</span>
 								<span class="info-value"><input type="text" name="{{= role.fieldCode }}" value="{{= role.value }}" /></span>
 							</div>
+							{{ } }}
+							{{ } }}
 							{{ } }}
 						</div>
 						</form>
@@ -1065,6 +1098,7 @@
 						<form id="otherInfoForm">
 						<div class="loan-info">
 							{{for(var c = 0, lenthc = other.cIndividuationFieldList.length; c < lenthc; c++) { var otherInfo = other.cIndividuationFieldList[c]; }}
+							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'otherField'){ }}
 							<div class="info-key-value-box">
 								<span class="info-key">
 									{{ if(otherInfo.required == 1){ }}
@@ -1074,6 +1108,8 @@
 								</span>
 								<span class="info-value"><input type="text" name="{{= otherInfo.code }}" value="{{= otherInfo.value }}" /></span>
 							</div>
+							{{ } }}
+							{{ } }}
 							{{ } }}
 						</div>
 						</form>
