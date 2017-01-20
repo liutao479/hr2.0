@@ -8,8 +8,17 @@ page.ctrl('loanInfo', function($scope) {
 //	$(document).on('change','select', function() {
 //		var that =$(this);
 //		var key = that.data('key');
+//		console.log(key);
+//		
 //		$.ajax({
-//			url: apiMap[key]
+//			url: apiMap[key],
+//			data: params,
+//			success: $http.ok(function(result) {
+//				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
+//				if(cb && typeof cb == 'function') {
+//					cb();
+//				}
+//			})
 //		})
 //	})
 	var $console = render.$console,
