@@ -1,5 +1,17 @@
 'use strict';
 page.ctrl('loanInfo', function($scope) {
+//	var apiMap = {
+//		"sex": "/sex",
+//		"busiArea": "/busiarea"
+//	}
+//	
+//	$(document).on('change','select', function() {
+//		var that =$(this);
+//		var key = that.data('key');
+//		$.ajax({
+//			url: apiMap[key]
+//		})
+//	})
 	var $console = render.$console,
 		$params = $scope.$params,
 		$source = $scope.$source = {},

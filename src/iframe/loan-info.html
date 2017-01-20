@@ -182,6 +182,7 @@
 						<form id="carInfoForm">
 							
 						<div class="loan-info">
+							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'licenseType'){ }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>车辆上公牌还是私牌：</span>
 								<span class="info-value">
@@ -192,6 +193,7 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'isFinanceLeaseVehicle'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>车辆是否为融资租赁的乘用车：</span>
 								<span class="info-value">
@@ -202,6 +204,7 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'isOperationVehicle'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>车辆是否为营运车：</span>
 								<span class="info-value">
@@ -212,6 +215,7 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'onLicensePlace'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>上牌地：</span>
 								<span class="info-value selecter">
@@ -220,10 +224,12 @@
 									<input type="hidden" name="onLicensePlace" id="selectTypeIH" />
 								</span>
 							</div>
+							{{  };if(seg.code == 'licenseCategory'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>牌照类型：</span>
 								<span class="info-value"><input type="text" name="licenseCategory" value="{{= it.data.loanUserCar.licenseCategory}}" /></span>
 							</div>
+							{{  };if(seg.code == 'carName'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>车辆型号：</span>
 								<span class="info-value">
@@ -237,14 +243,17 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'carPrice'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>车辆价格：</span>
 								<span class="info-value"><input type="text" name="carPrice" value="{{= it.data.loanUserCar.carPrice}}" /></span>
 							</div>
+							{{  };if(seg.code == 'systemCarPrice'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>系统查询价：</span>
 								<span class="info-value"><input type="text" name="systemCarPrice" value="{{= it.data.loanUserCar.systemCarPrice}}" /></span>
 							</div>
+							{{  };if(seg.code == 'isInstallGps'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>是否加装GPS：</span>
 								<span class="info-value gps gpssel">
@@ -257,18 +266,23 @@
 								<span class="info-value gps"><input type="text" name="gpsNumber1" value="{{= it.data.loanUserCar.gpsNumber1}}" /></span>
 								<span class="info-value gps"><input type="text" name="gpsNumber2" value="{{= it.data.loanUserCar.gpsNumber2}}" /></span>
 							</div>
+							{{  };if(seg.code == 'frameNo'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>车架号：</span>
 								<span class="info-value"><input type="text" name="frameNo" value="{{= it.data.loanUserCar.frameNo}}" /></span>
 							</div>
+							{{  };if(seg.code == 'engineNo'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>发动机号：</span>
 								<span class="info-value"><input type="text" name="engineNo" value="{{= it.data.loanUserCar.engineNo}}" /></span>
 							</div>
+							{{  };if(seg.code == 'billingDeptName'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>开票单位名称：</span>
 								<span class="info-value"><input type="text" name="billingDeptName" value="{{= it.data.loanUserCar.billingDeptName}}" /></span>
 							</div>
+							{{ } }}
+							{{ } }}
 						</div>
 						</form>
 
@@ -288,6 +302,7 @@
 					<div class="panel-detail-content-layout">
 						<form id="stageInfoForm">
 						<div class="loan-info">
+							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'businessModel'){ }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>业务模式：</span>
 								<span class="info-value">
@@ -298,30 +313,37 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'sfMoney'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>首付金额：</span>
 								<span class="info-value"><input type="text" name="sfMoney" value="{{= it.data.loanUserStage.sfMoney }}" /></span>
 							</div>
+							{{  };if(seg.code == 'sfProportion'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>首付比例：</span>
 								<span class="info-value"><input type="text" name="sfProportion" value="{{= it.data.loanUserStage.sfProportion }}" /></span>
 							</div>
+							{{  };if(seg.code == 'commissionFeeRate'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>分期手续费率：</span>
 								<span class="info-value"><input type="text" name="commissionFeeRate" value="{{= it.data.loanUserStage.commissionFeeRate }}" /></span>
 							</div>
+							{{  };if(seg.code == 'loanMoney'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>贷款金额：</span>
 								<span class="info-value"><input type="text" name="loanMoney" value="{{= it.data.loanUserStage.loanMoney }}" /></span>
 							</div>
+							{{  };if(seg.code == 'stageMoney'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>分期金额：</span>
 								<span class="info-value"><input type="text" name="stageMoney" value="{{= it.data.loanUserStage.stageMoney }}" /></span>
 							</div>
+							{{  };if(seg.code == 'advancedMoney'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>垫资金额：</span>
 								<span class="info-value"><input type="text" name="advancedMoney" value="{{= it.data.loanUserStage.advancedMoney }}" /></span>
 							</div>
+							{{  };if(seg.code == 'repayPeriod'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>还款期限：</span>
 								<span class="info-value">
@@ -335,34 +357,42 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'bankBaseRates'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>银行基准利率：</span>
 								<span class="info-value"><input type="text" name="bankBaseRates" value="{{= it.data.loanUserStage.bankBaseRates }}" /></span>
 							</div>
+							{{  };if(seg.code == 'bankFeeMoney'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>银行手续费：</span>
 								<span class="info-value"><input type="text" name="bankFeeMoney" value="{{= it.data.loanUserStage.bankFeeMoney }}" /></span>
 							</div>
+							{{  };if(seg.code == 'contractSfMoney'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>合同首付：</span>
 								<span class="info-value"><input type="text" name="contractSfMoney" value="{{= it.data.loanUserStage.contractSfMoney }}" /></span>
 							</div>
+							{{  };if(seg.code == 'firstMonthMoney'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>首月还款金额：</span>
 								<span class="info-value"><input type="text" name="firstMonthMoney" value="{{= it.data.loanUserStage.firstMonthMoney }}" /></span>
 							</div>
+							{{  };if(seg.code == 'contractSfRatio'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>合同首付比例：</span>
 								<span class="info-value"><input type="text" name="contractSfRatio" value="{{= it.data.loanUserStage.contractSfRatio }}" /></span>
 							</div>
+							{{  };if(seg.code == 'loanFeeMoney'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>办贷款手续费：</span>
 								<span class="info-value"><input type="text" name="loanFeeMoney" value="{{= it.data.loanUserStage.loanFeeMoney }}" /></span>
 							</div>
+							{{  };if(seg.code == 'bareRate'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>毛利率：</span>
 								<span class="info-value"><input type="text" name="bareRate" value="{{= it.data.loanUserStage.bareRate }}" /></span>
 							</div>
+							{{  };if(seg.code == 'isDiscount'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>是否贴息：</span>
 								<span class="info-value">
@@ -373,14 +403,17 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'discountMoney'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>贴息金额：</span>
 								<span class="info-value"><input type="text" name="discountMoney" value="{{= it.data.loanUserStage.discountMoney }}" /></span>
 							</div>
+							{{  };if(seg.code == 'discountRate'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>贴息利率：</span>
 								<span class="info-value"><input type="text" name="discountRate" value="{{= it.data.loanUserStage.discountRate }}" /></span>
 							</div>
+							{{  };if(seg.code == 'renewalMode'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>保险续保：</span>
 								<span class="info-value">
@@ -391,10 +424,12 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'cardNo'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>信用卡卡号：</span>
 								<span class="info-value"><input type="text" name="cardNo" value="{{= it.data.loanUserStage.cardNo}}" /></span>
 							</div>
+							{{  };if(seg.code == 'isAdvanced'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>是否需要垫资：</span>
 								<span class="info-value">
@@ -405,16 +440,19 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'utilityTime'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>用款时间：</span>
 								<span class="info-value"><input type="text" name="utilityTime" value="{{= it.data.loanUserStage.utilityTime}}" /></span>
 							</div>
+							{{ } }}
+							{{ } }}
 						</div>
 						</form>
 					</div>
 				</div>
 				{{ };if(sec.code == 'ZJKR'){ }}
-				{{for(var a = 0, lenth1 = it.data.loanUser.length; a < lenth1; a++) { var mainPerson = it.data.loanUser[a];if(mainPerson.userType == 0){ }}
+				{{ var mainPerson1=it.data.loanUser[0].loanUserList; for(var m = 0, lenthm = mainPerson1.length; m < lenthm; m++) { var mainPerson = mainPerson1[m]; }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
@@ -442,8 +480,7 @@
 									</select>
 								</span>
 							</div>
-							{{ } }}
-							{{ } }}
+							{{  };if(seg.code == 'houseStatus'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>购车地房屋所有权情况：</span>
 								<span class="info-value">
@@ -455,6 +492,7 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'isEnterprise'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>是否企业法人：</span>
 								<span class="info-value">
@@ -465,14 +503,17 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'accountLocation'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>户籍：</span>
 								<span class="info-value"><input type="text" name="accountLocation" value="{{= mainPerson.accountLocation }}" /></span>
 							</div>
+							{{  };if(seg.code == 'userName'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>姓名：</span>
 								<span class="info-value"><input type="text" name="userName" value="{{= mainPerson.userName }}" /></span>
 							</div>
+							{{  };if(seg.code == 'sex'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>性别：</span>
 								<span class="info-value">
@@ -483,58 +524,72 @@
 									</select>
 								</span>
 							</div>
+							{{  };if(seg.code == 'idCard'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>身份证号码：</span>
 								<span class="info-value"><input type="text" name="idCard" value="{{= mainPerson.idCard }}" /></span>
 							</div>
+							{{  };if(seg.code == 'mobile'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>联系电话：</span>
 								<span class="info-value"><input type="text" name="mobile" value="{{= mainPerson.mobile }}" /></span>
 							</div>
+							{{  };if(seg.code == 'age'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>申请时年龄：</span>
 								<span class="info-value"><input type="text" name="age" value="{{= mainPerson.age }}" /></span>
 							</div>
+							{{  };if(seg.code == 'familyTel'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭电话：</span>
 								<span class="info-value"><input type="text" name="familyTel" value="{{= mainPerson.familyTel }}" /></span>
 							</div>
+							{{  };if(seg.code == 'familyAddress'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭地址：</span>
 								<span class="info-value"><input type="text" name="familyAddress" value="{{= mainPerson.familyAddress }}" /></span>
 							</div>
+							{{  };if(seg.code == 'familyZipcode'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>家庭地址邮编：</span>
 								<span class="info-value"><input type="text" name="familyZipcode" value="{{= mainPerson.familyZipcode }}" /></span>
 							</div>
+							{{  };if(seg.code == 'campany'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位名称：</span>
 								<span class="info-value"><input type="text" name="company" value="{{= mainPerson.company }}" /></span>
 							</div>
+							{{  };if(seg.code == 'campanyTel'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位电话：</span>
 								<span class="info-value"><input type="text" name="companyTel" value="{{= mainPerson.companyTel }}" /></span>
 							</div>
+							{{  };if(seg.code == 'campanyAddress'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址：</span>
 								<span class="info-value"><input type="text" name="companyAddress" value="{{= mainPerson.companyAddress }}" /></span>
 							</div>
+							{{  };if(seg.code == 'campanyZipcode'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址邮编：</span>
 								<span class="info-value"><input type="text" name="companyZipcode" value="{{= mainPerson.companyZipcode }}" /></span>
 							</div>
+							{{  };if(seg.code == 'monthIncomeMoney'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>税后月收入：</span>
 								<span class="info-value"><input type="text" name="monthIncomeMoney" value="{{= mainPerson.monthIncomeMoney }}" /></span>
 							</div>
+							{{  };if(seg.code == 'balance'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>存款余额：</span>
 								<span class="info-value"><input type="text" name="balance" value="{{= mainPerson.balance }}" /></span>
 							</div>
+							{{  };if(seg.code == 'averageDailyBalance'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>日均存款余额：</span>
 								<span class="info-value"><input type="text" name="averageDailyBalance" value="{{= mainPerson.averageDailyBalance }}" /></span>
 							</div>
+							{{  };if(seg.code == 'residentType'){  }}
 							<div class="info-key-check-box" id="mainPersonRdtype">
 								<span class="info-key"><i>*</i>本地常住类型：</span>
 								<span class="info-check-box">
@@ -577,25 +632,193 @@
 									<input type="hidden" id="mainPersonTp" name="residentType" value="{{= mainPerson.residentType }}" />
 								</span>
 							</div>
+							{{ } }}
+							{{ } }}
+
 						</div>
 						</form>
 					</div>
 				</div>
 				{{ } }}
-				{{ } }}
-				{{for(var a = 0, lenth1 = it.data.loanUser.length; a < lenth1; a++) { var mainPerson = it.data.loanUser[a];if(mainPerson.userType == 1){ }}
+				{{ };if(sec.code == 'GTHK'){ }}
+				{{ var mainPerson1=it.data.loanUser[1].loanUserList; for(var m = 0, lenthm = mainPerson1.length; m < lenthm; m++) { var mainPerson = mainPerson1[m]; }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">共同还款人{{= a}}信息</span>
-							<div class="button button-mini-nowidth" id="saveCommonInfo_{{= a}}">
+							<span class="panel-title-name">共同还款人{{= m+1}}信息</span>
+							<div class="button button-mini-nowidth" id="saveCommonInfo_{{= m+1}}">
 								保存
 							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
-						<form id="commonPersonInfoForm_{{= a}}">
+						<form id="commonPersonInfoForm_{{= m+1}}">
+						<div class="loan-info">
+							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'userRelationship'){ }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>与借款人关系：</span>
+								<span class="info-value">
+									<select name="userRelationship">
+										<option value=''>请选择</option>
+										<option value="0" {{=(mainPerson.userRelationship==0?"selected":"")}}>本人</option>
+										<option value="1" {{=(mainPerson.userRelationship==1?"selected":"")}}>配偶</option>
+										<option value="2" {{=(mainPerson.userRelationship==2?"selected":"")}}>父母</option>
+										<option value="3" {{=(mainPerson.userRelationship==3?"selected":"")}}>子女</option>
+										<option value="4" {{=(mainPerson.userRelationship==4?"selected":"")}}>其他</option>
+									</select>
+								</span>
+							</div>
+							{{  };if(seg.code == 'accountLocation'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>户籍：</span>
+								<span class="info-value"><input type="text" name="accountLocation" value="{{= mainPerson.accountLocation }}" /></span>
+							</div>
+							{{  };if(seg.code == 'userName'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>姓名：</span>
+								<span class="info-value"><input type="text" name="userName" value="{{= mainPerson.userName }}" /></span>
+							</div>
+							{{  };if(seg.code == 'sex'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>性别：</span>
+								<span class="info-value">
+									<select name="sex">
+										<option value=''>请选择</option>
+										<option value="0" {{=(mainPerson.sex==0?"selected":"")}}>男</option>
+										<option value="1" {{=(mainPerson.sex==1?"selected":"")}}>女</option>
+									</select>
+								</span>
+							</div>
+							{{  };if(seg.code == 'idCard'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>身份证号码：</span>
+								<span class="info-value"><input type="text" name="idCard" value="{{= mainPerson.idCard }}" /></span>
+							</div>
+							{{  };if(seg.code == 'mobile'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>联系电话：</span>
+								<span class="info-value"><input type="text" name="mobile" value="{{= mainPerson.mobile }}" /></span>
+							</div>
+							{{  };if(seg.code == 'age'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>申请时年龄：</span>
+								<span class="info-value"><input type="text" name="age" value="{{= mainPerson.age }}" /></span>
+							</div>
+							{{  };if(seg.code == 'familyTel'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>家庭电话：</span>
+								<span class="info-value"><input type="text" name="familyTel" value="{{= mainPerson.familyTel }}" /></span>
+							</div>
+							{{  };if(seg.code == 'familyAddress'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>家庭地址：</span>
+								<span class="info-value"><input type="text" name="familyAddress" value="{{= mainPerson.familyAddress }}" /></span>
+							</div>
+							{{  };if(seg.code == 'familyZipcode'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>家庭地址邮编：</span>
+								<span class="info-value"><input type="text" name="familyZipcode" value="{{= mainPerson.familyZipcode }}" /></span>
+							</div>
+							{{  };if(seg.code == 'campany'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>单位名称：</span>
+								<span class="info-value"><input type="text" name="company" value="{{= mainPerson.company }}" /></span>
+							</div>
+							{{  };if(seg.code == 'campanyTel'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>单位电话：</span>
+								<span class="info-value"><input type="text" name="companyTel" value="{{= mainPerson.companyTel }}" /></span>
+							</div>
+							{{  };if(seg.code == 'campanyAddress'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>单位地址：</span>
+								<span class="info-value"><input type="text" name="companyAddress" value="{{= mainPerson.companyAddress }}" /></span>
+							</div>
+							{{  };if(seg.code == 'campanyZipcode'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>单位地址邮编：</span>
+								<span class="info-value"><input type="text" name="companyZipcode" value="{{= mainPerson.companyZipcode }}" /></span>
+							</div>
+							{{  };if(seg.code == 'monthIncomeMoney'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>税后月收入：</span>
+								<span class="info-value"><input type="text" name="monthIncomeMoney" value="{{= mainPerson.monthIncomeMoney }}" /></span>
+							</div>
+							{{  };if(seg.code == 'balance'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>存款余额：</span>
+								<span class="info-value"><input type="text" name="balance" value="{{= mainPerson.balance }}" /></span>
+							</div>
+							{{  };if(seg.code == 'averageDailyBalance'){  }}
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>日均存款余额：</span>
+								<span class="info-value"><input type="text" name="averageDailyBalance" value="{{= mainPerson.averageDailyBalance }}" /></span>
+							</div>
+							{{  };if(seg.code == 'residentType'){  }}
+							<div class="info-key-check-box">
+								<span class="info-key"><i>*</i>本地常住类型：</span>
+								<span class="info-check-box">
+									<div class="info-check">
+										<span class="check-key"><div class="checkbox {{=(mainPerson.residentType==0?"checked":"")}}"></div></span>
+										<span class="check-value">本地户口</span>
+									</div>
+									<div class="info-check">
+										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-value">本地工作</span>
+									</div>
+									<div class="info-check">
+										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-value">本地居住</span>
+									</div>
+									<div class="info-check">
+										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-value">1年社保或工资流水</span>
+									</div>
+									<div class="info-check">
+										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-value">非本地户口</span>
+									</div>
+									<div class="info-check">
+										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-value">1年本地房产</span>
+									</div>
+									<div class="info-check">
+										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-value">异地工作</span>
+									</div>
+									<div class="info-check">
+										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-value">企业成立1年</span>
+									</div>
+									<div class="info-check">
+										<span class="check-key"><div class="checkbox"></div></span>
+										<span class="check-value">其他</span>
+									</div>
+									<input type="hidden" name="" value="" />
+								</span>
+							</div>
+							{{ } }}
+							{{ } }}
+						</div>
+						</form>
+					</div>
+				</div>
+				{{ } }}
+				{{ };if(sec.code == 'FDBR'){ }}
+				{{ var mainPerson1=it.data.loanUser[1].loanUserList; for(var m = 0, lenthm = mainPerson1.length; m < lenthm; m++) { var mainPerson = mainPerson1[m]; }}
+				<div class="panel panel-loan">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">反担保人{{= m+1}}信息</span>
+							<div class="button button-mini-nowidth" id="saveGuaInfo_{{= m+1}}">
+								保存
+							</div>
+						</div>
+					</div>
+					<div class="panel-detail-content-layout">
+						<form id="guaPersonInfoForm_{{= m+1}}">
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>与借款人关系：</span>
@@ -726,152 +949,6 @@
 						</form>
 					</div>
 				</div>
-				{{ } }}
-				{{ } }}
-				{{for(var a = 0, lenth1 = it.data.loanUser.length; a < lenth1; a++) { var mainPerson = it.data.loanUser[a];if(mainPerson.userType == 2){ }}
-				<div class="panel panel-loan">
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">反担保人{{= a}}信息</span>
-							<div class="button button-mini-nowidth" id="saveGuaInfo_{{= a}}">
-								保存
-							</div>
-						</div>
-					</div>
-					<div class="panel-detail-content-layout">
-						<form id="guaPersonInfoForm_{{= a}}">
-						<div class="loan-info">
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>与借款人关系：</span>
-								<span class="info-value">
-									<select name="userRelationship">
-										<option value=''>请选择</option>
-										<option value="0" {{=(mainPerson.userRelationship==0?"selected":"")}}>本人</option>
-										<option value="1" {{=(mainPerson.userRelationship==1?"selected":"")}}>配偶</option>
-										<option value="2" {{=(mainPerson.userRelationship==2?"selected":"")}}>父母</option>
-										<option value="3" {{=(mainPerson.userRelationship==3?"selected":"")}}>子女</option>
-										<option value="4" {{=(mainPerson.userRelationship==4?"selected":"")}}>其他</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>户籍：</span>
-								<span class="info-value"><input type="text" name="accountLocation" value="{{= mainPerson.accountLocation }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>姓名：</span>
-								<span class="info-value"><input type="text" name="userName" value="{{= mainPerson.userName }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>性别：</span>
-								<span class="info-value">
-									<select name="sex">
-										<option value=''>请选择</option>
-										<option value="0" {{=(mainPerson.sex==0?"selected":"")}}>男</option>
-										<option value="1" {{=(mainPerson.sex==1?"selected":"")}}>女</option>
-									</select>
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>身份证号码：</span>
-								<span class="info-value"><input type="text" name="idCard" value="{{= mainPerson.idCard }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>联系电话：</span>
-								<span class="info-value"><input type="text" name="mobile" value="{{= mainPerson.mobile }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>申请时年龄：</span>
-								<span class="info-value"><input type="text" name="age" value="{{= mainPerson.age }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>家庭电话：</span>
-								<span class="info-value"><input type="text" name="familyTel" value="{{= mainPerson.familyTel }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>家庭地址：</span>
-								<span class="info-value"><input type="text" name="familyAddress" value="{{= mainPerson.familyAddress }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>家庭地址邮编：</span>
-								<span class="info-value"><input type="text" name="familyZipcode" value="{{= mainPerson.familyZipcode }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位名称：</span>
-								<span class="info-value"><input type="text" name="company" value="{{= mainPerson.company }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位电话：</span>
-								<span class="info-value"><input type="text" name="companyTel" value="{{= mainPerson.companyTel }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位地址：</span>
-								<span class="info-value"><input type="text" name="companyAddress" value="{{= mainPerson.companyAddress }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位地址邮编：</span>
-								<span class="info-value"><input type="text" name="companyZipcode" value="{{= mainPerson.companyZipcode }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>税后月收入：</span>
-								<span class="info-value"><input type="text" name="monthIncomeMoney" value="{{= mainPerson.monthIncomeMoney }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>存款余额：</span>
-								<span class="info-value"><input type="text" name="balance" value="{{= mainPerson.balance }}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>日均存款余额：</span>
-								<span class="info-value"><input type="text" name="averageDailyBalance" value="{{= mainPerson.averageDailyBalance }}" /></span>
-							</div>
-							<div class="info-key-check-box">
-								<span class="info-key"><i>*</i>本地常住类型：</span>
-								<span class="info-check-box">
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox {{=(mainPerson.residentType==0?"checked":"")}}"></div></span>
-										<span class="check-value">本地户口</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">本地工作</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">本地居住</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">1年社保或工资流水</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">非本地户口</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">1年本地房产</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">异地工作</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">企业成立1年</span>
-									</div>
-									<div class="info-check">
-										<span class="check-key"><div class="checkbox"></div></span>
-										<span class="check-value">其他</span>
-									</div>
-									<input type="hidden" name="" value="" />
-								</span>
-							</div>
-						</div>
-						</form>
-					</div>
-				</div>
-				{{ } }}
 				{{ } }}
 				{{ };if(sec.code == 'JJLXR'){ }}
 				<div class="panel panel-loan">

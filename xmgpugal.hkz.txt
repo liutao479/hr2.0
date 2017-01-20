@@ -1,0 +1,60 @@
+﻿Merge remote-tracking branch 'refs/remotes/origin/develop' into zhy
+
+Conflicts:
+	src/static/js/componements/dropdown.js
+	src/static/less/defined.less
+	src/static/less/main.less
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch zhy
+# Your branch is up-to-date with 'origin/zhy'.
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	renamed:    mock/get/expiress.process.json -> mock/get/expire.process.json
+#	modified:   mock/get/loan.infoBak.json
+#	modified:   src/app.html
+#	modified:   src/iframe/Component-test.html
+#	modified:   src/iframe/cooperative-bank.html
+#	modified:   src/iframe/credit-material-upload.html
+#	modified:   src/iframe/credit-pre-review.html
+#	modified:   src/iframe/credit-result-typing.html
+#	modified:   src/iframe/credit-result.html
+#	modified:   src/iframe/expire-info-prev.html
+#	new file:   src/iframe/expire-process-detail.html
+#	new file:   src/iframe/expire-process-input-list.html
+#	new file:   src/iframe/expire-record.html
+#	modified:   src/iframe/expire-single-detail.html
+#	new file:   src/iframe/expire-task-distribute.html
+#	new file:   src/iframe/import-history.html
+#	modified:   src/iframe/loan-info.html
+#	modified:   src/iframe/loan-manage.html
+#	modified:   src/iframe/main.html
+#	modified:   src/iframe/my-customer.html
+#	modified:   src/iframe/operations-analysis.html
+#	modified:   src/static/js/componements/dropdown.js
+#	new file:   src/static/js/componements/input.js
+#	modified:   src/static/js/componements/paging.js
+#	modified:   src/static/js/core/page.js
+#	modified:   src/static/js/page/creditUpload.js
+#	modified:   src/static/js/page/licenceProcess.js
+#	modified:   src/static/js/page/loanInfo.js
+#	modified:   src/static/less/defined.less
+#	modified:   src/static/less/global.less
+#	modified:   src/static/less/main.less
+#	renamed:    src/templates/expire.info-input-single.html -> src/templates/expire-info-input-single.html
+#	new file:   src/templates/expire-process-detail.html
+#	new file:   src/templates/expire-process-input-list.html
+#	new file:   src/templates/expire-record.html
+#	new file:   src/templates/expire-task-distribute.html
+#	new file:   src/templates/import-history.html
+#
+
