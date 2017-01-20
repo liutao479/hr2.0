@@ -1,0 +1,94 @@
+	<!--历史导入记录-->
+			<div class="container expire-info-input" id="expire-info-input">
+				<!-- 面包屑 返回列表 -->
+				<div class="path-back-bar clearfix">
+					<div class="path-back">
+						<i class="iconfont">&#xe626;</i>
+						<a href="#">逾期信息录入</a>&nbsp;&gt;
+						<span class="current-page">历史导入记录</span>
+					</div>
+				</div>
+				<!-- 面包屑 返回列表 end-->
+
+				<div class="layout mt15">
+					<!-- 搜素条件栏 -->
+					<div class="select-search-bar no-border clearfix">
+						<div class="search-item">
+							<span class="select-name">创建日期：</span>
+							<span class="select select-date">
+								<span class="placeholder">0000-00-00</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+							<span class="separator">-</span>
+							<span class="select select-date">
+								<span class="placeholder">0000-00-00</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">经办行：</span>
+							<span class="select select-common">
+								<span class="placeholder">请选择</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+						<div class="search-item">
+							<a href="javascript:;">重置</a>
+							<div id="" class="button button-mini-nowidth">搜索</div>
+						</div>
+					</div>
+					<!-- 搜素条件栏 end-->
+
+					<!-- 导入历史记录表格 -->
+					<table class="orders-table no-border" width="100%">
+						<thead>
+							<tr class="orders-bar-title">
+								<td class="orders-item-data"><a href="javascript:;" class="sort-arrow">创建时间<img src="/hr2.0/dist/static/css/img/sort-up.png" alt="" style="width:13px;height:13px;overflow: hidden;" title="时间升序" /></a></td>
+								<td class="orders-item-data">订单号</td>
+								<td class="orders-item-data">借款人</td>
+								<td class="orders-item-data">任务类型</td>
+								<td class="orders-item-data">处理状态</td>
+								<td class="orders-item-data">操作</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="tr-noborder tr-odd">
+								<td class="orders-item-data">2016/11/09 12:00</td>
+								<td class="orders-item-data">中国农业银行浙江省分行杭州XX支行</td>
+								<td class="orders-item-data">14</td>
+								<td class="orders-item-data">14</td>
+								<td class="orders-item-data">14</td>
+								<td class="orders-item-data">
+									<a href="#" class="button button-mini-nowidth">查看</a>
+								</td>
+							</tr>
+							<tr class="tr-even">
+								<td class="orders-item-data">2016/11/09 12:00</td>
+								<td class="orders-item-data">中国农业银行浙江省分行杭州XX支行</td>
+								<td class="orders-item-data">14</td>
+								<td class="orders-item-data">14</td>
+								<td class="orders-item-data">14</td>
+								<td class="orders-item-data">
+									<a href="#" class="button button-mini-nowidth">查看</a>
+								</td>
+							</tr>
+							<tr class="tr-odd">
+								<td class="orders-item-data">2016/11/09 12:00</td>
+								<td class="orders-item-data">中国农业银行浙江省分行杭州XX支行</td>
+								<td class="orders-item-data">14</td>
+								<td class="orders-item-data">14</td>
+								<td class="orders-item-data">14</td>
+								<td class="orders-item-data">
+									<a href="#" class="button button-mini-nowidth">查看</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- 导入历史记录表格 -->
+
+				</div>
+				
+				<!-- 分页插件 -->
+				<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['loan'].paging" data-pages="0" data-current="1"></div>
+				<!-- 分页插件 end-->
+			</div>

@@ -18,16 +18,20 @@
 	
 	<!--面板-->
 	<div class="panel panel-credit clearfix" id="creditUserPanel">
+
 	</div>
 	<!--提交订单按钮区域-->
 	<div class="commit-orders-box">
 		<div id="" class="button cancel">取消订单</div>
 		<div id="" class="button">征信查询</div>
 	</div>
+
+	<div class="select select-car" data-tabs="品牌|车系|车型"></div>
 </div>
 
+
 <script type="text/dot-x-template" id="tplTabItem">
-	<li class="role-bar-li"><a class="role-item tabEvt">{{=it.roleTypeName}}</a></li>
+	<li class="role-bar-li"><a class="role-item tabEvt" data-trigger="">{{=it.roleTypeName}}</a></li>
 </script>
 <script type="text/template" id="tplCreditPanel">
 	<div class="tabEvtTrigger" data-trigger="{{=it.trigger}}" data-code="{{=it.code}}">

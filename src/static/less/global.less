@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_e74b5pccutgiizfr.eot');
-  src: url('//at.alicdn.com/t/font_e74b5pccutgiizfr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_e74b5pccutgiizfr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_e74b5pccutgiizfr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_e74b5pccutgiizfr.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_ng63b7imj6jbrzfr.eot');
+  src: url('//at.alicdn.com/t/font_ng63b7imj6jbrzfr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_ng63b7imj6jbrzfr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_ng63b7imj6jbrzfr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_ng63b7imj6jbrzfr.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -19,41 +19,83 @@
 //按钮
 .button {
     display: inline-block;
+    cursor: pointer;
+    .borderRadius;
     height: 40px;
     line-height: 40px;
     padding:0 20px;
     font-size: 14px;
-    cursor: pointer;
-    .borderRadius;
-    background-color: @tableActiveColor;
-    color: #FFF; 
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    color: #FFF;
+    background-color: @buttonBgColor;
     &:hover {
-        background-color: @buttonBgColor !important;
-        color: #FFF !important;
+        background-color: darken(@buttonBgColor, 10%);
     }
-    &.button-mini {
-        width: 124px;
+    &:active {
+        background-color: lighten(@buttonBgColor, 1%);
+    }
+    &&-mini {
         height: 32px;
         line-height: 32px;
         text-align: center;
-        padding: 0;
-        background-color: #FFF !important;
-        color: @buttonBgColor;
         font-size: 13px;
-        border: 1px solid @borderColor;
-        &:hover {
-            background-color: @buttonBgColor !important;
-            color: #FFF !important;
+        &.button-mini-width {
+            width: 124px;
         }
     }
-    &.button-mini-nowidth {
-        height: 32px;
-        line-height: 32px;
+    &&-gray {
         background-color: #e9e7f7;
-        color: @tableActiveColor;
+        color: @mainColor;
+        &:hover {
+            color: #FFF !important;
+            background-color: @mainColor !important;
+        }
+        &:active {
+            color: #FFF !important;
+            background-color: lighten(@mainColor, 8%) !important;
+        }
     }
-    &.button-nowidth {
+    &&-empty {
+        height: 30px;
+        line-height: 30px;
+        border:1px solid #cdd9e9;
+        background-color: #ffffff;
+        color: @fontColor;
+        &:hover {
+            color: #FFF !important;
+            border-color: @mainColor !important;
+            background-color: @mainColor !important;
+        }
+        &:active {
+            color: #FFF !important;
+            border-color: lighten(@mainColor, 8%) !important;
+            background-color: lighten(@mainColor, 8%) !important;
+        }
+    }
+    &&-width {
+        width: 124px;
+        text-align: center;
+    }
+    &&-deep {
         background-color: @mainColor;
+        &:hover {
+            background-color: darken(@mainColor, 10%) !important;
+        }
+        &:active {
+            background-color: lighten(@mainColor, 1%) !important;
+        }
+    }
+    &&-orange {
+        background-color: @orangeColor;
+        &:hover {
+            background-color: darken(@orangeColor, 10%) !important;
+        }
+        &:active {
+            background-color: lighten(@orangeColor, 1%) !important;
+        }
     }
     i {
         margin-right: 7px;
@@ -101,16 +143,18 @@
 }
 //输入框
 .input-text {
+    display: inline-block;
     width: 348px;
     height: 32px;
     line-height: 32px;
     padding: 0 10px;
     border: 1px solid @borderColor;
     .borderRadius(3px);
-    outline: none;
+    &.input-text-mini {
+        width: 50px;
+    }
     input {
         float: left;
-        display: inline-block;
         width: 100%;
         height: 30px;
         line-height: 30px !important;
@@ -186,6 +230,9 @@
     padding: 20px;  
     border: 1px solid @borderColor;  
     background-color: #FFF;
+    hr {
+        margin: 20px 0;
+    }
 }
 
 //选择框
@@ -200,9 +247,15 @@
     color: @tiperColor;
     &&-common {
         width: 120px;
+        .placeholder {
+            width: 80px;
+        }
     }
     &&-date {
         width: 120px;
+        .placeholder {
+            width: 80px;
+        }
     }
     &&-car {
         width: 248px;
@@ -213,9 +266,7 @@
             width: 285px;
         }
     }
-    &&-open {
-        border-color: @buttonBgColor;
-    }
+    
     .arrow {
         cursor: pointer;
     }
@@ -234,7 +285,22 @@
             border: none;
             outline: none;
             line-height: 30px;
-            padding: 0 10px;
+            padding: 0 30px 0 10px;
+        }
+        .arrow-trigger {
+            position: absolute;
+            left: auto;
+            width: 30px;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            cursor: pointer;
+        }
+        &.readonly {
+            .arrow-trigger {
+                left: 0;
+                width: auto;
+            }
         }
     }
     .placeholder {
@@ -249,18 +315,22 @@
         padding: 0 10px;
     }
     .select-box {
+        display: none;
         cursor: default;
         position: absolute;
         z-index: 90;
         top: -1px;
         left: -1px;
-        border: 1px solid @buttonBgColor;
+        right: -1px;
         .borderRadius(3px);
+        border: 1px solid @buttonBgColor;
+        padding-top: 30px;
+        /*
         width: 248px;
+        */
         .select-tab {
             width: 248px;
             height: 29px;
-            margin-top: 30px;
             .select-tab-item {
                 position: relative;
                 float: left; 
@@ -356,7 +426,14 @@
         
     }
     .arrow {
+        cursor: pointer;
         right: 10px;         
+    }
+    &&-open {
+        border-color: @buttonBgColor;
+        .select-box {
+            display: block;
+        }
     }
 }
 
@@ -378,6 +455,19 @@
 .backReason {
     border: 1px solid @backReasonBorderColor;
     background-color: @backReasonBgColor;
+}
+// 特殊状态颜色
+.color-red {
+    color: #ff5c57;
+}
+.color-green {
+    color: #7ed262;
+}
+.color-blue {
+    color: @mainColor !important;
+}
+.color-tiper {
+    color: @tiperColor;
 }
 
 //分页器
@@ -431,12 +521,9 @@
                 width: 48px;
                 height: 30px;
             }
-            .button  {
+            .button {
                 float: left;
-                background-color: #FFF;
-                color: @fontColor;
-                font-size: 14px;
-                border: 1px solid #cdd9e9;
+                font-size: 13px;
                 height: 30px;
                 line-height: 30px;
             }
