@@ -1,0 +1,67 @@
+//右边栏
+.sideBar {
+    position: fixed;
+    z-index: 998;
+    top: 254px;
+    right: 0;
+    .sideBar-item {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        text-align: center;
+        background-color: #f3f4f9;
+        cursor: pointer;
+        color: @fontColor;
+        border: 1px solid @borderColor;
+        border-bottom: 1px solid transparent; 
+        border-top: 1px solid transparent;
+        &:hover {
+            color: #FFFFFF;
+            background-color: @mainColor;
+            border-color: @mainColor !important;
+            .iconfont {
+                color: #FFFFFF;
+            }
+        }
+        &:first-child {
+            border-top: 1px solid @borderColor;
+        }
+        &:last-child {
+            border-color: @borderColor;
+            line-height: 16px; 
+            padding-top: 5px;
+            .iconfont {
+                margin-top: 5px; 
+                margin-left: 3px;
+            }
+            
+        }
+        .iconfont {
+            color: #90a4ae;
+            font-size: 22px;
+        }
+        .sideBar-content {
+            position: absolute;
+            display: none;
+            right: 43px;
+            top: -1px;
+            width: 111px;
+            height: 44px;
+            line-height: 44px;
+            border: 1px solid @mainColor;
+            border-right: none;
+            background-color: #f3f4f9;
+            color: @tableActiveColor;
+            .sideBar-content-item {
+                display: inline-block;
+                text-align: center;
+            }
+            .arrow {
+                position: absolute;
+                right: -9px;
+                border-color: transparent transparent transparent #f3f4f9;
+            }
+        }
+    }
+} 

@@ -149,6 +149,11 @@
 			refer: [],
 			page: 'auditPrint'
 		},
+		'expireInfoInput': {
+			title: '逾期信息录入',
+			refer: [],
+			page: 'expireInfoInput'
+		},
 		'expireProcess': {
 			title: '逾期处理',
 			refer: [],
@@ -175,8 +180,12 @@
 			page: 'organizationManage'
 		},
 		'loanProcess/creditUpload': {
-			title: '征信结果录入',
+			title: '征信材料上传',
 			page: 'creditUpload'
+		},
+		'loanProcess/creditInput': {
+			title: '征信结果录入',
+			page: 'creditInput'
 		},
 		'loanProcess/loanInfo': {
 			title: '信息表修改',
@@ -186,6 +195,7 @@
 			title: '订单详情',
 			page: 'ordersDetail'
 		}
+		
 
 	}
 	/**

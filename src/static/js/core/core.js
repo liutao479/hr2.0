@@ -55,7 +55,7 @@
 	_.$http.apiMap = {
 		menu: 'http://127.0.0.1:8083/mock/menu',
 		loanList: 'http://127.0.0.1:8083/mock/loan.list',
-		myCustomer: 'http://192.168.0.112:8080/loanOrder/getMyCustomer',
+		myCustomer: 'http://192.168.0.114:8080/loanOrder/getMyCustomer',
 		orderModifyAudit: 'http://127.0.0.1:8083/mock/orderModifyAudit',
 		cancelOrderAudit: 'http://127.0.0.1:8083/mock/cancelOrderAudit',
 		loanManage: 'http://127.0.0.1:8083/mock/loan.manage',
@@ -63,19 +63,20 @@
 		moneyBussinessAuditPrint: 'http://127.0.0.1:8083/mock/moneyBussinessAuditPrint',
 		mortgageProcess: 'http://127.0.0.1:8083/mock/mortgage.process',
 		mortgageAudit: 'http://127.0.0.1:8083/mock/mortgage.audit',
-		mortgageStatis: 'http://192.168.0.112:8080/loanPledge/getLoanPledgeList',
+		mortgageStatis: 'http://192.168.0.114:8080/loanPledge/getLoanPledgeList',
 		operationsAnalysis: 'http://127.0.0.1:8083/mock/operationsAnalysis',
 		organizationManage: 'http://127.0.0.1:8083/mock/organizationManage',
 		licenceProcess: 'http://127.0.0.1:8083/mock/licence.process',
 		licenceAudit: 'http://127.0.0.1:8083/mock/licence.audit',
-		licenceStatis: 'http://192.168.0.112:8080/loanRegistration/getLoanRegistrationList',
+		licenceStatis: 'http://192.168.0.114:8080/loanRegistration/getLoanRegistrationList',
 		expireProcess: 'http://127.0.0.1:8083/mock/expire.process',
-		creditArchiveDownload: 'http://192.168.0.112:8080/creditUser/getCreditMaterials',
-		loadArchiveDownload: 'http://192.168.0.112:8080/creditUser/getCreditMaterials',
-		moneyBusinessAuditPrint: 'http://192.168.0.112:8080/loanUserStage/getFinancialData',
-		auditPrint: 'http://192.168.0.112:8080/loanUserStage/getFinancialData',
+		creditArchiveDownload: 'http://192.168.0.114:8080/creditUser/getCreditMaterials',
+		loadArchiveDownload: 'http://192.168.0.114:8080/creditUser/getCreditMaterials',
+		moneyBusinessAuditPrint: 'http://192.168.0.114:8080/loanUserStage/getFinancialData',
+		auditPrint: 'http://192.168.0.114:8080/loanUserStage/getFinancialData',
 		operationsAnalysis: 'http://127.0.0.1:8083/mock/operationsAnalysis',
-		organizationManage: 'http://127.0.0.1:8083/mock/organizationManage'
+		organizationManage: 'http://127.0.0.1:8083/mock/organizationManage',
+		creditInput: 'http://127.0.0.1:8083/mock/creditInput'
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error

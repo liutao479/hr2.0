@@ -92,7 +92,7 @@
 		'expireInfoInput': {
 			parent: 'expireManage',
 			name: '逾期信息录入',
-			route: ''
+			route: 'expireInfoInput'
 		},
 		'expireProcess': {
 			parent: 'expireManage',

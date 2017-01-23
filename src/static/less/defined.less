@@ -23,10 +23,12 @@
 
 
 //圆角
-.borderRadius(@radius:3px) { 
-    -moz-border-radius: @radius; 
-    -webkit-border-radius: @radius; 
-    border-radius: @radius; 
+.borderRadius(@radius: 3px) { 
+	-webkit-border-radius: @radius; 
+       -moz-border-radius: @radius; 
+        -ms-border-radius: @radius; 
+         -o-border-radius: @radius; 
+            border-radius: @radius; 
 }
 
 //弹性盒子

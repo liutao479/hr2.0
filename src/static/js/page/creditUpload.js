@@ -32,10 +32,10 @@ page.ctrl('creditUpload', function($scope) {
 		$location.location();
 	}
 
-	var setupCreditPanel = function() {
+	var setupCreditPanel = function(data) {
 		$('.select').dropdown($scope);
 	}
-
+	
 	var loadOrderInfo = function() {
 		$.ajax({
 			url: 'http://127.0.0.1:8083/mock/creditUpload',

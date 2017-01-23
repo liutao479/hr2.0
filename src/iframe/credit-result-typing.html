@@ -18,271 +18,270 @@
 				</div>
 				<!--返回列表 end-->
 				
-				<div class="creditResultPanel" id="creditResultPanel">
-
-				</div>
-				
-
-
-				<script type="text/x-dot-template" id="creditResultListTmpl">
-					{{ console.log(it); }}
-					{{  }}
-				</script>
-				<script type="text/x-dot-template" id="creditResultListTmpl1">
-				<!--征信材料角色tab切换栏-->
+				<!-- tab切换栏 -->
 				<div class="tab-bar mt15">
 					<ul class="role-bar-ul clearfix">
+						
 						<li class="role-bar-li"><a href="#" class="role-item">借款人</a></li>
 						<li class="role-bar-li"><a href="#" class="role-item role-item-active">共同还款人</a></li>
 						<li class="role-bar-li"><a href="#" class="role-item">反担保人</a></li>
 					</ul>
 				</div>
-				<!--征信材料角色tab切换栏 end-->
-				
-				<!--工作台左侧菜单对应项详细面板（申请人）-->
-				<div class="panel no-top-border clearfix">
-					<!--二级标题（姓名，身份证等等...）-->
-					<div class="panel-content-title panel-title-box-special">
-						<div class="key-value-box">
-							<span class="key">姓名：</span>
-							<span class="value">北上</span>
-						</div>
-						<div class="key-value-box">
-							<span class="key">身份证号：</span>
-							<span class="value">412702199102033154</span>
-						</div>
-						<div class="key-value-box">
-							<span class="key">与借款人关系：</span>
-							<span class="value">配偶</span>
-						</div>
-						<div class="key-value-box">
-							<span class="key">征信查询时间：</span>
-							<span class="value">2016-11-01 12:00</span>
-						</div>
-						<div class="key-value-box key-value-box-special">
-							<div class="button button-mini">查看征信材料</div>
-						</div>
-					</div>
-					<!--二级标题（姓名，身份证等等...） end-->
-					<!--详细内容罗列-->
-					<div class="panel-detail-content panel-detail-table">
-						<!-- 征信报告照片 -->
-						<div class="panel-item-box mt15">
-							<div class="panel-key-area">征信报告文件：</div>
-							<div class="panel-value-area clearfix">
-								<div class="panel-value-item">
-									<div class="button button-mini">上传文件</div>	
-								</div>
-								<div class="panel-value-item">
-									<span class="color-tiper">文件格式：*.pdf</span>
-								</div>
-								
-							</div>
-						</div>
-						<!-- 征信报告照片 end-->
+				<!-- tab切换栏 end-->
 
-						<!-- 征信报告编号 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">征信报告编号：</div>
-							<div class="panel-value-area clearfix">
-								<div class="panel-value-item">
-									<div class="input-text">
-										<input type="text" />	
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 征信报告编号 end-->
+				<div class="creditResultPanel" id="creditResultPanel">
 
-						<!-- 征信报告照片 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">征信报告照片：</div>
-							<div class="panel-value-area">
-								<div class="imgs-item-group">
-									<div class="imgs-item-upload">
-										<i class="iconfont iconfont-upload">&#xe61f;</i><br />
-										<span class="imgs-describe">点击或拖拽上传图片</span>
-										<input type="file" id="" class="input-file" />
-									</div>
-								</div>
-								<div class="imgs-item-group">
-									<div class="imgs-item-upload">
-										<i class="iconfont iconfont-upload">&#xe61f;</i><br />
-										<span class="imgs-describe">点击或拖拽上传图片</span>
-										<input type="file" id="" class="input-file" />
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 征信报告照片 end-->
-
-						<!-- 征信字段 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">征信字段：</div>
-							<div class="panel-value-area">
-								<table border="1" cellspacing="" cellpadding="" class="field-table">
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-								</table>
-							</div>
-						</div>
-						<!-- 征信字段 end-->
-						<!-- 备注信息 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">备注信息：</div>
-							<div class="panel-value-area">
-								<textarea name="" id="" cols="30" rows="6" class="remarks-box"></textarea>
-							</div>
-						</div>
-						<!-- 备注信息 end-->
-					</div>
-					<!--详细内容罗列 end-->
-					<!--二级标题（姓名，身份证等等...）-->
-					<div class="panel-content-title ">
-						<div class="key-value-box">
-							<span class="key">姓名：</span>
-							<span class="value">北上</span>
-						</div>
-						<div class="key-value-box">
-							<span class="key">身份证号：</span>
-							<span class="value">412702199102033154</span>
-						</div>
-						<div class="key-value-box">
-							<span class="key">与借款人关系：</span>
-							<span class="value">配偶</span>
-						</div>
-						<div class="key-value-box">
-							<span class="key">征信查询时间：</span>
-							<span class="value">2016-11-01 12:00</span>
-						</div>
-						<div class="key-value-box key-value-box-special">
-							<div class="button button-mini">查看征信材料</div>
-						</div>
-					</div>
-					<!--二级标题（姓名，身份证等等...） end-->
-					<!--详细内容罗列-->
-					<div class="panel-detail-content panel-detail-table">
-						<!-- 征信报告照片 -->
-						<div class="panel-item-box mt15">
-							<div class="panel-key-area">征信报告文件：</div>
-							<div class="panel-value-area clearfix">
-								<div class="panel-value-item">
-									<div class="button button-mini">上传文件</div>	
-								</div>
-								<div class="panel-value-item">
-									<span class="color-tiper">文件格式：*.pdf</span>
-								</div>
-								
-							</div>
-						</div>
-						<!-- 征信报告照片 end-->
-
-						<!-- 征信报告编号 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">征信报告编号：</div>
-							<div class="panel-value-area clearfix">
-								<div class="panel-value-item">
-									<div class="input-text">
-										<input type="text" />	
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 征信报告编号 end-->
-
-						<!-- 征信报告照片 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">征信报告照片：</div>
-							<div class="panel-value-area">
-								<div class="imgs-item-group">
-									<div class="imgs-item-upload">
-										<i class="iconfont iconfont-upload">&#xe61f;</i><br />
-										<span class="imgs-describe">点击或拖拽上传图片</span>
-										<input type="file" id="" class="input-file" />
-									</div>
-								</div>
-								<div class="imgs-item-group">
-									<div class="imgs-item-upload">
-										<i class="iconfont iconfont-upload">&#xe61f;</i><br />
-										<span class="imgs-describe">点击或拖拽上传图片</span>
-										<input type="file" id="" class="input-file" />
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 征信报告照片 end-->
-
-						<!-- 征信字段 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">征信字段：</div>
-							<div class="panel-value-area">
-								<table border="1" cellspacing="" cellpadding="" class="field-table">
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-								</table>
-							</div>
-						</div>
-						<!-- 征信字段 end-->
-						<!-- 备注信息 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">备注信息：</div>
-							<div class="panel-value-area">
-								<textarea name="" id="" cols="30" rows="6" class="remarks-box"></textarea>
-							</div>
-						</div>
-						<!-- 备注信息 end-->
-					</div>
 				</div>
-				<!--工作台左侧菜单对应项详细面板（申请人） end-->
 				
-				<!-- 提交订单按钮区域 -->
-				<div class="commit-orders-box">
-					<div id="" class="button">提交订单</div>
+				<script type="text/x-dot-template" id="creditResultListTmpl">
+				{{ for(var i = 0, len = it.cfgData.frames.length; i < len; i++ ) { var row = it.cfgData.frames; }}
+
+					
+					<!--工作台左侧菜单对应项详细面板（申请人）-->
+					<div class="panel no-top-border clearfix">
+						<!--二级标题（姓名，身份证等等...）-->
+						<div class="panel-content-title panel-title-box-special">
+							<div class="key-value-box">
+								<span class="key">姓名：</span>
+								<span class="value">北上</span>
+							</div>
+							<div class="key-value-box">
+								<span class="key">身份证号：</span>
+								<span class="value">412702199102033154</span>
+							</div>
+							<div class="key-value-box">
+								<span class="key">与借款人关系：</span>
+								<span class="value">配偶</span>
+							</div>
+							<div class="key-value-box">
+								<span class="key">征信查询时间：</span>
+								<span class="value">2016-11-01 12:00</span>
+							</div>
+							<div class="key-value-box key-value-box-special">
+								<div class="button button-mini">查看征信材料</div>
+							</div>
+						</div>
+						<!--二级标题（姓名，身份证等等...） end-->
+						<!--详细内容罗列-->
+						<div class="panel-detail-content panel-detail-table">
+							<!-- 征信报告照片 -->
+							<div class="panel-item-box mt15">
+								<div class="panel-key-area">征信报告文件：</div>
+								<div class="panel-value-area clearfix">
+									<div class="panel-value-item">
+										<div class="button button-mini">上传文件</div>	
+									</div>
+									<div class="panel-value-item">
+										<span class="color-tiper">文件格式：*.pdf</span>
+									</div>
+									
+								</div>
+							</div>
+							<!-- 征信报告照片 end-->
+
+							<!-- 征信报告编号 -->
+							<div class="panel-item-box">
+								<div class="panel-key-area">征信报告编号：</div>
+								<div class="panel-value-area clearfix">
+									<div class="panel-value-item">
+										<div class="input-text">
+											<input type="text" />	
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 征信报告编号 end-->
+
+							<!-- 征信报告照片 -->
+							<div class="panel-item-box">
+								<div class="panel-key-area">征信报告照片：</div>
+								<div class="panel-value-area">
+									<div class="imgs-item-group">
+										<div class="imgs-item-upload">
+											<i class="iconfont iconfont-upload">&#xe61f;</i><br />
+											<span class="imgs-describe">点击或拖拽上传图片</span>
+											<input type="file" id="" class="input-file" />
+										</div>
+									</div>
+									<div class="imgs-item-group">
+										<div class="imgs-item-upload">
+											<i class="iconfont iconfont-upload">&#xe61f;</i><br />
+											<span class="imgs-describe">点击或拖拽上传图片</span>
+											<input type="file" id="" class="input-file" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 征信报告照片 end-->
+
+							<!-- 征信字段 -->
+							<div class="panel-item-box">
+								<div class="panel-key-area">征信字段：</div>
+								<div class="panel-value-area">
+									<table border="1" cellspacing="" cellpadding="" class="field-table">
+										<tr>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+										</tr>
+										<tr>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+										</tr>
+										<tr>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+										</tr>
+										<tr>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<!-- 征信字段 end-->
+							<!-- 备注信息 -->
+							<div class="panel-item-box">
+								<div class="panel-key-area">备注信息：</div>
+								<div class="panel-value-area">
+									<textarea name="" id="" cols="30" rows="6" class="remarks-box"></textarea>
+								</div>
+							</div>
+							<!-- 备注信息 end-->
+						</div>
+						<!--详细内容罗列 end-->
+						<!--二级标题（姓名，身份证等等...）-->
+						<div class="panel-content-title ">
+							<div class="key-value-box">
+								<span class="key">姓名：</span>
+								<span class="value">北上</span>
+							</div>
+							<div class="key-value-box">
+								<span class="key">身份证号：</span>
+								<span class="value">412702199102033154</span>
+							</div>
+							<div class="key-value-box">
+								<span class="key">与借款人关系：</span>
+								<span class="value">配偶</span>
+							</div>
+							<div class="key-value-box">
+								<span class="key">征信查询时间：</span>
+								<span class="value">2016-11-01 12:00</span>
+							</div>
+							<div class="key-value-box key-value-box-special">
+								<div class="button button-mini">查看征信材料</div>
+							</div>
+						</div>
+						<!--二级标题（姓名，身份证等等...） end-->
+						<!--详细内容罗列-->
+						<div class="panel-detail-content panel-detail-table">
+							<!-- 征信报告照片 -->
+							<div class="panel-item-box mt15">
+								<div class="panel-key-area">征信报告文件：</div>
+								<div class="panel-value-area clearfix">
+									<div class="panel-value-item">
+										<div class="button button-mini">上传文件</div>	
+									</div>
+									<div class="panel-value-item">
+										<span class="color-tiper">文件格式：*.pdf</span>
+									</div>
+									
+								</div>
+							</div>
+							<!-- 征信报告照片 end-->
+
+							<!-- 征信报告编号 -->
+							<div class="panel-item-box">
+								<div class="panel-key-area">征信报告编号：</div>
+								<div class="panel-value-area clearfix">
+									<div class="panel-value-item">
+										<div class="input-text">
+											<input type="text" />	
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 征信报告编号 end-->
+
+							<!-- 征信报告照片 -->
+							<div class="panel-item-box">
+								<div class="panel-key-area">征信报告照片：</div>
+								<div class="panel-value-area">
+									<div class="imgs-item-group">
+										<div class="imgs-item-upload">
+											<i class="iconfont iconfont-upload">&#xe61f;</i><br />
+											<span class="imgs-describe">点击或拖拽上传图片</span>
+											<input type="file" id="" class="input-file" />
+										</div>
+									</div>
+									<div class="imgs-item-group">
+										<div class="imgs-item-upload">
+											<i class="iconfont iconfont-upload">&#xe61f;</i><br />
+											<span class="imgs-describe">点击或拖拽上传图片</span>
+											<input type="file" id="" class="input-file" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 征信报告照片 end-->
+
+							<!-- 征信字段 -->
+							<div class="panel-item-box">
+								<div class="panel-key-area">征信字段：</div>
+								<div class="panel-value-area">
+									<table border="1" cellspacing="" cellpadding="" class="field-table">
+										<tr>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+										</tr>
+										<tr>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+										</tr>
+										<tr>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+										</tr>
+										<tr>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+											<td>征信字段征信字段</td>
+											<td>1次</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<!-- 征信字段 end-->
+							<!-- 备注信息 -->
+							<div class="panel-item-box">
+								<div class="panel-key-area">备注信息：</div>
+								<div class="panel-value-area">
+									<textarea name="" id="" cols="30" rows="6" class="remarks-box"></textarea>
+								</div>
+							</div>
+							<!-- 备注信息 end-->
+						</div>
+					</div>
+					<!--工作台左侧菜单对应项详细面板（申请人） end-->
+					
+					<!-- 提交订单按钮区域 -->
+					<div class="commit-orders-box">
+						<div id="" class="button">提交订单</div>
+					</div>
+					<!-- 提交订单按钮区域 end-->
 				</div>
-				<!-- 提交订单按钮区域 end-->
-			</div>
+				{{ } }}
 			</script>

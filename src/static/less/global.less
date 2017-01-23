@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_jj8pr57cwo0tfbt9.eot');
-  src: url('//at.alicdn.com/t/font_jj8pr57cwo0tfbt9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_jj8pr57cwo0tfbt9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_jj8pr57cwo0tfbt9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_jj8pr57cwo0tfbt9.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.eot');
+  src: url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -16,193 +16,134 @@
 //  -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
 }
-//按钮
-.button {
-    display: inline-block;
-    cursor: pointer;
-    .borderRadius;
-    height: 40px;
-    line-height: 40px;
-    padding:0 20px;
-    font-size: 14px;
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
-    color: #FFF;
-    background-color: @buttonBgColor;
-    &:hover {
-        background-color: darken(@buttonBgColor, 10%);
-    }
-    &:active {
-        background-color: lighten(@buttonBgColor, 1%);
-    }
-    &&-mini {
-        height: 32px;
-        line-height: 32px;
-        text-align: center;
-        font-size: 13px;
-        &.button-mini-width {
-            width: 126px;
-            padding: 0;
-        }
-    }
-    &&-gray {
-        background-color: #e9e7f7;
-        color: @mainColor;
-        &:hover {
-            color: #FFF !important;
-            background-color: @mainColor !important;
-        }
-        &:active {
-            color: #FFF !important;
-            background-color: lighten(@mainColor, 8%) !important;
-        }
-    }
-    &&-empty {
-        height: 30px;
-        line-height: 30px;
-        border:1px solid #cdd9e9;
-        background-color: #ffffff;
-        color: @fontColor;
-        &:hover {
-            color: #FFF !important;
-            border-color: @mainColor !important;
-            background-color: @mainColor !important;
-        }
-        &:active {
-            color: #FFF !important;
-            border-color: lighten(@mainColor, 8%) !important;
-            background-color: lighten(@mainColor, 8%) !important;
-        }
-    }
-    &&-width {
-        width: 126px;
-        text-align: center;
-        padding: 0;
-    }
-    &&-deep {
-        background-color: @mainColor;
-        &:hover {
-            background-color: darken(@mainColor, 10%) !important;
-        }
-        &:active {
-            background-color: lighten(@mainColor, 1%) !important;
-        }
-    }
-    &&-orange {
-        background-color: @orangeColor;
-        &:hover {
-            background-color: darken(@orangeColor, 10%) !important;
-        }
-        &:active {
-            background-color: lighten(@orangeColor, 1%) !important;
-        }
-    }
-    &&-special {
-        background-color: transparent;
-        color: @buttonBgColor;
-        &:hover {
-            color: darken(@buttonBgColor, 10%) !important;
-        }
-        &:active {
-            color: @orangeColor !important;
-        }
-    }
-    i {
-        margin-right: 7px;
-    }
+
+.float-right{
+    float: right;
+}
+.pt24{
+    padding-top: 24px !important;
+}
+.mb15{
+    margin-bottom: 15px !important;
+}
+.mt15 {
+    margin-top: 15px !important;
+}
+.padding0{
+    padding: 0 !important;
+}
+.error-input{
+    border: 1px solid @messageNumberBgColor !important;
+}
+.error-input-tip{
+    color: @messageNumberBgColor !important;
+    position: absolute;
+    left: 0;
+    bottom: -16px;
+    font-size: 12px;
 }
 
-//复选框
-.checkbox {
-    display: inline-block;
-    border: 1px solid #cad2e1;
-    .borderRadius(4px);
+// 边框灰色背景白色的框
+.layout {
+    border: 1px solid @borderColor;
     background-color: #FFF;
-    cursor: pointer;
-    &:hover {
-        border-color: @tableActiveColor;
+}
+.backReason {
+    border: 1px solid @backReasonBorderColor;
+    background-color: @backReasonBgColor;
+}
+// 特殊状态颜色
+.color-red {
+    color: #ff5c57;
+}
+.color-green {
+    color: #7ed262;
+}
+.color-blue {
+    color: @mainColor !important;
+}
+.color-tiper {
+    color: @tiperColor;
+}
+.color-main {
+    color: @mainColor;
+}
+
+
+//边框处理
+.no-top-border {
+    border-top: none !important;
+}
+.no-bottom-border {
+    border-bottom: none !important;
+}
+.no-left-border {
+    border-left: none !important;
+}
+.no-right-border {
+    border-right: none !important;
+}
+.no-border {
+    border: none !important;
+}
+.top-border {
+    border-top: 1px solid @borderColor !important;
+}
+.bottom-border {
+    border-bottom: 1px solid @borderColor !important;
+}
+.left-border {
+    border-left: 1px solid @borderColor !important;
+}
+.right-border {
+    border-right: 1px solid @borderColor !important;
+}
+.border {
+    border: 1px solid @borderColor !important;
+}
+
+
+//测试页面的样式（最后删掉）
+.test-box {
+    height: 1000px;
+    padding: 20px;  
+    border: 1px solid @borderColor;  
+    background-color: #FFF;
+    hr {
+        margin: 20px 0;
     }
-    &&-select {
-        padding: 0 12px;
-        height: 23px;
-        line-height: 23px;
+}
+
+//键值对形式框
+.key-value-box {
+    display: inline-block;
+    .key {
+        color: @tiperColor;
+    }
+    .value {
         color: @fontColor;
-        &:hover {
-            color: @tableActiveColor;
-        }
-        &.checked {
-            color: @tableActiveColor;
-            border-color: @tableActiveColor;
-        }
-    }
-    &&-normal {
-        width: 18px;
-        height: 18px;
-        &.checked {
-            color: #FFF;
-            background-color: @tableActiveColor;
-            border-color: @tableActiveColor;
-        }
-    }
-    
-    .iconfont {
-        color: #FFF !important;
-        float: left;
-        line-height: 18px;
     }
 }
 
-//单选框 
-.radio {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 1px solid @borderColor;
-    .borderRadius(10px);
-    cursor: pointer;
-    &.checked {
-        background: #fff;
-        border: 1px solid @mainColor;
-        &:after {
-            content: '';
-            display: block;
-            position: relative;
-            top: 4px;
-            left: 4px;
-            width: 10px;
-            height: 10px;
-            background: @mainColor;
-            border-radius:50%;
-        }
+
+
+//表格内空白部分
+.blank-box {
+    width: 155px;
+    height: 220px;
+    margin: 143px auto;
+    img {
+        display: block;
+        width: 155px;
+        height: 175px;
+        margin: 0 auto;
+    }
+    p {
+        margin-top: 24px;
+        text-align: center;
+        color: @fontColor;
     }
 }
-
-//输入框
-.input-text {
-    display: inline-block;
-    width: 348px;
-    height: 32px;
-    line-height: 32px;
-    padding: 0 10px;
-    border: 1px solid @borderColor;
-    .borderRadius(3px);
-    &.input-text-mini {
-        width: 250px;
-    }
-    input {
-        float: left;
-        width: 100%;
-        height: 30px;
-        line-height: 30px !important;
-        margin: 0;
-        padding: 0;
-        border: none;
-    }
-}
-//图片上传
-
 //无边界下拉框 
 .drop-down-box {
     display: inline-block;
@@ -232,9 +173,1129 @@
     .borderRadius(8px);
 }
 
-//升序和降序
+// 排序
+.time-sort {
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    position: relative;
+    color: @fontColor;
+    margin-right: 25px;
+    padding-right: 20px;
+    &.time-sort-special {
+        color: #FFF;
+        &.time-sort-up {
+            &:before {
+                color: #FFF;
+            }
+            &:after {
+                color: #b8bfd0;
+            }
+        }
+        &.time-sort-down {
+            &:before {
+                color: #b8bfd0;
+            }
+            &:after {
+                color: #FFF;
+            }
+        }
+    }
+    &.time-sort-up {
+        &:before {
+            color: @fontColor;
+        }
+        &:after {
+            color: #b8bfd0;
+        }
+    }
+    &.time-sort-down {
+        &:before {
+            color: #b8bfd0;
+        }
+        &:after {
+            color: @fontColor;
+        }
+    }
+    &:before {
+        font-family: "iconfont";
+        content: "\e60f";
+        font-size: 12px;
+        line-height: 12px;
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        position: absolute;
+        top: 50%;
+        margin-top: -9px;
+        right: 0;
+    }
+    &:after {
+        font-family: "iconfont";
+        content: "\e611";
+        font-size: 12px;
+        line-height: 12px;
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        position: absolute;
+        top: 50%;
+        margin-top: -2px;
+        right: 0;
+    }
+}
 
 
+//分页器外围盒子
+.pageToolbar {
+    height: 48px;
+    border: 1px solid @borderColor;
+    background-color: #FFF;
+    margin-top: 15px;
+}
+
+//单独一栏提交订单按钮
+.commit-orders-box {
+    text-align: right;
+    height: 60px;
+    line-height: 60px;
+    border: 1px solid @borderColor;
+    background-color: #FFF;
+    padding-right: 15px;
+    &.commit-orders-box-area {
+        height: 51px;
+        line-height: 51px;
+        margin-top: 0;
+        border-top: none;
+    }
+    &.commit-orders-box-layout {
+        .layout;
+        padding: 15px;
+        margin-top: 15px;
+    }
+    .button {
+        margin-left: 15px;
+    }
+}
+//带图标的可点击元素
+.commit-item {
+    color: @fontColor;
+    margin-right: 30px;
+    .iconfont {
+        vertical-align: middle;
+        color: @mainColor;
+        margin-right: 3px;
+    }
+    &:hover {
+        color: @mainColor;
+    }
+}
+
+// 特殊突出表现颜色字体 
+.special-word {
+    color: #ef810e !important;
+}
+
+//有选择功能的搜索栏
+.select-search-bar {
+    padding: 10px 20px;
+    background-color: #FFF;
+    border: 1px solid @borderColor;
+    &.select-search-bar-noborder {
+        border: none;
+    }
+    &.select-search-bar-notopborder {
+        border-top: none;
+    }
+    &.select-search-bar-special {
+        margin-top: 15px;
+    }
+    .search-sure-box {
+        line-height: 52px;
+    }
+    .search-item {
+        position: relative;
+        float: left;
+        color: @fontColor;
+        height: 52px;
+        margin: 0 30px 0 0;
+        padding: 10px 0; 
+        .select {
+            float: left;
+        }
+        .select-name {
+            float: left;
+            line-height: 32px;
+            margin-right: 10px;
+        }
+        .separator {
+            float: left;
+            margin: 0 5px;
+            line-height: 32px;
+            color: @selectBorderColor;
+        }
+        .checkbox {
+            position: relative;
+            top: 4px;
+            margin-right: 10px;
+        }
+        &.search-item-checkbox {
+            line-height: 30px;
+        }
+        .radio {
+            position: relative;
+            top: 5px;
+            margin-right: 8px;
+        }
+        .input-text {
+            float: left;
+        }
+    }
+    .button {
+        margin-left: 10px;
+    }
+}
+
+//各个订单类表格统一样式
+.orders-table {
+    border: 1px solid @borderColor;
+    border-top: none;
+    border-collapse: collapse;
+    empty-cells:show;
+    &.orders-table-noborder {
+        border: none;
+    }
+    &.orders-table-borders {
+        .orders-item-data {
+            border:1px solid @borderColor;
+        }
+        tbody tr .orders-item-data {
+            height: 40px;
+        }
+    }
+    .orders-bar-title {
+        background-color: #717ea1;
+    }
+    .orders-item-data {
+        height: 40px;
+        color: #FFF;
+        text-align: center;
+        font-size: 14px;
+        .orders-item-data-blank {
+            width: 22%;
+        } 
+    }
+    tbody tr {
+        border-top:1px dashed #cdd9e9;
+        &.tr-noborder {
+            border: none;
+        }
+        &.tr-odd {
+            background-color: #FFF;
+        }
+        &.tr-even {
+            background-color: #f3f4f9;
+        }
+        td.order-item-first {
+            position: relative;
+            width: 50px; 
+        }
+        .orders-item-data {
+            height: 78px;
+            color: @fontColor;
+            //被退回
+            &.status-back {
+                color: @messageNumberBgColor;
+            }
+            //待审核
+            &.status-wait-verify {
+                color: #ef810e;
+            }
+            //未办理
+            &.status-not-handled {
+                color: #f2bc00;
+            }
+            &.orders-item-data-operate {
+                // width: 250px;
+                .button {
+                    margin-right: 15px;
+                }
+            }
+            &.orders-item-data-blank {
+                width: 20%;
+            }
+            &.orders-item-data-blank-mini {
+                width: 10%;
+            }
+            .table-inner {
+                min-width: 275px;
+                td {
+                    text-align: center;
+                    padding: 0 15px;
+                    .download-trigger {
+                        display: inline-block;
+                        color: @fontColor;
+                        -webkit-transition: all .05s;
+                           -moz-transition: all .05s;
+                            -ms-transition: all .05s;
+                             -o-transition: all .05s;
+                                transition: all .05s;
+                        .iconfont {
+                            font-size: 21px;
+                            color: @mainColor;
+                        }
+                        .download-text {
+                            display: inline-block;
+                            margin-top: 7px;
+                        }
+                        &:hover {
+                            -webkit-transform: scale(1.2);
+                               -moz-transform: scale(1.2);
+                                -ms-transform: scale(1.2);
+                                 -o-transform: scale(1.2);
+                                    transform: scale(1.2);
+                            .download-text {
+                                color: @mainColor;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.acount-name-data {
+            padding: 10px 0;
+        }
+        .acount-name {
+            line-height: 24px;
+        }
+    }
+}
+
+// 特殊类表格（逾期信息历史导入详情）
+.expire-orders-table {
+    border: 1px solid @borderColor;
+    background-color: #FFFFFF;
+    margin-top: 15px;
+    border-collapse: collapse;
+    &&-hover {
+        -webkit-transition: all .1s;
+           -moz-transition: all .1s;
+            -ms-transition: all .1s;
+             -o-transition: all .1s;
+                transition: all .1s;
+        &:hover {
+            border-color: @mainColor;
+            cursor: pointer;
+            -webkit-transform: scale(1.01);
+               -moz-transform: scale(1.01);
+                -ms-transform: scale(1.01);
+                 -o-transform: scale(1.01);
+                    transform: scale(1.01);
+            -webkit-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+               -moz-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                -ms-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                 -o-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                    box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2);
+                    filter:progid:DXImageTransform.Microsoft.Shadow(color=rgba(0, 0, 0, 0.2),direction=100,strength=4);
+        }
+    }
+    
+    &.expire-orders-table-special {
+        border-top: none;
+        margin-top: 0;
+    }
+    .expire-title {
+        height: 50px;
+        background-color: #f3f4f9;
+        line-height: 50px;
+        border-bottom: 1px solid @borderColor;
+        .checkbox {
+            position: relative;
+            top: 4px;
+            margin-left: 20px;
+        }
+        .iconfont-man {
+            position: relative;
+            top: 2px;
+            font-size: 20px;
+            color: @mainColor;
+            margin: 0 5px 0 16px;
+        }
+        .userName {
+            margin-right: 10px;
+            font-weight: 700;
+        }
+        .key-value-box {
+            float: right;
+            margin-right: 20px;
+        }
+    }
+    .expire-content {
+        &.no-match {
+            padding: 25px 125px;
+        }
+        &.match-fail {
+            padding: 16px 20px;
+        }
+        &.match-success {
+            padding: 16px 20px;
+            .match-status {
+                color: #7cd260;
+            }
+        }
+        &.expire-end {
+            padding: 16px 20px;
+            .match-status {
+                color: @mainColor;
+            }
+        }
+        .expire-content-tr .expire-content-item {
+            padding: 15px 10px;
+            vertical-align: top;
+            &.expire-content-item-last {
+                vertical-align: middle;
+                .button {
+                    margin-bottom: 5px;
+                }
+            }
+            // td中的表格
+            .table-inner {
+                margin: 0 auto;
+                .table-inner-tr {
+                    .key {
+                        color: @tiperColor;
+                        text-align: right;
+                        line-height: 24px;
+                    }
+                    .value {
+                        color: @fontColor;
+                        text-align: left;
+                        line-height: 24px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+//带有内部边框线的表格，在原有表格基础加上此属性 zhy
+.orders-table-borders{
+    td{
+        border:1px solid @borderColor;
+    }
+}
+
+
+//返回列表面板
+.path-back-bar {
+    position: relative;
+    .layout;
+    padding: 0 15px 0 20px;
+    text-align: right;
+    line-height: 50px;
+    .path-back {
+        float: left;
+        color: @mainColor;
+        height: 50px;
+        line-height: 50px;
+        .iconfont {
+            position: relative;
+            top: 3px;
+            font-size: 22px;
+        }
+        .current-page {
+            color: @fontColor;
+        }
+    }
+    .key-value-box {
+        line-height: 50px;
+        margin-left: 40px;
+    }
+}
+
+//顶部为蓝条的面板
+.panel {
+    .layout;
+    border-top: 3px solid @blue;
+    margin-bottom: 15px;
+    overflow: hidden;
+    &.panel-credit {
+        margin: 0;
+    }
+    &.panel-mb0 {
+        margin-bottom: 0;
+    }
+    &.panel-bottom {
+        padding-bottom: 180px;
+    }
+    &.panel-no-layout {
+        border-right: none;
+        border-bottom: none;
+        border-left: none;
+        background-color: transparent;
+    }
+    //征信结果录入详细内容面板
+    &&-result-typing {
+        margin-top: 0;
+    }
+    &.panel-min-h {
+        min-height: 614px;
+    }
+    //工作台左侧菜单
+    &&-menu {
+        float: left;
+        border-top: 3px solid @tableActiveColor; 
+        .panel-menu-item {
+           display: block;
+           width: 142px;
+           padding: 0 24px;
+           height: 42px;
+           line-height: 42px;
+           color: @fontColor;
+           &:hover, &.panel-menu-item-active {
+               position: relative;
+               background-color: #d4d6fc;
+               color: @mainColor;
+               .arrow {
+                   border-width: 6px;
+                   right: -13px;
+                   border-left-color: #d4d6fc;
+               }
+           }
+       }
+    }
+    //工作台有左侧菜单的右侧详细内容区域
+    &&-detail {
+        margin-left: 162px;
+    }
+    
+    //订单统计面板
+    .panel-count {
+        position: relative;
+        padding: 15px 0;
+        .panel-count-item {
+            width: 33.3%;
+            text-align: center;
+            &.today-predict {
+                position: absolute;
+                top: 15px;
+                left: 0;
+            }
+            &.today-curtain {
+                position: absolute;
+                top: 15px;
+                right: 0;
+            }
+            &.today-commit {
+                margin: 0 auto;
+            }
+            .view-interest {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                color: @buttonBgColor;
+            }
+            .panel-count-number-box {
+                position: relative;
+                display: inline-block;
+                margin-bottom: 5px;
+                .panel-count-number {
+                    font-weight: 500;
+                    font-size: 25px;
+                }
+                .tips {
+                    top: -2px;
+                    right: -20px;
+                }
+                .tips-content {
+                    left: 29px;
+                    top: -210%;
+                    text-align: left;
+                }
+            }
+            .panel-count-name {
+                color: @tiperColor;
+            }
+        }
+    }
+    
+    //工作台有左侧菜单的右侧详标题区域（title）
+    .panel-content-title {
+        text-align: left;
+        padding: 0 20px;
+        border-top: 1px dashed @borderColor;
+        border-bottom: 1px dashed @borderColor;
+        &.panel-title-box-special {
+            border-top: none;
+        }
+        &.panel-content-title-special {
+            border-top: 1px solid @borderColor;
+        }
+        .key-value-box {
+            margin-right: 24px;
+            line-height: 60px;
+            height: 60px;
+            &.key-value-box-special {
+                float: right;
+            }
+        }
+        .panel-title {
+            height: 50px;
+            line-height: 50px;
+        }
+        
+    }
+    //工作台有左侧菜单的右侧详细内容区域（content）
+    .panel-detail-content {
+        // 业务量区间统计
+        &.panel-task-count {
+            padding: 10px 15px 62px 20px;
+        }
+        &.panel-import-doc {
+            padding: 10px 20px 175px 41px;
+        }
+        &.panel-detail-layout {
+            padding-top: 25px;
+        }
+        &.panel-detail-bank {
+            padding-left: 92px;
+        }
+        &.panel-detail-table {
+            padding: 20px;
+        }
+        //详细内容区域放图片的区域
+        &.panel-detail-imgs {
+            padding: 30px 30px 22px 50px;
+        }
+        &.panel-detail-content-catalog {
+            padding: 50px;  
+        }
+        .key-value-box {
+            line-height: 73px;
+            .key {
+                float: left;
+            }
+        }
+        .import-result-box {
+            .import-dl {
+                margin: 57px auto;
+                width: 390px;
+                .import-icon-box {
+                    float: left;
+                    .import-icon {
+                        margin-top: 10px;
+                        width: 50px;
+                        height: 50px;
+                        line-height: 50px;
+                        text-align: center;
+                        .borderRadius(25px);
+                        background-color: @successColor;
+                        color: #FFF;
+                        .iconfont {
+                            font-size: 30px !important;
+                            font-weight: 600;
+                        }
+                    }
+                }
+                .import-msg-box {
+                    float: left;
+                    margin-left: 22px;
+                    .import-result {
+                        line-height: 32px;
+                        color: @successColor;
+                        font-size: 20px;
+                    }
+                    .import-text {
+                        line-height: 40px;
+                    }
+                    .import-preview {
+                        margin-top: 23px;
+                        
+                    }
+                }
+            }
+        }
+
+        // 征信结果录入以及征信结果
+        .panel-item-box {
+            margin-top: 25px;
+            .panel-key-area {
+                float: left;
+                text-align: right;
+                width: 190px;
+                line-height: 32px;
+            }
+            .panel-value-area {
+                overflow: hidden;
+                margin-left: 200px;
+                //文字元素给行高保持与左侧水平
+                .panel-value-item {
+                    float: left;
+                    line-height: 32px;
+                    margin-right: 10px;
+                    .input-text {
+                        width: 250px;
+                    }
+                }
+                //备注信息
+                .remarks-box {
+                    width: 100%;
+                    .borderRadius(3px);
+                    border: 1px solid @borderColor;
+                    resize:none;
+                    padding: 7px;
+                    color: @fontColor; 
+                }
+
+                //图片展示（可点击）
+                .imgs-item {
+                    display: inline-block;
+                    width: 220px;
+                    height: 136px;
+                    border: 2px solid @borderColor;
+                    .borderRadius(3px);
+                    margin-right: 25px;
+                }
+                //征信字段的表格
+                .field-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    tr:nth-of-type(odd) {
+                        background-color: #f3f4f9;
+                    }
+                    tr:nth-of-type(even) {
+                        background-color: #FFF;
+                    }
+                    td {
+                        padding: 0 37px;
+                        border: 1px solid @borderColor;
+                        text-align: center;
+                        height: 40px;
+                    }
+                }
+                .remark {
+                    line-height: 25px;
+                }
+                .import-doc {
+                    margin-top: 30px;
+                    .button {
+                        height: 32px;
+                        line-height: 32px;
+                    }
+                }
+            }
+        }
+    }
+    //面板标题行
+    .panel-title-box {
+        height: 47px;
+        line-height: 47px;
+        color: @blue;
+        border-bottom: 1px solid @borderColor;
+        .panel-title {
+            padding-left: 20px;
+            .iconfont {
+                position: relative;
+                top: 1px;
+                font-size: 18px;
+            }
+            .panel-title-name {
+                margin-left: 7px;
+                font-size: 15px;
+            }
+            .button{
+                float:right;
+                margin:7px 20px 0 0;
+            }
+        }
+    }
+    //面板详细内容
+    .panel-content {
+        padding: 0 0 29px 23px;
+        &.panel-content-layout {
+            padding: 20px 17px;
+        }
+        .loanman-material-item {
+            .box;
+            padding-top: 5px;
+            .check-item {
+                width: 75px;
+                text-align: center;
+                padding-top: 30px;
+            }
+            .checkname-item {
+                width: 115px;
+                text-align: left;
+                padding: 30px 0 0 10px;
+            }
+            .block-item {
+                .box-flex(1);
+                padding-top: 10px;
+                .block-item-data {
+                    position: relative;
+                    display: inline-block;
+                    border: 1px solid #cad2e1;
+                    .borderRadius(4px);
+                    background-color: #FFF;
+                    margin: 10px 0 0 10px;
+                    padding: 0 12px;
+                    height: 38px;
+                    line-height: 38px;
+                    color: @fontColor;
+                    &.selected {
+                        color: @tableActiveColor;
+                        border-color: @tableActiveColor;
+                    }
+                    .tips-content {
+                        top: 44px;
+                        left: -70px;
+                    }
+                }
+            }
+        }
+    }
+    // 逾期分析搜索框
+    .search-box {
+        position: relative;
+        width: 500px;
+        height: 40px;
+        margin: 75px auto;
+        .borderRadius(3px);
+        border: 1px solid @mainColor;
+        input {
+            float: left;
+            color: @fontColor;
+            width: 424px;
+            height: 38px;
+            line-height: 38px;
+            border: none;
+            padding: 0 7px;
+            margin: 0 3px;
+        }
+        .button  {
+            height: 40px;
+            line-height: 40px;
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            // -webkit-border-radius: 0;
+            //    -moz-border-radius: 0; 
+            //     -ms-border-radius: 0;
+            //      -o-border-radius: 0;
+            //         border-radius: 0;
+        }
+    }
+    // 逾期分析搜索结果框
+    .search-result {
+        margin: 0 20px;
+        .search-result-title {
+            line-height: 23px;
+            margin-bottom: 15px;
+        }
+        .search-result-commit {
+            text-align: center;
+            margin-top: 20px;
+            .button {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    // 导入流程
+    .import-process-box {
+        background-color: #f3f4f9;
+        border-bottom: 1px solid @borderColor;
+        .download-box {
+            float: right;
+            width: 160px;
+            line-height: 123px;
+        }
+        .process-box {
+            float: left;
+            height: 123px;
+            background: url(/hr2.0/src/static/css/img/dotted.png) 0 43px repeat-x;
+            background-size: 65%;
+            position: relative;
+            margin: 0 48px;
+            .process-item {
+                float: left;
+                margin-right: 80px;
+                width: 120px;
+                margin-top: 25px;
+                text-align: center;
+                .iconfont-box {
+                    display: inline-block;
+                    text-align: center;
+                    line-height: 40px;
+                    width: 40px;
+                    height: 40px;
+                    color: #FFF;
+                    .borderRadius(20px);
+                    font-size: 25px;
+                }
+                &.process-item-odd .iconfont-box {
+                    background-color: #5084fc;
+                }
+                &.process-item-even .iconfont-box {
+                    background-color: #60c4f4;
+                }
+                p {
+                    margin-top: 15px;
+                }
+            }
+        }
+    }
+}
+
+
+//特殊的带虚线标题处理 zhy
+.panel-layout{
+    .layout !important;
+    .panel-title-box{
+        color: @fontColor !important;
+        border: 1px dashed @borderColor;
+        border-width: 1px 0;
+        margin-top: 29px; 
+    }
+}
+//上门材料地址栏
+.investigate-address-bar {
+    padding: 10px 50px;
+    border-bottom: 1px solid @borderColor;
+    background-color: #f3f4f9;
+    .key-value-box {
+        line-height: 35px;
+        .key {
+            color: @tableActiveColor;
+        }
+    }
+}
+
+//订单日志记录表
+.catalog {
+//  border: 1px solid #999;
+    .catalog-item:nth-last-child(1) .catalog-content{
+        border-color: #FFF;
+    }
+    .blue {
+        color: @buttonBgColor;   
+    }
+    .red {
+        color: #ff5c57;
+    }
+    .weight {
+        font-weight: bold;
+    }
+    .catalog-time {
+        text-align: right;
+        width: 190px;
+        float: left;
+        line-height: 20px;
+        padding-right: 24px;
+        .catalog-time-item {
+            display: inline-block;
+            vertical-align: text-top;
+            margin-left: 14px;
+        }
+    }
+    .catalog-content {
+        margin-left: 190px;
+        padding: 3px 25px 25px 25px;
+        min-height: 80px;
+        border-left: 1px solid @buttonBgColor;
+        .catalog-content-item {
+            position: relative;
+            &.catalog-content-item-special .pointer {
+                .pointer1, .pointer3 {
+                    background-color: #ff5c57;
+                }
+            }
+            .catalog-content-text {
+                line-height: 18px;
+            }
+            .pointer {
+                width: 26px;
+                height: 26px;
+                background-color: #FFF;
+                position: absolute;
+                top: -3px;
+                left: -39px;
+                //当前时间的点
+                .current-pointer {
+                    position: relative;
+                    margin: 3px auto;
+                    width: 20px;
+                    height: 20px;
+                    .borderRadius(10px);
+                    background-color: @buttonBgColor;
+                    .current-pointer-inner {
+                        position: absolute;
+                        top: 3px;
+                        left: 9px;
+                        width: 8px;
+                        height: 8px;
+                        background-color: @buttonBgColor;
+                        border: 1px solid #FFFFFF;
+                        border-top: none;
+                        border-right: none;
+                    }
+                }
+                //历史点
+                
+                .pointer1 {
+                    width: 10px;
+                    height: 10px;
+                    background-color: @buttonBgColor;
+                    .borderRadius(5px);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -5px;
+                    margin-left: -5px;
+                }
+                .pointer2 {
+                    width: 8px;
+                    height: 8px;
+                    background-color: #FFF;
+                    .borderRadius(4px);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -4px;
+                    margin-left: -4px;
+                }
+                .pointer3 {
+                    width: 6px;
+                    height: 6px;
+                    background-color: @buttonBgColor;
+                    .borderRadius(3px);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -3px;
+                    margin-left: -3px;
+                }
+            }
+        }
+        .catalog-content-tips {
+            position: relative;
+            background-color: #f3f4f9;
+            .borderRadius(5px);
+            color: @tiperColor;
+            padding: 8px 19px;
+            line-height: 24px;
+            margin-top: 12px;
+            .arrow {
+                position: absolute;
+                top: -4px;
+                left: 30px;
+                margin-left: -3px;
+                border-width: 6px;
+                border-color: transparent transparent #f3f4f9 transparent;
+            }
+        }
+    }
+}
+
+//运营分析概览区域
+.row-table {
+    width: 100%;
+    // margin: 30px 20px;
+    tr {
+        td {
+            text-align: center;
+            padding: 30px 0; 
+            &.td-odd .operational-item {
+                .operational-item-top{
+                    background-color: @buttonBgColor;
+                }
+                .operational-item-bottom .iconfont-box{
+                    background-color: @buttonBgColor;
+                }
+            }
+            &.td-even .operational-item {
+                .operational-item-top{
+                    background-color: #60c4f4;;
+                }
+                .operational-item-bottom .iconfont-box{
+                    background-color: #60c4f4;
+                }
+            }
+            .operational-item {
+                display: inline-block;
+                .layout;
+                width: 210px;
+                height: 92px;
+                .operational-item-top {
+                    color: #FFF;
+                    height: 32px;
+                    line-height: 32px;
+                    padding-left: 10px;
+                }
+                .operational-item-bottom {
+                    position: relative;
+                    padding: 0 10px;
+                    .operational-item-money {
+                        float: left;
+                        height: 60px;
+                        line-height: 60px;
+                    }
+                    .iconfont-box {
+                        position: absolute;
+                        margin-top: -15px;
+                        top: 50%;
+                        right: 10px;
+                        width: 30px;
+                        height: 30px;
+                        color: #FFF;
+                        line-height: 30px;
+                        .borderRadius(5px);
+                        background-color: @buttonBgColor;
+                        text-align: center;
+                        .iconfont {
+                            font-size: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//公告详情
+.news-panel {
+    .layout;
+    margin-top: 15px;
+    padding: 50px 130px 100px 130px;
+    .news-title {
+        font-size: 20px;
+        font-weight: 500;
+        text-align: center;
+    }
+    .news-tips {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 50px;
+        color: #696969;
+        .news-tips-item {
+            margin-right: 10px;
+        }
+    }
+    .news-content {
+        color: #000;
+        p {
+            line-height: 28px;
+        }
+        .news-section {
+            text-indent: 2em;
+        }
+        .news-company, .news-time {
+            text-align: right;
+        }
+
+    }
+} 
 //箭头
 .arrow {
     position: absolute;
@@ -262,330 +1323,591 @@
         border-color: @fontColor transparent transparent transparent;
     }
 }
-//测试页面的样式（最后删掉）
-.test-box {
-    height: 1000px;
-    padding: 20px;  
-    border: 1px solid @borderColor;  
+
+
+//tab切换栏
+.tab-bar {
     background-color: #FFF;
-    hr {
-        margin: 20px 0;
+    border: 1px solid @borderColor;
+    border-bottom: 3px solid @blue;;
+    height: 53px;
+    line-height: 53px;
+    text-align: right;
+    padding-right: 20px;
+    &.tab-bar-special {
+        margin-top: 15px;
+    }
+    .role-bar-ul {
+        position: relative;
+        top: -1px;
+        left: -1px;
+        float: left;
+        .role-bar-li {
+            height: 50px;
+            float: left;
+            &:last-child .role-item{
+                border-right: 1px solid @borderColor;
+            }
+            .role-item {
+                display: inline-block;
+                line-height: 50px;
+                padding: 0 20px;
+                float: left;
+                color: @fontColor;
+                border-left: 1px solid @borderColor;
+                &.role-item-active {
+                    background-color: @buttonBgColor;
+                    color: #FFF;
+                    border-right: none;
+                    border-left: none;
+                    border-color: @buttonBgColor;
+                }
+            }
+        }
+    }
+    .button {
+        margin-left: 10px;
+    }
+    .import-time {
+        color: @tiperColor;
+        margin-right: 10px;
     }
 }
 
-//选择框
-.select {
-    position: relative;
+// tab切换栏对应信息
+.tab-content {
+    .tab-content-item {
+        overflow: hidden;
+        padding-bottom: 100px;
+        &.tab-content-item-layout {
+            padding: 15px 20px;
+        }
+    }
+}
+
+// 逾期信息tab切换
+.tab-bar-mini {
+    padding: 14px 20px; 
+    text-align: right;
+    .tab-bar-ul {
+        float: left;
+        .tab-bar-li {
+            height: 32px;
+            float: left;
+            .tab-item {
+                display: inline-block;
+                float: left;
+                padding: 0 20px;
+                height: 32px;
+                line-height: 32px;
+                background-color: #FFF;
+                .borderRadius(16px);
+                color: @fontColor;
+                &.tab-item-active {
+                    background-color: @buttonBgColor;
+                    color: #FFF;
+                }
+            }
+        }
+    }
+    .button {
+        margin-left: 15px;
+    }
+}
+//全选操作框
+.all-select-panel {
+    .layout;
+    padding: 0 20px;
+    &.all-select-panel-nobottomborder {
+        border-bottom: none;
+    }
+    &.all-select-special {
+        border: none;
+        border-top: 1px solid @borderColor; 
+    }
+    .all-check-box {
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        margin-right: 15px;
+        strong {
+            color: @mainColor;
+            font-size: 15px;
+        }
+        .checkbox {
+            position: relative;
+            top: -2px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .tips-area {
+            display: inline-block;
+            padding: 4px 20px;
+            background-color: #fcf7e3;
+            border: 1px solid #efad4f;
+            color: #ef810e;
+            line-height: 24px;
+            .borderRadius(3px);
+        }
+        .all-import {
+            color: @buttonBgColor;
+        }
+    }
+}
+// 逾期意见栏
+.expire-opinion {
+    margin: 10px 20px; 
+    padding-bottom: 20px;
+    border-bottom: 1px solid @borderColor;
+    dt {
+        line-height: 40px;
+        color: @tiperColor;
+        .expire-left {
+            float: left;
+        }
+        .expire-right {
+            float: right;
+        }
+    }
+    dd {
+        line-height: 25px;
+        text-indent: 2em;
+    }
+}
+
+.credit-datas-bar {
+    border-top: 1px dashed @borderColor;
+    border-bottom: 1px dashed @borderColor;
+    padding: 0 20px;
+    &.credit-datas-bar-special {
+        border-top: none;
+    }
+    .select {
+        line-height: 30px;
+    }
+    .delete-credit-item {
+        float: right;
+        line-height: 60px;
+    }
+}
+// 消息列表
+.message-area {
+    padding: 5px 20px;
+    .message-panel {
+        margin: 0 auto;
+        .message-item {
+            line-height: 40px;
+            border-bottom: 1px dashed @borderColor;
+            &:last-child {
+                border: none;
+            }
+            .message-item-data {
+                float: left;
+                display: inline-block;
+                text-align: left;
+                width: 80%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                a {
+                    color: @fontColor;
+                    &:hover {
+                        color: @mainColor;
+                    }
+                }
+            }
+            .message-time, .message-more {
+                float: right;
+            }
+            .message-time {
+                color: #90a4ae;
+            }
+            .message-more {
+                color: #3cb4f3;
+            }
+        }
+    }
+}
+
+//类似键值对的组合
+.key-item-box {
     display: inline-block;
-    height: 32px;
-    line-height: 30px;
-    .borderRadius(3px);
-    border: 1px solid @selectBorderColor;
-    font-size: 12px;
-    color: @tiperColor;
-    &&-common {
-        width: 120px;
-        .placeholder {
-            width: 90px;
+    float: left;
+    margin-right: 25px;
+    line-height: 60px;
+    .key-item {
+        margin-right: 25px;
+    }
+    .key-value {
+        width: 175px;
+    }
+    .select {
+        position: relative;
+        top: -2px;
+        vertical-align: middle;
+    }
+}
+
+.credit-imgs-bar {
+    padding: 24px 125px;
+}
+
+.loan-imgs-bar {
+    padding: 24px 0 0 0;
+    .imgs-item-group {
+        &:nth-last-of-type(1) {
+            margin-right: 0;
         }
     }
-    &&-date {
-        width: 120px;
-        .placeholder {
-            width: 90px;
+}
+//返回列表条目下，退回原因（退回增加XX） zhy
+.add-credit-bar {
+    .layout;
+    border-top:none;
+    padding: 0 15px 0 20px;
+    .add-credit {
+        display: block;
+        color: @tableActiveColor;
+        line-height: 49px;
+        .current-page {
+            color: @fontColor;
         }
     }
-    &&-car {
-        width: 248px;
+}
+//通用左右结构的多选checkbox zhy
+.key-value-check-box {
+    line-height: 49px;
+    margin-right: 20px;
+    display: inline-block;
+    .check-key{
+        width:20px;
+        height:20px;
+        display:inline-block;
+        position:relative;
+        margin:0 5px 0 10px;
+        .checkbox{
+            position:absolute;
+            width:20px;
+            height:20px;
+            top:4px;
+        }
     }
-    &&-bank {
-        width: 350px;
-        .placeholder {
-            width: 285px;
+}
+
+//左右结构的输入框及下拉框布局 zhy
+.info-key-value-box{
+    width: calc(~"50% - 2px");
+    display: inline-block;
+    margin: 10px 0;
+    position: relative;
+    i{
+        color:@backReasonBorderColor;
+    }
+    .info-key{
+        color:@fontColor;
+        display:inline-block;
+        width:120px;
+        text-align:right;
+        margin-right: 25px;
+    }
+    .info-value{
+        border:1px solid @selectBorderColor;
+        height:30px;
+        padding:5px;
+        border-radius:4px;
+        display:inline-block;
+        width:200px;
+        position: relative;
+        .unit-text{
+            position: absolute;
+            top:0;
+            right:3px;
+            line-height: 28px;
+            color: @unitTextColor;
+        }
+        input{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+        select{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+    }
+    .gps{
+        width: 64px !important;
+    }
+    &:nth-of-type(odd) {
+        text-align:left;
+    }
+    &:nth-of-type(even) {
+        text-align:right;
+    }
+}
+//左右结构的输入框及下拉框布局下面的多选check zhy
+.info-key-check-box{
+    margin: 10px 0;
+    .box;
+    i{
+        color:@backReasonBorderColor;
+    }
+    .info-key{
+        color: @fontColor;
+        width: 120px;
+        margin-right: 25px;
+        text-align: right;
+        line-height: 30px;
+        display: block;
+//      -moz-box-flex: 1;
+//      -webkit-box-flex: 1;
+//      box-flex: 1;
+    }
+    .info-check-box{
+        -moz-box-flex: 1;
+        -webkit-box-flex: 1;
+        box-flex: 1;
+        display: block;
+        position: relative;
+        .info-check{
+            width:auto;
+            float:left;
+            margin:0 10px 10px 10px;
+            .check-value{
+                line-height: 30px;
+            }
+        }
+        .check-key{
+            width:20px;
+            height:20px;
+            display:inline-block;
+            position:relative;
+            margin:0 5px 0 10px;
+            .checkbox{
+                position:absolute;
+                width:20px;
+                height:20px;
+                top:4px;
+            }
+        }
+    }
+}
+//征信退回原因 zhy
+.back-creditRes-bar {
+    .backReason;
+    padding: 15px 20px;
+    margin: 10px 0;
+    .borderRadius(3px); 
+    .back-credit {
+        color: @backReasonBorderColor;
+        display: block;
+        line-height: 49px;
+        .key-value-box {
+            line-height: 30px;
+            margin-right: 20px;
+            display:block;
+            .key{
+                color: @backReasonBorderColor;
+            }
+            .value{
+                color: @backReasonBorderColor;
+            }
+        }
+    }
+    .back-expire {
+        color: @fontColor;
+    }
+}
+//贷款信息录入 zhy
+.loan-info {
+    padding: 24px 125px;
+}
+//车商管理 zhy
+.carShop-manage {
+    padding: 24px 250px 24px 0;
+    position: relative;
+    .button{
+        position: absolute;
+        top: 34px;
+        right: 150px;
+        height: 30px;
+        line-height: 30px;
+    }
+    &-fee{
+        .button{
+            position: inherit;
+            height: 30px;
+            line-height: 30px;
+            margin-left: 30px;
+        }
+    }
+}
+
+
+
+//合作机构同类型布局 zhy
+.col-company{
+    &:first-child {
+        .panel-title-box{
+            border-top: none;
+            margin-top: 0;
+        }
+    }
+    &:last-child{
+        padding-bottom: 29px;
+    }
+    .carShop-manage{
+        padding: 24px 250px 0 0;
+    }
+}
+//业务模式选择类型，大按钮样式 zhy
+.choose-content{
+    display: flex;
+    text-align: center;
+    justify-content:center;
+    .choose-items{
+        margin: 120px 30px;
+        border: 1px solid @mainColor;
+        width: 240px;
+        height: 240px;
+        color: @fontColor;
+        cursor: pointer;
+        &-icon{
+            margin-top: 20px;
+            .iconfont{
+                font-size: 60px;
+                color: @mainColor;
+                line-height: 120px;
+                font-weight: bolder;
+            }
+        }
+        &-title{
+            font-size: 18px;
+            font-weight: bolder;
+            line-height: 100px;
+            letter-spacing: 3px;
+            -webkit-font-smoothing:antialiased;
+        }
+        &:hover{
+            background: @mainColor;
+            color: #fff;
+            .iconfont{
+                color: #fff;
+            }
+        }
+    }
+}
+
+/**
+* 页面特殊部分处理
+**/
+//合作机构维护
+.cooperation-maintenance {
+    .cooperation-maintenance-table  .button{
+        padding: 0 15px;
+//      margin-right: 15px;
+    }
+}
+
+//借款管理
+.loan-manage {
+    .panel-detail-content {
+        padding: 20px 17px;
+    }
+}
+//订单日志
+.orders-log {
+    .panel {
+        .panel-detail-content {
+            padding: 20px;
+        }
+    }
+}
+//保证金查询
+.deposit-query {
+    .panel {
+        .panel-content {
+            padding: 0 20px 140px 20px;
+            .table-title {
+                position: relative;
+                .layout;
+                height: 50px;
+                border: 1px solid @borderColor;
+                border-bottom: none;
+                margin-top: 20px;
+                padding: 0 20px;
+                .key-value-box {
+                    height: 50px;
+                    line-height: 50px;
+                    margin-right: 50px;
+                }
+                .new-item {
+                    position: absolute;
+                    top: -1px;
+                    left: -1px;
+                    width: 0;
+                    height: 0;
+                    border: 30px solid transparent;
+                    border-bottom-color: #efad4f;
+                    color: #FFF;
+                    text-align: center;
+                    transform: rotate(-45deg) translate(-8px,-22px);
+                    transform-origin:left;
+                    .new-item-inner {
+                        position: absolute;
+                        top: 10px;
+                        left: -13px;
+                        display: inline-block;
+                        
+                    }
+                }
+            }
+            
         }
     }
     
-    .arrow {
-        cursor: pointer;
-    }
-    .select-field {
-        position: relative;
-        height: 30px;
-        z-index: 99;
-        overflow: hidden;
-        .select-text {
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 30px;
-            width: 100%;
-            .borderRadius(3px 3px 0 0);
-            border: none;
-            outline: none;
-            line-height: 30px;
-            padding: 0 30px 0 10px;
-        }
-        .arrow-trigger {
-            position: absolute;
-            left: auto;
-            width: 30px;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            cursor: pointer;
-        }
-        &.readonly {
-            .arrow-trigger {
-                left: 0;
-                width: auto;
-            }
-        }
-    }
-    .placeholder {
-        position: absolute;
-        left: 0;
-        right: 0;
-        display: block;
-        height: 30px;
-        .borderRadius(3px 3px 0 0);
-        border: none;
-        outline: none;
-        padding: 0 10px;
-    }
-    .select-box {
-        display: none;
-        cursor: default;
-        position: absolute;
-        z-index: 90;
-        top: -1px;
-        left: -1px;
-        right: -1px;
-        .borderRadius(3px);
-        border: 1px solid @buttonBgColor;
-        padding-top: 30px;
-        /*
-        width: 248px;
-        */
-        .select-tab {
-            width: 248px;
-            height: 29px;
-            .select-tab-item {
-                position: relative;
-                float: left; 
-                cursor: pointer;
-                color: @fontColor;
-                line-height: 30px;
-                width: 82px;
-                border: 1px solid @borderColor;
-                border-right: none;
-                text-align: center;
-                background-color: #f3f4f9;
-                &:first-child {
-                    border-left: none;
-                }
-                &.select-tab-item-active {
-                    color: @buttonBgColor;
-                    background-color: #FFF;
-                    border-bottom-color: #FFF;
-                    &:before {
-                        content: "";
-                        width: 82px;
-                        height: 3px;
-                        background-color: @buttonBgColor;
-                        position: absolute;
-                        top: -1px;
-                        left: 0;
-                    }
-                }
-            }
-        }
-        .select-content-box {
-            width: 246px;
-            height: 336px;
-            overflow-x: hidden;
-            overflow-y: auto;
-            //品牌车系车型
-            .select-content {
-                display: none;
-                padding: 0 15px 15px 15px;
-                width: 248px;
-                &.select-content-active {
-                    display: block;
-                }
-                &.select-content-brand {
-                    .checkbox {
-                        margin-top: 10px;
-                    }
-                }
-                .word-area {
-                    position: relative;
-                    margin-top: 10px;
-                    &:last-child dd {
-                        border: none;
-                    }
-                    dt {
-                        position: absolute;
-                        left: 0;
-                        width: 21px;
-                        font-weight: 600;
-                        color: #000;
-                        line-height: 23px;
-                    }
-                    dd {
-                        padding-bottom: 10px;
-                        border-bottom: 1px dashed @borderColor;
-                        .car-item {
-                            float: left;
-                            display: inline-block;
-                            color: @fontColor;
-                            margin-left: 25px;
-                            line-height: 23px;
-                        }
-                    }
-                }
-                .audi-area {
-                    dt {
-                        padding-top: 10px;
-                        color: #000;
-                        font-weight: 700;
-                    }
-                    dd {
-                        border-bottom: 1px dashed @borderColor;
-                        padding: 10px 0;
-                        .car-item {
-                            line-height: 23px;
-                            margin-right: 23px;
-                            color: @fontColor;
-                        }
-                    }
-                }
-            }
-        }
-        
-    }
-    .arrow {
-        cursor: pointer;
-        right: 10px;         
-    }
-    &&-open {
-        border-color: @buttonBgColor;
-        .select-box {
-            display: block;
-        }
-    }
+}
+// 报表下载
+.layout-title {
+    padding: 10px 25px;
+    line-height: 35px;
+    background-color: #fcf7e3;
 }
 
-//键值对形式框
-.key-value-box {
-    display: inline-block;
-    .key {
-        color: @tiperColor;
-    }
-    .value {
-        color: @fontColor;
-    }
-}
-
-.layout {
-    border: 1px solid @borderColor;
-    background-color: #FFF;
-}
-.backReason {
-    border: 1px solid @backReasonBorderColor;
-    background-color: @backReasonBgColor;
-}
-// 特殊状态颜色
-.color-red {
-    color: #ff5c57;
-}
-.color-green {
-    color: #7ed262;
-}
-.color-blue {
-    color: @mainColor !important;
-}
-.color-tiper {
-    color: @tiperColor;
-}
-
-//分页器
-.paginator {
-    font-size: 12px;
-    float: right;
-    margin-right: 30px;
-    color: #97a1b5;
-    li {
-        display: inline-block;
+.layout-select {
+    position: relative;
+    padding: 5px 0 10px 27px;
+    border-bottom: 1px solid @borderColor;
+    dt {
         float: left;
-        margin: 8px 0;
-        height: 30px;
+        line-height: 52px;
+    }
+    .checkbox-panel {
         overflow: hidden;
-        &.page {
-            width: 30px;
-            line-height: 30px;
-            text-align: center;
-            margin-left: 5px;
-            cursor: pointer;
-            border:1px solid #cdd9e9;
-            .borderRadius(3px);
-            &:hover {
-                color: #6b59c9;
-                border-color: #6b59c9;
-            }
+        margin-right: 200px;
+        .checkbox {
+            margin: 10px 5px;
         }
-        &.focus {
-            background-color: #6b59c9;
-            color:#FFFFFF;
-            border-color: #6b59c9;
-            &:hover {
-                color: #FFF;
-            }
-        }
-        &.page-ellipse{
-            border:none;
-            cursor: default;
-        }
-        &.page-jump-area {
-            height: 32px;
-            span {
-                float: left;
-                height: 32px;
-                display: inline-block;
-                margin: 0 5px;
-                line-height: 32px;
-            }
-            .input-text {
-                float: left;
-                width: 48px;
-                height: 30px;
-            }
-            .button {
-                float: left;
-                font-size: 13px;
-                height: 30px;
-                line-height: 30px;
-            }
-        }
-        &.page-jump-area:hover {
-            color: #97a1b5;
-        }
+    }
+    .button {
+        position: absolute;
+        right: 20px;
+        top: 15px;
     }
 }
-
-//表格内空白部分
-.blank-box {
-    width: 155px;
-    height: 220px;
-    margin: 143px auto;
-    img {
-        display: block;
-        width: 155px;
-        height: 175px;
-        margin: 0 auto;
-    }
-    p {
-        margin-top: 24px;
-        text-align: center;
-        color: @fontColor;
+.layout-table {
+    padding: 0 20px 45px 20px;
+    .layout-table-title {
+        line-height: 54px;
+        text-align: right;
+        .current-orders {
+            float: left;
+            .color-main {
+                margin: 0 2px;
+            }
+        }
     }
 }

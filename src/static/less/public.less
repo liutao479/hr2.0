@@ -1,0 +1,57 @@
+html,body,p,div,a,ul,li,dl,dt,dd,span,em,h2,h3,h4,i {
+	margin:0;
+	padding: 0;
+}
+html,body {
+    border: 0;
+    color: @fontColor;
+}
+body, input, textarea, a, select {
+	-webkit-font-smoothing: antialiased;
+    font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", STHeiti, Arial, SimSun, sans-serif;
+	font-size: 13px;
+}
+
+body {
+    padding-top: 60px;
+	*, *:after, *:before {
+		box-sizing: border-box;
+    	-webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;	
+	}
+}
+
+*:focus, *:active, a:linked {
+	outline: 0 !important;
+}
+input,
+textarea {
+    outline: 0 !important;
+}
+ul,
+li {
+    list-style: none;
+}
+em,
+i {
+    font-style: normal;
+}
+a {
+    text-decoration: none;
+}
+img {
+    border: none;
+}
+
+//通用分离样式 
+.clearfix {
+    zoom:1;
+    &:before, &:after {
+		content: " ";
+	    display: block;
+	    height: 0;
+	    overflow: hidden;
+    }
+    &:after {
+    	clear: both;
+    }
+}

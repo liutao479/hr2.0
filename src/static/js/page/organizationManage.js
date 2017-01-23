@@ -3,23 +3,23 @@ page.ctrl('organizationManage', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
+			pageNum: $params.pageNum || 1
 		};
 	/**
-	* 加载运营分析信息表数据
+	* 加载合作机构（合作银行）数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
 	var loadOrganizationManageList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.organizationManage),
+			url: $http.apiMap.organizationManage,
+			type: 'get',
 			data: params,
+			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
+				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -31,8 +31,8 @@ page.ctrl('organizationManage', [], function($scope) {
 	*/
 	var setupPaging = function(count, isPage) {
 		$scope.$el.$paging.data({
-			current: parseInt(apiParams.page),
-			pages: isPage ? count : (tool.pages(count || 0, apiParams.pageSize)),
+			current: parseInt(apiParams.pageNum),
+			pages: isPage ? count.pages : (tool.pages(count.pages || 0, apiParams.pageSize)),
 			size: apiParams.pageSize
 		});
 		$('#pageToolbar').paging();
@@ -61,9 +61,9 @@ page.ctrl('organizationManage', [], function($scope) {
 	});
 
 	$scope.paging = function(_page, _size, $el, cb) {
-		apiParams.page = _page;
-		$params.page = _page;
-		router.updateQuery($scope.$path, $params);
+		apiParams.pageNum = _page;
+		$params.pageNum = _page;
+		// router.updateQuery($scope.$path, $params);
 		loadOrganizationManageList(apiParams);
 		cb();
 	}
