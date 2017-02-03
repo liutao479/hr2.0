@@ -1,0 +1,50 @@
+//我的客户快捷翻页
+.page-bar {
+    position: relative;
+    margin-top: 15px;
+    background-color: #FFF;
+    border: 1px solid @borderColor;
+    padding: 0 20px;
+    height: 40px;
+    line-height: 40px;
+    .time-sort {
+        float: left;
+    }
+    .page-bar-right {
+        position: absolute;
+        top: 0;
+        right: 20px;
+        bottom: 0;
+        height: 38px;
+        line-height: 38px;
+        .page-count {
+            float: left;
+        }
+        .page-change {
+            float: left;
+            color: @fontColor;
+            font-weight: 700;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            margin:4px 0 0 5px;
+            margin-left: 5px;
+            cursor: pointer;
+            border:1px solid #cdd9e9;
+            .borderRadius(3px);
+            &.disabled {
+                color: @disabledColor;
+                cursor: default;
+                &:hover {
+                    color: @disabledColor;
+                    border-color: #cdd9e9;
+                }
+            }
+            &:hover {
+                color: #6b59c9;
+                border-color: #6b59c9;
+            }
+        }
+    }
+}

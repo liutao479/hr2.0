@@ -68,13 +68,15 @@
 					</div>
 				</div>
 				<div class="customer-orders" id="myCustomerTable">
-					
+					<!-- {{for(var j = 0, len2 = row.status.length; j < len2; j++) { var col = row.status[j]; }}
+									<span class="status-value">{{=col}}</span>
+									{{ } }} -->
 				</div>
 			</div>
 			<!--我的客户 end-->
 
 			<!--分页插件-->
-			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['myCustomer'].paging" data-pages="50" data-current="8"></div>
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['myCustomer'].paging" data-pages="50" data-current="1"></div>
 
 			<script type="text/x-dot-template" id="myCustomerListTmpl">
 				{{ var len = it.length; if(len) { }}
@@ -82,8 +84,8 @@
 					<table border="0" cellpadding="" width="100%" class="orders-box">
 						<thead>
 							<tr class="orders-bar-title">
-								<td>
-									<p>订单生成时间：<span>{{=row.date}}</span></p>
+								<td class="first-td">
+									<p>订单生成时间：<span>{{=tool.formatDate(row.updateDate)}}</span></p>
 								</td>
 								<td colspan="4">
 									<p>订单号：<span>{{=row.orderNo}}</span></p>
@@ -91,49 +93,51 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
+							<tr class="first-tr">
 								<td rowspan="3" class="car-info-box">
 									<img src="/hr2.0/dist/static/css/img/car-logo.png" class="car-logo"/>
+									{{ if(row.carName) { }}
 									<span class="car-name">{{=row.carName}}</span>
+									{{ } else { }}
+									<span class="car-name">未提供车名！</span>
+									{{ } }}
 								</td>
 								<td class="user-info">
 									<i class="iconfont">&#xe656;</i>
-									<span id="customer-name">{{=row.user}}</span>
+									<span id="customer-name">{{=row.realName}}</span>
 								</td>
 								<td class="user-info">
 									<i class="iconfont">&#xe6f5;</i>
-									<span id="customer-ID">{{=row.idc}}</span>
+									<span id="customer-ID">{{=row.idCard}}</span>
 								</td>
 								<td class="user-info">
 									<i class="iconfont">&#xe607;</i>
-									<span id="customer-phone">{{=row.phone}}</span>
+									<span id="customer-phone">{{=row.mobile}}</span>
 								</td>
 								<td class="td-last">
-									<div class="button button-mini">放款预约</div>
+									<div class="button button-mini button-mini-width button-gray">放款预约</div>
 								</td>
 							</tr>
 							<tr>
-								<td class="status-name">分期金额：<span class="status-value">{{=row.installment}}</span></td>
-								<td class="status-name">期数：<span class="status-value">{{=row.periods}}</span></td>
-								<td class="status-name">首付比例：<span class="status-value">{{=row.downpayment}}</span></td>
+								<td class="status-name">分期金额：<span class="status-value">{{=row.stageMoney}}</span></td>
+								<td class="status-name">期数：<span class="status-value">{{=row.repayPeriod}}</span></td>
+								<td class="status-name">首付比例：<span class="status-value">{{=(row.sfProportion*100).toFixed(2) + '%'}}</span></td>
 								<td class="td-last">
-									<div class="button button-mini">申请删除订单</div>
+									<div class="button button-mini button-mini-width button-gray">申请删除订单</div>
 								</td>
 							</tr>
-							<tr>
+							<tr class="last-tr">
 								<td colspan="3" class="status-name">
 									订单状态：
-									{{for(var j = 0, len2 = row.status.length; j < len2; j++) { var col = row.status[j]; }}
-									<span class="status-value">{{=col}}</span>
-									{{ } }}
-									<!-- <span class="status-value">征信结果待录入</span>
+									
+									<span class="status-value">征信结果待录入</span>
 									<span class="status-value">垫资材料待上传</span>
 									<span class="status-value">提车待审核</span>
-									<span class="status-value">待上牌</span> -->
+									<span class="status-value">待上牌</span>
 									<a href="javascript:;" class="spread-tips">&lt;</a>
 								</td>
 								<td class="td-last">
-									<div class="button button-mini">申请修改贷款信息</div>
+									<div class="button button-mini button-mini-width button-gray">申请修改贷款信息</div>
 								</td>
 							</tr>
 						</tbody>

@@ -1,0 +1,104 @@
+	<!-- 贷款资料下载 -->
+			<div class="container load-archive-download" id="load-archive-ownload">
+				
+				<!-- 检索条件 -->
+				<div class="select-search-bar no-bottom-border clearfix">
+					<div class="search-item">
+						<span class="select-name">经办银行：</span>
+						<span class="select select-common">
+							<span class="placeholder">全部</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+					<div class="search-item">
+						<div class="input-text">
+							<input type="text" name="" id="" value="" placeholder="订单号\借款人姓名\身份证号" />	
+						</div>
+						
+					</div>
+					<div class="search-item">
+						<a href="javascript:;">重置</a>
+						<div id="" class="button button-mini">搜索</div>
+					</div>
+				</div>
+				<!-- 检索条件 end-->
+				
+				<!-- 全选删除框 -->
+				<div class="all-select-panel all-select-panel-nobottomborder clearfix">
+					<div class="all-check-box">
+						<div class="checkbox checkbox-normal"></div>
+						<span>全选</span>
+					</div>
+					<div class="all-check-box">
+						<div class="button button-mini button-deep">批量下载</div>
+					</div>
+				</div>
+				<!-- 全选删除框  end-->
+				
+				
+				<!-- 贷款资料下载表格 -->
+				<table width="100%" class="orders-table">
+					<thead>
+						<tr class="orders-bar-title">
+							<td class="orders-item-data order-item-first"></td>
+							<td class="orders-item-data">订单号</td>
+							<td class="orders-item-data">借款人</td>
+							<td class="orders-item-data">分期金额（元）</td>
+							<td class="orders-item-data">经办银行</td>
+							<td class="orders-item-data">当前进度</td>
+							<td class="orders-item-data orders-item-data-blank-mini"></td>
+							<td class="orders-item-data">操作</td>
+						</tr>
+					</thead>
+					<tbody id="loadArchiveDownloadTable">
+						
+					</tbody>
+				</table>
+				<!-- 征信资料表格 end-->
+				
+			</div>
+			
+			<!--分页器-->
+			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['loadArchiveDownload'].paging" data-pages="50" data-current="3"></div>
+
+			<script type="text/x-dot-template" id="loadArchiveDownloadListTmpl">
+				{{ var len = it.length; if(len) { }}
+					{{ for(var i = 0; i < len; i++) { var row = it[i]; }}
+						{{ if(i == 0) { }}
+						<tr class="tr-noborder">
+						{{ } else { }}
+						<tr>
+						{{ } }}
+							<td class="orders-item-data order-item-first">
+								<div class="checkbox checkbox-normal"></div>
+							</td>
+							<td class="orders-item-data">{{=row.orderNo}}</td>
+							<td class="orders-item-data">{{=row.userName}}（{{=row.idCard}}）</td>
+							<td class="orders-item-data">{{=row.stageMoney}}</td>
+							<td class="orders-item-data">{{=row.bankName}}</td>
+							{{ if(row.orderStatus == 0){ }}
+							<td class="orders-item-data">征信查询</td>
+							{{ } else if(row.orderStatus == 1) { }}
+							<td class="orders-item-data">待审核</td>
+							{{ } else if(row.orderStatus == 2) { }}
+							<td class="orders-item-data">已完成</td>
+							{{ } else if(row.orderStatus == 3) { }}
+							<td class="orders-item-data">征信完成</td>
+							{{ } }} 
+							<td class="orders-item-data orders-item-data-blank-mini"></td>
+							<td class="orders-item-data">
+								<div class="button button-mini button-gray">下载</div>
+							</td>
+						</tr>
+					{{ } }}
+				{{ } else { }}
+				<tr class="tr-noborder">
+					<td colspan="8" class="orders-blank">
+						<div class="blank-box">
+							<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+							<p>暂无待办任务！</p>
+						</div>
+					</td>
+				</tr>	
+				{{ } }}
+			</script>

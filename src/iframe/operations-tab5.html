@@ -1,0 +1,209 @@
+	<!-- 报表下载 -->
+			<div class="container operations-analysis" id="operations-analysis">
+				
+				<!--tab切换栏-->
+				<div class="tab-bar">
+					<ul class="role-bar-ul clearfix">
+						<li class="role-bar-li"><a href="#" class="role-item">业务量日统计</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">业务量区间统计</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">放款调度统计</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">逾期情况统计</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item role-item-active">报表下载</a></li>
+					</ul>
+				</div>
+				<!--tab切换栏   end-->
+				
+				
+				<!--面板-->
+				<div class="panel no-top-border">
+					<div class="select-search-bar no-border clearfix">
+						<div class="search-item">
+							<span class="select-name">创建日期：</span>
+							<span class="select select-date">
+								<span class="placeholder placeholder-mini">0000-00-00</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+							<span class="separator">-</span>
+							<span class="select select-date">
+								<span class="placeholder placeholder-mini">0000-00-00</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">当前进度：</span>
+							<span class="select select-common">
+								<span class="placeholder placeholder-mini">请选择</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">经办银行：</span>
+							<span class="select select-common">
+								<span class="placeholder placeholder-mini">请选择</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">贷款金额：</span>
+							<div class="input-text input-text-mini2">
+								<input type="text" />
+							</div>
+							<span class="separator">-</span>
+							<div class="input-text input-text-mini2">
+								<input type="text" />
+							</div>
+						</div>
+						<div class="search-item">
+							<span class="select-name">业务来源：</span>
+							<span class="select select-common">
+								<span class="placeholder placeholder-mini">请选择</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">车辆型号：</span>
+							<span class="select select-common">
+								<span class="placeholder placeholder-mini">请选择</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">分公司：</span>
+							<span class="select select-common">
+								<span class="placeholder placeholder-mini">请选择</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">新手车/二手车：</span>
+							<span class="select select-common">
+								<span class="placeholder placeholder-mini">请选择</span>
+								<span class="arrow arrow-bottom"></span>
+							</span>
+						</div>
+						<div class="search-item search-item-last">
+							<a href="javascript:;">重置</a>
+							<div id="" class="button button-mini button-deep">筛选</div>
+						</div>
+					</div>
+				</div>
+				<!--面板  end-->
+
+
+				<!-- 数据展示面板 -->
+				<div class="layout">
+					<div class="layout-title special-word">
+						提示：选中的字段会按照排列的顺序展示在列表中，导出时也会按照该顺序导入excel,你可以拖动字段来更改它的顺序。
+					</div>
+					<dl class="layout-select">
+						<dt>
+							已选字段：
+						</dt>
+						<dd class="checkbox-panel">
+							<div class="checkbox checkbox-select">
+							产品类型</div><div class="checkbox checkbox-select">
+							业务类型</div><div class="checkbox checkbox-select">
+							经办银行</div><div class="checkbox checkbox-select">
+							业务经济来源</div><div class="checkbox checkbox-select">
+							是否融资租赁乘用车</div><div class="checkbox checkbox-select">
+							账户名称</div><div class="checkbox checkbox-select">
+							车辆型号</div><div class="checkbox checkbox-select">
+							车辆价格</div>
+						</dd>
+						<dd class="button button-mini button-gray">
+							<i class="iconfont">&#xe615;</i>
+							增加表单字段
+						</dd>
+					</dl>
+					
+					<div class="layout-table">
+						<div class="layout-table-title">
+							<div class="current-orders">
+								当前订单数：<span class="color-main">10</span>笔
+							</div>
+							<div class="button">导出清单</div>
+						</div>
+						<table class="orders-table orders-table-borders" width="100%">
+							<thead>
+								<tr class="orders-bar-title">
+									<td class="orders-item-data">申请人</td>
+									<td class="orders-item-data">业务部门</td>
+									<td class="orders-item-data">产品类型</td>
+									<td class="orders-item-data">经办银行</td>
+									<td class="orders-item-data">业务类型</td>
+									<td class="orders-item-data">业务来源</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="orders-item-data">张亮</td>
+									<td class="orders-item-data">综合部</td>
+									<td class="orders-item-data">新车</td>
+									<td class="orders-item-data">浙江工行</td>
+									<td class="orders-item-data">担保</td>
+									<td class="orders-item-data">车商</td>
+								</tr>
+								<tr>
+									<td class="orders-item-data">张亮</td>
+									<td class="orders-item-data">综合部</td>
+									<td class="orders-item-data">新车</td>
+									<td class="orders-item-data">浙江工行</td>
+									<td class="orders-item-data">担保</td>
+									<td class="orders-item-data">车商</td>
+								</tr>
+								<tr>
+									<td class="orders-item-data">张亮</td>
+									<td class="orders-item-data">综合部</td>
+									<td class="orders-item-data">新车</td>
+									<td class="orders-item-data">浙江工行</td>
+									<td class="orders-item-data">担保</td>
+									<td class="orders-item-data">车商</td>
+								</tr>
+								<tr>
+									<td class="orders-item-data">张亮</td>
+									<td class="orders-item-data">综合部</td>
+									<td class="orders-item-data">新车</td>
+									<td class="orders-item-data">浙江工行</td>
+									<td class="orders-item-data">担保</td>
+									<td class="orders-item-data">车商</td>
+								</tr>
+								<tr>
+									<td class="orders-item-data">张亮</td>
+									<td class="orders-item-data">综合部</td>
+									<td class="orders-item-data">新车</td>
+									<td class="orders-item-data">浙江工行</td>
+									<td class="orders-item-data">担保</td>
+									<td class="orders-item-data">车商</td>
+								</tr>
+								<tr>
+									<td class="orders-item-data">张亮</td>
+									<td class="orders-item-data">综合部</td>
+									<td class="orders-item-data">新车</td>
+									<td class="orders-item-data">浙江工行</td>
+									<td class="orders-item-data">担保</td>
+									<td class="orders-item-data">车商</td>
+								</tr>
+								<tr>
+									<td class="orders-item-data">张亮</td>
+									<td class="orders-item-data">综合部</td>
+									<td class="orders-item-data">新车</td>
+									<td class="orders-item-data">浙江工行</td>
+									<td class="orders-item-data">担保</td>
+									<td class="orders-item-data">车商</td>
+								</tr>
+								<tr>
+									<td class="orders-item-data">张亮</td>
+									<td class="orders-item-data">综合部</td>
+									<td class="orders-item-data">新车</td>
+									<td class="orders-item-data">浙江工行</td>
+									<td class="orders-item-data">担保</td>
+									<td class="orders-item-data">车商</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- 数据展示面板 end-->
+				
+			</div>
+			<!-- 报表下载 end-->

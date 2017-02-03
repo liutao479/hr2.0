@@ -22,12 +22,12 @@
 		'orderModifyAudit': {
 			parent: 'orderManage',
 			name: '信息修改审核',
-			route: ''
+			route: 'orderModifyAudit'
 		},
 		'cancelOrderAudit': {
 			parent: 'orderManage',
 			name: '终止订单审核',
-			route: ''
+			route: 'cancelOrderAudit'
 		},
 		moneyManage: {
 			name: '财务管理',
@@ -92,7 +92,7 @@
 		'expireInfoInput': {
 			parent: 'expireManage',
 			name: '逾期信息录入',
-			route: ''
+			route: 'expireInfoInput'
 		},
 		'expireProcess': {
 			parent: 'expireManage',
@@ -107,12 +107,12 @@
 		'creditArchiveDownload': {
 			parent: 'archiveDownload',
 			name: '征信资料',
-			route: ''
+			route: 'creditArchiveDownload'
 		},
 		'loadArchiveDownload': {
 			parent: 'archiveDownload',
 			name: '贷款资料',
-			route: ''
+			route: 'loadArchiveDownload'
 		},
 		archivePrint: {
 			name: '资料打印',

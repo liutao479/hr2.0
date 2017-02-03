@@ -14,7 +14,7 @@ page.ctrl('licenceAudit', [], function($scope) {
 	*/
 	var loadLicenceAuditList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.licenceAudit),
+			url: $http.apiMap.licenceAudit,
 			data: params,
 			success: $http.ok(function(result) {
 				console.log(result);

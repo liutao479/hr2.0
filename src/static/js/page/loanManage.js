@@ -20,6 +20,10 @@ page.ctrl('loanManage', [], function($scope) {
 				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				setupPaging(result.page.pages, true);
+				// 鼠标移上提示框
+				$('#loan-manage .tips').on('hover', function() {
+					$(this).find('.tips-content').toggle();	
+				});
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -40,10 +44,7 @@ page.ctrl('loanManage', [], function($scope) {
 	/**
 	* 绑定立即处理事件
 	*/
-	$(document).on('hover', '#loan-manage .tips', function() {
-		console.log(this);
-		$(this).find('.tips-content').toggle();	
-	});
+	
 	$(document).on('click', '#loanManegeTable .button', function() {
 		var that = $(this);
 		router.render(that.data('href'), {orderNo: that.data('id')});

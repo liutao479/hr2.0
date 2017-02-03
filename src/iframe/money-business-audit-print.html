@@ -22,7 +22,7 @@
 					</div>
 					<div class="search-item">
 						<a href="javascript:;">重置</a>
-						<div id="" class="button button-mini-nowidth">搜索</div>
+						<div id="" class="button button-mini">搜索</div>
 					</div>
 				</div>
 				<!--银行汇款日期选择  end-->
@@ -34,14 +34,14 @@
 						<span>全选</span>
 					</div>
 					<div class="all-check-box">
-						<div class="button button-mini-nowidth button-special">批量打印</div>
+						<div class="button button-mini button-deep">批量打印</div>
 					</div>
 				</div>
 				<!--全选删除框  end-->
 				
 				
 				<!--采取业务审批表格-->
-				<table border="0" cellpadding="" width="100%" class="orders-table">
+				<table width="100%" class="orders-table">
 					<thead>
 						<tr class="orders-bar-title">
 							<td class="orders-item-data order-item-first"></td>
@@ -77,11 +77,11 @@
 								<div class="checkbox checkbox-normal"></div>
 							</td>
 							<td class="orders-item-data">{{=row.orderNo}}</td>
-							<td class="orders-item-data">{{=row.user}}（{{=row.idc}}）</td>
-							<td class="orders-item-data">{{=row.createTime}}</td>
-							<td class="orders-item-data">{{=row.company}}</td>
-							<td class="orders-item-data">{{=row.stagesMoney}}</td>
-							<td class="orders-item-data"><div class="button button-mini-nowidth">修改</div></td>
+							<td class="orders-item-data">{{=row.userName}}（{{=row.idCard}}）</td>
+							<td class="orders-item-data">{{=tool.formatDate(row.utilityTime)}}</td>
+							<td class="orders-item-data">{{=row.deptName}}</td>
+							<td class="orders-item-data">{{=row.stageMoney}}</td>
+							<td class="orders-item-data"><div class="button button-mini button-gray">修改</div></td>
 						</tr>
 					{{ } }}
 				{{ } else { }}

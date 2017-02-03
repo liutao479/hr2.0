@@ -3,9 +3,7 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
+			pageNum: $params.page || 1
 		};
 	/**
 	* 加载抵押办理信息表数据
@@ -14,12 +12,14 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 	*/
 	var loadMoneyPrintList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.moneyBusinessAuditPrint),
+			url: $http.apiMap.moneyBusinessAuditPrint,
+			type: 'post',
 			data: params,
+			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
+				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -61,9 +61,9 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 	});
 
 	$scope.paging = function(_page, _size, $el, cb) {
-		apiParams.page = _page;
-		$params.page = _page;
-		router.updateQuery($scope.$path, $params);
+		apiParams.pageNum = _page;
+		$params.pageNum = _page;
+		// router.updateQuery($scope.$path, $params);
 		loadMoneyPrintList(apiParams);
 		cb();
 	}
