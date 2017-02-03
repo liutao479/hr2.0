@@ -76,7 +76,15 @@
 		auditPrint: 'http://192.168.0.114:8080/loanUserStage/getFinancialData',
 		operationsAnalysis: 'http://127.0.0.1:8083/mock/operationsAnalysis',
 		organizationManage: 'http://127.0.0.1:8083/mock/organizationManage',
-		creditInput: 'http://127.0.0.1:8083/mock/creditInput'
+		creditInput: 'http://127.0.0.1:8083/mock/creditInput',
+		loanInfo: 'http://127.0.0.1:8083/mock/loan.infoBak',
+		serviceType: 'http://127.0.0.1:8083/mock/serviceType',
+		shangpaidi: 'http://127.0.0.1:8083/mock/shangpaidi',
+		loanAudit: 'http://127.0.0.1:8083/mock/loan.info',
+		cardAudit: 'http://127.0.0.1:8083/mock/loan.info',
+		lendAudit: 'http://127.0.0.1:8083/mock/loan.info',
+		eleCheck: 'http://127.0.0.1:8083/mock/electric.check',
+		carTwohand: 'http://127.0.0.1:8083/mock/car.towhand'
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
