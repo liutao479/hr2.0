@@ -14,7 +14,7 @@ page.ctrl('mortgageProcess', [], function($scope) {
 	*/
 	var loadMortgageProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.mortgageProcess),
+			url: $http.apiMap.mortgageProcess,
 			data: params,
 			success: $http.ok(function(result) {
 				console.log(result);

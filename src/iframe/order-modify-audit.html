@@ -1,0 +1,144 @@
+	<!--我的客户-->
+			<div class="container customer" id="customer">
+				<div class="select-search-bar clearfix">
+					<div class="search-item">
+						<span class="select-name">创建日期：</span>
+						<span class="select select-date">
+							<span class="placeholder placeholder-mini">0000-00-00</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+						<span class="separator">-</span>
+						<span class="select select-date">
+							<span class="placeholder placeholder-mini">0000-00-00</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+					<div class="search-item">
+						<span class="select-name">业务来源方：</span>
+						<span class="select select-common">
+							<span class="placeholder placeholder-mini">请选择</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+					<div class="search-item">
+						<span class="select-name">车辆品牌：</span>
+						<span class="select select-common">
+							<span class="placeholder placeholder-mini">请选择</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+					<div class="search-item">
+						<span class="select-name">分公司：</span>
+						<span class="select select-common">
+							<span class="placeholder placeholder-mini">全部</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+					<div class="search-item">
+						<span class="select-name">经办行：</span>
+						<span class="select select-common">
+							<span class="placeholder placeholder-mini">请选择</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+					<div class="search-item">
+						<span class="select-name">当前进度：</span>
+						<span class="select select-common">
+							<span class="placeholder placeholder-mini">请选择</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+					<div class="search-item">
+						<div class="input-text">
+							<input type="text" placeholder="订单号\借款人姓名\身份证号手机号" />
+						</div>
+					</div>
+					<div class="search-item search-item-last">
+						<a href="javascript:;">重置</a>
+						<div id="" class="button button-mini button-deep">搜索</div>
+					</div>
+					
+				</div>
+				<div class="page-bar">
+					<a href="javascript:;" class="time-sort time-sort-up">创建时间</a>
+					<div class="page-bar-right">
+						<span class="page-count">1/100</span>
+						<a href="javascript:;" class="page-change disabled"><i class="iconfont">&#xe601;</i></a>
+						<a href="javascript:;" class="page-change"><i class="iconfont">&#xe670;</i></a>
+					</div>
+				</div>
+				<div class="customer-orders" id="orderModifyTable">
+					
+				</div>
+			</div>
+			<!--我的客户 end-->
+
+			<!--分页插件-->
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['orderModifyAudit'].paging" data-pages="50" data-current="8"></div>
+
+			<script type="text/x-dot-template" id="orderModifyListTmpl">
+				{{ var len = it.length; if(len) { }}
+					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
+					<table width="100%" class="orders-box">
+						<thead>
+							<tr class="orders-bar-title">
+								<td class="first-td">
+									<p>订单生成时间：<span>{{=row.date}}</span></p>
+								</td>
+								<td colspan="4">
+									<p>订单号：<span>{{=row.orderNo}}</span></p>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="first-tr">
+								<td rowspan="3" class="car-info-box">
+									<img src="/hr2.0/dist/static/css/img/car-logo.png" class="car-logo"/>
+									<span class="car-name">{{=row.carName}}</span>
+								</td>
+								<td class="user-info">
+									<i class="iconfont">&#xe656;</i>
+									<span id="customer-name">{{=row.user}}</span>
+								</td>
+								<td class="user-info">
+									<i class="iconfont">&#xe6f5;</i>
+									<span id="customer-ID">{{=row.idc}}</span>
+								</td>
+								<td class="user-info">
+									<i class="iconfont">&#xe607;</i>
+									<span id="customer-phone">{{=row.phone}}</span>
+								</td>
+								<td class="td-last" rowspan="3">
+									<div class="button button-mini button-gray button-mini-width">立即审核</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="status-name">分期金额：<span class="status-value">{{=row.installment}}</span></td>
+								<td class="status-name">期数：<span class="status-value">{{=row.periods}}</span></td>
+								<td class="status-name">首付比例：<span class="status-value">{{=row.downpayment}}</span></td>
+							</tr>
+							<tr class="last-tr">
+								<td colspan="3" class="status-name">
+									订单状态：
+									{{for(var j = 0, len2 = row.status.length; j < len2; j++) { var col = row.status[j]; }}
+									<span class="status-value">{{=col}}</span>
+									{{ } }}
+									<!-- <span class="status-value">征信结果待录入</span>
+									<span class="status-value">垫资材料待上传</span>
+									<span class="status-value">提车待审核</span>
+									<span class="status-value">待上牌</span> -->
+									<a href="javascript:;" class="spread-tips">&lt;</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					{{ } }}
+				{{ } else { }}
+				<div class="layout">
+					<div class="blank-box">
+						<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+						<p>暂无待办任务！</p>
+					</div>
+				</div>
+				{{ } }}
+			</script>

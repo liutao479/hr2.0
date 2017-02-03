@@ -8,7 +8,7 @@ page.ctrl('expireProcess', [], function($scope) {
 			pageSize: 20
 		};
 	/**
-	* 加载车贷办理数据
+	* 加载逾期管理数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/

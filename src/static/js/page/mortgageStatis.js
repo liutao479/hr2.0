@@ -3,9 +3,13 @@ page.ctrl('mortgageStatis', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
+			// loanPledgeQuery: {
+			//     status: '',                   //上牌进度
+			//     acceptCompany: '',           //分公司名称
+			//     bankName: '',                //经办银行名称
+			//     orderNo: ''                  //订单号，借款人姓名，身份证号
+			// }
+	    	pageNum: $params.pageNum || 1       //当前页码
 		};
 	/**
 	* 加载抵押进度统计信息表数据
@@ -14,12 +18,14 @@ page.ctrl('mortgageStatis', [], function($scope) {
 	*/
 	var loadMortgageStatisList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.mortgageStatis),
+			url: $http.apiMap.mortgageStatis,
+			type: 'post',
 			data: params,
+			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
+				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -29,11 +35,11 @@ page.ctrl('mortgageStatis', [], function($scope) {
 	/**
 	* 构造分页
 	*/
-	var setupPaging = function(count, isPage) {
+	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
-			current: parseInt(apiParams.page),
-			pages: isPage ? count : (tool.pages(count || 0, apiParams.pageSize)),
-			size: apiParams.pageSize
+			current: parseInt(apiParams.pageNum),
+			pages: isPage ? _page.pages : (tool.pages(count || 0, _page.pageSize)),
+			size: _page.pageSize
 		});
 		$('#pageToolbar').paging();
 	}
@@ -60,10 +66,10 @@ page.ctrl('mortgageStatis', [], function($scope) {
 		loadMortgageStatisList(apiParams);
 	});
 
-	$scope.paging = function(_page, _size, $el, cb) {
-		apiParams.page = _page;
-		$params.page = _page;
-		router.updateQuery($scope.$path, $params);
+	$scope.paging = function(_pageNum, _size, $el, cb) {
+		apiParams.pageNum = _pageNum;
+		$params.pageNum = _pageNum;
+		// router.updateQuery($scope.$path, $params);
 		loadMortgageStatisList(apiParams);
 		cb();
 	}

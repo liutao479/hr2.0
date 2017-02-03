@@ -1,0 +1,91 @@
+// 我的客户表格
+.orders-box {
+    border: 1px solid @borderColor;
+    border-collapse: collapse;
+    margin-top: 10px;
+    text-align: left;
+    -webkit-transition: all .1s;
+       -moz-transition: all .1s;
+        -ms-transition: all .1s;
+         -o-transition: all .1s;
+            transition: all .1s;
+    &:hover {
+        border-color: @mainColor;
+        cursor: pointer;
+        -webkit-transform: scale(1.01);
+           -moz-transform: scale(1.01);
+            -ms-transform: scale(1.01);
+             -o-transform: scale(1.01);
+                transform: scale(1.01);
+        -webkit-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+           -moz-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+            -ms-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+             -o-box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2); 
+                box-shadow: 2.83px 2.83px 10px 0 rgba(0, 0, 0, 0.2);
+                filter:progid:DXImageTransform.Microsoft.Shadow(color=rgba(0, 5, 5, 0.2),direction=100,strength=4);
+    }
+    .iconfont {
+        color: @mainColor;
+    }
+    thead {
+        color: @tiperColor;
+        background-color: #f3f4f9;
+        height: 43px;
+        line-height: 43px;
+        td {
+            &.first-td {
+                width: 240px;
+            }
+            text-align: left;
+            padding-left: 20px;
+        }
+    }
+    tbody {
+        background-color: #FFF;
+        td {
+            line-height: 30px;
+        }
+        .first-tr td{
+            padding-top: 13px;
+        }
+        .last-tr td{
+            padding-bottom: 16px;
+        }
+        .user-info {
+            .iconfont {
+                margin-right: 10px;
+                position: relative;
+                top: 1px;
+            }
+        }
+        .car-logo {
+            width: 71px;
+            height: 71px;
+            margin: 0 10px 0 15px;
+            vertical-align: middle;
+        }
+        .car-name {
+            width: 120px;
+            line-height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .status-name {
+            color: @tiperColor;
+            .status-value {
+                color: @fontColor;
+                margin-right: 20px;
+            }
+            .spread-tips {
+                color: @fontColor;
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+            }
+        }
+        .td-last {
+            text-align: center;
+            padding-bottom: 5px;
+        }
+    }
+}

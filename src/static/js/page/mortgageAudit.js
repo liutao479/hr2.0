@@ -14,12 +14,12 @@ page.ctrl('mortgageAudit', [], function($scope) {
 	*/
 	var loadMortgageAuditList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.mortgageAudit),
+			url: $http.apiMap.mortgageAudit,
 			data: params,
 			success: $http.ok(function(result) {
 				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
+				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}

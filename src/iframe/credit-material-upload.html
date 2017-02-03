@@ -3,13 +3,13 @@
 	<!--返回列表-->
 	<div id="location"></div>
 	<!--tab切换栏(征信材料角色)-->
-	<div class="tab-bar tab-bar-special">
+	<div class="tab-bar mt15">
 		<ul class="role-bar-ul clearfix" id="creditTabs"></ul>
-		<div class="button button-mini-nowidth" id="btnNewLoanPartner">
+		<div class="button button-mini" id="btnNewLoanPartner">
 			<i class="iconfont">&#xe615;</i>
 			增加共同还款人
 		</div>
-		<div class="button button-mini-nowidth" id="btnNewGuarantor">
+		<div class="button button-mini" id="btnNewGuarantor">
 			<i class="iconfont">&#xe615;</i>
 			增加反担保人
 		</div>
@@ -17,19 +17,17 @@
 	<!--tab切换栏(征信材料角色)   end-->
 	
 	<!--面板-->
-	<div class="panel panel-credit clearfix" id="creditUserPanel">
+	<div class="panel no-top-border clearfix" id="creditUserPanel">
 
 	</div>
 	<!--提交订单按钮区域-->
 	<div class="commit-orders-box">
-		<div id="" class="button cancel">取消订单</div>
+		<div id="" class="button button-orange">取消订单</div>
 		<div id="" class="button">征信查询</div>
 	</div>
 
 	<div class="select select-car" data-tabs="品牌|车系|车型"></div>
 </div>
-
-
 <script type="text/dot-x-template" id="tplTabItem">
 	<li class="role-bar-li"><a class="role-item tabEvt" data-trigger="">{{=it.roleTypeName}}</a></li>
 </script>

@@ -3,9 +3,7 @@ page.ctrl('licenceProcess', ['page/test'], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
+			pageNum: $params.pageNum || 1
 		};
 	/**
 	* 加载上牌办理信息表数据
@@ -14,12 +12,13 @@ page.ctrl('licenceProcess', ['page/test'], function($scope) {
 	*/
 	var loadLicenceProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.licenceProcess),
+			url: $http.apiMap.licenceProcess,
 			data: params,
+			dateType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
+				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -32,7 +31,7 @@ page.ctrl('licenceProcess', ['page/test'], function($scope) {
 	var setupPaging = function(count, isPage) {
 		$scope.$el.$paging.data({
 			current: parseInt(apiParams.page),
-			pages: isPage ? count : (tool.pages(count || 0, apiParams.pageSize)),
+			pages: isPage ? count : (tool.pages(count  || 0, apiParams.pageSize)),
 			size: apiParams.pageSize
 		});
 		$('#pageToolbar').paging();
@@ -60,9 +59,9 @@ page.ctrl('licenceProcess', ['page/test'], function($scope) {
 		loadLicenceProcessList(apiParams);
 	});
 
-	$scope.paging = function(_page, _size, $el, cb) {
-		apiParams.page = _page;
-		$params.page = _page;
+	$scope.paging = function(_pageNum, _size, $el, cb) {
+		apiParams.pageNum = _pageNum;
+		$params.pageNum = _pageNum;
 		router.updateQuery($scope.$path, $params);
 		loadLicenceProcessList(apiParams);
 		cb();
