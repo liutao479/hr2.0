@@ -42,8 +42,6 @@
         }
     }
     &&-empty {
-        position: relative;
-        top: 1px;
         border:1px solid @buttonBgColor;
         background-color: #ffffff;
         color: @buttonBgColor;
@@ -586,6 +584,7 @@
 
 //鼠标移上小提示
 .tips {
+    position: absolute;
     width: 16px;
     height: 16px;
     background-color: #efad4f;
@@ -601,7 +600,6 @@
 .tips-area {
     cursor: pointer;
     .tips {
-        position: absolute;
         top: -8px;
         right: -8px;
     }
@@ -609,7 +607,7 @@
 .tips-content {
     display: none;
     position: absolute;
-    z-index: 999;
+    z-index: 1000;
     width: 273px;
     padding: 4px 20px;
     background-color: #fcf7e3;
@@ -701,6 +699,7 @@
         color: #efad4f;
         padding: 0 20px;
         .tips {
+            position: relative;
             margin-right: 5px;
         }
     }
@@ -711,15 +710,31 @@
         &.w-content-padding {
             padding: 20px 32px 50px 32px;
         }
+
         .w-select {
             display: inline-block;
             margin: 10px 25px 10px 0;
+            &.w-select-left {
+                margin-left: 30px;
+            }
             .checkbox {
                 float: left;
                 margin-right: 10px;
+                position: relative;
+                top: 2px;
+            }
+            .radio {
+                float: left;
+                margin-right: 10px;
+            }
+            .i-download {
+                float: left;
+                color: @mainColor;
+                font-size: 18px;
+                margin-right: 6px;
             }
             .w-select-item {
-                line-height: 18px;
+                line-height: 20px;
                 float: left;
             }
         }
@@ -752,6 +767,10 @@
             margin-top: 20px;
             .button {
                 margin-right: 20px;
+                &.button-empty {
+                    position: relative;
+                    top: 1px;
+                }
             }
         }
         .w-expire {
