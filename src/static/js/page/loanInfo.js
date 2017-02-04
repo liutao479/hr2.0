@@ -14,21 +14,44 @@ page.ctrl('loanInfo', function($scope) {
 	}
 	
 	$(document).on('click','.selecter', function() {
-		var that =$(this);
-		var key = that.data('key');
-		console.log(key);
-		
+		var that =$("div",$(this));
+		var key = $(this).data('key');
+		var boxKey = key + 'Box';
+		$(this).attr("id",boxKey);
+ 		console.log(key);
 		$.ajax({
 			url: apiMap[key],
 			data: $params,
 			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.isSecondTmpl, result.data, true);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
+				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
+				$source.selectType = result.data;
+				var selectOptBox = $(".selectOptBox");
+				selectOptBox.attr("id",key);
 			})
 		})
 	})
+	$(document).on('click', '.selectOptBox li', function() {
+		var value = $(this).val();
+		var text = $(this).text();
+		$(this).parent().parent().siblings(".placeholder").html(text);
+		$(this).parent().parent().siblings("input").val(value);
+		var value1 = $(this).parent().parent().siblings("input").val();
+		if(!value1 || value1 == 0){
+			$(this).parent().parent().siblings(".placeholder").html("请选择")
+		}
+		$(".selectOptBox").hide(); 
+		return false;
+	})
+//点击下拉消失	
+	$(document).bind("click",function(e){ 
+		var target = $(e.target); 
+		if(target.closest(".selectOptBox").length == 0){ 
+			$(".selectOptBox").hide(); 
+			return false;
+		} 
+	})
+	
+	
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
@@ -46,38 +69,38 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		})
 	}
-//业务类型	
-	$(document).on('click', '#selectType', function() {
-		var that = $(this);
-//		if($source.selectType) {
-//			alert(1);
-////			$('#selectTypeOpt').show();
-//			return true;
+////业务类型	
+//	$(document).on('click', '#selectType', function() {
+//		var that = $(this);
+////		if($source.selectType) {
+////			alert(1);
+//////			$('#selectTypeOpt').show();
+////			return true;
+////		}
+//		$.ajax({
+//			url: $http.api($http.apiMap.serviceType),
+//			success: $http.ok(function(result) {
+//				render.compile(that, $scope.def.selectTypeTmpl, result.data, true);
+//				$source.selectType = result.data;
+////				$('#selectTypeOpt').show();
+////				$('#selectType').text("请选择");
+//				$('#selectTypeIH').val('');
+//				return false;
+//			})
+//		})
+////		$('#selectTypeOpt').show();
+//	})
+//	$(document).on('click', '#selectTypeOpt li', function() {
+//		var value = $(this).val();
+//		var text = $(this).text();
+//		$('#selectTypeIH').val(value);
+//		$('#selectType').html(text);
+//		var value1 = $('#selectTypeIH').val();
+//		if(value1 == 0){
+//			$('#selectType').html("请选择");
 //		}
-		$.ajax({
-			url: $http.api($http.apiMap.serviceType),
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectTypeTmpl, result.data, true);
-				$source.selectType = result.data;
-//				$('#selectTypeOpt').show();
-//				$('#selectType').text("请选择");
-				$('#selectTypeIH').val('');
-				return false;
-			})
-		})
-//		$('#selectTypeOpt').show();
-	})
-	$(document).on('click', '#selectTypeOpt li', function() {
-		var value = $(this).val();
-		var text = $(this).text();
-		$('#selectTypeIH').val(value);
-		$('#selectType').html(text);
-		var value1 = $('#selectTypeIH').val();
-		if(value1 == 0){
-			$('#selectType').html("请选择");
-		}
-		return false;
-	})
+//		return false;
+//	})
 //上牌地
 	$(document).on('click', '#selectType', function() {
 		var that = $(this);
@@ -103,18 +126,6 @@ page.ctrl('loanInfo', function($scope) {
 		return false;
 	})
 	
-//点击下拉消失	
-//	$(document).bind("click",function(e){ 
-//		var target = $(e.target); 
-//		if(target.closest("#selectTypeOpt").length == 0){ 
-//			$("#selectTypeOpt").hide(); 
-//			var value1 = $('#selectTypeIH').val();
-//			if(value1 == 0){
-//				$('#selectType').html("请选择");
-//			}
-//			return false;
-//		} 
-//	})
 
 //点击本地常驻类型复选框
 	//主申请人
@@ -275,8 +286,7 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	render.$console.load(router.template('loan-info'), function() {
 		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
-		$scope.def.selectTypeTmpl =  render.$console.find('#selectTypetmpl').html();
-		$scope.def.isSecondTmpl =  render.$console.find('#isSecondTmpl').html();
+		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#loanInfoTable'),
 				  

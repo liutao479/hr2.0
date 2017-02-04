@@ -1,13 +1,21 @@
 {
-	"code": 0,
-	"data": [
-		{
-            "id": "0",
-            "value": "男"
+    "code":0,
+    "data":[
+        {
+            "configFieldItem":[
+                {
+                    "name":"男",
+                    "value":"0"
+                }
+            ]
         },
-		{
-            "id": "1",
-            "value": "女"
+        {
+            "configFieldItem":[
+                {
+                    "name":"女",
+                    "value":"1"
+                }
+            ]
         }
-	]
+    ]
 }
