@@ -65,12 +65,17 @@
 							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'isSecond'){ }}
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>新车还是二手车：</span>
-								<span class="info-value">
-									<select name="isSecond">
+								<!--<span class="info-value">
+									<select data-key="sex" name="isSecond">
 										<option value=''>请选择</option>
 										<option value="0" {{=(it.data.loanOrder.isSecond==0?"selected":"")}}>新车</option>
 										<option value="1" {{=(it.data.loanOrder.isSecond==1?"selected":"")}}>二手车</option>
 									</select>
+								</span>-->
+								<span data-key="sex" class="info-value selecter">
+									<span class="placeholder" id="selectSex">请选择</span>
+									<span class="arrow arrow-bottom"></span>
+									<input type="hidden" name="serviceTypeCode" id="isSecond" />
 								</span>
 							</div>
 							{{ };if(seg.code == 'serviceType'){ }}
@@ -1120,11 +1125,22 @@
 				{{ } }}
 				{{ } }}
 			</script>
+			<script type="text/x-dot-template" id="isSecondTmpl">
+				<ul id="isSecondOpt" class="selectOpt">
+					<li value="">请选择</li>
+				{{for(var a = 0, lenth11 = it.data.length; a < lenth11; a++) { var op1 = it.data[a]; }}
+					{{for(var b = 0, lenth12 = op1.configFieldItem.length; b < lenth12; b++) { var opt = op1.configFieldItem[b]; }}
+					<!--<option value="{{= opt.value}}">{{= opt.name}}</option>-->
+						<li value="{{= opt.value}}">{{= opt.name}}</li>
+					{{ } }}
+				{{ } }}
+				</ul>
+			</script>
 			<script type="text/x-dot-template" id="selectTypetmpl">
 				<ul id="selectTypeOpt" class="selectOpt">
 					<li value="">请选择</li>
-				{{for(var a = 0, lenth1 = it.data.length; a < lenth1; a++) { var op1 = it.data[a]; }}
-					{{for(var b = 0, lenth2 = op1.configFieldItem.length; b < lenth2; b++) { var opt = op1.configFieldItem[b]; }}
+				{{for(var a = 0, lenth11 = it.data.length; a < lenth11; a++) { var op1 = it.data[a]; }}
+					{{for(var b = 0, lenth12 = op1.configFieldItem.length; b < lenth12; b++) { var opt = op1.configFieldItem[b]; }}
 					<!--<option value="{{= opt.value}}">{{= opt.name}}</option>-->
 						<li value="{{= opt.value}}">{{= opt.name}}</li>
 					{{ } }}

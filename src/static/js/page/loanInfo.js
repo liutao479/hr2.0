@@ -1,26 +1,5 @@
 'use strict';
 page.ctrl('loanInfo', function($scope) {
-//	var apiMap = {
-//		"sex": "/sex",
-//		"busiArea": "/busiarea"
-//	}
-//	
-//	$(document).on('change','select', function() {
-//		var that =$(this);
-//		var key = that.data('key');
-//		console.log(key);
-//		
-//		$.ajax({
-//			url: apiMap[key],
-//			data: params,
-//			success: $http.ok(function(result) {
-//				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
-//				if(cb && typeof cb == 'function') {
-//					cb();
-//				}
-//			})
-//		})
-//	})
 	var $console = render.$console,
 		$params = $scope.$params,
 		$source = $scope.$source = {},
@@ -29,6 +8,27 @@ page.ctrl('loanInfo', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
+	var apiMap = {
+		"sex": "http://127.0.0.1:8083/mock/sex",
+		"serviceType": "http://127.0.0.1:8083/mock/serviceType"
+	}
+	
+	$(document).on('click','.selecter', function() {
+		var that =$(this);
+		var key = that.data('key');
+		console.log(key);
+		
+		$.ajax({
+			url: apiMap[key],
+			data: $params,
+			success: $http.ok(function(result) {
+				render.compile(that, $scope.def.isSecondTmpl, result.data, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	})
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
@@ -104,17 +104,18 @@ page.ctrl('loanInfo', function($scope) {
 	})
 	
 //点击下拉消失	
-	$(document).bind("click",function(e){ 
-		var target = $(e.target); 
-		if(target.closest("#selectTypeOpt").length == 0){ 
-			$("#selectTypeOpt").hide(); 
-			var value1 = $('#selectTypeIH').val();
-			if(value1 == 0){
-				$('#selectType').html("请选择");
-			}
-			return false;
-		} 
-	})
+//	$(document).bind("click",function(e){ 
+//		var target = $(e.target); 
+//		if(target.closest("#selectTypeOpt").length == 0){ 
+//			$("#selectTypeOpt").hide(); 
+//			var value1 = $('#selectTypeIH').val();
+//			if(value1 == 0){
+//				$('#selectType').html("请选择");
+//			}
+//			return false;
+//		} 
+//	})
+
 //点击本地常驻类型复选框
 	//主申请人
 	$(document).on('click', '#mainPersonRdtype .checkbox', function() {
@@ -275,6 +276,7 @@ page.ctrl('loanInfo', function($scope) {
 	render.$console.load(router.template('loan-info'), function() {
 		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
 		$scope.def.selectTypeTmpl =  render.$console.find('#selectTypetmpl').html();
+		$scope.def.isSecondTmpl =  render.$console.find('#isSecondTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#loanInfoTable'),
 				  
