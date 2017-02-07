@@ -15,9 +15,24 @@ page.ctrl('loanInfo', function($scope) {
 		"demandBankId": "http://127.0.0.1:8083/mock/demandBankId",
 		"busiSourceType": "http://127.0.0.1:8083/mock/busiSourceType",
 		"busiArea": "http://127.0.0.1:8083/mock/busiArea",
-		"busiSourceName": "http://127.0.0.1:8083/mock/busiSourceName"
+		"busiSourceName": "http://127.0.0.1:8083/mock/busiSourceName",
+		"licenseType": "http://127.0.0.1:8083/mock/busiSourceName",
+		"isFinanceLeaseVehicle": "http://127.0.0.1:8083/mock/busiSourceName",
+		"isOperationVehicle": "http://127.0.0.1:8083/mock/busiSourceName",
+		"onLicensePlace": "http://127.0.0.1:8083/mock/busiSourceName",
+		"isInstallGps": "http://127.0.0.1:8083/mock/yesOrNo",
+		"businessModel": "http://127.0.0.1:8083/mock/busiSourceName",
+		"isDiscount": "http://127.0.0.1:8083/mock/busiSourceName",
+		"repayPeriod": "http://127.0.0.1:8083/mock/busiSourceName",
+		"renewalMode": "http://127.0.0.1:8083/mock/busiSourceName",
+		"isAdvanced": "http://127.0.0.1:8083/mock/busiSourceName",
+		"maritalStatus": "http://127.0.0.1:8083/mock/busiSourceName",
+		"houseStatus": "http://127.0.0.1:8083/mock/busiSourceName",
+		"isEnterprise": "http://127.0.0.1:8083/mock/busiSourceName",
+		"userRelationship": "http://127.0.0.1:8083/mock/busiSourceName",
+		"relationship": "http://127.0.0.1:8083/mock/busiSourceName"
 		}
-	
+
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
@@ -35,10 +50,11 @@ page.ctrl('loanInfo', function($scope) {
 				}
 				loanFinishedSelect();
 				loanFinishedCheckbox();
+				loanFinishedGps();
 			})
 		});
-		
 	}
+	
 //页面加载完成对所有下拉框进行赋值	
 	var loanFinishedSelect = function(){
 		$(".selecter").each(function(){
@@ -46,7 +62,6 @@ page.ctrl('loanInfo', function($scope) {
 			var key = $(this).data('key');
 			var boxKey = key + 'Box';
 			$(this).attr("id",boxKey);
-   			//console.log(key);
 			$.ajax({
 				url: apiMap[key],
 				data: $params,
@@ -118,7 +133,6 @@ page.ctrl('loanInfo', function($scope) {
 	})
 
 //点击本地常驻类型复选框
-	//主申请人
 	$(document).on('click', '.checkbox', function() {
 		returnCheckboxVal();
 	})
@@ -151,11 +165,26 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		})
 	}
-	//共同还款人，反担保人
+
+//gps
+	$(document).on('click', '#isInstallGps li', function() {
+		loanFinishedGps();
+	})
+	var loanFinishedGps = function(){
+		var gps = $("#gps").val();
+		if(gps != 1){
+			$("#isInstallGpsBox").removeClass("gps");
+			$("#gps1").hide();
+			$("#gps2").hide();
+		}else{
+			$("#isInstallGpsBox").addClass("gps");
+			$("#gps1").show();
+			$("#gps2").show();
+		}
+	}
 
 
-
-/***
+	/***
 	* 保存按钮
 	*/
 	$(document).on('click', '#saveOrderInfo', function() {
@@ -163,7 +192,7 @@ page.ctrl('loanInfo', function($scope) {
         console.log(data);
 		$.ajax({
 			type: 'POST',
-			url: 'http://192.168.0.107',
+			url: 'http://192.168.0.107/loanInfoInput/updLoanOrder',
 			data: data,
 			dataType: 'text',
 			success: function(result){
@@ -174,87 +203,63 @@ page.ctrl('loanInfo', function($scope) {
 	$(document).on('click', '#saveCarInfo', function() {
         var data = $('#carInfoForm').serializeArray();
         console.log(data);
-//		$.ajax({
-//			type: 'GET',
-//			url: '',
-//			data: data,
-//			dataType: 'text',
-//			success: function(result){
-//				//console.log("success");
-//			}
-//		});
+		$.ajax({
+			type: 'POST',
+			url: 'http://192.168.0.107/loanInfoInput/updLoanUserCar',
+			data: data,
+			dataType: 'text',
+			success: function(result){
+				//console.log("success");
+			}
+		});
 	})
 	$(document).on('click', '#saveStageInfo', function() {
         var data = $('#stageInfoForm').serializeArray();
         console.log(data);
-//		$.ajax({
-//			type: 'GET',
-//			url: '',
-//			data: data,
-//			dataType: 'text',
-//			success: function(result){
-//				//console.log("success");
-//			}
-//		});
+		$.ajax({
+			type: 'POST',
+			url: 'http://192.168.0.107/loanInfoInput/updLoanUserStage',
+			data: data,
+			dataType: 'text',
+			success: function(result){
+				//console.log("success");
+			}
+		});
 	})
-	$(document).on('click', '#saveMainInfo', function() {
-        var data = $('#mainPersonInfoForm').serializeArray();
+	$(document).on('click', '.saveCommonInfo', function() {
+		var thisForm = $(this).parent().parent().siblings().find("form");
+		console.log(thisForm);
+        var data = thisForm.serializeArray();
         console.log(data);
-//		$.ajax({
-//			type: 'GET',
-//			url: '',
-//			data: data,
-//			dataType: 'text',
-//			success: function(result){
-//				//console.log("success");
-//			}
-//		});
+		$.ajax({
+			type: 'POST',
+			url: 'http://192.168.0.107/loanInfoInput/updLoanUser',
+			data: data,
+			dataType: 'text',
+			success: function(result){
+				//console.log("success");
+			}
+		});
 	})
-//	$(document).on('click', '#saveCommonInfo_'+i, function(i) {
-//      var data = $('#commonPersonInfoForm_'+i).serializeArray();
-//      console.log(data);
-//		$.ajax({
-//			type: 'GET',
-//			url: '',
-//			data: data,
-//			dataType: 'text',
-//			success: function(result){
-//				//console.log("success");
-//			}
-//		});
-//	})
-//	$(document).on('click', '#saveGuaInfo_'+i, function(i) {
-//      var data = $('#guaPersonInfoForm_'+i).serializeArray();
-//      console.log(data);
-//		$.ajax({
-//			type: 'GET',
-//			url: '',
-//			data: data,
-//			dataType: 'text',
-//			success: function(result){
-//				//console.log("success");
-//			}
-//		});
-//	})
 	$(document).on('click', '#saveEmergencyInfo', function() {
         var data = $('#emergencyInfoForm').serializeArray();
         console.log(data);
-//		$.ajax({
-//			type: 'GET',
-//			url: '',
-//			data: data,
-//			dataType: 'text',
-//			success: function(result){
-//				//console.log("success");
-//			}
-//		});
+		$.ajax({
+			type: 'POST',
+			url: 'http://192.168.0.107/loanInfoInput/updLoanEmergencyConact',
+			data: data,
+			dataType: 'text',
+			success: function(result){
+				//console.log("success");
+			}
+		});
 	})
 	$(document).on('click', '#saveloanPayCardInfo', function() {
         var data = $('#loanPayCardInfoForm').serializeArray();
         console.log(data);
 		$.ajax({
 			type: 'POST',
-			url: 'http://192.168.0.107',
+			url: 'http://192.168.0.107/loanInfoInput/updLoanPayCard',
 			data: data,
 			dataType: 'text',
 			success: function(result){
@@ -265,28 +270,28 @@ page.ctrl('loanInfo', function($scope) {
 	$(document).on('click', '#saveLoanFeeInfo', function() {
         var data = $('#loanFeeInfoForm').serializeArray();
         console.log(data);
-//		$.ajax({
-//			type: 'GET',
-//			url: '',
-//			data: data,
-//			dataType: 'text',
-//			success: function(result){
-//				//console.log("success");
-//			}
-//		});
+		$.ajax({
+			type: 'POST',
+			url: 'http://192.168.0.107/loanInfoInput/updLoanFee',
+			data: data,
+			dataType: 'text',
+			success: function(result){
+				//console.log("success");
+			}
+		});
 	})
 	$(document).on('click', '#saveOtherInfo', function() {
         var data = $('#otherInfoForm').serializeArray();
         console.log(data);
-//		$.ajax({
-//			type: 'GET',
-//			url: '',
-//			data: data,
-//			dataType: 'text',
-//			success: function(result){
-//				//console.log("success");
-//			}
-//		});
+		$.ajax({
+			type: 'POST',
+			url: 'http://192.168.0.107/loanInfoInput/updLoanIndividuation',
+			data: data,
+			dataType: 'text',
+			success: function(result){
+				//console.log("success");
+			}
+		});
 	})
 	
 	/***
