@@ -33,7 +33,8 @@
 		if(typeof fn != 'function') {
 			fn = $.noop;
 		}
-		page.ctrl[name] = {
+		if(page.ctrls[name]) return;
+		page.ctrls[name] = {
 			refer: refer,
 			fn: fn
 		}
@@ -46,7 +47,7 @@
 	* @params {object} params 参数
 	*/
 	page.excute = function(name, path, params) {
-		var _ctrl = page.ctrl[name],
+		var _ctrl = page.ctrls[name],
 			_$scope = page.$scope[name],
 			args = [];
 		router.closeRefresh = false;

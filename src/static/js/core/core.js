@@ -55,7 +55,7 @@
 	_.$http.apiMap = {
 		menu: 'http://127.0.0.1:8083/mock/menu',
 		loanList: 'http://127.0.0.1:8083/mock/loan.list',
-		myCustomer: 'http://192.168.0.114:8080/loanOrder/getMyCustomer',
+		myCustomer: 'http://192.168.0.146:8080/loanOrder/getMyCustomer',
 		orderModifyAudit: 'http://127.0.0.1:8083/mock/orderModifyAudit',
 		cancelOrderAudit: 'http://127.0.0.1:8083/mock/cancelOrderAudit',
 		loanManage: 'http://127.0.0.1:8083/mock/loan.manage',
@@ -63,17 +63,17 @@
 		moneyBussinessAuditPrint: 'http://127.0.0.1:8083/mock/moneyBussinessAuditPrint',
 		mortgageProcess: 'http://127.0.0.1:8083/mock/mortgage.process',
 		mortgageAudit: 'http://127.0.0.1:8083/mock/mortgage.audit',
-		mortgageStatis: 'http://192.168.0.114:8080/loanPledge/getLoanPledgeList',
+		mortgageStatis: 'http://192.168.0.146:8080/loanPledge/getLoanPledgeList',
 		operationsAnalysis: 'http://127.0.0.1:8083/mock/operationsAnalysis',
 		organizationManage: 'http://127.0.0.1:8083/mock/organizationManage',
 		licenceProcess: 'http://127.0.0.1:8083/mock/licence.process',
 		licenceAudit: 'http://127.0.0.1:8083/mock/licence.audit',
-		licenceStatis: 'http://192.168.0.114:8080/loanRegistration/getLoanRegistrationList',
+		licenceStatis: 'http://192.168.0.146:8080/loanRegistration/getLoanRegistrationList',
 		expireProcess: 'http://127.0.0.1:8083/mock/expire.process',
-		creditArchiveDownload: 'http://192.168.0.114:8080/creditUser/getCreditMaterials',
-		loadArchiveDownload: 'http://192.168.0.114:8080/creditUser/getCreditMaterials',
-		moneyBusinessAuditPrint: 'http://192.168.0.114:8080/loanUserStage/getFinancialData',
-		auditPrint: 'http://192.168.0.114:8080/loanUserStage/getFinancialData',
+		creditArchiveDownload: 'http://192.168.0.146:8080/creditUser/getCreditMaterials',
+		loadArchiveDownload: 'http://192.168.0.146:8080/creditUser/getCreditMaterials',
+		moneyBusinessAuditPrint: 'http://192.168.0.146:8080/loanUserStage/getFinancialData',
+		auditPrint: 'http://192.168.0.146:8080/loanUserStage/getFinancialData',
 		operationsAnalysis: 'http://127.0.0.1:8083/mock/operationsAnalysis',
 		organizationManage: 'http://127.0.0.1:8083/mock/organizationManage',
 		creditInput: 'http://127.0.0.1:8083/mock/creditInput'
@@ -95,9 +95,17 @@
 	/**
 	 * 添加日期格式化方法
 	 */
-	tool.formatDate = function(_time) {
-		var cDate = new Date(_time);
-		return cDate.getFullYear() + '-' + tool.leftPad(cDate.getMonth() + 1, 2) + '-' + tool.leftPad(cDate.getDate(), 2);
+	tool.formatDate = function(time, isTime) {
+		var cDate = new Date(time),
+			_year = cDate.getFullYear(),
+			_month = tool.leftPad(cDate.getMonth() + 1, 2),
+			_date = tool.leftPad(cDate.getDate(), 2),
+			_hours = tool.leftPad(cDate.getHours(), 2),
+			_minutes = tool.leftPad(cDate.getMinutes(), 2);
+		if(isTime) {
+			return _year + '-' + _month + '-' + _date + ' ' + _hours + ':' + _minutes;
+		}
+		return _year + '-' + _month + '-' + _date;
 	}
 	tool.leftPad = function (s, n) {
 		var l = '';

@@ -34,7 +34,7 @@
 	var tpl = '<div class="path-back-bar">\
 					<div class="path-back">\
 						<i class="iconfont">&#xe626;</i>\
-						<a id="backspace" data-href="{{=it.backspace}}">返回列表</a>&nbsp;&gt;&nbsp;\
+						<a href="javascript:;" id="backspace" data-href="{{=it.backspace}}">返回列表</a>&nbsp;&gt;&nbsp;\
 						<span class="current-page">{{=it.current}}</span>\
 					</div>\
 					{{ if(it.loanUser) { }}\

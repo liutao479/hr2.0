@@ -10,18 +10,15 @@ page.ctrl('loan', function($scope) {
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
-	* @params {function} cb 回调函数
 	*/
-	var loadLoanList = function(params, cb) {
+	var loadLoanList = function(params) {
 		$.ajax({
 			url: $http.api($http.apiMap.loanList),
 			data: params,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				setupPaging(result.page.pages, true);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
+				setupEvent();
 			})
 		})
 	}
@@ -36,33 +33,36 @@ page.ctrl('loan', function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
- 	/**
-	* 绑定搜索事件
-	**/
-	$(document).on('keydown', '#search', function(evt) {
-		if(evt.which == 13) {
-			alert("查询");
-			var that = $(this),
-				searchText = $.trim(that.val());
-			if(!searchText) {
-				return false;
-			}
-			apiParams.search = searchText;
-			$params.search = searchText;
-			apiParams.page = 1;
-			$params.page = 1;
-			loadLoanList(apiParams);
-			// router.updateQuery($scope.$path, $params);
-		}
-	});
-	/**
-	* 绑定立即处理事件
-	*/
-	$(document).on('click', '#loanTable .button', function() {
-		var that = $(this);
-		router.render(that.data('href'), {orderNo: that.data('id'), path: 'loanProcess'});
-	});
 
+	var setupEvent = function() {
+		/**
+		* 绑定搜索事件
+		**/
+		$console.find('#search').on('keydown', function(evt) {
+			if(evt.which == 13) {
+				alert("查询");
+				var that = $(this),
+					searchText = $.trim(that.val());
+				if(!searchText) {
+					return false;
+				}
+				apiParams.search = searchText;
+				$params.search = searchText;
+				apiParams.page = 1;
+				$params.page = 1;
+				loadLoanList(apiParams);
+				// router.updateQuery($scope.$path, $params);
+			}
+		});
+		/**
+		* 绑定立即处理事件
+		*/
+		$console.find('#loanTable .button').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {orderNo: that.data('id'), path: 'loanProcess'});
+		});
+	}
+ 	
 	/***
 	* 加载页面模板
 	*/

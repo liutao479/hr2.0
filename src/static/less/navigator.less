@@ -43,116 +43,111 @@
           text-align: center;
           cursor: pointer;
           &.QR-Code,&.message {
-                width: 60px;
-                height: 60px;
-                i {
-                    font-size: 21px;
-                }
-            }
-            &.user {
-                width: 102px;
-                height: 60px;
-                .drop-down-box {
-                    margin: 15px auto; 
-                    .user-field-item {
-                        .iconfont-arrow {
-                            -webkit-transition: all .25s;
-                               -moz-transition: all .25s;
-                                -ms-transition: all .25s;
-                                 -o-transition: all .25s;
-                                    transition: all .25s;
-                        }
-                        &.user-field-item-active {
-                            .iconfont-arrow { 
-                                -webkit-transform: rotate(180deg);
-                                   -moz-transform: rotate(180deg);
-                                    -ms-transform: rotate(180deg);
-                                     -o-transform: rotate(180deg);
-                                        transform: rotate(180deg);
-                            }
-                        }
-                    }
-
-                }
-                
-            }
-            
-            &:hover {
-                background-color: #6347bd;
-            }
-            .QR-Code-area, .message-area, .user-area {
-                position: absolute;
-                display: none;
-                z-index: 999;
-                right: 0;
-                top: 60px;
-                background-color: #FFF;
-                border: 1px solid @borderColor;
-                border-top: none;
-                line-height: normal;
-                cursor: default;
-            } 
-            .QR-Code-area {
-                width: 125px;
-                padding: 15px;
-                text-align: center;
-                color: #90a4ae;
-                .QR-Code-text {
-                    margin-top: 3px;   
-                }
-            }
-            .message-area {
-                width: 325px;
-                .message-item-data {
-                    width: 205px;
-                }
-            }
-            .user-area {
-               width: 300px;
-               text-align: left;
-               .user-area-top {
-                   padding: 10px 15px;
-                   border-bottom: 1px solid @borderColor;
-                   .user-panel {
-                       .user-panel-key {
-                           float: left;
-                           width: 40px;
-                           line-height: 25px;
-                       }
-                       .user-panel-value {
-                           margin-left: 40px;
-                           line-height: 25px;
-                           .phone-bind {
-                               color: #3cb4f3;
-                               margin-left: 16px;
-                           }
-                       }
-                   }
-               }
-               .user-area-bottom {
-                   line-height: 40px;
-                   padding: 0 15px;
-                   .modify-pwd {
-                       float: left;
-                       color: #3cb4f3;
-                   }
-                   .user-quit {
-                       color: #90a4ae;
-                       float: right;
-                   }
-               }
-            }
-            .message-a{
-                position: relative;
-                .message-number{
-                    position: absolute;
-                    left: 11px;
-                    top:-11px;
-                }
-            } 
-            .user-field-item {
-                color: #FFF;
-            }
+              width: 60px;
+              height: 60px;
+              i {
+                  font-size: 21px;
+              }
+          }
+          &.user {
+              width: 102px;
+              height: 60px;
+              .drop-down-box {
+                  margin: 15px auto; 
+                  .iconfont-arrow {
+                      -webkit-transition: all .25s;
+                         -moz-transition: all .25s;
+                          -ms-transition: all .25s;
+                           -o-transition: all .25s;
+                              transition: all .25s;
+                  }
+              }
+              
+          }
+          
+          &:hover {
+              background-color: #6347bd;
+              &.user .drop-down-box .iconfont-arrow { 
+                  -webkit-transform: rotate(180deg);
+                     -moz-transform: rotate(180deg);
+                      -ms-transform: rotate(180deg);
+                       -o-transform: rotate(180deg);
+                          transform: rotate(90deg);
+              }
+          }
+          .QR-Code-area, .message-area, .user-area {
+              position: absolute;
+              display: none;
+              z-index: 999;
+              right: 0;
+              top: 60px;
+              background-color: #FFF;
+              border: 1px solid @borderColor;
+              border-top: none;
+              line-height: normal;
+              cursor: default;
+          } 
+          .QR-Code-area {
+              width: 125px;
+              padding: 15px;
+              text-align: center;
+              color: #90a4ae;
+              .QR-Code-text {
+                  margin-top: 3px;   
+              }
+          }
+          .message-area {
+              width: 325px;
+              .message-item-data {
+                  width: 205px;
+              }
+          }
+          .user-area {
+             width: 300px;
+             text-align: left;
+             .user-area-top {
+                 padding: 10px 15px;
+                 border-bottom: 1px solid @borderColor;
+                 .user-panel {
+                     .user-panel-key {
+                         float: left;
+                         width: 40px;
+                         line-height: 25px;
+                     }
+                     .user-panel-value {
+                         margin-left: 40px;
+                         line-height: 25px;
+                         .phone-bind {
+                             color: #3cb4f3;
+                             margin-left: 16px;
+                         }
+                     }
+                 }
+             }
+             .user-area-bottom {
+                 line-height: 40px;
+                 padding: 0 15px;
+                 .modify-pwd {
+                     float: left;
+                     color: #3cb4f3;
+                 }
+                 .user-quit {
+                     color: #90a4ae;
+                     float: right;
+                 }
+             }
+          }
+          .message-a{
+              position: relative;
+              .message-number{
+                  position: absolute;
+                  left: 11px;
+                  top:-11px;
+              }
+          } 
+          .user-field-item {
+              color: #FFF;
+          }
       }
   }
 }
