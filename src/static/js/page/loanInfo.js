@@ -10,15 +10,80 @@ page.ctrl('loanInfo', function($scope) {
 		};
 	var apiMap = {
 		"sex": "http://127.0.0.1:8083/mock/sex",
-		"serviceType": "http://127.0.0.1:8083/mock/serviceType"
+		"isSecond": "http://127.0.0.1:8083/mock/isSecond",
+		"serviceType": "http://127.0.0.1:8083/mock/serviceType",
+		"demandBankId": "http://127.0.0.1:8083/mock/demandBankId",
+		"busiSourceType": "http://127.0.0.1:8083/mock/busiSourceType",
+		"busiArea": "http://127.0.0.1:8083/mock/busiArea",
+		"busiSourceName": "http://127.0.0.1:8083/mock/busiSourceName"
+		}
+	
+	/**
+	* 加载车贷办理数据
+	* @params {object} params 请求参数
+	* @params {function} cb 回调函数
+	*/
+	var loadLoanList = function(params, cb) {
+		$.ajax({
+			url: $http.api($http.apiMap.loanInfo),
+			data: params,
+			async:false,
+			success: $http.ok(function(result) {
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+				loanFinishedSelect();
+				loanFinishedCheckbox();
+			})
+		});
+		
+	}
+//页面加载完成对所有下拉框进行赋值	
+	var loanFinishedSelect = function(){
+		$(".selecter").each(function(){
+			var that =$("div",$(this));
+			var key = $(this).data('key');
+			var boxKey = key + 'Box';
+			$(this).attr("id",boxKey);
+   			//console.log(key);
+			$.ajax({
+				url: apiMap[key],
+				data: $params,
+				async:false,
+				success: $http.ok(function(result) {
+					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
+					$source.selectType = result.data;
+					var selectOptBox = $(".selectOptBox");
+					selectOptBox.attr("id",key);
+				})
+			})
+			var value1 = $("input",$(this)).val();
+			$("li",$(this)).each(function(){
+				var val = $(this).val();
+				var text = $(this).text();
+				//console.log("fu"+value1+",zi"+val);
+				if(value1 == val){
+					$(this).parent().parent().siblings(".placeholder").html(text);
+					$(this).parent().parent().siblings("input").val(val);
+					var value2 = $(this).parent().parent().siblings("input").val();
+					if(!value2){
+						$(this).parent().parent().siblings(".placeholder").html("请选择")
+					}
+					$(".selectOptBox").hide(); 
+				}
+			})
+			
+		});
 	}
 	
+//点击下拉框拉取选项	
 	$(document).on('click','.selecter', function() {
 		var that =$("div",$(this));
 		var key = $(this).data('key');
 		var boxKey = key + 'Box';
 		$(this).attr("id",boxKey);
- 		console.log(key);
+// 		//console.log(key);
 		$.ajax({
 			url: apiMap[key],
 			data: $params,
@@ -30,118 +95,61 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		})
 	})
+	//点击下拉选项
 	$(document).on('click', '.selectOptBox li', function() {
 		var value = $(this).val();
 		var text = $(this).text();
 		$(this).parent().parent().siblings(".placeholder").html(text);
 		$(this).parent().parent().siblings("input").val(value);
 		var value1 = $(this).parent().parent().siblings("input").val();
-		if(!value1 || value1 == 0){
+		if(!value1){
 			$(this).parent().parent().siblings(".placeholder").html("请选择")
 		}
 		$(".selectOptBox").hide(); 
 		return false;
 	})
 //点击下拉消失	
-	$(document).bind("click",function(e){ 
-		var target = $(e.target); 
+	$(document).on("click",function(e){ 
+		var target = $(e.target);
 		if(target.closest(".selectOptBox").length == 0){ 
 			$(".selectOptBox").hide(); 
 			return false;
-		} 
-	})
-	
-	
-	/**
-	* 加载车贷办理数据
-	* @params {object} params 请求参数
-	* @params {function} cb 回调函数
-	*/
-	var loadLoanList = function(params, cb) {
-		$.ajax({
-			url: $http.api($http.apiMap.loanInfo),
-			data: params,
-			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
-			})
-		})
-	}
-////业务类型	
-//	$(document).on('click', '#selectType', function() {
-//		var that = $(this);
-////		if($source.selectType) {
-////			alert(1);
-//////			$('#selectTypeOpt').show();
-////			return true;
-////		}
-//		$.ajax({
-//			url: $http.api($http.apiMap.serviceType),
-//			success: $http.ok(function(result) {
-//				render.compile(that, $scope.def.selectTypeTmpl, result.data, true);
-//				$source.selectType = result.data;
-////				$('#selectTypeOpt').show();
-////				$('#selectType').text("请选择");
-//				$('#selectTypeIH').val('');
-//				return false;
-//			})
-//		})
-////		$('#selectTypeOpt').show();
-//	})
-//	$(document).on('click', '#selectTypeOpt li', function() {
-//		var value = $(this).val();
-//		var text = $(this).text();
-//		$('#selectTypeIH').val(value);
-//		$('#selectType').html(text);
-//		var value1 = $('#selectTypeIH').val();
-//		if(value1 == 0){
-//			$('#selectType').html("请选择");
-//		}
-//		return false;
-//	})
-//上牌地
-	$(document).on('click', '#selectType', function() {
-		var that = $(this);
-		$.ajax({
-			url: $http.api($http.apiMap.serviceType),
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectTypeTmpl, result.data, true);
-				$source.selectType = result.data;
-				$('#selectTypeIH').val('');
-				return false;
-			})
-		})
-	})
-	$(document).on('click', '#selectTypeOpt option', function() {
-		var value = $(this).val();
-		var text = $(this).text();
-		$('#selectTypeIH').val(value);
-		$('#selectType').html(text);
-		var value1 = $('#selectTypeIH').val();
-		if(value1 == 0){
-			$('#selectType').html("请选择");
 		}
-		return false;
 	})
-	
 
 //点击本地常驻类型复选框
 	//主申请人
-	$(document).on('click', '#mainPersonRdtype .checkbox', function() {
-		$(this).toggleClass('checked');
+	$(document).on('click', '.checkbox', function() {
 		returnCheckboxVal();
 	})
 	function returnCheckboxVal(){
-		var data="";
-		$('#mainPersonRdtype .checked').each(function(){
-			data += $(this).attr("data-value")+",";
-		});
-		var value = data.substring(0,data.length-1);
-		$("#mainPersonTp").val(value);
-		console.log($("#mainPersonTp").val());
-		return;
+		$(".info-key-check-box").each(function(){
+			var data="";
+			$('.checked',$(this)).each(function(){
+				data += $(this).attr("data-value")+",";
+			});
+			var value = data.substring(0,data.length-1);
+			$("input",$(this)).val(value);
+			return;
+		})
+	}
+	var loanFinishedCheckbox = function(){
+		$(".info-key-check-box").each(function(){
+			var that =$("input",$(this)),
+				checkBox =$("div.checkbox",$(this));
+			var data={};
+			data = that.val().split(",");
+			$(".checkbox",$(this)).each(function(){
+				var thisVal = $(this).data('value');
+				var div = $(this);
+				$.each(data,function(n,value){
+					if(value == thisVal){
+						div.addClass('checked').attr('checked',true);
+						div.html('<i class="iconfont">&#xe659;</i>');
+					}
+				});
+			})
+		})
 	}
 	//共同还款人，反担保人
 
@@ -159,7 +167,7 @@ page.ctrl('loanInfo', function($scope) {
 			data: data,
 			dataType: 'text',
 			success: function(result){
-				console.log("success");
+				//console.log("success");
 			}
 		});
 	})
@@ -172,7 +180,7 @@ page.ctrl('loanInfo', function($scope) {
 //			data: data,
 //			dataType: 'text',
 //			success: function(result){
-//				console.log("success");
+//				//console.log("success");
 //			}
 //		});
 	})
@@ -185,7 +193,7 @@ page.ctrl('loanInfo', function($scope) {
 //			data: data,
 //			dataType: 'text',
 //			success: function(result){
-//				console.log("success");
+//				//console.log("success");
 //			}
 //		});
 	})
@@ -198,7 +206,7 @@ page.ctrl('loanInfo', function($scope) {
 //			data: data,
 //			dataType: 'text',
 //			success: function(result){
-//				console.log("success");
+//				//console.log("success");
 //			}
 //		});
 	})
@@ -211,7 +219,7 @@ page.ctrl('loanInfo', function($scope) {
 //			data: data,
 //			dataType: 'text',
 //			success: function(result){
-//				console.log("success");
+//				//console.log("success");
 //			}
 //		});
 //	})
@@ -224,7 +232,7 @@ page.ctrl('loanInfo', function($scope) {
 //			data: data,
 //			dataType: 'text',
 //			success: function(result){
-//				console.log("success");
+//				//console.log("success");
 //			}
 //		});
 //	})
@@ -237,7 +245,7 @@ page.ctrl('loanInfo', function($scope) {
 //			data: data,
 //			dataType: 'text',
 //			success: function(result){
-//				console.log("success");
+//				//console.log("success");
 //			}
 //		});
 	})
@@ -250,7 +258,7 @@ page.ctrl('loanInfo', function($scope) {
 			data: data,
 			dataType: 'text',
 			success: function(result){
-				console.log("success");
+				//console.log("success");
 			}
 		});
 	})
@@ -263,7 +271,7 @@ page.ctrl('loanInfo', function($scope) {
 //			data: data,
 //			dataType: 'text',
 //			success: function(result){
-//				console.log("success");
+//				//console.log("success");
 //			}
 //		});
 	})
@@ -276,7 +284,7 @@ page.ctrl('loanInfo', function($scope) {
 //			data: data,
 //			dataType: 'text',
 //			success: function(result){
-//				console.log("success");
+//				//console.log("success");
 //			}
 //		});
 	})

@@ -140,9 +140,9 @@
                                 "type":2
                             },
                             {
-                                "code":"car",
+                                "code":"carName",
                                 "empty":0,
-                                "fieldName":"car",
+                                "fieldName":"carName",
                                 "name":"车辆型号",
                                 "orderBy":0,
                                 "type":2
@@ -466,7 +466,7 @@
                                 "type":2
                             },
                             {
-                                "code":"xx4familyZipcode",
+                                "code":"familyZipcode",
                                 "empty":0,
                                 "fieldName":"familyZipcode",
                                 "name":"家庭地址邮编",
@@ -514,14 +514,6 @@
                                 "type":2
                             },
                             {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
                                 "code":"monthIncomeMoney",
                                 "empty":0,
                                 "fieldName":"monthIncomeMoney",
@@ -544,6 +536,14 @@
                                 "name":"存款余额",
                                 "orderBy":0,
                                 "type":2
+                            },
+                            {
+                                "code":"residentType",
+                                "empty":0,
+                                "fieldName":"residentType",
+                                "name":"本地常驻类型",
+                                "orderBy":0,
+                                "type":3
                             }
                         ]
                     },
@@ -609,7 +609,7 @@
                                 "type":2
                             },
                             {
-                                "code":"xx24",
+                                "code":"familyZipcode",
                                 "empty":0,
                                 "fieldName":"familyZipcode",
                                 "name":"家庭地址邮编",
@@ -657,14 +657,6 @@
                                 "type":2
                             },
                             {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
                                 "code":"monthIncomeMoney",
                                 "empty":0,
                                 "fieldName":"monthIncomeMoney",
@@ -695,6 +687,14 @@
                                 "name":"与借款人关系",
                                 "orderBy":0,
                                 "type":2
+                            },
+                            {
+                                "code":"residentType",
+                                "empty":0,
+                                "fieldName":"residentType",
+                                "name":"本地常驻类型",
+                                "orderBy":0,
+                                "type":3
                             }
                         ]
                     },
@@ -808,14 +808,6 @@
                                 "type":2
                             },
                             {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
                                 "code":"monthIncomeMoney",
                                 "empty":0,
                                 "fieldName":"monthIncomeMoney",
@@ -846,6 +838,14 @@
                                 "name":"与借款人关系",
                                 "orderBy":0,
                                 "type":2
+                            },
+                            {
+                                "code":"residentType",
+                                "empty":0,
+                                "fieldName":"residentType",
+                                "name":"本地常驻类型",
+                                "orderBy":0,
+                                "type":3
                             }
                         ]
                     },
@@ -948,111 +948,210 @@
     },
     "code":0,
     "data":{
-        "FYXX":[
-            {
-                "fieldCode":"name",
-                "fieldId":1,
-                "fieldName":"税务名称",
-                "fieldType":0,
-                "loanFeeId":1,
-                "orderNo":"nfdb2016102421082285",
-                "required":0,
-                "value":"地税"
-            },
-            {
-                "fieldCode":"rate",
-                "fieldId":2,
-                "fieldName":"费率",
-                "fieldType":0,
-                "loanFeeId":2,
-                "orderNo":"nfdb2016102421082285",
-                "required":0,
-                "value":"费率"
-            }
-        ],
-        "HKKXX":{
+        "loanPayCard":{
             "accountName":"3245252352",
             "accountNumber":"ewr223",
             "bankName":"中国银行",
             "id":2
         },
-        "GTHK":[
+        "loanOrder":{
+            "busiArea":"江苏省盐城市建湖县",
+            "busiAreaCode":320925,
+            "busiSourceId":1001,
+            "busiSourceTypeCode":"555",
+            "demandBankId":62,
+            "id":334663,
+            "isSecond":0,
+            "orderNo":"nfdb2016102421082285",
+            "remitAccountNumber":"12434242424",
+            "serviceTypeCode":"2"
+        },
+        "loanEmergencyConact":[
             {
-                "accountLocation":"并州",
-                "age":42,
-                "averageDailyBalance":5000,
-                "company":"荆州分公司",
-                "companyAddress":"湖北荆州分厂",
-                "companyTel":"0577-86759603",
-                "companyZipcode":"334334",
-                "familyAddress":"湖北省荆州皇叔街1号",
-                "familyTel":"111111",
-                "familyZipcode":"112112",
-                "houseStatus":0,
-                "idCard":"513029197305261956",
-                "isEnterprise":0,
-                "maritalStatus":1,
-                "mobile":"13551469163",
-                "monthIncomeMoney":15000,
-                "residentType":"554",
-                "sex":0,
-                "userId":1000002,
-                "userName":"关云长",
-                "userRelationship":0,
-                "userType":1
+                "id":3,
+                "name":"张三",
+                "phone":"110",
+                "relationship":"哥们"
             },
             {
-                "accountLocation":"并州",
-                "age":41,
-                "averageDailyBalance":5000,
-                "company":"益州分公司",
-                "companyAddress":"四川益州分厂",
-                "companyTel":"0577-86759604",
-                "companyZipcode":"335335",
-                "familyAddress":"四川省益州皇叔街1号",
-                "familyTel":"112112",
-                "familyZipcode":"113113",
-                "houseStatus":0,
-                "idCard":"513029197305261957",
-                "isEnterprise":0,
-                "maritalStatus":1,
-                "mobile":"13551469164",
-                "monthIncomeMoney":15000,
-                "residentType":"555",
-                "sex":0,
-                "userId":1000003,
-                "userName":"张翼德",
-                "userRelationship":0,
-                "userType":1
-            }
-        ],
-        "ZJKR":[
+                "id":4,
+                "name":"你妹妹",
+                "phone":"139139",
+                "relationship":"旁系"
+            },
             {
-                "accountLocation":"涿州",
-                "age":43,
-                "averageDailyBalance":5000,
-                "company":"四川大竹煤电有限责任公司柏林煤矿",
-                "companyAddress":"大竹县柏林镇柏林煤矿厂",
-                "companyTel":"0577-86759602",
-                "companyZipcode":"331331",
-                "familyAddress":"四川省大竹县柏林镇街道柏煤街13号",
-                "familyTel":"110110",
-                "familyZipcode":"110110",
-                "houseStatus":0,
-                "idCard":"110000198902281234",
-                "isEnterprise":0,
-                "maritalStatus":1,
-                "mobile":"13551469162",
-                "monthIncomeMoney":20000,
-                "residentType":"553",
-                "sex":0,
-                "userId":334322,
-                "userName":"蒋贵燕",
-                "userRelationship":0,
-                "userType":0
+                "id":5,
+                "name":"你姥姥",
+                "phone":"12334",
+                "relationship":"旁系"
             }
         ],
-        "QTXX":[
+        "loanUser":[
+            {
+                "loanUserList":[
+                    {
+                        "accountLocation":"涿州",
+                        "age":43,
+                        "averageDailyBalance":5000,
+                        "company":"四川大竹煤电有限责任公司柏林煤矿",
+                        "companyAddress":"大竹县柏林镇柏林煤矿厂",
+                        "companyTel":"0577-86759602",
+                        "companyZipcode":"331331",
+                        "familyAddress":"四川省大竹县柏林镇街道柏煤街13号",
+                        "familyTel":"110110",
+                        "familyZipcode":"110110",
+                        "houseStatus":0,
+                        "idCard":"110000198902281234",
+                        "isEnterprise":0,
+                        "maritalStatus":1,
+                        "mobile":"13551469162",
+                        "monthIncomeMoney":20000,
+                        "residentType":"553,563",
+                        "sex":0,
+                        "userId":334322,
+                        "userName":"蒋贵燕",
+                        "userRelationship":0,
+                        "userType":0
+                    }
+                ],
+                "userType":0,
+                "userTypeName":"借款人"
+            },
+            {
+                "loanUserList":[
+                    {
+                        "accountLocation":"并州",
+                        "age":42,
+                        "averageDailyBalance":5000,
+                        "company":"荆州分公司",
+                        "companyAddress":"湖北荆州分厂",
+                        "companyTel":"0577-86759603",
+                        "companyZipcode":"334334",
+                        "familyAddress":"湖北省荆州皇叔街1号",
+                        "familyTel":"111111",
+                        "familyZipcode":"112112",
+                        "houseStatus":0,
+                        "idCard":"513029197305261956",
+                        "isEnterprise":0,
+                        "maritalStatus":1,
+                        "mobile":"13551469163",
+                        "monthIncomeMoney":15000,
+                        "residentType":"554",
+                        "sex":0,
+                        "userId":1000002,
+                        "userName":"关云长",
+                        "userRelationship":0,
+                        "userType":1
+                    },
+                    {
+                        "accountLocation":"并州",
+                        "age":41,
+                        "averageDailyBalance":5000,
+                        "company":"益州分公司",
+                        "companyAddress":"四川益州分厂",
+                        "companyTel":"0577-86759604",
+                        "companyZipcode":"335335",
+                        "familyAddress":"四川省益州皇叔街1号",
+                        "familyTel":"112112",
+                        "familyZipcode":"113113",
+                        "houseStatus":0,
+                        "idCard":"513029197305261957",
+                        "isEnterprise":0,
+                        "maritalStatus":1,
+                        "mobile":"13551469164",
+                        "monthIncomeMoney":15000,
+                        "residentType":"573",
+                        "sex":0,
+                        "userId":1000003,
+                        "userName":"张翼德",
+                        "userRelationship":0,
+                        "userType":1
+                    }
+                ],
+                "userType":1,
+                "userTypeName":"共同还款人"
+            },
+            {
+                "loanUserList":[
+                    {
+                        "accountLocation":"隆中",
+                        "age":40,
+                        "averageDailyBalance":2000,
+                        "company":"隆中分公司",
+                        "companyAddress":"湖北隆中分厂",
+                        "companyTel":"0577-86759605",
+                        "companyZipcode":"336336",
+                        "familyAddress":"湖北省隆中皇叔街1号",
+                        "familyTel":"113113",
+                        "familyZipcode":"114114",
+                        "houseStatus":0,
+                        "idCard":"513029197305261958",
+                        "isEnterprise":0,
+                        "maritalStatus":1,
+                        "mobile":"13551469165",
+                        "monthIncomeMoney":10000,
+                        "residentType":"553,563",
+                        "sex":0,
+                        "userId":1000004,
+                        "userName":"诸葛孔明",
+                        "userRelationship":0,
+                        "userType":2
+                    },
+                    {
+                        "accountLocation":"河北常山",
+                        "age":39,
+                        "averageDailyBalance":1000,
+                        "company":"常山分公司",
+                        "companyAddress":"河北常山分厂",
+                        "companyTel":"0577-86759606",
+                        "companyZipcode":"337337",
+                        "familyAddress":"河北省隆中皇叔街1号",
+                        "familyTel":"114114",
+                        "familyZipcode":"115115",
+                        "houseStatus":0,
+                        "idCard":"513029197305261959",
+                        "isEnterprise":0,
+                        "maritalStatus":1,
+                        "mobile":"13551469166",
+                        "monthIncomeMoney":10000,
+                        "residentType":"563",
+                        "sex":0,
+                        "userId":1000005,
+                        "userName":"赵常山",
+                        "userRelationship":0,
+                        "userType":2
+                    }
+                ],
+                "userType":2,
+                "userTypeName":"反担保人"
+            }
+        ],
+        "loanUserStage":{
+            "advancedMoney":46000,
+            "bankBaseRates":0,
+            "bankFeeMoney":20000,
+            "bareRate":10,
+            "businessModel":"10010",
+            "cardNo":"325464533",
+            "commissionFeeRate":"9.49",
+            "contractSfMoney":300000,
+            "contractSfRatio":30,
+            "discountMoney":30000,
+            "discountRate":"5",
+            "firstMonthMoney":1473.16,
+            "isAdvanced":0,
+            "isDiscount":0,
+            "loanFeeMoney":5000,
+            "loanMoney":48400,
+            "renewalMode":0,
+            "repayPeriod":36,
+            "sfMoney":28400,
+            "sfProportion":0.3817,
+            "stageId":277792,
+            "stageMoney":52993.16,
+            "utilityTime":1483942301000
+        },
+        "otherInfo":[
             {
                 "cIndividuationFieldList":[
                     {
@@ -1093,15 +1192,32 @@
                 "groupName":"其他信息"
             }
         ],
-        "CLXX":{
-            "billingDeptName":"UFO",
-            "car":{
-                "carMode":21819,
-                "carName":"奇瑞瑞虎32016款 1.6L 手动智尚版"
+        "loanFee":[
+            {
+                "fieldCode":"name",
+                "fieldId":1,
+                "fieldName":"税务名称",
+                "fieldType":0,
+                "loanFeeId":1,
+                "orderNo":"nfdb2016102421082285",
+                "required":0,
+                "value":"地税"
             },
+            {
+                "fieldCode":"rate",
+                "fieldId":2,
+                "fieldName":"费率",
+                "fieldType":0,
+                "loanFeeId":2,
+                "orderNo":"nfdb2016102421082285",
+                "required":0,
+                "value":"费率"
+            }
+        ],
+        "loanUserCar":{
+            "billingDeptName":"UFO",
             "carId":278342,
             "carMode":21819,
-            "carName":"奇瑞瑞虎32016款 1.6L 手动智尚版",
             "carPrice":1233333,
             "carSerieId":21819,
             "cardBrandId":977,
@@ -1114,125 +1230,10 @@
             "isOperationVehicle":0,
             "licenseCategory":"浙A",
             "licenseType":0,
-            "onLicensePlace":{
-                "onLicensePlaceCode":320925,
-                "onLicensePlaceName":"江苏省盐城市建湖县"
-            },
+            "onLicensePlace":"江苏省盐城市建湖县",
             "onLicensePlaceCode":320925,
-            "onLicensePlaceName":"江苏省盐城市建湖县",
             "systemCarPrice":75900
-        },
-        "JJLXR":[
-            {
-                "id":3,
-                "name":"张三",
-                "phone":"110",
-                "relationship":"哥们"
-            },
-            {
-                "id":4,
-                "name":"你妹妹",
-                "phone":"139139",
-                "relationship":"旁系"
-            },
-            {
-                "id":5,
-                "name":"你姥姥",
-                "phone":"12334",
-                "relationship":"旁系"
-            }
-        ],
-        "FQXX":{
-            "advancedMoney":46000,
-            "bankBaseRates":0,
-            "bankFeeMoney":20000,
-            "bareRate":10,
-            "businessModel":"10010",
-            "cardNo":"325464533",
-            "commissionFeeRate":"9.49",
-            "contractSfMoney":300000,
-            "contractSfRatio":30,
-            "discountMoney":30000,
-            "discountRate":"5",
-            "firstMonthMoney":1473.16,
-            "isAdvanced":0,
-            "isDiscount":0,
-            "loanFeeMoney":5000,
-            "loanMoney":48400,
-            "renewalMode":0,
-            "repayPeriod":36,
-            "sfMoney":28400,
-            "sfProportion":0.3817,
-            "stageId":277792,
-            "stageMoney":52993.16,
-            "utilityTime":1483942301000
-        },
-        "DDXX":{
-            "busiArea":{
-                "busiAreaCode":320925,
-                "busiAreaName":"江苏省盐城市建湖县"
-            },
-            "busiAreaCode":320925,
-            "busiAreaName":"江苏省盐城市建湖县",
-            "busiSourceId":1001,
-            "busiSourceTypeCode":"555",
-            "demandBankId":62,
-            "id":334663,
-            "isSecond":0,
-            "orderNo":"nfdb2016102421082285",
-            "remitAccountNumber":"12434242424",
-            "serviceTypeCode":"2"
-        },
-        "FDBR":[
-            {
-                "accountLocation":"隆中",
-                "age":40,
-                "averageDailyBalance":2000,
-                "company":"隆中分公司",
-                "companyAddress":"湖北隆中分厂",
-                "companyTel":"0577-86759605",
-                "companyZipcode":"336336",
-                "familyAddress":"湖北省隆中皇叔街1号",
-                "familyTel":"113113",
-                "familyZipcode":"114114",
-                "houseStatus":0,
-                "idCard":"513029197305261958",
-                "isEnterprise":0,
-                "maritalStatus":1,
-                "mobile":"13551469165",
-                "monthIncomeMoney":10000,
-                "residentType":"556",
-                "sex":0,
-                "userId":1000004,
-                "userName":"诸葛孔明",
-                "userRelationship":0,
-                "userType":2
-            },
-            {
-                "accountLocation":"河北常山",
-                "age":39,
-                "averageDailyBalance":1000,
-                "company":"常山分公司",
-                "companyAddress":"河北常山分厂",
-                "companyTel":"0577-86759606",
-                "companyZipcode":"337337",
-                "familyAddress":"河北省隆中皇叔街1号",
-                "familyTel":"114114",
-                "familyZipcode":"115115",
-                "houseStatus":0,
-                "idCard":"513029197305261959",
-                "isEnterprise":0,
-                "maritalStatus":1,
-                "mobile":"13551469166",
-                "monthIncomeMoney":10000,
-                "residentType":"557",
-                "sex":0,
-                "userId":1000005,
-                "userName":"赵常山",
-                "userRelationship":0,
-                "userType":2
-            }
-        ]
+        }
     },
     "msg":"success"
 }
