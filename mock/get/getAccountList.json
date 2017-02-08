@@ -1,0 +1,18 @@
+{
+    "code":0,
+    "data":[
+        {
+            "account":"1111111111111111111111",
+            "accountName":"测试账户1",
+            "bankName":"中国银行",
+            "carShopId":582
+        },
+        {
+            "account":"1111111111111111111112",
+            "accountName":"测试账户2",
+            "bankName":"杭州银行",
+            "carShopId":582
+        }
+    ],
+    "msg":"success"
+}
