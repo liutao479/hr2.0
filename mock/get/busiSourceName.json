@@ -2,12 +2,20 @@
     "code":0,
     "data":[
         {
-        	"name":"卡融易",
-            "value":"0"
+            "configFieldItem":[
+                {
+                    "name":"男",
+                    "value":"0"
+                }
+            ]
         },
         {
-        	"name":"车融易",
-            "value":"1"
+            "configFieldItem":[
+                {
+                    "name":"女",
+                    "value":"1"
+                }
+            ]
         }
     ]
 }

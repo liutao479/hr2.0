@@ -21,9 +21,9 @@ page.ctrl('loanAudit', function($scope) {
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
-	/***
-	* 点击对应的保存按钮
-	*/
+/***
+* 点击对应的保存按钮
+*/
 				$("#save_1").on("click",function(){
 //1表单序列化/					
 //		            var data =  $("#loanOrgn").serialize(); 

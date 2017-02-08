@@ -514,6 +514,14 @@
                                 "type":2
                             },
                             {
+                                "code":"residentType",
+                                "empty":0,
+                                "fieldName":"residentType",
+                                "name":"本地常驻类型",
+                                "orderBy":0,
+                                "type":3
+                            },
+                            {
                                 "code":"monthIncomeMoney",
                                 "empty":0,
                                 "fieldName":"monthIncomeMoney",
@@ -536,14 +544,6 @@
                                 "name":"存款余额",
                                 "orderBy":0,
                                 "type":2
-                            },
-                            {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
                             }
                         ]
                     },
@@ -657,6 +657,14 @@
                                 "type":2
                             },
                             {
+                                "code":"residentType",
+                                "empty":0,
+                                "fieldName":"residentType",
+                                "name":"本地常驻类型",
+                                "orderBy":0,
+                                "type":3
+                            },
+                            {
                                 "code":"monthIncomeMoney",
                                 "empty":0,
                                 "fieldName":"monthIncomeMoney",
@@ -687,14 +695,6 @@
                                 "name":"与借款人关系",
                                 "orderBy":0,
                                 "type":2
-                            },
-                            {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
                             }
                         ]
                     },
@@ -808,6 +808,14 @@
                                 "type":2
                             },
                             {
+                                "code":"residentType",
+                                "empty":0,
+                                "fieldName":"residentType",
+                                "name":"本地常驻类型",
+                                "orderBy":0,
+                                "type":3
+                            },
+                            {
                                 "code":"monthIncomeMoney",
                                 "empty":0,
                                 "fieldName":"monthIncomeMoney",
@@ -838,14 +846,6 @@
                                 "name":"与借款人关系",
                                 "orderBy":0,
                                 "type":2
-                            },
-                            {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
                             }
                         ]
                     },
@@ -994,12 +994,12 @@
                 "maritalStatus":1,
                 "mobile":"13551469163",
                 "monthIncomeMoney":15000,
+                "residentType":"554",
                 "sex":0,
                 "userId":1000002,
                 "userName":"关云长",
                 "userRelationship":0,
-                "userType":1,
-                "residentType":"554"
+                "userType":1
             },
             {
                 "accountLocation":"并州",
@@ -1018,12 +1018,12 @@
                 "maritalStatus":1,
                 "mobile":"13551469164",
                 "monthIncomeMoney":15000,
+                "residentType":"555",
                 "sex":0,
                 "userId":1000003,
                 "userName":"张翼德",
                 "userRelationship":0,
-                "userType":1,
-                "residentType":"555"
+                "userType":1
             }
         ],
         "ZJKR":[
@@ -1044,12 +1044,12 @@
                 "maritalStatus":1,
                 "mobile":"13551469162",
                 "monthIncomeMoney":20000,
+                "residentType":"553",
                 "sex":0,
                 "userId":334322,
                 "userName":"蒋贵燕",
                 "userRelationship":0,
-                "userType":0,
-                "residentType":"553"
+                "userType":0
             }
         ],
         "QTXX":[
@@ -1201,12 +1201,12 @@
                 "maritalStatus":1,
                 "mobile":"13551469165",
                 "monthIncomeMoney":10000,
+                "residentType":"556",
                 "sex":0,
                 "userId":1000004,
                 "userName":"诸葛孔明",
                 "userRelationship":0,
-                "userType":2,
-                "residentType":"556"
+                "userType":2
             },
             {
                 "accountLocation":"河北常山",
@@ -1225,12 +1225,12 @@
                 "maritalStatus":1,
                 "mobile":"13551469166",
                 "monthIncomeMoney":10000,
+                "residentType":"557",
                 "sex":0,
                 "userId":1000005,
                 "userName":"赵常山",
                 "userRelationship":0,
-                "userType":2,
-                "residentType":"557"
+                "userType":2
             }
         ]
     },

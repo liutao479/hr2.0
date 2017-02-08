@@ -29,7 +29,6 @@ page.ctrl('carTwohand', function($scope) {
 	*/
 	render.$console.load(router.template('car-twohand'), function() {
 		$scope.def.listTmpl = render.$console.find('#carTwohandtmpl').html();
-		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#carTwohand'),
 		}

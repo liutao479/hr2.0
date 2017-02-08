@@ -2,24 +2,44 @@
     "code":0,
     "data":[
         {
-        	"name":"信用",
-            "value":"1"
+            "configFieldItem":[
+                {
+                    "name":"信用",
+                    "value":"1"
+                }
+            ]
         },
         {
-        	"name":"担保",
-            "value":"2"
+            "configFieldItem":[
+                {
+                    "name":"担保",
+                    "value":"2"
+                }
+            ]
         },
         {
-        	"name":"抵押",
-            "value":"3"
+            "configFieldItem":[
+                {
+                    "name":"抵押",
+                    "value":"3"
+                }
+            ]
         },
         {
-        	"name":"正租",
-            "value":"4"
+            "configFieldItem":[
+                {
+                    "name":"正租",
+                    "value":"4"
+                }
+            ]
         },
         {
-        	"name":"反租",
-            "value":"5"
+            "configFieldItem":[
+                {
+                    "name":"反租",
+                    "value":"5"
+                }
+            ]
         }
     ],
     "msg":"success"
