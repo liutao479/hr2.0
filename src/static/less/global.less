@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.eot');
-  src: url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.eot');
+  src: url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -168,7 +168,7 @@
     color: #FFF;
     height: 16px;
     line-height: 16px;
-    padding: 0 5px;
+    padding: 0 4px;
     background-color: @messageNumberBgColor;
     .borderRadius(8px);
 }
@@ -838,7 +838,15 @@
                         width: 250px;
                     }
                 }
-                
+                //备注信息
+                .remarks-box {
+                    width: 100%;
+                    .borderRadius(3px);
+                    border: 1px solid @borderColor;
+                    resize:none;
+                    padding: 7px;
+                    color: @fontColor; 
+                }
 
                 //图片展示（可点击）
                 .imgs-item {
@@ -1040,15 +1048,6 @@
     }
 }
 
-//textarea输入框
-.remarks-box {
-    width: 100%;
-    .borderRadius(3px);
-    border: 1px solid @borderColor;
-    resize:none;
-    padding: 7px;
-    color: @fontColor; 
-}
 
 //特殊的带虚线标题处理 zhy
 .panel-layout{
@@ -1328,25 +1327,15 @@
 
 //tab切换栏
 .tab-bar {
-    position: relative;
     background-color: #FFF;
     border: 1px solid @borderColor;
-    border-bottom: none;
+    border-bottom: 3px solid @blue;;
     height: 53px;
     line-height: 53px;
     text-align: right;
     padding-right: 20px;
     &.tab-bar-special {
         margin-top: 15px;
-    }
-    &:before {
-        content: '';
-        height: 3px;
-        background-color: @blue;
-        position: absolute;
-        left: -1px;
-        bottom: 0;
-        right: -1px;
     }
     .role-bar-ul {
         position: relative;
