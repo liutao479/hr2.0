@@ -2,11 +2,11 @@
     "code":0,
     "data":[
         {
-        	"name":"新车",
+        	"name":"否",
             "value":"0"
         },
         {
-        	"name":"二手车",
+        	"name":"是",
             "value":"1"
         }
     ]

@@ -2,20 +2,12 @@
     "code":0,
     "data":[
         {
-            "configFieldItem":[
-                {
-                    "name":"男",
-                    "value":"0"
-                }
-            ]
+        	"name":"男",
+            "value":"0"
         },
         {
-            "configFieldItem":[
-                {
-                    "name":"女",
-                    "value":"1"
-                }
-            ]
+        	"name":"女",
+            "value":"1"
         }
     ]
 }

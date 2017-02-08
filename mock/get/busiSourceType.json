@@ -2,20 +2,12 @@
     "code":0,
     "data":[
         {
-            "configFieldItem":[
-                {
-                    "name":"飞单",
-                    "value":"1"
-                }
-            ]
+        	"name":"飞单",
+            "value":"1"
         },
         {
-            "configFieldItem":[
-                {
-                    "name":"业务自拓",
-                    "value":"2"
-                }
-            ]
+        	"name":"业务自拓",
+            "value":"2"
         }
     ],
     "msg":"success"
