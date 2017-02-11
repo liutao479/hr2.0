@@ -26,10 +26,14 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadOrderInfo = function() {
+	var loadOrderInfo = function(_type, isPost) {
+		var flag = 'get';
+		if(isPost) {
+			flag = 'post';
+		}
 		$.ajax({
 			url: 'http://127.0.0.1:8083/mock/creditUpload',
-			// type: 'post',
+			type: flag,
 			// url: 'http://192.168.0.144:8080/creditMaterials/index',
 			// data: {
 			// 	taskId: $scope.$params.taskId
@@ -38,12 +42,14 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
+				$scope.result.data.currentType = _type;
+				$scope.currentType = _type;
 				var _loanUser = $scope.result.data.loanTask.loanOrder.realName;
 				setupLocation(_loanUser);
 				// 编译tab
 				setupTab($scope.result.data);
 				// 编译tab项对应内容
-				setupCreditPanel($scope.result.data);
+				setupCreditPanel($scope.result.data, _type);
 				setupEvent();
 			})
 		})
@@ -70,7 +76,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * @param  {object} data tab栏操作的数据
 	 */
 	var setupTab = function(data) {
-		render.compile($scope.$el.$tab, $scope.def.tabTmpl, data.creditUsers, true);
+		render.compile($scope.$el.$tab, $scope.def.tabTmpl, data, true);
 		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
 		// console.log($scope.$el.$tabs);
 	}
@@ -79,10 +85,10 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 渲染tab栏对应项内容
 	 * @param  {object} result 请求获得的数据
 	 */
-	var setupCreditPanel = function(data) {
-		render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, data.creditUsers[0], true);
+	var setupCreditPanel = function(data, _type) {
+		render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, data.creditUsers[_type], true);
 		var _tabTrigger = $console.find('#creditUploadPanel').html();
-		$scope.tabs.push(_tabTrigger);
+		$scope.tabs[_type] = _tabTrigger;
 	}
 
 	// 编译完成后绑定事件
@@ -99,54 +105,72 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$scope.tabs[_type] = _tabTrigger;
 				// $scope.result.index = _type;
 			}
+			console.log($scope.currentType)
 			$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.currentType = _type;
 			$scope.$el.$creditPanel.html($scope.tabs[$scope.currentType]);
 		})
-		/**
-		 * 增加共同还款人
-		 */
-		$console.find('#btnNewLoanPartner').on('click', function() {
-			// 后台接口修改完成时使用
-			// $.ajax({
-			// 	url: 'http://127.0.0.1:8083/mock/creditUpload',
-			// 	data: {
-			// 		orderNo: $scope.$params.orderNo,
-			// 		userType: $scope.currentType
-			// 	},
-			// 	success: $http.ok(function(result) {
-			// 		console.log(result);
-			// 	})
-			// }) 
-
-		})
-		/**
-		 * 增加反担保人
-		 */
-		$console.find('#btnNewGuarantor').on('click', function() {
-			// 后台接口修改完成时使用
-			// $.ajax({
-			// 	url: 'http://127.0.0.1:8083/mock/creditUpload',
-			// 	data: {
-			// 		orderNo: $scope.$params.orderNo,
-			// 		userType: $scope.currentType
-			// 	},
-			// 	success: $http.ok(function(result) {
-			// 		console.log(result);
-			// 	})
-			// }) 
-			
-		})
 	}
 
 
-
+	/**
+	 * 增加共同还款人
+	 */
 	$(document).on('click', '#btnNewLoanPartner', function() {
-
+		// 后台接口修改完成时使用
+		// $.ajax({
+		// 	url: 'http://127.0.0.1:8083/mock/creditUpload',
+		// 	data: {
+		// 		orderNo: $scope.$params.orderNo,
+		// 		userType: $scope.currentType
+		// 	},
+		// 	success: $http.ok(function(result) {
+		// 		console.log(result);
+		// 	})
+		// }) 
+		loadOrderInfo(1, true);
+	})
+	/**
+	 * 增加反担保人
+	 */
+	$(document).on('click', '#btnNewGuarantor', function() {
+		// 后台接口修改完成时使用
+		// $.ajax({
+		// 	url: 'http://127.0.0.1:8083/mock/creditUpload',
+		// 	data: {
+		// 		orderNo: $scope.$params.orderNo,
+		// 		userType: $scope.currentType
+		// 	},
+		// 	success: $http.ok(function(result) {
+		// 		console.log(result);
+		// 	})
+		// }) 
+		loadOrderInfo(2, true);
 	})
 
 
+	/**
+	 * 删除一个共同还款人或者反担保人
+	 */
+	$(document).on('click', '.delete-credit-item', function() {
+		// 后台接口修改完成时使用
+		// $.ajax({
+		// 	url: 'http://127.0.0.1:8083/mock/creditUpload',
+		// 	data: {
+		// 		userId: 
+		// 	},
+		// 	success: $http.ok(function(result) {
+		// 		console.log(result);
+		// 	})
+		// })
+		if($scope.result.data.creditUsers[$scope.currentType].length == 1) {
+			loadOrderInfo(0);	
+		} else {
+			loadOrderInfo($scope.currentType);	
+		}
+		
+	})
 
 	$console.load(router.template('iframe/credit-material-upload'), function() {
 		$console.find('#creditUploadPanel').load(router.template('defs/creditPanel'), function() {
@@ -157,7 +181,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$tab: $console.find('#creditTabs'),
 				$creditPanel: $console.find('#creditUploadPanel')
 			}
-			loadOrderInfo();
+			loadOrderInfo($scope.currentType);
 		})
 	})
 });

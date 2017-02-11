@@ -32,13 +32,13 @@
 </div>
 <!-- 征信材料上传 end-->
 <script type="text/dot-x-template" id="creditUploadTabsTmpl">
-	{{ for(var i in it) { }}
+	{{ for(var i in it.creditUsers) { }}
 		{{ if(i == 0) { }}
-		<li class="role-bar-li"><a href="javascript:;" class="role-item role-item-active tabEvt" data-type="0">借款人</a></li>
+		<li class="role-bar-li"><a href="javascript:;" class="role-item{{=(i == it.currentType ? ' role-item-active' : '')}} tabEvt" data-type="0">借款人</a></li>
 		{{ }else if(i == 1){ }}
-		<li class="role-bar-li"><a href="javascript:;" class="role-item tabEvt" data-type="1">共同还款人</a></li>
+		<li class="role-bar-li"><a href="javascript:;" class="role-item{{=(i == it.currentType ? ' role-item-active' : '')}} tabEvt" data-type="1">共同还款人</a></li>
 		{{ }else if(i == 2){ }}
-		<li class="role-bar-li"><a href="javascript:;" class="role-item tabEvt" data-type="2">反担保人</a></li>
+		<li class="role-bar-li"><a href="javascript:;" class="role-item{{=(i == it.currentType ? ' role-item-active' : '')}} tabEvt" data-type="2">反担保人</a></li>
 		{{ } }}
 	{{ } }}
 </script>
