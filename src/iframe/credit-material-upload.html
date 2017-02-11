@@ -1,99 +1,44 @@
-<!--征信材料上传-->
+<!-- 征信材料上传 -->
 <div class="container credit-material-upload" id="credit-material-upload">
-	<!--返回列表-->
+	<!-- 返回列表 -->
 	<div id="location"></div>
-	<!--tab切换栏(征信材料角色)-->
+	<!-- 返回列表 end-->
+
+	<!-- tab切换栏 -->
 	<div class="tab-bar mt15">
 		<ul class="role-bar-ul clearfix" id="creditTabs"></ul>
 		<div class="button button-mini" id="btnNewLoanPartner">
-			<i class="iconfont">&#xe615;</i>
-			增加共同还款人
+			<i class="iconfont">&#xe615;</i>增加共同还款人
 		</div>
 		<div class="button button-mini" id="btnNewGuarantor">
-			<i class="iconfont">&#xe615;</i>
-			增加反担保人
+			<i class="iconfont">&#xe615;</i>增加反担保人
 		</div>
 	</div>
-	<!--tab切换栏(征信材料角色)   end-->
+	<!-- tab切换栏 end-->
 	
-	<!--面板-->
-	<div class="panel no-top-border clearfix" id="creditUserPanel">
-
+	<!-- tab栏对应项 -->
+	<div class="creditUploadPanel" id="creditUploadPanel">
 	</div>
-	<!--提交订单按钮区域-->
+	<!-- tab栏对应项 end-->
+
+	<!-- 提交订单按钮区域 -->
 	<div class="commit-orders-box">
 		<div id="" class="button button-orange">取消订单</div>
 		<div id="" class="button">征信查询</div>
 	</div>
+	<!-- 提交订单按钮区域 end-->
 
 	<div class="select select-car" data-tabs="品牌|车系|车型"></div>
 </div>
-<script type="text/dot-x-template" id="tplTabItem">
-	<li class="role-bar-li"><a class="role-item tabEvt" data-trigger="">{{=it.roleTypeName}}</a></li>
-</script>
-<script type="text/template" id="tplCreditPanel">
-	<div class="tabEvtTrigger" data-trigger="{{=it.trigger}}" data-code="{{=it.code}}">
-		<!--借款人信息填写栏-->
-		<div class="credit-datas-bar credit-datas-bar-special clearfix">
-			<div class="key-item-box">
-				<span class="key-item">真实姓名：</span>
-				<input type="text" class="input-text key-value"/>
-			</div>
-			<div class="key-item-box">
-				<span class="key-item">身份证号：</span>
-				<input type="text" class="input-text key-value"/>
-			</div>
-			<div class="key-item-box">
-				<span class="key-item">与借款人关系：</span>
-				<span class="select select-common">
-					<span class="placeholder">请选择</span>
-					<span class="arrow arrow-bottom"></span>
-				</span>
-			</div>
-			<a href="javascript:;" class="delete-credit-item"><i class="iconfont">&#xe602;</i></a>
-		</div>
-		<!--借款人照片嵌入栏-->
-		<div class="credit-imgs-bar">
-			<div class="imgs-item-group">
-				<div class="imgs-item-upload">
-					<i class="iconfont">&#xe61f;</i><br />
-					<span class="imgs-describe">点击或拖拽上传图片</span>
-					<input type="file" id="" class="input-file" />
-				</div>
-				<span class="imgs-item-p">共同还款人身份证正面</span>
-			</div>
-			<div class="imgs-item-group">
-				<div class="imgs-item-upload">
-					<i class="iconfont">&#xe61f;</i><br />
-					<span class="imgs-describe">点击或拖拽上传图片</span>
-					<input type="file" id="" class="input-file" />
-				</div>
-				<span class="imgs-item-p">共同还款人身份证反面</span>
-			</div>
-			<div class="imgs-item-group">
-				<div class="imgs-item-upload">
-					<i class="iconfont">&#xe61f;</i><br />
-					<span class="imgs-describe">点击或拖拽上传图片</span>
-					<input type="file" id="" class="input-file" />
-				</div>
-				<span class="imgs-item-p">共同还款人征信授权书</span>
-			</div>
-			<div class="imgs-item-group">
-				<div class="imgs-item-upload">
-					<i class="iconfont">&#xe61f;</i><br />
-					<span class="imgs-describe">点击或拖拽上传图片</span>
-					<input type="file" id="" class="input-file" >
-				</div>
-				<span class="imgs-item-p">系统使用知情书</span>
-			</div>
-			<div class="imgs-item-group">
-				<div class="imgs-item-upload">
-					<i class="iconfont">&#xe61f;</i><br />
-					<span class="imgs-describe">点击或拖拽上传图片</span>
-					<input type="file" id="" class="input-file" />
-				</div>
-				<span class="imgs-item-p">授权书签字照片</span>
-			</div>
-		</div>
-	</div>
+<!-- 征信材料上传 end-->
+<script type="text/dot-x-template" id="creditUploadTabsTmpl">
+	{{ for(var i in it) { }}
+		{{ if(i == 0) { }}
+		<li class="role-bar-li"><a href="javascript:;" class="role-item role-item-active tabEvt" data-type="0">借款人</a></li>
+		{{ }else if(i == 1){ }}
+		<li class="role-bar-li"><a href="javascript:;" class="role-item tabEvt" data-type="1">共同还款人</a></li>
+		{{ }else if(i == 2){ }}
+		<li class="role-bar-li"><a href="javascript:;" class="role-item tabEvt" data-type="2">反担保人</a></li>
+		{{ } }}
+	{{ } }}
 </script>

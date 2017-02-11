@@ -3,9 +3,7 @@ page.ctrl('loan', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
+			pageNum: $params.pageNum || 1
 		};
 	/**
 	* 加载车贷办理数据
@@ -13,10 +11,14 @@ page.ctrl('loan', function($scope) {
 	*/
 	var loadLoanList = function(params) {
 		$.ajax({
-			url: $http.api($http.apiMap.loanList),
+			url: 'http://127.0.0.1:8083/mock/loan.list',
+			// type: 'get',
+			// url: 'http://192.168.0.144:8080/loanOrder/workbench',
+			// dataType:"json",
 			data: params,
 			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				console.log(result);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page.pages, true);
 				setupEvent();
 			})
@@ -59,14 +61,41 @@ page.ctrl('loan', function($scope) {
 		*/
 		$console.find('#loanTable .button').on('click', function() {
 			var that = $(this);
-			router.render(that.data('href'), {orderNo: that.data('id'), path: 'loanProcess'});
+			router.render(that.data('href'), {
+				taskId: that.data('id'), 
+				date: that.data('date'),
+				path: 'loanProcess'
+			});
 		});
+
+		/**
+		* 任务类型点击显示/隐藏
+		*/
+		$console.find('#loanTable .arrow').on('click', function() {
+			var that = $(this);
+			var $tr = that.parent().parent().parent().find('.loantask-item');
+			if(!that.data('isShow')) {
+				$tr.show();
+				that.data('isShow', true);
+				that.removeClass('arrow-bottom').addClass('arrow-top');
+			} else {
+				$tr.hide();
+				that.data('isShow', false);
+				that.removeClass('arrow-top').addClass('arrow-bottom');
+				$tr.eq(0).show();
+				$tr.eq(1).show();
+			}
+		})
+
+		/**
+		* 任务类型点击排序
+		*/
 	}
  	
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('main'), function() {
+	render.$console.load(router.template('iframe/main'), function() {
 		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#loanTable'),
@@ -79,9 +108,10 @@ page.ctrl('loan', function($scope) {
 	});
 
 	$scope.paging = function(_page, _size, $el, cb) {
-		apiParams.page = _page;
-		$params.page = _page;
+		apiParams.pageNum = _page;
+		$params.pageNum = _page;
 		// router.updateQuery($scope.$path, $params);
+		
 		loadLoanList(apiParams);
 		cb();
 	}

@@ -180,9 +180,9 @@
 			refer: [],
 			page: 'organizationManage'
 		},
-		'loanProcess/creditUpload': {
+		'loanProcess/creditMaterialsUpload': {
 			title: '征信材料上传',
-			page: 'creditUpload'
+			page: 'creditMaterialsUpload'
 		},
 		'loanProcess/creditInput': {
 			title: '征信结果录入',
@@ -215,7 +215,7 @@
 	* 获取路由模板
 	*/
 	router.template = function(key) {
-		return 'iframe/' + key + '.html';
+		return key + '.html';
 	}
 	router.closeRefresh = false;
 	/**
@@ -252,6 +252,8 @@
 		var sp = hash.split('?');
 		var _origin = sp[0],
 			_search = !!sp[1] ? ('?' + sp[1]) : undefined;
+			
+			// _search = decodeURI(_search);
 		var _paths = _origin.split('/'),
 			_params = !!_search ? $.parseParams(_search) : undefined;
 		router.render(_origin, _params);

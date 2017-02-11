@@ -8,14 +8,15 @@ page.ctrl('creditInput', [], function($scope) {
 	/**
 	* 设置面包屑
 	*/
-	var setupLocation = function(loanUser, orderDate) {
+	var setupLocation = function(loanUser) {
 		if(!$scope.$params.path) return false;
 		var $location = $console.find('#location');
+		var _orderDate = tool.formatDate($scope.$params.date, true);
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: loanUser,
 			current: '征信结果录入',
-			orderDate: orderDate
+			orderDate: _orderDate
 		});
 		$location.location();
 	}
@@ -27,23 +28,50 @@ page.ctrl('creditInput', [], function($scope) {
 	*/
 	var loadOrderInfo = function() {
 		$.ajax({
-			url: $http.apiMap.creditInput,
-			data: {orderNo: $scope.$params.orderNo},
+			// type: 'post',
+			// url: $http.apiMap.creditInput,
+			url: 'http://127.0.0.1:8083/mock/creditInput',
+			// data: {
+			// 	taskId : 80871
+			// },
+			// dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				render.compile($scope.$el.$tab, $scope.def.tabTmpl, $scope.result.data, true);
-				$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
-				var _tabTrigger = $scope.$el.$tbls.eq(0);
-				$scope.tabs.push(_tabTrigger);
-				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, true);
-				setupEvent();
+				// 启动面包屑
 				var _loanUser = $scope.result.data[0].loanUserCredits[0].userName;
-				var _orderDate = tool.formatDate($scope.result.data[0].loanUserCredits[0].submitDate, true);
-				setupLocation(_loanUser, _orderDate);
+				setupLocation(_loanUser);
+				// 编译tab
+				setupTab($scope.result);
+				// 编译tab项对应内容
+				setupCreditPanel($scope.result);
+				// 启动绑定事件
+				setupEvent();
 			})
 		})
 	}
+
+	/**
+	 * 渲染tab栏
+	 * @param  {object} result 请求获得的数据
+	 */
+	var setupTab = function(result) {
+		render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.data, true);
+		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
+	}
+
+	/**
+	 * 渲染tab栏对应项内容
+	 * @param  {object} result 请求获得的数据
+	 */
+	var setupCreditPanel = function(result) {
+		var _tabTrigger = $scope.$el.$tbls.eq(0);
+		$scope.tabs.push(_tabTrigger);
+		$scope.result.index = 0;
+		render.compile(_tabTrigger, $scope.def.listTmpl, result, true);
+	}
+
+	
 
 	var setupEvent = function () {
 		$scope.$el.$tab.find('.tabEvt').on('click', function () {
@@ -51,11 +79,11 @@ page.ctrl('creditInput', [], function($scope) {
 			if($this.hasClass('role-item-active')) return;
 			var _type = $this.data('type');
 			if(!$scope.tabs[_type]) {
-				var _tabTrigger = $scope.$el.$tbls.eq(_type)
+				var _tabTrigger = $scope.$el.$tbls.eq(_type);
 				$scope.tabs[_type] = _tabTrigger;
-				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result.data[_type], true);
+				$scope.result.index = _type;
+				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, true);
 			}
-			console.log($scope.$el.$tabs.eq($scope.idx));
 			$scope.$el.$tabs.eq($scope.idx).removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.$el.$tbls.eq($scope.idx).hide();
@@ -74,13 +102,13 @@ page.ctrl('creditInput', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('credit-result-typing'), function() {
+	render.$console.load(router.template('iframe/credit-result-typing'), function() {
 		$scope.def.tabTmpl = $console.find('#creditResultTabsTmpl').html();
 		$scope.def.listTmpl = $console.find('#creditResultListTmpl').html();
 		// console.log($console.find('#creditResultPanel'))
 		$scope.$el = {
 			$tbls: $console.find('#creditResultPanel > .tabTrigger'),
-			$tab: $console.find('#userTabs'),
+			$tab: $console.find('#creditTabs'),
 			$paging: $console.find('#pageToolbar')
 		}
 		loadOrderInfo();
