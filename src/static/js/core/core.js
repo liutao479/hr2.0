@@ -76,7 +76,8 @@
 		auditPrint: 'http://192.168.0.146:8080/loanUserStage/getFinancialData',
 		operationsAnalysis: 'http://127.0.0.1:8083/mock/operationsAnalysis',
 		organizationManage: 'http://127.0.0.1:8083/mock/organizationManage',
-		creditInput: 'http://127.0.0.1:8083/mock/creditInput'
+		// creditInput: 'http://127.0.0.1:8083/mock/creditInput'
+		creditInput: 'http://192.168.0.148:8080/creditUser/getCreditInfo'
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
@@ -94,9 +95,11 @@
 	}
 	/**
 	 * 添加日期格式化方法
+	 * @params {number} time 时间戳
+	 * @params {boolean} isTime 是否输出时分秒
 	 */
 	tool.formatDate = function(time, isTime) {
-		var cDate = new Date(time),
+		var cDate = new Date(parseInt(time)),
 			_year = cDate.getFullYear(),
 			_month = tool.leftPad(cDate.getMonth() + 1, 2),
 			_date = tool.leftPad(cDate.getDate(), 2),

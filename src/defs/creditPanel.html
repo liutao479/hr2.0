@@ -1,0 +1,83 @@
+<script type="text/dot-x-template" id="creditUploadListTmpl">
+	<div class="panel no-top-border">
+	<!--借款人信息填写栏-->
+	{{ for(var i = 0, len = it.length; i < len; i++){ var row = it[i]; }}
+		{{ if(i == 0){ }}
+			<div class="credit-datas-bar credit-datas-bar-special clearfix">
+		{{ }else{ }}
+			<div class="credit-datas-bar clearfix">
+		{{ } }}
+			<div class="key-item-box">
+				<span class="key-item">真实姓名：</span>
+				<span class="key-value">
+					<input type="text" class="input-text input-text-mini" value=""/>	
+				</span>
+			</div>
+			<div class="key-item-box">
+				<span class="key-item">身份证号：</span>
+				<span class="key-value">
+					<input type="text" class="input-text input-text-mini" value=""/>	
+				</span>
+			</div>
+		{{ if(row.userType != 0){ }}
+			<div class="key-item-box">
+				<span class="key-item">与借款人关系：</span>
+				<span class="select select-common">
+					<select name="" id="">
+						<option value="">配偶</option>
+						<option value="">子女</option>
+						<option value="">父母</option>
+						<option value="">其他</option>
+					</select>
+				</span>
+			</div>
+			<a href="javascript:;" class="delete-credit-item" data-index="{{=i}}"><i class="iconfont">&#xe602;</i></a>
+		{{ } }}
+			
+		</div>
+		<!--借款人照片嵌入栏-->
+		<div class="credit-imgs-bar">
+			<div class="imgs-item-group">
+				<div class="imgs-item-upload">
+					<i class="iconfont iconfont-upload">&#xe61f;</i><br />
+					<span class="imgs-describe">点击或拖拽上传图片</span>
+					<input type="file" id="" class="input-file" />
+				</div>
+				<span class="imgs-item-p">共同还款人身份证正面</span>
+			</div>
+			<div class="imgs-item-group">
+				<div class="imgs-item-upload">
+					<i class="iconfont iconfont-upload">&#xe61f;</i><br />
+					<span class="imgs-describe">点击或拖拽上传图片</span>
+					<input type="file" id="" class="input-file" />
+				</div>
+				<span class="imgs-item-p">共同还款人身份证反面</span>
+			</div>
+			<div class="imgs-item-group">
+				<div class="imgs-item-upload">
+					<i class="iconfont iconfont-upload">&#xe61f;</i><br />
+					<span class="imgs-describe">点击或拖拽上传图片</span>
+					<input type="file" id="" class="input-file" />
+				</div>
+				<span class="imgs-item-p">共同还款人征信授权书</span>
+			</div>
+			<div class="imgs-item-group">
+				<div class="imgs-item-upload">
+					<i class="iconfont iconfont-upload">&#xe61f;</i><br />
+					<span class="imgs-describe">点击或拖拽上传图片</span>
+					<input type="file" id="" class="input-file" >
+				</div>
+				<span class="imgs-item-p">系统使用知情书</span>
+			</div>
+			<div class="imgs-item-group">
+				<div class="imgs-item-upload">
+					<i class="iconfont iconfont-upload">&#xe61f;</i><br />
+					<span class="imgs-describe">点击或拖拽上传图片</span>
+					<input type="file" id="" class="input-file" />
+				</div>
+				<span class="imgs-item-p">授权书签字照片</span>
+			</div>
+		</div>
+	{{ } }}
+	</div>
+</script>

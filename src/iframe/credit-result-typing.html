@@ -1,53 +1,54 @@
 <!-- 征信结果录入 -->
-	<div class="container credit-result-typing" id="credit-result-typing">
-		<!--返回列表-->
-		<div id="location"></div>
-		<!--返回列表 end-->
+<div class="container credit-result-typing" id="credit-result-typing">
+	<!--返回列表-->
+	<div id="location"></div>
+	<!--返回列表 end-->
 
-		<!-- tab切换栏 -->
-		<div class="tab-bar mt15" id="userTabs">
-			
-		</div>
-		<!-- tab切换栏 end-->
-		
-		<!-- tab栏对应项 -->
-		<div class="creditResultPanel" id="creditResultPanel">
-			
-			<div class="panel no-top-border clearfix tabTrigger" data-trigger="0"></div>
-			<div class="panel no-top-border clearfix tabTrigger" data-trigger="1" style="display: none;"></div>
-			<div class="panel no-top-border clearfix tabTrigger" data-trigger="2" style="display: none;"></div>
-			
-			<!-- 提交订单按钮区域 -->
-			<div class="commit-orders-box">
-				<div id="" class="button">提交订单</div>
-			</div>
-			<!-- 提交订单按钮区域 end-->
-		</div>
-		<!-- tab栏对应项 end-->
+	<!-- tab切换栏 -->
+	<div class="tab-bar mt15" id="userTabs">
+		<ul class="role-bar-ul clearfix" id="creditTabs"></ul>
 	</div>
+	<!-- tab切换栏 end-->
+	
+	<!-- tab栏对应项 -->
+	<div class="creditResultPanel" id="creditResultPanel">
+		<div class="panel no-top-border clearfix tabTrigger" data-trigger="0"></div>
+		<div class="panel no-top-border clearfix tabTrigger" data-trigger="1" style="display: none;"></div>
+		<div class="panel no-top-border clearfix tabTrigger" data-trigger="2" style="display: none;"></div>
+	</div>
+	<!-- tab栏对应项 end-->
+
+	<!-- 提交订单按钮区域 -->
+	<div class="commit-orders-box">
+		<div id="" class="button button-deep">提交订单</div>
+	</div>
+	<!-- 提交订单按钮区域 end-->
+</div>
 <!-- 征信结果录入 end-->
 
 <script type="text/x-dot-template" id="creditResultTabsTmpl">
-	<ul class="role-bar-ul clearfix">
-		{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
-		<li class="role-bar-li"><a href="javascript:;" class="role-item{{= (i == 0 ? ' role-item-active':'')}} tabEvt" data-type="{{=row.userType}}">{{=row.userTypeName}}</a></li>
-		{{ } }}
-	</ul>
+	{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i];  }}
+	<li class="role-bar-li"><a href="javascript:;" class="role-item{{= (i == 0 ? ' role-item-active':'')}} tabEvt" data-type="{{=row.userType}}">{{=row.userTypeName}}</a></li>
+	{{ } }}
 </script>
 
 
 <script type="text/x-dot-template" id="creditResultListTmpl">
-	{{ for(var i = 0, len = it.length; i < len; i++) { var row = it; }}
-	
+	{{ for(var i = 0, len = it.data[it.index].loanUserCredits.length; i < len; i++) { var row = it.cfgData.frames[it.index], col = it.data[it.index];  }}
 		<!--二级标题（姓名，身份证等等...）-->
+		{{ if(i == 0) { }}
+		<div class="panel-content-title no-top-border">
+		{{ }else{ }}
 		<div class="panel-content-title">
+		{{ } }}
+		{{ if(col.userType == 1) { }}
 			<div class="key-value-box">
 				<span class="key">姓名：</span>
-				<span class="value">北上</span>
+				<span class="value">{{=col.loanUserCredits[i].userName}}</span>
 			</div>
 			<div class="key-value-box">
 				<span class="key">身份证号：</span>
-				<span class="value">412702199102033154</span>
+				<span class="value">{{=col.loanUserCredits[i].idCard}}</span>
 			</div>
 			<div class="key-value-box">
 				<span class="key">与借款人关系：</span>
@@ -55,107 +56,146 @@
 			</div>
 			<div class="key-value-box">
 				<span class="key">征信查询时间：</span>
-				<span class="value">2016-11-01 12:00</span>
+				<span class="value">{{=tool.formatDate(col.loanUserCredits[i].submitDate, true)}}</span>
 			</div>
 			<div class="key-value-box key-value-box-special">
 				<div class="button button-mini">查看征信材料</div>
 			</div>
+		{{ }else{ }}
+			<div class="key-value-box">
+				<span class="key">征信查询时间：</span>
+				<span class="value">{{=tool.formatDate(col.loanUserCredits[i].submitDate, true)}}</span>
+			</div>
+			<div class="key-value-box key-value-box-special">
+				<div class="button button-mini">查看征信材料</div>
+			</div>
+		{{ } }}
 		</div>
 		<!--二级标题（姓名，身份证等等...） end-->
 		<!--详细内容罗列-->
 		<div class="panel-detail-content panel-detail-table">
-			<!-- 征信报告照片 -->
+			<!-- 征信是否合格 -->
+			<div class="panel-item-box mt15">
+				<div class="panel-key-area">征信是否合格：</div>
+				<div class="panel-value-area clearfix">
+					<div class="panel-value-item">
+						<span class="select select-common">
+							{{ if(col.loanUserCredits[i].isQualified == 0){ }}
+							<span class="placeholder placeholder-mini">合格</span>
+							{{ }else if(col.loanUserCredits[i].isQualified == 1){ }}
+							<span class="placeholder placeholder-mini">不合格</span>
+							{{ } }}
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<!-- 征信是否合格 end-->
+
+			<!-- 征信报告文件 -->
 			<div class="panel-item-box mt15">
 				<div class="panel-key-area">征信报告文件：</div>
 				<div class="panel-value-area clearfix">
-					<div class="panel-value-item">
-						<div class="button button-mini">上传文件</div>	
-					</div>
-					<div class="panel-value-item">
-						<span class="color-tiper">文件格式：*.pdf</span>
-					</div>
-					
+					{{ if(col.loanUserCredits[i].creditReportFile){ }}
+						<div class="panel-value-item">
+							<div class="input-text">
+								<input type="text" value="{{=col.loanUserCredits[i].creditReportFile}}" readonly="true" />	
+							</div>
+						</div>
+						<div class="panel-value-item">
+							<div class="button button-mini">重新上传</div>	
+						</div>
+					{{ }else{ }}
+						<div class="panel-value-item">
+							<div class="button button-mini">上传文件</div>
+						</div>
+						<div class="panel-value-item">
+							<span class="color-tiper">文件格式：*.pdf</span>
+						</div>
+					{{ } }}
 				</div>
 			</div>
-			<!-- 征信报告照片 end-->
-
-			<!-- 征信报告编号 -->
-			<div class="panel-item-box">
-				<div class="panel-key-area">征信报告编号：</div>
-				<div class="panel-value-area clearfix">
-					<div class="panel-value-item">
-						<div class="input-text">
-							<input type="text" />	
+			<!-- 征信报告文件 end-->
+			{{ if(row.sections) { }}
+				{{ for(var j = 0, len2 = row.sections.length; j < len2; j++) {  }}
+					{{ if(row.sections[j].code == 'ZXBGB') { }}
+					<!-- 征信报告编号 -->
+					<div class="panel-item-box">
+						<div class="panel-key-area">{{=row.sections[j].name}}：</div>
+						<div class="panel-value-area clearfix">
+							<div class="panel-value-item">
+								<div class="input-text">
+									<input type="text" value="{{=col.loanUserCredits[i].creditReportId}}" />	
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<!-- 征信报告编号 end-->
-
-			<!-- 征信报告照片 -->
-			<div class="panel-item-box">
-				<div class="panel-key-area">征信报告照片：</div>
-				<div class="panel-value-area">
-					<div class="imgs-item-group">
-						<div class="imgs-item-upload">
-							<i class="iconfont iconfont-upload">&#xe61f;</i><br />
-							<span class="imgs-describe">点击或拖拽上传图片</span>
-							<input type="file" id="" class="input-file" />
+					<!-- 征信报告编号 end-->
+					{{ }else if(row.sections[j].code == 'ZXBGP') { }}
+					<!-- 征信报告照片 -->
+					<div class="panel-item-box">
+						<div class="panel-key-area">{{=row.sections[j].name}}：</div>
+						<div class="panel-value-area">
+							<div class="imgs-item-group">
+								<div class="imgs-item-upload">
+									<i class="iconfont iconfont-upload">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+									<input type="file" id="" class="input-file" />
+								</div>
+							</div>
+							<div class="imgs-item-group">
+								<div class="imgs-item-upload">
+									<i class="iconfont iconfont-upload">&#xe61f;</i><br />
+									<span class="imgs-describe">点击或拖拽上传图片</span>
+									<input type="file" id="" class="input-file" />
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="imgs-item-group">
-						<div class="imgs-item-upload">
-							<i class="iconfont iconfont-upload">&#xe61f;</i><br />
-							<span class="imgs-describe">点击或拖拽上传图片</span>
-							<input type="file" id="" class="input-file" />
+					<!-- 征信报告照片 end-->
+					{{ }else if(row.sections[j].code == 'ZXZD') { }}
+					<!-- 征信字段 -->
+					<div class="panel-item-box">
+						<div class="panel-key-area">{{=row.sections[j].name}}：</div>
+						<div class="panel-value-area">
+							<table border="1" class="field-table">
+								{{ var zxzd = col.loanUserCredits[i].loanCreditResultList; }}
+								{{ for(var k = 0, len3 = parseInt((zxzd.length + 1) / 2) ; k < len3; k++){ }}
+									{{ if(k % 2 == 0) { }}
+									<tr class="tr-odd">
+									{{ }else{ }}
+									<tr class="tr-even">
+									{{ } }}
+										<td class="td-key">{{=zxzd[2 * k].fieldName}}</td>
+										<td class="td-value"><input class="input" type="text" value="{{=zxzd[2 * k].creditVal}}" /><span class="unit">次</span></td>
+										{{ if(k == len3 - 1) { }}
+											<td class="td-key"></td>
+											<td class="td-value"></td>
+										{{ }else{ }}
+											<td class="td-key">{{=zxzd[2 * k + 1].fieldName}}</td>
+											<td class="td-value"><input class="input" type="text" value="{{=zxzd[2 * k + 1].creditVal}}" /><span class="unit">次</span></td>
+										{{ } }}
+									</tr>
+								{{ } }}
+							</table>
 						</div>
 					</div>
-				</div>
-			</div>
-			<!-- 征信报告照片 end-->
+					<!-- 征信字段 end-->
+					{{ } }}
+				{{ } }}
+			{{ } }}
+			
 
-			<!-- 征信字段 -->
-			<div class="panel-item-box">
-				<div class="panel-key-area">征信字段：</div>
-				<div class="panel-value-area">
-					<table border="1" cellspacing="" cellpadding="" class="field-table">
-						<tr>
-							<td>征信字段征信字段</td>
-							<td>1次</td>
-							<td>征信字段征信字段</td>
-							<td>1次</td>
-						</tr>
-						<tr>
-							<td>征信字段征信字段</td>
-							<td>1次</td>
-							<td>征信字段征信字段</td>
-							<td>1次</td>
-						</tr>
-						<tr>
-							<td>征信字段征信字段</td>
-							<td>1次</td>
-							<td>征信字段征信字段</td>
-							<td>1次</td>
-						</tr>
-						<tr>
-							<td>征信字段征信字段</td>
-							<td>1次</td>
-							<td>征信字段征信字段</td>
-							<td>1次</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<!-- 征信字段 end-->
+			
 			<!-- 备注信息 -->
 			<div class="panel-item-box">
 				<div class="panel-key-area">备注信息：</div>
 				<div class="panel-value-area">
-					<textarea name="" id="" cols="30" rows="6" class="remarks-box"></textarea>
+					<textarea name="" id="" cols="30" rows="6" class="remarks-box">{{=col.loanUserCredits[i].remark}}</textarea>
 				</div>
 			</div>
 			<!-- 备注信息 end-->
 		</div>
 		<!--工作台左侧菜单对应项详细面板（申请人） end-->
-	}
+	{{ } }}
 </script>

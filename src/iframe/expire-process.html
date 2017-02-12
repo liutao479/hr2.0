@@ -34,11 +34,11 @@
 	{{ var len = it.length; if(len) { }}
 		{{for(var i = 0; i < len; i++) { var row = it[i]; }}
 			{{ if(i % 2 !== 0) { }}
-			<tr class="tr-even">
+			<tr class="orders-item tr-even">
 			{{ } else if(i % 2 == 0 && i == 0) { }}
-			<tr class="tr-odd tr-noborder">
+			<tr class="orders-item tr-odd tr-noborder">
 			{{ } else { }}
-			<tr class="tr-odd">
+			<tr class="orders-item tr-odd">
 			{{ } }}
 				<td class="orders-item-data">{{=row.expireStatus}}</td>
 				<td class="orders-item-data">{{=row.date}}</td>
