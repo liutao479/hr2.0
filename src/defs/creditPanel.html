@@ -8,28 +8,31 @@
 			<div class="credit-datas-bar clearfix">
 		{{ } }}
 			<div class="key-item-box">
-				<span class="key-item">真实姓名：</span>
-				<span class="key-value">
-					<input type="text" class="input-text input-text-mini" value=""/>	
-				</span>
+				<div class="key-item">真实姓名：</div>
+				<div class="key-value">
+					<div class="input-text input-text-mini2">
+						<input type="text" value=""/>		
+					</div>
+				</div>
 			</div>
 			<div class="key-item-box">
-				<span class="key-item">身份证号：</span>
-				<span class="key-value">
-					<input type="text" class="input-text input-text-mini" value=""/>	
-				</span>
+				<div class="key-item">身份证号：</div>
+				<div class="key-value">
+					<div class="input-text">
+						<input type="text" value=""/>		
+					</div>	
+				</div>
 			</div>
 		{{ if(row.userType != 0){ }}
 			<div class="key-item-box">
-				<span class="key-item">与借款人关系：</span>
-				<span class="select select-common">
-					<select name="" id="">
-						<option value="">配偶</option>
-						<option value="">子女</option>
-						<option value="">父母</option>
-						<option value="">其他</option>
-					</select>
-				</span>
+				<div class="key-item">与借款人关系：</div>
+				<div class="key-value">
+					<span class="select select-common">
+						<span class="placeholder placeholder-mini">请选择</span>
+						<span class="arrow arrow-bottom"></span>
+					</span>
+				</div>
+				
 			</div>
 			<a href="javascript:;" class="delete-credit-item" data-index="{{=i}}"><i class="iconfont">&#xe602;</i></a>
 		{{ } }}

@@ -94,7 +94,7 @@
     }
 }
 
-//图片组件
+//图片查看及上传组件
 .imgs-item-group {
     position: relative;
     display: inline-block;
@@ -102,36 +102,12 @@
     text-align: center;
     margin-right: 30px;
     margin-bottom: 10px;
-    .imgs-upload, .imgs-delete {
-        position: absolute;
-        top: 2px;
-        z-index: 1000;
-        width: 35px;
-        height: 35px;
-        line-height: 35px;
-        color: #FFF;
-        text-align: center;
-        background-color: #919191;
-        cursor: pointer;
-    }
-    .imgs-upload {
-        right: 40px;
-        &:hover {
-            background-color: #60c4f4;
-        }
-    }
-    .imgs-delete {
-        right: 2px;
-        &:hover {
-            background-color: #5084fc;
-        }
-    }
     //图片组件公共部分样式
     .imgs-item-upload, .imgs-item-view {
         display: block;
         position: relative;
         width: 220px;
-        height: 136px;
+        height: 137px;
         border: 2px solid @borderColor;
         .borderRadius(3px);
     }
@@ -142,13 +118,39 @@
         background-color: #f1f1f2;
         text-align: center;
         color: #b7bfc5;
-        padding: 20px 0;
         cursor: pointer;
         &:hover {
             background-color: darken(#f1f1f2,5%);
         }
+        .imgs-upload, .imgs-delete {
+            position: absolute;
+            top: 0;
+            z-index: 1000;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            color: #FFF;
+            text-align: center;
+            background-color: #919191;
+            cursor: pointer;
+        }
+        .imgs-upload {
+            right: 38px;
+            &:hover {
+                background-color: #60c4f4;
+            }
+        }
+        .imgs-delete {
+            right: 0;
+            &:hover {
+                background-color: #5084fc;
+            }
+        }
         .iconfont-upload {
-            font-size: 65px;
+            margin-top: 20px;
+            .iconfont {
+                font-size: 65px;    
+            }
         }
         .input-file {
             display: block;
@@ -165,27 +167,63 @@
             cursor: pointer;
             border: none;
         }
-    }
-    //图片查看组件的地址信息
-    .imgs-item-view .imgs-describe {
-        position: absolute;
-        bottom: -2px;
-        left: -2px;
-        width: 220px;
-        height: 31px;
-        line-height: 31px;
-        padding-left: 10px;
-        background-color: #a8a8a9;
-        color: #FFF;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        .iconfont {
-            position: relative;
-            top: 2px;
+        // 退回原因
+        .imgs-back {
+            position: absolute;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 216px;
+            height: 32px;
+            line-height: 32px;
+            padding: 0 7px;
+            background-color: #919191;
+            color: @fontColor;
+        }
+        //图片查看组件的地址信息以及图片错误原因
+        .imgs-describe {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 32px;
+            line-height: 32px;
+            padding-left: 10px;
+            background-color: #000;
+            opacity: 0.6;
+            filter: alpha(opacity=60);
+            color: #FFF;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            .iconfont {
+                position: relative;
+                top: 2px;
+            }
+        }
+        // 图片
+        .imgs-view, .imgs-error {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        // 错误图片
+        .imgs-view {
+            width: 100%;
+            height: 100%;
+        }
+        // 错误图片标记
+        .imgs-error {
+            top: 38px;
+            left: 58px;
+            width: 105px;
         }
     }
-    
     .imgs-item-p {
         line-height: 42px;
         text-align: center;

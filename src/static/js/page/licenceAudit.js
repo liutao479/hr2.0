@@ -48,7 +48,7 @@ page.ctrl('licenceAudit', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('licence-audit'), function() {
+	render.$console.load(router.template('iframe/licence-audit'), function() {
 		$scope.def.listTmpl = render.$console.find('#licenceAuditListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#licenceAuditTable'),

@@ -105,7 +105,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$scope.tabs[_type] = _tabTrigger;
 				// $scope.result.index = _type;
 			}
-			console.log($scope.currentType)
 			$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.currentType = _type;

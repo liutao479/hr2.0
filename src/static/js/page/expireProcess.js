@@ -66,7 +66,7 @@ page.ctrl('expireProcess', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('expire-process'), function() {
+	render.$console.load(router.template('iframe/expire-process'), function() {
 		$scope.def.listTmpl = render.$console.find('#expireProcessTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#expireProcessTable'),

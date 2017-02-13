@@ -48,7 +48,7 @@ page.ctrl('organizationManage', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('cooperative-bank'), function() {
+	render.$console.load(router.template('iframe/cooperative-bank'), function() {
 		$scope.def.listTmpl = render.$console.find('#organizationManageListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#organizationManageTable'),

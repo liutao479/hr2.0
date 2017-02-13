@@ -53,7 +53,7 @@ page.ctrl('licenceStatis', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('licence-statis'), function() {
+	render.$console.load(router.template('iframe/licence-statis'), function() {
 		$scope.def.listTmpl = render.$console.find('#licenceStatisListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#licenceStatisTable'),

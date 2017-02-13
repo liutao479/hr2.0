@@ -48,7 +48,7 @@ page.ctrl('auditPrint', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('audit-print'), function() {
+	render.$console.load(router.template('iframe/audit-print'), function() {
 		$scope.def.listTmpl = render.$console.find('#auditPrintListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#auditPrintTable'),

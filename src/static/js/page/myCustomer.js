@@ -63,7 +63,7 @@ page.ctrl('myCustomer', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('my-customer'), function() {
+	render.$console.load(router.template('iframe/my-customer'), function() {
 		$scope.def.listTmpl = render.$console.find('#myCustomerListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#myCustomerTable'),

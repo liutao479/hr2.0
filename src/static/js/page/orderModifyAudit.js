@@ -48,7 +48,7 @@ page.ctrl('orderModifyAudit', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('order-modify-audit'), function() {
+	render.$console.load(router.template('iframe/order-modify-audit'), function() {
 		$scope.def.listTmpl = render.$console.find('#orderModifyListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#orderModifyTable'),

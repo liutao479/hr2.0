@@ -1593,19 +1593,23 @@
 //类似键值对的组合
 .key-item-box {
     display: inline-block;
-    float: left;
     margin-right: 25px;
-    line-height: 60px;
+    height: 60px;
     .key-item {
+        float: left;
+        line-height: 60px;
         margin-right: 25px;
     }
     .key-value {
-        width: 175px;
-    }
-    .select {
-        position: relative;
-        top: -2px;
-        vertical-align: middle;
+        float: left;
+        overflow: hidden;
+        height: 60px;
+        .input-text {
+            margin-top: 14px; 
+        }
+        .select {
+            margin-top: 14px;
+        }
     }
 }
 

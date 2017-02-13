@@ -48,7 +48,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('load-archive-download'), function() {
+	render.$console.load(router.template('iframe/load-archive-download'), function() {
 		$scope.def.listTmpl = render.$console.find('#loadArchiveDownloadListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#loadArchiveDownloadTable'),

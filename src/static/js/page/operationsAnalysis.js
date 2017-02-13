@@ -48,7 +48,7 @@ page.ctrl('operationsAnalysis', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('operations-analysis'), function() {
+	render.$console.load(router.template('iframe/operations-analysis'), function() {
 		$scope.def.listTmpl = render.$console.find('#operationsAnalysisListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#operationsAnalysisTable'),

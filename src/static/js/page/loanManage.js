@@ -53,7 +53,7 @@ page.ctrl('loanManage', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('loan-manage'), function() {
+	render.$console.load(router.template('iframe/loan-manage'), function() {
 		$scope.def.listTmpl = render.$console.find('#loanManageListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#loanManageTable'),

@@ -54,7 +54,7 @@ page.ctrl('mortgageStatis', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('mortgage-statis'), function() {
+	render.$console.load(router.template('iframe/mortgage-statis'), function() {
 		$scope.def.listTmpl = render.$console.find('#mortgageStatisListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#mortgageStatisTable'),
