@@ -29,8 +29,12 @@
 			};
 		self.$el = $el;
 		self.opts = $.extend(opts, options || {});
+		var tabs = self.opts.tabs.split('|');
+		self.opts.tabs = self.opts.tabs.split('|');	
+		console.log(self.opts);
 		self.$scope = $scope;
 		self.setup();
+		console.log(this)
 		return this;
 	}
 	/**
@@ -41,20 +45,26 @@
 		self.$el.append(_.template(internal.template.fields)({readonly: !self.search}));
 		self.$content = $('<div class="select-box"></div>').appendTo(self.$el);
 		if(self.opts.tabs) {
-			self.$content.append(_.template(internal.template.tab)(self.opts.tabs))
+			self.$content.append(_.template(internal.template.tab)(self.opts.tabs));
 		}
+
+		self.__addEventListener();
 	};
 	/**
 	* 绑定事件
 	*/
 	dropdown.prototype.__addEventListener = function() {
+		var self = this;
+		self.$el.find('.arrow-trigger').on('click', function() {
+			self.open();
+		})
 		
 	};
 	/**
 	* 展开dropdown
 	*/
 	dropdown.prototype.open = function() {
-		
+		self.$el.find('.select-box').show();
 	};
 	/**
 	* 关闭dropdown
@@ -84,7 +94,7 @@
 								</div>';
 	internal.template.tab = '<ul class="select-tab">\
 								{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
-								<li class="select-tab-item">{{= row.name }}</li>\
+								<li class="select-tab-item">{{= row }}</li>\
 								{{ } }}\
 							</ul>';
 	internal.template.brandContent = '';

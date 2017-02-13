@@ -35,7 +35,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/creditUpload',
 			// type: flag,
 			type: 'post',
-			url: 'http://192.168.0.167:8080/creditMaterials/index',
+			url: 'http://192.168.0.185:8080/creditMaterials/index',
 			data: {
 				taskId: $scope.$params.taskId
 			},
@@ -92,6 +92,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, data.creditUsers[_type], true);
 		var _tabTrigger = $console.find('#creditUploadPanel').html();
 		$scope.tabs[_type] = _tabTrigger;
+		$('.select').dropdown($scope);
 	}
 
 	// 编译完成后绑定事件
