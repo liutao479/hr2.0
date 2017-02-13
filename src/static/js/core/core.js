@@ -56,7 +56,7 @@
 		menu: 'http://127.0.0.1:8083/mock/menu',
 		loanList: 'http://127.0.0.1:8083/mock/loan.list',
 		myCustomer: 'http://192.168.0.155:8080/loanOrder/getMyCustomer',
-		orderModifyAudit: 'http://127.0.0.1:8083/mock/orderModifyAudit',
+		orderModifyAudit: 'http://192.168.0.155:8080/loanOrderApply/getLoanOrderApply',
 		cancelOrderAudit: 'http://127.0.0.1:8083/mock/cancelOrderAudit',
 		loanManage: 'http://127.0.0.1:8083/mock/loan.manage',
 		marginManage: 'http://127.0.0.1:8083/mock/marginManage',

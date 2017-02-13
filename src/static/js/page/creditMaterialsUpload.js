@@ -26,24 +26,27 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadOrderInfo = function(_type, isPost) {
-		var flag = 'get';
-		if(isPost) {
-			flag = 'post';
-		}
+	var loadOrderInfo = function(_type) {
+		// var flag = 'get';
+		// if(isPost) {
+		// 	flag = 'post';
+		// }
 		$.ajax({
-			url: 'http://127.0.0.1:8083/mock/creditUpload',
-			type: flag,
-			// url: 'http://192.168.0.144:8080/creditMaterials/index',
-			// data: {
-			// 	taskId: $scope.$params.taskId
-			// },
-			// dataType: 'json',
+			// url: 'http://127.0.0.1:8083/mock/creditUpload',
+			// type: flag,
+			type: 'post',
+			url: 'http://192.168.0.167:8080/creditMaterials/index',
+			data: {
+				taskId: $scope.$params.taskId
+			},
+			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
+				$scope.orderNo = result.data.loanTask.orderNo;
 				$scope.result.data.currentType = _type;
 				$scope.currentType = _type;
+				// 编译面包屑
 				var _loanUser = $scope.result.data.loanTask.loanOrder.realName;
 				setupLocation(_loanUser);
 				// 编译tab
@@ -118,34 +121,38 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 */
 	$(document).on('click', '#btnNewLoanPartner', function() {
 		// 后台接口修改完成时使用
-		// $.ajax({
-		// 	url: 'http://127.0.0.1:8083/mock/creditUpload',
-		// 	data: {
-		// 		orderNo: $scope.$params.orderNo,
-		// 		userType: $scope.currentType
-		// 	},
-		// 	success: $http.ok(function(result) {
-		// 		console.log(result);
-		// 	})
-		// }) 
-		loadOrderInfo(1, true);
+		$.ajax({
+			type: 'post',
+			url: 'http://192.168.0.167:8080/creditUser/add',
+			data: {
+				orderNo: $scope.orderNo,
+				userType: 1
+			},
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				loadOrderInfo(1);
+			})
+		}) 
 	})
 	/**
 	 * 增加反担保人
 	 */
 	$(document).on('click', '#btnNewGuarantor', function() {
 		// 后台接口修改完成时使用
-		// $.ajax({
-		// 	url: 'http://127.0.0.1:8083/mock/creditUpload',
-		// 	data: {
-		// 		orderNo: $scope.$params.orderNo,
-		// 		userType: $scope.currentType
-		// 	},
-		// 	success: $http.ok(function(result) {
-		// 		console.log(result);
-		// 	})
-		// }) 
-		loadOrderInfo(2, true);
+		$.ajax({
+			type: 'post',
+			url: 'http://192.168.0.167:8080/creditUser/add',
+			data: {
+				orderNo: $scope.orderNo,
+				userType: 2
+			},
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				loadOrderInfo(2);
+			})
+		}) 		
 	})
 
 
@@ -153,21 +160,39 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 删除一个共同还款人或者反担保人
 	 */
 	$(document).on('click', '.delete-credit-item', function() {
-		// 后台接口修改完成时使用
-		// $.ajax({
-		// 	url: 'http://127.0.0.1:8083/mock/creditUpload',
-		// 	data: {
-		// 		userId: 
-		// 	},
-		// 	success: $http.ok(function(result) {
-		// 		console.log(result);
-		// 	})
-		// })
-		if($scope.result.data.creditUsers[$scope.currentType].length == 1) {
-			loadOrderInfo(0);	
-		} else {
-			loadOrderInfo($scope.currentType);	
+		var _userId = $(this).data('id');
+		console.log(_userId);
+		var flag;
+		switch ($scope.currentType) {
+			case 1:
+				flag = '共同还款人';
+				break;
+			case 2:
+				flag = '反担保人';
+			break;
 		}
+		console.log(flag);
+		if(confirm('确认删除一个为' + _userId + '的' + flag + '?')) {
+			// 后台接口修改完成时使用
+			$.ajax({
+				type: 'post',
+				url: 'http://192.168.0.167:8080/creditUser/del',
+				data: {
+					userId: _userId
+				},
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result);
+					if($scope.result.data.creditUsers[$scope.currentType].length == 1) {
+						loadOrderInfo(0);	
+					} else {
+						loadOrderInfo($scope.currentType);	
+					}
+				})
+			}) 
+		}
+		
+		
 		
 	})
 

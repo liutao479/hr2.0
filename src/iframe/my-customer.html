@@ -60,11 +60,9 @@
 					
 				</div>
 				<div class="page-bar">
-					<a href="javascript:;" class="time-sort time-sort-up" id="time-sort">创建时间</a>
-					<div class="page-bar-right">
-						<span class="page-count">1/100</span>
-						<a href="javascript:;" class="page-change disabled"><i class="iconfont">&#xe601;</i></a>
-						<a href="javascript:;" class="page-change"><i class="iconfont">&#xe670;</i></a>
+					<a href="javascript:;" class="time-sort time-sort-up" id="time-sort" data-sort="false">创建时间</a>
+					<div class="page-bar-right" id="scrollBar">
+						
 					</div>
 				</div>
 				<div class="customer-orders" id="myCustomerTable">
@@ -76,8 +74,13 @@
 			<!--我的客户 end-->
 
 			<!--分页插件-->
-			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['myCustomer'].paging" data-pages="50" data-current="1"></div>
-
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['myCustomer'].paging" data-pages="" data-current=""></div>
+			
+			<script type="text/x-dot-template" id="scrollBarTmpl">
+				<span class="page-count"><i id="page-num" >{{=it.pageNum}}</i>/<i id="pages">{{=it.pages}}</i></span>
+				<a href="javascript:;" class="page-change scroll-prev{{=(it.pageNum <= 1 ? ' disabled' : '')}}"><i class="iconfont">&#xe601;</i></a>
+				<a href="javascript:;" class="page-change scroll-next{{=(it.pageNum >= it.pages ? ' disabled' : '')}}"><i class="iconfont">&#xe670;</i></a>
+			</script>
 			<script type="text/x-dot-template" id="myCustomerListTmpl">
 				{{ var len = it.length; if(len) { }}
 					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
@@ -123,13 +126,12 @@
 								<td class="status-name">期数：<span class="status-value">{{=row.repayPeriod}}</span></td>
 								<td class="status-name">首付比例：<span class="status-value">{{=(row.sfProportion*100).toFixed(2) + '%'}}</span></td>
 								<td class="td-last">
-									<div class="button button-mini button-mini-width button-gray">申请删除订单</div>
+									<div class="button button-mini button-mini-width button-gray">申请终止订单</div>
 								</td>
 							</tr>
 							<tr class="last-tr">
 								<td colspan="3" class="status-name">
 									订单状态：
-									
 									<span class="status-value">征信结果待录入</span>
 									<span class="status-value">垫资材料待上传</span>
 									<span class="status-value">提车待审核</span>
