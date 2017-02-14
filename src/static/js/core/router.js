@@ -215,9 +215,13 @@
 			title: '放款审核',
 			page: 'lendAudit'
 		},
+//		'loanProcess/cardAudit': {
+//			title: '开卡审核',
+//			page: 'cardAudit'
+//		},
 		'loanProcess/cardAudit': {
 			title: '开卡审核',
-			page: 'cardAudit'
+			page: 'openCardSheet'
 		},
 		'loanProcess/creditAudit':{
 			title: '开卡审核',
