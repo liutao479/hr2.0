@@ -50,12 +50,12 @@
 					</div>
 					<div class="search-item">
 						<div class="input-text">
-							<input type="text" placeholder="订单号\借款人姓名\身份证号手机号" />
+							<input type="text" autocomplete="off" id="searchInput" placeholder="订单号\借款人姓名\身份证号手机号" />
 						</div>
 					</div>
-					<div class="search-item search-item-last">
-						<a href="javascript:;">重置</a>
-						<div id="" class="button button-mini button-deep">搜索</div>
+					<div class="search-item">
+						<a href="javascript:;" id="search-reset">重置</a>
+						<div id="search" class="button button-mini button-deep">搜索</div>
 					</div>
 					
 				</div>
@@ -66,18 +66,16 @@
 					</div>
 				</div>
 				<div class="customer-orders" id="myCustomerTable">
-					<!-- {{for(var j = 0, len2 = row.status.length; j < len2; j++) { var col = row.status[j]; }}
-									<span class="status-value">{{=col}}</span>
-									{{ } }} -->
+				
 				</div>
 			</div>
 			<!--我的客户 end-->
 
 			<!--分页插件-->
-			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['myCustomer'].paging" data-pages="" data-current=""></div>
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['myCustomer'].paging" data-pages="1" data-current="1"></div>
 			
 			<script type="text/x-dot-template" id="scrollBarTmpl">
-				<span class="page-count"><i id="page-num" >{{=it.pageNum}}</i>/<i id="pages">{{=it.pages}}</i></span>
+				<span class="page-count"><i id="page-num" >{{=(it.pages == 0 ? 0 : it.pageNum)}}</i>/<i id="pages">{{=it.pages}}</i></span>
 				<a href="javascript:;" class="page-change scroll-prev{{=(it.pageNum <= 1 ? ' disabled' : '')}}"><i class="iconfont">&#xe601;</i></a>
 				<a href="javascript:;" class="page-change scroll-next{{=(it.pageNum >= it.pages ? ' disabled' : '')}}"><i class="iconfont">&#xe670;</i></a>
 			</script>

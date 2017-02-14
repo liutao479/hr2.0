@@ -1,32 +1,15 @@
 'use strict';
-page.ctrl('creditMaterialsUpload', function($scope) {
+page.ctrl('loanMaterialsUpload', function($scope) {
 	var $console = render.$console;
-	$scope.userMap = [
-		{
-			userType: 0,
-			trigger: 'loanMain',
-			userTypeName: '借款人'
-		},
-		{
-			userType: 1,
-			trigger: 'loanPartner',
-			userTypeName: '共同还款人'
-		},
-		{
-			userType: 2,
-			trigger: 'loanGrarantor',
-			userTypeName: '反担保人'
-		}
-	];
 	$scope.tabs = [];
 	$scope.currentType = 0;
 	
 	/**
-	* 加载征信材料上传数据
+	* 加载贷款材料上传数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadOrderInfo = function(_type) {
+	var loadOrderInfo = function(_type, cb) {
 		// var flag = 'get';
 		// if(isPost) {
 		// 	flag = 'post';
@@ -35,7 +18,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/creditUpload',
 			// type: flag,
 			type: 'post',
-			url: $http.apiMap.creditMaterialsUpload,
+			url: $http.apiMap.loanMaterialsUpload,
 			data: {
 				taskId: $scope.$params.taskId
 			},
@@ -54,6 +37,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				// 编译tab项对应内容
 				setupCreditPanel($scope.result.data, _type);
 				setupEvent();
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
 			})
 		})
 	}
@@ -197,7 +183,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		
 	})
 
-	$console.load(router.template('iframe/credit-material-upload'), function() {
+	$console.load(router.template('iframe/loan-material-upload'), function() {
 		$console.find('#creditUploadPanel').load(router.template('defs/creditPanel'), function() {
 			$scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
 			$scope.def.listTmpl = $console.find('#creditUploadListTmpl').html();

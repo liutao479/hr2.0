@@ -29,12 +29,8 @@
 			};
 		self.$el = $el;
 		self.opts = $.extend(opts, options || {});
-		var tabs = self.opts.tabs.split('|');
-		self.opts.tabs = self.opts.tabs.split('|');	
-		console.log(self.opts);
 		self.$scope = $scope;
 		self.setup();
-		console.log(this)
 		return this;
 	}
 	/**
@@ -45,6 +41,7 @@
 		self.$el.append(_.template(internal.template.fields)({readonly: !self.search}));
 		self.$content = $('<div class="select-box"></div>').appendTo(self.$el);
 		if(self.opts.tabs) {
+			self.opts.tabs = self.opts.tabs.split('|');
 			self.$content.append(_.template(internal.template.tab)(self.opts.tabs));
 		}
 
@@ -58,19 +55,26 @@
 		self.$el.find('.arrow-trigger').on('click', function() {
 			self.open();
 		})
-		
+		$(document).on('click', null, function(e){
+			if(self.$el.has($(e.target)).length === 0)
+				self.close();
+		})
 	};
 	/**
 	* 展开dropdown
 	*/
 	dropdown.prototype.open = function() {
+		var self = this;
 		self.$el.find('.select-box').show();
+		self.$el.find('#arrow').removeClass('arrow-bottom').addClass('arrow-top');
 	};
 	/**
 	* 关闭dropdown
 	*/
 	dropdown.prototype.close = function() {
-
+		var self = this;
+		self.$el.find('.select-box').hide();
+		self.$el.find('#arrow').removeClass('arrow-top').addClass('arrow-bottom');
 	}
 	/**
 	* 打开下一级
@@ -89,7 +93,7 @@
 	internal.template = {};
 	internal.template.fields = '<div class="select-field{{=(it.readonly ? \" readonly\": \"\")}}">\
 									<input type="text" placeholder="{{=(it.readonly ? \"请选择\":\"可输入过滤条件\")}}" class="select-text" />\
-									<span class="arrow arrow-bottom"></span>\
+									<span class="arrow arrow-bottom" id="arrow"></span>\
 									<a class="arrow-trigger"></a>\
 								</div>';
 	internal.template.tab = '<ul class="select-tab">\

@@ -70,8 +70,7 @@ page.ctrl('loan', function($scope) {
 				path: 'loanProcess'
 			});
 		});
-		// 车型测试
-		$('.select').dropdown($scope);
+		// $('.select').dropdown($scope);
 
 		/**
 		* 任务类型点击显示/隐藏

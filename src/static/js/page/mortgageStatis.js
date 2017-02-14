@@ -44,12 +44,44 @@ page.ctrl('mortgageStatis', [], function($scope) {
 		$('#pageToolbar').paging();
 	}
 	/**
-	* 绑定立即处理事件
-	*/
-	// $(document).on('click', '#myCustomerTable .button', function() {
-	// 	var that = $(this);
-	// 	router.render(that.data('href'));
-	// });
+	 * 绑定立即处理事件
+	 */
+	var setupEvt = function() {
+		// 绑定搜索框模糊查询事件
+		$console.find('#searchInput').on('keydown', function(evt) {
+			if(evt.which == 13) {
+				var that = $(this),
+					searchText = $.trim(that.val());
+				if(!searchText) {
+					return false;
+				}
+				apiParams.keyWord = searchText;
+				$params.keyWord = searchText;
+				apiParams.pageNum = 1;
+				$params.pageNum = 1;
+				loadMortgageStatisList(apiParams, function() {
+					delete apiParams.keyWord;
+					delete $params.keyWord;
+					that.blur();
+				});
+				// router.updateQuery($scope.$path, $params);
+			}
+		});
+
+		//绑定搜索按钮事件
+		$console.find('#search').on('click', function() {
+			loadMortgageStatisList(apiParams);
+			// router.updateQuery($scope.$path, $params);
+			
+		});
+
+		//绑定重置按钮事件
+		$console.find('#search-reset').on('click', function() {
+			// 下拉框数据以及输入框数据重置
+			// router.updateQuery($scope.$path, $params);
+			
+		});
+	}
 
 	/***
 	* 加载页面模板
@@ -63,7 +95,9 @@ page.ctrl('mortgageStatis', [], function($scope) {
 		if($params.process) {
 			
 		}
-		loadMortgageStatisList(apiParams);
+		loadMortgageStatisList(apiParams, function() {
+			setupEvt();
+		});
 	});
 
 	$scope.paging = function(_pageNum, _size, $el, cb) {

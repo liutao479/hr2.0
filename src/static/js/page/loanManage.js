@@ -3,9 +3,7 @@ page.ctrl('loanManage', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
+			page: $params.page || 1
 		};
 	/**
 	* 加载借款管理信息表数据
@@ -58,9 +56,6 @@ page.ctrl('loanManage', [], function($scope) {
 		$scope.$el = {
 			$tbl: $console.find('#loanManageTable'),
 			$paging: $console.find('#pageToolbar')
-		}
-		if($params.process) {
-			
 		}
 		loadLoanManageList(apiParams);
 	});
