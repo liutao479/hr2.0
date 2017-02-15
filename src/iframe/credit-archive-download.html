@@ -25,11 +25,11 @@
 				<!--全选删除框-->
 				<div class="all-select-panel all-select-panel-nobottomborder clearfix">
 					<div class="all-check-box">
-						<div class="checkbox checkbox-normal"></div>
+						<div class="checkbox checkbox-normal" id="allCheck"></div>
 						<span>全选</span>
 					</div>
 					<div class="all-check-box">
-						<div class="button button-mini button-deep">批量下载</div>
+						<div class="button button-mini button-deep" id="allDownload">批量下载</div>
 					</div>
 				</div>
 				<!--全选删除框  end-->
@@ -62,34 +62,34 @@
 				{{ var len = it.length; if(len) { }}
 					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
 						{{ if(i == 0) { }}
-						<tr class="tr-noborder">
+						<tr class="orders-item tr-noborder">
 						{{ } else { }}
-						<tr>
+						<tr class="orders-item">
 						{{ } }}
 							<td class="orders-item-data order-item-first">
 								<div class="checkbox checkbox-normal"></div>
 							</td>
 							<td class="orders-item-data">{{=row.orderNo}}</td>
-							<td class="orders-item-data">{{=row.userName}}（{{=row.idCard}}）</td>
+							<td class="orders-item-data">{{=row.userName || '未录入'}}（{{=row.idCard || '未录入'}}）</td>
 							<td class="orders-item-data">{{=row.bankName}}</td>
 							<td class="orders-item-data orders-item-data-blank"></td>
 							<td class="orders-item-data">
 								<table class="table-inner">
 									<tr>
 										<td>
-											<a href="javascript:;" class="download-trigger">
+											<a href="javascript:;" class="download-trigger pdf-d">
 												<i class="iconfont">&#xe624;</i><br>
 												<span class="download-text">PDF下载</span>	
 											</a>
 										</td>
 										<td>
-											<a href="javascript:;" class="download-trigger">
+											<a href="javascript:;" class="download-trigger word-d">
 												<i class="iconfont">&#xe64c;</i><br>
 												<span class="download-text">WORD下载</span>
 											</a>
 										</td>
 										<td>
-											<a href="javascript:;" class="download-trigger">
+											<a href="javascript:;" class="download-trigger zip-d">
 												<i class="iconfont">&#xe675;</i><br>
 												<span class="download-text">ZIP下载</span>
 											</a>

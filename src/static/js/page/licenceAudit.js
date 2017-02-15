@@ -3,9 +3,10 @@ page.ctrl('licenceAudit', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
+			overdue: 0,
+			operation: 3, //上牌审核接口
+			pageNum: $params.pageNum || 1,
+			pageSize: $params.pageSize || 20
 		};
 	/**
 	* 加载上牌审核信息表数据
@@ -14,12 +15,14 @@ page.ctrl('licenceAudit', [], function($scope) {
 	*/
 	var loadLicenceAuditList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.licenceAudit,
+			type: 'post',
+			url: $http.apiMap.licenceTable,
 			data: params,
+			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
+				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -29,21 +32,64 @@ page.ctrl('licenceAudit', [], function($scope) {
 	/**
 	* 构造分页
 	*/
-	var setupPaging = function(count, isPage) {
+	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
-			current: parseInt(apiParams.page),
-			pages: isPage ? count : (tool.pages(count || 0, apiParams.pageSize)),
-			size: apiParams.pageSize
+			current: parseInt(apiParams.pageNum),
+			pages: isPage ? _page.pages : (tool.pages(count || 0, _page.pageSize)),
+			size: _page.pageSize
 		});
 		$('#pageToolbar').paging();
 	}
-	/**
-	* 绑定立即处理事件
-	*/
-	// $(document).on('click', '#myCustomerTable .button', function() {
-	// 	var that = $(this);
-	// 	router.render(that.data('href'));
-	// });
+	var setupEvt = function() {
+
+		// 绑定搜索框模糊查询事件
+		$console.find('#searchInput').on('keydown', function(evt) {
+			if(evt.which == 13) {
+				var that = $(this),
+					searchText = $.trim(that.val());
+				if(!searchText) {
+					return false;
+				}
+				apiParams.keyWord = searchText;
+				$params.keyWord = searchText;
+				apiParams.pageNum = 1;
+				$params.pageNum = 1;
+				loadLicenceAuditList(apiParams, function() {
+					delete apiParams.keyWord;
+					delete $params.keyWord;
+					that.blur();
+				});
+				// router.updateQuery($scope.$path, $params);
+			}
+		});
+
+		// 绑定只显示超期记录
+		$console.find('#overdue').on('click', function() {
+			var that = $(this);
+			if(!$(this).hasClass('checked')) {
+				apiParams.overdue = 1;
+				$params.overdue = 1;
+			} else {
+				apiParams.overdue = 0;
+				$params.overdue = 0;
+			}
+			loadLicenceAuditList(apiParams);
+		});
+
+		//绑定搜索按钮事件
+		$console.find('#search').on('click', function() {
+			loadLicenceAuditList(apiParams);
+			// router.updateQuery($scope.$path, $params);
+			
+		});
+
+		//绑定重置按钮事件
+		$console.find('#search-reset').on('click', function() {
+			// 下拉框数据以及输入框数据重置
+			// router.updateQuery($scope.$path, $params);
+			
+		});
+	}
 
 	/***
 	* 加载页面模板
@@ -54,16 +100,15 @@ page.ctrl('licenceAudit', [], function($scope) {
 			$tbl: $console.find('#licenceAuditTable'),
 			$paging: $console.find('#pageToolbar')
 		}
-		if($params.process) {
-			
-		}
-		loadLicenceAuditList(apiParams);
+		loadLicenceAuditList(apiParams, function() {
+			setupEvt();
+		});
 	});
 
-	$scope.paging = function(_page, _size, $el, cb) {
-		apiParams.page = _page;
-		$params.page = _page;
-		router.updateQuery($scope.$path, $params);
+	$scope.paging = function(_pageNum, _size, $el, cb) {
+		apiParams.pageNum = _pageNum;
+		$params.pageNum = _pageNum;
+		// router.updateQuery($scope.$path, $params);
 		loadLicenceAuditList(apiParams);
 		cb();
 	}

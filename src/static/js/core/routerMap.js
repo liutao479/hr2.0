@@ -117,6 +117,10 @@
 			title: '信息表修改',
 			page: 'loanInfo'
 		},
+		'loanProcess/loanMaterialsUpload': {
+			title: '贷款材料上传',
+			page: 'loanMaterialsUpload'
+		},
 		'loanManage/ordersDetail': {
 			title: '订单详情',
 			page: 'ordersDetail'
