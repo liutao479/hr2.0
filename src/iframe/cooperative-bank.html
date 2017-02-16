@@ -57,9 +57,9 @@
 						{{ } }}
 							<td class="orders-item-data">{{=row.bankName}}</td>
 							<td class="orders-item-data acount-name-data">
-								{{for(var j = 0, len2 = row.userInfo.length; j < len2; j++) { var col = row.userInfo[j]; }}
+								{{for(var j = 0, len2 = row.demandBankAccountList.length; j < len2; j++) { var col = row.demandBankAccountList[j]; }}
 								<p class="acount-name">
-									<span>{{=col.bankc}}</span>-<span>{{=col.user}}</span><br />
+									<span>{{=col.accountNumber}}</span>-<span>{{=col.accountName}}</span><br />
 								</p>
 								{{ } }}
 							</td>

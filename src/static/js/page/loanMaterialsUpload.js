@@ -9,12 +9,13 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	*/
 	var loadOrderInfo = function(cb) {
 		$.ajax({
-			// url: 'http://127.0.0.1:8083/mock/creditUpload',
+			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
 			// type: flag,
 			type: 'post',
 			url: $http.apiMap.loanMaterialsUpload,
 			data: {
-				taskId: $scope.$params.taskId
+				// taskId: $scope.$params.taskId
+				taskId: 1
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
