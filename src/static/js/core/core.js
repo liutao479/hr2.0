@@ -148,6 +148,14 @@
 		if(_seconds > 0 && _minutes < 60) return '1小时';
 		
 	}
+	/**
+	 * 添加材料名称转换方法
+	 * @params {number} materialsCode 材料code
+	 */
+	tool.formatCode = function(materialsCode) {
+		return _.materialsCodeMap[materialsCode];
+	}
+
 })(window);
 
 

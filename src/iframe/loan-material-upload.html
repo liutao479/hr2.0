@@ -11,7 +11,7 @@
 				
 				<!--提交订单按钮-->
 				<div class="commit-orders-box">
-					<div id="" class="button">提交订单</div>
+					<div id="addCreditUser" class="button">增加征信人员</div><div id="submitOrder" class="button button-deep">提交订单</div>
 				</div>
 			</div>
 
@@ -58,7 +58,7 @@
 										<span class="i-tips">点击或拖拽上传图片</span>
 										<input type="file" id="" class="input-file" />
 									</div>
-									<span class="imgs-item-p">{{=(row.name.split('材料')[0])}}身份证正面</span>
+									<span class="imgs-item-p">{{=(row.name.split('材料')[0])}}{{=tool.formatCode(col.materials[k].materialsCode) || '【还没配置好】'}}</span>
 								</div>
 								{{ } }}
 							</div>

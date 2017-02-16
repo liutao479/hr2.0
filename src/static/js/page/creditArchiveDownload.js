@@ -78,6 +78,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 		// 绑定pdf下载按钮
 		$console.find('.pdf-d').on('click', function() {
 			var that = $(this);
+			// http://192.168.0.172:8080/materialsDownLoad/downLoadCreditMaterials?userIds=100001&downLoadType=2
 		});
 
 		// 绑定word下载按钮

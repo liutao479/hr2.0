@@ -116,7 +116,7 @@
 									<span id="customer-phone">{{=row.mobile}}</span>
 								</td>
 								<td class="td-last">
-									<div class="button button-mini button-mini-width button-gray">放款预约</div>
+									<a href="javascript:;" data-orderno="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray makeLoan">放款预约</a>
 								</td>
 							</tr>
 							<tr>
@@ -124,7 +124,7 @@
 								<td class="status-name">期数：<span class="status-value">{{=row.repayPeriod}}</span></td>
 								<td class="status-name">首付比例：<span class="status-value">{{=(row.sfProportion*100).toFixed(2) + '%'}}</span></td>
 								<td class="td-last">
-									<div class="button button-mini button-mini-width button-gray">申请终止订单</div>
+									<a href="javascript:;" class="button button-mini button-mini-width button-gray applyTerminate">申请终止订单</a>
 								</td>
 							</tr>
 							<tr class="last-tr">
@@ -137,7 +137,7 @@
 									<a href="javascript:;" class="spread-tips">&lt;</a>
 								</td>
 								<td class="td-last">
-									<div class="button button-mini button-mini-width button-gray">申请修改贷款信息</div>
+									<a href="javascript:;" data-href="loanProcess/applyModify" data-orderno="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray applyModify">申请修改贷款信息</a>
 								</td>
 							</tr>
 						</tbody>

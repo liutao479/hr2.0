@@ -50,23 +50,28 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 
 	// 编译完成后绑定事件
 	var setupEvent = function () {
-		// tab栏点击事件
-		// $scope.$el.$tab.find('.tabEvt').on('click', function () {
-		// 	var $this = $(this);
-		// 	if($this.hasClass('role-item-active')) return;
-		// 	var _type = $this.data('type');
-		// 	if(!$scope.tabs[_type]) {
-		// 		$scope.$el.$creditPanel.html('');
-		// 		render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, $scope.result.data.creditUsers[_type], true);
-		// 		var _tabTrigger = $console.find('#creditUploadPanel').html();
-		// 		$scope.tabs[_type] = _tabTrigger;
-		// 		// $scope.result.index = _type;
-		// 	}
-		// 	$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
-		// 	$this.addClass('role-item-active');
-		// 	$scope.currentType = _type;
-		// 	$scope.$el.$creditPanel.html($scope.tabs[$scope.currentType]);
-		// })
+
+		$console.find('#addCreditUser').on('click', function() {
+			$.ajax({
+				// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
+				// type: flag,
+				type: 'post',
+				url: $http.apiMap.materialUpdate,
+				data: {
+					// 参数1：id 材料id （必填）
+					// 参数2：materialsType 材料类型 0图片1视频
+					// 参数3：sceneCode 场景编码 
+					// 参数4：userId 材料所属用户
+					// 参数5：ownerCode 材料归属类型
+					// 参数6：materialsPic 材料地址（必填）
+				},
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result);
+					
+				})
+			})
+		})
 	}
 
 	$console.load(router.template('iframe/loan-material-upload'), function() {

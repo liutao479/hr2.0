@@ -128,6 +128,60 @@ page.ctrl('myCustomer', [], function($scope) {
 				});
 			}
 		});
+
+		// 放款预约
+		$console.find('.makeLoan').on('click', function() {
+			var that = $(this);
+			console.log(that.data('orderno'))
+			$.ajax({
+				type: "post",
+				url: "http://192.168.0.184:8080/LoanFinancePayment/getLoanFinancePayment",
+				data:{
+					orderNo: that.data('orderno')
+					// orderNo: 'nfdb2015091812345678'
+				},
+				dataType:"json",
+				success: $http.ok(function(result) {
+					console.log(result)
+				})
+			});
+		});
+
+		// 申请终止订单
+		$console.find('.applyTerminate').on('click', function() {
+			// 弹窗
+			if(confirm('确认申请终止该条订单：\nfdb2016102421082285，\n申请理由为：刘东风测试申请终止，\n审核人为1？')) {
+				$.ajax({
+					type: "post",
+					url: "http://192.168.0.184:8080/loanOrderApply/terminate",
+					data:{
+						orderNo: 'nfdb2016102421082285',
+						applyReason: '刘东风测试申请终止',
+						approvalId: 1    //当前登录审核用户的id
+					},
+					dataType:"json",
+					success: $http.ok(function(result) {
+						console.log(result)
+						alert("申请成功！");
+					}),
+					error: function() {
+						alert("申请失败！");
+					}
+				});
+			}
+		});
+
+		// 申请修改贷款信息
+		$console.find('.applyModify').on('click', function() {
+			var that = $(this);
+
+			alert('前往订单号' + that.data('orderno') + '的页面？');
+			// router.render(that.data('href'), {
+			// 	taskId: that.data('id'), 
+			// 	path: 'loanProcess'
+			// });
+		});
+
 	}
 
 	// 绑定翻页栏（上下页）按钮事件
