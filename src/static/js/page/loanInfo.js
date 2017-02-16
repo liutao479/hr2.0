@@ -70,6 +70,7 @@ page.ctrl('loanInfo', function($scope) {
 				loanFinishedSelect();
 				loanFinishedCheckbox();
 				loanFinishedGps();
+				loanFinishedBxxb();
 			})
 		});
 	}
@@ -240,6 +241,19 @@ page.ctrl('loanInfo', function($scope) {
 			$("#isInstallGpsBox").addClass("gps");
 			$("#gps1").show();
 			$("#gps2").show();
+		}
+	}
+//保险续保
+	$(document).on('click', '#renewalModeBox li', function() {
+		loanFinishedBxxb();
+	})
+	var loanFinishedBxxb = function(){
+		var gps = $("#bxxbInput").val();
+		console.log(gps);
+		if(gps != 1){
+			$(".bxxbYear").hide();
+		}else{
+			$(".bxxbYear").show();
 		}
 	}
 

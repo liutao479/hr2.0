@@ -638,7 +638,7 @@ input[disabled]{
     .layout;
     border-top: 3px solid @blue;
     margin-bottom: 15px;
-    overflow: hidden;
+//  overflow: hidden;
     &.panel-credit {
         margin: 0;
     }
@@ -1639,6 +1639,8 @@ input[disabled]{
         width:120px;
         text-align:right;
         margin-right: 25px;
+        position: relative;
+        left: 0;
     }
     .inputSearch{
         position: absolute;
@@ -1659,7 +1661,7 @@ input[disabled]{
     .placeholder{
         width: calc(~"100% - 25px");
         height: 100%;
-        overflow: hidden;
+//      overflow-x: hidden;
         display: block;
     }
     .info-value{
@@ -1986,7 +1988,7 @@ input[disabled]{
     position: absolute;
     left: 0;
     top: 28px;
-    z-index: 9;
+    z-index: 19;
     background: #FFFFFF;
     li{
         line-height: inherit;
