@@ -116,7 +116,7 @@ $(document).on('hover', '#navigator .user', function() {
 /*=========信息录入表格通用js=zhy===========*/
 	//点击下拉选项赋值zhy
 	$(document).on('click', '.selectOptBox li', function() {
-		var value = $(this).val();
+		var value = $(this).data('key');
 		var text = $(this).text();
 		console.log(value);
 		$(this).parent().parent().siblings(".placeholder").html(text);
@@ -128,7 +128,7 @@ $(document).on('hover', '#navigator .user', function() {
 		}else{
 			$(this).parent().parent().parent().removeClass("error-input");
 			$(this).parent().parent().siblings("i").remove();
-			$(this).parent().parent().after("<div class='opcity0'>这个是新增的div</div>");
+//			$(this).parent().parent().after("<div class='opcity0'>这个是新增的div</div>");
 		}
 		$(".selectOptBox").hide();
 		return false;

@@ -1642,8 +1642,8 @@ input[disabled]{
     }
     .inputSearch{
         position: absolute;
-        left: 150px;
-        top: 1px;
+        left: 5px;
+        top: 0px;
         height: 28px;
         width: 170px;
         border-right: 1px solid @selectBorderColor;
@@ -2008,6 +2008,7 @@ input[disabled]{
         width: 100%;
     }
 }
+//三级下拉带有详细地址的显示框
 .addressDetail{
     max-height: 400px;
     border: 1px solid @buttonBgColor;
@@ -2043,8 +2044,71 @@ input[disabled]{
         float: right;
     }
 }
+//禁止点击样式
 .pointDisabled {
- pointer-events: none;
- cursor: default;
- opacity: 0.6;
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+}
+//电审类型问题板块样式 zhy
+.question-box{
+    line-height: 30px;
+    margin: 10px 0;
+    &:first-child{
+        margin-top: -15px;
+    }
+    .info-key{
+        color:@fontColor;
+        display:inline-block;
+        width:120px;
+        text-align:right;
+        margin-right: 25px;
+        position: absolute;
+        top: 0;
+    }
+    .info-value{
+        border:1px solid @selectBorderColor;
+//      height:30px;
+        padding: 0 5px;
+        border-radius:4px;
+        display:inline-block;
+        width:200px;
+        position: relative;
+        margin-left: 145px;
+        .unit-text{
+            position: absolute;
+            top:0;
+            right:3px;
+            line-height: 28px;
+            color: @unitTextColor;
+        }
+        input,select{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+        &-long{
+            width: calc(~"100% - 150px");
+        }
+    }
+    &-title{
+        line-height: 50px;
+        .que{
+            margin-left: 43px;
+        }
+        .ans{
+            color: @orange;
+        }
+    }
+    &-cont{
+        margin: 10px 0 0 0;
+        position: relative;
+    }
+    textarea{
+        resize: none;
+        width: 100%;
+        border: none;
+        padding: 5px 0;
+    }
 }

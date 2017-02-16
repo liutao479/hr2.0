@@ -34,6 +34,7 @@ page.ctrl('loanInfo', function($scope) {
 		"houseStatus": urlStr+"/mock/busiSourceName",
 		"isEnterprise": urlStr+"/mock/busiSourceName",
 		"userRelationship": urlStr+"/mock/busiSourceName",
+		"remitAccountNumber": urlStr+"/mock/bankNo",
 		"relationship": urlStr+"/mock/busiSourceName"
 		}
 	var postUrl = {
@@ -115,11 +116,18 @@ page.ctrl('loanInfo', function($scope) {
 			})
 			var value1 = $("input",$(this)).val();
 			$("li",$(this)).each(function(){
-				var val = $(this).val();
+				var val = $(this).data('key');
 				var text = $(this).text();
+				var keybank = $(this).data('bank');
+				var keyname = $(this).data('name');
+
 				if(value1 == val){
 					$(this).parent().parent().siblings(".placeholder").html(text);
 					$(this).parent().parent().siblings("input").val(val);
+					if(keybank && keyname){
+						$("#bankName").val(keybank);
+						$("#accountName").val(keyname);
+					}
 					var value2 = $(this).parent().parent().siblings("input").val();
 					if(!value2){
 						$(this).parent().parent().siblings(".placeholder").html("请选择")
@@ -131,6 +139,26 @@ page.ctrl('loanInfo', function($scope) {
 		});
 	}
 	
+//模糊搜索
+	$(document).on('input','.searchInp', function() {
+		var that = $(this).parent().siblings(".selecter").find("div");
+		var key = $(this).data('key');
+		var boxKey = key + 'Box';
+		$(this).attr("id",boxKey);
+		var data={};
+            data['keyword'] = $(this).val();
+		$.ajax({
+			url: apiMap[key],
+			data: data,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
+//				$source.selectType = result.data;
+				var selectOptBox = $(".selectOptBox");
+				selectOptBox.attr("id",key);
+			})
+		})
+	})
 //点击下拉框拉取选项	
 	$(document).on('click','.selecter', function() {
 		var that =$("div",$(this));
@@ -138,7 +166,11 @@ page.ctrl('loanInfo', function($scope) {
 		var boxKey = key + 'Box';
 		$(this).attr("id",boxKey);
 		var data={};
-            data['code'] = key;
+		if(key == 'remitAccountNumber'){
+			data['carShopId'] = $("#busiSourceId").val();
+		}else{
+			data['code'] = key;
+		}
 		$.ajax({
 			url: apiMap[key],
 			data: data,
@@ -151,7 +183,15 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		})
 	})
-
+//
+	$(document).on('click', '#remitAccountNumber li', function() {
+		var keyvalue = $(this).data('key');
+		var keybank = $(this).data('bank');
+		var keyname = $(this).data('name');
+		console.log(keyvalue);
+		$("#bankName").val(keybank);
+		$("#accountName").val(keyname);
+	})
 //点击本地常驻类型复选框
 	$(document).on('click', '.checkbox', function() {
 		returnCheckboxVal();

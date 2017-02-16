@@ -269,7 +269,7 @@
 				<ul class="selectOptBox">
 					<!--<li value="100001">请选择</li>-->
 					{{for(var a = 0, len = it.length; a < len; a++) { var op1 = it[a]; }}
-						<li value="{{= op1.value || op1.areaId}}">{{= op1.name || op1.areaName}}</li>
+						<li data-key="{{= op1.value || op1.areaId}}">{{= op1.name || op1.areaName}}</li>
 					{{ } }}
 				</ul>
 			</script>

@@ -7,9 +7,9 @@ page.ctrl('openCardSheet', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-	var urlStr1 = "http://192.168.0.134:8080";
+//	var urlStr1 = "http://192.168.0.134:8080";
 	var urlStr = "http://127.0.0.1:8083";
-//	var urlStr1 = "http://127.0.0.1:8083";
+	var urlStr1 = "http://127.0.0.1:8083";
 	var apiMap = {
 		"dealerName": urlStr+"/mock/sex",
 		"dealerId": urlStr+"/mock/busiSourceName",
@@ -31,8 +31,8 @@ page.ctrl('openCardSheet', function($scope) {
 		var data={};
 			data['taskId']=80871;
 		$.ajax({
-//			url: $http.api($http.apiMap.cardAudit),
-			url: urlStr1+'/icbcCreditCardForm/queryICBCCreditCardForm',
+			url: $http.api($http.apiMap.cardAudit),
+//			url: urlStr1+'/icbcCreditCardForm/queryICBCCreditCardForm',
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {

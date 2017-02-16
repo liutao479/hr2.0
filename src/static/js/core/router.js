@@ -209,7 +209,7 @@
 		},
 		'loanProcess/phoneAudit': {
 			title: '电审',
-			page: 'electricCheck'
+			page: 'phoneAudit'
 		},
 		'loanProcess/loanAudit': {
 			title: '贷款审核',

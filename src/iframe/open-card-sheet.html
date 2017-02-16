@@ -53,8 +53,8 @@
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>经销商名称：</span>
-								<span class="inputSearch"><input class="searchInp" data-key = "dealerName" type="text" name="dealerName" id="dealerName" value="{{= it.dealerName}}" title="{{= it.dealerName}}" /></span>
 								<span data-key="dealerId" class="info-value selecter">
+									<span class="inputSearch"><input class="searchInp" data-key = "dealerName" type="text" name="dealerName" id="dealerName" value="{{= it.dealerName}}" title="{{= it.dealerName}}" /></span>
 									<div></div>
 									<span class="placeholder">{{= it.dealerName}}</span>
 									<span class="arrow arrow-bottom right8px"></span>
@@ -426,7 +426,7 @@
 				<ul class="selectOptBox">
 					<!--<li value="100001">请选择</li>-->
 					{{for(var a = 0, len = it.length; a < len; a++) { var op1 = it[a]; }}
-						<li value="{{= op1.value || op1.areaId}}">{{= op1.name || op1.areaName}}</li>
+						<li data-key="{{= op1.value || op1.areaId}}">{{= op1.name || op1.areaName}}</li>
 					{{ } }}
 				</ul>
 			</script>

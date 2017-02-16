@@ -66,17 +66,20 @@
 									<span class="ans">({{= role.anwser}})</span>
 								</div>
 								<div class="question-box-cont">
-									<span class="info-key">客户回答：{{= role.value}}</span>
-									<span class="info-value">
-										<select>
-											<option {{=(role.value==1?"selected":"")}}>是</option>
-											<option {{=(role.value==0?"selected":"")}}>否</option>
-										</select>
+									<span class="info-key">客户回答：<!--{{= role.value}}--></span>
+									<span data-key="sex" class="info-value selecter">
+										<div></div>
+										<span class="placeholder">{{= role.value}}</span>
+										<span class="arrow arrow-bottom right8px"></span>
+										<input type="hidden" name="taxIsPay" value="{{= role.value}}" />
 									</span>
 								</div>
 								<div class="question-box-cont">
 									<span class="info-key">备注：</span>
-									<span class="info-value info-value-long"><input type="text" value="{{= role.editInfo}}" /></span>
+									<span class="info-value info-value-long">
+										<!--<input type="text" value="{{= role.editInfo}}" />-->
+										<textarea name="" rows="4" cols="" value="{{= role.editInfo}}"></textarea>
+									</span>
 								</div>
 							</div>
 							{{ } }}
@@ -85,4 +88,12 @@
 					</div>
 				</div>
 				{{ } }}
+			</script>
+			<script type="text/x-dot-template" id="selectOpttmpl">
+				<ul class="selectOptBox">
+					<!--<li value="100001">请选择</li>-->
+					{{for(var a = 0, len = it.length; a < len; a++) { var op1 = it[a]; }}
+						<li data-key="{{= op1.value}}">{{= op1.name}}</li>
+					{{ } }}
+				</ul>
 			</script>
