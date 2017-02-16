@@ -75,9 +75,19 @@ page.ctrl('loanInfo', function($scope) {
 //页面加载完成对所有带“*”的input进行必填绑定
 	var loanFinishedInput = function(){
 		$(".info-key").each(function(){
-			var requiredStar = $(this).find("i");
-			if(requiredStar){
+			var jqObj = $(this);
+			if(jqObj.has('i').length > 0){
 				$(this).siblings().find("input").addClass("required");
+			}
+			loanFinishedInputReq();
+		});
+	}
+//页面加载完成对所有带“*”的input进行必填绑定,不需要必填的删除required
+	var loanFinishedInputReq = function(){
+		$("input[type='hidden'],input[type='text']").each(function(){
+			var required = $(this).attr("name");
+			if(!required){
+				$(this).removeClass("required");
 			}
 		});
 	}

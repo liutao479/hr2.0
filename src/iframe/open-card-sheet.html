@@ -119,6 +119,10 @@
 								<span class="info-value"><input type="text" name="chnsname" value="{{= it.chnsname}}" /></span>
 							</div>
 							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>姓名拼音：</span>
+								<span class="info-value"><input type="text" name="engname" value="{{= it.engname}}" /></span>
+							</div>
+							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>性别：</span>
 								<span data-key="sex" class="info-value selecter">
 									<div></div>
@@ -128,8 +132,17 @@
 								</span>
 							</div>
 							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>证件类型：</span>
+								<span data-key="sex" class="info-value selecter">
+									<div></div>
+									<span class="placeholder">{{= it.custsort}}</span>
+									<span class="arrow arrow-bottom right8px"></span>
+									<input type="hidden" name="custsort" value="{{= it.custsort}}" />
+								</span>
+							</div>
+							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>证件号码：</span>
-								<span class="info-value"><input type="text" name="idCard" value="{{= it.idCard}}" /></span>
+								<span class="info-value"><input type="text" name="custcode" value="{{= it.custcode}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>发证机关：</span>
@@ -145,7 +158,7 @@
 									<div></div>
 									<span class="placeholder">{{= it.mrtlstat}}</span>
 									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isSecond" value="{{= it.mrtlstat}}" />
+									<input type="hidden" name="mrtlstat" value="{{= it.mrtlstat}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
@@ -155,11 +168,11 @@
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>住宅：</span>
 								<span class="info-value">
-									<input type="text" class="addInput" readonly="readonly" title="{{= it.hprovince+"省"+it.hcity+"市"+it.hcounty+it.haddress}}" value="{{= it.hprovince+"省"+it.hcity+"市"+it.hcounty+it.haddress}}" />
-									<input type="hidden" name="hprovince" id="hprovince" value="" />
-									<input type="hidden" name="hcity" id="hcity" value="" />
-									<input type="hidden" name="hcounty" id="hcounty" value="" />
-									<input type="hidden" name="haddress" id="haddress" value="" />
+									<input type="text" id='homeAdd' class="addInput" readonly="readonly" title="{{= it.hprovince+"省"+it.hcity+"市"+it.hcounty+it.haddress}}" value="{{= it.hprovince+"省"+it.hcity+"市"+it.hcounty+it.haddress}}" />
+									<input type="hidden" name="hprovince" id="hprovince1" value="{{= it.hprovince}}" />
+									<input type="hidden" name="hcity" id="hcity1" value="{{= it.hcity}}" />
+									<input type="hidden" name="hcounty" id="hcounty1" value="{{= it.hcounty}}" />
+									<input type="hidden" name="haddress" id="haddress1" value="{{= it.haddress}}" />
 									<div class="addressDetail">
 										<span data-key="hprovince" class="info-value width33 selecter">
 											<div></div>
@@ -185,7 +198,7 @@
 												<input type="text" id="shaddress" />
 											</span>
 										</div>
-										<div id="" class="button addComplete">完成</div>
+										<div id="" data-key = "had" class="button addComplete">完成</div>
 									</div>
 								</span>
 							</div>
@@ -220,28 +233,37 @@
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位地址：</span>
 								<span class="info-value">
-									<input type="text" class="addInput" readonly="readonly" title="{{= it.cprovince+"省"+it.ccity+"市"+it.ccounty+it.caddress}}" value="{{= it.cprovince+"省"+it.ccity+"市"+it.ccounty+it.caddress}}" />
+									<input type="text" id='comeAdd' class="addInput" readonly="readonly" title="{{= it.cprovince+"省"+it.ccity+"市"+it.ccounty+it.caddress}}" value="{{= it.cprovince+"省"+it.ccity+"市"+it.ccounty+it.caddress}}" />
+									<input type="hidden" name="cprovince" id="cprovince1" value="{{= it.cprovince}}" />
+									<input type="hidden" name="ccity" id="ccity1" value="{{= it.ccity}}" />
+									<input type="hidden" name="ccounty" id="ccounty1" value="{{= it.ccounty}}" />
+									<input type="hidden" name="caddress" id="caddress1" value="{{= it.caddress}}" />
 									<div class="addressDetail">
 										<span data-key="cprovince" class="info-value width33 selecter">
 											<div></div>
 											<span class="placeholder width100">省</span>
 											<span class="arrow arrow-bottom right8px"></span>
-											<input type="hidden" name="cprovince" id="cprovince" value="{{= it.cprovince}}" />
+											<input type="hidden" id="scprovince" />
 										</span>
 										<span data-key="ccity" class="info-value width33 selecter pointDisabled">
 											<div></div>
 											<span class="placeholder width100">市</span>
 											<span class="arrow arrow-bottom right8px"></span>
-											<input type="hidden" name="ccity" id="ccity" value="{{= it.ccity}}" />
+											<input type="hidden" id="sccity" />
 										</span>
 										<span data-key="ccounty" class="info-value width33 selecter pointDisabled">
 											<div></div>
 											<span class="placeholder width100">区/县</span>
 											<span class="arrow arrow-bottom right8px"></span>
-											<input type="hidden" name="ccounty" value="{{= it.ccounty}}" />
+											<input type="hidden" id="sccounty" />
 										</span>
-										<div class="addDiv pointDisabled"><p>详细地址：</p><span class="info-value"><input type="text" name="hcounty" value="{{= it.hcounty}}" disabled="disabled" /></span></div>
-										<div id="" class="button addComplete">完成</div>
+										<div class="addDiv pointDisabled">
+											<p>详细地址：</p>
+											<span class="info-value">
+												<input type="text" id="scaddress" />
+											</span>
+										</div>
+										<div id="" data-key = "cad" class="button addComplete">完成</div>
 									</div>
 								</span>
 							</div>
@@ -249,9 +271,9 @@
 								<span class="info-key"><i>*</i>单位电话：</span>
 								<span class="info-value">
 									<input type="text" id="cophone" value="{{= it.cophozono+"--"+it.cophoneno+it.cophonext}}" />
-									<input type="hidden" id="cophozono" value="{{= it.cophozono}}" />
-									<input type="hidden" id="cophoneno" value="{{= it.cophoneno}}" />
-									<input type="hidden" id="cophonext" value="{{= it.cophonext}}" />
+									<input type="hidden" id="cophozono" name="cophozono" value="{{= it.cophozono}}" />
+									<input type="hidden" id="cophoneno" name="cophoneno" value="{{= it.cophoneno}}" />
+									<input type="hidden" id="cophonext" name="cophonext" value="{{= it.cophonext}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
@@ -264,7 +286,7 @@
 									<div></div>
 									<span class="placeholder">{{= it.modelcode}}</span>
 									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isSecond" value="{{= it.modelcode}}" />
+									<input type="hidden" name="modelcode" value="{{= it.modelcode}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
@@ -348,7 +370,10 @@
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key">E-mali地址(对账服务)：</span>
-								<span class="info-value"><input type="text" placeholder="选填" name="stmtemail" value="{{= it.stmtemail}}" /></span>
+								<span class="info-value">
+									<input type="text" id="email" placeholder="选填" name="stmtemail" value="{{= it.stmtemail}}" />
+									<input type="hidden" id="emladdrf" name="emladdrf" value="{{= it.emladdrf}}" />
+								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>卡片领取方式：</span>
@@ -356,7 +381,7 @@
 									<div></div>
 									<span class="placeholder">{{= it.drawmode}}</span>
 									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isSecond" value="{{= it.drawmode}}" />
+									<input type="hidden" name="drawmode" value="{{= it.drawmode}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
@@ -365,7 +390,7 @@
 									<div></div>
 									<span class="placeholder">{{= it.machgf}}</span>
 									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isSecond" value="{{= it.machgf}}" />
+									<input type="hidden" name="machgf" value="{{= it.machgf}}" />
 								</span>
 							</div>
 						</div>
@@ -384,13 +409,17 @@
 								<div class="imgs-item-upload">
 									<i class="iconfont">&#xe61f;</i><br />
 									<span class="imgs-describe">点击或拖拽上传图片</span>
-									<input type="file" id="" class="input-file" >
-								</div>
+									<input type="file" id="creditCardImg" class="input-file required" >
+									<img id="preview" style="width: 100%;height: 100%;position: absolute;left: 0;top: 0;">
+									<input type="hidden" name="creditCardImgUrl" id="creditCardImgUrl" value="{{= it.creditCardImgUrl}}" />
+								</div>	
 								<span class="imgs-item-p">信用卡申请表</span>
 							</div>
 						</div>
 					</div>
 				</div>
+				<input type="hidden" name="id" value="{{= it.id}}" />
+				<input type="hidden" name="orderNo" value="{{= it.orderNo}}" />
 				</form>
 			</script>
 			<script type="text/x-dot-template" id="selectOpttmpl">

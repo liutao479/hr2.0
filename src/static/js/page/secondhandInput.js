@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('openCardSheet', function($scope) {
+page.ctrl('secondhandInput', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
@@ -31,10 +31,10 @@ page.ctrl('openCardSheet', function($scope) {
 		var data={};
 			data['taskId']=80871;
 		$.ajax({
-//			url: $http.api($http.apiMap.cardAudit),
-			url: urlStr1+'/icbcCreditCardForm/queryICBCCreditCardForm',
+			url: $http.api($http.apiMap.carTwohand),
+//			url: urlStr1+'/icbcCreditCardForm/queryICBCCreditCardForm',
 			data: data,
-			dataType: 'json',
+//			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result.data);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
@@ -43,7 +43,6 @@ page.ctrl('openCardSheet', function($scope) {
 					cb();
 				}
 				loanFinishedInput();
-				loanFinishedInputPic();
 				loanFinishedSelect();
 			})
 		})
@@ -66,16 +65,6 @@ page.ctrl('openCardSheet', function($scope) {
 				$(this).removeClass("required");
 			}
 		});
-	}
-//页面加载完成对图片上传框进行设置
-	var loanFinishedInputPic = function(){
-		var imgSrc = $("#creditCardImgUrl").val();
-		if(!imgSrc){
-			$("#preview").hide();
-		}else{
-			$("#preview").show();
-			$("#preview").attr('src',urlStr+'/'+imgSrc);
-		}
 	}
 
 //页面加载完成对所有下拉框进行赋值	
@@ -117,121 +106,13 @@ page.ctrl('openCardSheet', function($scope) {
 			
 		});
 	}
-//单位电话特殊处理
-	$(document).on('change','#cophone', function() {
-		var cophone = $(this).val();
-		var cophone1 = cophone.substring(0,4),
-			cophone2 = cophone.substring(cophone.length-8,cophone.length-4),
-			cophone3 = cophone.substring(cophone.length-4,cophone.length);
-		console.log('第一段：'+cophone1+'，第二段'+cophone2+'，第三段'+cophone3);
-		$("#cophozono").val(cophone1);
-		$("#cophoneno").val(cophone2);
-		$("#cophonext").val(cophone3);
-	})
 
 //为完善项更改去掉错误提示
 	$(document).on('input','input', function() {
 			$(this).parents().removeClass("error-input");
 			$(this).siblings("i").remove();
 	})
-	$(document).on('change','#creditCardImg', function() {
-		$(this).parent().removeClass("error-input");
-		$(this).next("i").remove();
-		$("#preview").show();
-		var $file = $(this);
-		var fileObj = $file[0];
-		var windowURL = window.URL || window.webkitURL;
-		var dataURL;
-		var $img = $("#preview");
-		 
-		if(fileObj && fileObj.files && fileObj.files[0]){
-			dataURL = windowURL.createObjectURL(fileObj.files[0]);
-			$img.attr('src',dataURL);
-		}else{
-			dataURL = $file.val();
-			var imgObj = document.getElementById("preview");
-			// 两个坑:
-			// 1、在设置filter属性时，元素必须已经存在在DOM树中，动态创建的Node，也需要在设置属性前加入到DOM中，先设置属性在加入，无效；
-			// 2、src属性需要像下面的方式添加，上面的两种方式添加，无效；
-			imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
-			imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
-		}
-	})
 	
-//点击详细地址显示地址框
-	$(document).on('click','.addInput', function() {
-		$(this).siblings(".addressDetail").show();
-	})
-	$(document).on('click','.addressDetail > .info-value', function() {
-		var divOP = $('.opcity0');
-		if(divOP){
-			console.log('chufaleshijiang');
-			$(this).next().removeClass('pointDisabled');
-		}
-	})
-    
-	$(document).on('click','.addComplete', function() {
-		var adKey = $(this).data('key');
-		var valInput = $(this).siblings().find('input');
-		valInput.each(function(){ 
-			if(!$(this).val()){
-				alert("请完善地址");
-				return false;
-			}else{
-				if(adKey == 'had'){
-					var provincetext = $('#shprovince').siblings('.placeholder').text();
-					var citytext = $('#shcity').siblings('.placeholder').text();
-					var countrytext = $('#shcounty').siblings('.placeholder').text();
-					var addresstext = $('#shaddress').val();
-					$('#hprovince1').val(provincetext);
-					$('#hcity1').val(citytext);
-					$('#hcounty1').val(countrytext);
-					$('#haddress1').val(addresstext);
-					console.log($('#hcounty1').val());
-					var commentext = '';
-					    commentext = $('#hprovince1').val()+$('#hcity1').val()+$('#hcounty1').val()+$('#haddress1').val();
-				    $("#homeAdd").val(commentext);
-				    $("#homeAdd").attr('title',commentext);
-				}else{
-					var provincetext = $('#scprovince').siblings('.placeholder').text();
-					var citytext = $('#sccity').siblings('.placeholder').text();
-					var countrytext = $('#sccounty').siblings('.placeholder').text();
-					var addresstext = $('#scaddress').val();
-					$('#cprovince1').val(provincetext);
-					$('#ccity1').val(citytext);
-					$('#ccounty1').val(countrytext);
-					$('#caddress1').val(addresstext);
-					console.log($('#ccounty1').val());
-					var commentext = '';
-					    commentext = $('#cprovince1').val()+$('#ccity1').val()+$('#ccounty1').val()+$('#caddress1').val();
-				    $("#comeAdd").val(commentext);
-				    $("#comeAdd").attr('title',commentext);
-				}
-			    $(this).parent().parent().parent(".addressDetail").hide();
-			}
-		})
-//		$(this).parent(".addressDetail").hide();
-	})
-//模糊搜索
-	$(document).on('input','.searchInp', function() {
-		var that = $(this).parent().siblings(".selecter").find("div");
-		var key = $(this).data('key');
-		var boxKey = key + 'Box';
-		$(this).attr("id",boxKey);
-		var data={};
-            data['code'] = key;
-		$.ajax({
-			url: apiMap[key],
-			data: data,
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//				$source.selectType = result.data;
-				var selectOptBox = $(".selectOptBox");
-				selectOptBox.attr("id",key);
-			})
-		})
-	})
 //点击下拉框拉取选项	
 	$(document).on('click','.selecter', function() {
 		var that =$("div",$(this));
@@ -298,15 +179,14 @@ page.ctrl('openCardSheet', function($scope) {
 			});
 		}
 	})
-	
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('open-card-sheet'), function() {
-		$scope.def.listTmpl = render.$console.find('#openCardSheettmpl').html();
+	render.$console.load(router.template('secondhandInput'), function() {
+		$scope.def.listTmpl = render.$console.find('#secondhandInputtmpl').html();
 		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#openCardSheet'),
+			$tbl: $console.find('#secondhandInput'),
 		}
 		if($params.process) {
 			
@@ -314,4 +194,6 @@ page.ctrl('openCardSheet', function($scope) {
 		loadLoanList(apiParams);
 	});
 });
+
+
 

@@ -199,9 +199,13 @@
 			title: '贷款信息表录入',
 			page: 'loanInfo'
 		},
-		'loanProcess/secondhandInput': {
+//		'loanProcess/secondhandInput': {
+//			title: '二手车评估信息录入',
+//			page: 'carTwohand'
+//		},
+		'loanProcess/secondhandInput':{
 			title: '二手车评估信息录入',
-			page: 'carTwohand'
+			page: 'secondhandInput'
 		},
 		'loanProcess/phoneAudit': {
 			title: '电审',
@@ -226,6 +230,10 @@
 		'loanProcess/creditAudit':{
 			title: '开卡审核',
 			page: 'operateAnalysis'
+		},
+		'loanProcess/choiseType':{
+			title: '业务类型选择',
+			page: 'surviceType'
 		}
 		
 
