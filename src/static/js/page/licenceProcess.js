@@ -47,7 +47,7 @@ page.ctrl('licenceProcess', ['page/test'], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('licence-process'), function() {
+	render.$console.load(router.template('iframe/licence-process'), function() {
 		$scope.def.listTmpl = render.$console.find('#licenceProcessListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#licenceProcessTable'),

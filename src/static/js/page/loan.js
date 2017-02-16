@@ -9,7 +9,7 @@ page.ctrl('loan', function($scope) {
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
 	*/
-	var loadLoanList = function(params) {
+	var loadLoanList = function(params, cb) {
 		$.ajax({
 			url: 'http://127.0.0.1:8083/mock/loan.list',
 			// type: 'get',
@@ -21,6 +21,9 @@ page.ctrl('loan', function($scope) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page.pages, true);
 				setupEvent();
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
 			})
 		})
 	}
@@ -50,8 +53,8 @@ page.ctrl('loan', function($scope) {
 				}
 				apiParams.search = searchText;
 				$params.search = searchText;
-				apiParams.page = 1;
-				$params.page = 1;
+				apiParams.pageNum = 1;
+				$params.pageNum = 1;
 				loadLoanList(apiParams);
 				// router.updateQuery($scope.$path, $params);
 			}
@@ -67,6 +70,7 @@ page.ctrl('loan', function($scope) {
 				path: 'loanProcess'
 			});
 		});
+		// $('.select').dropdown($scope);
 
 		/**
 		* 任务类型点击显示/隐藏
@@ -92,6 +96,26 @@ page.ctrl('loan', function($scope) {
 		*/
 	}
  	
+ 	// 订单列表的排序
+	$(document).on('click', '#time-sort', function() {
+		var that = $(this);
+		if(!that.data('sort')) {
+			apiParams.createTimeSort = 1;
+			$params.createTimeSort = 1;
+			loadLoanList(apiParams, function() {
+				that.data('sort', true);
+				that.removeClass('time-sort-up').addClass('time-sort-down');
+			});
+
+		} else {
+			delete apiParams.createTimeSort;
+			delete $params.createTimeSort;
+			loadLoanList(apiParams, function() {
+				that.data('sort', false);
+				that.removeClass('time-sort-down').addClass('time-sort-up');
+			});
+		}
+	});
 	/***
 	* 加载页面模板
 	*/

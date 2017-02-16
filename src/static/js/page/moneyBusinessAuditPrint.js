@@ -48,7 +48,7 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('money-business-audit-print'), function() {
+	render.$console.load(router.template('iframe/money-business-audit-print'), function() {
 		$scope.def.listTmpl = render.$console.find('#moneyAuditPrintListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#moneyAuditPrintTable'),

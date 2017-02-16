@@ -48,7 +48,7 @@ page.ctrl('mortgageProcess', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('mortgage-process'), function() {
+	render.$console.load(router.template('iframe/mortgage-process'), function() {
 		$scope.def.listTmpl = render.$console.find('#mortgageProcessListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#mortgageProcessTable'),

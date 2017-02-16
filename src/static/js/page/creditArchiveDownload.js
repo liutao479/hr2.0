@@ -48,7 +48,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('credit-archive-download'), function() {
+	render.$console.load(router.template('iframe/credit-archive-download'), function() {
 		$scope.def.listTmpl = render.$console.find('#creditArchiveDownloadListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#creditArchiveDownloadTable'),

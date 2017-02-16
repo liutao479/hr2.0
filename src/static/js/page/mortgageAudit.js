@@ -48,7 +48,7 @@ page.ctrl('mortgageAudit', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('mortgage-audit'), function() {
+	render.$console.load(router.template('iframe/mortgage-audit'), function() {
 		$scope.def.listTmpl = render.$console.find('#mortgageAuditListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#mortgageAuditTable'),

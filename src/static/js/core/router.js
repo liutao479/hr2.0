@@ -75,7 +75,12 @@
 			_ctrl.fn(_$scope);	
 		}
 	}
+<<<<<<< HEAD
 	/*
+=======
+	
+	/**
+>>>>>>> ldf
 	* router 内部方法
 	*/
 	var internal = {}
