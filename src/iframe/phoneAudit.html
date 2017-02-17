@@ -33,67 +33,112 @@
 				
 				<!--提交订单按钮-->
 				<div class="commit-orders-box">
-					<div id="" class="button">提交订单</div>
+					<div id="" class="button saveBtn">提交订单</div>
 				</div>
 			</div>
 			
 			<script type="text/x-dot-template" id="eleChecktmpl">
-				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">{{= row.model}}</span>
-							<div class="button button-mini-nowidth">
-								保存
-							</div>
+							<span class="panel-title-name">必问问题</span>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
-							{{ if(row.type == '0'){ }}
-							{{for(var j = 0, len2 = row.modelcontent.length; j < len2; j++) { var role = row.modelcontent[j]; }}
-							<div class="info-key-value-box">
-								<span class="info-key">{{= role.name}}：</span>
-								<span class="info-value"><input type="text" value="{{= role.value}}" /></span>
-							</div>
-							{{ } }}
-							{{ }else{ }}
-							{{for(var j = 0, len2 = row.modelcontent.length; j < len2; j++) { var role = row.modelcontent[j]; }}
+						{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+							<form>
 							<div class="question-box">
 								<div class="question-box-title">
-									<span class="que">{{= j+1}}.{{= role.question}}</span>
-									<span class="ans">({{= role.anwser}})</span>
+									<span class="que">{{= i+1}}.{{= row.question}}</span>
+									{{if(row.answer){ }}
+									<span class="ans">({{= row.answer}})</span>
+									{{ } }}
 								</div>
 								<div class="question-box-cont">
-									<span class="info-key">客户回答：<!--{{= role.value}}--></span>
-									<span data-key="sex" class="info-value selecter">
-										<div></div>
-										<span class="placeholder">{{= role.value}}</span>
+									<span class="info-key">客户回答：</span>
+									<span class="info-value selecter">
+										<div>
+											<ul class="selectOptBox1">
+												{{for(var a = 0, len = row.configCheckOptionList.length; a < len; a++) { var op1 = row.configCheckOptionList[a]; }}
+													<li data-select="{{= op1.selected}}" data-key="{{= op1.value}}">{{= op1.name}}</li>
+												{{ } }}
+											</ul>
+										</div>
+										<span class="placeholder">请选择</span>
 										<span class="arrow arrow-bottom right8px"></span>
-										<input type="hidden" name="taxIsPay" value="{{= role.value}}" />
+										<input type="hidden" name="qvalue" class="required" />
 									</span>
 								</div>
 								<div class="question-box-cont">
 									<span class="info-key">备注：</span>
 									<span class="info-value info-value-long">
-										<!--<input type="text" value="{{= role.editInfo}}" />-->
-										<textarea name="" rows="4" cols="" value="{{= role.editInfo}}"></textarea>
+										<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>
 									</span>
 								</div>
 							</div>
-							{{ } }}
-							{{ } }}
+							<input type="hidden" name="qid" value="{{= row.id}}"  />
+							<input type="hidden" name="id" value="{{= row.id}}"  />
+							<input type="hidden" name="orderNo" value="{{= row.id}}"  />
+							</form>
+						{{ } }}
 						</div>
 					</div>
 				</div>
-				{{ } }}
+				<div class="panel panel-loan">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">选问问题</span>
+						</div>
+					</div>
+					<div class="panel-detail-content-layout">
+						<div class="loan-info">
+						{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+							<form>
+							<div class="question-box">
+								<div class="question-box-title">
+									<span class="que">{{= i+1}}.{{= row.question}}</span>
+									{{if(row.answer){ }}
+									<span class="ans">({{= row.answer}})</span>
+									{{ } }}
+								</div>
+								<div class="question-box-cont">
+									<span class="info-key">客户回答：</span>
+									<span class="info-value selecter">
+										<div>
+											<ul class="selectOptBox1">
+												{{for(var a = 0, len = row.configCheckOptionList.length; a < len; a++) { var op1 = row.configCheckOptionList[a]; }}
+													<li data-select="{{= op1.selected}}" data-key="{{= op1.value}}">{{= op1.name}}</li>
+												{{ } }}
+											</ul>
+										</div>
+										<span class="placeholder">请选择</span>
+										<span class="arrow arrow-bottom right8px"></span>
+										<input type="hidden" name="qvalue" class="required" />
+									</span>
+								</div>
+								<div class="question-box-cont">
+									<span class="info-key">备注：</span>
+									<span class="info-value info-value-long">
+										<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>
+									</span>
+								</div>
+							</div>
+							<input type="hidden" name="qid" value="{{= row.id}}"  />
+							<input type="hidden" name="id" value="{{= row.id}}"  />
+							<input type="hidden" name="orderNo" value="{{= row.id}}"  />
+							</form>
+						{{ } }}
+						</div>
+					</div>
+				</div>
 			</script>
-			<script type="text/x-dot-template" id="selectOpttmpl">
+			<!--<script type="text/x-dot-template" id="selectOpttmpl">
 				<ul class="selectOptBox">
-					<!--<li value="100001">请选择</li>-->
 					{{for(var a = 0, len = it.length; a < len; a++) { var op1 = it[a]; }}
 						<li data-key="{{= op1.value}}">{{= op1.name}}</li>
 					{{ } }}
 				</ul>
-			</script>
+			</script>-->

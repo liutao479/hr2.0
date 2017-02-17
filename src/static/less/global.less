@@ -1981,7 +1981,7 @@ input[disabled]{
     }
 }
 //下拉选项样式 zhy
-.selectOptBox{
+.selectOptBox,.selectOptBox1{
     width: inherit;
     max-height: 400px;
     border: 1px solid @buttonBgColor;
@@ -2104,7 +2104,7 @@ input[disabled]{
         }
     }
     &-cont{
-        margin: 10px 0 0 0;
+        margin: 10px 0 30px 0;
         position: relative;
     }
     textarea{
@@ -2112,5 +2112,8 @@ input[disabled]{
         width: 100%;
         border: none;
         padding: 5px 0;
+    }
+    .error-input-tip{
+        bottom: -25px;
     }
 }

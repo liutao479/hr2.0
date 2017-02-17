@@ -137,7 +137,7 @@ $(document).on('hover', '#navigator .user', function() {
 	$(document).on("click",function(e){ 
 		var target = $(e.target);
 		if(target.closest(".selectOptBox").length == 0){ 
-			$(".selectOptBox").hide(); 
+			$(".selectOptBox").hide();
 			return;
 		}
 	})

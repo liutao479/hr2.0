@@ -90,7 +90,7 @@
 								<span class="info-key"><i>*</i>车船使用税是否缴纳：</span>
 								<span data-key="sex" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.taxIsPay}}</span>
+									<span class="placeholder">{{= it.loanCarAssess.taxIsPay}}</span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="taxIsPay" value="{{= it.loanCarAssess.taxIsPay}}" />
 								</span>
@@ -258,6 +258,7 @@
 						</div>
 					</div>
 				</div>
+				<input type="hidden" name="identifyAssessDate" value="{{= it.loanCarAssess.identifyAssessDate}}" />
 				<input type="hidden" name="updateDate" value="{{= it.loanCarAssess.updateDate}}" />
 				<input type="hidden" name="updateUser" value="{{= it.loanCarAssess.updateUser}}" />
 				<input type="hidden" name="productionDate" value="{{= it.loanCarAssess.productionDate}}" />

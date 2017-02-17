@@ -90,7 +90,7 @@ page.ctrl('secondhandInput', function($scope) {
 			})
 			var value1 = $("input",$(this)).val();
 			$("li",$(this)).each(function(){
-				var val = $(this).val();
+				var val = $(this).data('key');
 				var text = $(this).text();
 				if(value1 == val){
 					$(this).parent().parent().siblings(".placeholder").html(text);

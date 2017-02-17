@@ -29,7 +29,7 @@ page.ctrl('phoneAudit', function($scope) {
 	*/
 	var loadLoanList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.eleCheck),
+			url: $http.api($http.apiMap.phoneAudit),
 			data: params,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
@@ -43,29 +43,11 @@ page.ctrl('phoneAudit', function($scope) {
 //页面加载完成对所有下拉框进行赋值	
 	var loanFinishedSelect = function(){
 		$(".selecter").each(function(){
-			var that =$("div",$(this));
-			var key = $(this).data('key');
-			var boxKey = key + 'Box';
-			$(this).attr("id",boxKey);
-			var data={};
-                data['code'] = key;
-			$.ajax({
-				url: apiMap[key],
-				data: data,
-				dataType: 'json',
-				async:false,
-				success: $http.ok(function(result) {
-					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//					$source.selectType = result.data;
-					var selectOptBox = $(".selectOptBox");
-					selectOptBox.attr("id",key);
-				})
-			})
-			var value1 = $("input",$(this)).val();
 			$("li",$(this)).each(function(){
-				var val = $(this).val();
+				var selected = $(this).data('select');
+				var val = $(this).data('key');
 				var text = $(this).text();
-				if(value1 == val){
+				if(selected){
 					$(this).parent().parent().siblings(".placeholder").html(text);
 					$(this).parent().parent().siblings("input").val(val);
 					$(this).parent().parent().siblings(".placeholder").attr('title',val);
@@ -73,38 +55,99 @@ page.ctrl('phoneAudit', function($scope) {
 					if(!value2){
 						$(this).parent().parent().siblings(".placeholder").html("请选择")
 					}
-					$(".selectOptBox").hide(); 
 				}
 			})
-			
+			$(".selectOptBox1").hide(); 
 		});
 	}
 //点击下拉框拉取选项	
 	$(document).on('click','.selecter', function() {
-		var that =$("div",$(this));
-		var key = $(this).data('key');
-		var boxKey = key + 'Box';
-		$(this).attr("id",boxKey);
-		var data={};
-            data['code'] = key;
-		$.ajax({
-			url: apiMap[key],
-			data: data,
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//				$source.selectType = result.data;
-				var selectOptBox = $(".selectOptBox");
-				selectOptBox.attr("id",key);
-			})
-		})
+		$(".selectOptBox1",$(this)).show();
+	})
+	//点击下拉选项赋值zhy
+	$(document).on('click', '.selectOptBox1 li', function() {
+		var value = $(this).data('key');
+		var text = $(this).text();
+		console.log(value);
+		$(this).parent().parent().siblings(".placeholder").html(text);
+		$(this).parent().parent().siblings(".placeholder").attr('title',text);
+		$(this).parent().parent().siblings("input").val(value);
+		var value1 = $(this).parent().parent().siblings("input").val();
+		if(!value1){
+			$(this).parent().parent().siblings(".placeholder").html("请选择");
+		}else{
+			$(this).parent().parent().parent().removeClass("error-input");
+			$(this).parent().parent().siblings("i").remove();
+//			$(this).parent().parent().after("<div class='opcity0'>这个是新增的div</div>");
+		}
+		$(".selectOptBox1").hide();
+		return false;
+	})
+	/***
+	* 保存按钮
+	*/
+	$(document).on('click', '.saveBtn', function() {
+		var isTure = true;
+		var requireList = $(this).parent().siblings().find("form").find(".required");
+		requireList.each(function(){
+			var value = $(this).val();
+			if(!value){
+				$(this).parent().addClass("error-input");
+				$(this).after('<i class="error-input-tip">请完善该必填项</i>');
+				console.log($(this).index());
+				isTure = false;
+//				return false;
+			}
+		});
+		if(isTure){
+			var data;
+	        var formList = $(this).parent().siblings().find('form');
+	        console.log("form的个数为："+formList.length);
+	        if(formList.length == 1){
+		        var params = formList.serialize();
+	            params = decodeURIComponent(params,true);
+	            var paramArray = params.split("&");
+	            var data1 = {};
+	            for(var i=0;i<paramArray.length;i++){
+	                var valueStr = paramArray[i];
+	                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
+	            }
+	            data = data1;
+	        }else{
+	        	data = [];
+		        formList.each(function(index){
+			        var params = $(this).serialize();
+		            params = decodeURIComponent(params,true);
+		            var paramArray = params.split("&");
+		            var data1 = {};
+		            for(var i=0;i<paramArray.length;i++){
+		                var valueStr = paramArray[i];
+		                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
+		            }
+					console.log(data1);
+					data[index]=data1;
+		        })
+	        }
+	        console.log(data);
+	        
+			$.ajax({
+				type: 'POST',
+				url: '127.0.0.1',
+				data:JSON.stringify(data),
+				dataType:"json",
+				contentType : 'application/json;charset=utf-8',
+				success: function(result){
+					console.log(result.msg);
+				}
+			});
+		}
 	})
 	/***
 	* 加载页面模板
 	*/
 	render.$console.load(router.template('phoneAudit'), function() {
 		$scope.def.listTmpl = render.$console.find('#eleChecktmpl').html();
-		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
+//		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#eleCheck'),
 		}
