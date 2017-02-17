@@ -52,7 +52,7 @@ page.ctrl('myCustomer', [], function($scope) {
 	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
 			current: parseInt(apiParams.pageNum),
-			pages: isPage ? _page.pages : (tool.pages(count || 0, _page.pageSize)),
+			pages: isPage ? _page.pages : (tool.pages(_page.pages || 0, _page.pageSize)),
 			size: _page.pageSize
 		});
 		$('#pageToolbar').paging();
@@ -95,6 +95,8 @@ page.ctrl('myCustomer', [], function($scope) {
 		});
 		//绑定搜索按钮事件
 		$console.find('#search').on('click', function() {
+			apiParams.pageNum = 1;
+			$params.pageNum = 1;
 			loadCustomerList(apiParams);
 			// router.updateQuery($scope.$path, $params);
 			
@@ -106,6 +108,7 @@ page.ctrl('myCustomer', [], function($scope) {
 			// router.updateQuery($scope.$path, $params);
 			
 		});
+
 
 		
 		// 订单列表的排序
@@ -129,8 +132,36 @@ page.ctrl('myCustomer', [], function($scope) {
 			}
 		});
 
+		// 去往订单详情页面
+		$console.find('#myCustomerTable .orders-detail').on('click', function() {
+			// var that = $(this);
+			// router.render(that.data('href'), {
+			// 	taskId: that.data('id'), 
+			// 	date: that.data('date'),
+			// 	path: 'myCustomer'
+			// });
+		});
+
+		// 订单当前进度的展开与隐藏
+		$console.find('#myCustomerTable .spread-tips').on('click', function() {
+			var that = $(this);
+			var $status = that.parent().find('.status-value');
+			var $iconfont = that.find('.iconfont');
+			if(!that.data('trigger')) {
+				$status.show();
+				$iconfont.html('&#xe601;');
+				that.data('trigger', true);
+			} else {
+				$status.hide().eq(0).show();
+				$iconfont.html('&#xe670;');
+				that.data('trigger', false);
+			}
+			return false;
+		})
+
+
 		// 放款预约
-		$console.find('.makeLoan').on('click', function() {
+		$console.find('#myCustomerTable .makeLoan').on('click', function() {
 			var that = $(this);
 			console.log(that.data('orderno'))
 			$.ajax({
@@ -141,38 +172,88 @@ page.ctrl('myCustomer', [], function($scope) {
 					// orderNo: 'nfdb2015091812345678'
 				},
 				dataType:"json",
-				success: $http.ok(function(result) {
-					console.log(result)
+				success: $http.ok(function(data) {
+					console.log(data)
+					console.log('获取信息ok!');
+					if(confirm('是否点击弹窗内的提交按钮？')) {
+						$.ajax({
+							type: "post",
+							url: "http://192.168.0.184:8080/LoanFinancePayment/saveOrUpdateLoanFinancePayment",
+							data:{
+								orderNo: that.data('orderno'), //订单号
+								loaningDate: new Date('2017-02-17 10:10'), //用款时间
+								receiveCompanyAddress: '环球4S店（ldf测试）', //收款账户名称
+								paymentMoney: 103620.0000, //垫资金额
+								receiveAccount: '0571888805718888', //收款账号
+								receiveAccountBank: '刘东风测试工行' //开户行
+							},
+							dataType:"json",
+							success: $http.ok(function(result) {
+								console.log(result)
+								alert('提交成功！');
+							})
+						});
+					}
 				})
 			});
+			return false;
 		});
 
 		// 申请终止订单
-		$console.find('.applyTerminate').on('click', function() {
-			// 弹窗
-			if(confirm('确认申请终止该条订单：\nfdb2016102421082285，\n申请理由为：刘东风测试申请终止，\n审核人为1？')) {
+		$console.find('#myCustomerTable .applyTerminate').on('click', function() {
+			var that = $(this);
+			var _orderNo = that.data('orderno');
+			console.log(_orderNo)
+
+
+			// 查询订单申请终止条数，若大于0则弹窗提示已提交终止订单申请，否则正常弹窗申请
+			var loanOrderApplyCount = function() {
 				$.ajax({
 					type: "post",
-					url: "http://192.168.0.184:8080/loanOrderApply/terminate",
+					url: "http://192.168.0.184:8080/loanOrderApply/getLoanOrderApplyCount",
 					data:{
-						orderNo: 'nfdb2016102421082285',
-						applyReason: '刘东风测试申请终止',
-						approvalId: 1    //当前登录审核用户的id
+						orderNo: _orderNo
 					},
 					dataType:"json",
 					success: $http.ok(function(result) {
-						console.log(result)
-						alert("申请成功！");
-					}),
-					error: function() {
-						alert("申请失败！");
-					}
+						console.log(result);
+						if(result.data > 0) {
+							alert('该订单已提交终止订单申请！');
+						} else {
+							loanOrderApply();
+						}
+					})
 				});
+			} 
+			// 申请终止订单弹窗提交
+			var loanOrderApply = function() {
+				// 弹窗
+				if(confirm('确认申请终止该条订单：\n' + _orderNo + '，\n申请理由为：刘东风测试申请终止，\n审核人为1？')) {
+					$.ajax({
+						type: "post",
+						url: "http://192.168.0.184:8080/loanOrderApply/terminate",
+						data:{
+							orderNo: _orderNo,
+							applyReason: '刘东风测试申请终止',
+							approvalId: 1    //当前登录审核用户的id
+						},
+						dataType:"json",
+						success: $http.ok(function(result) {
+							console.log(result)
+							alert("申请成功！");
+						}),
+						error: function() {
+							alert("申请失败！");
+						}
+					});
+				}
 			}
+			loanOrderApplyCount();
+			return false;
 		});
 
 		// 申请修改贷款信息
-		$console.find('.applyModify').on('click', function() {
+		$console.find('#myCustomerTable .applyModify').on('click', function() {
 			var that = $(this);
 
 			alert('前往订单号' + that.data('orderno') + '的页面？');
@@ -180,6 +261,7 @@ page.ctrl('myCustomer', [], function($scope) {
 			// 	taskId: that.data('id'), 
 			// 	path: 'loanProcess'
 			// });
+			return false;
 		});
 
 	}

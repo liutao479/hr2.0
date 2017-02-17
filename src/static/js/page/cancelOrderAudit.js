@@ -3,7 +3,7 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			type: 1,
+			applyType: 1,
 			pageNum: $params.pageNum || 1
 		};
 	/**
@@ -20,7 +20,7 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
 				setupPaging(result.page.pages, true);
 				setupScroll(result.page, function() {
 					pageChangeEvt();
@@ -37,7 +37,7 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
 			current: parseInt(apiParams.pageNum),
-			pages: isPage ? _page.pages : (tool.pages(count || 0, _page.pageSize)),
+			pages: isPage ? _page.pages : (tool.pages(_page.pages || 0, _page.pageSize)),
 			size: _page.pageSize
 		});
 		$('#pageToolbar').paging();
@@ -57,7 +57,7 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 	 */
 	var setupEvt = function() {
 		// 绑定搜索框模糊查询事件
-		$console.find('#searchInput').on('keydown', function() {
+		$console.find('#searchInput').on('keydown', function(evt) {
 			if(evt.which == 13) {
 				var that = $(this),
 					searchText = $.trim(that.val());
@@ -79,6 +79,8 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 
 		//绑定搜索按钮事件
 		$console.find('#search').on('click', function() {
+			apiParams.pageNum = 1;
+			$params.pageNum = 1;
 			loadCancelOrderList(apiParams);
 			// router.updateQuery($scope.$path, $params);
 			
@@ -105,6 +107,23 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 			}
 			loadCancelOrderList(apiParams);
 		});
+
+		// 订单当前进度的展开与隐藏
+		$console.find('.spread-tips').on('click', function() {
+			var that = $(this);
+			var $status = that.parent().find('.status-value');
+			var $iconfont = that.find('.iconfont');
+			if(!that.data('trigger')) {
+				$status.show();
+				$iconfont.html('&#xe601;');
+				that.data('trigger', true);
+			} else {
+				$status.hide().eq(0).show();
+				$iconfont.html('&#xe670;');
+				that.data('trigger', false);
+			}
+			return false;
+		})
 		
 		// 订单列表的排序
 		$console.find('#time-sort').on('click', function() {

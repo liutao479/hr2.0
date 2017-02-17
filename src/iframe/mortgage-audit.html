@@ -57,7 +57,7 @@
 			<!--抵押审核 end-->
 			
 			<!--分页插件改编（未完成）-->
-			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['mortgageAudit'].paging" data-pages="50" data-current="3"></div>
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['mortgageAudit'].paging" data-pages="50" data-current="3"></div>
 
 			<script type="text/x-dot-template" id="mortgageAuditListTmpl">
 				{{ var len = it.length; if(len) { }}

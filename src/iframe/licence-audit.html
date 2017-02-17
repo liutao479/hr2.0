@@ -57,7 +57,7 @@
 			<!--上牌审核     end-->
 			
 			<!--分页插件改编（未完成）-->
-			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['licenceAudit'].paging" data-pages="50" data-current="3"></div>
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['licenceAudit'].paging" data-pages="50" data-current="3"></div>
 
 			<script type="text/x-dot-template" id="licenceAuditListTmpl">
 				{{ var len = it.length; if(len) { }}

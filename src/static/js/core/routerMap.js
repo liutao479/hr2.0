@@ -121,7 +121,7 @@
 			title: '贷款材料上传',
 			page: 'loanMaterialsUpload'
 		},
-		'loanManage/ordersDetail': {
+		'myCustomer/ordersDetail': {
 			title: '订单详情',
 			page: 'ordersDetail'
 		}

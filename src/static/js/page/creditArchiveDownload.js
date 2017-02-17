@@ -93,6 +93,8 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 
 		//绑定搜索按钮事件
 		$console.find('#search').on('click', function() {
+			apiParams.pageNum = 1;
+			$params.pageNum = 1;
 			loadCreaditList(apiParams);
 			// router.updateQuery($scope.$path, $params);
 			

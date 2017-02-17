@@ -17,7 +17,7 @@
 
 			<script type="text/dot-x-template" id="loanUploadTmpl">
 				{{ if(it.data.loanTask.backReason) { }}
-				<!--征信退回原因及人员信息-->
+				<!--贷款材料上传退回原因及人员信息-->
 				<div class="back-creditRes-bar">
 					<div class="back-credit">
 						<div class="key-value-box">
@@ -31,22 +31,22 @@
 						</div>
 					</div>
 				</div>
-				<!--征信退回原因及人员信息-->
+				<!--贷款材料上传退回原因及人员信息-->
 				{{ } }}
 
 				{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i]; }}
 					{{ for(var j = 0, len2 = it.data[row.code].length; j < len2; j++) { var col = it.data[row.code][j]; }}
 					<div class="panel clearfix">
-						<!-- 用户类别名 -->
+						<!-- 贷款材料类别名 -->
 						<div class="panel-title-box">
 							<div class="panel-title">
 								<i class="iconfont">&#xe626;</i>
 								<span class="panel-title-name">{{=row.name}}{{=(col.userName ? '(' + col.userName + ')' : '')}}</span>
 							</div>
 						</div>
-						<!-- 用户类别名 -->
+						<!-- 贷款材料类别名 -->
 
-						<!-- 用户对应上传材料项 -->
+						<!-- 贷款材料对应上传材料项 -->
 						<div class="panel-content clearfix">
 							<div class="loan-imgs-bar">
 								{{ for(var k = 0, len3 = col.materials.length; k < len3; k++) { }}
@@ -63,8 +63,49 @@
 								{{ } }}
 							</div>
 						</div>
-						<!-- 用户对应上传材料项 -->
+						<!-- 贷款材料对应上传材料项 -->
 					</div>
 					{{ } }}
 				{{ } }}
+				<div class="panel clearfix">
+					<!-- 贷款材料类别名 -->
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">贷款其他材料</span>
+						</div>
+					</div>
+					<!-- 贷款材料类别名 -->
+
+					<!-- 贷款材料对应上传材料项 -->
+					<div class="panel-content clearfix">
+						<div class="loan-imgs-bar">
+							{{ for(var m = 0, len4 = it.data.QTCL[0].materials.length; m < len4; m++) { }}
+							<div class="imgs-item-group">
+								<div class="imgs-item-upload">
+									<div class="iconfont-upload">
+										<i class="iconfont">&#xe61f;</i>
+									</div>
+									<span class="i-tips">点击或拖拽上传图片</span>
+									<input type="file" id="" class="input-file" />
+								</div>
+								<span class="imgs-item-p">其它材料{{=tool.formatCode(it.data.QTCL[0].materials[m].materialsCode) || '【还没配置好】'}}</span>
+							</div>
+							{{ } }}
+							<div class="imgs-item-group">
+								<div class="imgs-item-upload">
+									<div class="iconfont-upload">
+										<i class="iconfont">&#xe61f;</i>
+									</div>
+									<span class="i-tips">点击或拖拽上传图片</span>
+									<input type="file" id="" class="input-file" />
+								</div>
+								<div class="input-text imgs-input-text">
+									<input type="text" id>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 贷款材料对应上传材料项 -->
+				</div>
 			</script>

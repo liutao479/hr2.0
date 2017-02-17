@@ -19,7 +19,7 @@ page.ctrl('loan', function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
-				setupPaging(result.page.pages, true);
+				setupPaging(result.page, true);
 				setupEvent();
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -30,16 +30,17 @@ page.ctrl('loan', function($scope) {
 	/**
 	* 构造分页
 	*/
-	var setupPaging = function(count, isPage) {
+	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
-			current: parseInt(apiParams.page),
-			pages: isPage ? count : (tool.pages(count || 0, apiParams.pageSize)),
+			current: parseInt(apiParams.pageNum),
+			pages: isPage ? _page.pages : (tool.pages(_page.pages || 0, apiParams.pageSize)),
 			size: apiParams.pageSize
 		});
 		$('#pageToolbar').paging();
 	}
 
 	var setupEvent = function() {
+		wDialog.alert('haha')
 		/**
 		* 绑定搜索事件
 		**/

@@ -3,7 +3,7 @@ page.ctrl('orderModifyAudit', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			type: 0,
+			applyType: 0,
 			pageNum: $params.pageNum || 1
 		};
 	/**
