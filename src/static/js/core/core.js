@@ -26,8 +26,25 @@
 	* 全局http请求配置
 	*/
 	_.$http = {};
-	_.$http.api = function(url) {
-		return url;
+	_.$http.api = function(method, name) {
+		// name不传值，代表取mock中假数据
+		if(!name) 
+			return 'http://127.0.0.1:8083/mock/' + method;
+		else
+			switch (name) {
+				// 周宜俭ip
+				case 'zyj':
+					return 'http://192.168.0.189:8080/' + method;
+					break;
+				// 蔡延军ip
+				case 'cyj':
+					return 'http://192.168.0.184:8080/' + method;
+					break;
+				// 季本松ip
+				case 'jbs':
+					return 'http://192.168.0.113:8080/' + method;
+					break;
+			}
 		//Todo 发布时增加prefix
 		// return 'http://192.168.0.113:8080/' + method;
 	}
@@ -54,35 +71,64 @@
 	};
 	_.$http.apiMap = {
 		menu: 'http://127.0.0.1:8083/mock/menu',
+
 		loanList: 'http://127.0.0.1:8083/mock/loan.list',
+
 		myCustomer: 'http://192.168.0.184:8080/loanOrder/getMyCustomer',
+
 		orderModifyAudit: 'http://192.168.0.184:8080/loanOrderApply/getLoanOrderApply',
+
 		cancelOrderAudit: 'http://192.168.0.184:8080/loanOrderApply/getLoanOrderApply',
+
 		loanManage: 'http://127.0.0.1:8083/mock/loan.manage',
+
 		marginManage: 'http://127.0.0.1:8083/mock/marginManage',
+
 		moneyBussinessAuditPrint: 'http://127.0.0.1:8083/mock/moneyBussinessAuditPrint',
+
 		mortgageProcess: 'http://127.0.0.1:8083/mock/mortgage.process',
+
 		mortgageAudit: 'http://127.0.0.1:8083/mock/mortgage.audit',
+
 		mortgageTable: 'http://192.168.0.184:8080/loanPledge/getLoanPledgeList',
+
 		operationsAnalysis: 'http://127.0.0.1:8083/mock/operationsAnalysis',
+
 		organizationManage: 'http://127.0.0.1:8083/mock/organizationManage',
+
 		licenceProcess: 'http://127.0.0.1:8083/mock/licence.process',
+
 		licenceAudit: 'http://127.0.0.1:8083/mock/licence.audit',
+
 		licenceTable: 'http://192.168.0.184:8080/loanRegistration/getLoanRegistrationList',
+
 		expireProcess: 'http://127.0.0.1:8083/mock/expire.process',
+
 		creditArchiveDownload: 'http://192.168.0.184:8080/creditUser/getCreditMaterials',
+
 		loadArchiveDownload: 'http://192.168.0.184:8080/creditUser/getCreditMaterials',
+
 		moneyBusinessAuditPrint: 'http://192.168.0.184:8080/loanUserStage/getFinancialData',
+
 		auditPrint: 'http://192.168.0.184:8080/loanUserStage/getFinancialData',
+
 		operationsAnalysis: 'http://127.0.0.1:8083/mock/operationsAnalysis',
+
 		organizationManageBank: 'http://192.168.0.184:8080/demandBank/getDemandBankList',
+
 		organizationManageCar: 'http://192.168.0.184:8080/demandCarShop/getDemandCarShop',
+
 		// creditInput: 'http://127.0.0.1:8083/mock/creditInput'
 		creditInput: 'http://192.168.0.148:8080/creditUser/getCreditInfo',
+
 		creditMaterialsUpload: 'http://192.168.0.189:8080/creditMaterials/index',
+
 		loanMaterialsUpload: 'http://192.168.0.189:8080/loanMaterials/index',
+
 		addCreditUser: 'http://192.168.0.189:8080/creditUser/add',
-		delCreditUser: 'http://192.168.0.189:8080/creditUser/del',
+
+		delCreditUser: 'http://192.168.0.189:8080/creditUser/del'
+
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error

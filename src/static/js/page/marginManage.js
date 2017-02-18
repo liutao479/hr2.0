@@ -12,7 +12,7 @@ page.ctrl('marginManage', [], function($scope) {
 	*/
 	var loadMarginManageList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.marginManage),
+			url: $http.api('marginManage'),
 			data: params,
 			success: $http.ok(function(result) {
 				console.log(result);

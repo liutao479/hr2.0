@@ -37,7 +37,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			type: 'post',
 			url: $http.apiMap.creditMaterialsUpload,
 			data: {
-				taskId: $scope.$params.taskId
+				// taskId: $scope.$params.taskId
+				taskId: 10
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {

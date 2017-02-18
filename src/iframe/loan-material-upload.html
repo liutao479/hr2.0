@@ -1,12 +1,12 @@
 	<!-- 材料上传 -->
-			<div class="container material-upload">
+			<div class="container loan-material-upload">
 				<!-- 面包屑 -->
 				<div id="location"></div>
 				<!-- 面包屑 end-->
 
 				<!-- 退回原因 -->
-				<div id="backreason"></div>
-				<!--  -->
+				<div id="backReason"></div>
+				<!-- 退回原因 end-->
 
 				<!-- 渲染栏 -->
 				<div class="loanUploadPanel" id="loanUploadPanel">
@@ -18,7 +18,7 @@
 					<div id="addCreditUser" class="button">增加征信人员</div><div id="submitOrder" class="button button-deep">提交订单</div>
 				</div>
 			</div>
-
+			<!-- 材料上传 end-->
 			<script type="text/dot-x-template" id="loanUploadTmpl">
 				{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i]; }}
 					{{ for(var j = 0, len2 = it.data[row.code].length; j < len2; j++) { var col = it.data[row.code][j]; }}

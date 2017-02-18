@@ -23,6 +23,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 				$scope.result = result;
 				// 编译面包屑
 				setupLocation();
+				// 设置退回原因
 				setupBackReason();
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, true);
 				if(cb && typeof cb == 'function') {
@@ -36,13 +37,13 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	* 设置面包屑
 	*/
 	var setupLocation = function() {
-		// if(!$scope.$params.path) return false;
+		if(!$scope.$params.path) return false;
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
 			current: '贷款材料上传',
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			orderDate: $scope.result.data.loanTask.createDate
+			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 		});
 		$location.location();
 	}

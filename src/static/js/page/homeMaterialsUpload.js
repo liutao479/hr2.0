@@ -12,7 +12,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
 			// type: flag,
 			type: 'post',
-			url: $http.apiMap.loanMaterialsUpload,
+			url: $http.apiMap.homeMaterialsUpload,
 			data: {
 				// taskId: $scope.$params.taskId
 				taskId: 2
@@ -22,8 +22,9 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 				console.log(result);
 				$scope.result = result;
 				// 编译面包屑
-				var _loanUser = $scope.result.data.loanTask.loanOrder.realName;
-				setupLocation(_loanUser);
+				setupLocation();
+				// 设置退回原因
+				setupBackReason();
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -35,22 +36,48 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 	/**
 	* 设置面包屑
 	*/
-	var setupLocation = function(loanUser) {
+	var setupLocation = function() {
 		if(!$scope.$params.path) return false;
 		var $location = $console.find('#location');
-		var _orderDate = tool.formatDate($scope.$params.date, true);
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '上门材料上传',
-			loanUser: loanUser,
-			orderDate: _orderDate
+			current: '贷款材料上传',
+			loanUser: $scope.result.data.loanTask.loanOrder.realName,
+			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 		});
 		$location.location();
 	}
 
-	// 编译完成后绑定事件
+	/**
+	* 设置退回原因
+	*/
+	var setupBackReason = function() {
+		var $backReason = $console.find('#backReason');
+		console.log($backReason)
+		var _backReason;
+		if($scope.result.data.loanTask.backReason) {
+			_backReason = $scope.result.data.loanTask.backReason;
+		} else {
+			_backReason = false;
+		}
+		$backReason.data({
+			backReason: _backReason,
+			// backUser: $scope.result.data.loanTask.assign,
+			// backUserPhone: $scope.result.data.loanTask.backUserPhone,
+			// orderDate: $scope.result.data.loanTask.createDate（后台开发好，使用这个）
+			backUser: '刘东风',
+			backUserPhone: '13002601637',
+			backDate: '2017-2-18  12:12'
+		});
+		$backReason.backReason();
+	}
+
+	/**
+	 * 编译完成后绑定事件
+	 */
 	var setupEvent = function () {
 
+		// 增加征信人员
 		$console.find('#addCreditUser').on('click', function() {
 			$.ajax({
 				// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
@@ -74,7 +101,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 		})
 	}
 
-	$console.load(router.template('iframe/loan-material-upload'), function() {
+	$console.load(router.template('iframe/material-upload'), function() {
 		// $scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
 		$scope.def.listTmpl = $console.find('#loanUploadTmpl').html();
 		// console.log($console.find('#creditResultPanel'))

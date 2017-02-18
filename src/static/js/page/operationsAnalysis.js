@@ -14,7 +14,7 @@ page.ctrl('operationsAnalysis', [], function($scope) {
 	*/
 	var loadOperationsAnalysisList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.operationsAnalysis),
+			url: $http.api('operationsAnalysis'),
 			data: params,
 			success: $http.ok(function(result) {
 				console.log(result);

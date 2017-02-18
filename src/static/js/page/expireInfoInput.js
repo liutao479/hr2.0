@@ -14,7 +14,7 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	*/
 	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.expireProcess),
+			url: $http.api('expire.process'),
 			data: params,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);

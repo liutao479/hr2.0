@@ -28,7 +28,7 @@ page.ctrl('myCustomer', [], function($scope) {
 	*/
 	var loadCustomerList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.myCustomer,
+			url: $http.api('loanOrder/getMyCustomer', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',

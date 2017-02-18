@@ -11,11 +11,12 @@ page.ctrl('loan', function($scope) {
 	*/
 	var loadLoanList = function(params, cb) {
 		$.ajax({
-			url: 'http://127.0.0.1:8083/mock/loan.list',
+			// 贷款办理列表的在线接口，为调试并行任务各页面，先使用假数据
 			// type: 'get',
 			// url: 'http://192.168.0.144:8080/loanOrder/workbench',
 			// dataType:"json",
-			data: params,
+			// data: params,
+			url: $http.api('loan.list'),
 			success: $http.ok(function(result) {
 				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
