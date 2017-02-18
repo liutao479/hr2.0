@@ -92,6 +92,23 @@ page.ctrl('licenceProcess', [], function($scope) {
 			// router.updateQuery($scope.$path, $params);
 			
 		});
+
+		//绑定搜索按钮事件
+		$console.find('#search').on('click', function() {
+			loadLicenceProcessList(apiParams);
+			// router.updateQuery($scope.$path, $params);
+			
+		});
+
+		// 进入详情页
+		$console.find('#licenceProcessTable .button').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				// taskId: that.data('id'), 
+				// date: that.data('date'),
+				path: 'licenceProcess'
+			});
+		});
 	}
 
 	/***

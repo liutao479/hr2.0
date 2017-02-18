@@ -1,9 +1,9 @@
 'use strict';
-page.ctrl('loanMaterialsUpload', function($scope) {
+page.ctrl('advanceMaterialsUpload', function($scope) {
 	var $console = render.$console;
 	
 	/**
-	* 加载贷款材料上传数据
+	* 加载提车材料上传数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
@@ -15,15 +15,15 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 			url: $http.apiMap.loanMaterialsUpload,
 			data: {
 				// taskId: $scope.$params.taskId
-				taskId: 1
+				taskId: 4
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
 				// 编译面包屑
-				setupLocation();
-				setupBackReason();
+				var _loanUser = $scope.result.data.loanTask.loanOrder.realName;
+				setupLocation(_loanUser);
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -35,39 +35,17 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	/**
 	* 设置面包屑
 	*/
-	var setupLocation = function() {
-		// if(!$scope.$params.path) return false;
+	var setupLocation = function(loanUser) {
+		if(!$scope.$params.path) return false;
 		var $location = $console.find('#location');
+		var _orderDate = tool.formatDate($scope.$params.date, true);
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '贷款材料上传',
-			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			orderDate: $scope.result.data.loanTask.createDate
+			current: '上门材料上传',
+			loanUser: loanUser,
+			orderDate: _orderDate
 		});
 		$location.location();
-	}
-
-	/**
-	* 设置退回原因
-	*/
-	var setupBackReason = function() {
-		var $backReason = $console.find('#backReason');
-		var _backReason;
-		if($scope.result.data.loanTask.backReason) {
-			_backReason = $scope.result.data.loanTask.backReason;
-		} else {
-			_backReason = false;
-		}
-		$backReason.data({
-			backReason: _backReason,
-			// backUser: $scope.result.data.loanTask.assign,
-			// backUserPhone: $scope.result.data.loanTask.backUserPhone,
-			// orderDate: $scope.result.data.loanTask.createDate（后台开发好，使用这个）
-			backUser: '刘东风',
-			backUserPhone: '13002601637',
-			backDate: '2017-2-18  12:12'
-		});
-		$backReason.backReason();
 	}
 
 	// 编译完成后绑定事件

@@ -121,9 +121,29 @@
 			title: '贷款材料上传',
 			page: 'loanMaterialsUpload'
 		},
+		'loanProcess/homeMaterialsUpload': {
+			title: '上门材料上传',
+			page: 'homeMaterialsUpload'
+		},
+		'loanProcess/signMaterialsUpload': {
+			title: '签约材料上传',
+			page: 'signMaterialsUpload'
+		},
+		'loanProcess/advanceMaterialsUpload': {
+			title: '垫资材料上传',
+			page: 'advanceMaterialsUpload'
+		},
+		'loanProcess/pickMaterialsUpload': {
+			title: '提车材料上传',
+			page: 'pickMaterialsUpload'
+		},
 		'myCustomer/ordersDetail': {
 			title: '订单详情',
 			page: 'ordersDetail'
+		},
+		'licenceProcess/licenceDetail': {
+			title: '上牌办理详情',
+			page: 'licenceDetail'
 		}
 		
 

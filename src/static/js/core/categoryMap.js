@@ -8,7 +8,7 @@
 	g.categoryMap = {
 		"creditMaterialsUpload": "征信材料上传",
 		    
-		"creditMaterialsApproval": "征信材料上传",
+		"creditMaterialsApproval": "征信材料审核",
 
 		"creditInput": "征信结果录入",
 

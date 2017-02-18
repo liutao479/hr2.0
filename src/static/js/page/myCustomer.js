@@ -134,12 +134,12 @@ page.ctrl('myCustomer', [], function($scope) {
 
 		// 去往订单详情页面
 		$console.find('#myCustomerTable .orders-detail').on('click', function() {
-			// var that = $(this);
-			// router.render(that.data('href'), {
-			// 	taskId: that.data('id'), 
-			// 	date: that.data('date'),
-			// 	path: 'myCustomer'
-			// });
+			var that = $(this);
+			router.render(that.data('href'), {
+				taskId: that.data('id'), 
+				date: that.data('date'),
+				path: 'myCustomer'
+			});
 		});
 
 		// 订单当前进度的展开与隐藏

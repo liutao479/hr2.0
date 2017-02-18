@@ -79,10 +79,10 @@
 		organizationManageCar: 'http://192.168.0.184:8080/demandCarShop/getDemandCarShop',
 		// creditInput: 'http://127.0.0.1:8083/mock/creditInput'
 		creditInput: 'http://192.168.0.148:8080/creditUser/getCreditInfo',
-		creditMaterialsUpload: 'http://192.168.0.198:8080/creditMaterials/index',
-		loanMaterialsUpload: 'http://192.168.0.198:8080/loanMaterials/index',
-		addCreditUser: 'http://192.168.0.198:8080/creditUser/add',
-		delCreditUser: 'http://192.168.0.198:8080/creditUser/del',
+		creditMaterialsUpload: 'http://192.168.0.189:8080/creditMaterials/index',
+		loanMaterialsUpload: 'http://192.168.0.189:8080/loanMaterials/index',
+		addCreditUser: 'http://192.168.0.189:8080/creditUser/add',
+		delCreditUser: 'http://192.168.0.189:8080/creditUser/del',
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error

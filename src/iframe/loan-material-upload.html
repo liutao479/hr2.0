@@ -1,8 +1,12 @@
-	<!--贷款材料上传zhy-->
-			<div class="container loan-material-upload" id="loan-material-upload">
-				<!-- 返回列表 -->
+	<!-- 材料上传 -->
+			<div class="container material-upload">
+				<!-- 面包屑 -->
 				<div id="location"></div>
-				<!-- 返回列表 end-->
+				<!-- 面包屑 end-->
+
+				<!-- 退回原因 -->
+				<div id="backreason"></div>
+				<!--  -->
 
 				<!-- 渲染栏 -->
 				<div class="loanUploadPanel" id="loanUploadPanel">
@@ -16,27 +20,9 @@
 			</div>
 
 			<script type="text/dot-x-template" id="loanUploadTmpl">
-				{{ if(it.data.loanTask.backReason) { }}
-				<!--贷款材料上传退回原因及人员信息-->
-				<div class="back-creditRes-bar">
-					<div class="back-credit">
-						<div class="key-value-box">
-							<span class="key">退回人员：</span>
-							<span class="value">{{=it.data.loanTask.assignee}}</span>
-							<span class="value float-right">{{=it.data.loanTask.createDateStr}}</span>
-						</div>
-						<div class="key-value-box">
-							<span class="key">退回原因：</span>
-							<span class="value">{{=it.data.loanTask.backReason}}</span>
-						</div>
-					</div>
-				</div>
-				<!--贷款材料上传退回原因及人员信息-->
-				{{ } }}
-
 				{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i]; }}
 					{{ for(var j = 0, len2 = it.data[row.code].length; j < len2; j++) { var col = it.data[row.code][j]; }}
-					<div class="panel clearfix">
+					<div class="panel mt15 clearfix">
 						<!-- 贷款材料类别名 -->
 						<div class="panel-title-box">
 							<div class="panel-title">
