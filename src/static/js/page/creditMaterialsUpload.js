@@ -114,6 +114,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			$scope.currentType = _type;
 			$scope.$el.$creditPanel.html($scope.tabs[$scope.currentType]);
 		})
+		$scope.$el.find('.uploadEvt').imgUpload();
 	}
 
 

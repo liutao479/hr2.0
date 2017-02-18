@@ -79,7 +79,7 @@
 		organizationManageCar: 'http://192.168.0.166:8080/demandCarShop/getDemandCarShop',
 		// creditInput: 'http://127.0.0.1:8083/mock/creditInput'
 		creditInput: 'http://192.168.0.148:8080/creditUser/getCreditInfo',
-		creditMaterialsUpload: 'http://192.168.0.170:8080/creditMaterials/index',
+		creditMaterialsUpload: 'http://localhost:8083/mock/creditMaterials/index',
 		loanMaterialsUpload: 'http://192.168.0.170:8080/loanMaterials/index',
 		addCreditUser: 'http://192.168.0.170:8080/creditUser/add',
 		delCreditUser: 'http://192.168.0.170:8080/creditUser/del',
