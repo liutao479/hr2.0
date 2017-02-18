@@ -152,7 +152,7 @@
                 font-size: 65px;    
             }
         }
-        .input-file {
+        .input-file, .input-file-again {
             display: block;
             position: absolute;
             top: 0;
@@ -162,7 +162,7 @@
             z-index: 998;
             opacity: 0;
             filter: alpha(opacity=0);
-            width: 216px;
+            width: 100%;
             height: 100%;
             cursor: pointer;
             border: none;
@@ -186,12 +186,14 @@
         //图片查看组件的地址信息以及图片错误原因
         .imgs-describe {
             position: absolute;
+            z-index: 1001;
             bottom: 0;
             left: 0;
+            right: 0;
             width: 100%;
             height: 32px;
-            line-height: 32px;
-            padding-left: 10px;
+            line-height: 12px;
+            padding: 10px 10px;
             background-color: #000;
             opacity: 0.6;
             filter: alpha(opacity=60);
@@ -199,6 +201,18 @@
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            text-align: left;
+            -webkit-transition: .2s; 
+               -moz-transition: .2s; 
+                -ms-transition: .2s; 
+                 -o-transition: .2s; 
+                    transition: .2s;
+            &:hover {
+                height: 133px;
+                white-space: normal; 
+                text-indent: 2em;
+                line-height: 20px;
+            }
             .iconfont {
                 position: relative;
                 top: 2px;
@@ -223,6 +237,10 @@
             left: 58px;
             width: 105px;
         }
+    }
+    .imgs-input-text {
+        width: 100%;
+        margin-top: 10px;
     }
     .imgs-item-p {
         line-height: 42px;

@@ -7,6 +7,7 @@ page.ctrl('licenceStatis', [], function($scope) {
 			// acceptCompany:'',           //分公司名称
 			// bankName:'',                //经办银行名称
 			// orderNo:''                  //订单号，借款人姓名，身份证号 
+			operation: 1, //上牌进度接口
 			pageNum: $params.pageNum || 1
 		};
 	/**
@@ -17,7 +18,7 @@ page.ctrl('licenceStatis', [], function($scope) {
 	var loadLicenceStatisList = function(params, cb) {
 		$.ajax({
 			// url: $http.api($http.apiMap.licenceStatis),
-			url: $http.apiMap.licenceStatis,
+			url: $http.apiMap.licenceTable,
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -37,7 +38,7 @@ page.ctrl('licenceStatis', [], function($scope) {
 	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
 			current: parseInt(apiParams.pageNum),
-			pages: isPage ? _page.pages : (tool.pages(count || 0, _page.pageSize)),
+			pages: isPage ? _page.pages : (tool.pages(_page.pages || 0, _page.pageSize)),
 			size: _page.pageSize
 		});
 		$('#pageToolbar').paging();

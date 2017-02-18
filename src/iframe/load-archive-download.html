@@ -25,11 +25,11 @@
 				<!-- 全选删除框 -->
 				<div class="all-select-panel all-select-panel-nobottomborder clearfix">
 					<div class="all-check-box">
-						<div class="checkbox checkbox-normal"></div>
+						<div class="checkbox checkbox-normal" id="allCheck"></div>
 						<span>全选</span>
 					</div>
 					<div class="all-check-box">
-						<div class="button button-mini button-deep">批量下载</div>
+						<div class="button button-mini button-deep" id="allDownload">批量下载</div>
 					</div>
 				</div>
 				<!-- 全选删除框  end-->
@@ -58,15 +58,15 @@
 			</div>
 			
 			<!--分页器-->
-			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['loadArchiveDownload'].paging" data-pages="50" data-current="3"></div>
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['loadArchiveDownload'].paging" data-pages="1" data-current="1"></div>
 
 			<script type="text/x-dot-template" id="loadArchiveDownloadListTmpl">
 				{{ var len = it.length; if(len) { }}
 					{{ for(var i = 0; i < len; i++) { var row = it[i]; }}
 						{{ if(i == 0) { }}
-						<tr class="tr-noborder">
+						<tr class="orders-item tr-noborder">
 						{{ } else { }}
-						<tr>
+						<tr class="orders-item">
 						{{ } }}
 							<td class="orders-item-data order-item-first">
 								<div class="checkbox checkbox-normal"></div>

@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.eot');
-  src: url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_s94pbvaekwc23xr.eot');
+  src: url('//at.alicdn.com/t/font_s94pbvaekwc23xr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_s94pbvaekwc23xr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_s94pbvaekwc23xr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_s94pbvaekwc23xr.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -18,7 +18,7 @@
 }
 
 .float-right{
-    float: right;
+    float: right !important;
 }
 .pt24{
     padding-top: 24px !important;
@@ -424,7 +424,7 @@
         }
         td.order-item-first {
             position: relative;
-            width: 50px; 
+            width: 60px; 
         }
         .orders-item-data {
             height: 78px;
@@ -854,7 +854,7 @@
             }
             .panel-value-area {
                 overflow: hidden;
-                margin-left: 200px;
+                margin-left: 210px;
                 //文字元素给行高保持与左侧水平
                 .panel-value-item {
                     float: left;
@@ -922,7 +922,7 @@
                     line-height: 25px;
                 }
                 .import-doc {
-                    margin-top: 30px;
+                    margin-top: 20px;
                     .button {
                         height: 32px;
                         line-height: 32px;
@@ -1479,18 +1479,12 @@
 .all-select-panel {
     .layout;
     padding: 0 20px;
-    &.all-select-panel-nobottomborder {
-        border-bottom: none;
-    }
-    &.all-select-special {
-        border: none;
-        border-top: 1px solid @borderColor; 
-    }
     .all-check-box {
         float: left;
         height: 50px;
         line-height: 50px;
         margin-right: 15px;
+        color: @fontColor;
         strong {
             color: @mainColor;
             font-size: 15px;
@@ -1512,6 +1506,14 @@
         }
         .all-import {
             color: @buttonBgColor;
+        }
+        .all-describe {
+        }
+        .iconfont-exipre {
+            font-size: 22px;
+            color: @mainColor;
+            position: relative;
+            top: 2px;
         }
     }
 }
@@ -1764,7 +1766,6 @@
 .back-creditRes-bar {
     .backReason;
     padding: 15px 20px;
-    margin: 10px 0;
     .borderRadius(3px); 
     .back-credit {
         color: @backReasonBorderColor;
@@ -1779,6 +1780,7 @@
             }
             .value{
                 color: @backReasonBorderColor;
+                margin-right: 10px;
             }
         }
     }

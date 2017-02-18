@@ -1,9 +1,9 @@
 'use strict';
-page.ctrl('loanMaterialsUpload', function($scope) {
+page.ctrl('homeMaterialsUpload', function($scope) {
 	var $console = render.$console;
 	
 	/**
-	* 加载贷款材料上传数据
+	* 加载上门材料上传数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
@@ -12,10 +12,10 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
 			// type: flag,
 			type: 'post',
-			url: $http.apiMap.loanMaterialsUpload,
+			url: $http.apiMap.homeMaterialsUpload,
 			data: {
 				// taskId: $scope.$params.taskId
-				taskId: 1
+				taskId: 2
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -53,6 +53,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	*/
 	var setupBackReason = function() {
 		var $backReason = $console.find('#backReason');
+		console.log($backReason)
 		var _backReason;
 		if($scope.result.data.loanTask.backReason) {
 			_backReason = $scope.result.data.loanTask.backReason;
@@ -71,9 +72,12 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		$backReason.backReason();
 	}
 
-	// 编译完成后绑定事件
+	/**
+	 * 编译完成后绑定事件
+	 */
 	var setupEvent = function () {
 
+		// 增加征信人员
 		$console.find('#addCreditUser').on('click', function() {
 			$.ajax({
 				// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
@@ -97,7 +101,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		})
 	}
 
-	$console.load(router.template('iframe/loan-material-upload'), function() {
+	$console.load(router.template('iframe/material-upload'), function() {
 		// $scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
 		$scope.def.listTmpl = $console.find('#loanUploadTmpl').html();
 		// console.log($console.find('#creditResultPanel'))

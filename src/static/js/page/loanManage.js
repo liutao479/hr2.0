@@ -12,7 +12,7 @@ page.ctrl('loanManage', [], function($scope) {
 	*/
 	var loadLoanManageList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.loanManage),
+			url: $http.api('loan.manage'),
 			data: params,
 			success: $http.ok(function(result) {
 				console.log(result);

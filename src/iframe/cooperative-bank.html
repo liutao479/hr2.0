@@ -40,7 +40,7 @@
 				<!--面板  end-->
 				
 			</div>
-			<!--上牌办理   end-->
+			<!--合作机构维护（合作银行）-->
 			
 			<!--分页器-->
 			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['organizationManage'].paging" data-pages="50" data-current="3"></div>
@@ -57,9 +57,9 @@
 						{{ } }}
 							<td class="orders-item-data">{{=row.bankName}}</td>
 							<td class="orders-item-data acount-name-data">
-								{{for(var j = 0, len2 = row.userInfo.length; j < len2; j++) { var col = row.userInfo[j]; }}
+								{{for(var j = 0, len2 = row.demandBankAccountList.length; j < len2; j++) { var col = row.demandBankAccountList[j]; }}
 								<p class="acount-name">
-									<span>{{=col.bankc}}</span>-<span>{{=col.user}}</span><br />
+									<span>{{=col.accountNumber}}</span>-<span>{{=col.accountName}}</span><br />
 								</p>
 								{{ } }}
 							</td>
@@ -68,11 +68,11 @@
 							</td>
 							<td class="orders-item-data orders-item-data-blank"></td>
 							<td class="orders-item-data orders-item-data-operate">
-								<div class="button button-gray">
+								<div class="button button-gray button-mini">
 									<i class="iconfont">&#xe640;</i>
 									编辑
 								</div>
-								<div class="button button-gray">
+								<div class="button button-gray button-mini">
 									<i class="iconfont">&#xe602;</i>
 									删除
 								</div>

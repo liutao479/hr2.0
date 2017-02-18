@@ -23,14 +23,26 @@
 						</span>
 					</div>
 					<div class="search-item">
-						<input type="text" name="" autocomplete="off" id="searchInput" value="" placeholder="订单号\借款人姓名\身份证号" class="input-text" />
+						<div class="input-text">
+							<input type="text" autocomplete="off" id="searchInput" placeholder="订单号\借款人姓名\身份证号手机号" />
+						</div>
 					</div>
 					<div class="search-item">
 						<a href="javascript:;" id="search-reset">重置</a>
 						<div id="search" class="button button-mini button-deep">搜索</div>
 					</div>
 				</div>
-				<table border="0" cellpadding="" width="100%" class="orders-table">
+
+				<!--全选删除框-->
+				<div class="all-select-panel no-top-border clearfix">
+					<a href="javascript:;" class="all-check-box float-right">
+						<i class="iconfont iconfont-exipre">&#xe671;</i>
+						<span class="all-describe">导出超期名单</span>
+					</a>
+				</div>
+				<!--全选删除框  end-->
+				
+				<table cellpadding="" width="100%" class="orders-table">
 					<thead>
 						<tr class="orders-bar-title">
 							<td class="orders-item-data">订单编号</td>
@@ -53,7 +65,7 @@
 			<!--上牌进度查询 end-->
 			
 			<!--分页插件改编（未完成）-->
-			<div id="pageToolbar" class="pageToolbar"></div>
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['licenceStatis'].paging" data-pages="1" data-current="1"></div>
 
 			<script type="text/x-dot-template" id="licenceStatisListTmpl">
 				{{ var len = it.length; if(len) { }}
@@ -73,19 +85,21 @@
 							{{ if(row.status == 0){ }}
 							<td class="orders-item-data status-wait-verify">未办理</td>
 							{{ } else if(row.status == 1) { }}
-							<td class="orders-item-data status-not-handled">待审核</td>
-							{{ } else if(row.status == 2) { }}
-							<td class="orders-item-data">已完成</td>
-							{{ } else if(row.status == 4) { }}
-							<td class="orders-item-data status-back">被退回</td>
-							{{ } }} 
+								<td class="orders-item-data status-not-handled">待审核</td>
+								{{ } else if(row.status == 2) { }}
+									<td class="orders-item-data">已完成</td>
+									{{ } else if(row.status == 4) { }}
+										<td class="orders-item-data status-back">被退回</td>
+										{{ } }} 
 							<td class="orders-item-data">{{=tool.formatDate(row.pickDate)}}</td>
 							<td class="orders-item-data">{{=tool.formatDate(row.deadline)}}</td>
-							{{ if(row.countDown == "已超期"){ }}
-							<td class="orders-item-data status-back">已超期</td>
-							{{ } else { }}
-							<td class="orders-item-data">24小时</td>
-							{{ } }}
+							{{ if(row.status && row.status == 2) { }}
+							<td class="orders-item-data">--</td>
+							{{ } else if(tool.overdue(row.pickDate, row.deadline) == "已超期") { }}
+								<td class="orders-item-data status-back">{{=tool.overdue(row.pickDate, row.deadline)}}</td>
+								{{ } else { }}
+									<td class="orders-item-data">{{=tool.overdue(row.pickDate, row.deadline)}}</td>
+									{{ } }}
 							<td class="orders-item-data"><div class="button button-mini button-gray">查看</div></td>
 						</tr>
 					{{ } }}

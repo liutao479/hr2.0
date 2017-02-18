@@ -9,6 +9,7 @@ page.ctrl('mortgageStatis', [], function($scope) {
 			//     bankName: '',                //经办银行名称
 			//     orderNo: ''                  //订单号，借款人姓名，身份证号
 			// }
+			operation: 1, //抵押进度接口
 	    	pageNum: $params.pageNum || 1       //当前页码
 		};
 	/**
@@ -18,7 +19,7 @@ page.ctrl('mortgageStatis', [], function($scope) {
 	*/
 	var loadMortgageStatisList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.mortgageStatis,
+			url: $http.apiMap.mortgageTable,
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -38,7 +39,7 @@ page.ctrl('mortgageStatis', [], function($scope) {
 	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
 			current: parseInt(apiParams.pageNum),
-			pages: isPage ? _page.pages : (tool.pages(count || 0, _page.pageSize)),
+			pages: isPage ? _page.pages : (tool.pages(_page.pageNum || 0, _page.pageSize)),
 			size: _page.pageSize
 		});
 		$('#pageToolbar').paging();
@@ -91,9 +92,6 @@ page.ctrl('mortgageStatis', [], function($scope) {
 		$scope.$el = {
 			$tbl: $console.find('#mortgageStatisTable'),
 			$paging: $console.find('#pageToolbar')
-		}
-		if($params.process) {
-			
 		}
 		loadMortgageStatisList(apiParams, function() {
 			setupEvt();

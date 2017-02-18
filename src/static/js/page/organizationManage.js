@@ -12,13 +12,13 @@ page.ctrl('organizationManage', [], function($scope) {
 	*/
 	var loadOrganizationManageList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.organizationManage,
-			type: 'get',
+			url: $http.apiMap.organizationManageBank,
+			type: 'post',
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
 				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();

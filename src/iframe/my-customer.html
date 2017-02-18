@@ -82,6 +82,7 @@
 			<script type="text/x-dot-template" id="myCustomerListTmpl">
 				{{ var len = it.length; if(len) { }}
 					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
+					<a data-href="myCustomer/ordersDetail" class="orders-detail">
 					<table border="0" cellpadding="" width="100%" class="orders-box">
 						<thead>
 							<tr class="orders-bar-title">
@@ -115,33 +116,31 @@
 									<i class="iconfont">&#xe607;</i>
 									<span id="customer-phone">{{=row.mobile}}</span>
 								</td>
-								<td class="td-last">
-									<div class="button button-mini button-mini-width button-gray">放款预约</div>
+								<td class="td-last" rowspan="3">
+									<a href="javascript:;" data-orderno="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray makeLoan">放款预约</a><br>
+									<a href="javascript:;" data-orderno="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray applyTerminate">申请终止订单</a><br>
+									<a href="javascript:;" data-href="loanProcess/applyModify" data-orderno="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray applyModify">申请修改贷款信息</a>
 								</td>
 							</tr>
 							<tr>
 								<td class="status-name">分期金额：<span class="status-value">{{=row.stageMoney}}</span></td>
 								<td class="status-name">期数：<span class="status-value">{{=row.repayPeriod}}</span></td>
 								<td class="status-name">首付比例：<span class="status-value">{{=(row.sfProportion*100).toFixed(2) + '%'}}</span></td>
-								<td class="td-last">
-									<div class="button button-mini button-mini-width button-gray">申请终止订单</div>
-								</td>
 							</tr>
 							<tr class="last-tr">
 								<td colspan="3" class="status-name">
-									订单状态：
-									<span class="status-value">征信结果待录入</span>
-									<span class="status-value">垫资材料待上传</span>
-									<span class="status-value">提车待审核</span>
-									<span class="status-value">待上牌</span>
-									<a href="javascript:;" class="spread-tips">&lt;</a>
-								</td>
-								<td class="td-last">
-									<div class="button button-mini button-mini-width button-gray">申请修改贷款信息</div>
+									<div class="status-name-key">当前进度：</div>
+									<div class="status-name-value clearfix">
+										{{ for(var j = 0, len2 = row.loanTasks.length; j < len2; j++) { }}
+										<span class="status-value" style="{{=(j == 0 ? 'display: block;' : 'display: none;')}}">{{=window.categoryMap[row.loanTasks[j].category]}}</span>
+										{{ } }}
+										<a href="javascript:;" class="spread-tips" data-trigger="false"><i class="iconfont">&#xe670;</i></a>
+									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+					</a>
 					{{ } }}
 				{{ } else { }}
 				<div class="layout">
