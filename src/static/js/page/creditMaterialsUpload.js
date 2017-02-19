@@ -32,12 +32,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		// 	flag = 'post';
 		// }
 		$.ajax({
-			// url: 'http://127.0.0.1:8083/mock/creditUpload',
-			// type: flag,
 			type: 'post',
 			url: $http.apiMap.creditMaterialsUpload,
 			data: {
-				// taskId: $scope.$params.taskId
 				taskId: 10
 			},
 			dataType: 'json',

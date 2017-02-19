@@ -72,7 +72,7 @@
 	_.$http.apiMap = {
 		menu: 'http://127.0.0.1:8083/mock/menu',
 
-		loanList: 'http://127.0.0.1:8083/mock/loan.list',
+		loanList: 'http://127.0.0.1:8083/mock/loan/list',
 
 		myCustomer: 'http://192.168.0.184:8080/loanOrder/getMyCustomer',
 

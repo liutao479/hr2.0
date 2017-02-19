@@ -108,6 +108,7 @@
 			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + $.param(params) : '');
 		}
 		var item = g.routerMap[key];
+		console.log(item);
 		if(!item) {
 			return g.location.href = '404.html';
 		}

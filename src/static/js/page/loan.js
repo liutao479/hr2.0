@@ -16,7 +16,7 @@ page.ctrl('loan', function($scope) {
 			// url: 'http://192.168.0.144:8080/loanOrder/workbench',
 			// dataType:"json",
 			// data: params,
-			url: $http.api('loan.list'),
+			url: $http.apiMap.loanList,
 			success: $http.ok(function(result) {
 				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
