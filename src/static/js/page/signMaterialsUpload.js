@@ -12,7 +12,7 @@ page.ctrl('signMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
 			// type: flag,
 			type: 'post',
-			url: $http.apiMap.loanMaterialsUpload,
+			url: $http.api('signMaterials/index', 'zyj'),
 			data: {
 				// taskId: $scope.$params.taskId
 				taskId: 4
@@ -22,8 +22,11 @@ page.ctrl('signMaterialsUpload', function($scope) {
 				console.log(result);
 				$scope.result = result;
 				// 编译面包屑
-				var _loanUser = $scope.result.data.loanTask.loanOrder.realName;
-				setupLocation(_loanUser);
+				setupLocation();
+				// 设置退回原因
+				setupBackReason();
+				// 绑定立即处理事件
+				setupEvent();
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -35,17 +38,39 @@ page.ctrl('signMaterialsUpload', function($scope) {
 	/**
 	* 设置面包屑
 	*/
-	var setupLocation = function(loanUser) {
+	var setupLocation = function() {
 		if(!$scope.$params.path) return false;
 		var $location = $console.find('#location');
-		var _orderDate = tool.formatDate($scope.$params.date, true);
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '上门材料上传',
-			loanUser: loanUser,
-			orderDate: _orderDate
+			current: '签约材料上传',
+			loanUser: $scope.result.data.loanTask.loanOrder.realName,
+			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 		});
 		$location.location();
+	}
+
+	/**
+	* 设置退回原因
+	*/
+	var setupBackReason = function() {
+		var $backReason = $console.find('#backReason');
+		var _backReason;
+		if($scope.result.data.loanTask.backReason) {
+			_backReason = $scope.result.data.loanTask.backReason;
+		} else {
+			_backReason = false;
+		}
+		$backReason.data({
+			backReason: _backReason,
+			// backUser: $scope.result.data.loanTask.assign,
+			// backUserPhone: $scope.result.data.loanTask.backUserPhone,
+			// orderDate: $scope.result.data.loanTask.createDate（后台开发好，使用这个）
+			backUser: '刘东风',
+			backUserPhone: '13002601637',
+			backDate: '2017-2-18  12:12'
+		});
+		$backReason.backReason();
 	}
 
 	// 编译完成后绑定事件

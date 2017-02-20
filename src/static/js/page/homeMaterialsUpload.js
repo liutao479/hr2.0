@@ -25,6 +25,8 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 				setupLocation();
 				// 设置退回原因
 				setupBackReason();
+				// 绑定立即处理事件
+				setupEvent();
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -41,7 +43,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '贷款材料上传',
+			current: '上门材料上传',
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 		});
@@ -78,25 +80,31 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 
 		// 增加征信人员
 		$console.find('#addCreditUser').on('click', function() {
-			$.ajax({
-				// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
-				// type: flag,
-				type: 'post',
-				url: $http.apiMap.materialUpdate,
-				data: {
-					// 参数1：id 材料id （必填）
-					// 参数2：materialsType 材料类型 0图片1视频
-					// 参数3：sceneCode 场景编码 
-					// 参数4：userId 材料所属用户
-					// 参数5：ownerCode 材料归属类型
-					// 参数6：materialsPic 材料地址（必填）
-				},
-				dataType: 'json',
-				success: $http.ok(function(result) {
-					console.log(result);
+			alert('增加征信人员')
+		})
+
+		// 增加征信人员
+		$console.find('#submitOrder').on('click', function() {
+			alert("提交订单");
+			// $.ajax({
+			// 	// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
+			// 	// type: flag,
+			// 	type: 'post',
+			// 	url: $http.apiMap.materialUpdate,
+			// 	data: {
+			// 		// 参数1：id 材料id （必填）
+			// 		// 参数2：materialsType 材料类型 0图片1视频
+			// 		// 参数3：sceneCode 场景编码 
+			// 		// 参数4：userId 材料所属用户
+			// 		// 参数5：ownerCode 材料归属类型
+			// 		// 参数6：materialsPic 材料地址（必填）
+			// 	},
+			// 	dataType: 'json',
+			// 	success: $http.ok(function(result) {
+			// 		console.log(result);
 					
-				})
-			})
+			// 	})
+			// })
 		})
 	}
 

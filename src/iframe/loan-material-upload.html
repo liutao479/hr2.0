@@ -54,18 +54,19 @@
 					{{ } }}
 				{{ } }}
 				<div class="panel clearfix">
-					<!-- 贷款材料类别名 -->
+					<!-- 材料类别名 -->
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">贷款其他材料</span>
+							<span class="panel-title-name">其他材料</span>
 						</div>
 					</div>
-					<!-- 贷款材料类别名 -->
+					<!-- 材料类别名 -->
 
-					<!-- 贷款材料对应上传材料项 -->
+					<!-- 其他材料对应上传材料项 -->
 					<div class="panel-content clearfix">
 						<div class="loan-imgs-bar">
+						{{ if(it.data.QTCL[0].materials) { }}
 							{{ for(var m = 0, len4 = it.data.QTCL[0].materials.length; m < len4; m++) { }}
 							<div class="imgs-item-group">
 								<div class="imgs-item-upload">
@@ -78,6 +79,7 @@
 								<span class="imgs-item-p">其它材料{{=tool.formatCode(it.data.QTCL[0].materials[m].materialsCode) || '【还没配置好】'}}</span>
 							</div>
 							{{ } }}
+						{{ } }}
 							<div class="imgs-item-group">
 								<div class="imgs-item-upload">
 									<div class="iconfont-upload">
@@ -92,6 +94,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- 贷款材料对应上传材料项 -->
+					<!-- 其他材料对应上传材料项 -->
 				</div>
 			</script>
