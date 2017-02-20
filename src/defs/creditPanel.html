@@ -41,7 +41,7 @@
 		<!--借款人照片嵌入栏-->
 		<div class="credit-imgs-bar">
 			{{ for(var j = 0, len2 = row.loanUserCredit.creditMaterials.length; j < len2; j++) { var mr = row.loanUserCredit.creditMaterials[j]; }}
-			<div class="imgs-item-group uploadEvt" data-id="{{=it.loanTask.orderNo}}" data-name="{{=mr.materialsCode}}" data-sence="1" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-editable="1"></div>
+			<div class="imgs-item-group uploadEvt" data-id="{{=it.loanTask.orderNo}}" data-name="{{=mr.materialsCode}}" data-scene="1" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-editable="1"></div>
 			{{ } }}
 		</div>
 	{{ } }}

@@ -34,7 +34,7 @@
 		var self = this;
 		self.$el = $el;
 		self.options = $.extend(def, opts, params);
-		if(!self.options.id && !self.options.user && !self.options.sence) return false;
+		if(!self.options.id && !self.options.user && !self.options.scene) return false;
 		self.init();
 	}
 
@@ -71,6 +71,8 @@
 		var self = this;
 		if(self.status != 2) {
 			self.$el.find('.activeEvt').on('change', function() {
+				console.log(this.files[0])
+				console.log(this.value.split("\\\\"));
 				self.onUpload(this.files[0]);
 			});
 		}
@@ -140,7 +142,7 @@
 		}
 		params.materialsCode = self.options.code;
 		params.materialsType = self.options.type;
-		params.sceneCode = self.options.sence;
+		params.sceneCode = self.options.scene;
 		params.materialsPic = url;
 		$.ajax({
 			url: api.upload,
