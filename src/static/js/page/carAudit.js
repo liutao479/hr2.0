@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('loanInfo', function($scope) {
+page.ctrl('carAudit', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		$source = $scope.$source = {},
@@ -136,77 +136,10 @@ page.ctrl('loanInfo', function($scope) {
 					$(".selectOptBox").hide(); 
 				}
 			})
+			
 		});
 	}
 	
-//模糊搜索
-	$(document).on('input','.searchInp', function() {
-		var that = $(this).parent().siblings(".selecter").find("div");
-		var key = $(this).data('key');
-		var boxKey = key + 'Box';
-		$(this).attr("id",boxKey);
-		var data={};
-            data['keyword'] = $(this).val();
-		$.ajax({
-			url: apiMap[key],
-			data: data,
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//				$source.selectType = result.data;
-				var selectOptBox = $(".selectOptBox");
-				selectOptBox.attr("id",key);
-			})
-		})
-	})
-//点击下拉框拉取选项	
-	$(document).on('click','.selecter', function() {
-		var that =$("div",$(this));
-		var key = $(this).data('key');
-		var boxKey = key + 'Box';
-		$(this).attr("id",boxKey);
-		var data={};
-		if(key == 'remitAccountNumber'){
-			data['carShopId'] = $("#busiSourceId").val();
-		}else{
-			data['code'] = key;
-		}
-		$.ajax({
-			url: apiMap[key],
-			data: data,
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-				$source.selectType = result.data;
-				var selectOptBox = $(".selectOptBox");
-				selectOptBox.attr("id",key);
-			})
-		})
-	})
-//
-	$(document).on('click', '#remitAccountNumber li', function() {
-		var keyvalue = $(this).data('key');
-		var keybank = $(this).data('bank');
-		var keyname = $(this).data('name');
-		console.log(keyvalue);
-		$("#bankName").val(keybank);
-		$("#accountName").val(keyname);
-	})
-//点击本地常驻类型复选框
-	$(document).on('click', '.checkbox', function() {
-		returnCheckboxVal();
-	})
-	function returnCheckboxVal(){
-		$(".info-key-check-box").each(function(){
-			var data="";
-			$('.checked',$(this)).each(function(){
-				data += $(this).attr("data-value")+",";
-			});
-			var value = data.substring(0,data.length-1);
-			$("input",$(this)).val(value);
-			return;
-		})
-	}
 	var loanFinishedCheckbox = function(){
 		$(".info-key-check-box").each(function(){
 			var that =$("input",$(this)),
@@ -226,10 +159,6 @@ page.ctrl('loanInfo', function($scope) {
 		})
 	}
 
-//gps
-	$(document).on('click', '#isInstallGps li', function() {
-		loanFinishedGps();
-	})
 	var loanFinishedGps = function(){
 		var gps = $("#gps").val();
 		if(gps != 1){
@@ -242,10 +171,6 @@ page.ctrl('loanInfo', function($scope) {
 			$("#gps2").show();
 		}
 	}
-//保险续保
-	$(document).on('click', '#renewalModeBox li', function() {
-		loanFinishedBxxb();
-	})
 	var loanFinishedBxxb = function(){
 		var gps = $("#bxxbInput").val();
 		console.log(gps);
@@ -321,11 +246,11 @@ page.ctrl('loanInfo', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('loanInfo'), function() {
-		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
+	render.$console.load(router.template('carAudit'), function() {
+		$scope.def.listTmpl = render.$console.find('#pickCarchecktmpl').html();
 		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#loanInfoTable')
+			$tbl: $console.find('#pickCarcheck')
 		}
 		if($params.process) {
 			

@@ -87,7 +87,8 @@
 		openCardSheet: 'http://127.0.0.1:8083/mock/openCardSheet',
 		lendAudit: 'http://127.0.0.1:8083/mock/loan.info',
 		phoneAudit: 'http://127.0.0.1:8083/mock/phoneAudit',
-		carTwohand: 'http://127.0.0.1:8083/mock/car.towhand'
+		carTwohand: 'http://127.0.0.1:8083/mock/car.towhand',
+		carAudit: 'http://127.0.0.1:8083/mock/loan.infoBak'
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error

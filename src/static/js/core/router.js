@@ -234,6 +234,14 @@
 		'loanProcess/choiseType':{
 			title: '业务类型选择',
 			page: 'surviceType'
+		},
+		'loanProcess/carAudit':{
+			title: '提车审核',
+			page: 'carAudit'
+		},
+		'expireProcess/expireProcessDetail':{
+			title: '逾期处理',
+			page: 'expireProcessDetail'
 		}
 		
 

@@ -105,26 +105,6 @@ page.ctrl('cardAudit', function($scope) {
 		});
 	}
 	
-//点击下拉框拉取选项	
-//	$(document).on('click','.selecter', function() {
-//		var that =$("div",$(this));
-//		var key = $(this).data('key');
-//		var boxKey = key + 'Box';
-//		$(this).attr("id",boxKey);
-//		var data={};
-//          data['code'] = key;
-//		$.ajax({
-//			url: apiMap[key],
-//			data: data,
-//			dataType: 'json',
-//			success: $http.ok(function(result) {
-//				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-////				$source.selectType = result.data;
-//				var selectOptBox = $(".selectOptBox");
-//				selectOptBox.attr("id",key);
-//			})
-//		})
-//	})
 	/***
 	* 加载页面模板
 	*/
