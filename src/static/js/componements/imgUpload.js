@@ -1,7 +1,7 @@
 'use strict';
 /**
 * 图片上传组件
-* usage: <element data-id="材料ID" data-name="材料名称" data-type="材料类型" data-scene="场景编码" data-user="所属用户ID" data-owner="所属用户类型" data-img="已上传的图片地址" data-editable="" data-msg="" data-err=""></element>
+* usage: <element data-id="订单id" data-code="材料code" data-name="材料名称" data-type="材料类型" data-scene="场景编码" data-user="所属用户ID" data-owner="所属用户类型" data-img="已上传的图片地址" data-editable="" data-msg="" data-err=""></element>
 */
 (function($) {
 	$.fn.imgUpload = function(opts) {
@@ -19,12 +19,13 @@
 	*/
 	var imgUpload = function($el, opts, params) {
 		var def = {
-			id: undefined,
+			id: undefined,		//订单编号
+			code: undefined,	//材料编码
 			name: '材料名称',
 			type: 0,	//0 图片；1 视频
-			scene: undefined,	
-			user: undefined,
-			owner: undefined,
+			scene: undefined,	//场景名称
+			user: undefined,	//材料所属用户
+			owner: undefined,	//材料所属类型
 			img: undefined,	//图片地址
 			msg: undefined,	//退回消息
 			err: undefined,	//错误类型 0 图片错误；1 图片不清晰；2 其他
@@ -33,27 +34,31 @@
 		var self = this;
 		self.$el = $el;
 		self.options = $.extend(def, opts, params);
+		if(!self.options.id && !self.options.user && !self.options.sence) return false;
 		self.init();
 	}
 
 	imgUpload.prototype.init = function() {
 		var self = this,
 			tmp;
-		if(!self.options.img) {
+		self.errImg = '';
+		self.errMsg = '';
+		if(!self.options.img || self.options.img == 'undefined') {
+			self.status = 0;
 			tmp = internalTemplates.edit.format(self.options.name)
 		} else {
 			if(self.options.editable) {
-				var errImg = '',
-					errMsg = '';
 				if(self.options.err != undefined) {
-					errImg = self.options.err == 1 ? imgs.unclear : imgs.error;
+					self.errImg = self.options.err == 1 ? imgs.unclear : imgs.error;
 				}
 				if(self.options.msg != undefined) {
-					errMsg = internalTemplates.msg.format(self.options.msg);
+					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
-				tmp = internalTemplates.modify.format(self.options.name, self.options.img, errImg, errMsg)
+				tmp = internalTemplates.modify.format(self.options.name, self.options.img, self.errImg, self.errMsg)
+				self.status = 1;
 			} else {
 				tmp = internalTemplates.view.format(self.options.name, self.options.img || '');
+				self.status = 2;
 			}
 		}
 		self.$el.html(tmp);
@@ -64,12 +69,23 @@
 	*/
 	imgUpload.prototype.listen = function() {
 		var self = this;
-		self.$el.find('input.input-file').on('change', function() {
-			self.onUpload(this.files[0]);
-		});
+		if(self.status != 2) {
+			self.$el.find('.activeEvt').on('change', function() {
+				self.onUpload(this.files[0]);
+			});
+		}
+		if(self.status == 1) {
+			self.$el.find('.imgs-delete').on('click', function() {
+				self.onDelete();
+			});	
+		}
+		self.$el.find('.viewEvt').on('click', function() {
+
+		})
 	};
 	/**
 	* 图片上传
+	* @params {object} file 要上传的文件
 	*/
 	imgUpload.prototype.onUpload = function(file) {
 		var self = this;
@@ -77,14 +93,70 @@
 			if(!res) {
 				throw "can not get the license";
 			}
+			var suffix = file.name.substr(file.name.lastIndexOf('.'));
+			var key = res.dir + md5(res.signature) + suffix;
 			var fd = new FormData();
 			fd.append('OSSAccessKeyId', res.accessId);
 			fd.append('policy', res.policy);
 			fd.append('Signature', res.signature);
-			fd.append('key', res.dir + Base64.btoa(file.name + new Date()));
+			fd.append('key', key);
 			fd.append('file', file, file.name);
 			fd.append('success_action_status', 200);
-			imgUpload.doUpload(res.host, fd);
+			self.doUpload(res.host, fd);
+		})
+	};
+	/**
+	* 删除图片
+	*/
+	imgUpload.prototype.onDelete = function() {
+		var self = this;
+		$.ajax({
+			url: api.del,
+			success: function(xhr) {
+				if(!xhr.code) {
+					self.$el.html(internalTemplates.edit.format(self.options.name));
+					self.status = 0;
+					self.listen();			
+				}
+			}
+		});
+	};
+	/**
+	* 保存图片
+	* @params {string} url 图片地址
+	*/
+	imgUpload.prototype.saveImage = function(url) {
+		var self = this;
+		var params = {};
+		console.log(self);
+		if(self.options.id) {
+			params.orderNo = self.options.id;
+		}
+		if(self.options.user) {
+			params.userId = self.options.user;
+		}
+		if(self.options.owner) {
+			params.ownerCode = self.options.owner;
+		}
+		params.materialsCode = self.options.code;
+		params.materialsType = self.options.type;
+		params.sceneCode = self.options.sence;
+		params.materialsPic = url;
+		$.ajax({
+			url: api.upload,
+			data: params,
+			type: 'post',
+			success: function(xhr) {
+				if(!xhr.code) {
+					if(self.status != 1) {
+						self.$el.html(internalTemplates.modify.format(self.options.name, url, self.errImg, self.errMsg));
+						self.status = 1;	
+						self.listen();
+					} else {
+						self.$el.find('img').attr('src', url);
+					}
+				}
+			}
 		})
 	};
 	/**
@@ -93,23 +165,31 @@
 	* @params {function} cb 回调函数
 	*/
 	imgUpload.getLicense = function (type, cb) {
-		cb && typeof cb == 'function' && $.post(type == 1 ? api.video : api.img, function(response) {
+		$.ajax({
+			url: type == 1 ? api.video : api.img,
+			dataType: 'json'
+		}).done(function(response) {
 			if(!response.code) {
 				cb(response.data);
 			} else {
 				cb(false);
 			}
-		})
+		});
 	}
 	/**
 	* 执行图片上传
 	*/
-	imgUpload.doUpload = function(host, fd) {
+	imgUpload.prototype.doUpload = function(host, fd) {
+		var self = this;
 		$.ajax({
 			url: host,
 			data: fd,
+			type: 'post',
+			processData: false,
+			dataType: 'xml',
+			contentType: false,
 			success: function(response) {
-				console.log(response);
+				self.saveImage(host + '/' + fd.get('key'));
 			}
 		})
 	}
@@ -121,20 +201,19 @@
 
 	var internalTemplates = {
 		edit: '<div class="imgs-item-upload">\
-				<div class="iconfont-upload"><i class="<iconfont>&#xe61f;</iconfont>"></i>\
+				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
 				<span class="i-tips">点击上传图片</span>\
-				</div>\
-				<input type="file" class="input-file uploadEvt" />\
+				<input type="file" class="input-file activeEvt" />\
 			   </div>\
 			   <span class="imgs-item-p">{0}</span>',
 		modify: '<div class="imgs-item-upload">\
-				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i></div>\
+				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt"/></div>\
 				<div class="imgs-delete"><i class="iconfont">&#xe602;</i></div>\
 				<img src="{1}" class="imgs-view" />\
 				{2}{3}</div>\
 			   <span class="imgs-item-p">{0}</span>',
 		view: '<div class="imgs-item-upload">\
-				<img src="{1}" class="imgs-view" />\
+				<img src="{1}" class="imgs-view viewEvt" />\
 			   </div>\
 			   <span class="imgs-item-p">{0}</span>',
 		msg: '<div class="imgs-describe">{0}</div>'
@@ -142,7 +221,9 @@
 
 	var api = {
 		img: 'http://112.74.99.75:8089/oss/img/sign',
-		video: 'http://112.74.99.75:8089/oss/video/sign'
+		video: 'http://112.74.99.75:8089/oss/video/sign',
+		upload: 'http://127.0.0.1:8083/mock/addOrUpdate',
+		del: 'http://127.0.0.1:8083/mock/material/del'
 	}
 
 })(jQuery);

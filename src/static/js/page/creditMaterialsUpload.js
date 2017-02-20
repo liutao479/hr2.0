@@ -19,7 +19,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		}
 	];
 	$scope.tabs = [];
-	$scope.currentType = 0;
+	$scope.currentType = $scope.$params.type || 0;
+	$scope.$el = {};
 	
 	/**
 	* 加载征信材料上传数据
@@ -27,28 +28,21 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadOrderInfo = function(_type) {
-		// var flag = 'get';
-		// if(isPost) {
-		// 	flag = 'post';
-		// }
 		$.ajax({
 			type: 'post',
 			url: $http.apiMap.creditMaterialsUpload,
 			data: {
-				taskId: 10
+				taskId: $scope.$params.taskId
 			},
-			dataType: 'json',
 			success: $http.ok(function(result) {
-				console.log(result);
 				$scope.result = result;
 				$scope.orderNo = result.data.loanTask.orderNo;
 				$scope.result.data.currentType = _type;
-				$scope.currentType = _type;
 				// 编译面包屑
 				var _loanUser = $scope.result.data.loanTask.loanOrder.realName;
 				setupLocation(_loanUser);
 				// 编译tab
-				setupTab($scope.result.data);
+				setupTab($scope.result.data || {});
 				// 编译tab项对应内容
 				setupCreditPanel($scope.result.data, _type);
 				setupEvent();
@@ -77,9 +71,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * @param  {object} data tab栏操作的数据
 	 */
 	var setupTab = function(data) {
+		data.types = ['借款人', '共同还款人', '反担保人'];
 		render.compile($scope.$el.$tab, $scope.def.tabTmpl, data, true);
-		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
-		// console.log($scope.$el.$tabs);
 	}
 
 	/**
@@ -87,10 +80,10 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * @param  {object} result 请求获得的数据
 	 */
 	var setupCreditPanel = function(data, _type) {
-		render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, data.creditUsers[_type], true);
+		data.idx = _type;
+		render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, data, true);
 		var _tabTrigger = $console.find('#creditUploadPanel').html();
 		$scope.tabs[_type] = _tabTrigger;
-		
 	}
 	
 	// 编译完成后绑定事件
@@ -112,7 +105,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			$scope.currentType = _type;
 			$scope.$el.$creditPanel.html($scope.tabs[$scope.currentType]);
 		})
-		$scope.$el.find('.uploadEvt').imgUpload();
+		$scope.$el.$creditPanel.find('.uploadEvt').imgUpload();
 	}
 
 
@@ -191,21 +184,13 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				})
 			}) 
 		}
-		
-		
-		
 	})
-
-	$console.load(router.template('iframe/credit-material-upload'), function() {
-		$console.find('#creditUploadPanel').load(router.template('defs/creditPanel'), function() {
-			$scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
-			$scope.def.listTmpl = $console.find('#creditUploadListTmpl').html();
-			// console.log($console.find('#creditResultPanel'))
-			$scope.$el = {
-				$tab: $console.find('#creditTabs'),
-				$creditPanel: $console.find('#creditUploadPanel')
-			}
-			loadOrderInfo($scope.currentType);
-		})
-	})
+	$.when($.ajax('iframe/credit-material-upload'), $.ajax('defs/creditPanel.html')).done(function(t1, t2) {
+		$console.append(t1[0] + t2[0]);
+		$scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
+		$scope.def.listTmpl = $console.find('#creditUploadListTmpl').html();
+		$scope.$el.$tab = $console.find('#creditTabs');
+		$scope.$el.$creditPanel = $console.find('#creditUploadPanel');
+		loadOrderInfo($scope.currentType);
+	});
 });

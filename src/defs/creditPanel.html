@@ -1,7 +1,7 @@
 <script type="text/dot-x-template" id="creditUploadListTmpl">
 	<div class="panel no-top-border">
 	<!--借款人信息填写栏-->
-	{{ for(var i = 0, len = it.length; i < len; i++){ var row = it[i]; console.log(row); }}
+	{{ for(var i = 0, len = it.creditUsers[it.idx].length; i < len; i++){ var row = it.creditUsers[it.idx][i]; }}
 		{{ if(i == 0){ }}
 			<div class="credit-datas-bar credit-datas-bar-special clearfix">
 		{{ }else{ }}
@@ -11,7 +11,7 @@
 				<div class="key-item">真实姓名：</div>
 				<div class="key-value">
 					<div class="input-text input-text-mini2">
-						<input type="text" value=""/>		
+						<input type="text" value="{{=row.userName || ''}}"/>		
 					</div>
 				</div>
 			</div>
@@ -19,7 +19,7 @@
 				<div class="key-item">身份证号：</div>
 				<div class="key-value">
 					<div class="input-text">
-						<input type="text" value=""/>		
+						<input type="text" value="{{= row.idCard || ''}}"/>		
 					</div>	
 				</div>
 			</div>
@@ -40,47 +40,9 @@
 		</div>
 		<!--借款人照片嵌入栏-->
 		<div class="credit-imgs-bar">
-			<div class="imgs-item-group uploadEvt" data-id="1" data-name="身份证正面" data-sence="credit" data-user="1" data-owner="0"></div>
-			<div class="imgs-item-group">
-				<div class="imgs-item-upload">
-					<div class="iconfont-upload">
-						<i class="iconfont">&#xe61f;</i>
-					</div>
-					<span class="i-tips">点击或拖拽上传图片</span>
-					<input type="file" id="" class="input-file" />
-				</div>
-				<span class="imgs-item-p">共同还款人身份反面</span>
-			</div>
-			<div class="imgs-item-group">
-				<div class="imgs-item-upload">
-					<div class="iconfont-upload">
-						<i class="iconfont">&#xe61f;</i>
-					</div>
-					<span class="i-tips">点击或拖拽上传图片</span>
-					<input type="file" id="" class="input-file" />
-				</div>
-				<span class="imgs-item-p">共同还款人征信授权书</span>
-			</div>
-			<div class="imgs-item-group">
-				<div class="imgs-item-upload">
-					<div class="iconfont-upload">
-						<i class="iconfont">&#xe61f;</i>
-					</div>
-					<span class="i-tips">点击或拖拽上传图片</span>
-					<input type="file" id="" class="input-file" />
-				</div>
-				<span class="imgs-item-p">系统使用知情书</span>
-			</div>
-			<div class="imgs-item-group">
-				<div class="imgs-item-upload">
-					<div class="iconfont-upload">
-						<i class="iconfont">&#xe61f;</i>
-					</div>
-					<span class="i-tips">点击或拖拽上传图片</span>
-					<input type="file" id="" class="input-file" />
-				</div>
-				<span class="imgs-item-p">授权书签字照片</span>
-			</div>
+			{{ for(var j = 0, len2 = row.loanUserCredit.creditMaterials.length; j < len2; j++) { var mr = row.loanUserCredit.creditMaterials[j]; }}
+			<div class="imgs-item-group uploadEvt" data-id="{{=it.loanTask.orderNo}}" data-name="{{=mr.materialsCode}}" data-sence="1" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-editable="1"></div>
+			{{ } }}
 		</div>
 	{{ } }}
 	</div>

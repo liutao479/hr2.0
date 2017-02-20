@@ -98,7 +98,7 @@
 	* 执行渲染
 	* @params {string} key 要渲染的页面键名
 	* @params {object} params 要传递的参数
-	* @params {object} opts 参数
+	* @params {object}  opts 参数
 	* --@opts.bStatic 是否更新路由
 	*/
 	router.render = function(key, params, opts) {
@@ -108,7 +108,6 @@
 			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + $.param(params) : '');
 		}
 		var item = g.routerMap[key];
-		console.log(item);
 		if(!item) {
 			return g.location.href = '404.html';
 		}

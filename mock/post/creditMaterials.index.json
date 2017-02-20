@@ -1,46 +1,52 @@
 {
     "code":0,
     "data":{
-        "creditUsers":{    //征信用户
-            "0":[    //借款人
+        "creditUsers":{   
+            "0":[    
                 {
-                    "company":"公司A",    //所在单位
-                    "companyTel":"13334333334",     //单位电话
-                    "idCard":"330621197410036800", //身份证
+                    "company":"公司A",  
+                    "companyTel":"13334333334",
+                    "idCard":"330621197410036800", 
                     "isDel":0,
-                    "isServe":0,    //是否服兵役(0：否 1：是)
-                    "loanUserCredit":{    //用户征信
-                        "creditBatchNo":"21341324214",    //征信批次
-                        "creditId":100002,    //征信id
-                        "creditMaterials":[    //征信材料
+                    "isServe":0,    
+                    "loanUserCredit":{    
+                        "creditBatchNo":"21341324214",    
+                        "creditId":100002,    
+                        "creditMaterials":[    
                             {
-                                "creditId":100002,    //征信Id
-                                "id":28,    //征信材料结果id
+                                "creditId":100002,    
+                                "id":28,    
                                 "isDel":0,
-                                "materialsCode":"2",    //材料编码
-                                "materialsPic":"asdfasf",    //材料地址
-                                "thumnailPic":"sadfsaf"    //缩略图地址
+                                "materialsCode":"2"  
+                            },
+                            {
+                                "creditId": 100002,
+                                "id": 29,
+                                "isDel": 0,
+                                "materialsCode": 3,
+                                "materialsPic": "http://hjhjkh.oss-cn-hangzhou.aliyuncs.com/carloan-test/NmMWo2E7fDcgEfttAjSL8dXiVnE=.png",
+                                "thumnailPic": "http://hjhjkh.oss-cn-hangzhou.aliyuncs.com/carloan-test/NmMWo2E7fDcgEfttAjSL8dXiVnE=.png"
                             }
                         ],
-                        "creditReportId":"AD--2e94ikdj002",    //征信报告编号
-                        "orgId":82,    //征信机构
-                        "internalCreditInfo":"备注11111",     //内部征信信息
-                        "orderNo":"nfdb2016102820480799",    //订单号
-                        "remark":"备注0000000000002",    //备注
-                        "submitDate":1481614439000,    //征信提交日期
-                        "userId":990001,    //用户id
-                        "userName":"张三",    //征信用户名字
-                        "userType":0    //用户类型(0本人1共同还款人2反担保人)
+                        "creditReportId":"AD--2e94ikdj002",    
+                        "orgId":82,    
+                        "internalCreditInfo":"备注11111",     
+                        "orderNo":"nfdb2016102820480799",    
+                        "remark":"备注0000000000002",    
+                        "submitDate":1481614439000,    
+                        "userId":990001,    
+                        "userName":"张三",    
+                        "userType":0    
                     },
-                    "mobile":"13334333331",    //征信人手机
-                    "orderNo":"nfdb2016102820480799",    //订单号
-                    "userId":990001,    //用户Id
-                    "userName":"张三",    //用户姓名
-                    "userRelationship":0,    //与贷款人关系(本人:0;配偶：1；父母：2；子女：3；其他）
-                    "userType":0    //用户类型(0本人1共同还款人2反担保人)
+                    "mobile":"13334333331",    
+                    "orderNo":"nfdb2016102820480799",    
+                    "userId":990001,    
+                    "userName":"张三",    
+                    "userRelationship":0,    
+                    "userType":0    
                 }
             ],
-            "1":[//共同还款人
+            "1":[
                 {
                     "company":"公司B",
                     "companyTel":"13334333335",
@@ -79,7 +85,7 @@
                     "userType":1
                 }
             ],
-            "2":[//反担保人
+            "2":[
                 {
                     "company":"公司C",
                     "companyTel":"13334333336",
@@ -119,43 +125,44 @@
                 }
             ]
         },
-       "loanTask":{	//代办任务
-        "assignee":0,	 //任务指派人
-        "backReason":"图片不清晰",	//退回理由
-        "category":"loanMateriasupload",	    //场景编码
-        "configTasks":[
-            {
-                "id":237,
-                "productId":14, //产品ID
-                "reasons":[	//退回理由选项
-                    "要求增加共同还款人",	
-                    "要求增加反担保人"
-                ],
-                "taskCode":"NanfangNewCarProcess_usertask4",	//任务编码
-                "taskDefKey":"usertask4",	//任务定义key
-                "taskName":"人工录入征信", //任务名称
-                "type":"userTask"	//任务类型
-            }
-        ],
-        "createDate":1484617788000,
-        "id":1,
-        "loanOrder":{
-            "createDate":1481613850000,
-            "demandBankId":82, //经办银行
-            "id":100001,
-            "idCard":"330621197410036800", //借款人身份证
-            "isDel":0,
-            "orderNo":"nfdb2016102820480799",
-            "processInstId":"1243214214",	 //流程实例id	
-            "realName":"张三", //借款人
-            "status":0,
-            "updateDate":1486558322000
-        },
-        "orderNo":"nfdb2016102820480799",	//订单号
-        "processTaskId":"243321",	//流程任务id
-        "sceneName":"征信结果录入",    //场景名字
-        "status":1,  //任务状态:0新建 1正常2已完成3已退回-1已刪除
-        "taskCode":"NanfangNewCarProcess_usertask1"
-    }
-},
-"msg":"success" }
+       "loanTask":{	
+            "assignee":0,	 
+            "backReason":"图片不清晰",	
+            "category":"loanMateriasupload",	    
+            "configTasks":[
+                {
+                    "id":237,
+                    "productId":14, 
+                    "reasons":[	
+                        "要求增加共同还款人",	
+                        "要求增加反担保人"
+                    ],
+                    "taskCode":"NanfangNewCarProcess_usertask4",	
+                    "taskDefKey":"usertask4",	
+                    "taskName":"人工录入征信", 
+                    "type":"userTask"	
+                }
+            ],
+            "createDate":1484617788000,
+            "id":1,
+            "loanOrder":{
+                "createDate":1481613850000,
+                "demandBankId":82, 
+                "id":100001,
+                "idCard":"330621197410036800", 
+                "isDel":0,
+                "orderNo":"nfdb2016102820480799",
+                "processInstId":"1243214214",	 
+                "realName":"张三", 
+                "status":0,
+                "updateDate":1486558322000
+            },
+            "orderNo":"nfdb2016102820480799",	
+            "processTaskId":"243321",	
+            "sceneName":"征信结果录入",    
+            "status":1,  
+            "taskCode":"NanfangNewCarProcess_usertask1"
+        }
+    },
+    "msg":"success" 
+}
