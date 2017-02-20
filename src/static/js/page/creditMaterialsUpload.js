@@ -185,7 +185,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			}) 
 		}
 	})
-	$.when($.ajax('iframe/credit-material-upload'), $.ajax('defs/creditPanel.html')).done(function(t1, t2) {
+	$.when($.ajax('iframe/credit-material-upload.html'), $.ajax('defs/creditPanel.html')).done(function(t1, t2) {
 		$console.append(t1[0] + t2[0]);
 		$scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
 		$scope.def.listTmpl = $console.find('#creditUploadListTmpl').html();
