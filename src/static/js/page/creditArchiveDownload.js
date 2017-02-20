@@ -12,7 +12,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	*/
 	var loadCreaditList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.creditArchiveDownload,
+			url: $http.api('creditUser/getCreditMaterials', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',

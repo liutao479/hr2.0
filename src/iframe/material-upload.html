@@ -21,21 +21,21 @@
 			<!-- 材料上传 end-->
 			<script type="text/dot-x-template" id="loanUploadTmpl">
 				{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i]; }}
-					{{ for(var j = 0, len2 = it.data[row.code].length; j < len2; j++) { var col = it.data[row.code][j]; }}
+					{{ if(row.code == 'SMCL') {}}
 					<div class="panel mt15 clearfix">
-						<!-- 贷款材料类别名 -->
+						<!-- 上门材料标题 -->
 						<div class="panel-title-box">
 							<div class="panel-title">
 								<i class="iconfont">&#xe626;</i>
-								<span class="panel-title-name">{{=row.name}}{{=(col.userName ? '(' + col.userName + ')' : '')}}</span>
+								<span class="panel-title-name"></span>
 							</div>
 						</div>
-						<!-- 贷款材料类别名 -->
+						<!-- 上门材料标题 -->
 
-						<!-- 贷款材料对应上传材料项 -->
+						<!-- 上门材料对应上传材料项 -->
 						<div class="panel-content clearfix">
 							<div class="loan-imgs-bar">
-								{{ for(var k = 0, len3 = col.materials.length; k < len3; k++) { }}
+								{{ for(var j = 0, len2 = it.data.materials.length; j < len2; j++) { var col = it.data.materials[j]; }}
 								<div class="imgs-item-group">
 									<div class="imgs-item-upload">
 										<div class="iconfont-upload">
@@ -49,7 +49,7 @@
 								{{ } }}
 							</div>
 						</div>
-						<!-- 贷款材料对应上传材料项 -->
+						<!-- 上门材料对应上传材料项 -->
 					</div>
 					{{ } }}
 				{{ } }}

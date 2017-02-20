@@ -12,7 +12,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
 			// type: flag,
 			type: 'post',
-			url: $http.apiMap.homeMaterialsUpload,
+			url: $http.api('materials/index', 'zyj'),
 			data: {
 				// taskId: $scope.$params.taskId
 				taskId: 2
@@ -53,7 +53,6 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 	*/
 	var setupBackReason = function() {
 		var $backReason = $console.find('#backReason');
-		console.log($backReason)
 		var _backReason;
 		if($scope.result.data.loanTask.backReason) {
 			_backReason = $scope.result.data.loanTask.backReason;

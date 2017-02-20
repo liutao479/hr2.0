@@ -15,7 +15,7 @@ page.ctrl('licenceProcess', [], function($scope) {
 	*/
 	var loadLicenceProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.licenceTable,
+			url: $http.api('loanRegistration/getLoanRegistrationList', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
