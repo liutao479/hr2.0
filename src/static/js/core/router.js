@@ -242,6 +242,30 @@
 		'expireProcess/expireProcessDetail':{
 			title: '逾期处理',
 			page: 'expireProcessDetail'
+		},
+		'expireProcess/expireRecord':{
+			title: '逾期记录',
+			page: 'expireRecord'
+		},
+		'expireProcess/expireInfoPrev':{
+			title: '逾期记录',
+			page: 'expireInfoPrev'
+		},
+		'expireProcess/expireTaskDistribute':{
+			title: '逾期记录',
+			page: 'expireTaskDistribute'
+		},
+		'expireProcess/expireInfoInputSingle':{
+			title: '逾期记录',
+			page: 'expireInfoInputSingle'
+		},
+		'expireProcess/expireProcessInputList':{
+			title: '逾期记录',
+			page: 'expireProcessInputList'
+		},
+		'expireProcess/expireSingleDetail':{
+			title: '逾期记录',
+			page: 'expireSingleDetail'
 		}
 		
 

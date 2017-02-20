@@ -36,7 +36,7 @@ page.ctrl('loanInfo', function($scope) {
 		"userRelationship": urlStr+"/mock/busiSourceName",
 		"remitAccountNumber": urlStr+"/mock/bankNo",
 		"relationship": urlStr+"/mock/busiSourceName"
-		}
+	};
 	var postUrl = {
 		"saveOrderInfo": urlStr+"/loanInfoInput/updLoanOrder",
 		"saveCarInfo": urlStr+"/loanInfoInput/updLoanUserCar",
@@ -46,7 +46,7 @@ page.ctrl('loanInfo', function($scope) {
 		"saveloanPayCardInfo": urlStr+"/loanInfoInput/updLoanPayCard",
 		"saveFYXXInfo": urlStr+"/loanInfoInput/updLoanFee",
 		"saveQTXX": urlStr+"/loanInfoInput/updLoanIndividuation"
-		}
+	};
 
 	/**
 	* 加载车贷办理数据

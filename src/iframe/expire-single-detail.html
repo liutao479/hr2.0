@@ -20,152 +20,156 @@
 				<!--提交修改等等按钮   end-->
 				
 				<!-- 逾期记录 -->
-				<table class="expire-orders-table" width="100%">
-					<tbody class="expire-content match-fail">
-						<tr class="expire-content-tr">
-							<td class="expire-content-item">
-								<table class="table-inner">
-									<tr class="table-inner-tr">
-										<td class="key">记录生成时间：</td>
-										<td class="value">2016-09-06 11:34</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">卡号：</td>
-										<td class="value">261736726483478347364</td>
-									</tr>
-									
-									<tr class="table-inner-tr">
-										<td class="key">账单日：</td>
-										<td class="value">2016/12/13</td>
-									</tr>
-								</table>
-							</td>
-							<td class="expire-content-item">
-								<table class="table-inner">
-									<tr class="table-inner-tr">
-										<td class="key">卡余额：</td>
-										<td class="value">40000元</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">公司垫款：</td>
-										<td class="value">40000元</td>
-									</tr>
-								</table>
-							</td>
-							<td class="expire-content-item">
-								<table class="table-inner">
-									<tr class="table-inner-tr">
-										<td class="key">当前逾期金额：</td>
-										<td class="value">621.226.00元</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">每期应还：</td>
-										<td class="value">2944元</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">当前逾期金额/每期应还：</td>
-										<td class="value">100元</td>
-									</tr>
-								</table>
-							</td>
-							<td class="expire-content-item">
-								<table class="table-inner">
-									<tr class="table-inner-tr">
-										<td class="key">连续逾期次数：</td>
-										<td class="value">2次</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">累计逾期次数：</td>
-										<td class="value">2次</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">当前逾期金额/每期应还：</td>
-										<td class="value">100元</td>
-									</tr>
-								</table>
-							</td>
-							<td class="expire-content-item expire-content-item-last">
-								<a class="button button-mini button-mini-width button-gray">逾期结清</a>
-								<br>
-								<a class="button button-mini button-mini-width button-gray">删除</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<table class="expire-orders-table" width="100%">
-					<tbody class="expire-content match-fail">
-						<tr class="expire-content-tr">
-							<td class="expire-content-item">
-								<table class="table-inner">
-									<tr class="table-inner-tr">
-										<td class="key">记录生成时间：</td>
-										<td class="value">2016-09-06 11:34</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">卡号：</td>
-										<td class="value">261736726483478347364</td>
-									</tr>
-									
-									<tr class="table-inner-tr">
-										<td class="key">账单日：</td>
-										<td class="value">2016/12/13</td>
-									</tr>
-								</table>
-							</td>
-							<td class="expire-content-item">
-								<table class="table-inner">
-									<tr class="table-inner-tr">
-										<td class="key">卡余额：</td>
-										<td class="value">40000元</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">公司垫款：</td>
-										<td class="value">40000元</td>
-									</tr>
-								</table>
-							</td>
-							<td class="expire-content-item">
-								<table class="table-inner">
-									<tr class="table-inner-tr">
-										<td class="key">当前逾期金额：</td>
-										<td class="value">621.226.00元</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">每期应还：</td>
-										<td class="value">2944元</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">当前逾期金额/每期应还：</td>
-										<td class="value">100元</td>
-									</tr>
-								</table>
-							</td>
-							<td class="expire-content-item">
-								<table class="table-inner">
-									<tr class="table-inner-tr">
-										<td class="key">连续逾期次数：</td>
-										<td class="value">2次</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">累计逾期次数：</td>
-										<td class="value">2次</td>
-									</tr>
-									<tr class="table-inner-tr">
-										<td class="key">当前逾期金额/每期应还：</td>
-										<td class="value">100元</td>
-									</tr>
-								</table>
-							</td>
-							<td class="expire-content-item expire-content-item-last">
-								<a class="button button-mini button-mini-width button-gray">逾期结清</a>
-								<br>
-								<a class="button button-mini button-mini-width button-gray">删除</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div id="expireSingleDetailTable"></div>
 
 
 				<!-- 逾期记录  end-->
 			</div>
+			<script type="text/x-dot-template" id="expireSingleDetailTmpl">
+				<table class="expire-orders-table" width="100%">
+					<tbody class="expire-content match-fail">
+						<tr class="expire-content-tr">
+							<td class="expire-content-item">
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">记录生成时间：</td>
+										<td class="value">2016-09-06 11:34</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">卡号：</td>
+										<td class="value">261736726483478347364</td>
+									</tr>
+									
+									<tr class="table-inner-tr">
+										<td class="key">账单日：</td>
+										<td class="value">2016/12/13</td>
+									</tr>
+								</table>
+							</td>
+							<td class="expire-content-item">
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">卡余额：</td>
+										<td class="value">40000元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">公司垫款：</td>
+										<td class="value">40000元</td>
+									</tr>
+								</table>
+							</td>
+							<td class="expire-content-item">
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">当前逾期金额：</td>
+										<td class="value">621.226.00元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">每期应还：</td>
+										<td class="value">2944元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">当前逾期金额/每期应还：</td>
+										<td class="value">100元</td>
+									</tr>
+								</table>
+							</td>
+							<td class="expire-content-item">
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">连续逾期次数：</td>
+										<td class="value">2次</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">累计逾期次数：</td>
+										<td class="value">2次</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">当前逾期金额/每期应还：</td>
+										<td class="value">100元</td>
+									</tr>
+								</table>
+							</td>
+							<td class="expire-content-item expire-content-item-last">
+								<a class="button button-mini button-mini-width button-gray">逾期结清</a>
+								<br>
+								<a class="button button-mini button-mini-width button-gray">删除</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="expire-orders-table" width="100%">
+					<tbody class="expire-content match-fail">
+						<tr class="expire-content-tr">
+							<td class="expire-content-item">
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">记录生成时间：</td>
+										<td class="value">2016-09-06 11:34</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">卡号：</td>
+										<td class="value">261736726483478347364</td>
+									</tr>
+									
+									<tr class="table-inner-tr">
+										<td class="key">账单日：</td>
+										<td class="value">2016/12/13</td>
+									</tr>
+								</table>
+							</td>
+							<td class="expire-content-item">
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">卡余额：</td>
+										<td class="value">40000元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">公司垫款：</td>
+										<td class="value">40000元</td>
+									</tr>
+								</table>
+							</td>
+							<td class="expire-content-item">
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">当前逾期金额：</td>
+										<td class="value">621.226.00元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">每期应还：</td>
+										<td class="value">2944元</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">当前逾期金额/每期应还：</td>
+										<td class="value">100元</td>
+									</tr>
+								</table>
+							</td>
+							<td class="expire-content-item">
+								<table class="table-inner">
+									<tr class="table-inner-tr">
+										<td class="key">连续逾期次数：</td>
+										<td class="value">2次</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">累计逾期次数：</td>
+										<td class="value">2次</td>
+									</tr>
+									<tr class="table-inner-tr">
+										<td class="key">当前逾期金额/每期应还：</td>
+										<td class="value">100元</td>
+									</tr>
+								</table>
+							</td>
+							<td class="expire-content-item expire-content-item-last">
+								<a class="button button-mini button-mini-width button-gray">逾期结清</a>
+								<br>
+								<a class="button button-mini button-mini-width button-gray">删除</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</script>
+			
