@@ -12,7 +12,7 @@ page.ctrl('auditPrint', [], function($scope) {
 	*/
 	var loadAuditPrintList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.auditPrint,
+			url: $http.api('loanUserStage/getFinancialData', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
