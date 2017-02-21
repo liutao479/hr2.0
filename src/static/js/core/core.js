@@ -44,6 +44,7 @@
 				case 'jbs':
 					return 'http://192.168.0.113:8080/' + method;
 					break;
+				// 王亮ip 
 				case 'wl':
 					return 'http://192.168.0.110:8080/' + method;
 					break;
