@@ -144,6 +144,86 @@
 		'licenceProcess/licenceDetail': {
 			title: '上牌办理详情',
 			page: 'licenceDetail'
+		},
+		'loanProcess/loanInfo': {
+			title: '信息表修改',
+			page: 'loanInfo'
+		},
+		'loanManage/ordersDetail': {
+			title: '订单详情',
+			page: 'ordersDetail'
+		},
+		'loanProcess/loanInfoInput': {
+			title: '贷款信息表录入',
+			page: 'loanInfo'
+		},
+//		'loanProcess/secondhandInput': {
+//			title: '二手车评估信息录入',
+//			page: 'carTwohand'
+//		},
+		'loanProcess/secondhandInput':{
+			title: '二手车评估信息录入',
+			page: 'secondhandInput'
+		},
+		'loanProcess/phoneAudit': {
+			title: '电审',
+			page: 'phoneAudit'
+		},
+		'loanProcess/loanAudit': {
+			title: '贷款审核',
+			page: 'loanAudit'
+		},
+		'loanProcess/lendAudit': {
+			title: '放款审核',
+			page: 'lendAudit'
+		},
+//		'loanProcess/cardAudit': {
+//			title: '开卡审核',
+//			page: 'cardAudit'
+//		},
+		'loanProcess/cardAudit': {
+			title: '开卡审核',
+			page: 'openCardSheet'
+		},
+		'loanProcess/creditAudit':{
+			title: '开卡审核',
+			page: 'operateAnalysis'
+		},
+		'loanProcess/choiseType':{
+			title: '业务类型选择',
+			page: 'surviceType'
+		},
+		'loanProcess/carAudit':{
+			title: '提车审核',
+			page: 'carAudit'
+		},
+		'expireProcess/expireProcessDetail':{
+			title: '逾期处理',
+			page: 'expireProcessDetail'
+		},
+		'expireProcess/expireRecord':{
+			title: '逾期记录',
+			page: 'expireRecord'
+		},
+		'expireProcess/expireInfoPrev':{
+			title: '逾期记录',
+			page: 'expireInfoPrev'
+		},
+		'expireProcess/expireTaskDistribute':{
+			title: '逾期记录',
+			page: 'expireTaskDistribute'
+		},
+		'expireProcess/expireInfoInputSingle':{
+			title: '逾期记录',
+			page: 'expireInfoInputSingle'
+		},
+		'expireProcess/expireProcessInputList':{
+			title: '逾期记录',
+			page: 'expireProcessInputList'
+		},
+		'expireProcess/expireSingleDetail':{
+			title: '逾期记录',
+			page: 'expireSingleDetail'
 		}
 		
 

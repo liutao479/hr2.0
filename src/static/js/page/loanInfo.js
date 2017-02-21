@@ -8,26 +8,27 @@ page.ctrl('loanInfo', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-//	var urlStr = "http://192.168.0.135:8080";
+	var urlStr1 = "http://192.168.0.144:8080";
 	var urlStr = "http://127.0.0.1:8083";
 	var apiMap = {
 		"sex": urlStr+"/mock/sex",
 		"isSecond": urlStr+"/mock/isSecond",
 		"serviceType": urlStr+"/mock/serviceType",
-		"demandBankId": urlStr+"/mock/demandBankId",
+		"brand": urlStr+"/mock/demandBankId",
 		"busiSourceType": urlStr+"/mock/busiSourceType",
 		"busiArea": urlStr+"/mock/busiArea",
 		"busiSourceName": urlStr+"/mock/busiSourceName",
+		"busiSourceNameSearch": urlStr+"/mock/searchCarShop",
 //		"busiSourceName": urlStr+"/carshop/list",
 		"licenseType": urlStr+"/mock/busiSourceName",
 		"isFinanceLeaseVehicle": urlStr+"/mock/busiSourceName",
 		"isOperationVehicle": urlStr+"/mock/busiSourceName",
 		"onLicensePlace": urlStr+"/mock/busiSourceName",
 		"isInstallGps": urlStr+"/mock/yesOrNo",
-		"businessModel": urlStr+"/mock/busiSourceName",
+		"busimode": urlStr+"/mock/busimode",
 		"isDiscount": urlStr+"/mock/busiSourceName",
 		"carName": urlStr+"/mock/busiSourceName",
-		"repayPeriod": urlStr+"/mock/busiSourceName",
+		"repaymentTerm": urlStr+"/mock/repaymentTerm",
 		"renewalMode": urlStr+"/mock/busiSourceName",
 		"isAdvanced": urlStr+"/mock/busiSourceName",
 		"maritalStatus": urlStr+"/mock/busiSourceName",
@@ -38,14 +39,14 @@ page.ctrl('loanInfo', function($scope) {
 		"relationship": urlStr+"/mock/busiSourceName"
 	};
 	var postUrl = {
-		"saveOrderInfo": urlStr+"/loanInfoInput/updLoanOrder",
-		"saveCarInfo": urlStr+"/loanInfoInput/updLoanUserCar",
-		"saveStageInfo": urlStr+"/loanInfoInput/updLoanUserStage",
-		"saveCommonInfo": urlStr+"/loanInfoInput/updLoanUser",
-		"saveEmergencyInfo": urlStr+"/loanInfoInput/updLoanEmergencyConact",
-		"saveloanPayCardInfo": urlStr+"/loanInfoInput/updLoanPayCard",
-		"saveFYXXInfo": urlStr+"/loanInfoInput/updLoanFee",
-		"saveQTXX": urlStr+"/loanInfoInput/updLoanIndividuation"
+		"saveOrderInfo": urlStr1+"/loanInfoInput/updLoanOrder",
+		"saveCarInfo": urlStr1+"/loanInfoInput/updLoanUserCar",
+		"saveStageInfo": urlStr1+"/loanInfoInput/updLoanUserStage",
+		"saveCommonInfo": urlStr1+"/loanInfoInput/updLoanUser",
+		"saveEmergencyInfo": urlStr1+"/loanInfoInput/updLoanEmergencyConact",
+		"saveloanPayCardInfo": urlStr1+"/loanInfoInput/updLoanPayCard",
+		"saveFYXXInfo": urlStr1+"/loanInfoInput/updLoanFee",
+		"saveQTXX": urlStr1+"/loanInfoInput/updLoanIndividuation"
 	};
 
 	/**
@@ -57,7 +58,7 @@ page.ctrl('loanInfo', function($scope) {
 		var data={};
 			data['taskId']=80871;
 		$.ajax({
-			url: $http.api($http.apiMap.loanInfo),
+			url: $http.api('loan.infoBak',''),
 			data: data,
 			dataType: 'json',
 			async:false,
@@ -72,6 +73,17 @@ page.ctrl('loanInfo', function($scope) {
 				loanFinishedGps();
 				loanFinishedBxxb();
 			})
+		});
+	}
+//页面加载完成对所有输入框进行样式设定
+	var loanFinishedCss = function(){
+		var boxes = $(".info-key-value-box");
+		boxes.each(function(i){
+			if(i % 2 == 0){
+				$(this).css('text-align','left');
+			}else{
+				$(this).css('text-align','right');
+			}
 		});
 	}
 //页面加载完成对所有带“*”的input进行必填绑定
@@ -99,6 +111,10 @@ page.ctrl('loanInfo', function($scope) {
 		$(".selecter").each(function(){
 			var that =$("div",$(this));
 			var key = $(this).data('key');
+			var inputSearch = $(".searchInp",$(this));
+			if(inputSearch){
+				inputSearch.hide();
+			};
 			var boxKey = key + 'Box';
 			$(this).attr("id",boxKey);
 			var data={};
@@ -141,7 +157,7 @@ page.ctrl('loanInfo', function($scope) {
 	
 //模糊搜索
 	$(document).on('input','.searchInp', function() {
-		var that = $(this).parent().siblings(".selecter").find("div");
+		var that = $(this).parent().siblings("div");
 		var key = $(this).data('key');
 		var boxKey = key + 'Box';
 		$(this).attr("id",boxKey);
@@ -155,6 +171,7 @@ page.ctrl('loanInfo', function($scope) {
 				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
 //				$source.selectType = result.data;
 				var selectOptBox = $(".selectOptBox");
+				that.find('.selectOptBox').show();
 				selectOptBox.attr("id",key);
 			})
 		})
@@ -162,6 +179,10 @@ page.ctrl('loanInfo', function($scope) {
 //点击下拉框拉取选项	
 	$(document).on('click','.selecter', function() {
 		var that =$("div",$(this));
+		var inputSearch =$(".searchInp",$(this));
+		if(inputSearch){
+			inputSearch.show();
+		}
 		var key = $(this).data('key');
 		var boxKey = key + 'Box';
 		$(this).attr("id",boxKey);
@@ -321,17 +342,14 @@ page.ctrl('loanInfo', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('loanInfo'), function() {
-		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
-		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
+	$console.load(router.template('iframe/loanInfo'), function() {
+		$scope.def.listTmpl = $console.find('#loanlisttmpl').html();
+		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#loanInfoTable')
 		}
-		if($params.process) {
-			
-		}
 		loadLoanList(apiParams);
-	});
+	})
 });
 
 

@@ -131,6 +131,7 @@ $(document).on('hover', '#navigator .user', function() {
 //			$(this).parent().parent().after("<div class='opcity0'>这个是新增的div</div>");
 		}
 		$(".selectOptBox").hide();
+		$(".searchInp").hide();
 		return false;
 	})
 //点击下拉消失	zhy

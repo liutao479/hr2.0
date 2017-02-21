@@ -1,40 +1,11 @@
 	<!--贷款信息录入zhy-->
 			<div class="container" id="loan-info">
-				<!--返回列表-->
-				<div class="path-back-bar">
-					<div class="path-back">
-						<i class="iconfont">&#xe626;</i>
-						<a href="#">返回列表</a>&nbsp;&gt;
-						<span class="current-page">贷款信息录入</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">借款人：</span>
-						<span class="value">张三</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">订单生成时间：</span>
-						<span class="value">2016-11-03 14:02</span>
-					</div>
-				</div>
-				<!--提交修改等等按钮-->
-				<div class="commit-orders-box commit-orders-box-area mb15">
-					<a href="javascript:;" class="commit-item">
-						<i class="iconfont">&#xe614;</i>
-						<span>放款预约</span>
-					</a>
-					<a href="javascript:;" class="commit-item">
-						<i class="iconfont">&#xe6fd;</i>
-						<span>申请终止订单</span>
-					</a>
-					<a href="javascript:;" class="commit-item">
-						<i class="iconfont">&#xe640;</i>
-						<span>申请修改分期信息</span>
-					</a>
-				</div>
-				<!--提交修改等等按钮   end-->
+				<!-- 返回列表 -->
+				<div id="location"></div>
+				<!-- 返回列表 end-->
 				
 				<!--面板-->
-				<div id="loanInfoTable"></div>
+				<div id="loanInfoTable" class="mt15"></div>
 				
 				
 				<!--提交订单按钮-->
@@ -97,11 +68,11 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="demandBankId" class="info-value selecter">
+								<span data-key="brand" class="info-value selecter">
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="demandBankId" />
+									<input type="hidden" name="demandBankId" value="{{= it.data.DDXX.demandBankId}}" />
 								</span>
 							</div>
 							{{  };if(seg.code == 'busiSourceType'){  }}
@@ -116,7 +87,7 @@
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="busiSourceTypeCode" />
+									<input type="hidden" name="busiSourceTypeCode" value="{{= it.data.DDXX.busiSourceTypeCode}}" />
 								</span>
 							</div>
 							{{  };if(seg.code == 'busiArea'){  }}
@@ -130,8 +101,8 @@
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="busiAreaCode" />
-									<input type="hidden" name="busiAreaName" />
+									<input type="hidden" name="busiAreaCode" value="{{= it.data.DDXX.busiArea.busiAreaCode}} />
+									<!--<input type="hidden" name="busiAreaName" value="{{= it.data.DDXX.busiArea.busiAreaName}} />-->
 								</span>
 							</div>
 							{{  };if(seg.code == 'busiSourceName'){  }}
@@ -142,7 +113,7 @@
 									{{ } }} 
 									{{= seg.name}}：</span>
 								<span data-key="busiSourceName" class="info-value selecter">
-									<span class="inputSearch"><input class="searchInp" data-key = "busiSourceName" type="text" name="busiSourceName" id="busiSourceName" value="{{= it.data.DDXX.busiSourceId}}" title="{{= it.data.DDXX.busiSourceId}}" /></span>
+									<span class="inputSearch"><input class="searchInp" data-key = "busiSourceNameSearch" type="text" /></span>
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
@@ -376,7 +347,7 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="businessModel" class="info-value selecter">
+								<span data-key="busimode" class="info-value selecter">
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
@@ -444,7 +415,7 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="repayPeriod" class="info-value selecter">
+								<span data-key="repaymentTerm" class="info-value selecter">
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
@@ -538,7 +509,7 @@
 								<span class="info-value"><input type="text" name="discountMoney" value="{{= it.data.FQXX.discountMoney }}" /></span>
 							</div>
 							{{  };if(seg.code == 'discountRate'){  }}
-							<div class="info-key-value-box">
+							<div class="info-key-value-box maxxxx">
 								<span class="info-key">
 									{{ if(seg.empty == '0'){ }}
 									<i>*</i>
@@ -547,7 +518,7 @@
 								<span class="info-value"><input type="text" name="discountRate" value="{{= it.data.FQXX.discountRate }}" /></span>
 							</div>
 							{{  };if(seg.code == 'renewalMode'){  }}
-							<div class="info-key-value-box">
+							<div class="info-key-value-box maxxxx">
 								<span class="info-key">
 									{{ if(seg.empty == '0'){ }}
 									<i>*</i>
@@ -560,96 +531,23 @@
 									<input type="hidden" id="bxxbInput" name="renewalMode" />
 								</span>
 							</div>
-							<div class="info-key-value-box bxxbYear">
+							{{ for(var g = 0;g < it.data.FQXX.renewalInfoList.length;g++){ var bxxb = it.data.FQXX.renewalInfoList[g]; }}
+							<div class="info-key-value-box maxxxx bxxbYear">
 								<span class="info-key">
 									<!--{{ if(seg.empty == '0'){ }}-->
 									<i>*</i>
 									<!--{{ } }}--> 
 									<!--{{= seg.name}}：-->
-									第一年：
+									第{{= bxxb.yaerNumber}}年：
 								</span>
 								<span data-key="isAdvanced" class="info-value selecter">
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isAdvanced" />
+									<input type="hidden" name="{{= bxxb.yaerNumber}}" value="{{= bxxb.value}}" />
 								</span>
 							</div>
-							<div class="info-key-value-box bxxbYear">
-								<span class="info-key">
-									<!--{{ if(seg.empty == '0'){ }}-->
-									<i>*</i>
-									<!--{{ } }}--> 
-									<!--{{= seg.name}}：-->
-									第二年：
-								</span>
-								<span data-key="isAdvanced" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isAdvanced" />
-								</span>
-							</div>
-							<div class="info-key-value-box bxxbYear">
-								<span class="info-key">
-									<!--{{ if(seg.empty == '0'){ }}-->
-									<i>*</i>
-									<!--{{ } }}--> 
-									<!--{{= seg.name}}：-->
-									第三年：
-								</span>
-								<span data-key="isAdvanced" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isAdvanced" />
-								</span>
-							</div>
-							<div class="info-key-value-box bxxbYear">
-								<span class="info-key">
-									<!--{{ if(seg.empty == '0'){ }}-->
-									<i>*</i>
-									<!--{{ } }}--> 
-									<!--{{= seg.name}}：-->
-									第四年：
-								</span>
-								<span data-key="isAdvanced" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isAdvanced" />
-								</span>
-							</div>
-							<div class="info-key-value-box bxxbYear">
-								<span class="info-key">
-									<!--{{ if(seg.empty == '0'){ }}-->
-									<i>*</i>
-									<!--{{ } }}--> 
-									<!--{{= seg.name}}：-->
-									第五年：
-								</span>
-								<span data-key="isAdvanced" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isAdvanced" />
-								</span>
-							</div>
-							<div class="info-key-value-box bxxbYear">
-								<span class="info-key">
-									<!--{{ if(seg.empty == '0'){ }}-->
-									<i>*</i>
-									<!--{{ } }}--> 
-									<!--{{= seg.name}}：-->
-									第六年：
-								</span>
-								<span data-key="isAdvanced" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isAdvanced" />
-								</span>
-							</div>
+							{{ } }}
 							{{  };if(seg.code == 'cardNo'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key">
@@ -1621,6 +1519,10 @@
 					{{for(var a = 0, len = it.length; a < len; a++) { var op1 = it[a]; }}
 						{{if(op1.account){}}
 						<li data-bank='{{= op1.bankName}}' data-name = "{{= op1.accountName}}" data-key="{{= op1.account}}">{{= op1.account}}</li>
+						{{ }else if(op1.shopId){ }}
+						<li data-key="{{= op1.shopId}}">{{= op1.shopName}}</li>
+						{{ }else if(op1.bankId){ }}
+						<li data-key="{{= op1.bankId}}">{{= op1.bankName}}</li>
 						{{ }else{ }}
 						<li data-key="{{= op1.value}}">{{= op1.name}}</li>
 						{{ } }}

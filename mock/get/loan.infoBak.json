@@ -1155,6 +1155,21 @@
             "loanFeeMoney":5000,
             "loanMoney":48400,
             "renewalMode":0,
+            "renewalInfoList":[
+	           {
+	            	"value":1,
+	            	"yaerNumber":1
+	           },{
+	            	"value":1,
+	            	"yaerNumber":2
+	           },{
+	            	"value":1,
+	            	"yaerNumber":3
+	           },{
+	            	"value":1,
+	            	"yaerNumber":4
+	           }
+            ],
             "repayPeriod":36,
             "sfMoney":28400,
             "sfProportion":0.3817,
