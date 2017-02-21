@@ -130,7 +130,7 @@
 			route: 'auditPrint'
 		},
 		operationsAnalysis: {
-			name: '运营分析',
+			name: '统计分析',
 			route: 'operationsAnalysis',
 			icon: '&#xe603;'
 		},

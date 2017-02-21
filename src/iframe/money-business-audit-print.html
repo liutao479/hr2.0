@@ -18,11 +18,13 @@
 						</span>
 					</div>
 					<div class="search-item">
-						<input type="text" name="" id="" value="" placeholder="订单号\借款人姓名\身份证号" class="input-text" />
+						<div class="input-text">
+							<input type="text" autocomplete="off" id="searchInput" placeholder="订单号\借款人姓名\身份证号手机号" />
+						</div>
 					</div>
 					<div class="search-item">
-						<a href="javascript:;">重置</a>
-						<div id="" class="button button-mini">搜索</div>
+						<a href="javascript:;" id="search-reset">重置</a>
+						<div id="search" class="button button-mini button-deep">搜索</div>
 					</div>
 				</div>
 				<!--银行汇款日期选择  end-->
@@ -69,9 +71,9 @@
 				{{ var len = it.length; if(len) { }}
 					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
 						{{ if(i == 0) { }}
-						<tr class="tr-noborder">
+						<tr class="orders-item tr-noborder">
 						{{ } else { }}
-						<tr>
+						<tr class="orders-item">
 						{{ } }}
 							<td class="orders-item-data order-item-first">
 								<div class="checkbox checkbox-normal"></div>
@@ -81,7 +83,7 @@
 							<td class="orders-item-data">{{=tool.formatDate(row.utilityTime)}}</td>
 							<td class="orders-item-data">{{=row.deptName}}</td>
 							<td class="orders-item-data">{{=row.stageMoney}}</td>
-							<td class="orders-item-data"><div class="button button-mini button-gray">修改</div></td>
+							<td class="orders-item-data"><div class="button button-mini button-gray">打印</div></td>
 						</tr>
 					{{ } }}
 				{{ } else { }}

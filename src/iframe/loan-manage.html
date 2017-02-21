@@ -92,9 +92,9 @@
 				{{ var len = it.length; if(len) { }}
 					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
 						{{ if(i == 0) { }}
-						<tr class="tr-noborder">
+						<tr class="orders-item tr-noborder">
 						{{ } else { }}
-						<tr>
+						<tr class="orders-item">
 						{{ } }}
 							<td class="orders-item-data">{{=row.orderNo}}</td>
 							<td class="orders-item-data">{{=row.applyTime}}</td>
@@ -108,7 +108,7 @@
 						</tr>
 					{{ } }}
 				{{ } else { }}
-				<tr class="tr-noborder">
+				<tr class="orders-item tr-noborder">
 					<td colspan="7" class="orders-blank">
 						<div class="blank-box">
 							<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">

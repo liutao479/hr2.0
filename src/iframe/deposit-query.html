@@ -8,6 +8,7 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe6f5;</i>
 							<span class="panel-title-name">保证金管理</span>
+							<div class="button button-mini button-deep">查询保证金余额</div>
 						</div>
 					</div>
 					<!--面板标题 end-->
@@ -99,11 +100,11 @@
 					<tbody>
 						{{for(var j = 0, len2 = it[i].result.length; j < len2; j++) { var col = it[i].result[j]; }}
 							{{ if(j % 2 !== 0) { }}
-							<tr class="tr-even">
+							<tr class="orders-item tr-even">
 							{{ } else if(j % 2 == 0 && j == 0) { }}
-							<tr class="tr-odd tr-noborder">
+							<tr class="orders-item tr-odd tr-noborder">
 							{{ } else { }}
-							<tr class="tr-odd">
+							<tr class="orders-item tr-odd">
 							{{ } }}
 								<td class="orders-item-data">{{=col.queryTime}}</td>
 								<td class="orders-item-data">{{=col.bank}}</td>

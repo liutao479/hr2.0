@@ -91,7 +91,7 @@ $(document).on('hover', '#navigator .message', function() {
 //用户名
 $(document).on('hover', '#navigator .user', function() {
 	$(this).find('.user-area').toggle();
-	$(this).find('.user-field-item').toggleClass('user-field-item-active');
+	// $(this).find('.user-field-item').toggleClass('user-field-item-active');
 });
 
 

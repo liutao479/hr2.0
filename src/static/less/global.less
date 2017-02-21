@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.eot');
-  src: url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_qf0tq8bfqhugnwmi.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_s94pbvaekwc23xr.eot');
+  src: url('//at.alicdn.com/t/font_s94pbvaekwc23xr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_s94pbvaekwc23xr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_s94pbvaekwc23xr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_s94pbvaekwc23xr.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -18,7 +18,7 @@
 }
 
 .float-right{
-    float: right;
+    float: right !important;
 }
 .pt24{
     padding-top: 24px !important;
@@ -403,8 +403,34 @@ input[disabled]{
         .orders-item-data-blank {
             width: 22%;
         } 
+        .meanwhile {
+            width: 100%;
+            text-align: center;
+            .arrow-trigger {
+                position: relative;
+                height: 21px;
+                .arrow-bottom {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -4px;
+                    margin-left: -4px;
+                    cursor: pointer;
+                    border-width: 6px;
+                }
+                .arrow-top {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -10px;
+                    margin-left: -4px;
+                    cursor: pointer;
+                    border-width: 6px;
+                }
+            }
+        }
     }
-    tbody tr {
+    tbody .orders-item {
         border-top:1px dashed #cdd9e9;
         &.tr-noborder {
             border: none;
@@ -417,7 +443,7 @@ input[disabled]{
         }
         td.order-item-first {
             position: relative;
-            width: 50px; 
+            width: 60px; 
         }
         .orders-item-data {
             height: 78px;
@@ -638,7 +664,6 @@ input[disabled]{
     .layout;
     border-top: 3px solid @blue;
     margin-bottom: 15px;
-//  overflow: hidden;
     &.panel-credit {
         margin: 0;
     }
@@ -847,7 +872,7 @@ input[disabled]{
             }
             .panel-value-area {
                 overflow: hidden;
-                margin-left: 200px;
+                margin-left: 210px;
                 //文字元素给行高保持与左侧水平
                 .panel-value-item {
                     float: left;
@@ -872,24 +897,50 @@ input[disabled]{
                 .field-table {
                     width: 100%;
                     border-collapse: collapse;
-                    tr:nth-of-type(odd) {
+                    tr.tr-odd {
                         background-color: #f3f4f9;
+                        .input {
+                            background-color: #f3f4f9;
+                        }
                     }
-                    tr:nth-of-type(even) {
+                    tr.tr-even {
                         background-color: #FFF;
+                        .input {
+                            background-color: #FFF;
+                        }
                     }
                     td {
-                        padding: 0 37px;
+                        position: relative;
                         border: 1px solid @borderColor;
                         text-align: center;
                         height: 40px;
+                        &.td-key {
+                            width: 15%;
+                        }
+                        &.td-value {
+                            width: 35%;
+                        }
+                        .input {
+                            float: left;
+                            text-align: center;
+                            width: 80%;
+                            height: 40px;
+                            border: none;
+                            padding-left: 30px;
+                        }
+                        .unit {
+                            float: right;
+                            width: 20%;
+                            text-align: center;
+                            line-height: 40px;
+                        }
                     }
                 }
                 .remark {
                     line-height: 25px;
                 }
                 .import-doc {
-                    margin-top: 30px;
+                    margin-top: 20px;
                     .button {
                         height: 32px;
                         line-height: 32px;
@@ -1318,9 +1369,7 @@ input[disabled]{
 } 
 //箭头
 .arrow {
-    position: absolute;
     border-width: 5px;
-    top: 50%;
     &&-left, &&-right {
         margin-top: -6px;
     }
@@ -1448,18 +1497,12 @@ input[disabled]{
 .all-select-panel {
     .layout;
     padding: 0 20px;
-    &.all-select-panel-nobottomborder {
-        border-bottom: none;
-    }
-    &.all-select-special {
-        border: none;
-        border-top: 1px solid @borderColor; 
-    }
     .all-check-box {
         float: left;
         height: 50px;
         line-height: 50px;
         margin-right: 15px;
+        color: @fontColor;
         strong {
             color: @mainColor;
             font-size: 15px;
@@ -1481,6 +1524,14 @@ input[disabled]{
         }
         .all-import {
             color: @buttonBgColor;
+        }
+        .all-describe {
+        }
+        .iconfont-exipre {
+            font-size: 22px;
+            color: @mainColor;
+            position: relative;
+            top: 2px;
         }
     }
 }
@@ -1562,19 +1613,23 @@ input[disabled]{
 //类似键值对的组合
 .key-item-box {
     display: inline-block;
-    float: left;
     margin-right: 25px;
-    line-height: 60px;
+    height: 60px;
     .key-item {
+        float: left;
+        line-height: 60px;
         margin-right: 25px;
     }
     .key-value {
-        width: 175px;
-    }
-    .select {
-        position: relative;
-        top: -2px;
-        vertical-align: middle;
+        float: left;
+        overflow: hidden;
+        height: 60px;
+        .input-text {
+            margin-top: 14px; 
+        }
+        .select {
+            margin-top: 14px;
+        }
     }
 }
 
@@ -1754,7 +1809,6 @@ input[disabled]{
 .back-creditRes-bar {
     .backReason;
     padding: 15px 20px;
-    margin: 10px 0;
     .borderRadius(3px); 
     .back-credit {
         color: @backReasonBorderColor;
@@ -1769,6 +1823,7 @@ input[disabled]{
             }
             .value{
                 color: @backReasonBorderColor;
+                margin-right: 10px;
             }
         }
     }

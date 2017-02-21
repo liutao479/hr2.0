@@ -3,21 +3,29 @@
 				<div class="select-search-bar clearfix">
 					<div class="search-item">
 						<span class="select-name">经销商：</span>
-						<span class="select select-common">请选择<span class="arrow arrow-bottom"></span></span>
+						<span class="select select-common">
+							<span class="placeholder">请选择</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
 					</div>
 					<div class="search-item">
 						<span class="select-name">经销商：</span>
-						<span class="select select-common">请选择<span class="arrow arrow-bottom"></span></span>
+						<span class="select select-common">
+							<span class="placeholder">请选择</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
 					</div>
 					<div class="search-item">
-						<input type="text" name="" id="" value="" placeholder="订单号\借款人姓名\身份证号" class="input-text" />
+						<div class="input-text">
+							<input type="text" autocomplete="off" id="searchInput" placeholder="订单号\借款人姓名\身份证号手机号" />
+						</div>
 					</div>
 					<div class="search-item">
-						<a href="javascript:;">重置</a>
-						<div id="" class="button button-mini-nowidth">搜索</div>
+						<a href="javascript:;" id="search-reset">重置</a>
+						<div id="search" class="button button-mini button-deep">搜索</div>
 					</div>
 					<div class="search-item">
-						<div class="checkbox checkbox-normal" id="haha"></div>
+						<div class="checkbox checkbox-normal" id="overdue"></div>
 						<span>只显示已超期记录</span>
 					</div>
 				</div>
@@ -42,36 +50,40 @@
 			<!--订单列表 end-->
 			
 			<!--分页器-->
-			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['mortgageProcess'].paging" data-pages="50" data-current="3"></div>
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['mortgageProcess'].paging" data-pages="50" data-current="3"></div>
 
 			<script type="text/x-dot-template" id="mortgageProcessListTmpl">
 				{{ var len = it.length; if(len) { }}
 					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
 						{{ if(i % 2 !== 0) { }}
-						<tr class="tr-even">
+						<tr class="orders-item tr-even">
 						{{ } else if(i % 2 == 0 && i == 0) { }}
-						<tr class="tr-odd tr-noborder">
+						<tr class="orders-item tr-odd tr-noborder">
 						{{ } else { }}
-						<tr class="tr-odd">
+						<tr class="orders-item tr-odd">
 						{{ } }}
 							<td class="orders-item-data">{{=row.orderNo}}</td>
-							<td class="orders-item-data"><span>{{=row.user}}</span><br /><span>（{{=row.idc}}）</span></td>
-							<td class="orders-item-data">{{=row.bank}}</td>
-							{{ if(row.licenceStatus == 0){ }}
-							<td class="orders-item-data">未办理</td>
-							{{ } else if(row.licenceStatus == 1) { }}
-							<td class="orders-item-data status-back">审核退回</td>
-							{{ } else { }}
-							<td class="orders-item-data">已完成</td>
-							{{ } }}
-							<td class="orders-item-data">{{=row.carTime}}</td>
-							<td class="orders-item-data">{{=row.licenceTime}}</td>
-							{{ if(row.countDown == "已超期"){ }}
-							<td class="orders-item-data status-back">已超期</td>
-							{{ } else { }}
-							<td class="orders-item-data">{{=row.countDown}}</td>
-							{{ } }}
-							<td class="orders-item-data"><div class="button button-gray">立即处理</div></td>
+							<td class="orders-item-data"><span>{{=row.realName}}</span><br /><span>（{{=row.idCard}}）</span></td>
+							<td class="orders-item-data">{{=row.bankName}}</td>
+							{{ if(row.status == 0){ }}
+							<td class="orders-item-data status-wait-verify">未办理</td>
+							{{ } else if(row.status == 1) { }}
+								<td class="orders-item-data status-not-handled">待审核</td>
+								{{ } else if(row.status == 2) { }}
+									<td class="orders-item-data">已完成</td>
+									{{ } else if(row.status == 4) { }}
+										<td class="orders-item-data status-back">被退回</td>
+										{{ } }} 
+							<td class="orders-item-data">{{=tool.formatDate(row.pickDate)}}</td>
+							<td class="orders-item-data">{{=tool.formatDate(row.deadline)}}</td>
+							{{ if(row.status && row.status == 2) { }}
+							<td class="orders-item-data">--</td>
+							{{ } else if(tool.overdue(row.pickDate, row.deadline) == "已超期") { }}
+								<td class="orders-item-data status-back">{{=tool.overdue(row.pickDate, row.deadline)}}</td>
+								{{ } else { }}
+									<td class="orders-item-data">{{=tool.overdue(row.pickDate, row.deadline)}}</td>
+									{{ } }}
+							<td class="orders-item-data"><div class="button button-mini button-gray">立即处理</div></td>
 						</tr>
 					{{ } }}
 				{{ } else { }}

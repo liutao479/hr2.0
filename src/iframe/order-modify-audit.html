@@ -1,46 +1,6 @@
-	<!--我的客户-->
-			<div class="container customer" id="customer">
+	<!--信息修改审核-->
+			<div class="container orderModifyAudit" id="orderModifyAudit">
 				<div class="select-search-bar clearfix">
-					<div class="search-item">
-						<span class="select-name">创建日期：</span>
-						<span class="select select-date">
-							<span class="placeholder placeholder-mini">0000-00-00</span>
-							<span class="arrow arrow-bottom"></span>
-						</span>
-						<span class="separator">-</span>
-						<span class="select select-date">
-							<span class="placeholder placeholder-mini">0000-00-00</span>
-							<span class="arrow arrow-bottom"></span>
-						</span>
-					</div>
-					<div class="search-item">
-						<span class="select-name">业务来源方：</span>
-						<span class="select select-common">
-							<span class="placeholder placeholder-mini">请选择</span>
-							<span class="arrow arrow-bottom"></span>
-						</span>
-					</div>
-					<div class="search-item">
-						<span class="select-name">车辆品牌：</span>
-						<span class="select select-common">
-							<span class="placeholder placeholder-mini">请选择</span>
-							<span class="arrow arrow-bottom"></span>
-						</span>
-					</div>
-					<div class="search-item">
-						<span class="select-name">分公司：</span>
-						<span class="select select-common">
-							<span class="placeholder placeholder-mini">全部</span>
-							<span class="arrow arrow-bottom"></span>
-						</span>
-					</div>
-					<div class="search-item">
-						<span class="select-name">经办行：</span>
-						<span class="select select-common">
-							<span class="placeholder placeholder-mini">请选择</span>
-							<span class="arrow arrow-bottom"></span>
-						</span>
-					</div>
 					<div class="search-item">
 						<span class="select-name">当前进度：</span>
 						<span class="select select-common">
@@ -50,21 +10,19 @@
 					</div>
 					<div class="search-item">
 						<div class="input-text">
-							<input type="text" placeholder="订单号\借款人姓名\身份证号手机号" />
+							<input type="text" autocomplete="off" id="searchInput" placeholder="订单号\借款人姓名\身份证号手机号" />
 						</div>
 					</div>
 					<div class="search-item search-item-last">
-						<a href="javascript:;">重置</a>
-						<div id="" class="button button-mini button-deep">搜索</div>
+						<a href="javascript:;" id="search-reset">重置</a>
+						<div id="search" class="button button-mini button-deep">搜索</div>
 					</div>
 					
 				</div>
 				<div class="page-bar">
-					<a href="javascript:;" class="time-sort time-sort-up">创建时间</a>
-					<div class="page-bar-right">
-						<span class="page-count">1/100</span>
-						<a href="javascript:;" class="page-change disabled"><i class="iconfont">&#xe601;</i></a>
-						<a href="javascript:;" class="page-change"><i class="iconfont">&#xe670;</i></a>
+					<a href="javascript:;" class="time-sort time-sort-up" id="time-sort">创建时间</a>
+					<div class="page-bar-right" id="scrollBar">
+						
 					</div>
 				</div>
 				<div class="customer-orders" id="orderModifyTable">
@@ -74,10 +32,16 @@
 			<!--我的客户 end-->
 
 			<!--分页插件-->
-			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['orderModifyAudit'].paging" data-pages="50" data-current="8"></div>
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['orderModifyAudit'].paging" data-pages="1" data-current="1"></div>
+			
+			<script type="text/x-dot-template" id="scrollBarTmpl">
+				<span class="page-count"><i id="page-num" >{{=(it.pages == 0 ? 0 : it.pageNum)}}</i>/<i id="pages">{{=it.pages}}</i></span>
+				<a href="javascript:;" class="page-change scroll-prev{{=(it.pageNum <= 1 ? ' disabled' : '')}}"><i class="iconfont">&#xe601;</i></a>
+				<a href="javascript:;" class="page-change scroll-next{{=(it.pageNum >= it.pages ? ' disabled' : '')}}"><i class="iconfont">&#xe670;</i></a>
+			</script>
 
 			<script type="text/x-dot-template" id="orderModifyListTmpl">
-				{{ var len = it.length; if(len) { }}
+				{{ var len = it.length; if(len) { console.log(len); }}
 					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
 					<table width="100%" class="orders-box">
 						<thead>
@@ -134,7 +98,7 @@
 					</table>
 					{{ } }}
 				{{ } else { }}
-				<div class="layout">
+				<div class="layout mt15">
 					<div class="blank-box">
 						<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
 						<p>暂无待办任务！</p>
