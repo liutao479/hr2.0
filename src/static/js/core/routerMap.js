@@ -141,10 +141,30 @@
 			title: '订单详情',
 			page: 'ordersDetail'
 		},
-		'licenceProcess/licenceDetail': {
+		'licenceProcess/licenceProcessDetail': {
 			title: '上牌办理详情',
-			page: 'licenceDetail'
-		}
+			page: 'licenceProcessDetail'
+		},
+		'licenceAudit/licenceAuditDetail': {
+			title: '上牌审核详情',
+			page: 'licenceAuditDetail'
+		},
+		'licenceStatis/licenceStatisDetail': {
+			title: '上牌办理进度详情',
+			page: 'licenceStatisDetail'
+		},
+		'mortgageProcess/mortgageProcessDetail': {
+			title: '抵押办理详情',
+			page: 'mortgageProcessDetail'
+		},
+		'mortgageAudit/mortgageAuditDetail': {
+			title: '抵押审核详情',
+			page: 'mortgageAuditDetail'
+		},
+		'mortgageStatis/mortgageStatisDetail': {
+			title: '抵押办理进度详情',
+			page: 'mortgageStatisDetail'
+		},
 		
 
 	}

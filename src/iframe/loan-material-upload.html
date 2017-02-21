@@ -21,22 +21,59 @@
 			<!-- 材料上传 end-->
 			<script type="text/x-dot-template" id="loanUploadTmpl">
 				{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i]; }}
-					{{ for(var j = 0, len2 = it.data[row.code].length; j < len2; j++) { var col = it.data[row.code][j]; }}
+					{{ if(row.code != 'QTCL') { }}
+						{{ for(var j = 0, len2 = it.data[row.code].length; j < len2; j++) { var col = it.data[row.code][j]; }}
+						<div class="panel mt15 clearfix">
+							<!-- 贷款材料类别名 -->
+							<div class="panel-title-box">
+								<div class="panel-title">
+									<i class="iconfont">&#xe626;</i>
+									<span class="panel-title-name">{{=row.name}}{{=(col.userName ? '(' + col.userName + ')' : '')}}</span>
+								</div>
+							</div>
+							<!-- 贷款材料类别名 -->
+
+							<!-- 贷款材料对应上传材料项 -->
+							<div class="panel-content clearfix">
+								<div class="loan-imgs-bar">
+								{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m]; }}
+									{{ for(var n = 0, len4 = col.materials.length; n < len4; n++) { var nl = col.materials[n]; }}
+										{{ if(ml.code == nl.materialsCode) { }}
+										<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="{{=col.materialsPic}}" data-editable="1"></div>
+										{{ } else { }}
+										<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="" data-editable="1"></div>
+										{{ } }}
+									{{ } }}
+								{{ } }}
+								</div>
+							</div>
+							<!-- 贷款材料对应上传材料项 -->
+						</div>
+						{{ } }}
+					{{ } }}
+					{{ if(row.code == 'QTCL') { }}
 					<div class="panel mt15 clearfix">
-						<!-- 贷款材料类别名 -->
+						<!-- 其他材料类别名 -->
 						<div class="panel-title-box">
 							<div class="panel-title">
 								<i class="iconfont">&#xe626;</i>
-								<span class="panel-title-name">{{=row.name}}{{=(col.userName ? '(' + col.userName + ')' : '')}}</span>
+								<span class="panel-title-name">{{=row.name}}</span>
 							</div>
 						</div>
-						<!-- 贷款材料类别名 -->
+						<!-- 其他材料类别名 -->
 
-						<!-- 贷款材料对应上传材料项 -->
+						<!-- 其他材料对应上传材料项 -->
 						<div class="panel-content clearfix">
 							<div class="loan-imgs-bar">
-							{{ for(var m = 0, len3 = col.materials.length; m < len3; m++) { var ml = col.materials[m]; }}
-								{{ for(var n = 0, len4 = row.segments.length; n < len4; n++) { var nl = row.segments[n]; }}
+								{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m]; }}
+									{{ for(var n = 0, len4 = col.materials.length; n < len4; n++) { var nl = col.materials[n]; }}
+										{{ if(ml.code == nl.materialsCode) { }}
+										<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-name="{{=ml.mame}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="{{=col.materialsPic}}" data-editable="1"></div>
+										{{ } else { }}
+										<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-name="{{=ml.mame}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="" data-editable="1"></div>
+										{{ } }}
+									{{ } }}
+								{{ } }}
 								<div class="imgs-item-group">
 									<div class="imgs-item-upload">
 										<div class="iconfont-upload">
@@ -45,59 +82,14 @@
 										<span class="i-tips">点击或拖拽上传图片</span>
 										<input type="file" id="" class="input-file" />
 									</div>
-									{{ if(nl.code == ml.materialsCode) { }}
-									<span class="imgs-item-p">{{=row.name.split('材料')[0]}}{{=nl.name}}</span>
-									{{ } }}
+									<div class="input-text imgs-input-text">
+										<input type="text" id="">
+									</div>
 								</div>
-								{{ } }}
-							{{ } }}
 							</div>
 						</div>
-						<!-- 贷款材料对应上传材料项 -->
+						<!-- 其他材料对应上传材料项 -->
 					</div>
 					{{ } }}
 				{{ } }}
-				<div class="panel clearfix">
-					<!-- 材料类别名 -->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">其他材料</span>
-						</div>
-					</div>
-					<!-- 材料类别名 -->
-
-					<!-- 其他材料对应上传材料项 -->
-					<div class="panel-content clearfix">
-						<div class="loan-imgs-bar">
-						{{ if(it.data.QTCL[0].materials) { }}
-							{{ for(var m = 0, len4 = it.data.QTCL[0].materials.length; m < len4; m++) { }}
-							<div class="imgs-item-group">
-								<div class="imgs-item-upload">
-									<div class="iconfont-upload">
-										<i class="iconfont">&#xe61f;</i>
-									</div>
-									<span class="i-tips">点击或拖拽上传图片</span>
-									<input type="file" id="" class="input-file" />
-								</div>
-								<span class="imgs-item-p">其它材料{{=tool.formatCode(it.data.QTCL[0].materials[m].materialsCode) || '【还没配置好】'}}</span>
-							</div>
-							{{ } }}
-						{{ } }}
-							<div class="imgs-item-group">
-								<div class="imgs-item-upload">
-									<div class="iconfont-upload">
-										<i class="iconfont">&#xe61f;</i>
-									</div>
-									<span class="i-tips">点击或拖拽上传图片</span>
-									<input type="file" id="" class="input-file" />
-								</div>
-								<div class="input-text imgs-input-text">
-									<input type="text" id>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- 其他材料对应上传材料项 -->
-				</div>
 			</script>

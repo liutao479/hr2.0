@@ -3,8 +3,8 @@ page.ctrl('licenceDetail', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			orderNo: 'nfdb2016102421082285',
-			sceneCode: 1 //1上牌 2上牌审核 3抵押 4抵押审核
+			orderNo: $params.orderNo,
+			sceneCode: 'registration' //"registration"(办理上牌),"registrationApproval"(上牌审核),"pledge"(办理抵押),"pledgeApproval"(抵押审核);
 		};
 	/**
 	* 加载上牌办理详情数据
@@ -13,13 +13,16 @@ page.ctrl('licenceDetail', [], function($scope) {
 	*/
 	var loadLicenceDetail = function(params, cb) {
 		$.ajax({
-			url: $http.api('loanUserMaterials/getRegisterCertificate', 'cyj'),
+			url: $http.api('loanUserMaterials/getCertificate', 'cyj'),
 			type: 'get',
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
+				setupLocation(result.data.orderInfo);
+				// console.log(result.data.backApprovalInfo)
+				setupBackReason(result.data.backApprovalInfo);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -31,14 +34,15 @@ page.ctrl('licenceDetail', [], function($scope) {
 	/**
 	* 设置面包屑
 	*/
-	var setupLocation = function() {
+	var setupLocation = function(data) {
 		if(!$scope.$params.path) return false;
 		var $location = $console.find('#location');
+		if(!data) return false;
 		$location.data({
 			backspace: $scope.$params.path,
 			current: '上牌办理详情',
-			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
+			loanUser: $scope.result.data.orderInfo.realName || '',
+			orderDate: tool.formatDate($scope.result.data.orderInfo.pickDate, true) || ''
 		});
 		$location.location();
 	}
@@ -46,24 +50,20 @@ page.ctrl('licenceDetail', [], function($scope) {
 	/**
 	* 设置退回原因
 	*/
-	var setupBackReason = function() {
+	var setupBackReason = function(data) {
 		var $backReason = $console.find('#backReason');
-		var _backReason;
-		if($scope.result.data.loanTask.backReason) {
-			_backReason = $scope.result.data.loanTask.backReason;
+		if(!data) {
+			$backReason.remove();
+			return false;
 		} else {
-			_backReason = false;
+			$backReason.data({
+				backReason: data.reason,
+				backUser: data.roleName,
+				backUserPhone: data.phone,
+				backDate: tool.formatDate(data.transDate, true)
+			});
+			$backReason.backReason();
 		}
-		$backReason.data({
-			backReason: _backReason,
-			// backUser: $scope.result.data.loanTask.assign,
-			// backUserPhone: $scope.result.data.loanTask.backUserPhone,
-			// orderDate: $scope.result.data.loanTask.createDate（后台开发好，使用这个）
-			backUser: '刘东风',
-			backUserPhone: '13002601637',
-			backDate: '2017-2-18  12:12'
-		});
-		$backReason.backReason();
 	}
 
 	var setupEvt = function() {

@@ -42,6 +42,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	/**
 	 * 绑定立即处理事件
 	 */
+	
 	var setupEvt = function() {
 
 		// 绑定搜索框模糊查询事件

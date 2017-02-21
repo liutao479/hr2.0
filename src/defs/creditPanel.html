@@ -1,7 +1,7 @@
 <script type="text/dot-x-template" id="creditUploadListTmpl">
 	<div class="panel no-top-border">
 	<!--借款人信息填写栏-->
-	{{ for(var i = 0, len = it.creditUsers[it.idx].length; i < len; i++){ var row = it.creditUsers[it.idx][i]; }}
+	{{ for(var i = 0, len = it.creditUsers[it.currentType].length; i < len; i++){ var row = it.creditUsers[it.currentType][i]; }}
 		{{ if(i == 0){ }}
 			<div class="credit-datas-bar credit-datas-bar-special clearfix">
 		{{ }else{ }}

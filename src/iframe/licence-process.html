@@ -83,7 +83,7 @@
 								{{ } else { }}
 									<td class="orders-item-data">{{=tool.overdue(row.pickDate, row.deadline)}}</td>
 									{{ } }}
-							<td class="orders-item-data"><a data-href="licenceProcess/licenceDetail" class="button button-mini button-gray">立即处理</a></td>
+							<td class="orders-item-data"><a data-href="licenceProcess/licenceProcessDetail" data-id="{{=row.orderNo}}" class="button button-mini button-gray">立即处理</a></td>
 						</tr>
 					{{ } }}
 				{{ } else { }}
