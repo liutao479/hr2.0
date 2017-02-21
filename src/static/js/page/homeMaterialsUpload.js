@@ -26,8 +26,8 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 				// 设置退回原因
 				setupBackReason(result.data.loanTask.backApprovalInfo);
 				// 绑定立即处理事件
-				setupEvent();
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, true);
+				setupEvent();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -43,7 +43,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '上门材料上传',
+			current: $scope.result.cfgData.name,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 		});

@@ -24,10 +24,9 @@ page.ctrl('signMaterialsUpload', function($scope) {
 				// 编译面包屑
 				setupLocation();
 				// 设置退回原因
-				setupBackReason();
-				// 绑定立即处理事件
-				setupEvent();
+				setupBackReason(result.data.loanTask.backApprovalInfo);
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, true);
+				setupEvent();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -43,7 +42,7 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '签约材料上传',
+			current: $scope.result.cfgData.name,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 		});
@@ -53,24 +52,20 @@ page.ctrl('signMaterialsUpload', function($scope) {
 	/**
 	* 设置退回原因
 	*/
-	var setupBackReason = function() {
+	var setupBackReason = function(data) {
 		var $backReason = $console.find('#backReason');
-		var _backReason;
-		if($scope.result.data.loanTask.backReason) {
-			_backReason = $scope.result.data.loanTask.backReason;
+		if(!data) {
+			$backReason.remove();
+			return false;
 		} else {
-			_backReason = false;
+			$backReason.data({
+				backReason: data.reason,
+				backUser: data.roleName,
+				backUserPhone: data.phone,
+				backDate: tool.formatDate(data.transDate, true)
+			});
+			$backReason.backReason();
 		}
-		$backReason.data({
-			backReason: _backReason,
-			// backUser: $scope.result.data.loanTask.assign,
-			// backUserPhone: $scope.result.data.loanTask.backUserPhone,
-			// orderDate: $scope.result.data.loanTask.createDate（后台开发好，使用这个）
-			backUser: '刘东风',
-			backUserPhone: '13002601637',
-			backDate: '2017-2-18  12:12'
-		});
-		$backReason.backReason();
 	}
 
 	// 编译完成后绑定事件
@@ -97,6 +92,7 @@ page.ctrl('signMaterialsUpload', function($scope) {
 				})
 			})
 		})
+		$scope.$el.$loanPanel.find('.uploadEvt').imgUpload();
 	}
 
 	$console.load(router.template('iframe/loan-material-upload'), function() {

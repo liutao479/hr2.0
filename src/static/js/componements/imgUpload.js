@@ -73,6 +73,7 @@
 			self.$el.find('.activeEvt').on('change', function() {
 				// console.log(this.files[0])
 				// console.log(this.value.split("\\\\"));
+				self.$el.find('.imgs-error').remove();
 				self.onUpload(this.files[0]);
 			});
 		}

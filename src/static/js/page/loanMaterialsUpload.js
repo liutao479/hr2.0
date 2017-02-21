@@ -43,7 +43,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '贷款材料上传',
+			current: $scope.result.cfgData.name,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 		});
