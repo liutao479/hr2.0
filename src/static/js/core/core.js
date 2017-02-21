@@ -34,7 +34,7 @@
 			switch (name) {
 				// 周宜俭ip
 				case 'zyj':
-					return 'http://192.168.0.189:8080/' + method;
+					return 'http://192.168.0.199:8080/' + method;
 					break;
 				// 蔡延军ip
 				case 'cyj':
@@ -43,6 +43,9 @@
 				// 季本松ip
 				case 'jbs':
 					return 'http://192.168.0.113:8080/' + method;
+					break;
+				case 'wl':
+					return 'http://192.168.0.110:8080/' + method;
 					break;
 			}
 		//Todo 发布时增加prefix
@@ -71,7 +74,6 @@
 	};
 	var gUrl='http://127.0.0.1:8083/';
 	_.$http.apiMap = {
-<<<<<<< HEAD
 		menu: gUrl+'mock/menu',
 		loanList: gUrl+'mock/loan.list',
 		myCustomer: 'http://192.168.0.114:8080/loanOrder/getMyCustomer',

@@ -17,6 +17,7 @@ page.ctrl('loan', function($scope) {
 			// dataType:"json",
 			// data: params,
 			url: $http.api('loan.list'),
+			// url: $http.api('material/addOrUpdate', 'wl'),
 			success: $http.ok(function(result) {
 				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
@@ -24,7 +25,7 @@ page.ctrl('loan', function($scope) {
 				setupEvent();
 				if(cb && typeof cb == 'function') {
 					cb();
-				}
+				}  
 			})
 		})
 	}

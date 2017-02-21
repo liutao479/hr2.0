@@ -12,10 +12,10 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
 			// type: flag,
 			type: 'post',
-			url: $http.apiMap.loanMaterialsUpload,
+			url: $http.api('advancedMaterials/index', 'zyj'),
 			data: {
 				// taskId: $scope.$params.taskId
-				taskId: 4
+				taskId: 3
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -41,7 +41,7 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 		var _orderDate = tool.formatDate($scope.$params.date, true);
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '上门材料上传',
+			current: '垫资材料上传',
 			loanUser: loanUser,
 			orderDate: _orderDate
 		});
@@ -74,7 +74,7 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 		})
 	}
 
-	$console.load(router.template('iframe/loan-material-upload'), function() {
+	$console.load(router.template('iframe/material-upload'), function() {
 		// $scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
 		$scope.def.listTmpl = $console.find('#loanUploadTmpl').html();
 		// console.log($console.find('#creditResultPanel'))

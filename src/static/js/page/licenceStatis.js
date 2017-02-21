@@ -18,7 +18,7 @@ page.ctrl('licenceStatis', [], function($scope) {
 	var loadLicenceStatisList = function(params, cb) {
 		$.ajax({
 			// url: $http.api($http.apiMap.licenceStatis),
-			url: $http.apiMap.licenceTable,
+			url: $http.api('loanRegistration/getLoanRegistrationList', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',

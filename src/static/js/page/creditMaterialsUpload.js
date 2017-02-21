@@ -26,7 +26,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadOrderInfo = function(_type) {
+	var loadOrderInfo = function(_type, cb) {
 		// var flag = 'get';
 		// if(isPost) {
 		// 	flag = 'post';
@@ -35,7 +35,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/creditUpload',
 			// type: flag,
 			type: 'post',
-			url: $http.apiMap.creditMaterialsUpload,
+			url: $http.api('creditMaterials/index', 'zyj'),
 			data: {
 				// taskId: $scope.$params.taskId
 				taskId: 10
@@ -51,10 +51,12 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				var _loanUser = $scope.result.data.loanTask.loanOrder.realName;
 				setupLocation(_loanUser);
 				// 编译tab
-				setupTab($scope.result.data);
+				setupTab($scope.result.data);				
 				// 编译tab项对应内容
 				setupCreditPanel($scope.result.data, _type);
-				setupEvent();
+				if( cb && typeof cb == 'function' ) {
+					cb();
+				}
 			})
 		})
 	}
@@ -79,10 +81,13 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 渲染tab栏
 	 * @param  {object} data tab栏操作的数据
 	 */
-	var setupTab = function(data) {
+	var setupTab = function(data, cb) {
 		render.compile($scope.$el.$tab, $scope.def.tabTmpl, data, true);
 		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
 		// console.log($scope.$el.$tabs);
+		if( cb && typeof cb == 'function' ) {
+			cb();
+		}
 	}
 
 	/**
@@ -95,28 +100,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		$scope.tabs[_type] = _tabTrigger;
 		
 	}
-	
-	// 编译完成后绑定事件
-	var setupEvent = function () {
-		// tab栏点击事件
-		$scope.$el.$tab.find('.tabEvt').on('click', function () {
-			var $this = $(this);
-			if($this.hasClass('role-item-active')) return;
-			var _type = $this.data('type');
-			if(!$scope.tabs[_type]) {
-				$scope.$el.$creditPanel.html('');
-				render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, $scope.result.data.creditUsers[_type], true);
-				var _tabTrigger = $console.find('#creditUploadPanel').html();
-				$scope.tabs[_type] = _tabTrigger;
-				// $scope.result.index = _type;
-			}
-			$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
-			$this.addClass('role-item-active');
-			$scope.currentType = _type;
-			$scope.$el.$creditPanel.html($scope.tabs[$scope.currentType]);
-		})
-	}
-
 
 	/**
 	 * 增加共同还款人
@@ -125,7 +108,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		// 后台接口修改完成时使用
 		$.ajax({
 			type: 'post',
-			url: $http.apiMap.addCreditUser,
+			url: $http.api('creditUser/add', 'zyj'),
 			data: {
 				orderNo: $scope.orderNo,
 				userType: 1
@@ -137,6 +120,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			})
 		}) 
 	})
+
 	/**
 	 * 增加反担保人
 	 */
@@ -144,7 +128,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		// 后台接口修改完成时使用
 		$.ajax({
 			type: 'post',
-			url: $http.apiMap.addCreditUser,
+			url: $http.api('creditUser/add', 'zyj'),
 			data: {
 				orderNo: $scope.orderNo,
 				userType: 2
@@ -155,13 +139,34 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				loadOrderInfo(2);
 			})
 		}) 		
-	})
+	});
 
+	/**
+	 * tab栏点击事件
+	 */
+	$(document).on('click', '.tabEvt', function() {
+		console.log('tab');
+		var $this = $(this);
+		if($this.hasClass('role-item-active')) return;
+		var _type = $this.data('type');
+		if(!$scope.tabs[_type]) {
+			$scope.$el.$creditPanel.html('');
+			render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, $scope.result.data.creditUsers[_type], true);
+			var _tabTrigger = $console.find('#creditUploadPanel').html();
+			$scope.tabs[_type] = _tabTrigger;
+			// $scope.result.index = _type;
+		}
+		$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
+		$this.addClass('role-item-active');
+		$scope.currentType = _type;
+		$scope.$el.$creditPanel.html($scope.tabs[$scope.currentType]);
+	})
 
 	/**
 	 * 删除一个共同还款人或者反担保人
 	 */
 	$(document).on('click', '.delete-credit-item', function() {
+	// $console.find('#creditUploadPanel .delete-credit-item').on('click', function() {
 		var _userId = $(this).data('id');
 		console.log(_userId);
 		var flag;
@@ -178,7 +183,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			// 后台接口修改完成时使用
 			$.ajax({
 				type: 'post',
-				url: $http.apiMap.delCreditUser,
+				url: $http.api('creditUser/del', 'zyj'),
 				data: {
 					userId: _userId
 				},
@@ -193,9 +198,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				})
 			}) 
 		}
-		
-		
-		
 	})
 
 	$console.load(router.template('iframe/credit-material-upload'), function() {

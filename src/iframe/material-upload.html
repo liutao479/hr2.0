@@ -20,22 +20,22 @@
 			</div>
 			<!-- 材料上传 end-->
 			<script type="text/dot-x-template" id="loanUploadTmpl">
-				{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i]; }}
-					{{ for(var j = 0, len2 = it.data[row.code].length; j < len2; j++) { var col = it.data[row.code][j]; }}
+				{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i]; console.log(row); }}
+					{{ if(row.code == 'SMCL') { }}
 					<div class="panel mt15 clearfix">
-						<!-- 贷款材料类别名 -->
+						<!-- {{=it.cfgData.name}}标题 -->
 						<div class="panel-title-box">
 							<div class="panel-title">
 								<i class="iconfont">&#xe626;</i>
-								<span class="panel-title-name">{{=row.name}}{{=(col.userName ? '(' + col.userName + ')' : '')}}</span>
+								<span class="panel-title-name">上门材料</span>
 							</div>
 						</div>
-						<!-- 贷款材料类别名 -->
+						<!-- {{=it.cfgData.name}}标题 -->
 
-						<!-- 贷款材料对应上传材料项 -->
+						<!-- {{=it.cfgData.name}}对应上传材料项 -->
 						<div class="panel-content clearfix">
 							<div class="loan-imgs-bar">
-								{{ for(var k = 0, len3 = col.materials.length; k < len3; k++) { }}
+								{{ for(var j = 0, len2 = it.data.materials.length; j < len2; j++) { var col = it.data.materials[j];}}
 								<div class="imgs-item-group">
 									<div class="imgs-item-upload">
 										<div class="iconfont-upload">
@@ -44,39 +44,104 @@
 										<span class="i-tips">点击或拖拽上传图片</span>
 										<input type="file" id="" class="input-file" />
 									</div>
-									<span class="imgs-item-p">{{=(row.name.split('材料')[0])}}{{=tool.formatCode(col.materials[k].materialsCode) || '【还没配置好】'}}</span>
+									<span class="imgs-item-p">{{=tool.formatCode(col.materialsCode) || '【还没配置好】'}}</span>
 								</div>
 								{{ } }}
 							</div>
 						</div>
-						<!-- 贷款材料对应上传材料项 -->
+						<!-- {{=it.cfgData.name}}对应上传材料项 -->
+					</div>
+					{{ } }}
+					{{ if(row.code == 'TCCL') { }}
+					<div class="panel mt15 clearfix">
+						<!-- {{=it.cfgData.name}}标题 -->
+						<div class="panel-title-box">
+							<div class="panel-title">
+								<i class="iconfont">&#xe626;</i>
+								<span class="panel-title-name">提车材料</span>
+							</div>
+						</div>
+						<!-- {{=it.cfgData.name}}标题 -->
+
+						<!-- {{=it.cfgData.name}}对应上传材料项 -->
+						<div class="panel-content clearfix">
+							<div class="loan-imgs-bar">
+								{{ for(var j = 0, len2 = it.data.materials.length; j < len2; j++) { var col = it.data.materials[j]; }}
+								<div class="imgs-item-group">
+									<div class="imgs-item-upload">
+										<div class="iconfont-upload">
+											<i class="iconfont">&#xe61f;</i>
+										</div>
+										<span class="i-tips">点击或拖拽上传图片</span>
+										<input type="file" id="" class="input-file" />
+									</div>
+									<span class="imgs-item-p">{{=tool.formatCode(col.materialsCode) || '【还没配置好】'}}</span>
+								</div>
+								{{ } }}
+							</div>
+						</div>
+						<!-- {{=it.cfgData.name}}对应上传材料项 -->
+					</div>
+					{{ } }}
+					{{ if(row.code == 'DZCL') { }}
+					<div class="panel mt15 clearfix">
+						<!-- {{=it.cfgData.name}}标题 -->
+						<div class="panel-title-box">
+							<div class="panel-title">
+								<i class="iconfont">&#xe626;</i>
+								<span class="panel-title-name">垫资材料</span>
+							</div>
+						</div>
+						<!-- {{=it.cfgData.name}}标题 -->
+
+						<!-- {{=it.cfgData.name}}对应上传材料项 -->
+						<div class="panel-content clearfix">
+							<div class="loan-imgs-bar">
+								{{ for(var j = 0, len2 = it.data.materials.length; j < len2; j++) { var col = it.data.materials[j]; }}
+								<div class="imgs-item-group">
+									<div class="imgs-item-upload">
+										<div class="iconfont-upload">
+											<i class="iconfont">&#xe61f;</i>
+										</div>
+										<span class="i-tips">点击或拖拽上传图片</span>
+										<input type="file" id="" class="input-file" />
+									</div>
+									<span class="imgs-item-p">{{=tool.formatCode(col.materialsCode) || '【还没配置好】'}}</span>
+								</div>
+								{{ } }}
+							</div>
+						</div>
+						<!-- {{=it.cfgData.name}}对应上传材料项 -->
 					</div>
 					{{ } }}
 				{{ } }}
-				<div class="panel clearfix">
-					<!-- 贷款材料类别名 -->
+				{{ if(row.code != 'DZCL') { }}
+				<div class="panel mt15 clearfix">
+					<!-- 其他材料 -->
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">贷款其他材料</span>
+							<span class="panel-title-name">其他材料</span>
 						</div>
 					</div>
-					<!-- 贷款材料类别名 -->
+					<!-- 其他材料 -->
 
-					<!-- 贷款材料对应上传材料项 -->
+					<!-- 其他材料对应上传材料项 -->
 					<div class="panel-content clearfix">
 						<div class="loan-imgs-bar">
-							{{ for(var m = 0, len4 = it.data.QTCL[0].materials.length; m < len4; m++) { }}
-							<div class="imgs-item-group">
-								<div class="imgs-item-upload">
-									<div class="iconfont-upload">
-										<i class="iconfont">&#xe61f;</i>
+							{{ if(it.data.otherMaterials.length) { console.log(typeof it.data.otherMaterials.length); }}
+								{{ for(var m = 0, len3 = it.data.otherMaterials.length; m < len3; m++) { console.log(it.data.otherMaterials); }}
+								<div class="imgs-item-group">
+									<div class="imgs-item-upload">
+										<div class="iconfont-upload">
+											<i class="iconfont">&#xe61f;</i>
+										</div>
+										<span class="i-tips">点击或拖拽上传图片</span>
+										<input type="file" id="" class="input-file" />
 									</div>
-									<span class="i-tips">点击或拖拽上传图片</span>
-									<input type="file" id="" class="input-file" />
+									<span class="imgs-item-p">{{=tool.formatCode(it.data.otherMaterials[m].materialsCode) || '【还没配置好】'}}</span>
 								</div>
-								<span class="imgs-item-p">其它材料{{=tool.formatCode(it.data.QTCL[0].materials[m].materialsCode) || '【还没配置好】'}}</span>
-							</div>
+								{{ } }}
 							{{ } }}
 							<div class="imgs-item-group">
 								<div class="imgs-item-upload">
@@ -87,11 +152,12 @@
 									<input type="file" id="" class="input-file" />
 								</div>
 								<div class="input-text imgs-input-text">
-									<input type="text" id>
+									<input type="text" id="" />
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- 贷款材料对应上传材料项 -->
+					<!-- 其他材料对应上传材料项 -->
 				</div>
+				{{ } }}
 			</script>
