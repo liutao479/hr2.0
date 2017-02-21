@@ -76,7 +76,7 @@
 	_.$http.apiMap = {
 		menu: 'http://127.0.0.1:8083/mock/menu',
 
-		loanList: 'http://127.0.0.1:8083/mock/loan.list',
+		loanList: 'http://127.0.0.1:8083/mock/loan/list',
 
 		myCustomer: 'http://192.168.0.184:8080/loanOrder/getMyCustomer',
 
@@ -124,7 +124,7 @@
 
 		// creditInput: 'http://127.0.0.1:8083/mock/creditInput'
 		creditInput: 'http://192.168.0.148:8080/creditUser/getCreditInfo',
-
+		
 		creditMaterialsUpload: 'http://192.168.0.199:8080/creditMaterials/index',
 
 		loanMaterialsUpload: 'http://192.168.0.199:8080/loanMaterials/index',
@@ -132,7 +132,6 @@
 		addCreditUser: 'http://192.168.0.199:8080/creditUser/add',
 
 		delCreditUser: 'http://192.168.0.199:8080/creditUser/del'
-
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
