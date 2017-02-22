@@ -1,19 +1,18 @@
 'use strict';
-page.ctrl('licenceDetail', [], function($scope) {
+page.ctrl('licenceAuditDetail', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			orderNo: $params.orderNo,
-			sceneCode: 'registration' //"registration"(办理上牌),"registrationApproval"(上牌审核),"pledge"(办理抵押),"pledgeApproval"(抵押审核);
+			orderNo: $params.orderNo
 		};
 	/**
-	* 加载上牌办理详情数据
+	* 加载上牌审核详情数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
 	var loadLicenceDetail = function(params, cb) {
 		$.ajax({
-			url: $http.api('loanUserMaterials/getCertificate', 'cyj'),
+			url: $http.api('loanUserMaterials/getRegCertificate', 'cyj'),
 			type: 'get',
 			data: params,
 			dataType: 'json',
@@ -40,7 +39,7 @@ page.ctrl('licenceDetail', [], function($scope) {
 		if(!data) return false;
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '上牌办理详情',
+			current: '上牌审核详情',
 			loanUser: $scope.result.data.orderInfo.realName || '',
 			orderDate: tool.formatDate($scope.result.data.orderInfo.pickDate, true) || ''
 		});

@@ -1,92 +1,182 @@
-	<!--合作机构维护（合作银行）-->
+	<!--合作机构维护-->
 			<div class="container cooperation-maintenance" id="cooperation-bank">
 				
 				<!--tab切换栏(合作银行及车商)-->
 				<div class="tab-bar">
-					<ul class="role-bar-ul clearfix">
-						<li class="role-bar-li"><a href="#" class="role-item role-item-active">合作银行管理</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">合作车商管理</a></li>
-					</ul>
-					<div class="button button-mini">
-						<i class="iconfont">&#xe615;</i>
-						新建合作银行
-					</div>
+					<ul class="role-bar-ul clearfix" id="tabsPanel"></ul>
+					<span id="btnPanel"></span>					
 				</div>
 				<!--tab切换栏(合作银行及车商)   end-->
 				
 				<!--面板  -->
-				<div class="panel panel-nomargintop no-top-border">
-					<div class="select-search-bar select-search-bar-noborder clearfix">
-						<div class="search-item">
-							<span class="select-name">银行名称：</span>
-							<input type="text" class="input-text" />
-						</div>
-					</div>
-					<table width="100%" class="orders-table orders-table-noborder cooperation-maintenance-table">
-						<thead>
-							<tr class="orders-bar-title">
-								<td class="orders-item-data">银行名称</td>
-								<td class="orders-item-data">开户账号-户名</td>
-								<td class="orders-item-data">费率表</td>
-								<td class="orders-item-data orders-item-data-blank"></td>
-								<td class="orders-item-data">操作</td>
-							</tr>
-						</thead>
-						<tbody id="organizationManageTable">
-							
-						</tbody>
-					</table>
+				<div class="panel panel-nomargintop no-top-border" id="tablePanel">
+					
 				</div>
 				<!--面板  end-->
 				
 			</div>
-			<!--合作机构维护（合作银行）-->
-			
-			<!--分页器-->
-			<div id="pageToolbar" class="pageToolbar" data-request="pageCtrl['organizationManage'].paging" data-pages="50" data-current="3"></div>
+			<!--合作机构维护-->
 
-			<script type="text/x-dot-template" id="organizationManageListTmpl">
-				{{ var len = it.length; if(len) { }}
-					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
-						{{ if(i % 2 !== 0) { }}
-						<tr class="orders-item tr-even">
-						{{ } else if(i % 2 == 0 && i == 0) { }}
-						<tr class="orders-item tr-odd tr-noborder">
-						{{ } else { }}
-						<tr class="orders-item tr-odd">
-						{{ } }}
-							<td class="orders-item-data">{{=row.bankName}}</td>
-							<td class="orders-item-data acount-name-data">
-								{{for(var j = 0, len2 = row.demandBankAccountList.length; j < len2; j++) { var col = row.demandBankAccountList[j]; }}
-								<p class="acount-name">
-									<span>{{=col.accountNumber}}</span>-<span>{{=col.accountName}}</span><br />
-								</p>
-								{{ } }}
-							</td>
-							<td class="orders-item-data orders-item-data-view">
-								<a href="javascript:;" class="view-fee">查看</a>
-							</td>
-							<td class="orders-item-data orders-item-data-blank"></td>
-							<td class="orders-item-data orders-item-data-operate">
-								<div class="button button-gray button-mini">
-									<i class="iconfont">&#xe640;</i>
-									编辑
-								</div>
-								<div class="button button-gray button-mini">
-									<i class="iconfont">&#xe602;</i>
-									删除
-								</div>
-							</td>
-						</tr>
-					{{ } }}
-				{{ } else { }}
-				<tr class="tr-noborder">
-					<td colspan="5" class="orders-blank">
-						<div class="blank-box">
-							<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
-							<p>暂无待办任务！</p>
-						</div>
-					</td>
-				</tr>	
+			<!-- 分页器 -->
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['organizationManage'].paging" data-pages="" data-current=""></div>
+			<!-- 分页器 end-->
+			
+			<script type="text/dot-x-template" id="tabsTmpl">
+				{{ for(var i = 0, len = it.length; i < len; i++) { }}
+					<li class="role-bar-li"><a href="javascript:;" class="role-item{{=(i == 0 ? ' role-item-active' : '')}} tabEvt" data-type="{{=i}}">{{=it[i]}}</a></li>
 				{{ } }}
+			</script>
+
+			<script type="text/dot-x-template" id="btnNewTmpl">
+				{{ for(var item in it) { }}
+					<a href="javascript:;" data-href="{{=item}}" class="button button-mini" >
+						<i class="iconfont">&#xe615;</i>
+						{{=it[item]}}
+					</a>
+				{{ } }}
+			</script>
+
+			<script type="text/x-dot-template" id="bankListTmpl">
+				<div class="select-search-bar select-search-bar-noborder clearfix">
+					<div class="search-item">
+						<span class="select-name">银行名称：</span>
+						<input type="text" class="input-text" />
+					</div>
+				</div>
+				<table width="100%" class="orders-table orders-table-noborder cooperation-maintenance-table">
+					<thead>
+						<tr class="orders-bar-title">
+							<td class="orders-item-data">银行名称</td>
+							<td class="orders-item-data">开户账号-户名</td>
+							<td class="orders-item-data">费率表</td>
+							<td class="orders-item-data orders-item-data-blank"></td>
+							<td class="orders-item-data">操作</td>
+						</tr>
+					</thead>
+					<tbody id="organizationManageTable">
+						{{ var len = it.length; if(len) { }}
+							{{for(var i = 0; i < len; i++) { var row = it[i]; }}
+								{{ if(i % 2 !== 0) { }}
+								<tr class="orders-item tr-even">
+								{{ } else if(i % 2 == 0 && i == 0) { }}
+								<tr class="orders-item tr-odd tr-noborder">
+								{{ } else { }}
+								<tr class="orders-item tr-odd">
+								{{ } }}
+									<td class="orders-item-data">{{=row.bankName}}</td>
+									<td class="orders-item-data acount-name-data">
+										{{for(var j = 0, len2 = row.demandBankAccountList.length; j < len2; j++) { var col = row.demandBankAccountList[j]; }}
+										<p class="acount-name">
+											<span>{{=col.accountNumber}}</span>-<span>{{=col.accountName}}</span><br />
+										</p>
+										{{ } }}
+									</td>
+									<td class="orders-item-data orders-item-data-view">
+										<a href="javascript:;" class="view-fee">查看</a>
+									</td>
+									<td class="orders-item-data orders-item-data-blank"></td>
+									<td class="orders-item-data orders-item-data-operate">
+										<div class="button button-gray button-mini">
+											<i class="iconfont">&#xe640;</i>
+											编辑
+										</div>
+										<div class="button button-gray button-mini">
+											<i class="iconfont">&#xe602;</i>
+											删除
+										</div>
+									</td>
+								</tr>
+							{{ } }}
+						{{ } else { }}
+						<tr class="tr-noborder">
+							<td colspan="5" class="orders-blank">
+								<div class="blank-box">
+									<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+									<p>暂无待办任务！</p>
+								</div>
+							</td>
+						</tr>	
+						{{ } }}
+					</tbody>
+				</table>
+			</script>
+
+			<script type="text/x-dot-template" id="carListTmpl">
+				<div class="select-search-bar select-search-bar-noborder clearfix">
+					<div class="search-item">
+						<span class="select-name">车商类型：</span>
+						<span class="select select-common">
+							<span class="placeholder">全部</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+					<div class="search-item">
+						<span class="select-name">车商名称：</span>
+						<span class="select select-common">
+							<span class="placeholder">全部</span>
+							<span class="arrow arrow-bottom"></span>
+						</span>
+					</div>
+					<div class="search-item">
+						<div id="" class="button button-mini-nowidth">搜索</div>
+					</div>
+				</div>
+				<table border="0" cellpadding="" width="100%" class="orders-table orders-table-noborder cooperation-maintenance-table">
+					<thead>
+						<tr class="orders-bar-title">
+							<td class="orders-item-data">车商类型</td>
+							<td class="orders-item-data">车商名称</td>
+							<td class="orders-item-data">汽车品牌</td>
+							<td class="orders-item-data">开户账号-户名</td>
+							<td class="orders-item-data">所需费用</td>
+							<td class="orders-item-data">操作</td>
+						</tr>
+					</thead>
+					<tbody>
+						{{ var len = it.length; if(len) { }}
+							{{for(var i = 0; i < len; i++) { var row = it[i]; }}
+								{{ if(i % 2 !== 0) { }}
+								<tr class="orders-item tr-even">
+								{{ } else if(i % 2 == 0 && i == 0) { }}
+								<tr class="orders-item tr-odd tr-noborder">
+								{{ } else { }}
+								<tr class="orders-item tr-odd">
+								{{ } }}
+									<td class="orders-item-data">{{=(row.shopType == 0 ? '4S' : '二级经销商')}}</td>
+									<td class="orders-item-data">{{=row.shopName}}</td>
+									<td class="orders-item-data"></td>
+									<td class="orders-item-data">
+										<span>6237132182371234565</span>-<span>周易</span><br />
+										<span>6237132182371234565</span>-<span>张凤</span><br />
+										<span>6237132182371234565</span>-<span>张凤</span><br />
+									</td>
+									<td class="orders-item-data">
+										<span>1%</span>,
+										<span>2%</span>,
+										<span>3%</span>
+									</td>
+									<td class="orders-item-data orders-item-data-operate">
+										<div class="button button-mini button-gray">
+											<i class="iconfont">&#xe640;</i>
+											编辑
+										</div>
+										<div class="button button-mini button-gray">
+											<i class="iconfont">&#xe602;</i>
+											删除
+										</div>
+									</td>
+								</tr>
+							{{ } }}
+						{{ } else { }}
+						<tr class="tr-noborder">
+							<td colspan="5" class="orders-blank">
+								<div class="blank-box">
+									<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+									<p>暂无待办任务！</p>
+								</div>
+							</td>
+						</tr>	
+						{{ } }}
+					</tbody>
+				</table>
 			</script>

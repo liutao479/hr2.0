@@ -115,6 +115,8 @@
 		var self = this;
 		$.ajax({
 			url: api.del,
+			type: 'post',
+			dataType: 'json',
 			success: function(xhr) {
 				if(!xhr.code) {
 					self.$el.html(internalTemplates.edit.format(self.options.name));
@@ -145,11 +147,14 @@
 		params.materialsType = self.options.type;
 		params.sceneCode = self.options.scene;
 		params.materialsPic = url;
+		console.log(params);
 		$.ajax({
 			url: api.upload,
 			data: params,
 			type: 'post',
+			dataType: 'json',
 			success: function(xhr) {
+				console.log(xhr);
 				if(!xhr.code) {
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.options.name, url, self.errImg, self.errMsg));
@@ -225,8 +230,9 @@
 	var api = {
 		img: 'http://112.74.99.75:8089/oss/img/sign',
 		video: 'http://112.74.99.75:8089/oss/video/sign',
-		upload: 'http://127.0.0.1:8083/mock/addOrUpdate',
-		del: 'http://127.0.0.1:8083/mock/material/del'
+		// upload: 'http://127.0.0.1:8083/mock/addOrUpdate',
+		upload: $http.api('material/addOrUpdate', 'zyj'),
+		del: $http.api('material/del', 'zyj')
 	}
 
 })(jQuery);

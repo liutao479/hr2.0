@@ -34,7 +34,7 @@
 			switch (name) {
 				// 周宜俭ip
 				case 'zyj':
-					return 'http://192.168.0.148:8080/' + method;
+					return 'http://192.168.0.100:8080/' + method;
 					break;
 				// 蔡延军ip
 				case 'cyj':
@@ -42,7 +42,7 @@
 					break;
 				// 季本松ip
 				case 'jbs':
-					return 'http://192.168.0.113:8080/' + method;
+					return 'http://192.168.0.180:8080/' + method;
 					break;
 				// 王亮ip 
 				case 'wl':

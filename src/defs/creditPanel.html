@@ -19,7 +19,7 @@
 				<div class="key-item">身份证号：</div>
 				<div class="key-value">
 					<div class="input-text">
-						<input type="text" value="{{= row.idCard || ''}}"/>		
+						<input type="text" value="{{=row.idCard || ''}}"/>		
 					</div>	
 				</div>
 			</div>
@@ -41,8 +41,25 @@
 		<!--借款人照片嵌入栏-->
 		<div class="credit-imgs-bar">
 			{{ for(var j = 0, len2 = row.loanUserCredit.creditMaterials.length; j < len2; j++) { var mr = row.loanUserCredit.creditMaterials[j]; }}
-			<div class="imgs-item-group uploadEvt" data-id="{{=it.loanTask.orderNo}}" data-name="{{=mr.materialsCode}}" data-scene="1" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-editable="1"></div>
+				{{ if(mr.materialsCode == 'sfzzm') { }}
+				<div class="imgs-item-group uploadEvt" data-id="{{=it.loanTask.orderNo}}" data-name="{{=it.types[it.currentType]}}身份证正面" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-editable="1"></div>
+				{{ } }}
+				{{ if(mr.materialsCode == 'sfzfm') { }}
+				<div class="imgs-item-group uploadEvt" data-id="{{=it.loanTask.orderNo}}" data-name="{{=it.types[it.currentType]}}身份证反面" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-editable="1"></div>
+				{{ } }}
+				{{ if(mr.materialsCode == 'zxsqs') { }}
+				<div class="imgs-item-group uploadEvt" data-id="{{=it.loanTask.orderNo}}" data-name="{{=it.types[it.currentType]}}征信授权书" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-editable="1"></div>
+				{{ } }}
+				{{ if(mr.materialsCode == 'xtzqtzs') { }}
+				<div class="imgs-item-group uploadEvt" data-id="{{=it.loanTask.orderNo}}" data-name="系统知情通知书" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-editable="1"></div>
+				{{ } }}
+				{{ if(mr.materialsCode == 'zxsqszp') { }}
+				<div class="imgs-item-group uploadEvt" data-id="{{=it.loanTask.orderNo}}" data-name="征信授权书签字照片" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-editable="1"></div>
+				{{ } }}
 			{{ } }}
+
+
+			
 		</div>
 	{{ } }}
 	</div>

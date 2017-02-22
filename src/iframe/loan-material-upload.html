@@ -39,11 +39,10 @@
 								{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m]; }}
 									{{ for(var n = 0, len4 = col.materials.length; n < len4; n++) { var nl = col.materials[n]; }}
 										{{ if(ml.code == nl.materialsCode) { }}
-										<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="{{=col.materialsPic}}" data-editable="1"></div>
-										{{ } else { }}
-										<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="" data-editable="1"></div>
+										<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.materialsCode}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-ownerCode="{{=col.userType}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="{{=nl.materialsPic}}" data-editable="1"></div>
 										{{ } }}
 									{{ } }}
+									<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.materialsCode}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-ownerCode="{{=col.userType}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="" data-editable="1"></div>
 								{{ } }}
 								</div>
 							</div>
@@ -68,11 +67,10 @@
 								{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m]; }}
 									{{ for(var n = 0, len4 = col.materials.length; n < len4; n++) { var nl = col.materials[n]; }}
 										{{ if(ml.code == nl.materialsCode) { }}
-										<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-name="{{=ml.mame}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="{{=col.materialsPic}}" data-editable="1"></div>
-										{{ } else { }}
-										<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-name="{{=ml.mame}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="" data-editable="1"></div>
+										<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-name="{{=ml.mame}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="{{=nl.materialsPic}}" data-editable="1"></div>
 										{{ } }}
 									{{ } }}
+									<div class="imgs-item-group uploadEvt" data-id="{{=it.data.loanTask.orderNo}}" data-name="{{=ml.mame}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="" data-editable="1"></div>
 								{{ } }}
 								<div class="imgs-item-group">
 									<div class="imgs-item-upload">

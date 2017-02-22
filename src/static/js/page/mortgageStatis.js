@@ -82,6 +82,17 @@ page.ctrl('mortgageStatis', [], function($scope) {
 			// router.updateQuery($scope.$path, $params);
 			
 		});
+
+		// 进入详情页
+		$console.find('#mortgageStatisTable .button').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				// taskId: that.data('id'), 
+				// date: that.data('date'),
+				orderNo: that.data('id'),
+				path: 'mortgageStatis'
+			});
+		});
 	}
 
 	/***
