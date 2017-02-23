@@ -11,8 +11,8 @@ page.ctrl('loanInfo', function($scope) {
 	var urlStr1 = "http://192.168.0.144:8080";
 	var urlStr = "http://127.0.0.1:8083";
 	var apiMap = {
-		"sex": urlStr+"/mock/sex",
-		"isSecond": urlStr+"/mock/isSecond",
+//		"sex": urlStr+"/mock/sex",
+//		"isSecond": urlStr+"/mock/isSecond",
 		"serviceType": urlStr+"/mock/serviceType",
 		"brand": urlStr+"/mock/demandBankId",
 		"busiSourceType": urlStr+"/mock/busiSourceType",
@@ -20,24 +20,176 @@ page.ctrl('loanInfo', function($scope) {
 		"busiSourceName": urlStr+"/mock/busiSourceName",
 		"busiSourceNameSearch": urlStr+"/mock/searchCarShop",
 //		"busiSourceName": urlStr+"/carshop/list",
-		"licenseType": urlStr+"/mock/busiSourceName",
-		"isFinanceLeaseVehicle": urlStr+"/mock/busiSourceName",
-		"isOperationVehicle": urlStr+"/mock/busiSourceName",
+//		"licenseType": urlStr+"/mock/busiSourceName",
+//		"isFinanceLeaseVehicle": urlStr+"/mock/busiSourceName",
+//		"isOperationVehicle": urlStr+"/mock/busiSourceName",
 		"onLicensePlace": urlStr+"/mock/busiSourceName",
-		"isInstallGps": urlStr+"/mock/yesOrNo",
+//		"isInstallGps": urlStr+"/mock/yesOrNo",
 		"busimode": urlStr+"/mock/busimode",
 		"isDiscount": urlStr+"/mock/busiSourceName",
 		"carName": urlStr+"/mock/busiSourceName",
 		"repaymentTerm": urlStr+"/mock/repaymentTerm",
-		"renewalMode": urlStr+"/mock/busiSourceName",
-		"isAdvanced": urlStr+"/mock/busiSourceName",
+//		"renewalMode": urlStr+"/mock/busiSourceName",
+//		"isAdvanced": urlStr+"/mock/busiSourceName",
 		"maritalStatus": urlStr+"/mock/busiSourceName",
-		"houseStatus": urlStr+"/mock/busiSourceName",
-		"isEnterprise": urlStr+"/mock/busiSourceName",
-		"userRelationship": urlStr+"/mock/busiSourceName",
-		"remitAccountNumber": urlStr+"/mock/bankNo",
-		"relationship": urlStr+"/mock/busiSourceName"
+//		"houseStatus": urlStr+"/mock/busiSourceName",
+//		"isEnterprise": urlStr+"/mock/busiSourceName",
+//		"userRelationship": urlStr+"/mock/busiSourceName",
+		"remitAccountNumber": urlStr+"/mock/bankNo"
+//		"relationship": urlStr+"/mock/busiSourceName"
 	};
+	var dataMap = {
+		    "sex":[
+		        {
+		            "name":"男",
+		            "value":"0"
+		        },
+		        {
+		            "name":"女",
+		            "value":"1"
+		        }
+		    ],
+		    "isSecond":[
+		        {
+		            "name":"新车",
+		            "value":"0"
+		        },
+		        {
+		            "name":"二手车",
+		            "value":"1"
+		        }
+		    ],
+		    "licenseType":[
+		        {
+		            "name":"公牌",
+		            "value":"0"
+		        },
+		        {
+		            "name":"私牌",
+		            "value":"1"
+		        }
+		    ],
+		    "isFinanceLeaseVehicle":[
+		        {
+		            "name":"是融资租赁车",
+		            "value":"0"
+		        },
+		        {
+		            "name":"不是融资租赁",
+		            "value":"1"
+		        }
+		    ],
+		    "isOperationVehicle":[
+		        {
+		            "name":"运营车",
+		            "value":"0"
+		        },
+		        {
+		            "name":"非运营车",
+		            "value":"1"
+		        }
+		    ],
+		    "isInstallGps":[
+		        {
+		            "name":"是",
+		            "value":"0"
+		        },
+		        {
+		            "name":"否",
+		            "value":"1"
+		        }
+		    ],
+		    "isDiscount":[
+		        {
+		            "name":"贴息",
+		            "value":"0"
+		        },
+		        {
+		            "name":"不贴息",
+		            "value":"1"
+		        }
+		    ],
+		    "renewalMode":[
+		        {
+		            "name":"自行承保",
+		            "value":"0"
+		        },
+		        {
+		            "name":"单位承保",
+		            "value":"1"
+		        }
+		    ],
+		    "renewalModeList":[
+		        {
+		            "name":"自营",
+		            "value":"0"
+		        },
+		        {
+		            "name":"非自营",
+		            "value":"1"
+		        }
+		    ],
+		    "isAdvanced":[
+		        {
+		            "name":"需要垫资",
+		            "value":"0"
+		        },
+		        {
+		            "name":"不需要垫资",
+		            "value":"1"
+		        }
+		    ],
+		    "maritalStatus":[
+		        {
+		            "name":"已婚",
+		            "value":"0"
+		        },
+		        {
+		            "name":"未婚",
+		            "value":"1"
+		        }
+		    ],
+		    "houseStatus":[
+		        {
+		            "name":"有商品房",
+		            "value":"0"
+		        },
+		        {
+		            "name":"有房",
+		            "value":"1"
+		        }
+		    ],
+		    "isEnterprise":[
+		        {
+		            "name":"是企业法人",
+		            "value":"0"
+		        },
+		        {
+		            "name":"不是企业法人",
+		            "value":"1"
+		        }
+		    ],
+		    "userRelationship":[
+		        {
+		            "name":"父母",
+		            "value":"0"
+		        },
+		        {
+		            "name":"子女",
+		            "value":"1"
+		        }
+		    ],
+		    "relationship":[
+		        {
+		            "name":"同事",
+		            "value":"0"
+		        },
+		        {
+		            "name":"朋友",
+		            "value":"1"
+		        }
+		    ]
+		};
 	var postUrl = {
 		"saveOrderInfo": urlStr1+"/loanInfoInput/updLoanOrder",
 		"saveCarInfo": urlStr1+"/loanInfoInput/updLoanUserCar",
@@ -58,7 +210,8 @@ page.ctrl('loanInfo', function($scope) {
 		var data={};
 			data['taskId']=80871;
 		$.ajax({
-			url: $http.api('loan.infoBak',''),
+			url: $http.api('loan.infoBak'),
+//			url: $http.api('loanInfoInput/info','jbs'),
 			data: data,
 			dataType: 'json',
 			async:false,
@@ -119,6 +272,10 @@ page.ctrl('loanInfo', function($scope) {
 			$(this).attr("id",boxKey);
 			var data={};
                 data['code'] = key;
+		var datatype = $(this).data('type');
+		if(datatype){
+			render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
+		}else{
 			$.ajax({
 				url: apiMap[key],
 				data: data,
@@ -131,6 +288,7 @@ page.ctrl('loanInfo', function($scope) {
 					selectOptBox.attr("id",key);
 				})
 			})
+		}	
 			var value1 = $("input",$(this)).val();
 			$("li",$(this)).each(function(){
 				var val = $(this).data('key');
@@ -176,33 +334,45 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		})
 	})
-//点击下拉框拉取选项	
+//点击下拉框拉取选项
 	$(document).on('click','.selecter', function() {
 		var that =$("div",$(this));
 		var inputSearch =$(".searchInp",$(this));
-		if(inputSearch){
-			inputSearch.show();
-		}
 		var key = $(this).data('key');
 		var boxKey = key + 'Box';
-		$(this).attr("id",boxKey);
-		var data={};
-		if(key == 'remitAccountNumber'){
-			data['carShopId'] = $("#busiSourceId").val();
+		var datatype = $(this).data('type');
+		if(datatype){
+			console.log(datatype);
+			render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
+			console.log(dataMap[key]);
+			var selectOptBox = $(".selectOptBox",$(this));
+			selectOptBox.style.display = 'block';
+			console.log(selectOptBox);
+			
 		}else{
-			data['code'] = key;
-		}
-		$.ajax({
-			url: apiMap[key],
-			data: data,
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-				$source.selectType = result.data;
-				var selectOptBox = $(".selectOptBox");
-				selectOptBox.attr("id",key);
+			if(inputSearch){
+				inputSearch.show();
+			}
+			$(this).attr("id",boxKey);
+			var data={};
+			if(key == 'remitAccountNumber'){
+				data['carShopId'] = $("#busiSourceId").val();
+			}else{
+				data['code'] = key;
+			}
+			$.ajax({
+				url: apiMap[key],
+				data: data,
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
+					console.log(result.data);
+					$source.selectType = result.data;
+					var selectOptBox = $(".selectOptBox");
+					selectOptBox.attr("id",key);
+				})
 			})
-		})
+		}
 	})
 //
 	$(document).on('click', '#remitAccountNumber li', function() {
@@ -268,12 +438,103 @@ page.ctrl('loanInfo', function($scope) {
 		loanFinishedBxxb();
 	})
 	var loanFinishedBxxb = function(){
-		var gps = $("#bxxbInput").val();
-		console.log(gps);
-		if(gps != 1){
+		var bxxbInput = $("#bxxbInput").val();
+//		console.log(bxxbInput);
+		if(bxxbInput != 1){
 			$(".bxxbYear").hide();
 		}else{
 			$(".bxxbYear").show();
+			$(".bxxbYear").each(function (){
+				var ipt = $(this).find('input');
+				if(ipt.val() == '555'){
+					$(this).hide()
+				}
+			})
+		}
+	}
+//保险续保及还款期限联动
+	$(document).on('click', '#repaymentTermBox li', function() {
+		loanFinishedrepay();
+	})
+	var loanFinishedrepay = function(){
+		var bxxbInput = $("#repayPeriod").val();
+		var bxxbLength = Math.ceil(bxxbInput/12);
+		console.log(bxxbLength);
+		$(".bxxbyearIpt").each(function(){
+			$(this).val('');
+			$(this).siblings('.placeholder').html("请选择");
+			$(this).parent().parent().hide();
+		});
+		
+		if(bxxbLength == 1){
+			$("#year1").show();
+			$("#year1").find('input').val(0);
+			$("#year1").find('.placeholder').html("自营");
+		}else if(bxxbLength == 2){
+			$("#year1").show();
+			$("#year2").show();
+			$("#year1").find('input').val(0);
+			$("#year1").find('.placeholder').html("自营");
+			$("#year2").find('input').val(0);
+			$("#year2").find('.placeholder').html("自营");
+		}else if(bxxbLength == 3){
+			$("#year1").show();
+			$("#year2").show();
+			$("#year3").show();
+			$("#year1").find('input').val(0);
+			$("#year1").find('.placeholder').html("自营");
+			$("#year2").find('input').val(0);
+			$("#year2").find('.placeholder').html("自营");
+			$("#year3").find('input').val(0);
+			$("#year3").find('.placeholder').html("自营");
+		}else if(bxxbLength == 4){
+			$("#year1").show();
+			$("#year2").show();
+			$("#year3").show();
+			$("#year4").show();
+			$("#year1").find('input').val(0);
+			$("#year1").find('.placeholder').html("自营");
+			$("#year2").find('input').val(0);
+			$("#year2").find('.placeholder').html("自营");
+			$("#year3").find('input').val(0);
+			$("#year3").find('.placeholder').html("自营");
+			$("#year4").find('input').val(0);
+			$("#year4").find('.placeholder').html("自营");
+		}else if(bxxbLength == 5){
+			$("#year1").show();
+			$("#year2").show();
+			$("#year3").show();
+			$("#year4").show();
+			$("#year5").show();
+			$("#year1").find('input').val(0);
+			$("#year1").find('.placeholder').html("自营");
+			$("#year2").find('input').val(0);
+			$("#year2").find('.placeholder').html("自营");
+			$("#year3").find('input').val(0);
+			$("#year3").find('.placeholder').html("自营");
+			$("#year4").find('input').val(0);
+			$("#year4").find('.placeholder').html("自营");
+			$("#year5").find('input').val(0);
+			$("#year5").find('.placeholder').html("自营");
+		}else{
+			$("#year1").show();
+			$("#year2").show();
+			$("#year3").show();
+			$("#year4").show();
+			$("#year5").show();
+			$("#year6").show();
+			$("#year1").find('input').val(0);
+			$("#year1").find('.placeholder').html("自营");
+			$("#year2").find('input').val(0);
+			$("#year2").find('.placeholder').html("自营");
+			$("#year3").find('input').val(0);
+			$("#year3").find('.placeholder').html("自营");
+			$("#year4").find('input').val(0);
+			$("#year4").find('.placeholder').html("自营");
+			$("#year5").find('input').val(0);
+			$("#year5").find('.placeholder').html("自营");
+			$("#year6").find('input').val(0);
+			$("#year6").find('.placeholder').html("自营");
 		}
 	}
 
@@ -296,6 +557,18 @@ page.ctrl('loanInfo', function($scope) {
 		});
 		if(isTure){
 			var key = $(this).data('key');
+			if(key == 'saveStageInfo'){
+				var renewalStr = '';
+				var inputList = $(".bxxbyearIpt");
+				for(var i=0;i<inputList.length;i++){
+					var rene = inputList[i];
+					if(rene.value == '555'){
+						rene.value = '';
+					}
+					renewalStr += rene.value+',';
+				}
+				$("#renewalInfo").val(renewalStr);
+			}
 			var data;
 	        var formList = $(this).parent().parent().siblings().find('form');
 	        console.log("form的个数为："+formList.length);

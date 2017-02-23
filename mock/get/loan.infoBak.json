@@ -1142,7 +1142,7 @@
             "bankBaseRates":0,
             "bankFeeMoney":20000,
             "bareRate":10,
-            "businessModel":"10010",
+            "businessModel":"21",
             "cardNo":"325464533",
             "commissionFeeRate":"9.49",
             "contractSfMoney":300000,
@@ -1162,12 +1162,6 @@
 	           },{
 	            	"value":1,
 	            	"yaerNumber":2
-	           },{
-	            	"value":1,
-	            	"yaerNumber":3
-	           },{
-	            	"value":1,
-	            	"yaerNumber":4
 	           }
             ],
             "repayPeriod":36,

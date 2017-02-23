@@ -1685,6 +1685,7 @@ input[disabled]{
 .info-key-value-box{
     width: calc(~"50% - 2px");
     display: inline-block;
+    text-align: center;
     margin: 10px 0;
     position: relative;
     i{
@@ -1752,12 +1753,6 @@ input[disabled]{
     }
     .gps{
         width: 64px !important;
-    }
-    &:nth-child(2n+1) {
-        text-align:left;
-    }
-    &:nth-child(2n) {
-        text-align:right;
     }
 }
 //左右结构的输入框及下拉框布局下面的多选check zhy
@@ -2040,7 +2035,8 @@ input[disabled]{
 //下拉选项样式 zhy
 .selectOptBox,.selectOptBox1{
     width: inherit;
-    max-height: 400px;
+    max-height: 200px;
+    overflow-y: scroll;
     border: 1px solid @buttonBgColor;
     position: absolute;
     left: 0;
@@ -2050,7 +2046,7 @@ input[disabled]{
     li{
         line-height: inherit;
         box-sizing: border-box;
-        padding: 0 10px;
+        padding: 5px 10px;
         cursor: pointer;
         &:hover{
             color: #FFFFFF;

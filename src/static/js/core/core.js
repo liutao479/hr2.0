@@ -42,7 +42,7 @@
 					break;
 				// 季本松ip
 				case 'jbs':
-					return 'http://192.168.0.113:8080/' + method;
+					return 'http://192.168.0.180:8080/' + method;
 					break;
 				case 'wl':
 					return 'http://192.168.0.110:8080/' + method;
