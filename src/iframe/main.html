@@ -59,7 +59,7 @@
 				<td class="orders-item-data">{{=row.realName}}({{=row.idCard}})</td>
 				<td class="orders-item-data">
 					<table class="meanwhile" id="meanwhile">
-						{{ for(var j = 0, len2 = row.loanTasks.length; j < len2; j++) { var col = row.loanTasks[j]; }}
+						{{ var tasks={}; for(var j = 0, len2 = row.loanTasks.length; j < len2; j++) { var col = row.loanTasks[j]; tasks[col.category] = {taskId: col.processTaskId, name: col.sceneName}; }}
 							{{ if(j < 2){ }}
 								<tr class="loantask-item">
 									<td>{{=col.sceneName}}</td>
@@ -78,7 +78,8 @@
 						{{ } }}
 					</table>
 				</td>
-				<td class="orders-item-data"><a data-href="loanProcess/{{=row.loanTasks[0].category}}" data-id="{{=row.loanTasks[0].id}}" data-date="{{=row.createDate}}" class="button button-mini button-gray">立即处理</a></td>
+				<!-- <td class="orders-item-data"><a data-href="loanProcess/{{=row.loanTasks[0].category}}" data-id="{{=row.loanTasks[0].id}}" data-date="{{=row.createDate}}" class="button button-mini button-gray">立即处理</a></td> -->
+				<td class="orders-item-data"><a data-href="loanProcess/detail" data-idx="{{=i}}" class="button button-mini button-gray">立即处理</a></td>
 			</tr>
 		{{ } }}
 	{{ } else { }}

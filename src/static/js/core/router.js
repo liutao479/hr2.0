@@ -105,7 +105,7 @@
 		render.$console.html('');
 		router.closeRefresh = true;
 		if(!opts || !opts.bStatic) {
-			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + $.param(params) : '');
+			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + Base64.btoa($.param(params)) : '');
 		}
 		var item = g.routerMap[key];
 		if(!item) {
@@ -127,11 +127,10 @@
 		if(!hash) { return cb(); }
 		var sp = hash.split('?');
 		var _origin = sp[0],
-			_search = !!sp[1] ? ('?' + sp[1]) : undefined;
-			
-			// _search = decodeURI(_search);
+			_search = !!sp[1] ? sp[1] : undefined;
+			console.log(_search);
 		var _paths = _origin.split('/'),
-			_params = !!_search ? $.parseParams(_search) : undefined;
+			_params = !!_search ? $.deparam(Base64.atob(decodeURI(_search))) : undefined;
 		router.render(_origin, _params);
 		cb && typeof cb == 'function' && cb(_paths[0]);
 	}
