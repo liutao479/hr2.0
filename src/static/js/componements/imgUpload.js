@@ -71,6 +71,8 @@
 		var self = this;
 		if(self.status != 2) {
 			self.$el.find('.activeEvt').on('change', function() {
+				console.log(this.files[0])
+				console.log(this.value.split("\\\\"));
 				self.onUpload(this.files[0]);
 			});
 		}

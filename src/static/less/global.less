@@ -63,6 +63,9 @@ input[disabled]{
     bottom: -16px;
     font-size: 12px;
 }
+.link {
+    color: @linkColor;
+}
 
 // 边框灰色背景白色的框
 .layout {
@@ -647,12 +650,14 @@ input[disabled]{
         height: 50px;
         line-height: 50px;
         .iconfont {
-            position: relative;
-            top: 3px;
-            font-size: 22px;
+            float: left;
+            font-size: 20px;
         }
         .current-page {
             color: @fontColor;
+        }
+        a {
+            color: @mainColor;
         }
     }
     .key-value-box {
