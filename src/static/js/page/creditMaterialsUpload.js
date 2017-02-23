@@ -21,6 +21,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	$scope.tabs = [];
 	$scope.currentType = $scope.$params.type || 0;
 	$scope.$el = {};
+
 	
 	/**
 	* 加载征信材料上传数据

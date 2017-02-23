@@ -1,7 +1,7 @@
 'use strict';
 /**
 * 图片上传组件
-* usage: <element data-id="订单id" data-code="材料code" data-name="材料名称" data-type="材料类型" data-scene="场景编码" data-user="所属用户ID" data-owner="所属用户类型" data-img="已上传的图片地址" data-editable="" data-msg="" data-err=""></element>
+* usage: <element data-orderno="订单号" data-materialsid="材料id" data-code="材料code" data-name="材料名称" data-type="材料类型" data-scene="场景编码" data-user="所属用户ID" data-owner="所属用户类型" data-img="已上传的图片地址" data-editable="" data-msg="" data-err=""></element>
 */
 (function($) {
 	$.fn.imgUpload = function(opts) {
@@ -19,8 +19,9 @@
 	*/
 	var imgUpload = function($el, opts, params) {
 		var def = {
-			id: undefined,		//订单编号
+			orderno: undefined,		//订单编号
 			code: undefined,	//材料编码
+			materialsid: undefined,  //材料id
 			name: '材料名称',
 			type: 0,	//0 图片；1 视频
 			scene: undefined,	//场景名称
@@ -34,7 +35,7 @@
 		var self = this;
 		self.$el = $el;
 		self.options = $.extend(def, opts, params);
-		if(!self.options.id && !self.options.user && !self.options.scene) return false;
+		if(!self.options.orderno && !self.options.user && !self.options.scene) return false;
 		self.init();
 	}
 
@@ -113,9 +114,16 @@
 	*/
 	imgUpload.prototype.onDelete = function() {
 		var self = this;
+		var params = {};
+		if(self.options.materialsid) {
+			params.materialsid = self.options.materialsid;
+		}
+		console.log("删除");
+		console.log(params);
 		$.ajax({
 			url: api.del,
 			type: 'post',
+			data: params,
 			dataType: 'json',
 			success: function(xhr) {
 				if(!xhr.code) {
@@ -134,8 +142,8 @@
 		var self = this;
 		var params = {};
 		console.log(self);
-		if(self.options.id) {
-			params.orderNo = self.options.id;
+		if(self.options.orderno) {
+			params.orderNo = self.options.orderno;
 		}
 		if(self.options.user) {
 			params.userId = self.options.user;

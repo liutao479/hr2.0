@@ -48,6 +48,10 @@
 				case 'wl':
 					return 'http://192.168.0.110:8080/' + method;
 					break;
+				// 李艳波ip 
+				case 'lyb':
+					return 'http://192.168.0.44:8080/' + method;
+					break;
 			}
 		//Todo 发布时增加prefix
 		// return 'http://192.168.0.113:8080/' + method;
@@ -204,6 +208,25 @@
 	tool.formatCode = function(materialsCode) {
 		return _.materialsCodeMap[materialsCode];
 	}
+	tool.cfgMaterials = [{
+			materialsCode: 'sfzzm',
+			name: '身份证正面'
+		},{
+			materialsCode: 'sfzfm',
+			name: '身份证反面'
+		},{
+			materialsCode: 'zxsqs',
+			name: '征信申请书'
+		},{
+			materialsCode: 'xtzqtzs',
+			name: '系统知情通知书'
+		},{
+			materialsCode: 'hkbhzy',
+			name: '户口本户主页'
+		},{
+			materialsCode: 'hkbsy',
+			name: '户口本首页'
+		}];
 
 })(window);
 

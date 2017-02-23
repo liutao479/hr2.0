@@ -42,7 +42,7 @@ page.ctrl('loan', function($scope) {
 	}
 
 	var setupEvent = function() {
-		wDialog.alert('haha')
+		
 		/**
 		* 绑定搜索事件
 		**/
