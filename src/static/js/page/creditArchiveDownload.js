@@ -3,6 +3,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
+			queryType: 1,  //征信资料下载
 			pageNum: $params.pageNum || 1
 		};
 	/**
@@ -41,6 +42,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	/**
 	 * 绑定立即处理事件
 	 */
+	
 	var setupEvt = function() {
 
 		// 绑定搜索框模糊查询事件

@@ -3,6 +3,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
+			queryType: 2,  //贷款资料下载
 			pageNum: $params.pageNum || 1
 		};
 	/**
@@ -12,7 +13,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	*/
 	var loadArchiveDownloadList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.loadArchiveDownload,
+			url: $http.api('creditUser/getCreditMaterials', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',

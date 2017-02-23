@@ -732,12 +732,33 @@
     }
     
 }
-
+.dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    text-align: center;
+    &:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -0.25em;
+    }
+}
 // 弹窗
 .window {
+    position: relative;
+    display: inline-block;
+    vertical-align:middle;
     width: 500px;
     // 标题部分
     .w-title {
+        width: 500px;
         position: relative;
         height: 54px;
         background-color: #FFF;
@@ -765,6 +786,7 @@
     }
     // 提示消息
     .w-remind {
+        width: 500px;
         position: relative;
         height: 40px;
         line-height: 40px;
@@ -778,6 +800,7 @@
     }
     // 内容部分
     .w-content {
+        width: 500px;
         background-color: #FFF;
         padding: 20px 50px 50px 50px;
         &.w-content-padding {

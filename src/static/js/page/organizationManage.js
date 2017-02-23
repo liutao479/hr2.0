@@ -12,7 +12,7 @@ page.ctrl('organizationManage', [], function($scope) {
 	*/
 	var loadOrganizationManageList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.organizationManageBank,
+			url: $http.api('demandBank/getDemandBankList', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -60,9 +60,9 @@ page.ctrl('organizationManage', [], function($scope) {
 		loadOrganizationManageList(apiParams);
 	});
 
-	$scope.paging = function(_page, _size, $el, cb) {
-		apiParams.pageNum = _page;
-		$params.pageNum = _page;
+	$scope.paging = function(_pageNum, _size, $el, cb) {
+		apiParams.pageNum = _pageNum;
+		$params.pageNum = _pageNum;
 		// router.updateQuery($scope.$path, $params);
 		loadOrganizationManageList(apiParams);
 		cb();
