@@ -137,6 +137,10 @@
 			title: '提车材料上传',
 			page: 'pickMaterialsUpload'
 		},
+		'loanProcess/loanMaterialsChoose': {
+			title: '贷款材料选择',
+			page: 'loanMaterialsChoose'
+		},
 		'myCustomer/ordersDetail': {
 			title: '订单详情',
 			page: 'ordersDetail'

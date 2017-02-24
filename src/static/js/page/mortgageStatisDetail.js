@@ -12,8 +12,8 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 	*/
 	var loadMortgageDetail = function(params, cb) {
 		$.ajax({
-			url: $http.api('loanUserMaterials/getPledgeCertificate', 'cyj'),
-			type: 'get',
+			url: $http.api('loanPledge/index', 'cyj'),
+			type: 'post',
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {

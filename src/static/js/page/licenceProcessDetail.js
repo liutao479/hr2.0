@@ -12,8 +12,8 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 	*/
 	var loadLicenceDetail = function(params, cb) {
 		$.ajax({
-			url: $http.api('loanUserMaterials/getRegCertificate', 'cyj'),
-			type: 'get',
+			url: $http.api('loanRegistration/index', 'cyj'),
+			type: 'post',
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {

@@ -172,22 +172,20 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		 */
 		$console.find('#creditUploadPanel .delete-credit-item').on('click', function() {
 			var _userId = $(this).data('id');
-			console.log(_userId);
-			var flag;
 			switch ($scope.currentType) {
 				case 1:
-					flag = '共同还款人';
+					var flag = '共同还款人';
 					break;
 				case 2:
-					flag = '反担保人';
+					var flag = '反担保人';
 					break;
 			}
-			console.log(flag);
+			console.log(flag + ',' +_userId);
 			if(confirm('确认删除一个为' + _userId + '的' + flag + '?')) {
 				// 后台接口修改完成时使用
 				$.ajax({
 					type: 'post',
-					url: $http.api('creditUsers/del', 'zyj'),
+					url: $http.api('creditUser/del', 'zyj'),
 					data: {
 						userId: _userId
 					},

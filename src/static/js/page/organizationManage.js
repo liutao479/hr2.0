@@ -3,6 +3,7 @@ page.ctrl('organizationManage', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
+			organId: 99,  //机构id(登录用户)
 			pageNum: $params.pageNum || 1
 		};
 	$scope.tabs = ['合作银行管理', '合作车商管理'];
@@ -15,6 +16,7 @@ page.ctrl('organizationManage', [], function($scope) {
 			'organizationManage/newCar': '新建合作车商'
 		}
 	];
+
 	/**
 	* 加载合作银行数据
 	* @params {object} params 请求参数
@@ -30,12 +32,14 @@ page.ctrl('organizationManage', [], function($scope) {
 				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.bankListTmpl, result.data.resultlist, true);
 				setupPaging(result.page, true);
+				setupEvt();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
 			})
 		})
 	}
+
 	/**
 	* 加载合作车商数据
 	* @params {object} params 请求参数
@@ -99,6 +103,13 @@ page.ctrl('organizationManage', [], function($scope) {
 	 */
 	var setupBtnPanel = function(type, cb) {
 		render.compile($scope.$el.$btn, $scope.def.btnNewTmpl, $scope.btn[type], true);
+		$console.find('#btnPanel .button').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				bankId: that.data('id'), 
+				path: 'organizationManage'
+			});
+		})
 		if(cb && typeof cb == 'function') {
 			cb();
 		}
@@ -113,7 +124,12 @@ page.ctrl('organizationManage', [], function($scope) {
 		router.render(that.data('href'));
 	});
 
-	var setupEvt = function() {
+
+
+	/**
+	* 绑定tab栏事件
+	*/
+	var setupTabEvt = function() {
 		$console.find('.tabEvt').on('click', function() {
 			var that = $(this);
 			if(that.hasClass('role-item-active')) return;
@@ -124,6 +140,32 @@ page.ctrl('organizationManage', [], function($scope) {
 			that.addClass('role-item-active')
 			$scope.idx = _type;
 		})
+	}
+
+	/**
+	* 绑定tab栏事件
+	*/
+	var setupEvt = function() {
+		$console.find('#searchBankName').on('keydown', function(evt) {
+			if(evt.which == 13) {
+				alert("查询");
+				var that = $(this),
+					searchText = $.trim(that.val());
+				if(!searchText) {
+					return false;
+				}
+				apiParams.bankName = searchText;
+				$params.bankName = searchText;
+				apiParams.pageNum = 1;
+				$params.pageNum = 1;
+				loadBankList(apiParams, function() {
+					delete apiParams.bankName;
+					delete $params.bankName;
+					that.blur();
+				});
+				// router.updateQuery($scope.$path, $params);
+			}
+		});
 	}
 
 	/***
@@ -144,7 +186,7 @@ page.ctrl('organizationManage', [], function($scope) {
 		setupTablePanel(0, function() {
 			$scope.idx = 0;
 			setupTab();
-			setupEvt();
+			setupTabEvt();
 		});
 	});
 

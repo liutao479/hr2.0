@@ -15,7 +15,7 @@ page.ctrl('mortgageProcess', [], function($scope) {
 	*/
 	var loadMortgageProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api('loanPledge/getLoanPledgeList', 'cyj'),
+			url: $http.api('loanPledge/List', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
