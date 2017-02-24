@@ -46,7 +46,7 @@
 					break;
 				// 王亮ip 
 				case 'wl':
-					return 'http://192.168.0.110:8080/' + method;
+					return 'http://192.168.0.113:8888/' + method;
 					break;
 			}
 		//Todo 发布时增加prefix

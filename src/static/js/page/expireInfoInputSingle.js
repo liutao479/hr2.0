@@ -67,7 +67,7 @@ page.ctrl('expireInfoInputSingle', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('expire-info-input-single'), function() {
+	render.$console.load(router.template('iframe/expire-info-input-single'), function() {
 		$scope.def.listTmpl = render.$console.find('#expireInfoInputSingleTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#expireInfoInputSingleTable'),
