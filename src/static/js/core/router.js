@@ -145,4 +145,3 @@
 		g.location.reload();
 	});
 })(window);
-

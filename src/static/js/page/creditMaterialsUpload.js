@@ -72,16 +72,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		$location.location();
 	}
 
-	
-	// var setupTab = function(data, cb) {
-	// 	render.compile($scope.$el.$tab, $scope.def.tabTmpl, data, true);
-	// 	$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
-	// 	// console.log($scope.$el.$tabs);
-	// 	if( cb && typeof cb == 'function' ) {
-	// 		cb();
-	// 	}
-	// }
-
 	/**
 	 * 渲染tab栏
 	 * @param  {object} data tab栏操作的数据
@@ -102,6 +92,29 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		$scope.tabs[_type] = $console.find('#creditUploadPanel').html();
 		setupEvt();
 	}
+	
+	// 编译完成后绑定事件
+	var setupEvent = function () {
+		// tab栏点击事件
+		$scope.$el.$tab.find('.tabEvt').on('click', function () {
+			var $this = $(this);
+			if($this.hasClass('role-item-active')) return;
+			var _type = $this.data('type');
+			if(!$scope.tabs[_type]) {
+				$scope.$el.$creditPanel.html('');
+				render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, $scope.result.data.creditUsers[_type], true);
+				var _tabTrigger = $console.find('#creditUploadPanel').html();
+				$scope.tabs[_type] = _tabTrigger;
+				// $scope.result.index = _type;
+			}
+			$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
+			$this.addClass('role-item-active');
+			$scope.currentType = _type;
+			$scope.$el.$creditPanel.html($scope.tabs[$scope.currentType]);
+		})
+		$scope.$el.$creditPanel.find('.uploadEvt').imgUpload();
+	}
+
 
 	/**
 	 * 增加共同还款人

@@ -1,0 +1,14 @@
+{
+    "code":0,
+    "data":[
+        {
+        	"name":"飞单",
+            "value":"1"
+        },
+        {
+        	"name":"业务自拓",
+            "value":"2"
+        }
+    ],
+    "msg":"success"
+}
