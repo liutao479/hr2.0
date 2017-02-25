@@ -45,7 +45,7 @@
 							<td class="orders-item-data">分期金额（元）</td>
 							<td class="orders-item-data">经办银行</td>
 							<td class="orders-item-data">当前进度</td>
-							<td class="orders-item-data orders-item-data-blank-mini"></td>
+							
 							<td class="orders-item-data">操作</td>
 						</tr>
 					</thead>
@@ -75,24 +75,17 @@
 							<td class="orders-item-data">{{=row.userName}}（{{=row.idCard}}）</td>
 							<td class="orders-item-data">{{=row.stageMoney}}</td>
 							<td class="orders-item-data">{{=row.bankName}}</td>
-							{{ if(row.orderStatus == 0){ }}
 							<td class="orders-item-data">征信查询</td>
-							{{ } else if(row.orderStatus == 1) { }}
-							<td class="orders-item-data">待审核</td>
-							{{ } else if(row.orderStatus == 2) { }}
-							<td class="orders-item-data">已完成</td>
-							{{ } else if(row.orderStatus == 3) { }}
-							<td class="orders-item-data">征信完成</td>
-							{{ } }} 
-							<td class="orders-item-data orders-item-data-blank-mini"></td>
+							
 							<td class="orders-item-data">
-								<div class="button button-mini button-gray">下载</div>
+								<a class="button button-mini button-gray contractPrint">合同套打</a>
+								<a class="button button-mini button-gray ml15">下载</a>
 							</td>
 						</tr>
 					{{ } }}
 				{{ } else { }}
 				<tr class="tr-noborder">
-					<td colspan="8" class="orders-blank">
+					<td colspan="7" class="orders-blank">
 						<div class="blank-box">
 							<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
 							<p>暂无待办任务！</p>

@@ -34,15 +34,23 @@
 			switch (name) {
 				// 周宜俭ip
 				case 'zyj':
-					return 'http://192.168.0.189:8080/' + method;
+					return 'http://192.168.0.103:8080/' + method;
 					break;
 				// 蔡延军ip
 				case 'cyj':
-					return 'http://192.168.0.184:8080/' + method;
+					return 'http://192.168.0.105:8080/' + method;
 					break;
 				// 季本松ip
 				case 'jbs':
-					return 'http://192.168.0.113:8080/' + method;
+					return 'http://192.168.0.180:8080/' + method;
+					break;
+				// 王亮ip 
+				case 'wl':
+					return 'http://192.168.0.113:8888/' + method;
+					break;
+				// 李艳波ip 
+				case 'lyb':
+					return 'http://192.168.0.44:8080/' + method;
 					break;
 			}
 		//Todo 发布时增加prefix
@@ -69,61 +77,49 @@
 			}
 		}
 	};
+	var gUrl='http://127.0.0.1:8083/';
 	_.$http.apiMap = {
-		menu: 'http://127.0.0.1:8083/mock/menu',
-
-		loanList: 'http://127.0.0.1:8083/mock/loan/list',
-
-		myCustomer: 'http://192.168.0.184:8080/loanOrder/getMyCustomer',
-
-		orderModifyAudit: 'http://192.168.0.184:8080/loanOrderApply/getLoanOrderApply',
-
-		cancelOrderAudit: 'http://192.168.0.184:8080/loanOrderApply/getLoanOrderApply',
-
-		loanManage: 'http://127.0.0.1:8083/mock/loan.manage',
-
-		marginManage: 'http://127.0.0.1:8083/mock/marginManage',
-
-		moneyBussinessAuditPrint: 'http://127.0.0.1:8083/mock/moneyBussinessAuditPrint',
-
-		mortgageProcess: 'http://127.0.0.1:8083/mock/mortgage.process',
-
-		mortgageAudit: 'http://127.0.0.1:8083/mock/mortgage.audit',
-
+		menu: gUrl+'mock/menu',
+		loanList: gUrl+'mock/loan.list',
+		myCustomer: 'http://192.168.0.114:8080/loanOrder/getMyCustomer',
+		orderModifyAudit: gUrl+'mock/orderModifyAudit',
+		cancelOrderAudit: gUrl+'mock/cancelOrderAudit',
+		loanManage: gUrl+'mock/loan.manage',
+		marginManage: gUrl+'mock/marginManage',
+		moneyBussinessAuditPrint: gUrl+'mock/moneyBussinessAuditPrint',
+		mortgageProcess: gUrl+'mock/mortgage.process',
+		mortgageAudit: gUrl+'mock/mortgage.audit',
+		mortgageStatis: 'http://192.168.0.114:8080/loanPledge/getLoanPledgeList',
+		operationsAnalysis: gUrl+'mock/operationsAnalysis',
+		licenceProcess: gUrl+'mock/licence.process',
+		licenceAudit: gUrl+'mock/licence.audit',
+		licenceStatis: 'http://192.168.0.114:8080/loanRegistration/getLoanRegistrationList',
+		expireProcess: gUrl+'mock/expire.process',
+		creditArchiveDownload: 'http://192.168.0.114:8080/creditUser/getCreditMaterials',
+		loadArchiveDownload: 'http://192.168.0.114:8080/creditUser/getCreditMaterials',
+		moneyBusinessAuditPrint: 'http://192.168.0.114:8080/loanUserStage/getFinancialData',
+		auditPrint: 'http://192.168.0.114:8080/loanUserStage/getFinancialData',
+		organizationManage: gUrl+'mock/organizationManage',
+		creditInput: gUrl+'mock/creditInput',
+//		loanInfo: 'http://192.168.0.135:8080/loanInfoInput/info',
+		loanInfo: gUrl+'mock/loan.infoBak',
+//		loanInfo: gUrl+'mock/loan.infoBakChange',
+		loanAudit: gUrl+'mock/loan.info',
+		cardAudit: gUrl+'mock/openCardSheet',
+		openCardSheet: gUrl+'mock/openCardSheet',
+		lendAudit: gUrl+'mock/loan.info',
+		phoneAudit: gUrl+'mock/phoneAudit',
+		carTwohand: gUrl+'mock/car.towhand',
+		carAudit: gUrl+'mock/loan.infoBak',
 		mortgageTable: 'http://192.168.0.184:8080/loanPledge/getLoanPledgeList',
-
-		operationsAnalysis: 'http://127.0.0.1:8083/mock/operationsAnalysis',
-
-		organizationManage: 'http://127.0.0.1:8083/mock/organizationManage',
-
-		licenceProcess: 'http://127.0.0.1:8083/mock/licence.process',
-
-		licenceAudit: 'http://127.0.0.1:8083/mock/licence.audit',
-
 		licenceTable: 'http://192.168.0.184:8080/loanRegistration/getLoanRegistrationList',
-
-		expireProcess: 'http://127.0.0.1:8083/mock/expire.process',
-
-		creditArchiveDownload: 'http://192.168.0.184:8080/creditUser/getCreditMaterials',
-
-		loadArchiveDownload: 'http://192.168.0.184:8080/creditUser/getCreditMaterials',
-
-		moneyBusinessAuditPrint: 'http://192.168.0.184:8080/loanUserStage/getFinancialData',
-
-		auditPrint: 'http://192.168.0.184:8080/loanUserStage/getFinancialData',
-
-		operationsAnalysis: 'http://127.0.0.1:8083/mock/operationsAnalysis',
-
 		organizationManageBank: 'http://192.168.0.184:8080/demandBank/getDemandBankList',
-
 		organizationManageCar: 'http://192.168.0.184:8080/demandCarShop/getDemandCarShop',
+		creditMaterialsUpload: 'http://192.168.0.189:8080/creditMaterials/index',
+		loanMaterialsUpload: 'http://192.168.0.189:8080/loanMaterials/index',
+		addCreditUser: 'http://192.168.0.189:8080/creditUser/add',
+		delCreditUser: 'http://192.168.0.189:8080/creditUser/del'
 
-		// creditInput: 'http://127.0.0.1:8083/mock/creditInput'
-		creditInput: 'http://192.168.0.148:8080/creditUser/getCreditInfo',
-		creditMaterialsUpload: 'http://127.0.0.1:8083/mock/creditMaterials/index',
-		loanMaterialsUpload: 'http://192.168.0.170:8080/loanMaterials/index',
-		addCreditUser: 'http://192.168.0.170:8080/creditUser/add',
-		delCreditUser: 'http://192.168.0.170:8080/creditUser/del',
 	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
@@ -196,7 +192,24 @@
 	tool.formatCode = function(materialsCode) {
 		return _.materialsCodeMap[materialsCode];
 	}
+	tool.cfgMaterials = [{
+			materialsCode: 'sfzzm',
+			name: '身份证正面'
+		},{
+			materialsCode: 'sfzfm',
+			name: '身份证反面'
+		},{
+			materialsCode: 'zxsqs',
+			name: '征信申请书'
+		},{
+			materialsCode: 'xtzqtzs',
+			name: '系统知情通知书'
+		},{
+			materialsCode: 'hkbhzy',
+			name: '户口本户主页'
+		},{
+			materialsCode: 'hkbsy',
+			name: '户口本首页'
+		}];
 
 })(window);
-
-

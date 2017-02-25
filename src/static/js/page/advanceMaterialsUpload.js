@@ -12,10 +12,10 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
 			// type: flag,
 			type: 'post',
-			url: $http.apiMap.loanMaterialsUpload,
+			url: $http.api('advancedMaterials/index'),
 			data: {
 				// taskId: $scope.$params.taskId
-				taskId: 4
+				taskId: 3
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -24,7 +24,9 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 				// 编译面包屑
 				var _loanUser = $scope.result.data.loanTask.loanOrder.realName;
 				setupLocation(_loanUser);
+				setupBackReason(result.data.loanTask.backApprovalInfo);
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, true);
+				setupEvent();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -41,11 +43,30 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 		var _orderDate = tool.formatDate($scope.$params.date, true);
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '上门材料上传',
+			current: $scope.result.cfgData.name,
 			loanUser: loanUser,
 			orderDate: _orderDate
 		});
 		$location.location();
+	}
+	
+	/**
+	* 设置退回原因
+	*/
+	var setupBackReason = function(data) {
+		var $backReason = $console.find('#backReason');
+		if(!data) {
+			$backReason.remove();
+			return false;
+		} else {
+			$backReason.data({
+				backReason: data.reason,
+				backUser: data.roleName,
+				backUserPhone: data.phone,
+				backDate: tool.formatDate(data.transDate, true)
+			});
+			$backReason.backReason();
+		}
 	}
 
 	// 编译完成后绑定事件
@@ -72,9 +93,11 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 				})
 			})
 		})
+		
+		$scope.$el.$loanPanel.find('.uploadEvt').imgUpload();
 	}
 
-	$console.load(router.template('iframe/loan-material-upload'), function() {
+	$console.load(router.template('iframe/material-upload'), function() {
 		// $scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
 		$scope.def.listTmpl = $console.find('#loanUploadTmpl').html();
 		// console.log($console.find('#creditResultPanel'))

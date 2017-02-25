@@ -19,7 +19,7 @@ page.ctrl('mortgageStatis', [], function($scope) {
 	*/
 	var loadMortgageStatisList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.mortgageTable,
+			url: $http.api('loanPledge/List', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -81,6 +81,17 @@ page.ctrl('mortgageStatis', [], function($scope) {
 			// 下拉框数据以及输入框数据重置
 			// router.updateQuery($scope.$path, $params);
 			
+		});
+
+		// 进入详情页
+		$console.find('#mortgageStatisTable .button').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				// taskId: that.data('id'), 
+				// date: that.data('date'),
+				orderNo: that.data('id'),
+				path: 'mortgageStatis'
+			});
 		});
 	}
 

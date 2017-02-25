@@ -144,4 +144,3 @@
 		g.location.reload();
 	});
 })(window);
-

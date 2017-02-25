@@ -15,7 +15,7 @@ page.ctrl('licenceProcess', [], function($scope) {
 	*/
 	var loadLicenceProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.licenceTable,
+			url: $http.api('loanRegistration/List', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -106,6 +106,7 @@ page.ctrl('licenceProcess', [], function($scope) {
 			router.render(that.data('href'), {
 				// taskId: that.data('id'), 
 				// date: that.data('date'),
+				orderNo: that.data('id'),
 				path: 'licenceProcess'
 			});
 		});

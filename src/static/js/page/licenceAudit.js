@@ -16,7 +16,7 @@ page.ctrl('licenceAudit', [], function($scope) {
 	var loadLicenceAuditList = function(params, cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.apiMap.licenceTable,
+			url: $http.api('loanRegistration/List', 'cyj'),
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -88,6 +88,17 @@ page.ctrl('licenceAudit', [], function($scope) {
 			// 下拉框数据以及输入框数据重置
 			// router.updateQuery($scope.$path, $params);
 			
+		});
+		
+		// 进入详情页
+		$console.find('#licenceAuditTable .button').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				// taskId: that.data('id'), 
+				// date: that.data('date'),
+				orderNo: that.data('id'),
+				path: 'licenceAudit'
+			});
 		});
 	}
 

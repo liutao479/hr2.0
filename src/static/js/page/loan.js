@@ -16,7 +16,8 @@ page.ctrl('loan', function($scope) {
 			// url: 'http://192.168.0.144:8080/loanOrder/workbench',
 			// dataType:"json",
 			// data: params,
-			url: $http.apiMap.loanList,
+			url: $http.api('loan.list'),
+			// url: $http.api('material/addOrUpdate', 'wl'),
 			success: $http.ok(function(result) {
 				$scope.pageData = result.data;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
@@ -24,7 +25,7 @@ page.ctrl('loan', function($scope) {
 				setupEvent();
 				if(cb && typeof cb == 'function') {
 					cb();
-				}
+				}  
 			})
 		})
 	}
@@ -41,7 +42,7 @@ page.ctrl('loan', function($scope) {
 	}
 
 	var setupEvent = function() {
-		wDialog.alert('haha')
+		
 		/**
 		* 绑定搜索事件
 		**/

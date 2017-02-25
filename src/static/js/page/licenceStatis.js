@@ -18,7 +18,7 @@ page.ctrl('licenceStatis', [], function($scope) {
 	var loadLicenceStatisList = function(params, cb) {
 		$.ajax({
 			// url: $http.api($http.apiMap.licenceStatis),
-			url: $http.apiMap.licenceTable,
+			url: $http.api('loanRegistration/List', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -81,6 +81,17 @@ page.ctrl('licenceStatis', [], function($scope) {
 			// 下拉框数据以及输入框数据重置
 			// router.updateQuery($scope.$path, $params);
 			
+		});
+
+		// 进入详情页
+		$console.find('#licenceStatisTable .button').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				// taskId: that.data('id'), 
+				// date: that.data('date'),
+				orderNo: that.data('id'),
+				path: 'licenceStatis'
+			});
 		});
 	}
 	/***

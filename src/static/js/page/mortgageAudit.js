@@ -15,7 +15,7 @@ page.ctrl('mortgageAudit', [], function($scope) {
 	*/
 	var loadMortgageAuditList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.mortgageTable,
+			url: $http.api('loanPledge/List', 'cyj'),
 			type: 'post',
 			dataType: 'json',
 			data: params,
@@ -92,6 +92,17 @@ page.ctrl('mortgageAudit', [], function($scope) {
 			// 下拉框数据以及输入框数据重置
 			// router.updateQuery($scope.$path, $params);
 			
+		});
+
+		// 进入详情页
+		$console.find('#mortgageAuditTable .button').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				// taskId: that.data('id'), 
+				// date: that.data('date'),
+				orderNo: that.data('id'),
+				path: 'mortgageAudit'
+			});
 		});
 	}
 

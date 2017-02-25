@@ -6,13 +6,13 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 			pageNum: $params.page || 1
 		};
 	/**
-	* 加载抵押办理信息表数据
+	* 加载财务业务审批表数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
 	var loadMoneyPrintList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.moneyBusinessAuditPrint,
+			url: $http.api('loanUserStage/getFinancialData', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',

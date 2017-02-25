@@ -1,19 +1,33 @@
 //弹窗 所需要的
 var wDialog = {};
 wDialog.alert = function(msg, cb) {
-	var template = '<div class="ngdialog ngdialog-theme-alert">\
-					<div class="ngdialog-overlay"></div>\
-					<div class="ngdialog-content">\
-						'+msg+'<div class="ngdialog-close"></div>\
-					</div>\
-				</div>';
-	var $dialog = $(template).appendTo('body');
-	var $dialog_close = $dialog.find('.ngdialog-close');
-	$dialog_close.on('click', function() {
-		if(cb && typeof cb == 'function')
-			cb();
-		$dialog.remove();
-	})
+	var template = '<div class="window">\
+		<div class="w-title">\
+			<div class="w-title-content">'+ msg +'</div>\
+			<div class="w-close"><i class="iconfont">&#xe65a;</i></div>\
+		</div>\
+		<div class="w-content">\
+			<dl class="w-dropdown">\
+				<dt>请选择需要套打的合同模板：</dt>\
+				<dd>\
+					<select name="" id="">\
+						{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
+						<option>{{=it.fileName}}</option>\
+						{{ } }}\
+					</select>\
+				</dd>\
+			</dl>\
+			<div class="w-commit-area">\
+				<div class="button button-empty">取消</div><div class="button">确定</div>\
+			</div>\
+		</div>\
+	</div>';
+	var $dialog = $('<div class="dialog" id="dialog"></dialog>').appendTo('body');
+	
+
+
+	if(cb && typeof cb == 'function')
+		cb();
 }
 wDialog.confirm = function(msg, opt) {
 	if(!opt) opt = {};

@@ -100,7 +100,7 @@
 								{{ } else { }}
 									<td class="orders-item-data">{{=tool.overdue(row.pickDate, row.deadline)}}</td>
 									{{ } }}
-							<td class="orders-item-data"><div class="button button-mini button-gray">查看</div></td>
+							<td class="orders-item-data"><a data-href="licenceStatis/licenceStatisDetail" data-id="{{=row.orderNo}}" class="button button-mini button-gray">查看</a></td>
 						</tr>
 					{{ } }}
 				{{ } else { }}
