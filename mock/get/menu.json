@@ -3,7 +3,8 @@
 	"data": {
 		"loanProcess": [],
 		"myCustomer": [],
-		"orderManage": ["orderModifyAudit", "cancelOrderAudit"],
+		"orderModifyAudit":[],
+		"cancelOrderAudit":[],
 		"moneyManage": ["loanManage", "marginManage"],
 		"licenceManage": ["licenceProcess", "licenceAudit", "licenceStatis"],
 		"mortgageManage": ["mortgageProcess", "mortgageAudit", "mortgageStatis"],
