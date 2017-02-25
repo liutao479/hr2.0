@@ -63,7 +63,18 @@
 				<!-- 翻页 end-->
 
 				<!-- 订单表格 -->
-				<div class="expire-input-list" id="expireInputListTable">
+				<div class="expire-input-list" id="expireTaskDistributeTable">
+				</div>
+				<!--订单表格  end-->
+			</div>
+			<!--我的客户  end-->
+
+			<!--分页插件-->
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope[''].paging" data-pages="50" data-current="1"></div>
+	
+	
+	
+			<script type="text/x-dot-template" id="expireTaskDistributeTmpl">
 					<table class="expire-orders-table expire-orders-table-hover" width="100%">
 						<thead class="expire-title">
 							<tr>
@@ -203,10 +214,6 @@
 							</tr>
 						</tbody>
 					</table>
-				</div>
-				<!--订单表格  end-->
-			</div>
-			<!--我的客户 end-->
+			</script>
 
-			<!--分页插件-->
-			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope[''].paging" data-pages="50" data-current="1"></div>
+

@@ -12,7 +12,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
 			// type: flag,
 			type: 'post',
-			url: $http.api('materials/index'),
+			url: $http.api('materials/index', 'zyj'),
 			data: {
 				// taskId: $scope.$params.taskId
 				taskId: 2

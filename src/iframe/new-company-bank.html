@@ -18,8 +18,17 @@
 				</div>
 				
 				<!--面板-->
-				<div class="panel panel-loan panel-layout clearfix">
-					<!--合作机构维护单个循环div-->
+				<div class="panel panel-loan panel-layout clearfix" id="newCompanyBank">
+				</div>
+				
+				<!--提交订单按钮-->
+				<div class="commit-orders-box">
+					<div id="" class="button">提交订单</div>
+				</div>
+			</div>
+			
+
+			<script type="text/x-dot-template" id="openCardSheettmpl">
 				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 					<div class="col-company">
 						<div class="panel-title-box">
@@ -42,65 +51,12 @@
 									<span class="info-value"><input type="text" /></span>
 								{{ } }}
 								</div>
+								{{ if(role.type != '1'){ }}
+								<div id="" class="button">增加</div>
+								{{ } }}
 							{{ } }}
 							</div>
 						</div>
 					</div>
 				{{ } }}
-					<div class="col-company">
-						<div class="panel-title-box">
-							<div class="panel-title">
-								<span class="panel-title-name">打款账户</span>
-							</div>
-						</div>
-						<div class="panel-content clearfix">
-							<div class="carShop-manage">
-								<div class="info-key-value-box">
-									<span class="info-key"><i>*</i>开户账户：</span>
-									<span class="info-value"><input type="text" /></span>
-								</div>
-								<div class="info-key-value-box">
-									<span class="info-key"><i>*</i>账户户名：</span>
-									<span class="info-value"><input type="text" /></span>
-								</div>
-								<div id="" class="button">增加</div>
-							</div>
-						</div>
-						<div class="panel-content clearfix">
-							<div class="carShop-manage">
-								<div class="info-key-value-box">
-									<span class="info-key"><i>*</i>开户账户：</span>
-									<span class="info-value"><input type="text" /></span>
-								</div>
-								<div class="info-key-value-box">
-									<span class="info-key"><i>*</i>账户户名：</span>
-									<span class="info-value"><input type="text" /></span>
-								</div>
-								<div id="" class="button">删除</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-company">
-						<div class="panel-title-box">
-							<div class="panel-title">
-								<span class="panel-title-name">银行费率表</span>
-							</div>
-						</div>
-						<div class="panel-content pt24 clearfix">
-							<div class="carShop-manage-fee">
-								<div class="info-key-value-box">
-									<span class="info-key"><i>*</i>费率1：</span>
-									<span class="info-value"><input type="text" /></span>
-									<div id="" class="button">此处为表格</div>
-								</div>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<!--提交订单按钮-->
-				<div class="commit-orders-box">
-					<div id="" class="button">提交订单</div>
-				</div>
-			</div>
+			</script>

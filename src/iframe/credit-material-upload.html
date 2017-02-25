@@ -31,6 +31,6 @@
 <!-- 征信材料上传 end-->
 <script type="text/dot-x-template" id="creditUploadTabsTmpl">
 	{{ for(var item in it.creditUsers) { }}
-		<li class="role-bar-li"><a href="javascript:;" class="role-item{{=(item == 0 ? ' role-item-active' : '')}} tabEvt" data-type="item">{{=it.types[item]}}</a></li>
+		<li class="role-bar-li"><a href="javascript:;" class="role-item{{=(item == it.currentType ? ' role-item-active' : '')}} tabEvt" data-type="{{=item}}">{{=it.types[item]}}</a></li>
 	{{ } }}
 </script>

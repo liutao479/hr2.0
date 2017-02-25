@@ -21,6 +21,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	$scope.tabs = [];
 	$scope.currentType = $scope.$params.type || 0;
 	$scope.$el = {};
+
 	
 	/**
 	* 加载征信材料上传数据
@@ -40,6 +41,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$scope.result = result;
 				$scope.orderNo = result.data.loanTask.orderNo;
 				$scope.result.data.currentType = _type;
+				$scope.currentType = _type;
 				// 编译面包屑
 				setupLocation();
 				// 编译tab
@@ -47,7 +49,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				// 编译tab项对应内容
 				setupCreditPanel($scope.result.data, _type);
 				// 编译立即处理事件
-				setupEvt();
+				setupTabEvt();
 				if( cb && typeof cb == 'function' ) {
 					cb();
 				}
@@ -74,18 +76,10 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 渲染tab栏
 	 * @param  {object} data tab栏操作的数据
 	 */
-	// var setupTab = function(data, cb) {
-	// 	render.compile($scope.$el.$tab, $scope.def.tabTmpl, data, true);
-	// 	$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
-	// 	// console.log($scope.$el.$tabs);
-	// 	if( cb && typeof cb == 'function' ) {
-	// 		cb();
-	// 	}
-	// }
-
 	var setupTab = function(data) {
 		data.types = ['借款人', '共同还款人', '反担保人'];
 		render.compile($scope.$el.$tab, $scope.def.tabTmpl, data, true);
+		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
 	}
 
 	/**
@@ -95,9 +89,32 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	var setupCreditPanel = function(data, _type) {
 		data.currentType = _type;
 		render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, data, true);
-		var _tabTrigger = $console.find('#creditUploadPanel').html();
-		$scope.tabs[_type] = _tabTrigger;
+		$scope.tabs[_type] = $console.find('#creditUploadPanel').html();
+		setupEvt();
 	}
+	
+	// 编译完成后绑定事件
+	var setupEvent = function () {
+		// tab栏点击事件
+		$scope.$el.$tab.find('.tabEvt').on('click', function () {
+			var $this = $(this);
+			if($this.hasClass('role-item-active')) return;
+			var _type = $this.data('type');
+			if(!$scope.tabs[_type]) {
+				$scope.$el.$creditPanel.html('');
+				render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, $scope.result.data.creditUsers[_type], true);
+				var _tabTrigger = $console.find('#creditUploadPanel').html();
+				$scope.tabs[_type] = _tabTrigger;
+				// $scope.result.index = _type;
+			}
+			$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
+			$this.addClass('role-item-active');
+			$scope.currentType = _type;
+			$scope.$el.$creditPanel.html($scope.tabs[$scope.currentType]);
+		})
+		$scope.$el.$creditPanel.find('.uploadEvt').imgUpload();
+	}
+
 
 	/**
 	 * 增加共同还款人
@@ -142,49 +159,46 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	/**
 	 * tab栏点击事件
 	 */
-	var setupEvt = function() {
+	var setupTabEvt = function() {
 		// $(document).on('click', '.tabEvt', function() {
 		$console.find('#creditTabs .tabEvt').on('click', function() {
-			console.log('tab');
 			var $this = $(this);
 			if($this.hasClass('role-item-active')) return;
+			// 如果当前tab对应页面html发生了变化，例如上传了图片，则将页面再次存入$scope.tabs里面
+			$scope.tabs[$scope.currentType] = $console.find('#creditUploadPanel').html();
 			var _type = $this.data('type');
 			if(!$scope.tabs[_type]) {
 				$scope.$el.$creditPanel.html('');
-				render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, $scope.result.data.creditUsers[_type], true);
-				var _tabTrigger = $console.find('#creditUploadPanel').html();
-				$scope.tabs[_type] = _tabTrigger;
-				// $scope.result.index = _type;
+				setupCreditPanel($scope.result.data, _type);
 			}
 			$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.currentType = _type;
 			$scope.$el.$creditPanel.html($scope.tabs[$scope.currentType]);
+			setupEvt();
 		})
+	}
 
+	var setupEvt = function() {
 		/**
 		 * 删除一个共同还款人或者反担保人
 		 */
-		// $(document).on('click', '.delete-credit-item', function() {
-		// console.log($console.find('#creditUploadPanel .delete-credit-item'))
 		$console.find('#creditUploadPanel .delete-credit-item').on('click', function() {
 			var _userId = $(this).data('id');
-			console.log(_userId);
-			var flag;
 			switch ($scope.currentType) {
 				case 1:
-					flag = '共同还款人';
+					var flag = '共同还款人';
 					break;
 				case 2:
-					flag = '反担保人';
+					var flag = '反担保人';
 					break;
 			}
-			console.log(flag);
+			console.log(flag + ',' +_userId);
 			if(confirm('确认删除一个为' + _userId + '的' + flag + '?')) {
 				// 后台接口修改完成时使用
 				$.ajax({
 					type: 'post',
-					url: $http.apiMap.delCreditUser,
+					url: $http.api('creditUser/del', 'zyj'),
 					data: {
 						userId: _userId
 					},
@@ -200,15 +214,20 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				}) 
 			}
 		});
+
+		/**
+		 * 启动上传图片控件
+		 */
+		$scope.$el.$creditPanel.find('.uploadEvt').imgUpload();
 	}
 
-
-		$.when($.ajax('iframe/credit-material-upload.html'), $.ajax('defs/creditPanel.html')).done(function(t1, t2) {
-			$console.append(t1[0] + t2[0]);
-			$scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
-			$scope.def.listTmpl = $console.find('#creditUploadListTmpl').html();
-			$scope.$el.$tab = $console.find('#creditTabs');
-			$scope.$el.$creditPanel = $console.find('#creditUploadPanel');
-			loadOrderInfo($scope.currentType);
-		});
+	// 加载页面模板
+	$.when($.ajax('iframe/credit-material-upload.html'), $.ajax('defs/creditPanel.html')).done(function(t1, t2) {
+		$console.append(t1[0] + t2[0]);
+		$scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
+		$scope.def.listTmpl = $console.find('#creditUploadListTmpl').html();
+		$scope.$el.$tab = $console.find('#creditTabs');
+		$scope.$el.$creditPanel = $console.find('#creditUploadPanel');
+		loadOrderInfo($scope.currentType);
+	});
 });

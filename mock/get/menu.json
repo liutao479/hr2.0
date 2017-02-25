@@ -10,7 +10,7 @@
 		"mortgageManage": ["mortgageProcess", "mortgageAudit", "mortgageStatis"],
 		"expireManage": ["expireInfoInput", "expireProcess"],
 		"archiveDownload": ["creditArchiveDownload", "loadArchiveDownload"],
-		"archivePrint": ["moneyBusinessAuditPrint", "auditPrint"],
+		"archivePrint": ["moneyBusinessAuditPrint"],
 		"operationsAnalysis": [],
 		"organizationManage": []
 	}

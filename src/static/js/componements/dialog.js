@@ -1,39 +1,33 @@
 //弹窗 所需要的
 var wDialog = {};
 wDialog.alert = function(msg, cb) {
-	var template = '<div class="dialog"><div class="window">\
+	var template = '<div class="window">\
 		<div class="w-title">\
-			<div class="w-title-content">退回</div>\
+			<div class="w-title-content">'+ msg +'</div>\
 			<div class="w-close"><i class="iconfont">&#xe65a;</i></div>\
 		</div>\
 		<div class="w-content">\
-			<textarea name="" id="" cols="5" rows="5" class="remarks-box" placeholder="在此处填写意见"></textarea>\
-			<!-- 选择区域 -->\
-			<div class="w-select-area clearfix">\
-				<div class="w-select">\
-					<div class="checkbox checkbox-normal checked" checked="checked" >\
-						<i class="iconfont">&#xe659;</i>\
-					</div>\
-					<span class="w-select-item">材料不全或不合规</span>\
-				</div>\
-				<div class="w-select">\
-					<div class="checkbox checkbox-normal"></div>\
-					<span class="w-select-item">其他</span>\
-				</div>\
-			</div>\
-			<!-- 提交区域 -->\
+			<dl class="w-dropdown">\
+				<dt>请选择需要套打的合同模板：</dt>\
+				<dd>\
+					<select name="" id="">\
+						{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
+						<option>{{=it.fileName}}</option>\
+						{{ } }}\
+					</select>\
+				</dd>\
+			</dl>\
 			<div class="w-commit-area">\
 				<div class="button button-empty">取消</div><div class="button">确定</div>\
 			</div>\
 		</div>\
-	</div></div>';
-	var $dialog = $(template).appendTo('body');
-	var $dialog_close = $dialog.find('.ngdialog-close');
-	$dialog_close.on('click', function() {
-		if(cb && typeof cb == 'function')
-			cb();
-		$dialog.remove();
-	})
+	</div>';
+	var $dialog = $('<div class="dialog" id="dialog"></dialog>').appendTo('body');
+	
+
+
+	if(cb && typeof cb == 'function')
+		cb();
 }
 wDialog.confirm = function(msg, opt) {
 	if(!opt) opt = {};

@@ -1,0 +1,276 @@
+	<!--二手车评估zhy-->
+			<div class="container car-twohand" id="car-twohand">
+				<!--返回列表-->
+				<div class="path-back-bar">
+					<div class="path-back">
+						<i class="iconfont">&#xe626;</i>
+						<a href="#">返回列表</a>&nbsp;&gt;
+						<span class="current-page">二手车评估</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">借款人：</span>
+						<span class="value">张三</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">订单生成时间：</span>
+						<span class="value">2016-11-03 14:02</span>
+					</div>
+				</div>
+				<!--提交修改等等按钮-->
+				<div class="commit-orders-box commit-orders-box-area mb15">
+					<a href="javascript:;" class="commit-item">
+						<i class="iconfont">&#xe614;</i>
+						<span>放款预约</span>
+					</a>
+					<a href="javascript:;" class="commit-item">
+						<i class="iconfont">&#xe6fd;</i>
+						<span>申请终止订单</span>
+					</a>
+					<a href="javascript:;" class="commit-item">
+						<i class="iconfont">&#xe640;</i>
+						<span>申请修改分期信息</span>
+					</a>
+				</div>
+				<!--提交修改等等按钮   end-->
+				
+				<!--面板-->
+				<div id="secondhandInput"></div>
+				<!--提交订单按钮-->
+				<div class="commit-orders-box">
+					<div class="button saveBtn">提交订单</div>
+				</div>
+			</div>			
+			<script type="text/x-dot-template" id="secondhandInputtmpl">
+				<form id="dataform">
+				<div class="panel panel-loan">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">评估对象</span>
+						</div>
+					</div>
+					<div class="panel-detail-content-layout">
+						<div class="loan-info">
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>车辆型号：</span>
+								<span class="info-value">
+									<input type="text" name="carMode" value="{{= it.loanCarAssess.carMode}}" />
+								</span>
+								
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>车型名称：</span>
+								<span class="info-value"><input type="text" name="carName" value="{{= it.loanCarAssess.carName }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>车架号：</span>
+								<span class="info-value"><input type="text" name="frameNo" value="{{= it.loanCarAssess.frameNo }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>厂牌型号：</span>
+								<span class="info-value"><input type="text" name="factoryModel" value="{{= it.loanCarAssess.factoryModel }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>发动机号：</span>
+								<span class="info-value"><input type="text" name="engineNo" value="{{= it.loanCarAssess.engineNo }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>年审检验合格有效截止日期：</span>
+								<span class="info-value"><input type="text" name="annualAuditPeriodDateStr" value="{{= it.loanCarAssess.annualAuditPeriodDateStr }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>购置附加税费：</span>
+								<span class="info-value"><input type="text" name="purchasedAdditionalFee" value="{{= it.loanCarAssess.purchasedAdditionalFee }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>公路规费交至何时：</span>
+								<span class="info-value"><input type="text" name="highwayChargesDateStr" value="{{= it.loanCarAssess.highwayChargesDateStr }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>车船使用税是否缴纳：</span>
+								<span data-key="sex" class="info-value selecter">
+									<div></div>
+									<span class="placeholder">{{= it.loanCarAssess.taxIsPay}}</span>
+									<span class="arrow arrow-bottom right8px"></span>
+									<input type="hidden" name="taxIsPay" value="{{= it.loanCarAssess.taxIsPay}}" />
+								</span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>车辆登记证编号：</span>
+								<span class="info-value"><input type="text" name="certificateNo" value="{{= it.loanCarAssess.certificateNo }}" /></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-loan">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">评估依据</span>
+						</div>
+					</div>
+					<div class="panel-detail-content-layout">
+						<div class="loan-info">
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>首次上牌时间：</span>
+								<span class="info-value"><input type="text" name="firstLicenseDateStr" value="{{= it.loanCarAssess.firstLicenseDateStr }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>所在地：</span>
+								<span class="info-value"><input type="text" name="location" value="{{= it.loanCarAssess.location }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>新车指导价：</span>
+								<span class="info-value"><input type="text" name="systemCarPrice" value="{{= it.loanCarAssess.systemCarPrice }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>新车最低价：</span>
+								<span class="info-value"><input type="text" name="systemCarPriceLowest" value="{{= it.loanCarAssess.systemCarPriceLowest }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>表显里程：</span>
+								<span class="info-value"><input type="text" name="carMileage" value="{{= it.loanCarAssess.carMileage }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>出厂日期：</span>
+								<span class="info-value"><input type="text" name="productionDateStr" value="{{= it.loanCarAssess.productionDateStr }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>车身颜色：</span>
+								<span class="info-value"><input type="text" name="carColour" value="{{= it.loanCarAssess.carColour }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>排放标准：</span>
+								<span class="info-value"><input type="text" name="emissionStandard" value="{{= it.loanCarAssess.emissionStandard }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>发动机排量：</span>
+								<span class="info-value"><input type="text" name="engineDisplacement" value="{{= it.loanCarAssess.engineDisplacement }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>过户次数：</span>
+								<span class="info-value"><input type="text" name="transferTimes" value="{{= it.loanCarAssess.transferTimes }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>变速箱类型：</span>
+								<span class="info-value"><input type="text" name="gearboxType" value="{{= it.loanCarAssess.gearboxType }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>产地：</span>
+								<span class="info-value"><input type="text" name="originArea" value="{{= it.loanCarAssess.originArea }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>驱动形式：</span>
+								<span class="info-value"><input type="text" name="driveType" value="{{= it.loanCarAssess.driveType }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>售车价格：</span>
+								<span class="info-value"><input type="text" name="salePrice" value="{{= it.loanCarAssess.salePrice }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>安全装备：</span>
+								<span class="info-value"><input type="text" name="safetyEquipment" value="{{= it.loanCarAssess.safetyEquipment }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>操控配置：</span>
+								<span class="info-value"><input type="text" name="controlConf" value="{{= it.loanCarAssess.controlConf }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>外部配置：</span>
+								<span class="info-value"><input type="text" name="externalConf" value="{{= it.loanCarAssess.externalConf }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>内部配置：</span>
+								<span class="info-value"><input type="text" name="internalConf" value="{{= it.loanCarAssess.internalConf }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>座椅配置：</span>
+								<span class="info-value"><input type="text" name="seatConf" value="{{= it.loanCarAssess.seatConf }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>多媒体配置：</span>
+								<span class="info-value"><input type="text" name="multimediaConf" value="{{= it.loanCarAssess.multimediaConf }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>灯光配置：</span>
+								<span class="info-value"><input type="text" name="lightConf" value="{{= it.loanCarAssess.lightConf }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>玻璃/后视镜：</span>
+								<span class="info-value"><input type="text" name="glassMirror" value="{{= it.loanCarAssess.glassMirror }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>高科技技术：</span>
+								<span class="info-value"><input type="text" name="higgTech" value="{{= it.loanCarAssess.higgTech }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>空调/冰箱：</span>
+								<span class="info-value"><input type="text" name="airIce" value="{{= it.loanCarAssess.airIce }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>维修保养情况：</span>
+								<span class="info-value"><input type="text" name="maintenanceInfo" value="{{= it.loanCarAssess.maintenanceInfo }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>重大事故情况：</span>
+								<span class="info-value"><input type="text" name="majorAccInfo" value="{{= it.loanCarAssess.majorAccInfo }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>泡水火烧情况：</span>
+								<span class="info-value"><input type="text" name="waterFireInfo" value="{{= it.loanCarAssess.waterFireInfo }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>漆面情况：</span>
+								<span class="info-value"><input type="text" name="paintInfo" value="{{= it.loanCarAssess.paintInfo }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>内饰成色：</span>
+								<span class="info-value"><input type="text" name="trimInfo" value="{{= it.loanCarAssess.trimInfo }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>工况：</span>
+								<span class="info-value"><input type="text" name="workCondition" value="{{= it.loanCarAssess.workCondition }}" /></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-loan">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">评估对象</span>
+						</div>
+					</div>
+					<div class="panel-detail-content-layout">
+						<div class="loan-info">
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>车辆评估价格：</span>
+								<span class="info-value"><input type="text" name="assessPrice" value="{{= it.loanCarAssess.assessPrice }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>评估机构：</span>
+								<span class="info-value"><input type="text" name="assessOrg" value="{{= it.loanCarAssess.assessOrg }}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>鉴定基准日：</span>
+								<span class="info-value"><input type="text" name="identifyAssessDateStr" value="{{= it.loanCarAssess.identifyAssessDateStr }}" /></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<input type="hidden" name="identifyAssessDate" value="{{= it.loanCarAssess.identifyAssessDate}}" />
+				<input type="hidden" name="updateDate" value="{{= it.loanCarAssess.updateDate}}" />
+				<input type="hidden" name="updateUser" value="{{= it.loanCarAssess.updateUser}}" />
+				<input type="hidden" name="productionDate" value="{{= it.loanCarAssess.productionDate}}" />
+				<input type="hidden" name="id" value="{{= it.loanCarAssess.id}}" />
+				<input type="hidden" name="orderNo" value="{{= it.loanCarAssess.orderNo}}" />
+				</form>
+			</script>
+			<script type="text/x-dot-template" id="selectOpttmpl">
+				<ul class="selectOptBox">
+					<!--<li value="100001">请选择</li>-->
+					{{for(var a = 0, len = it.length; a < len; a++) { var op1 = it[a]; }}
+						<li data-key="{{= op1.value || op1.areaId}}">{{= op1.name || op1.areaName}}</li>
+					{{ } }}
+				</ul>
+			</script>
