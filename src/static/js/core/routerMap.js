@@ -147,7 +147,7 @@
 		},
 		'licenceProcess/licenceProcessDetail': {
 			title: '上牌办理详情',
-			page: 'licenceDetail'
+			page: 'licenceProcessDetail'
 		},
 		'loanProcess/loanInfo': {
 			title: '信息表修改',
