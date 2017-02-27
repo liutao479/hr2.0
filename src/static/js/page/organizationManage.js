@@ -30,6 +30,7 @@ page.ctrl('organizationManage', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.data.resultlist[0].demandBankAccountList[1] = result.data.resultlist[0].demandBankAccountList[2] = result.data.resultlist[0].demandBankAccountList[0];
 				render.compile($scope.$el.$tbl, $scope.def.bankListTmpl, result.data.resultlist, true);
 				setupPaging(result.page, true);
 				setupEvt();
@@ -166,6 +167,24 @@ page.ctrl('organizationManage', [], function($scope) {
 				// router.updateQuery($scope.$path, $params);
 			}
 		});
+		/**
+		* 任务类型点击显示/隐藏
+		*/
+		$console.find('#organizationManageTable .arrow').on('click', function() {
+			var that = $(this);
+			var $tr = that.parent().parent().parent().find('.loantask-item');
+			if(!that.data('isShow')) {
+				$tr.show();
+				that.data('isShow', true);
+				that.removeClass('arrow-bottom').addClass('arrow-top');
+			} else {
+				$tr.hide();
+				that.data('isShow', false);
+				that.removeClass('arrow-top').addClass('arrow-bottom');
+				$tr.eq(0).show();
+				$tr.eq(1).show();
+			}
+		})
 	}
 
 	/***

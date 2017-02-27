@@ -1,12 +1,9 @@
 'use strict';
 (function($) {
-	$.fn.checking = function(cb) {
+	$.fn.checking = function() {
 		return this.each(function() {
 			var that = $(this);
-			that.$checking = new checking(that, that.data());
-			if(cb && typeof cb == 'function') {
-				cb(that);
-			} 
+			this.$checking = new checking(that, that.data());
 		});
 	}
 
@@ -21,7 +18,13 @@
 			checked: undefined
 		}, data);
 		self.$el = $el;
+		self.evt = {};
 		self.init();
+	}
+
+	checking.prototype.onChange = function(fn) {
+		console.log(this);
+		this.evt.onchange = fn;
 	}
 
 	checking.prototype.init = function() {
@@ -38,12 +41,13 @@
 	checking.prototype.setupEvt = function() {
 		var self = this;
 		self.$el.on('click', function() {
-			// console.log(1)
+			console.log(1)
 			if(!self.$el.attr('checked')) {
 				self.full();
 			} else {
 				self.empty();
 			}
+			self.evt.onchange && self.evt.onchange(11);
 		})
 	}
 

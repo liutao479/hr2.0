@@ -145,10 +145,6 @@
 			title: '订单详情',
 			page: 'ordersDetail'
 		},
-		'licenceProcess/licenceProcessDetail': {
-			title: '上牌办理详情',
-			page: 'licenceProcessDetail'
-		},
 		'loanProcess/loanInfo': {
 			title: '信息表修改',
 			page: 'loanInfo'
@@ -229,6 +225,10 @@
 			title: '逾期记录',
 			page: 'expireSingleDetail'
 		},
+		'licenceProcess/licenceProcessDetail': {
+			title: '上牌办理详情',
+			page: 'licenceProcessDetail'
+		},
 		'licenceAudit/licenceAuditDetail': {
 			title: '上牌审核详情',
 			page: 'licenceAuditDetail'
@@ -248,6 +248,14 @@
 		'mortgageStatis/mortgageStatisDetail': {
 			title: '抵押办理进度详情',
 			page: 'mortgageStatisDetail'
+		},
+		'organizationManage/newBank': {
+			title: '新建合作银行',
+			page: 'newBank'
+		},
+		'organizationManage/newCar': {
+			title: '新建合作车商',
+			page: 'newCar'
 		}
 		
 

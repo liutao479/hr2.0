@@ -64,12 +64,25 @@
 								<tr class="orders-item tr-odd">
 								{{ } }}
 									<td class="orders-item-data">{{=row.bankName}}</td>
-									<td class="orders-item-data acount-name-data">
+									<td class="orders-item-data">
+										<table class="meanwhile" id="meanwhile">
 										{{for(var j = 0, len2 = row.demandBankAccountList.length; j < len2; j++) { var col = row.demandBankAccountList[j]; }}
-										<p class="acount-name">
-											<span>{{=col.accountNumber}}</span>-<span>{{=col.accountName}}</span><br />
-										</p>
+											{{ if(j < 2){ }}
+												<tr class="loantask-item">
+													<td>{{=col.accountNumber}}-{{=col.accountName}}</td>
+												</tr>
+											{{ }else{ }}
+												<tr class="loantask-item" style="display: none;">
+													<td>{{=col.accountNumber}}-{{=col.accountName}}</td>
+												</tr>
+												{{ if(j == len2 - 1){ }}
+													<tr>
+														<td class="arrow-trigger"><span class="arrow arrow-bottom" data-isShow="false"></span></td>
+													</tr>
+												{{ } }}
+											{{ } }}
 										{{ } }}
+										</table>
 									</td>
 									<td class="orders-item-data orders-item-data-view">
 										<a href="javascript:;" class="view-fee">查看</a>
