@@ -23,6 +23,25 @@ page.ctrl('loan', function($scope) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page, true);
 				setupEvent();
+
+
+				// 测试复选框
+				$('.checkbox').checking(function($el) {
+					$el.filter('#haha').on('click', function() {
+						alert('callback')
+					})
+				});
+
+
+				// 测试弹窗
+				$console.find('#newBusiness').on('click', function() {
+					var that = $(this);
+					that.openWindow({
+						title: "新建业务",
+						html: "渲染内容"
+					})
+				})
+
 				if(cb && typeof cb == 'function') {
 					cb();
 				}  
@@ -42,7 +61,7 @@ page.ctrl('loan', function($scope) {
 	}
 
 	var setupEvent = function() {
-		wDialog.alert('haha')
+		
 		/**
 		* 绑定搜索事件
 		**/

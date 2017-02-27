@@ -15,7 +15,7 @@ page.ctrl('mortgageProcess', [], function($scope) {
 	*/
 	var loadMortgageProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api('loanPledge/getLoanPledgeList', 'cyj'),
+			url: $http.api('loanPledge/List', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -92,6 +92,17 @@ page.ctrl('mortgageProcess', [], function($scope) {
 			// 下拉框数据以及输入框数据重置
 			// router.updateQuery($scope.$path, $params);
 			
+		});
+
+		// 进入详情页
+		$console.find('#mortgageProcessTable .button').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				// taskId: that.data('id'), 
+				// date: that.data('date'),
+				orderNo: that.data('id'),
+				path: 'mortgageProcess'
+			});
 		});
 	}
 

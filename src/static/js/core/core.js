@@ -34,11 +34,11 @@
 			switch (name) {
 				// 周宜俭ip
 				case 'zyj':
-					return 'http://192.168.0.148:8080/' + method;
+					return 'http://192.168.0.103:8080/' + method;
 					break;
 				// 蔡延军ip
 				case 'cyj':
-					return 'http://192.168.0.179:8080/' + method;
+					return 'http://192.168.0.105:8080/' + method;
 					break;
 				// 季本松ip
 				case 'jbs':
@@ -47,6 +47,10 @@
 				// 王亮ip 
 				case 'wl':
 					return 'http://192.168.0.113:8888/' + method;
+					break;
+				// 李艳波ip 
+				case 'lyb':
+					return 'http://192.168.0.44:8080/' + method;
 					break;
 			}
 		//Todo 发布时增加prefix
@@ -188,5 +192,24 @@
 	tool.formatCode = function(materialsCode) {
 		return _.materialsCodeMap[materialsCode];
 	}
+	tool.cfgMaterials = [{
+			materialsCode: 'sfzzm',
+			name: '身份证正面'
+		},{
+			materialsCode: 'sfzfm',
+			name: '身份证反面'
+		},{
+			materialsCode: 'zxsqs',
+			name: '征信申请书'
+		},{
+			materialsCode: 'xtzqtzs',
+			name: '系统知情通知书'
+		},{
+			materialsCode: 'hkbhzy',
+			name: '户口本户主页'
+		},{
+			materialsCode: 'hkbsy',
+			name: '户口本首页'
+		}];
 
 })(window);

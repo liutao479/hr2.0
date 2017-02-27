@@ -34,5 +34,5 @@
 							<span class="value">{{=it.backReason}}</span>\
 						</div>\
 					</div>\
-				</div>'
+				</div>';
 })(jQuery, doT);

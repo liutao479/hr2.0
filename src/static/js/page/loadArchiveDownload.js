@@ -13,7 +13,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	*/
 	var loadArchiveDownloadList = function(params, cb) {
 		$.ajax({
-			url: $http.api('creditUser/getCreditMaterials', 'cyj'),
+			url: $http.api('creditUser/getCreditMaterials', 'zyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -68,7 +68,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 		// 绑定全选按钮
 		$console.find('#allCheck').on('click', function() {
 			var that = $(this);
-			if(!$(this).hasClass('checked')) {
+			if(!that.hasClass('checked')) {
 				// 去做全选操作
 				// $console.find('#creditArchiveDownloadTable .checkbox')
 			} else {
@@ -78,18 +78,80 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 
 
 		// 绑定pdf下载按钮
-		$console.find('.pdf-d').on('click', function() {
+		$console.find('.contractPrint').on('click', function() {
 			var that = $(this);
-		});
-
-		// 绑定word下载按钮
-		$console.find('.word-d').on('click', function() {
-			var that = $(this);
-		});
-
-		// 绑定zip下载按钮
-		$console.find('.zip-d').on('click', function() {
-			var that = $(this);
+			var template = '<div class="window">\
+				<div class="w-title">\
+					<div class="w-title-content">选择套打模板</div>\
+					<div class="w-close"><i class="iconfont">&#xe65a;</i></div>\
+				</div>\
+				<div class="w-content">\
+					<dl class="w-dropdown">\
+						<dt>请选择需要套打的合同模板：</dt>\
+						<dd>\
+							<select name="" id="muban">\
+								{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
+								<option data-id="{{=row.attachmentId}}">{{=row.fileName}}</option>\
+								{{ } }}\
+							</select>\
+						</dd>\
+					</dl>\
+					<div class="w-commit-area">\
+						<div class="button button-empty btnCancel">取消</div><div class="button btnSure">确定</div>\
+					</div>\
+				</div>\
+			</div>';
+			var $dialog = $('<div class="dialog" id="dialog"></dialog>').appendTo('body');
+			console.log($dialog);
+			$.ajax({
+				url: $http.api('contractPrint/queryContractExeclList', 'lyb'),
+				type: 'post',
+				data: {
+					deptOrgId: 62
+				},
+				dataType: 'json',
+				success: function(result) {
+					console.log(result);
+					$(doT.template(template)(result.data)).appendTo($dialog);
+					$dialog.find('#muban').data('selectid', result.data[0].attachmentId);
+					$dialog.find('#muban').on('change', function() {
+						var _selectid = $(this).find('option:selected').data('id');
+						console.log(_selectid)
+						$(this).data('selectid', _selectid);
+					})
+					$dialog.find('.w-close').on('click', function() {
+						$dialog.remove();
+					})
+					$dialog.find('.btnSure').on('click', function() {
+						console.log(typeof $dialog.find('#muban').data('selectid'))
+						$.ajax({
+							url: $http.api('contractPrint/verifyTemplateIsExist', 'lyb'),
+							type: 'post',
+							data: {
+								fileId: $dialog.find('#muban').data('selectid')
+							},
+							dataType: 'json',
+							success: function(xhr) {
+								console.log(xhr);
+								if(!xhr) {
+									$.ajax({
+										url: $http.api('contractPrint/printContractFile', 'lyb'),
+										type: 'post',
+										data: {
+											fileId: 301,
+											orderNo: 'nfb110'
+										},
+										dataType: 'json',
+										success: function(xhr) {
+											console.log(xhr);
+										}
+									})
+								}
+							}
+						})
+					})
+				}
+			})
 		});
 
 

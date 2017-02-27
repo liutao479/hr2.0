@@ -734,6 +734,7 @@
 }
 .dialog {
     position: fixed;
+    z-index: 9998;
     top: 0;
     left: 0;
     right: 0;
@@ -753,6 +754,7 @@
 // 弹窗
 .window {
     position: relative;
+    z-index: 9999;
     display: inline-block;
     vertical-align:middle;
     width: 500px;
@@ -760,6 +762,7 @@
     .w-title {
         width: 500px;
         position: relative;
+        z-index: 10000;
         height: 54px;
         background-color: #FFF;
         border-top: 3px solid @mainColor;
@@ -769,7 +772,7 @@
         .w-title-content {
             line-height: 50px;
         }
-        .w-close {
+        .w-x {
             position: absolute;
             top: 15px;
             right: 10px;
@@ -788,6 +791,7 @@
     .w-remind {
         width: 500px;
         position: relative;
+        z-index: 10000;
         height: 40px;
         line-height: 40px;
         background-color: #fcf7e3;
