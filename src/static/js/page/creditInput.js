@@ -28,9 +28,9 @@ page.ctrl('creditInput', [], function($scope) {
 	*/
 	var loadOrderInfo = function() {
 		$.ajax({
-			// type: 'post',
-			// url: $http.apiMap.creditInput,
 			url: 'http://127.0.0.1:8083/mock/creditInput',
+			// type: 'post',
+			// url: $http.api(''),
 			// data: {
 			// 	taskId : 80871
 			// },

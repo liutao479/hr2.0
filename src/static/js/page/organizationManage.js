@@ -24,7 +24,7 @@ page.ctrl('organizationManage', [], function($scope) {
 	*/
 	var loadBankList = function(params, cb) {
 		$.ajax({
-			url: $http.api('demandBank/getDemandBankList', 'cyj'),
+			url: $http.api('demandBank/getList', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -47,7 +47,7 @@ page.ctrl('organizationManage', [], function($scope) {
 	*/
 	var loadCarList = function(params, cb) {
 		$.ajax({
-			url: $http.api('demandCarShop/getDemandCarShop', 'cyj'),
+			url: $http.api('demandCarShop/get', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',

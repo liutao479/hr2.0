@@ -15,7 +15,7 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 		$.ajax({
 			// url: 'http://127.0.0.1:8083/mock/orderModifyAudit',
 			type: 'post',
-			url: $http.api('loanOrderApply/getLoanOrderApply', 'cyj'),
+			url: $http.api('loanOrderApply/get', 'cyj'),
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {

@@ -96,11 +96,8 @@ page.ctrl('signMaterialsUpload', function($scope) {
 	}
 
 	$console.load(router.template('iframe/loan-material-upload'), function() {
-		// $scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
 		$scope.def.listTmpl = $console.find('#loanUploadTmpl').html();
-		// console.log($console.find('#creditResultPanel'))
 		$scope.$el = {
-			// $tab: $console.find('#creditTabs'),
 			$loanPanel: $console.find('#loanUploadPanel')
 		}
 		loadOrderInfo();

@@ -157,6 +157,40 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	});
 
 	/**
+	 * 征信查询按钮
+	 */
+	$(document).on('click', '#creditQuery', function() {
+		var that = $(this);
+		that.openWindow({
+			title: "征信查询",
+			content: wContent.creditQuery,
+			commit: wCommit.cancelNext
+		}, function() {
+			$('.w-next').on('click', function() {
+				alert('下一步');
+			})
+		})
+	});
+
+	/**
+	 * 取消订单按钮
+	 */
+	$(document).on('click', '#cancelOrders', function() {
+		var that = $(this);
+		that.openWindow({
+			title: "取消订单",
+			content: "<div>确定要取消该笔贷款申请吗？</div>",
+			commit: wCommit.cancelSure
+		}, function() {
+			$('.w-sure').on('click', function() {
+				alert('确定');
+			})
+		})
+	});
+
+
+
+	/**
 	 * tab栏点击事件
 	 */
 	var setupTabEvt = function() {
