@@ -180,7 +180,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		that.openWindow({
 			title: "取消订单",
 			content: "<div>确定要取消该笔贷款申请吗？</div>",
-			commit: wCommit.cancelSure
+			commit: dialogTml.wCommit.cancelSure
 		}, function() {
 			$('.w-sure').on('click', function() {
 				alert('确定');
