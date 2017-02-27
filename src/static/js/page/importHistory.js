@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('expireInfoPrev', [], function($scope) {
+page.ctrl('importHistory', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
@@ -11,14 +11,10 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var pageData={};
-	pageData['importId']=79;
-	pageData['status']=0;
 
 	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api('loanOverdueImport/queryImportDetails','wl'),
-			data: pageData,
+			url: $http.api('loanOverdueImport/importReordList','wl'),
 			type: 'post',
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -93,11 +89,11 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('iframe/expire-info-prev'), function() {
-		$scope.def.listTmpl = render.$console.find('#expireInfoPrevTmpl').html();
+	render.$console.load(router.template('iframe/import-history'), function() {
+		$scope.def.listTmpl = render.$console.find('#importHistoryTmpl').html();
 		$scope.def.scrollBarTmpl = render.$console.find('#scrollBarTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#expireInfoPrevTable'),
+			$tbl: $console.find('#importHistoryTable'),
 			$paging: $console.find('#pageToolbar'),
 			$scrollBar: $console.find('#scrollBar')
 		}

@@ -14,11 +14,11 @@
 				<div class="panel no-top-border panel-mb0">
 					<!-- mini-tab切换 -->
 					<div class="tab-bar-mini clearfix">
-						<ul class="tab-bar-ul clearfix">
-							<li class="tab-bar-li"><a href="javascript:;" class="tab-item tab-item-active">无匹配订单</a></li>
-							<li class="tab-bar-li"><a href="javascript:;" class="tab-item">匹配冲突</a></li>
-							<li class="tab-bar-li"><a href="javascript:;" class="tab-item">匹配成功</a></li>
-							<li class="tab-bar-li"><a href="javascript:;" class="tab-item">逾期将结清</a></li>
+						<ul id="currentPageTab" class="tab-bar-ul clearfix">
+							<li class="tab-bar-li"><a href="javascript:;" data-status='0' class="tab-item tab-item-active">无匹配订单</a></li>
+							<li class="tab-bar-li"><a href="javascript:;" data-status='1' class="tab-item">匹配冲突</a></li>
+							<li class="tab-bar-li"><a href="javascript:;" data-status='2' class="tab-item">匹配成功</a></li>
+							<li class="tab-bar-li"><a href="javascript:;" data-status='3' class="tab-item">逾期将结清</a></li>
 						</ul>
 						<div class="button button-mini button-orange">
 						取消导入</div><div class="button button-mini">
@@ -28,35 +28,46 @@
 				</div>
 				<!-- 面板 end-->
 
+
+				<!--订单表格 （无匹配订单）-->
+				<div id="expireInfoPrevTable"></div>
+			</div>
+			<!--逾期信息（预览） end-->				
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['expireInfoPrev'].paging" data-pages="1" data-current="1"></div>
+			<script type="text/x-dot-template" id="scrollBarTmpl">
+				<span class="page-count"><i id="page-num" >{{=(it.pages == 0 ? 0 : it.pageNum)}}</i>/<i id="pages">{{=it.pages}}</i></span>
+				<a href="javascript:;" class="page-change scroll-prev{{=(it.pageNum <= 1 ? ' disabled' : '')}}"><i class="iconfont">&#xe601;</i></a>
+				<a href="javascript:;" class="page-change scroll-next{{=(it.pageNum >= it.pages ? ' disabled' : '')}}"><i class="iconfont">&#xe670;</i></a>
+			</script>
+				
+				
+			<script type="text/x-dot-template" id="expireInfoPrevTmpl">
 				<!-- 全选栏 -->
 				<div class="all-select-panel no-top-border mb15 clearfix" >
 					<div class="all-check-box">
-						<div class="checkbox checkbox-normal"></div>
+						<div id="allCheck" class="checkbox checkbox-normal"></div>
 						<span>全选</span>
 					</div>
 					<div class="all-check-box">
-						创建新逾期客户<strong class="">12</strong>人
+						创建新逾期客户<strong class="">{{= it.page.total}}</strong>人
 					</div>
 				</div>
 				<!-- 全选栏 end-->
 
 				<!--订单表格 （无匹配订单）-->
-				<div class="tab-content" id="expireInfoPrevTable"></div>
-				
-				
-				
-				<script type="text/x-dot-template" id="expireInfoPrevTmpl">
+				<div class="tab-content">
+					{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == 0){ }}
 					<table class="expire-orders-table" width="100%">
 						<thead class="expire-title">
 							<tr>
 								<td colspan="3">
-									<div class="checkbox checkbox-normal checked" checked="checked"><i class="iconfont">&#xe659;</i></div>
+									<div data-id = "{{= item.overdueImportId}}" class="checkbox checkbox-normal checked" checked="checked"><i class="iconfont">&#xe659;</i></div>
 									<i class="iconfont iconfont-man">&#xe656;</i>
-									<span class="userName">韩梅梅</span>
-									<span>412702 19930206 3154</span>
+									<span class="userName">{{= item.userName}}</span>
+									<span>{{= item.idCard}}</span>
 									<div class="key-value-box clearfix">
 										<span class="key">解析时间：</span>
-										<span class="value">2016/12/13</span>
+										<span class="value">{{= item.createDate}}</span>
 									</div>
 								</td>
 							</tr>
@@ -67,15 +78,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">卡号：</td>
-											<td class="value">261736726483478347364</td>
+											<td class="value">{{= item.cardNumber}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">卡余额：</td>
-											<td class="value">110,022,00元</td>
+											<td class="value">{{= item.cardBalance}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">账单日：</td>
-											<td class="value">2016/12/13</td>
+											<td class="value">{{= item.statementDate}}</td>
 										</tr>
 									</table>
 								</td>
@@ -83,15 +94,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">当前逾期金额：</td>
-											<td class="value">621,226.00元</td>
+											<td class="value">{{= item.overdueAmount}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">当前连续违约次数：</td>
-											<td class="value">3次</td>
+											<td class="value">{{= item.currentDefaultNum}}次</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">历史累计违约次数：</td>
-											<td class="value">3次</td>
+											<td class="value">{{= item.cumulativeDefaultNum}}次</td>
 										</tr>
 									</table>
 								</td>
@@ -99,30 +110,33 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">分期金额：</td>
-											<td class="value">110,022.00</td>
+											<td class="value">{{= item.stageMoney}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">备注：</td>
-											<td class="value special-word">未在系统内找到该订单</td>
+											<td class="value special-word">未在系统中找到订单</td>
 										</tr>
 									</table>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+					{{ } }}
+					{{ } }}
 					<!--订单表格（无匹配订单） end-->
 	
 					<!--订单表格（匹配冲突）-->
+					{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == 1){ }}
 					<table class="expire-orders-table" width="100%">
 						<thead class="expire-title">
 							<tr>
 								<td colspan="4">
 									<i class="iconfont iconfont-man">&#xe656;</i>
-									<span class="userName">韩梅梅</span>
-									<span>412702 19930206 3154</span>
+									<span class="userName">{{= item.userName}}</span>
+									<span>{{= item.idCard}}</span>
 									<div class="key-value-box clearfix">
 										<span class="key">解析时间：</span>
-										<span class="value">2016/12/13</span>
+										<span class="value">{{= item.createDate}}</span>
 									</div>
 								</td>
 							</tr>
@@ -133,15 +147,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">卡号：</td>
-											<td class="value">261736726483478347364</td>
+											<td class="value">{{= item.cardNumber}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">卡余额：</td>
-											<td class="value">110,022,00元</td>
+											<td class="value">{{= item.cardBalance}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">账单日：</td>
-											<td class="value">2016/12/13</td>
+											<td class="value">{{= item.statementDate}}</td>
 										</tr>
 									</table>
 								</td>
@@ -149,15 +163,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">当前逾期金额：</td>
-											<td class="value">621,226.00元</td>
+											<td class="value">{{= item.overdueAmount}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">当前连续违约次数：</td>
-											<td class="value">3次</td>
+											<td class="value">{{= item.currentDefaultNum}}次</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">历史累计违约次数：</td>
-											<td class="value">3次</td>
+											<td class="value">{{= item.cumulativeDefaultNum}}次</td>
 										</tr>
 									</table>
 								</td>
@@ -165,36 +179,39 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">分期金额：</td>
-											<td class="value">110,022.00</td>
+											<td class="value">{{= item.stageMoney}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">备注：</td>
-											<td class="value special-word">未在系统内找到该订单</td>
+											<td class="value special-word">找到多条订单</td>
 										</tr>
 									</table>
 								</td>
 								<td class="expire-content-item expire-content-item-last">
-									<div class="button button-mini">选择订单</div>
+									<div class="button button-mini" data-id = "{{= item.overdueImportId}}">选择订单</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+					{{ } }}
+					{{ } }}
 					<!--订单表格（匹配冲突）  end-->
 	
 					<!--订单表格（匹配成功）-->
+					{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == 2){ }}
 					<table class="expire-orders-table" width="100%">
 						<thead class="expire-title">
 							<tr>
 								<td colspan="4">
-									<div class="checkbox checkbox-normal checked" checked="checked">
+									<div data-id = "{{= item.overdueImportId}}" class="checkbox checkbox-normal checked" checked="checked">
 										<i class="iconfont">&#xe659;</i>
 									</div>
 									<i class="iconfont iconfont-man">&#xe656;</i>
-									<span class="userName">韩梅梅</span>
-									<span>412702 19930206 3154</span>
+									<span class="userName">{{= item.userName}}</span>
+									<span>{{= item.idCard}}</span>
 									<div class="key-value-box clearfix">
 										<span class="key">解析时间：</span>
-										<span class="value">2016/12/13</span>
+										<span class="value">{{= item.createDate}}</span>
 									</div>							
 								</td>
 							</tr>
@@ -205,15 +222,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">卡号：</td>
-											<td class="value">261736726483478347364</td>
+											<td class="value">{{= item.cardNumber}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">卡余额：</td>
-											<td class="value">110,022,00元</td>
+											<td class="value">{{= item.cardBalance}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">账单日：</td>
-											<td class="value">2016/12/13</td>
+											<td class="value">{{= item.statementDate}}</td>
 										</tr>
 									</table>
 								</td>
@@ -221,15 +238,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">当前逾期金额：</td>
-											<td class="value">621,226.00元</td>
+											<td class="value">{{= item.overdueAmount}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">当前连续违约次数：</td>
-											<td class="value">3次</td>
+											<td class="value">{{= item.currentDefaultNum}}次</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">历史累计违约次数：</td>
-											<td class="value">3次</td>
+											<td class="value">{{= item.cumulativeDefaultNum}}次</td>
 										</tr>
 									</table>
 								</td>
@@ -237,11 +254,11 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">分期金额：</td>
-											<td class="value">110,022.00</td>
+											<td class="value">{{= item.stageMoney}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">备注：</td>
-											<td class="value special-word">未在系统内找到该订单</td>
+											<td class="value special-word">匹配成功</td>
 										</tr>
 									</table>
 								</td>
@@ -251,23 +268,26 @@
 							</tr>
 						</tbody>
 					</table>
+					{{ } }}
+					{{ } }}
 					<!--订单表格（匹配成功）  end-->
 	
 					<!--订单表格（逾期将结清）-->
+					{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == 3){ }}
 					<table class="expire-orders-table" width="100%">
 						<thead class="expire-title">
 							<tr>
 								<td colspan="4">
-									<div class="checkbox checkbox-normal checked" checked="checked">
+									<div data-id = "{{= item.overdueImportId}}" class="checkbox checkbox-normal checked" checked="checked">
 										<i class="iconfont">&#xe659;</i>
 									</div>
 									<i class="iconfont iconfont-man">&#xe656;</i>
-									<span class="userName">韩梅梅</span>
-									<span>412702 19930206 3154</span>
+									<span class="userName">{{= item.userName}}</span>
+									<span>{{= item.idCard}}</span>
 									<div class="key-value-box clearfix">
 										<span class="key">解析时间：</span>
-										<span class="value">2016/12/13</span>
-									</div>
+										<span class="value">{{= item.createDate}}</span>
+									</div>							
 								</td>
 							</tr>
 						</thead>
@@ -277,15 +297,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">卡号：</td>
-											<td class="value">261736726483478347364</td>
+											<td class="value">{{= item.cardNumber}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">卡余额：</td>
-											<td class="value">110,022,00元</td>
+											<td class="value">{{= item.cardBalance}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">账单日：</td>
-											<td class="value">2016/12/13</td>
+											<td class="value">{{= item.statementDate}}</td>
 										</tr>
 									</table>
 								</td>
@@ -293,15 +313,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">当前逾期金额：</td>
-											<td class="value">621,226.00元</td>
+											<td class="value">{{= item.overdueAmount}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">当前连续违约次数：</td>
-											<td class="value">3次</td>
+											<td class="value">{{= item.currentDefaultNum}}次</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">历史累计违约次数：</td>
-											<td class="value">3次</td>
+											<td class="value">{{= item.cumulativeDefaultNum}}次</td>
 										</tr>
 									</table>
 								</td>
@@ -309,11 +329,11 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">分期金额：</td>
-											<td class="value">110,022.00</td>
+											<td class="value">{{= item.stageMoney}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">备注：</td>
-											<td class="value special-word">未在系统内找到该订单</td>
+											<td class="value special-word">逾期将结清</td>
 										</tr>
 									</table>
 								</td>
@@ -323,9 +343,10 @@
 							</tr>
 						</tbody>
 					</table>
+					{{ } }}
+					{{ } }}
 				<!--订单表格（逾期将结清）  end-->
-				</script>	
+				</div>
+			</script>	
 				
 				
-			</div>
-			<!--逾期信息（预览） end-->

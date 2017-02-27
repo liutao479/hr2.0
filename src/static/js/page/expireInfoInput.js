@@ -40,26 +40,34 @@ page.ctrl('expireInfoInput', [], function($scope) {
         ajaxFileUpload();
     })
     function ajaxFileUpload() {
-    	console.log("启动");
         $.ajaxFileUpload({
             url: postUrl+'loanOverdueImport/uploadOverdue', //用于文件上传的服务器端请求地址
             secureuri: false, //是否需要安全协议，一般设置为false
             fileElementId: 'fileData', //文件上传域的ID
             dataType: 'json', //返回值类型 一般设置为json
-            success: function (data, status){
-                console.log("成功");
-                if (typeof (data.error) != 'undefined') {
-                    if (data.error != '') {
-                            console.log(data.error);
-                    } else {
-                            console.log(data.msg);
-                    }
-                }
-            },
-            error: function (data, status, e)//服务器响应失败处理函数
-            {
-                    console.log(e);
-            }
+			success : function(data, status){    
+		    	console.log(data+','+status+',1');
+		    	console.log(typeof(data));
+		    	console.log(data);
+		    	
+		    },
+		    error:function(data,status,e){
+		            
+		    }
+//			success: function(xhr) {
+//				if(!xhr.code) {
+//					console.log(1);			
+//				}
+//			},
+////			function(xhr) {
+////              console.log('成功的回调'+xhr.data);
+//////              $("#importResule").show();
+//////				render.compile($scope.$el.$iRTtbl, $scope.def.iRTTmpl, result.data, true);
+//////				console.log(result.data);
+////			},
+//			error: function(error){
+//				console.log('失败的回调'+error);
+//			}
         })
         return false;
     }
@@ -68,8 +76,10 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	*/
 	render.$console.load(router.template('iframe/expire-info-input'), function() {
 		$scope.def.listTmpl = render.$console.find('#expireInputTmpl').html();
+		$scope.def.iRTTmpl = render.$console.find('#importResultTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#expireInputPanel')
+			$tbl: $console.find('#expireInputPanel'),
+			$iRTtbl: $console.find('#importResultTable')
 		}
 		if($params.process) {
 			

@@ -28,13 +28,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadOrderInfo = function(_type, cb) {
-<<<<<<< HEAD
-		// var flag = 'get';
-		// if(isPost) {
-		// 	flag = 'post';
-		// }
-=======
->>>>>>> refs/remotes/origin/ldf
 		$.ajax({
 			type: 'post',
 			url: $http.api('creditMaterials/index', 'zyj'),
@@ -50,11 +43,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				// 编译面包屑
 				setupLocation();
 				// 编译tab
-<<<<<<< HEAD
-				setupTab($scope.result.data);				
-=======
 				setupTab($scope.result.data || {});
->>>>>>> refs/remotes/origin/ldf
 				// 编译tab项对应内容
 				setupCreditPanel($scope.result.data, _type);
 				// 编译立即处理事件
@@ -85,15 +74,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 渲染tab栏
 	 * @param  {object} data tab栏操作的数据
 	 */
-<<<<<<< HEAD
-	var setupTab = function(data, cb) {
-		render.compile($scope.$el.$tab, $scope.def.tabTmpl, data, true);
-		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
-		// console.log($scope.$el.$tabs);
-		if( cb && typeof cb == 'function' ) {
-			cb();
-		}
-=======
 	// var setupTab = function(data, cb) {
 	// 	render.compile($scope.$el.$tab, $scope.def.tabTmpl, data, true);
 	// 	$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
@@ -106,7 +86,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	var setupTab = function(data) {
 		data.types = ['借款人', '共同还款人', '反担保人'];
 		render.compile($scope.$el.$tab, $scope.def.tabTmpl, data, true);
->>>>>>> refs/remotes/origin/ldf
 	}
 
 	/**
@@ -119,32 +98,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		var _tabTrigger = $console.find('#creditUploadPanel').html();
 		$scope.tabs[_type] = _tabTrigger;
 	}
-<<<<<<< HEAD
-	
-	// 编译完成后绑定事件
-	var setupEvent = function () {
-		// tab栏点击事件
-		$scope.$el.$tab.find('.tabEvt').on('click', function () {
-			var $this = $(this);
-			if($this.hasClass('role-item-active')) return;
-			var _type = $this.data('type');
-			if(!$scope.tabs[_type]) {
-				$scope.$el.$creditPanel.html('');
-				render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, $scope.result.data.creditUsers[_type], true);
-				var _tabTrigger = $console.find('#creditUploadPanel').html();
-				$scope.tabs[_type] = _tabTrigger;
-				// $scope.result.index = _type;
-			}
-			$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
-			$this.addClass('role-item-active');
-			$scope.currentType = _type;
-			$scope.$el.$creditPanel.html($scope.tabs[$scope.currentType]);
-		})
-		$scope.$el.$creditPanel.find('.uploadEvt').imgUpload();
-	}
-
-=======
->>>>>>> refs/remotes/origin/ldf
 
 	/**
 	 * 增加共同还款人

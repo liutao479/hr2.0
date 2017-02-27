@@ -104,8 +104,7 @@ jQuery.extend({
                     } catch(e) {
                         jQuery.handleError(s, xml, null, e);
                     }
-                },
-                100)
+                },100)
                 xml = null;
             }
         }
@@ -143,7 +142,20 @@ jQuery.extend({
         // If the type is "script", eval it in global context
         if (type == "script") jQuery.globalEval(data);
         // Get the JavaScript object, if JSON is used.
-        if (type == "json") eval("data = " + data);
+        if (type == "json")
+//			eval("data = " + data);
+//			eval("data = "+$(data).html())
+       		data = jQuery.parseJSON(jQuery(data).text() || jQuery(data).html());
+//      if (type == "json"){
+//      	data = r.responseText;  
+//			var start = data.indexOf(">");  
+//			if(start != -1) {  
+//			    var end = data.indexOf("<", start + 1);  
+//			    if(end != -1) {  
+//			    	data = data.substring(start + 1, end);  
+//				}  
+//			}  
+//      };
         // evaluate scripts within html
         if (type == "html") jQuery("<div>").html(data).evalScripts();
         return data;

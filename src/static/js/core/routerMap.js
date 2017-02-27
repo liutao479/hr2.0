@@ -197,6 +197,10 @@
 			title: '提车审核',
 			page: 'carAudit'
 		},
+		'expireProcess/importHistory':{
+			title: '逾期导入历史记录',
+			page: 'importHistory'
+		},
 		'expireProcess/expireProcessDetail':{
 			title: '逾期处理',
 			page: 'expireProcessDetail'

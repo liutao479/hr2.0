@@ -29,7 +29,7 @@ page.ctrl('phoneAudit', function($scope) {
 	*/
 	var loadLoanList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.phoneAudit),
+			url: $http.api('phoneAudit'),
 			data: params,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
