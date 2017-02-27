@@ -96,12 +96,55 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		$scope.$el.$loanPanel.find('.uploadEvt').imgUpload();
 	}
 
+	/**
+	 * 提交订单按钮
+	 */
+	$(document).on('click', '#submitOrders', function() {
+		var that = $(this);
+		that.openWindow({
+			title: "提交",
+			content: wContent.suggestion,
+			commit: wCommit.cancelNext
+		}, function() {
+			$('.w-next').on('click', function() {
+				alert('下一步');
+			})
+		})
+	});
+
+	/**
+	 * 增加征信人员按钮
+	 */
+	$(document).on('click', '#addCreditUser', function() {
+		var that = $(this);
+		that.openWindow({
+			title: "增加征信人员",
+			remind: wRemind.addCreditUsers,
+			content: wContent.addCreditUsers,
+			commit: wCommit.cancelSure
+		}, function() {
+			var addUserType;
+			var $checkboxs = $('.dialog').find('div[name="addCreditUsers"]');
+			$('.dialog').find('.checkbox').checking(function() {
+				$checkboxs.on('click', function() {
+					var $this = $(this);
+					if($checkboxs.not($(this)).attr('checked')) {
+						$checkboxs.not($(this)).removeClass('checked').attr('checked', false).html();
+					}
+				})
+			});
+			$('.w-sure').on('click', function() {
+				$checkboxs.each(function() {
+					if($(this).attr('checked')) addUserType = $(this).data('type');
+				})
+				alert('退回人员类型：' + addUserType)
+			})
+		})
+	});
+
 	$console.load(router.template('iframe/loan-material-upload'), function() {
-		// $scope.def.tabTmpl = $console.find('#creditUploadTabsTmpl').html();
 		$scope.def.listTmpl = $console.find('#loanUploadTmpl').html();
-		// console.log($console.find('#creditResultPanel'))
 		$scope.$el = {
-			// $tab: $console.find('#creditTabs'),
 			$loanPanel: $console.find('#loanUploadPanel')
 		}
 		loadOrderInfo();

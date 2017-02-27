@@ -38,7 +38,7 @@ page.ctrl('loan', function($scope) {
 					var that = $(this);
 					that.openWindow({
 						title: "新建业务",
-						html: "渲染内容"
+						content: "<div>测试弹窗功能</div>"
 					})
 				})
 

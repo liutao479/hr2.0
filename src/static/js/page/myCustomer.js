@@ -166,7 +166,7 @@ page.ctrl('myCustomer', [], function($scope) {
 			console.log(that.data('orderno'))
 			$.ajax({
 				type: "post",
-				url: "http://192.168.0.184:8080/LoanFinancePayment/getLoanFinancePayment",
+				url: $http.api('LoanFinancePayment/get'),
 				data:{
 					orderNo: that.data('orderno')
 					// orderNo: 'nfdb2015091812345678'
@@ -178,7 +178,7 @@ page.ctrl('myCustomer', [], function($scope) {
 					if(confirm('是否点击弹窗内的提交按钮？')) {
 						$.ajax({
 							type: "post",
-							url: "http://192.168.0.184:8080/LoanFinancePayment/saveOrUpdateLoanFinancePayment",
+							url: $http.api('LoanFinancePayment/update'),
 							data:{
 								orderNo: that.data('orderno'), //订单号
 								loaningDate: new Date('2017-02-17 10:10'), //用款时间
@@ -210,7 +210,7 @@ page.ctrl('myCustomer', [], function($scope) {
 			var loanOrderApplyCount = function() {
 				$.ajax({
 					type: "post",
-					url: "http://192.168.0.184:8080/loanOrderApply/getLoanOrderApplyCount",
+					url: $http.api('loanOrderApply/count'),
 					data:{
 						orderNo: _orderNo
 					},
@@ -231,7 +231,7 @@ page.ctrl('myCustomer', [], function($scope) {
 				if(confirm('确认申请终止该条订单：\n' + _orderNo + '，\n申请理由为：刘东风测试申请终止，\n审核人为1？')) {
 					$.ajax({
 						type: "post",
-						url: "http://192.168.0.184:8080/loanOrderApply/terminate",
+						url: $http.api('loanOrderApply/terminate'),
 						data:{
 							orderNo: _orderNo,
 							applyReason: '刘东风测试申请终止',

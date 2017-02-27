@@ -7,11 +7,30 @@
 				<!-- 退回原因 -->
 				<div id="backReason"></div>
 				<!-- 退回原因 end-->
+				
+				<!-- 抵押信息 -->
+				<div class="mortgageInfoPanel">
+					<div class="panel mt15 clearfix">
+						<!-- 标题名 -->
+						<div class="panel-title-box">
+							<div class="panel-title">
+								<i class="iconfont">&#xe626;</i>
+								<span class="panel-title-name">登记证材料</span>
+							</div>
+						</div>
+						<!-- 标题名 end-->
 
-				<!-- 渲染栏 -->
-				<div class="registerPanel" id="registerPanel">
-					
+						<!-- 标题对应项 -->
+						<div class="panel-content padding20" id="mortgageInfoPanel">
+							
+						</div>
+					</div>
 				</div>
+				<!-- 抵押信息 end-->
+				
+				<!-- 抵押登记证 -->
+				<div class="registerPanel" id="registerPanel"></div>
+				<!-- 抵押登记证 end-->
 				
 				<!--提交订单按钮-->
 				<div class="commit-orders-box">
@@ -19,6 +38,54 @@
 				</div>
 			</div>
 			<!-- 登记证材料 end-->
+
+			<script type="text/x-dot-template" id="mortgageInfoTmpl">
+				<table border="1" class="field-table">
+					<tbody>
+						<tr class="tr-odd">
+							<td class="td-key">抵押权人</td>
+							<td class="td-value">
+								<input class="input" type="text" disabled="disabled" value="{{=it.pledgee}}">
+							</td>
+							<td class="td-key">身份证明名称</td>
+							<td class="td-value">
+								<input class="input" type="text" disabled="disabled" value="身份证">
+							</td>
+						</tr>
+						<tr class="tr-even">
+							<td class="td-key">身份证明号码</td>
+							<td class="td-value">
+								<input class="input" type="text" disabled="disabled" value="{{=it.idCard}}">
+							</td>
+							<td class="td-key">登记机关</td>
+							<td class="td-value">
+								<input class="input" type="text" disabled="disabled" value="{{=it.pledgeDept}}">
+							</td>
+						</tr>
+						<tr class="tr-odd">
+							<td class="td-key">机动车登记编号</td>
+							<td class="td-value">
+								<input class="input" type="text" disabled="disabled" value="{{=it.vehileRegNo}}">
+							</td>
+							<td class="td-key">抵押登记日期</td>
+							<td class="td-value">
+								<input class="input" type="text" disabled="disabled" value="{{=it.pledgeDate}}">
+							</td>
+						</tr>
+						<tr class="tr-even">
+							<td class="td-key">解除抵押日期</td>
+							<td class="td-value">
+								<input class="input" type="text" disabled="disabled" value="未知">
+							</td>
+							<td class="td-key"></td>
+							<td class="td-value">
+								<input class="input" type="text" disabled="disabled" value="education1">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</script>
+
 			<script type="text/x-dot-template" id="loanUploadTmpl">
 				<div class="panel mt15 clearfix">
 					<!-- 标题名 -->

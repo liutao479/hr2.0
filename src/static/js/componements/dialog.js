@@ -67,10 +67,14 @@
 // }
 
 (function($, _){
-    $.fn.openWindow = function(options,callback) {
+    $.fn.openWindow = function(options, cb) {
         return this.each(function() {
             var that = $(this);
             that.$openWindow = new openWindow(that, options);
+            if(cb && typeof cb == 'function'){
+                cb();
+            };
+            
         });
     }
 
@@ -79,6 +83,9 @@
     	self.opts = $.extend({}, $.fn.openWindow.defaults, options)
     	self.$el = $el;
     	self.init();
+        if(self.opts.addFunction){
+            self.opts.addFunction();
+        };
     }
 
     // 初始化窗口
@@ -86,13 +93,20 @@
     	var self = this;
     	self.$dialog = $(_.template(dialogTml)(self.opts)).prependTo("body");
     	self.$content = self.$dialog.find('.w-content');
-    	self.close();
     	if(self.opts.move) {
     		self.move();
     	}
-    	if(self.opts.html) {
+    	if(self.opts.content) {
     		self.render();
+            if(self.opts.commit) {
+                $(_.template(self.opts.commit)(self.opts)).appendTo(self.$content);
+            }
+            if(self.opts.remind) {
+                $(_.template(self.opts.remind)(self.opts)).insertBefore(self.$content);
+            }
     	}
+
+        self.close();
     }
 
     // 窗口关闭
@@ -133,8 +147,7 @@
     // 窗口内容渲染
     openWindow.prototype.render = function() {
     	var self = this;
-    	console.log($(_.template(self.opts.html)))
-    	// $(_.template(self.opts.html)).prependTo(self.$content);
+    	$(_.template(self.opts.content)(self.opts)).prependTo(self.$content);
     }
 
 
@@ -151,7 +164,6 @@
 
 
     $.fn.openWindow.defaults = {
-        html: "",
         move: false,
 		bgClose: false,
 		addFunction: function(){}

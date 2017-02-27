@@ -30,6 +30,22 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 		})
 	}
 
+	var loadInfo = function(params, cb) {
+		$.ajax({
+			url: $http.api('loanPledgeInfo/get', 'cyj'),
+			type: 'post',
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result.data, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
 	/**
 	* 设置面包屑
 	*/
@@ -73,14 +89,19 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 	* 加载页面模板
 	*/
 	render.$console.load(router.template('iframe/mortgage-detail'), function() {
-		$scope.def.listTmpl = render.$console.find('#loanUploadTmpl').html();
-		$scope.$el = {
-			$tbl: $console.find('#registerPanel')
+		$scope.def = {
+			infoTmpl: render.$console.find('#mortgageInfoTmpl').html(),
+			listTmpl: render.$console.find('#loanUploadTmpl').html()
 		}
-		console.log(apiParams)
+		$scope.$el = {
+			$tbl: $console.find('#registerPanel'),
+			$infoPanel: $console.find('#mortgageInfoPanel')
+		}
+		$console.find('.commit-orders-box').remove();
 		loadMortgageDetail(apiParams, function() {
 			setupEvt();
 		});
+		loadInfo(apiParams);
 	});
 
 
