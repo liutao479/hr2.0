@@ -30,10 +30,9 @@ page.ctrl('organizationManage', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				result.data.resultlist[0].demandBankAccountList[1] = result.data.resultlist[0].demandBankAccountList[2] = result.data.resultlist[0].demandBankAccountList[0];
 				render.compile($scope.$el.$tbl, $scope.def.bankListTmpl, result.data.resultlist, true);
 				setupPaging(result.page, true);
-				setupEvt();
+				setupBankEvt();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -146,10 +145,9 @@ page.ctrl('organizationManage', [], function($scope) {
 	/**
 	* 绑定tab栏事件
 	*/
-	var setupEvt = function() {
+	var setupBankEvt = function() {
 		$console.find('#searchBankName').on('keydown', function(evt) {
 			if(evt.which == 13) {
-				alert("查询");
 				var that = $(this),
 					searchText = $.trim(that.val());
 				if(!searchText) {

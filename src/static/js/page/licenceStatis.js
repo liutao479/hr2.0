@@ -76,6 +76,17 @@ page.ctrl('licenceStatis', [], function($scope) {
 			
 		});
 
+		//绑定只显示超期记录事件
+		$console.find('#overdue').on('click', function() {
+			// apiParams.status = searchText;
+			// $params.status = searchText;
+			// loadLicenceStatisList(apiParams, function() {
+			// 	delete apiParams.status;
+			// 	delete $params.status;
+			// });
+			
+		});
+
 		//绑定重置按钮事件
 		$console.find('#search-reset').on('click', function() {
 			// 下拉框数据以及输入框数据重置
@@ -93,6 +104,11 @@ page.ctrl('licenceStatis', [], function($scope) {
 				path: 'licenceStatis'
 			});
 		});
+
+		// 导出超期记录
+		$console.find('#importItems').on('click', function() {
+			alert('导出超期记录');
+		})
 	}
 	/***
 	* 加载页面模板

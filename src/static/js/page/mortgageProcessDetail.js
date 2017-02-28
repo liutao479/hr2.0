@@ -18,11 +18,32 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.data.loanTask = {
+					category: 'pledge',
+					editable: 1
+				}
 				$scope.result = result;
+				$scope.id = result.data.orderInfo.id;
 				setupLocation(result.data.orderInfo);
 				// console.log(result.data.backApprovalInfo)
-				setupBackReason(result.data.backApprovalInfo);
+				setupBackReason(result.data.orderInfo.loanOrderApproval);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	// 弹窗确定
+	var submitOrders = function(params, cb) {
+		$.ajax({
+			url: $http.api('loanPledge/sumbit', 'cyj'),
+			type: 'post',
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -39,6 +60,7 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.data.disabled = false;
 				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -50,15 +72,14 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	/**
 	* 底部操作按钮区域
 	*/	
-	var setupCommitBar = function() {
+	var loadCommitBar = function(cb) {
 		$.ajax({
 			url: $http.api('processCommit'),
 			// type: 'post',
 			// data: params,
 			// dataType: 'json',
 			success: $http.ok(function(result) {
-				console.log(result);
-				var $commitBar = $console.find('#commitBar');
+				var $commitBar = $console.find('#commitPanel');
 				$commitBar.data({
 					back: result.data.back,
 					verify: result.data.verify,
@@ -66,6 +87,9 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 					submit: result.data.submit
 				});
 				$commitBar.commitBar();
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
 			})
 		})
 		
@@ -106,8 +130,43 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 		}
 	}
 
+	/**
+	* 登记证材料事件
+	*/
 	var setupEvt = function() {
+		$scope.$el.$tbl.find('.uploadEvt').imgUpload();
+	}
 
+	/**
+	* 提交栏事件
+	*/
+	var setupCommitEvt = function() {
+		$console.find('#submit').on('click', function() {
+			var that = $(this);
+			that.openWindow({
+				title: '提交',
+				content: dialogTml.wContent.suggestion,
+				commit: dialogTml.wCommit.cancelSure
+			}, function($dialog) {
+				$dialog.find('.w-sure').on('click', function() {
+					var _params = {
+						pledgeId: $scope.id,
+						reason: $dialog.find('#suggestion').val().trim(),
+						pledgee: $console.find('#pledgee').val().trim(), //抵押权人
+						idCard: $console.find('#idCard').val().trim(), //身份证号码
+						pledgeDept: $console.find('#pledgeDept').val().trim(), //登记机关
+						pledgeDate: new Date($console.find('#pledgeDate').val().trim()), //抵押登记日期
+						vehileRegNo: $console.find('#vehileRegNo').val().trim(), //机动车登记编号
+						unPledgeDate: new Date($console.find('#unPledgeDate').val().trim()), //解除登记日期
+						cardName: $console.find('#cardName').val().trim() //身份证明名称
+					}
+					console.log(_params);
+					submitOrders(_params, function() {
+						$dialog.remove();
+					});
+				})
+			})
+		})
 	}
 
 	/***
@@ -127,8 +186,11 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 		loadMortgageDetail(apiParams, function() {
 			setupEvt();
 		});
+		console.log(apiParams);
 		loadInfo(apiParams);
-		setupCommitBar();
+		loadCommitBar(function() {
+			setupCommitEvt();
+		});
 	});
 
 

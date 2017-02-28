@@ -93,6 +93,11 @@ page.ctrl('mortgageStatis', [], function($scope) {
 				path: 'mortgageStatis'
 			});
 		});
+
+		// 导出超期记录
+		$console.find('#importItems').on('click', function() {
+			alert('导出超期记录');
+		})
 	}
 
 	/***

@@ -18,7 +18,12 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.data.loanTask = {
+					category: 'registrationApproval',
+					editable: 0
+				}
 				$scope.result = result;
+				$scope.orderNo = result.data.orderInfo.orderNo;//订单号
 				setupLocation(result.data.orderInfo);
 				// console.log(result.data.backApprovalInfo)
 				setupBackReason(result.data.backApprovalInfo);
@@ -28,6 +33,66 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 				}
 			})
 		})
+	}
+
+	// 审核弹窗确定按钮
+	var verifyOrders = function(params, cb) {
+		$.ajax({
+			url: $http.api('loanRegistration/approval/pass', 'cyj'),
+			type: 'post',
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	// 退回弹窗确定按钮
+	var backOrders = function(params, cb) {
+		$.ajax({
+			url: $http.api('loanRegistration/approval/back', 'cyj'),
+			type: 'post',
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+
+	/**
+	* 底部操作按钮区域
+	*/	
+	var loadCommitBar = function(cb) {
+		$.ajax({
+			url: $http.api('auditCommit'),
+			// type: 'post',
+			// data: params,
+			// dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				var $commitBar = $console.find('#commitPanel');
+				$commitBar.data({
+					back: result.data.back,
+					verify: result.data.verify,
+					cancel: result.data.cancel,
+					submit: result.data.submit
+				});
+				$commitBar.commitBar();
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+		
 	}
 
 	/**
@@ -66,8 +131,56 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 	}
 
 	var setupEvt = function() {
-
+		$scope.$el.$tbl.find('.uploadEvt').imgUpload();
 	}
+
+	/**
+	* 提交栏事件
+	*/
+	var setupCommitEvt = function() {
+		// 审核退回
+		$console.find('#back').on('click', function() {
+			var that = $(this);
+			that.openWindow({
+				title: '退回订单',
+				content: dialogTml.wContent.suggestion,
+				commit: dialogTml.wCommit.cancelSure
+			}, function($dialog) {
+				$dialog.find('.w-sure').on('click', function() {
+					var _params = {
+						orderNo: $scope.orderNo,
+						reason: $dialog.find('#suggestion').val()
+					}
+					console.log(_params);
+					backOrders(_params, function() {
+						$dialog.remove();
+					});
+				})
+			})
+		})
+
+		// 审核通过
+		$console.find('#verify').on('click', function() {
+			var that = $(this);
+			that.openWindow({
+				title: '审核通过',
+				content: dialogTml.wContent.suggestion,
+				commit: dialogTml.wCommit.cancelSure
+			}, function($dialog) {
+				$dialog.find('.w-sure').on('click', function() {
+					var _params = {
+						orderNo: $scope.orderNo,
+						reason: $dialog.find('#suggestion').val()
+					}
+					verifyOrders(_params, function() {
+						$dialog.remove();
+					});
+				})
+			})
+		})
+	}
+
+	
 
 	/***
 	* 加载页面模板
@@ -77,9 +190,11 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 		$scope.$el = {
 			$tbl: $console.find('#registerPanel')
 		}
-		console.log(apiParams)
 		loadLicenceDetail(apiParams, function() {
 			setupEvt();
+		});
+		loadCommitBar(function() {
+			setupCommitEvt();
 		});
 	});
 

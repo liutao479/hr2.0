@@ -40,6 +40,7 @@ page.ctrl('licenceProcess', [], function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
+	
 	/**
 	 * 绑定立即处理事件
 	 */

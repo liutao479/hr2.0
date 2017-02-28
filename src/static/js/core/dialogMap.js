@@ -7,7 +7,7 @@
 	*/
 	g.dialogTml = {};
 	g.dialogTml.wContent = {
-		suggestion: '<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写申请理由"></textarea>',
+		suggestion: '<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>',
 		creditQuery: '<dl class="w-dropdown">\
 				<dt>经办银行：</dt>\
 				<dd>\

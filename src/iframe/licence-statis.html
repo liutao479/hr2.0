@@ -35,7 +35,7 @@
 
 				<!--全选删除框-->
 				<div class="all-select-panel no-top-border clearfix">
-					<a href="javascript:;" class="all-check-box float-right">
+					<a href="javascript:;" class="all-check-box float-right" id="importItems">
 						<i class="iconfont iconfont-exipre">&#xe671;</i>
 						<span class="all-describe">导出超期名单</span>
 					</a>
@@ -80,7 +80,7 @@
 							<td class="orders-item-data">{{=row.orderNo}}</td>
 							<td class="orders-item-data">{{=row.acceptName}}</td>
 							<td class="orders-item-data">{{=row.realName}}</td>
-							<td class="orders-item-data">{{=row.acceptCompany}}</td>
+							<td class="orders-item-data">{{=row.deptName}}</td>
 							<td class="orders-item-data">{{=row.bankName}}</td>
 							{{ if(row.status == 0){ }}
 							<td class="orders-item-data status-wait-verify">未办理</td>
