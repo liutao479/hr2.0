@@ -45,7 +45,7 @@
 				<!-- 全选栏 -->
 				<div class="all-select-panel no-top-border mb15 clearfix" >
 					<div class="all-check-box">
-						<div id="allCheck" class="checkbox checkbox-normal"></div>
+						<div id="all" class="checkbox checkbox-normal"></div>
 						<span>全选</span>
 					</div>
 					<div class="all-check-box">
@@ -57,11 +57,11 @@
 				<!--订单表格 （无匹配订单）-->
 				<div class="tab-content">
 					{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == 0){ }}
-					<table class="expire-orders-table" width="100%">
+					<table class="expire-orders-table" id="list" width="100%">
 						<thead class="expire-title">
 							<tr>
 								<td colspan="3">
-									<div data-id = "{{= item.overdueImportId}}" class="checkbox checkbox-normal checked" checked="checked"><i class="iconfont">&#xe659;</i></div>
+									<div id="onlyCheck" data-id = "{{= item.overdueImportId}}" class="checkbox checkbox-normal"></div>
 									<i class="iconfont iconfont-man">&#xe656;</i>
 									<span class="userName">{{= item.userName}}</span>
 									<span>{{= item.idCard}}</span>
@@ -281,9 +281,7 @@
 						<thead class="expire-title">
 							<tr>
 								<td colspan="4">
-									<div data-id = "{{= item.overdueImportId}}" class="checkbox checkbox-normal checked" checked="checked">
-										<i class="iconfont">&#xe659;</i>
-									</div>
+									<div data-id = "{{= item.overdueImportId}}" class="checkbox checkbox-normal" data-checked="false"></div>
 									<i class="iconfont iconfont-man">&#xe656;</i>
 									<span class="userName">{{= item.userName}}</span>
 									<span>{{= item.idCard}}</span>
@@ -348,8 +346,9 @@
 					</table>
 					{{ } }}
 					{{ } }}
-					<div id="chooseOrderDetail" style="position: fixed;top: 0;bottom: 0;right: 0;left: 0;background: rgba(0,0,0,.8);">
+					<div id="chooseOrderDetail" style="position: fixed;top: 0;bottom: 0;right: 0;left: 0;background: rgba(0,0,0,0.6);">
 						<div style="padding: 20px;width: 80%;position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);background: #fff;">
+							<div></div>
 							<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">
 								<thead>
 									<tr class="orders-bar-title">
@@ -365,7 +364,10 @@
 								<tbody id="chooseOrderTable">
 								</tbody>
 							</table>
-							
+							<div class="search-result-commit" style="text-align: center; margin-top: 10px;">
+								<div class="button button-mini button-empty" id="cancle">取消</div>
+								<div class="button button-mini button-deep" id="submitPass" style="border:1px solid #6b59c9;margin-left: 20px;">确定</div>
+							</div>
 						</div>
 					</div>
 				<!--订单表格（逾期将结清）  end-->
@@ -381,8 +383,8 @@
 					<tr class="orders-item tr-odd">
 					{{ } }}
 						<td class="orders-item-data order-item-first">
-							<input type="radio" name="detailId" value="{{=col.detailId}}" />
-							<input type="hidden" name="orderNo" value="{{=col.orderNo}}" />
+							<input type="radio" name="detailId" value="{{=col.orderNo}}" />
+							<input type="hidden" name="orderNo" value="{{=col.idCard}}" />
 						</td>
 						<td class="orders-item-data">{{=col.orderNo}}</td>
 						<td class="orders-item-data">{{=col.userName}}</td>

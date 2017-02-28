@@ -12,12 +12,12 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var pageData={};
-	pageData['importId']=79;
+	pageData['importId']=80;
 	pageData['status']=0;
 
 	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api('loanOverdueImport/queryImportDetails','wl'),
+			url: 'http://192.168.0.113:8888/loanOverdueImport/queryImportDetails',
 			data: pageData,
 			type: 'post',
 			dataType: 'json',
@@ -84,22 +84,99 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 		loadExpireProcessList(apiParams);
 	});
 	/**
-	* 绑定立即处理事件
+	* 全选、不选
+	* 
 	*/
+	$(function () {
+		//全选或全不选
+		$("#all").click(function(){   
+	    	if(this.checked){   
+	        	$("#list .checkbox").attr("checked", true);  
+	    	}else{   
+			$("#list .checkbox").attr("checked", false);
+	    	}   
+	 	}); 
+		//设置全选复选框
+		$("#list .checkbox").click(function(){
+			allchk();
+		});
+	 
+		//获取选中选项的值
+		$("#getValue").click(function(){
+			var valArr = new Array;
+	        $("#list .checkbox[checked]").each(function(i){
+				valArr[i] = $(this).val();
+	        });
+			var vals = valArr.join(',');
+	      	alert(vals);
+	    });
+	}); 
+	function allchk(){
+		var chknum = $("#list .checkbox").size();//选项总个数
+		var chk = 0;
+		$("#list .checkbox").each(function () {  
+	        if($(this).attr("checked")==true){
+				chk++;
+			}
+	    });
+		if(chknum==chk){//全选
+			$("#all").attr("checked",true);
+		}else{//不全选
+			$("#all").attr("checked",false);
+		}
+	}
+	$(document).on('click', '.checkbox', function() {
+		if(!$(this).attr('checked')) {
+			$(this).addClass('checked').attr('checked',true);
+			$(this).html('<i class="iconfont">&#xe659;</i>');
+		} else {
+			$(this).removeClass('checked').attr('checked', false);
+			$(this).html();
+		}
+	});
 	/**
-	 * 提交订单按钮
+	* 详情页面确定取消按钮
+	*/
+	$(document).on('click', '#cancle', function() {
+		$("#chooseOrderDetail").hide();
+	});
+	$(document).on('click', '#submitPass', function() {
+		var data = {};
+		var boolCheck=$('input:radio[name="detailId"]');
+		boolCheck.each(function(){
+			if($(this).is(":checked")){
+				data['detailId'] = $(this).val();
+				data['orderNo'] = $(this).siblings('input:hidden[name="orderNo"]').val();
+			}
+		})
+		$.ajax({
+			url: $http.api('loanOverdueImport/chooseOverdueOrder','wl'),
+			data: data,
+			type: 'post',
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				$("#chooseOrderDetail").hide();
+			})
+		})
+	});
+	
+	/**
+	 * 点击查看详情
 	 */
 	$(document).on('click', '#submitOrders', function() {
 		$("#chooseOrderDetail").show();
+//		chooseOrderTable
+		var that =$("#chooseOrderTable");
 		var detailData = {};
+//			detailData['detailId']=$(this).data('detail');
 			detailData['detailId']=1;
 		$.ajax({
 			url: $http.api('loanOverdueImport/checkOverdueOrderList','wl'),
 			data: detailData,
 			type: 'post',
 			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile($scope.$el.$orderDetail, $scope.def.orderDetailTmpl, result.data, true);
+			success: $http.ok(function(xhr) {
+				render.compile(that, $scope.def.orderDetailTmpl, xhr.data, true);
 //				if(cb && typeof cb == 'function') {
 //					cb();
 //				}
@@ -116,7 +193,6 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 		$scope.def.scrollBarTmpl = render.$console.find('#scrollBarTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#expireInfoPrevTable'),
-			$orderDetail: $console.find('#chooseOrderTable'),
 			$paging: $console.find('#pageToolbar'),
 			$scrollBar: $console.find('#scrollBar')
 		}
