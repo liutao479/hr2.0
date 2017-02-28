@@ -93,7 +93,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	    	if(this.checked){   
 	        	$("#list .checkbox").attr("checked", true);  
 	    	}else{   
-			$("#list .checkbox").attr("checked", false);
+				$("#list .checkbox").attr("checked", false);
 	    	}   
 	 	}); 
 		//设置全选复选框
@@ -126,12 +126,36 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 		}
 	}
 	$(document).on('click', '.checkbox', function() {
+		var detailId = $(this).data('id');
+		var dataP={};
+			dataP['detailId']=detailId;
+			
 		if(!$(this).attr('checked')) {
 			$(this).addClass('checked').attr('checked',true);
 			$(this).html('<i class="iconfont">&#xe659;</i>');
+			dataP['isFoundTask']=1;
+			$.ajax({
+				url: $http.api('loanOverdueImport/isCreateOverdue','wl'),
+				data: dataP,
+				type: 'post',
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result.msg)
+				})
+			})
 		} else {
 			$(this).removeClass('checked').attr('checked', false);
 			$(this).html();
+			dataP['isFoundTask']=0;
+			$.ajax({
+				url: $http.api('loanOverdueImport/isCreateOverdue','wl'),
+				data: dataP,
+				type: 'post',
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result.msg)
+				})
+			})
 		}
 	});
 	/**
@@ -163,13 +187,13 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	/**
 	 * 点击查看详情
 	 */
-	$(document).on('click', '#submitOrders', function() {
+	$(document).on('click', '.selOrderDetail', function() {
 		$("#chooseOrderDetail").show();
 //		chooseOrderTable
 		var that =$("#chooseOrderTable");
 		var detailData = {};
-//			detailData['detailId']=$(this).data('detail');
-			detailData['detailId']=1;
+			detailData['detailId']=$(this).data('detail');
+//			detailData['detailId']=1;
 		$.ajax({
 			url: $http.api('loanOverdueImport/checkOverdueOrderList','wl'),
 			data: detailData,
