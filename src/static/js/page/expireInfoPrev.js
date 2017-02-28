@@ -87,22 +87,29 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	* 全选、不选
 	* 
 	*/
-	$(function () {
+//	$(function () {
 		//全选或全不选
-		$("#all").click(function(){   
-	    	if(this.checked){   
-	        	$("#list .checkbox").attr("checked", true);  
+		$(document).on('click', '#all', function() {
+			if(!$(this).attr('checked')) {
+				$(this).addClass('checked').attr('checked',true);
+				$(this).html('<i class="iconfont">&#xe659;</i>');
+	        	$("#list .checkbox").each(function(){
+					$(this).addClass('checked').attr('checked',true);
+					$(this).html('<i class="iconfont">&#xe659;</i>');
+	        	})
 	    	}else{   
-				$("#list .checkbox").attr("checked", false);
+				$(this).removeClass('checked').attr('checked', false);
+				$(this).html();
+	        	$("#list .checkbox").each(function(){
+					$(this).removeClass('checked').attr('checked', false);
+					$(this).html();
+	        	})
 	    	}   
 	 	}); 
-		//设置全选复选框
-		$("#list .checkbox").click(function(){
-			allchk();
-		});
 	 
 		//获取选中选项的值
-		$("#getValue").click(function(){
+		$(document).on('click', '#getValue', function() {
+//		$("#getValue").click(function(){
 			var valArr = new Array;
 	        $("#list .checkbox[checked]").each(function(i){
 				valArr[i] = $(this).val();
@@ -110,10 +117,11 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 			var vals = valArr.join(',');
 	      	alert(vals);
 	    });
-	}); 
+//	}); 
 	function allchk(){
 		var chknum = $("#list .checkbox").size();//选项总个数
 		var chk = 0;
+		console.log(chknum);
 		$("#list .checkbox").each(function () {  
 	        if($(this).attr("checked")==true){
 				chk++;
@@ -125,7 +133,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 			$("#all").attr("checked",false);
 		}
 	}
-	$(document).on('click', '.checkbox', function() {
+	$(document).on('click', '#list .checkbox', function() {
 		var detailId = $(this).data('id');
 		var dataP={};
 			dataP['detailId']=detailId;
@@ -146,6 +154,8 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 		} else {
 			$(this).removeClass('checked').attr('checked', false);
 			$(this).html();
+			$('#all').removeClass('checked').attr('checked', false);
+			$('#all').html();
 			dataP['isFoundTask']=0;
 			$.ajax({
 				url: $http.api('loanOverdueImport/isCreateOverdue','wl'),
