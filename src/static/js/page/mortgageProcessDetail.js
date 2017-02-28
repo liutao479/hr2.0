@@ -30,6 +30,7 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 		})
 	}
 
+	// 抵押信息获取
 	var loadInfo = function(params, cb) {
 		$.ajax({
 			url: $http.api('loanPledgeInfo/get', 'cyj'),
@@ -44,6 +45,30 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 				}
 			})
 		})
+	}
+
+	/**
+	* 底部操作按钮区域
+	*/	
+	var setupCommitBar = function() {
+		$.ajax({
+			url: $http.api('processCommit'),
+			// type: 'post',
+			// data: params,
+			// dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				var $commitBar = $console.find('#commitBar');
+				$commitBar.data({
+					back: result.data.back,
+					verify: result.data.verify,
+					cancel: result.data.cancel,
+					submit: result.data.submit
+				});
+				$commitBar.commitBar();
+			})
+		})
+		
 	}
 
 	/**
@@ -91,16 +116,19 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	render.$console.load(router.template('iframe/mortgage-detail'), function() {
 		$scope.def = {
 			infoTmpl: render.$console.find('#mortgageInfoTmpl').html(),
-			listTmpl: render.$console.find('#loanUploadTmpl').html()
+			listTmpl: render.$console.find('#loanUploadTmpl').html(),
+			commitTmpl: render.$console.find('#commitBarTmpl').html()
 		}
 		$scope.$el = {
 			$tbl: $console.find('#registerPanel'),
-			$infoPanel: $console.find('#mortgageInfoPanel')
+			$infoPanel: $console.find('#mortgageInfoPanel'),
+			$commitPanel: $console.find('#commitPanel')
 		}
 		loadMortgageDetail(apiParams, function() {
 			setupEvt();
 		});
 		loadInfo(apiParams);
+		setupCommitBar();
 	});
 
 

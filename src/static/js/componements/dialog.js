@@ -70,15 +70,21 @@
     $.fn.openWindow = function(options,callback) {
         return this.each(function() {
             var that = $(this);
-            that.$openWindow = new openWindow(that, options);
+            this.$openWindow = new openWindow(that, options, cb);
         });
     }
 
-    function openWindow($el, options) {
+    function openWindow($el, options, cb) {
     	var self = this;
     	self.opts = $.extend({}, $.fn.openWindow.defaults, options)
     	self.$el = $el;
     	self.init();
+        if(self.opts.addFunction){
+            self.opts.addFunction();
+        };
+        if(cb && typeof cb == 'function') {
+        	cb(self.$dialog);
+        }
     }
 
     // 初始化窗口

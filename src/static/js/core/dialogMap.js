@@ -5,8 +5,9 @@
 	* key:  窗口内容名
 	* value: 窗口内容模板
 	*/
-	g.wContent = {
-		suggestion: '<textarea name="" id="" cols="5" rows="5" class="remarks-box" placeholder="在此处填写申请理由"></textarea>',
+	g.dialogTml = {};
+	g.dialogTml.wContent = {
+		suggestion: '<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写申请理由"></textarea>',
 		creditQuery: '<dl class="w-dropdown">\
 				<dt>经办银行：</dt>\
 				<dd>\
@@ -37,7 +38,7 @@
 				</div>\
 			</div>'
 	}
-	g.wCommit = {
+	g.dialogTml.wCommit = {
 		sure: '<div class="w-commit-area">\
 				<div class="button">确定</div>\
 			</div>',
@@ -48,7 +49,7 @@
 				<div class="button button-empty w-close">取消</div><div class="button w-next">下一步</div>\
 			</div>'
 	}
-	g.wRemind = {
+	g.dialogTml.wRemind = {
 		addCreditUsers: '<div class="w-remind">\
 							<span class="tips"><i class="iconfont">&#xe67f;</i></span>\
 							提示：更改后，订单将被退回到征信材料上传节点。\

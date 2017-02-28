@@ -30,6 +30,29 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 		})
 	}
 
+	// 抵押信息获取
+	var loadInfo = function(params, cb) {
+		$.ajax({
+			url: $http.api('loanPledgeInfo/get', 'cyj'),
+			type: 'post',
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result.data, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	// 底部操作按钮区域	
+	var loadCommitBox = function() {
+		var data = {};
+		render.compile($scope.$el.$commitBox, $scope.def.commitTmpl, data, true);
+	}
+
 	/**
 	* 设置面包屑
 	*/
@@ -73,14 +96,19 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 	* 加载页面模板
 	*/
 	render.$console.load(router.template('iframe/mortgage-detail'), function() {
-		$scope.def.listTmpl = render.$console.find('#loanUploadTmpl').html();
-		$scope.$el = {
-			$tbl: $console.find('#registerPanel')
+		$scope.def = {
+			infoTmpl: render.$console.find('#mortgageInfoTmpl').html(),
+			listTmpl: render.$console.find('#loanUploadTmpl').html()
 		}
-		console.log(apiParams)
+		$scope.$el = {
+			$tbl: $console.find('#registerPanel'),
+			$infoPanel: $console.find('#mortgageInfoPanel')
+		}
 		loadMortgageDetail(apiParams, function() {
 			setupEvt();
 		});
+		loadInfo();
+		// loadCommitBox();
 	});
 
 

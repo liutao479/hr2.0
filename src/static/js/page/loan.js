@@ -26,11 +26,11 @@ page.ctrl('loan', function($scope) {
 
 
 				// 测试复选框
-				$('.checkbox').checking(function($el) {
-					$el.filter('#haha').on('click', function() {
-						alert('callback')
-					})
-				});
+				$scope.$checks = $('.checkbox').checking();
+
+				$scope.$checks[0].$checking.onChange(function(a) {
+					console.log(a);
+				})
 
 
 				// 测试弹窗
