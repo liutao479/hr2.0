@@ -379,7 +379,10 @@
 					{{ } else { }}
 					<tr class="orders-item tr-odd">
 					{{ } }}
-						<td class="orders-item-data">{{=col.orderNo}}</td>
+						<td class="orders-item-data order-item-first">
+							<input type="radio" name="detailId" value="{{=col.detailId}}" />
+							<input type="hidden" name="orderNo" value="{{=col.orderNo}}" />
+						</td>
 						<td class="orders-item-data">{{=col.orderNo}}</td>
 						<td class="orders-item-data">{{=col.userName}}</td>
 						<td class="orders-item-data">{{=col.idCard}}</td>
