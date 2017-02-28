@@ -27,6 +27,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 				setupScroll(result.page, function() {
 					pageChangeEvt();
 				});
+				$("#chooseOrderDetail").hide();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -85,19 +86,37 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	/**
 	* 绑定立即处理事件
 	*/
-//	$(document).on('click', '#expireProcessTable .button', function() {
-//		var that = $(this);
-//		router.render(that.data('href'), {orderNo: that.data('id')});
-//	});
+	/**
+	 * 提交订单按钮
+	 */
+	$(document).on('click', '#submitOrders', function() {
+		$("#chooseOrderDetail").show();
+		var detailData = {};
+			detailData['detailId']=1;
+		$.ajax({
+			url: $http.api('loanOverdueImport/checkOverdueOrderList','wl'),
+			data: detailData,
+			type: 'post',
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				render.compile($scope.$el.$orderDetail, $scope.def.orderDetailTmpl, result.data, true);
+//				if(cb && typeof cb == 'function') {
+//					cb();
+//				}
+			})
+		})
+	});
 
 	/***
 	* 加载页面模板
 	*/
 	render.$console.load(router.template('iframe/expire-info-prev'), function() {
 		$scope.def.listTmpl = render.$console.find('#expireInfoPrevTmpl').html();
+		$scope.def.orderDetailTmpl = render.$console.find('#chooseOrderTmpl').html();
 		$scope.def.scrollBarTmpl = render.$console.find('#scrollBarTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#expireInfoPrevTable'),
+			$orderDetail: $console.find('#chooseOrderTable'),
 			$paging: $console.find('#pageToolbar'),
 			$scrollBar: $console.find('#scrollBar')
 		}
