@@ -1,25 +1,11 @@
 	<!--新建合作车商管理zhy-->
 			<div class="container new-carshop-manage" id="new-carshop-manage">
-				<!--返回列表-->
-				<div class="path-back-bar">
-					<div class="path-back">
-						<i class="iconfont">&#xe626;</i>
-						<a href="#">返回列表</a>&nbsp;&gt;
-						<span class="current-page">新建合作车商管理</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">借款人：</span>
-						<span class="value">张三</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">订单生成时间：</span>
-						<span class="value">2016-11-03 14:02</span>
-					</div>
-				</div>
+				<!-- 返回列表 -->
+				<div id="location"></div>
+				<!-- 返回列表 end-->
 				
 				<!--面板-->
-				<div class="panel panel-loan panel-layout clearfix" id="newCarshopManage">
-				</div>
+				<div class="panel mt15" id="carPanel"></div>
 				
 				<!--提交订单按钮-->
 				<div class="commit-orders-box">
@@ -28,35 +14,55 @@
 			</div>
 			
 
-			<script type="text/x-dot-template" id="newCarshopManagetmpl">
-				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
-					<div class="col-company">
-						<div class="panel-title-box">
-							<div class="panel-title">
-								<span class="panel-title-name">{{= row.model}}</span>
-							</div>
-						</div>
-						<div class="panel-content clearfix">
-							<div class="carShop-manage">
-							{{for(var j = 0, len2 = row.modelcontent.length; j < len2; j++) { var role = row.modelcontent[j]; }}
-								<div class="info-key-value-box">
-									<span class="info-key"><i>*</i>{{= role.name}}：</span>
-								{{ if(role.type == '1'){ }}
-									<span class="info-value">
-										<select>
-											<option>12</option>
-										</select>
-									</span>
-								{{ }else{ }}
-									<span class="info-value"><input type="text" /></span>
-								{{ } }}
+			<script type="text/x-dot-template" id="carTmpl">
+
+
+				<div class="panel-content-title no-top-border">
+					<span class="panel-title">车商资料</span>
+				</div>
+				<div class="panel-detail-content panel-detail-bank">
+					<div class="loan-info">
+						<div class="info-key-value-box">
+							<span class="info-key"><i>*</i> 新车还是二手车：</span>
+							<span data-type="self" data-key="isSecond" class="info-value selecter" id="isSecondBox">
+								<div>
+									<ul class="selectOptBox" id="repaymentTerm" style="display: none;">
+										<!--<li value="100001">请选择</li>-->
+										<li data-key="0">新车</li>
+										<li data-key="1">二手车</li>
+									</ul>
 								</div>
-								{{ if(role.type != '1'){ }}
-								<div id="" class="button">增加</div>
-								{{ } }}
-							{{ } }}
+								<span class="placeholder">新车</span>
+								<span class="arrow arrow-bottom right8px"></span>
+								<input type="hidden" name="isSecond" value="0" class="required">
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-content-title panel-detail-bank">
+					<span class="panel-title">打款账户</span>
+				</div>
+				<div class="panel-detail-content panel-detail-bank">
+					<div class="select-search-bar no-border clearfix">
+						<div class="search-item">
+							<span class="select-name">开户账户：</span>
+							<span class="input-text input-text-mini">
+								<input type="text" value="">
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">账户户名：</span>
+							<span class="input-text input-text-mini">
+								<input type="text" value="">
+							</span>
+						</div>
+						<div class="search-item">
+							<div class="button button-mini" id="addCard">
+								<i class="iconfont">&#xe615;</i>
+								增加
 							</div>
 						</div>
 					</div>
-				{{ } }}
+				</div>
 			</script>

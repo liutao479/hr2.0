@@ -89,11 +89,11 @@
 									</td>
 									<td class="orders-item-data orders-item-data-blank"></td>
 									<td class="orders-item-data orders-item-data-operate">
-										<a class="button button-gray button-mini" data-id="{{=it.bankId}}">
+										<a class="button button-gray button-mini toNewBank" data-bankid="{{=row.bankId}}" data-href="organizationManage/newBank">
 											<i class="iconfont">&#xe640;</i>
 											编辑
 										</a>
-										<a class="button button-gray button-mini">
+										<a class="button button-gray button-mini deleteBank" data-id="{{=row.id}}">
 											<i class="iconfont">&#xe602;</i>
 											删除
 										</a>
@@ -145,7 +145,7 @@
 							<td class="orders-item-data">操作</td>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="organizationManageTable">
 						{{ var len = it.length; if(len) { }}
 							{{for(var i = 0; i < len; i++) { var row = it[i]; }}
 								{{ if(i % 2 !== 0) { }}
@@ -157,7 +157,7 @@
 								{{ } }}
 									<td class="orders-item-data">{{=(row.shopType == 0 ? '4S' : '二级经销商')}}</td>
 									<td class="orders-item-data">{{=row.shopName}}</td>
-									<td class="orders-item-data"></td>
+									<td class="orders-item-data">{{=row.operateBrand}}</td>
 									<td class="orders-item-data">
 										<table class="meanwhile" id="meanwhile">
 										{{for(var j = 0, len2 = row.bankAccountNameList.length; j < len2; j++) { var col = row.bankAccountNameList[j]; }}
@@ -171,7 +171,7 @@
 												</tr>
 												{{ if(j == len2 - 1){ }}
 													<tr>
-														<td class="arrow-trigger"><span class="arrow arrow-bottom" data-isShow="false"></span></td>
+														<td class="arrow-trigger"><span class="arrow arrow-bottom" data-ishow="false"></span></td>
 													</tr>
 												{{ } }}
 											{{ } }}
@@ -188,14 +188,14 @@
 										{{ } }}
 									</td>
 									<td class="orders-item-data orders-item-data-operate">
-										<div class="button button-mini button-gray">
+										<a class="button button-gray button-mini toNewCar" data-bankid="{{=row.bankId}}" data-href="organizationManage/newCar">
 											<i class="iconfont">&#xe640;</i>
 											编辑
-										</div>
-										<div class="button button-mini button-gray">
+										</a>
+										<a class="button button-gray button-mini deleteBank" data-id="{{=row.id}}">
 											<i class="iconfont">&#xe602;</i>
 											删除
-										</div>
+										</a>
 									</td>
 								</tr>
 							{{ } }}

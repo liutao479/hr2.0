@@ -149,10 +149,6 @@
 			title: '信息表修改',
 			page: 'loanInfo'
 		},
-		'loanManage/ordersDetail': {
-			title: '订单详情',
-			page: 'ordersDetail'
-		},
 		'loanProcess/loanInfoInput': {
 			title: '贷款信息表录入',
 			page: 'loanInfo'

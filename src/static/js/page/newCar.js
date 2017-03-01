@@ -6,8 +6,48 @@ page.ctrl('newCar', [], function($scope) {
 			
 		};
 
-	var loadCarDetail = function(params, cb) {
-		
+	/**
+	 * 加载编辑/新建合作车商详情
+	 */
+	var loadNewCar = function(cb) {
+		$.ajax({
+			url: $http.api('demandBank/detail'),
+			type: 'post',
+			data: {
+				bankId: 1
+			},
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				setupLocation();
+				render.compile($scope.$el.$carPanel, $scope.def.carTmpl, result.data, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
+	* 设置面包屑
+	*/
+	var setupLocation = function() {
+		if(!$scope.$params.path) return false;
+		var $location = $console.find('#location');
+		$location.data({
+			backspace: $scope.$params.path,
+			current: '新建合作车商'
+		});
+		$location.location();
+	}
+
+	/**
+	 * 加载立即处理事件
+	 */
+	var setupEvt = function() {
+		$console.find('#addCard').on('click', function() {
+			
+		})
 	}
 
 
@@ -16,12 +56,14 @@ page.ctrl('newCar', [], function($scope) {
 	*/
 	render.$console.load(router.template('iframe/new-car'), function() {
 		$scope.def = {
-			infoTmpl: render.$console.find('#mortgageInfoTmpl').html()
+			carTmpl: render.$console.find('#carTmpl').html()
 		}
 		$scope.$el = {
-			$tbl: $console.find('#registerPanel')
+			$carPanel: $console.find('#carPanel')
 		}
-		loadCarDetail(apiParams);
+		loadNewCar(function() {
+			setupEvt();
+		});
 	});
 
-}
+})

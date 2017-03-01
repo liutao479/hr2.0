@@ -55,12 +55,35 @@ page.ctrl('organizationManage', [], function($scope) {
 				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.carListTmpl, result.data.resultlist, true);
 				setupPaging(result.page, true);
+				setupCarEvt();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
 			})
 		})
 	}
+
+	/**
+	 * 删除合作银行
+	 */
+	 var deleteBank = function(params, cb) {
+	 	$.ajax({
+			url: $http.api('demandBank/del', 'cyj'),
+			type: 'post',
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			}),
+			error: function() {
+				alert('删除失败！');
+			}
+		})
+	 }
+
 	/**
 	* 构造分页
 	*/
@@ -103,10 +126,10 @@ page.ctrl('organizationManage', [], function($scope) {
 	 */
 	var setupBtnPanel = function(type, cb) {
 		render.compile($scope.$el.$btn, $scope.def.btnNewTmpl, $scope.btn[type], true);
+
 		$console.find('#btnPanel .button').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
-				bankId: that.data('id'), 
 				path: 'organizationManage'
 			});
 		})
@@ -115,22 +138,13 @@ page.ctrl('organizationManage', [], function($scope) {
 		}
 	}
 
-
-	/**
-	* 绑定立即处理事件
-	*/
-	$(document).on('click', '#myCustomerTable .button', function() {
-		var that = $(this);
-		router.render(that.data('href'));
-	});
-
-
-
 	/**
 	* 绑定tab栏事件
 	*/
 	var setupTabEvt = function() {
 		$console.find('.tabEvt').on('click', function() {
+			apiParams.pageNum = 1;
+			$params.pageNum = 1;
 			var that = $(this);
 			if(that.hasClass('role-item-active')) return;
 			var _type = that.data('type');
@@ -143,9 +157,10 @@ page.ctrl('organizationManage', [], function($scope) {
 	}
 
 	/**
-	* 绑定tab栏事件
+	* 绑定银行立即处理事件
 	*/
 	var setupBankEvt = function() {
+		// 模糊搜索
 		$console.find('#searchBankName').on('keydown', function(evt) {
 			if(evt.which == 13) {
 				var that = $(this),
@@ -165,9 +180,79 @@ page.ctrl('organizationManage', [], function($scope) {
 				// router.updateQuery($scope.$path, $params);
 			}
 		});
-		/**
-		* 任务类型点击显示/隐藏
-		*/
+		
+		//  任务类型点击显示/隐藏
+		$console.find('#organizationManageTable .arrow').on('click', function() {
+			var that = $(this);
+			var $tr = that.parent().parent().parent().find('.loantask-item');
+			if(!that.data('isShow')) {
+				$tr.show();
+				that.data('isShow', true);
+				that.removeClass('arrow-bottom').addClass('arrow-top');
+			} else {
+				$tr.hide();
+				that.data('isShow', false);
+				that.removeClass('arrow-top').addClass('arrow-bottom');
+				$tr.eq(0).show();
+				$tr.eq(1).show();
+			}
+		})
+
+		// 编辑合作银行按钮
+		$console.find('#organizationManageTable .toNewBank').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				bankId: that.data('bankid'),
+				path: 'organizationManage'
+			});
+		})
+
+		// 删除合作银行
+		$console.find('#organizationManageTable .deleteBank').on('click', function() {
+			var that = $(this);
+			var _params = {
+				id: that.data('id')
+			}
+			that.openWindow({
+				title: '删除合作银行',
+				content: '<div>确定删除所选合作银行吗？</div>',
+				commit: dialogTml.wCommit.cancelSure
+			}, function($dialog) {
+				// 窗口确定按钮
+				$dialog.find('.w-sure').on('click', function() {
+					$dialog.remove();
+					deleteBank(_params, function() {
+						apiParams.pageNum = 1;
+						$params.pageNum = 1;
+						loadBankList(apiParams);
+					});
+					
+				})
+			})
+		})
+
+		// 查看费率
+		$console.find('#organizationManageTable .view-fee').on('click', function() {
+			var that = $(this);
+
+			that.openWindow({
+				title: '查看费率',
+				content: '<div>确定删除所选合作银行吗？</div>',
+				commit: dialogTml.wCommit.cancelSure
+			}, function($dialog) {
+				// 窗口确定按钮
+				$dialog.find('.w-sure').on('click', function() {
+					$dialog.remove();
+				})
+			})
+		})
+	}
+
+	/**
+	* 绑定车商立即处理事件
+	*/
+	var setupCarEvt = function() {
+		//  任务类型点击显示/隐藏
 		$console.find('#organizationManageTable .arrow').on('click', function() {
 			var that = $(this);
 			var $tr = that.parent().parent().parent().find('.loantask-item');
