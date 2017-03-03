@@ -85,54 +85,67 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	});
 	/**
 	* 全选、不选
-	* 
 	*/
-//	$(function () {
-		//全选或全不选
-		$(document).on('click', '#all', function() {
-			if(!$(this).attr('checked')) {
+	//全选或全不选
+	$(document).on('click', '#all', function() {
+		var importId = $(this).data('id');
+		var dataP={};
+			dataP['importId']=importId;
+		if(!$(this).attr('checked')) {
+			$(this).addClass('checked').attr('checked',true);
+			$(this).html('<i class="iconfont">&#xe659;</i>');
+        	$("#list .checkbox").each(function(){
 				$(this).addClass('checked').attr('checked',true);
 				$(this).html('<i class="iconfont">&#xe659;</i>');
-	        	$("#list .checkbox").each(function(){
-					$(this).addClass('checked').attr('checked',true);
-					$(this).html('<i class="iconfont">&#xe659;</i>');
-	        	})
-	    	}else{   
+        	})
+			dataP['isFoundTask']=1;
+			$.ajax({
+				url: $http.api('loanOverdueImport/checkAllOverdue','wl'),
+				data: dataP,
+				type: 'post',
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result.msg)
+				})
+			})
+    	}else{   
+			$(this).removeClass('checked').attr('checked', false);
+			$(this).html();
+        	$("#list .checkbox").each(function(){
 				$(this).removeClass('checked').attr('checked', false);
 				$(this).html();
-	        	$("#list .checkbox").each(function(){
-					$(this).removeClass('checked').attr('checked', false);
-					$(this).html();
-	        	})
-	    	}   
-	 	}); 
-	 
-		//获取选中选项的值
-		$(document).on('click', '#getValue', function() {
-//		$("#getValue").click(function(){
-			var valArr = new Array;
-	        $("#list .checkbox[checked]").each(function(i){
-				valArr[i] = $(this).val();
-	        });
-			var vals = valArr.join(',');
-	      	alert(vals);
-	    });
-//	}); 
-	function allchk(){
-		var chknum = $("#list .checkbox").size();//选项总个数
-		var chk = 0;
-		console.log(chknum);
-		$("#list .checkbox").each(function () {  
-	        if($(this).attr("checked")==true){
-				chk++;
-			}
-	    });
-		if(chknum==chk){//全选
-			$("#all").attr("checked",true);
-		}else{//不全选
-			$("#all").attr("checked",false);
-		}
-	}
+        	})
+			dataP['isFoundTask']=0;
+			$.ajax({
+				url: $http.api('loanOverdueImport/checkAllOverdue','wl'),
+				data: dataP,
+				type: 'post',
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result.msg)
+				})
+			})
+    	}   
+ 	}); 
+ 
+	//获取选中选项的值
+	$(document).on('click', '#getValue', function() {
+		var valArr = new Array;
+        $("#list .checked").each(function(i){
+			valArr[i] = $(this).data('id');
+        });
+		var vals = valArr.join(',');
+      	console.log(vals);
+		$.ajax({
+			url: $http.api('loanOverdueImport/prepareConfirmed','wl'),
+			data: dataP,
+			type: 'post',
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result.msg)
+			})
+		})
+    });
 	$(document).on('click', '#list .checkbox', function() {
 		var detailId = $(this).data('id');
 		var dataP={};

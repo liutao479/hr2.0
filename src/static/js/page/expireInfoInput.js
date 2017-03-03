@@ -39,37 +39,41 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	$(document).on('change', '#fileData', function() {
         ajaxFileUpload();
     })
+	
+	
+	
+	
+	
+	
+	
+	
+	
     function ajaxFileUpload() {
-        $.ajaxFileUpload({
-            url: postUrl+'loanOverdueImport/uploadOverdue', //用于文件上传的服务器端请求地址
-            secureuri: false, //是否需要安全协议，一般设置为false
-            fileElementId: 'fileData', //文件上传域的ID
-            dataType: 'json', //返回值类型 一般设置为json
-			success : function(data, status){    
-		    	console.log(data+','+status+',1');
-		    	console.log(typeof(data));
-		    	console.log(data);
-		    	
+		$.ajaxFileUpload({
+		    url: postUrl+'loanOverdueImport/uploadOverdue',
+		    secureuri: false,
+		    fileElementId: 'fileData',
+		    dataType: 'json',
+//		    complete: function() {
+//		    	console.log('执行了complete');
+//		    },
+		    success: function(data, status){
+//		        if (typeof(data.msg) != 'undefined') {
+//		            if (data.msg != '') {
+//		                alert(data.msg);
+//		                return;
+//		            } else {
+//		                console.log(data);
+//		            }
+//		        }else{
+//		        	console.log(data);
+//		        };
+		        console.log(data);
 		    },
-		    error:function(data,status,e){
-		            
+		    error: function(data, status, e){
+		        console.log(data+','+status);
 		    }
-//			success: function(xhr) {
-//				if(!xhr.code) {
-//					console.log(1);			
-//				}
-//			},
-////			function(xhr) {
-////              console.log('成功的回调'+xhr.data);
-//////              $("#importResule").show();
-//////				render.compile($scope.$el.$iRTtbl, $scope.def.iRTTmpl, result.data, true);
-//////				console.log(result.data);
-////			},
-//			error: function(error){
-//				console.log('失败的回调'+error);
-//			}
-        })
-        return false;
+		})	
     }
     /***
 	* 加载页面模板
