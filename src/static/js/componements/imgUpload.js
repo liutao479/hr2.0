@@ -50,7 +50,18 @@
 		} else {
 			if(self.options.editable) {
 				if(self.options.err != undefined) {
+<<<<<<< HEAD
 					self.errImg = imgs[self.options.err];
+=======
+					switch(self.options.err) {
+						case 0:
+							self.errImg = imgs.blank; break;
+						case 1:
+							self.errImg = imgs.unclear; break;
+						case 2:
+							self.errImg = imgs.error; break;
+					}
+>>>>>>> ldf
 				}
 				if(self.options.msg != undefined) {
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
@@ -114,15 +125,18 @@
 	*/
 	imgUpload.prototype.onDelete = function() {
 		var self = this;
+		var params = {};
 		if(self.options.id == undefined) {
 			return false;
 		}
+		params.id = self.options.id;
 		$.ajax({
 			url: api.del,
 			type: 'post',
 			data: {id: self.options.id},
 			dataType: 'json',
 			success: function(xhr) {
+				console.log(xhr)
 				if(!xhr.code) {
 					self.$el.html(internalTemplates.edit.format(self.options.name));
 					self.status = 0;

@@ -19,36 +19,36 @@ $(document).on('click', '#remind-tips', function (){
 
 //复选框
 $(document).on('selectstart', '.checkbox-normal', false);
-$(document).on('click', '.checkbox-normal', function() {
-	var keyData = $(this).attr("data-key");
-	var keyCode = $(this).attr("data-code");
-	var keyMark = $(this).attr("data-mark");
-	if(keyData){
-		$(".hklx").each(function(){
-			$(this).removeClass('checked').attr('checked',false);
-			$(this).html('');
-		})
-	}
-	if(keyCode){
-		$(".gzd").each(function(){
-			$(this).removeClass('checked').attr('checked',false);
-			$(this).html('');
-		})
-	}
-	if(keyMark){
-		$(".jzlx").each(function(){
-			$(this).removeClass('checked').attr('checked',false);
-			$(this).html('');
-		})
-	}
-	if(!$(this).attr('checked')) {
-		$(this).addClass('checked').attr('checked',true);
-		$(this).html('<i class="iconfont">&#xe659;</i>');
-	} else {
-		$(this).removeClass('checked').attr('checked',false);
-		$(this).html('');
-	}
-})
+// $(document).on('click', '.checkbox-normal', function() {
+// 	var keyData = $(this).attr("data-key");
+// 	var keyCode = $(this).attr("data-code");
+// 	var keyMark = $(this).attr("data-mark");
+// 	if(keyData){
+// 		$(".hklx").each(function(){
+// 			$(this).removeClass('checked').attr('checked',false);
+// 			$(this).html('');
+// 		})
+// 	}
+// 	if(keyCode){
+// 		$(".gzd").each(function(){
+// 			$(this).removeClass('checked').attr('checked',false);
+// 			$(this).html('');
+// 		})
+// 	}
+// 	if(keyMark){
+// 		$(".jzlx").each(function(){
+// 			$(this).removeClass('checked').attr('checked',false);
+// 			$(this).html('');
+// 		})
+// 	}
+// 	if(!$(this).attr('checked')) {
+// 		$(this).addClass('checked').attr('checked',true);
+// 		$(this).html('<i class="iconfont">&#xe659;</i>');
+// 	} else {
+// 		$(this).removeClass('checked').attr('checked',false);
+// 		$(this).html('');
+// 	}
+// })
 
 //单选框
 $(document).on('selectstart', '.radio', false);

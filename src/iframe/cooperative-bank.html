@@ -40,7 +40,7 @@
 				<div class="select-search-bar select-search-bar-noborder clearfix">
 					<div class="search-item">
 						<span class="select-name">银行名称：</span>
-						<input type="text" class="input-text" />
+						<input type="text" class="input-text" id="searchBankName" />
 					</div>
 				</div>
 				<table width="100%" class="orders-table orders-table-noborder cooperation-maintenance-table">
@@ -64,23 +64,36 @@
 								<tr class="orders-item tr-odd">
 								{{ } }}
 									<td class="orders-item-data">{{=row.bankName}}</td>
-									<td class="orders-item-data acount-name-data">
+									<td class="orders-item-data">
+										<table class="meanwhile" id="meanwhile">
 										{{for(var j = 0, len2 = row.demandBankAccountList.length; j < len2; j++) { var col = row.demandBankAccountList[j]; }}
-										<p class="acount-name">
-											<span>{{=col.accountNumber}}</span>-<span>{{=col.accountName}}</span><br />
-										</p>
+											{{ if(j < 2){ }}
+												<tr class="loantask-item">
+													<td>{{=col.accountNumber}}-{{=col.accountName}}</td>
+												</tr>
+											{{ }else{ }}
+												<tr class="loantask-item" style="display: none;">
+													<td>{{=col.accountNumber}}-{{=col.accountName}}</td>
+												</tr>
+												{{ if(j == len2 - 1){ }}
+													<tr>
+														<td class="arrow-trigger"><span class="arrow arrow-bottom" data-isShow="false"></span></td>
+													</tr>
+												{{ } }}
+											{{ } }}
 										{{ } }}
+										</table>
 									</td>
 									<td class="orders-item-data orders-item-data-view">
 										<a href="javascript:;" class="view-fee">查看</a>
 									</td>
 									<td class="orders-item-data orders-item-data-blank"></td>
 									<td class="orders-item-data orders-item-data-operate">
-										<a class="button button-gray button-mini" data-id="{{=it.bankId}}">
+										<a class="button button-gray button-mini toNewBank" data-bankid="{{=row.bankId}}" data-href="organizationManage/newBank">
 											<i class="iconfont">&#xe640;</i>
 											编辑
 										</a>
-										<a class="button button-gray button-mini">
+										<a class="button button-gray button-mini deleteBank" data-id="{{=row.id}}">
 											<i class="iconfont">&#xe602;</i>
 											删除
 										</a>
@@ -118,7 +131,7 @@
 						</span>
 					</div>
 					<div class="search-item">
-						<div id="" class="button button-mini-nowidth">搜索</div>
+						<div id="" class="button button-mini">搜索</div>
 					</div>
 				</div>
 				<table border="0" cellpadding="" width="100%" class="orders-table orders-table-noborder cooperation-maintenance-table">
@@ -132,7 +145,7 @@
 							<td class="orders-item-data">操作</td>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="organizationManageTable">
 						{{ var len = it.length; if(len) { }}
 							{{for(var i = 0; i < len; i++) { var row = it[i]; }}
 								{{ if(i % 2 !== 0) { }}
@@ -144,26 +157,45 @@
 								{{ } }}
 									<td class="orders-item-data">{{=(row.shopType == 0 ? '4S' : '二级经销商')}}</td>
 									<td class="orders-item-data">{{=row.shopName}}</td>
-									<td class="orders-item-data"></td>
+									<td class="orders-item-data">{{=row.operateBrand}}</td>
 									<td class="orders-item-data">
-										<span>6237132182371234565</span>-<span>周易</span><br />
-										<span>6237132182371234565</span>-<span>张凤</span><br />
-										<span>6237132182371234565</span>-<span>张凤</span><br />
+										<table class="meanwhile" id="meanwhile">
+										{{for(var j = 0, len2 = row.bankAccountNameList.length; j < len2; j++) { var col = row.bankAccountNameList[j]; }}
+											{{ if(j < 2){ }}
+												<tr class="loantask-item">
+													<td>{{=col}}</td>
+												</tr>
+											{{ }else{ }}
+												<tr class="loantask-item" style="display: none;">
+													<td>{{=col}}</td>
+												</tr>
+												{{ if(j == len2 - 1){ }}
+													<tr>
+														<td class="arrow-trigger"><span class="arrow arrow-bottom" data-ishow="false"></span></td>
+													</tr>
+												{{ } }}
+											{{ } }}
+										{{ } }}
+										</table>
 									</td>
 									<td class="orders-item-data">
-										<span>1%</span>,
-										<span>2%</span>,
-										<span>3%</span>
+										{{for(var j = 0, len2 = row.policyList.length; j < len2; j++) { var col = row.policyList[j]; }}
+											{{  if(j < len2 - 1) { }}
+												<span>{{=(col/100 + '%')}}</span>，
+											{{ } else { }}
+												<span>{{=(col/100 + '%')}}</span>
+											{{ } }}
+										{{ } }}
 									</td>
 									<td class="orders-item-data orders-item-data-operate">
-										<div class="button button-mini button-gray">
+										<a class="button button-gray button-mini toNewCar" data-bankid="{{=row.bankId}}" data-href="organizationManage/newCar">
 											<i class="iconfont">&#xe640;</i>
 											编辑
-										</div>
-										<div class="button button-mini button-gray">
+										</a>
+										<a class="button button-gray button-mini deleteBank" data-id="{{=row.id}}">
 											<i class="iconfont">&#xe602;</i>
 											删除
-										</div>
+										</a>
 									</td>
 								</tr>
 							{{ } }}

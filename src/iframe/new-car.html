@@ -1,0 +1,68 @@
+	<!--新建合作车商管理zhy-->
+			<div class="container new-carshop-manage" id="new-carshop-manage">
+				<!-- 返回列表 -->
+				<div id="location"></div>
+				<!-- 返回列表 end-->
+				
+				<!--面板-->
+				<div class="panel mt15" id="carPanel"></div>
+				
+				<!--提交订单按钮-->
+				<div class="commit-orders-box">
+					<div id="" class="button">提交订单</div>
+				</div>
+			</div>
+			
+
+			<script type="text/x-dot-template" id="carTmpl">
+
+
+				<div class="panel-content-title no-top-border">
+					<span class="panel-title">车商资料</span>
+				</div>
+				<div class="panel-detail-content panel-detail-bank">
+					<div class="loan-info">
+						<div class="info-key-value-box">
+							<span class="info-key"><i>*</i> 新车还是二手车：</span>
+							<span data-type="self" data-key="isSecond" class="info-value selecter" id="isSecondBox">
+								<div>
+									<ul class="selectOptBox" id="repaymentTerm" style="display: none;">
+										<!--<li value="100001">请选择</li>-->
+										<li data-key="0">新车</li>
+										<li data-key="1">二手车</li>
+									</ul>
+								</div>
+								<span class="placeholder">新车</span>
+								<span class="arrow arrow-bottom right8px"></span>
+								<input type="hidden" name="isSecond" value="0" class="required">
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-content-title panel-detail-bank">
+					<span class="panel-title">打款账户</span>
+				</div>
+				<div class="panel-detail-content panel-detail-bank">
+					<div class="select-search-bar no-border clearfix">
+						<div class="search-item">
+							<span class="select-name">开户账户：</span>
+							<span class="input-text input-text-mini">
+								<input type="text" value="">
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">账户户名：</span>
+							<span class="input-text input-text-mini">
+								<input type="text" value="">
+							</span>
+						</div>
+						<div class="search-item">
+							<div class="button button-mini" id="addCard">
+								<i class="iconfont">&#xe615;</i>
+								增加
+							</div>
+						</div>
+					</div>
+				</div>
+			</script>

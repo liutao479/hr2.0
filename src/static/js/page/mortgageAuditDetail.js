@@ -18,7 +18,12 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.data.loanTask = {
+					category: 'pledgeApproval',
+					editable: 0
+				}
 				$scope.result = result;
+				$scope.orderNo = result.data.orderInfo.orderNo;//订单号
 				setupLocation(result.data.orderInfo);
 				// console.log(result.data.backApprovalInfo)
 				setupBackReason(result.data.backApprovalInfo);
@@ -28,6 +33,82 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 				}
 			})
 		})
+	}
+
+	// 抵押信息获取
+	var loadInfo = function(params, cb) {
+		$.ajax({
+			url: $http.api('loanPledgeInfo/get', 'cyj'),
+			type: 'post',
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				result.data.disabled = true;
+				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result.data, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	// 审核弹窗确定按钮
+	var verifyOrders = function(params, cb) {
+		$.ajax({
+			url: $http.api('loanPledge/approval/pass', 'cyj'),
+			type: 'post',
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	// 退回弹窗确定按钮
+	var backOrders = function(params, cb) {
+		$.ajax({
+			url: $http.api('loanPledge/approval/back', 'cyj'),
+			type: 'post',
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
+	* 底部操作按钮区域
+	*/	
+	var loadCommitBar = function(cb) {
+		$.ajax({
+			url: $http.api('auditCommit'),
+			// type: 'post',
+			// data: params,
+			// dataType: 'json',
+			success: $http.ok(function(result) {
+				var $commitBar = $console.find('#commitPanel');
+				$commitBar.data({
+					back: result.data.back,
+					verify: result.data.verify,
+					cancel: result.data.cancel,
+					submit: result.data.submit
+				});
+				$commitBar.commitBar();
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+		
 	}
 
 	/**
@@ -66,20 +147,72 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 	}
 
 	var setupEvt = function() {
+		$scope.$el.$tbl.find('.uploadEvt').imgUpload();
+	}
 
+	/**
+	* 提交栏事件
+	*/
+	var setupCommitEvt = function() {
+		// 审核退回
+		$console.find('#back').on('click', function() {
+			var that = $(this);
+			that.openWindow({
+				title: '退回订单',
+				content: dialogTml.wContent.suggestion,
+				commit: dialogTml.wCommit.cancelSure
+			}, function($dialog) {
+				$dialog.find('.w-sure').on('click', function() {
+					var _params = {
+						orderNo: $scope.orderNo,
+						reason: $dialog.find('#suggestion').val()
+					}
+					backOrders(_params, function() {
+						$dialog.remove();
+					});
+				})
+			})
+		})
+
+		// 审核通过
+		$console.find('#verify').on('click', function() {
+			var that = $(this);
+			that.openWindow({
+				title: '审核通过',
+				content: dialogTml.wContent.suggestion,
+				commit: dialogTml.wCommit.cancelSure
+			}, function($dialog) {
+				$dialog.find('.w-sure').on('click', function() {
+					var _params = {
+						orderNo: $scope.orderNo,
+						reason: $dialog.find('#suggestion').val()
+					}
+					verifyOrders(_params, function() {
+						$dialog.remove();
+					});
+				})
+			})
+		})
 	}
 
 	/***
 	* 加载页面模板
 	*/
 	render.$console.load(router.template('iframe/mortgage-detail'), function() {
-		$scope.def.listTmpl = render.$console.find('#loanUploadTmpl').html();
-		$scope.$el = {
-			$tbl: $console.find('#registerPanel')
+		$scope.def = {
+			infoTmpl: render.$console.find('#mortgageInfoTmpl').html(),
+			listTmpl: render.$console.find('#loanUploadTmpl').html()
 		}
-		console.log(apiParams)
+		$scope.$el = {
+			$tbl: $console.find('#registerPanel'),
+			$infoPanel: $console.find('#mortgageInfoPanel')
+		}
 		loadMortgageDetail(apiParams, function() {
 			setupEvt();
+		});
+		loadInfo(apiParams);
+		loadCommitBar(function() {
+			setupCommitEvt();
 		});
 	});
 

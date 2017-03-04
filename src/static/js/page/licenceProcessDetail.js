@@ -18,16 +18,65 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.data.loanTask = {
+					category: 'registration',
+					editable: 1
+				}
 				$scope.result = result;
+				$scope.id = result.data.orderInfo.id;
+
 				setupLocation(result.data.orderInfo);
-				// console.log(result.data.backApprovalInfo)
-				setupBackReason(result.data.backApprovalInfo);
+				setupBackReason(result.data.orderInfo.loanOrderApproval);
+
+				// 编译两个抵押证
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
 			})
 		})
+	}
+
+	// 弹窗确定
+	var submitOrders = function(params, cb) {
+		$.ajax({
+			url: $http.api('loanRegistration/sumbit', 'cyj'),
+			type: 'post',
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
+	* 底部操作按钮区域
+	*/	
+	var loadCommitBar = function(cb) {
+		$.ajax({
+			url: $http.api('processCommit'),
+			// type: 'post',
+			// data: params,
+			// dataType: 'json',
+			success: $http.ok(function(result) {
+				var $commitBar = $console.find('#commitPanel');
+				$commitBar.data({
+					back: result.data.back,
+					verify: result.data.verify,
+					cancel: result.data.cancel,
+					submit: result.data.submit
+				});
+				$commitBar.commitBar();
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+		
 	}
 
 	/**
@@ -66,7 +115,31 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 	}
 
 	var setupEvt = function() {
+		$scope.$el.$tbl.find('.uploadEvt').imgUpload();
+	}
 
+	/**
+	* 提交栏事件
+	*/
+	var setupCommitEvt = function() {
+		$console.find('#submit').on('click', function() {
+			var that = $(this);
+			that.openWindow({
+				title: '提交',
+				content: dialogTml.wContent.suggestion,
+				commit: dialogTml.wCommit.cancelSure
+			}, function($dialog) {
+				$dialog.find('.w-sure').on('click', function() {
+					var _params = {
+						id: $scope.id,
+						reason: $dialog.find('#suggestion').val()
+					}
+					submitOrders(_params, function() {
+						$dialog.remove();
+					});
+				})
+			})
+		})
 	}
 
 	/***
@@ -77,9 +150,11 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 		$scope.$el = {
 			$tbl: $console.find('#registerPanel')
 		}
-		console.log(apiParams)
 		loadLicenceDetail(apiParams, function() {
 			setupEvt();
+		});
+		loadCommitBar(function() {
+			setupCommitEvt();
 		});
 	});
 

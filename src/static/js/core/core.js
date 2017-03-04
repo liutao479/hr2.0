@@ -34,7 +34,7 @@
 			switch (name) {
 				// 周宜俭ip
 				case 'zyj':
-					return 'http://192.168.0.103:8080/' + method;
+					return 'http://192.168.0.121:8080/' + method;
 					break;
 				// 蔡延军ip
 				case 'cyj':

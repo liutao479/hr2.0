@@ -1,51 +1,66 @@
 'use strict';
-(function($, _) {
+(function($) {
 	$.fn.checking = function() {
 		return this.each(function() {
 			var that = $(this);
-			that.$checking = new checking(that, that.data());
+			this.$checking = new checking(that, that.data());
 		});
 	}
 
 	/**
 	* @params {element} $el 要渲染的对象
 	* @params {object} data 要渲染的数据 
-	* --@backspace {string} 返回的路由地址
-	* --@current {string} 当前的地址
-	* --@loanUser {string} 当前的借款人
-	* --@orderDate {string} 订单日期
+	* --@checked {string} 是否被选中
 	**/
 	function checking($el, data) {
-		this.$location = $(_.template(tpl)(data)).insertAfter($el);
-		$el.remove();
-		this.setupLocation();
+		var self = this;
+		self.opt = $.extend({
+			checked: undefined
+		}, data);
+		self.$el = $el;
+		self.evt = {};
+		self.init();
 	}
 
-	checking.prototype.setupLocation = function(){
-		this.$location.find('#backspace').on('click', function() {
-			var that = $(this),
-				params = that.data();
-			var href = params.href;
-			delete params['href'];
-			router.render(href, params);
-		})
+	checking.prototype.onChange = function(fn) {
+		console.log(this);
+		this.evt.onchange = fn;
+	}
+
+	checking.prototype.init = function() {
+		var self = this;
+		self.onselectstart = function(e) { return false };
+		if(!self.opt.checked) {
+			self.empty();
+		} else {
+			self.full();
+		}
+		self.setupEvt();
 	};
 
-	var tpl = '<div class="path-back-bar">\
-					<div class="path-back">\
-						<i class="iconfont">&#xe626;</i>\
-						<a href="javascript:;" id="backspace" class="link" data-href="{{=it.backspace}}">返回列表</a>&nbsp;&gt;&nbsp;\
-						<span class="current-page">{{=it.current}}</span>\
-					</div>\
-					{{ if(it.loanUser) { }}\
-					<div class="key-value-box">\
-						<span class="key">借款人：</span>\
-						<span class="value">{{=it.loanUser}}</span>\
-					</div>\
-					{{ } }}\
-					<div class="key-value-box">\
-						<span class="key">订单生成时间：</span>\
-						<span class="value">{{=it.orderDate}}</span>\
-					</div>\
-				</div>'
-})(jQuery, doT);
+	checking.prototype.setupEvt = function() {
+		var self = this;
+		self.$el.on('click', function() {
+			console.log(1)
+			if(!self.$el.attr('checked')) {
+				self.full();
+			} else {
+				self.empty();
+			}
+			self.evt.onchange && self.evt.onchange(11);
+		})
+	}
+
+	checking.prototype.full = function() {
+		var self = this;
+		self.$el.addClass('checked').attr('checked', true);
+		self.$el.html('<i class="iconfont">&#xe659;</i>');
+	}
+
+
+	checking.prototype.empty = function() {
+		var self = this;
+		self.$el.removeClass('checked').attr('checked', false);
+		self.$el.html();
+	}
+})(jQuery);

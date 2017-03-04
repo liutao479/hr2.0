@@ -18,6 +18,9 @@ page.ctrl('licenceStatisDetail', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.data.loanTask = {
+					editable: 0
+				}
 				$scope.result = result;
 				setupLocation(result.data.orderInfo);
 				// console.log(result.data.backApprovalInfo)
@@ -66,7 +69,7 @@ page.ctrl('licenceStatisDetail', [], function($scope) {
 	}
 
 	var setupEvt = function() {
-
+		$scope.$el.$tbl.find('.uploadEvt').imgUpload();
 	}
 
 	/***

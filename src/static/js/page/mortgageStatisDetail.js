@@ -18,11 +18,31 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.data.loanTask = {
+					editable: 0
+				}
 				$scope.result = result;
 				setupLocation(result.data.orderInfo);
 				// console.log(result.data.backApprovalInfo)
 				setupBackReason(result.data.backApprovalInfo);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	var loadInfo = function(params, cb) {
+		$.ajax({
+			url: $http.api('loanPledgeInfo/get', 'cyj'),
+			type: 'post',
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				result.data.disabled = true;
+				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -65,22 +85,30 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 		}
 	}
 
+	/**
+	* 登记证材料事件
+	*/
 	var setupEvt = function() {
-
+		$scope.$el.$tbl.find('.uploadEvt').imgUpload();
 	}
 
 	/***
 	* 加载页面模板
 	*/
 	render.$console.load(router.template('iframe/mortgage-detail'), function() {
-		$scope.def.listTmpl = render.$console.find('#loanUploadTmpl').html();
-		$scope.$el = {
-			$tbl: $console.find('#registerPanel')
+		$scope.def = {
+			infoTmpl: render.$console.find('#mortgageInfoTmpl').html(),
+			listTmpl: render.$console.find('#loanUploadTmpl').html()
 		}
-		console.log(apiParams)
+		$scope.$el = {
+			$tbl: $console.find('#registerPanel'),
+			$infoPanel: $console.find('#mortgageInfoPanel')
+		}
+		$console.find('.commit-orders-box').remove();
 		loadMortgageDetail(apiParams, function() {
 			setupEvt();
 		});
+		loadInfo(apiParams);
 	});
 
 

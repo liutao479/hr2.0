@@ -23,6 +23,25 @@ page.ctrl('loan', function($scope) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page, true);
 				setupEvent();
+
+
+				// 测试复选框
+				$scope.$checks = $('.checkbox').checking();
+
+				$scope.$checks[0].$checking.onChange(function(a) {
+					console.log(a);
+				})
+
+
+				// 测试弹窗
+				$console.find('#newBusiness').on('click', function() {
+					var that = $(this);
+					that.openWindow({
+						title: "新建业务",
+						content: "<div>测试弹窗功能</div>"
+					})
+				})
+
 				if(cb && typeof cb == 'function') {
 					cb();
 				}  

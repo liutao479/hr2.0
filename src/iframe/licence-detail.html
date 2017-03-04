@@ -13,10 +13,10 @@
 					
 				</div>
 				
-				<!--提交订单按钮-->
-				<div class="commit-orders-box">
-					<div id="submitOrder" class="button button-deep">提交</div>
-				</div>
+				<!-- 底部按钮操作 -->
+				<div id="commitPanel"></div>
+				<!-- 底部按钮操作 end-->
+				
 			</div>
 			<!-- 登记证材料 end-->
 			<script type="text/x-dot-template" id="loanUploadTmpl">
@@ -33,26 +33,8 @@
 					<!-- 标题对应项 -->
 					<div class="panel-content clearfix">
 						<div class="loan-imgs-bar">
-							<div class="imgs-item-group">
-								<div class="imgs-item-upload">
-									<div class="iconfont-upload">
-										<i class="iconfont">&#xe61f;</i>
-									</div>
-									<span class="i-tips">点击或拖拽上传图片</span>
-									<input type="file" id="" class="input-file" />
-								</div>
-								<span class="imgs-item-p">注册登记证</span>
-							</div>
-							<div class="imgs-item-group">
-								<div class="imgs-item-upload">
-									<div class="iconfont-upload">
-										<i class="iconfont">&#xe61f;</i>
-									</div>
-									<span class="i-tips">点击或拖拽上传图片</span>
-									<input type="file" id="" class="input-file" />
-								</div>
-								<span class="imgs-item-p">登记证右上角编号</span>
-							</div>
+							<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderInfo.orderNo}}" data-code="zcdjz" data-name="注册登记证" data-scene="{{=it.loanTask.category}}" data-img="{{=(it.userMaterials[0] ? it.userMaterials[0].materialsPic : undefined)}}" data-id="{{=(it.userMaterials[0] ? it.userMaterials[0].id : undefined)}}" data-err="{{=(it.userMaterials[0] ? it.userMaterials[0].auditResult : undefined)}}" data-editable="{{=it.loanTask.editable}}"></div>
+							<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderInfo.orderNo}}" data-code="djzysjbh" data-name="登记证右上角编号" data-scene="{{=it.loanTask.category}}" data-img="{{=(it.userMaterials[1] ? it.userMaterials[1].materialsPic : undefined)}}" data-id="{{=(it.userMaterials[1] ? it.userMaterials[1].id : undefined)}}" data-err="{{=(it.userMaterials[1] ? it.userMaterials[1].auditResult : undefined)}}" data-editable="{{=it.loanTask.editable}}"></div>
 						</div>
 					</div>
 					<!-- 标题对应项 end-->

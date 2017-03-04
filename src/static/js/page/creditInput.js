@@ -28,9 +28,9 @@ page.ctrl('creditInput', [], function($scope) {
 	*/
 	var loadOrderInfo = function() {
 		$.ajax({
-			// type: 'post',
-			// url: $http.apiMap.creditInput,
 			url: 'http://127.0.0.1:8083/mock/creditInput',
+			// type: 'post',
+			// url: $http.api(''),
 			// data: {
 			// 	taskId : 80871
 			// },
@@ -94,9 +94,19 @@ page.ctrl('creditInput', [], function($scope) {
 	/**
 	* 绑定立即处理事件
 	*/
-	$(document).on('click', '#loanManegeTable .button', function() {
+	$(document).on('click', '#submitOrders', function() {
 		var that = $(this);
-		router.render(that.data('href'), {orderNo: that.data('id')});
+		that.openWindow({
+			title: "提交",
+			content: dialogTml.wContent.suggestion,
+			commit: dialogTml.wCommit.cancelSure
+		}, function($dialog) {
+			$dialog.find('.w-sure').on('click', function() {
+				var _suggestion = $dialog.find('#suggestion').val();
+				alert(_suggestion);
+				$dialog.remove();
+			})
+		})
 	});
 
 	/***
