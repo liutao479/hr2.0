@@ -46,7 +46,7 @@
 	* @params {stirng} 当前路由地址
 	* @params {object} params 参数
 	*/
-	page.excute = function(name, path, params) {
+	page.excute = function(name, path, params, reload) {
 		var _ctrl = page.ctrls[name],
 			_$scope = page.$scope[name],
 			args = [];
@@ -54,6 +54,11 @@
 		if(!_$scope) return false;
 		_$scope.$params = params || {};
 		_$scope.$path = path;
+		if(reload) {
+			setTimeout(function(){
+				
+			})
+		}
 		if(_ctrl.refer && _ctrl.refer.length > 0) {
 			for(var i = 0, len = _ctrl.refer.length; i < len; i++) {
 				var referName = _ctrl.refer[i];
@@ -113,6 +118,9 @@
 		}
 		g.render.renderTitle(item.title);
 		var __currentPage = item.page;
+		if(page.ctrls[__currentPage]) {
+			return page.excute(__currentPage, key, params, true);
+		}
 		$.getScript(internal.script(__currentPage))
 			.done(function() {
 				page.excute(__currentPage, key, params);
@@ -128,12 +136,12 @@
 		var sp = hash.split('?');
 		var _origin = sp[0],
 			_search = !!sp[1] ? sp[1] : undefined;
-			console.log(_search);
 		var _paths = _origin.split('/'),
 			_params = !!_search ? $.deparam(Base64.atob(decodeURI(_search))) : undefined;
 		router.render(_origin, _params);
 		cb && typeof cb == 'function' && cb(_paths[0]);
 	}
+	/*
 	$(window).bind('hashchange', function() {
 		var path = g.location.hash.substr(1).split('?')[0];
 		if(!path) return false;
@@ -143,4 +151,5 @@
 		}
 		g.location.reload();
 	});
+	*/
 })(window);
