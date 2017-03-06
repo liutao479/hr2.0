@@ -7,36 +7,87 @@
 	*/
 	g.dialogTml = {};
 	g.dialogTml.wContent = {
-		suggestion: '<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写申请理由"></textarea>',
+		suggestion: '<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>',
+		loanOrderApply: '<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+						<dl class="w-dropdown">\
+							<dt>请选择审核人：</dt>\
+							<dd>\
+								<span class="select select-bank">\
+									<input class="placeholder" placeholder="请选择" />\
+									<span class="arrow arrow-bottom"></span>\
+								</span>\
+							</dd>\
+						</dl>',
 		creditQuery: '<dl class="w-dropdown">\
-				<dt>经办银行：</dt>\
-				<dd>\
-					<span class="select select-bank">\
-						<input class="placeholder" placeholder="请选择" />\
-						<span class="arrow arrow-bottom"></span>\
-					</span>\
-				</dd>\
-			</dl>\
-			<dl class="w-dropdown">\
-				<dt>业务发生地：</dt>\
-				<dd>\
-					<span class="select select-bank">\
-						<input class="placeholder" placeholder="请选择" />\
-						<span class="arrow arrow-bottom"></span>\
-					</span>\
-				</dd>\
-			</dl>',
+						<dt>经办银行：</dt>\
+						<dd>\
+							<span class="select select-bank">\
+								<input class="placeholder" placeholder="请选择" />\
+								<span class="arrow arrow-bottom"></span>\
+							</span>\
+						</dd>\
+					</dl>\
+					<dl class="w-dropdown">\
+						<dt>业务发生地：</dt>\
+						<dd>\
+							<span class="select select-bank">\
+								<input class="placeholder" placeholder="请选择" />\
+								<span class="arrow arrow-bottom"></span>\
+							</span>\
+						</dd>\
+					</dl>',
 		addCreditUsers: '<div class="w-add clearfix">\
-				<div class="w-select clearfix">增加征信人员：</div>\
-				<div class="w-select clearfix">\
-					<div class="checkbox checkbox-normal" data-checked="true" name="addCreditUsers" data-type="1"></div>\
-					<span class="w-select-item">反担保人</span>\
-				</div>\
-				<div class="w-select clearfix">\
-					<div class="checkbox checkbox-normal"  name="addCreditUsers" data-type="2"></div>\
-					<span class="w-select-item">共同还款人</span>\
-				</div>\
-			</div>'
+							<div class="w-select clearfix">增加征信人员：</div>\
+							<div class="w-select clearfix">\
+								<div class="checkbox checkbox-normal" data-checked="true" name="addCreditUsers" data-type="1"></div>\
+								<span class="w-select-item">反担保人</span>\
+							</div>\
+							<div class="w-select clearfix">\
+								<div class="checkbox checkbox-normal"  name="addCreditUsers" data-type="2"></div>\
+								<span class="w-select-item">共同还款人</span>\
+							</div>\
+						</div>',
+		makeLoan: '<dl class="w-dropdown">\
+						<dt>用款时间：</dt>\
+						<dd>\
+							<span class="select select-bank">\
+								<input class="placeholder required" placeholder="请选择" id="loaningDate" value="{{=(it.loaningDate ? tool.formatDate(it.loaningDate) : "")}}" />\
+								<span class="arrow arrow-bottom"></span>\
+							</span>\
+						</dd>\
+					</dl>\
+					<dl class="w-dropdown">\
+						<dt>垫资金额：</dt>\
+						<dd>\
+							<div class="input-text input-text-mini">\
+								<input type="text required" id="paymentMoney" value="{{=it.paymentMoney || ""}}"><span class="unit">元</span>\
+							</div>\
+						</dd>\
+					</dl>\
+					<dl class="w-dropdown">\
+						<dt>收款账户名称：</dt>\
+						<dd>\
+							<div class="input-text input-text-mini">\
+								<input type="text required" id="receiveCompanyAddress" value="{{=it.receiveCompanyAddress || ""}}">\
+							</div>\
+						</dd>\
+					</dl>\
+					<dl class="w-dropdown">\
+						<dt>收款账户：</dt>\
+						<dd>\
+							<div class="input-text input-text-mini">\
+								<input type="text required" id="receiveAccount" value="{{=it.receiveAccount || ""}}">\
+							</div>\
+						</dd>\
+					</dl>\
+					<dl class="w-dropdown">\
+						<dt>开户行：</dt>\
+						<dd>\
+							<div class="input-text input-text-mini">\
+								<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || ""}}">\
+							</div>\
+						</dd>\
+					</dl>'
 	}
 	g.dialogTml.wCommit = {
 		sure: '<div class="w-commit-area">\

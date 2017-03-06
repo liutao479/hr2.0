@@ -68,6 +68,81 @@ page.ctrl('myCustomer', [], function($scope) {
 		}
 	}
 
+	/**
+	* 放款预约弹窗信息取得
+	*/
+	var makeLoan = function(that) {
+		$.ajax({
+			type: "post",
+			url: $http.api('financePayment/get', 'cyj'),
+			data:{
+				orderNo: that.data('orderno')
+				// orderNo: 'nfdb2015091812345678'
+			},
+			dataType:"json",
+			success: $http.ok(function(result) {
+				console.log(result);
+				console.log('获取信息ok!');
+				var _paymentId = result.paymentId;
+				that.openWindow({
+					title: '放款预约',
+					content: dialogTml.wContent.makeLoan,
+					commit: dialogTml.wCommit.cancelSure,
+					data: result.data
+				}, function($dialog) {
+					$dialog.find('.w-sure').on('click', function() {
+						var isTrue = true;
+						var _orderNo = that.data('orderno');
+						var _loaningDate = $dialog.find('#loaningDate').val();
+						var _paymentMoney = $dialog.find('#paymentMoney').val();
+						var _receiveCompanyAddress = $dialog.find('#receiveCompanyAddress').val();
+						var _receiveAccount = $dialog.find('#receiveAccount').val();
+						var _receiveAccountBank = $dialog.find('#receiveAccountBank').val();
+						$dialog.find('.required').each(function() {
+							var value = $(this).val();
+							console.log(value)
+							if(!value){
+								$(this).parent().addClass("error-input");
+								$(this).after('<i class="error-input-tip">请完善该必填项</i>');
+								console.log($(this).index());
+								isTrue = false;
+								return false;
+							}
+						})
+						if(isTrue) {
+							var _params = {
+								orderNo: _orderNo, //订单号
+								paymentId: _paymentId,
+								loaningDate: new Date(_loaningDate), //用款时间
+								paymentMoney: _paymentMoney, //垫资金额
+								receiveCompanyAddress: _receiveCompanyAddress, //收款账户名称
+								receiveAccount: _receiveAccount, //收款账号
+								receiveAccountBank: _receiveAccountBank //开户行
+							}
+							makeloanSubmit(_params, $dialog);
+						}
+					})
+				})
+			})
+		})
+	}
+
+	/**
+	 * 放款预约提交
+	 */
+	var makeloanSubmit = function(params, $dialog) {
+		$.ajax({
+			type: "post",
+			url: $http.api('financePayment/update', 'cyj'),
+			data: params,
+			dataType: "json",
+			success: $http.ok(function(result) {
+				console.log(result)
+				$dialog.remove();
+			})
+		});
+	}
+
 
 	/**
 	 * 绑定立即处理事件
@@ -136,8 +211,6 @@ page.ctrl('myCustomer', [], function($scope) {
 		$console.find('#myCustomerTable .orders-detail').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
-				taskId: that.data('id'), 
-				date: that.data('date'),
 				path: 'myCustomer'
 			});
 		});
@@ -164,38 +237,7 @@ page.ctrl('myCustomer', [], function($scope) {
 		$console.find('#myCustomerTable .makeLoan').on('click', function() {
 			var that = $(this);
 			console.log(that.data('orderno'))
-			$.ajax({
-				type: "post",
-				url: $http.api('LoanFinancePayment/get'),
-				data:{
-					orderNo: that.data('orderno')
-					// orderNo: 'nfdb2015091812345678'
-				},
-				dataType:"json",
-				success: $http.ok(function(data) {
-					console.log(data)
-					console.log('获取信息ok!');
-					if(confirm('是否点击弹窗内的提交按钮？')) {
-						$.ajax({
-							type: "post",
-							url: $http.api('LoanFinancePayment/update'),
-							data:{
-								orderNo: that.data('orderno'), //订单号
-								loaningDate: new Date('2017-02-17 10:10'), //用款时间
-								receiveCompanyAddress: '环球4S店（ldf测试）', //收款账户名称
-								paymentMoney: 103620.0000, //垫资金额
-								receiveAccount: '0571888805718888', //收款账号
-								receiveAccountBank: '刘东风测试工行' //开户行
-							},
-							dataType:"json",
-							success: $http.ok(function(result) {
-								console.log(result)
-								alert('提交成功！');
-							})
-						});
-					}
-				})
-			});
+			makeLoan(that);
 			return false;
 		});
 
@@ -203,14 +245,13 @@ page.ctrl('myCustomer', [], function($scope) {
 		$console.find('#myCustomerTable .applyTerminate').on('click', function() {
 			var that = $(this);
 			var _orderNo = that.data('orderno');
-			console.log(_orderNo)
 
 
 			// 查询订单申请终止条数，若大于0则弹窗提示已提交终止订单申请，否则正常弹窗申请
-			var loanOrderApplyCount = function() {
+			var loanOrderApplyCount = function(that) {
 				$.ajax({
 					type: "post",
-					url: $http.api('loanOrderApply/count'),
+					url: $http.api('loanOrderApply/count', 'cyj'),
 					data:{
 						orderNo: _orderNo
 					},
@@ -218,37 +259,47 @@ page.ctrl('myCustomer', [], function($scope) {
 					success: $http.ok(function(result) {
 						console.log(result);
 						if(result.data > 0) {
-							alert('该订单已提交终止订单申请！');
+							that.openWindow({
+								title: '提示',
+								content: '<div>该订单已提交订单申请！</div>'
+							});
 						} else {
-							loanOrderApply();
+							loanOrderApply(that);
 						}
 					})
 				});
 			} 
 			// 申请终止订单弹窗提交
-			var loanOrderApply = function() {
-				// 弹窗
-				if(confirm('确认申请终止该条订单：\n' + _orderNo + '，\n申请理由为：刘东风测试申请终止，\n审核人为1？')) {
-					$.ajax({
-						type: "post",
-						url: $http.api('loanOrderApply/terminate'),
-						data:{
-							orderNo: _orderNo,
-							applyReason: '刘东风测试申请终止',
-							approvalId: 1    //当前登录审核用户的id
-						},
-						dataType:"json",
-						success: $http.ok(function(result) {
-							console.log(result)
-							alert("申请成功！");
-						}),
-						error: function() {
-							alert("申请失败！");
-						}
-					});
-				}
+			var loanOrderApply = function(that) {
+
+				that.openWindow({
+					title: '申请终止订单',
+					content: dialogTml.wContent.loanOrderApply,
+					commit: dialogTml.wCommit.cancelSure
+				}, function($dialog) {
+					$dialog.find('w-sure').on('click', function() {
+						$.ajax({
+							type: "post",
+							url: $http.api('loanOrderApply/terminate', 'cyj'),
+							data:{
+								orderNo: _orderNo,
+								applyReason: $dialog.find('#suggestion').val(),
+								approvalId: 1    //当前登录审核用户的id
+							},
+							dataType:"json",
+							success: $http.ok(function(result) {
+								console.log(result)
+								alert("申请成功！");
+							}),
+							error: function() {
+								alert("申请失败！");
+							}
+						});
+						$dialog.remove();
+					})
+				})
 			}
-			loanOrderApplyCount();
+			loanOrderApplyCount(that);
 			return false;
 		});
 

@@ -43,9 +43,11 @@
 						<span class="value">{{=it.loanUser}}</span>\
 					</div>\
 					{{ } }}\
+					{{ if(it.orderDate) { }}\
 					<div class="key-value-box">\
 						<span class="key">订单生成时间：</span>\
 						<span class="value">{{=it.orderDate}}</span>\
 					</div>\
+					{{ } }}\
 				</div>'
 })(jQuery, doT);

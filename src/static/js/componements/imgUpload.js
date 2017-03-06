@@ -57,7 +57,6 @@
 							self.errImg = imgs.unclear; break;
 						case 2:
 							self.errImg = imgs.error; break;
-
 					}
 				}
 				if(self.options.msg != undefined) {
@@ -123,16 +122,18 @@
 	imgUpload.prototype.onDelete = function() {
 		var self = this;
 		var params = {};
-		if(self.options.id) {
-			params.id = self.options.id;
+		if(self.options.id == undefined) {
+			return false;
 		}
-		console.log("删除" + params);
+		params.id = self.options.id;
+		console.log(params);
 		$.ajax({
 			url: api.del,
 			type: 'post',
 			data: params,
 			dataType: 'json',
 			success: function(xhr) {
+				console.log(xhr)
 				if(!xhr.code) {
 					self.$el.html(internalTemplates.edit.format(self.options.name));
 					self.status = 0;
@@ -175,7 +176,7 @@
 						self.status = 1;	
 						self.listen();
 					} else {
-						self.$el.data('id', xhr);
+						self.options.id = xhr.data;
 						self.$el.find('img').attr('src', url);
 					}
 				}

@@ -1,7 +1,7 @@
 {
 	"code": 0,
 	"data": {
-		"submit": false,
+		"submit": true,
 		"back": false,
 		"cancel": false,
 		"verify": false

@@ -18,6 +18,9 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.data.loanTask = {
+					editable: 0
+				}
 				$scope.result = result;
 				setupLocation(result.data.orderInfo);
 				// console.log(result.data.backApprovalInfo)
@@ -38,6 +41,7 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.data.disabled = true;
 				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -81,8 +85,11 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 		}
 	}
 
+	/**
+	* 登记证材料事件
+	*/
 	var setupEvt = function() {
-
+		$scope.$el.$tbl.find('.uploadEvt').imgUpload();
 	}
 
 	/***

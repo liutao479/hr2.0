@@ -370,6 +370,15 @@ input[disabled]{
         .select {
             float: left;
         }
+        .stopUse, .deleteItem {
+            display: inline-block;
+            line-height: 30px;
+            margin-left: 10px;
+            color: @buttonBgColor;
+        }
+        .deleteItem {
+            margin-left: 20px;
+        }
         .select-name {
             float: left;
             line-height: 32px;
@@ -431,6 +440,11 @@ input[disabled]{
         .orders-item-data-blank {
             width: 22%;
         } 
+        .orders-item-data-view {
+            .view-fee {
+                color: @buttonBgColor;
+            }
+        }
         .meanwhile {
             width: 100%;
             text-align: center;
@@ -711,6 +725,7 @@ input[disabled]{
     padding: 0 15px 0 20px;
     text-align: right;
     line-height: 50px;
+    height: 52px;
     .path-back {
         float: left;
         color: @mainColor;

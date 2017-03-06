@@ -76,7 +76,7 @@
 
     function openWindow($el, options, cb) {
     	var self = this;
-    	self.opts = $.extend({}, $.fn.openWindow.defaults, options)
+    	self.opts = $.extend({}, $.fn.openWindow.defaults, options);
     	self.$el = $el;
     	self.init();
         if(self.opts.addFunction){
@@ -139,8 +139,7 @@
     // 窗口内容渲染
     openWindow.prototype.render = function() {
     	var self = this;
-    	console.log($(_.template(self.opts.html)))
-    	// $(_.template(self.opts.html)).prependTo(self.$content);
+    	$(_.template(self.opts.content)(self.opts.data)).prependTo(self.$content);
     }
 
 
@@ -160,6 +159,7 @@
         html: "",
         move: false,
 		bgClose: false,
+        data:{},
 		addFunction: function(){}
     };
 })(jQuery, doT);
