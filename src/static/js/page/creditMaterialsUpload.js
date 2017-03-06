@@ -33,7 +33,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			type: 'post',
 			url: $http.api('creditMaterials/index', 'zyj'),
 			data: {
-				taskId: $scope.$params.taskId
+				// taskId: $scope.$params.taskId
+				taskId: 80885
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -67,7 +68,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			backspace: $scope.$params.path,
 			current: '征信材料上传',
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			orderDate: tool.formatDate($scope.$params.date, true)
+			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 		});
 		$location.location();
 	}

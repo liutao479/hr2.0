@@ -74,7 +74,7 @@ page.ctrl('myCustomer', [], function($scope) {
 	var makeLoan = function(that) {
 		$.ajax({
 			type: "post",
-			url: $http.api('financePayment/get', 'cyj'),
+			url: $http.api('financePayment/get', 'zyj'),
 			data:{
 				orderNo: that.data('orderno')
 				// orderNo: 'nfdb2015091812345678'
@@ -133,7 +133,7 @@ page.ctrl('myCustomer', [], function($scope) {
 	var makeloanSubmit = function(params, $dialog) {
 		$.ajax({
 			type: "post",
-			url: $http.api('financePayment/update', 'cyj'),
+			url: $http.api('financePayment/update', 'zyj'),
 			data: params,
 			dataType: "json",
 			success: $http.ok(function(result) {
@@ -245,13 +245,14 @@ page.ctrl('myCustomer', [], function($scope) {
 		$console.find('#myCustomerTable .applyTerminate').on('click', function() {
 			var that = $(this);
 			var _orderNo = that.data('orderno');
+			console.log(_orderNo)
 
 
 			// 查询订单申请终止条数，若大于0则弹窗提示已提交终止订单申请，否则正常弹窗申请
 			var loanOrderApplyCount = function(that) {
 				$.ajax({
 					type: "post",
-					url: $http.api('loanOrderApply/count', 'cyj'),
+					url: $http.api('loanOrderApply/count', 'zyj'),
 					data:{
 						orderNo: _orderNo
 					},
@@ -277,25 +278,40 @@ page.ctrl('myCustomer', [], function($scope) {
 					content: dialogTml.wContent.loanOrderApply,
 					commit: dialogTml.wCommit.cancelSure
 				}, function($dialog) {
-					$dialog.find('w-sure').on('click', function() {
+
+					// 用于获取审核人下拉框数据源
+					$.ajax({
+						type: "post",
+						url: $http.api('pmsUser/get', 'cyj'),
+						data:{
+							orgId: 99,
+							operation: 1 //1表示申请终止订单
+						},
+						dataType:"json",
+						success: $http.ok(function(result) {
+							console.log(result)
+						})
+					});
+					$dialog.find('.w-sure').on('click', function() {
+						$dialog.remove();
 						$.ajax({
 							type: "post",
-							url: $http.api('loanOrderApply/terminate', 'cyj'),
+							url: $http.api('loanOrderApply/terminate', 'zyj'),
 							data:{
 								orderNo: _orderNo,
 								applyReason: $dialog.find('#suggestion').val(),
-								approvalId: 1    //当前登录审核用户的id
+								approvalId: 30000    //当前登录审核用户的id
 							},
 							dataType:"json",
 							success: $http.ok(function(result) {
 								console.log(result)
-								alert("申请成功！");
-							}),
-							error: function() {
-								alert("申请失败！");
-							}
+								that.openWindow({
+									title: '申请结果',
+									content: '<div>申请终止订单成功！</div>'
+								})
+							})
 						});
-						$dialog.remove();
+						
 					})
 				})
 			}
@@ -306,12 +322,9 @@ page.ctrl('myCustomer', [], function($scope) {
 		// 申请修改贷款信息
 		$console.find('#myCustomerTable .applyModify').on('click', function() {
 			var that = $(this);
-
-			alert('前往订单号' + that.data('orderno') + '的页面？');
-			// router.render(that.data('href'), {
-			// 	taskId: that.data('id'), 
-			// 	path: 'loanProcess'
-			// });
+			router.render(that.data('href'), {
+				path: 'loanProcess'
+			});
 			return false;
 		});
 

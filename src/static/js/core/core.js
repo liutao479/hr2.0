@@ -12,6 +12,14 @@
 		    });
 		};
 	}
+	/**
+	* 添加string.trim方法
+	*/
+	if(!String.prototype.trim) {
+		String.prototype.trim = function(){
+			return this.replace(/(^\s*)|(\s*$)/g, '');
+		};
+	}
 	/*
 	* 本地验证规则
 	*/
@@ -34,7 +42,7 @@
 			switch (name) {
 				// 周宜俭ip
 				case 'zyj':
-					return 'http://192.168.0.121:8080/' + method;
+					return 'http://192.168.0.193:8080/' + method;
 					break;
 				// 蔡延军ip
 				case 'cyj':
@@ -200,16 +208,13 @@
 			name: '身份证反面'
 		},{
 			materialsCode: 'zxsqs',
-			name: '征信申请书'
+			name: '征信授权书'
 		},{
 			materialsCode: 'xtzqtzs',
 			name: '系统知情通知书'
 		},{
-			materialsCode: 'hkbhzy',
-			name: '户口本户主页'
-		},{
-			materialsCode: 'hkbsy',
-			name: '户口本首页'
+			materialsCode: 'zxsqszp',
+			name: '授权书签字照片'
 		}];
 
 })(window);

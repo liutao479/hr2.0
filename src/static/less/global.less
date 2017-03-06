@@ -26,6 +26,15 @@
 .pt24{
     padding-top: 24px !important;
 }
+.pl200 {
+    padding-left: 200px !important;
+}
+.pl150 {
+    padding-left: 150px !important;
+}
+.pr150 {
+    padding-right: 150px !important;
+}
 .mb15{
     margin-bottom: 15px !important;
 }
@@ -165,9 +174,11 @@ input[disabled]{
 .key-value-box {
     display: inline-block;
     .key {
+        display: inline-block;
         color: @tiperColor;
     }
     .value {
+        display: inline-block;
         color: @fontColor;
     }
 }
@@ -367,6 +378,11 @@ input[disabled]{
         height: 52px;
         margin: 0 30px 0 0;
         padding: 10px 0; 
+        &.search-item-disabled {
+            .select-name, input {
+                color: @borderColor;
+            } 
+        }
         .select {
             float: left;
         }
@@ -855,6 +871,7 @@ input[disabled]{
     
     //工作台有左侧菜单的右侧详标题区域（title）
     .panel-content-title {
+        position: relative;
         text-align: left;
         padding: 0 20px;
         border-top: 1px dashed @borderColor;
@@ -867,15 +884,29 @@ input[disabled]{
         }
         .key-value-box {
             margin-right: 24px;
-            line-height: 60px;
-            height: 60px;
+            line-height: 52px;
+            .value {
+                .input-text {
+                    top: 10px;
+                }
+                .select {
+                    top: 10px;
+                }
+            }
             &.key-value-box-special {
-                float: right;
+                position: absolute;
+                top: 0;
+                right: 20px;
             }
         }
         .panel-title {
             height: 50px;
             line-height: 50px;
+        }
+        .button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
         }
         
     }
@@ -1003,6 +1034,7 @@ input[disabled]{
         color: @blue;
         border-bottom: 1px solid @borderColor;
         .panel-title {
+            position: relative;
             padding-left: 20px;
             .iconfont {
                 position: relative;
@@ -1013,9 +1045,11 @@ input[disabled]{
                 margin-left: 7px;
                 font-size: 15px;
             }
-            .button{
-                float:right;
-                margin:3px 20px 0 0;
+            .button {
+                position: absolute;
+                top: 50%;
+                margin-top: -16px;
+                right: 20px;
             }
         }
     }
@@ -1043,6 +1077,11 @@ input[disabled]{
                 margin-left: 192px;
                 padding-top: 10px;
                 .block-item-data {
+                    -moz-user-select: none; /*火狐*/
+                    -webkit-user-select: none; /*webkit浏览器*/
+                    -ms-user-select: none; /*IE10*/
+                    -khtml-user-select: none; /*早期浏览器*/
+                    user-select: none;
                     position: relative;
                     display: inline-block;
                     border: 1px solid #cad2e1;
@@ -1053,6 +1092,7 @@ input[disabled]{
                     height: 38px;
                     line-height: 38px;
                     color: @fontColor;
+                    cursor: pointer;
                     &.selected {
                         color: @tableActiveColor;
                         border-color: @tableActiveColor;
@@ -1154,6 +1194,46 @@ input[disabled]{
                     margin-top: 15px;
                 }
             }
+        }
+    }
+}
+
+// 合作银行/合作车商打款账户
+.account {
+    position: relative;
+    margin: 20px 0;
+    padding-right: 90px;
+    .account-left {
+        .search-item {
+            float: left;
+            line-height: 32px;
+            margin: 10px 30px 10px 0;
+            &.search-item-disabled {
+                .select-name {
+                    color: @borderColor !important;
+                }
+                .input-text input {
+                    color: @borderColor !important;
+                }
+            }
+            .select-name {
+                width: 80px;
+                display: inline-block;
+                text-align: right;
+                float: left;
+            }
+            .input-text {
+                float: left;
+            }
+
+        }
+    }
+    .account-right {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        .stopUse {
+            margin-right: 30px;
         }
     }
 }

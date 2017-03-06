@@ -28,11 +28,9 @@ page.ctrl('loan', function($scope) {
 				// 测试复选框
 				$scope.$checks = $('.checkbox').checking();
 
-				$scope.$checks[0].$checking.onChange(function(a) {
-					console.log(a);
-				})
+				$scope.$checks[0].$checking.onChange();
 
-
+				$('.select').dropdown();
 				// 测试弹窗
 				$console.find('#newBusiness').on('click', function() {
 					var that = $(this);
@@ -88,11 +86,9 @@ page.ctrl('loan', function($scope) {
 			var that = $(this);
 			router.render(that.data('href'), {
 				taskId: that.data('id'), 
-				date: that.data('date'),
 				path: 'loanProcess'
 			});
 		});
-		// $('.select').dropdown($scope);
 
 		/**
 		* 任务类型点击显示/隐藏

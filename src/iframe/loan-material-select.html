@@ -5,7 +5,7 @@
 				<!-- 面包屑 -->
 
 				<!--面板-->
-				<div class="panel mt15" id="materialsChoosePanel"></div>
+				<div id="materialsChoosePanel"></div>
 				
 				<!--提交订单按钮-->
 				<div class="commit-orders-box">
@@ -15,7 +15,8 @@
 			<!--贷款材料选择 end-->
 
 			<script type="text/dot-x-template" id="materialsChooseTmpl">
-			{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}	
+			{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+			<div class="panel mt15">	
 				<div class="panel-title-box">
 					<div class="panel-title">
 						<i class="iconfont">&#xe6f5;</i>
@@ -26,29 +27,30 @@
 				{{ for(var j = 0, len2 = row.materialsCatalogsList.length; j < len2; j++) { var col = row.materialsCatalogsList[j]; }}
 					<div class="loanman-material-item">
 						<div class="check-item">
-							<div class="checkbox checkbox-normal" data-checked="{{=(col.materialsList[0].selectd ? 'true' : 'false')}}"></div>
+							<div class="checkbox checkbox-normal" data-len="{{=col.materialsList.length}}"></div>
 						</div>
 						<div class="checkname-item">{{=col.name}}</div>
 						<div class="block-item">
 						{{ for(var k = 0, len3 = col.materialsList.length; k < len3; k++) { var ml = col.materialsList[k]; }}
 							{{ if(ml.remark) { }}
-								<div class="block-item-data{{=(ml.selectd ? ' selected' : '')}} tips-area">
+								<div class="block-item-data{{=(ml.selectd ? ' selected' : '')}} tips-area" data-materialscode="{{=ml.materialsCode}}" data-materialsownercode="{{=row.code}}">
 									{{=ml.materialsName}}
 									<span class="tips"><i class="iconfont">&#xe67f;</i></span>
 									<div class="tips-content">
 										<p class="temp-position"></p>
-										<span class="tips-text">申请人收入证明申请人收入证明申请人收入证明申请人收入证明申请人收入证明申请人收入证明申请人收入证明申请人收入证明</span>
+										<span class="tips-text">{{=ml.remark}}</span>
 										<span class="arrow arrow-top top-outer"></span>
 										<span class="arrow arrow-top top-inner"></span>
 									</div>
 								</div>
 							{{ } else { }}
-								<div class="block-item-data{{=(ml.selectd ? ' selected' : '')}}">{{=ml.materialsName}}</div>
+								<div class="block-item-data{{=(ml.selectd ? ' selected' : '')}}" data-materialscode="{{=ml.materialsCode}}" data-materialsownercode="{{=row.code}}">{{=ml.materialsName}}</div>
 							{{ } }}
 						{{ } }}
 						</div>
 					</div>
 				{{ } }}
 				</div>
+			</div>
 			{{ } }}
 			</script>

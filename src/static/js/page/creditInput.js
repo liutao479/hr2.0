@@ -8,15 +8,14 @@ page.ctrl('creditInput', [], function($scope) {
 	/**
 	* 设置面包屑
 	*/
-	var setupLocation = function(loanUser) {
+	var setupLocation = function() {
 		if(!$scope.$params.path) return false;
 		var $location = $console.find('#location');
-		var _orderDate = tool.formatDate($scope.$params.date, true);
 		$location.data({
 			backspace: $scope.$params.path,
-			loanUser: loanUser,
+			loanUser: $scope.result.data[0].loanUserCredits[0].userName,
 			current: '征信结果录入',
-			orderDate: _orderDate
+			orderDate: '2017-12-12 12:12'
 		});
 		$location.location();
 	}
@@ -26,27 +25,28 @@ page.ctrl('creditInput', [], function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadOrderInfo = function() {
+	var loadOrderInfo = function(idx, cb) {
 		$.ajax({
-			url: 'http://127.0.0.1:8083/mock/creditInput',
-			// type: 'post',
-			// url: $http.api(''),
-			// data: {
-			// 	taskId : 80871
-			// },
-			// dataType: 'json',
+			// url: 'http://127.0.0.1:8083/mock/creditInput',
+			type: 'post',
+			url: $http.api('creditUser/getCreditInfo', 'zyj'),
+			data: {
+				taskId : 80871
+			},
+			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.index = idx;
 				$scope.result = result;
-				// 启动面包屑
-				var _loanUser = $scope.result.data[0].loanUserCredits[0].userName;
-				setupLocation(_loanUser);
-				// 编译tab
-				setupTab($scope.result);
+				
 				// 编译tab项对应内容
-				setupCreditPanel($scope.result);
+				setupCreditPanel(idx, $scope.result);
 				// 启动绑定事件
-				setupEvent();
+				setupTabEvt();
+				setupEvt();
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
 			})
 		})
 	}
@@ -56,7 +56,7 @@ page.ctrl('creditInput', [], function($scope) {
 	 * @param  {object} result 请求获得的数据
 	 */
 	var setupTab = function(result) {
-		render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.data, true);
+		render.compile($scope.$el.$tab, $scope.def.tabTmpl, result, true);
 		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
 	}
 
@@ -64,16 +64,18 @@ page.ctrl('creditInput', [], function($scope) {
 	 * 渲染tab栏对应项内容
 	 * @param  {object} result 请求获得的数据
 	 */
-	var setupCreditPanel = function(result) {
-		var _tabTrigger = $scope.$el.$tbls.eq(0);
+	var setupCreditPanel = function(idx, result) {
+		var _tabTrigger = $scope.$el.$tbls.eq(idx);
 		$scope.tabs.push(_tabTrigger);
-		$scope.result.index = 0;
+		$scope.result.index = idx;
 		render.compile(_tabTrigger, $scope.def.listTmpl, result, true);
 	}
 
 	
-
-	var setupEvent = function () {
+	/**
+	* 绑定tab栏立即处理事件
+	*/
+	var setupTabEvt = function () {
 		$scope.$el.$tab.find('.tabEvt').on('click', function () {
 			var $this = $(this);
 			if($this.hasClass('role-item-active')) return;
@@ -89,25 +91,21 @@ page.ctrl('creditInput', [], function($scope) {
 			$scope.$el.$tbls.eq($scope.idx).hide();
 			$scope.$el.$tbls.eq(_type).show();
 			$scope.idx = _type;
+			$console.find('.uploadEvt').imgUpload();
 		})
 	}
+
 	/**
 	* 绑定立即处理事件
 	*/
-	$(document).on('click', '#submitOrders', function() {
-		var that = $(this);
-		that.openWindow({
-			title: "提交",
-			content: dialogTml.wContent.suggestion,
-			commit: dialogTml.wCommit.cancelSure
-		}, function($dialog) {
-			$dialog.find('.w-sure').on('click', function() {
-				var _suggestion = $dialog.find('#suggestion').val();
-				alert(_suggestion);
-				$dialog.remove();
-			})
-		})
-	});
+	var setupEvt = function() {
+		$console.find('.uploadEvt').imgUpload();
+	}
+
+
+	var commitData = function() {
+		
+	}
 
 	/***
 	* 加载页面模板
@@ -121,6 +119,26 @@ page.ctrl('creditInput', [], function($scope) {
 			$tab: $console.find('#creditTabs'),
 			$paging: $console.find('#pageToolbar')
 		}
-		loadOrderInfo();
+		loadOrderInfo($scope.idx, function() {
+			setupLocation();
+			setupTab($scope.result);
+		});
 	});
+
+	/***
+	* 删除图片后的回调函数
+	*/
+	$scope.deletecb = function() {
+		loadOrderInfo($scope.idx);
+	}
+
+	/***
+	* 上传图片成功后的回调函数
+	*/
+	$scope.uploadcb = function(self) {
+		console.log(self.$el);
+		self.$el.find('.imgs-item-p').html('征信报告' + self.$el.data('count'));
+		self.$el.after(self.outerHTML);
+		self.$el.next().imgUpload();
+	}
 });

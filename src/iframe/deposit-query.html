@@ -8,84 +8,42 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe6f5;</i>
 							<span class="panel-title-name">保证金管理</span>
-							<div class="button button-mini button-deep">查询保证金余额</div>
+							<div class="button button-mini button-deep" id="queryDeposit">查询保证金余额</div>
 						</div>
 					</div>
 					<!--面板标题 end-->
 					
 					<!--面板内容-->
-					<div class="panel-content" id="marginManageTable">
-						
-						<!-- <div class="table-title">
-							<div class="key-value-box">
-								<span class="key">查询时间：</span>
-								<span class="value">
-									<span>2016-11-30</span>&nbsp;
-									<span>17:23</span>
-								</span>
-							</div>
-							<div class="key-value-box">
-								<span class="key">保证金总余额：</span>
-								<span class="value">20256.00元</span>
-							</div>
-						</div>
-						<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">
-							<thead>
-								<tr class="orders-bar-title">
-									<td class="orders-item-data">查询时间</td>
-									<td class="orders-item-data">开户网点</td>
-									<td class="orders-item-data">账号</td>
-									<td class="orders-item-data">保证金总额</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="orders-item-data">2016/11/24</td>
-									<td class="orders-item-data">中国工商银行</td>
-									<td class="orders-item-data">12092938475868769878</td>
-									<td class="orders-item-data">20256.00</td>
-								</tr>
-								<tr>
-									<td class="orders-item-data">2016/11/24</td>
-									<td class="orders-item-data">中国工商银行</td>
-									<td class="orders-item-data">12092938475868769878</td>
-									<td class="orders-item-data">20256.00</td>
-								</tr>
-								<tr>
-									<td class="orders-item-data">2016/11/24</td>
-									<td class="orders-item-data">中国工商银行</td>
-									<td class="orders-item-data">12092938475868769878</td>
-									<td class="orders-item-data">20256.00</td>
-								</tr>
-							</tbody>
-						</table> -->
-					</div>
+					<div class="panel-content" id="marginManageTable"></div>
 					<!--面板内容  end-->
 				</div>
 				<!--面板  end-->
 			</div>
 			<!--保证金查询 end-->
 
+			<!-- 分页插件 -->
+			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['marginManage'].paging" data-pages="1" data-current="1"></div>
+			<!-- 分页插件 end-->
+
 			<script type="text/x-dot-template" id="marginManageListTmpl">
 				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 				<div class="table-title">
-								
+					{{ if(i == 0) { }}
 					<!--是否是新表格 若是加上此项-->
 					<div class="new-item">
 						<span class="new-item-inner">new</span>
 					</div>
 					<!--是否是新表格 若是加上此项 end-->
-					
+					{{ } }}
 					<div class="key-value-box">
 						<span class="key">查询时间：</span>
 						<span class="value">
-							<span>2016-11-30</span>&nbsp;
-							<span>17:23</span>
+							{{=tool.formatDate(row.createDate, true)}}
 						</span>
 					</div>
 					<div class="key-value-box">
 						<span class="key">保证金总余额：</span>
-						<span class="value">{{=row.totalMoney}}元</span>
+						<span class="value">{{=row.totalAmount}}元</span>
 					</div>
 				</div>
 				<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">
@@ -98,7 +56,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{{for(var j = 0, len2 = it[i].result.length; j < len2; j++) { var col = it[i].result[j]; }}
+						{{for(var j = 0, len2 = row.assistList.length; j < len2; j++) { var col = row.assistList[j]; }}
 							{{ if(j % 2 !== 0) { }}
 							<tr class="orders-item tr-even">
 							{{ } else if(j % 2 == 0 && j == 0) { }}
@@ -106,10 +64,10 @@
 							{{ } else { }}
 							<tr class="orders-item tr-odd">
 							{{ } }}
-								<td class="orders-item-data">{{=col.queryTime}}</td>
-								<td class="orders-item-data">{{=col.bank}}</td>
-								<td class="orders-item-data">{{=col.bankc}}</td>
-								<td class="orders-item-data">{{=col.depositBalance}}</td>
+								<td class="orders-item-data">{{=tool.formatDate(col.createDate, true)}}</td>
+								<td class="orders-item-data">{{=col.bankName}}</td>
+								<td class="orders-item-data">{{=col.accno}}</td>
+								<td class="orders-item-data">{{=col.bal}}</td>
 							</tr>
 						{{ } }}
 					</tbody>

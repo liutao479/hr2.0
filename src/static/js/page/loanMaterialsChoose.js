@@ -20,8 +20,9 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
+				$scope.orderNo = result.data.ORDERNO;
 				setupLocation();
-				render.compile($scope.$el.$mainPanel, $scope.def.mainTmpl, result.data, true);
+				render.compile($scope.$el.$mainPanel, $scope.def.mainTmpl, result.data.LOANMATERIALS, true);
 				setupEvt();
 				if( cb && typeof cb == 'function' ) {
 					cb();
@@ -41,36 +42,93 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 			current: '贷款材料选择',
 			// loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			// orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
-			loanUser: '张三',
-			orderDate: '2017-12-12 11:30'
+			loanUser: $scope.result.data.LOANORDER.realName,
+			orderDate: tool.formatDate($scope.result.data.LOANORDER.createDate, true)
 		});
 		$location.location();
 	}
+
 	/**
 	 * 设置立即处理事件
 	 */
 	var setupEvt = function() {
-		$console.find('.checkbox').checking(function($el) {
-			var $items = $el.parent().parent().find('.block-item-data');
+
+		// 初始化材料全选按钮
+		var $checks = $console.find('.checkbox');
+		$checks.each(function() {
+			var $itemsSelected = $(this).parent().parent().find('.selected');
+			var len = $(this).data('len');
+			// 若后面材料项被默认选中的个数和此类别总个数相等，则初始化选中复选框
+			if($itemsSelected.length == len) {
+				$(this).data('checked', true);
+			}
+
+		})
+
+		// 材料项提示文字
+		$console.find('.tips-area').hover(function() {
+			$(this).find('.tips-content').toggle();
+		})
+
+		$console.find('.block-item-data').onselectstart = function(){return false;};
+		// 材料项点击事件
+		$console.find('.block-item-data').on('click', function() {
+			var $parent = $(this).parent().parent();
+			if(!$(this).hasClass('selected')) {
+				$(this).removeClass('selected').addClass('selected')
+			} else {
+				$(this).removeClass('selected');
+			}
+			if($parent.find('.block-item-data').length == $parent.find('.selected').length) {
+				$parent.find('.checkbox').addClass('checked').attr('checked', true).html('<i class="iconfont">&#xe659;</i>');
+			} else {
+				$parent.find('.checkbox').removeClass('checked').attr('checked', false).html('');
+			}
+
+		})
+
+		// 初始化复选框
+		$checks.checking(function($self) {
+			var $items = $self.parent().parent().find('.block-item-data');
 			// 复选框回调函数（有问题）
-			$el.on('click', function() {
-				if($el.attr('checked')) {
-					$items.removeClass('selected').addClass('selected');
-				} else {
-					$items.removeClass('selected');
-				}
-			})
+			if($self.attr('checked')) {
+				$items.removeClass('selected');
+			} else {
+				$items.removeClass('selected').addClass('selected');
+			}
 		});
 
+		// 底部操作按钮事件
 		$console.find('#submitOrders').on('click', function() {
 			var that = $(this);
 			that.openWindow({
 				title: "提交",
-				content: wContent.suggestion,
-				commit: wCommit.cancelSure
-			}, function() {
-				$('.w-sure').on('click', function() {
-					alert('确定')
+				content: dialogTml.wContent.suggestion,
+				commit: dialogTml.wCommit.cancelSure
+			}, function($dialog) {
+				$dialog.find('.w-sure').on('click', function() {
+					// 用于提交所选择的贷款材料项
+					var _params = [];
+					$console.find('.selected').each(function() {
+						var $this = $(this);
+						var _item = {
+							orderNo: $scope.orderNo, //订单号
+							materialsCode : $this.data('materialscode'), //材料CODE
+							materialsOwnerCode : $this.data('materialsownercode') //材料归属CODE
+						}
+						_params.push(_item);
+					});
+					$.ajax({
+						type: 'post',
+						url: $http.api('materialsChoose/submit', 'zyj'),
+						data: JSON.stringify(_params),
+						dataType: 'json',
+						contentType: 'application/json;charset=utf-8',
+						success: $http.ok(function(result) {
+							console.log(result);
+							$dialog.remove();
+						})
+					})
 				})
 			})
 		})

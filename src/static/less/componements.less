@@ -348,15 +348,14 @@
     display: inline-block;
     width: 348px;
     height: 32px;
-    line-height: 32px;
-    padding: 0 10px;
     border: 1px solid @borderColor;
+    padding: 0 10px;
     .borderRadius(3px);
     &.input-text-mini {
         width: 250px;
     }
     &.input-text-small {
-        width: 50px;
+        width: 60px;
     }
     &.input-text-mini2 {
         width: 120px;
@@ -376,6 +375,13 @@
         right: 5px;
         display: inline-block;
         line-height: 30px;
+    }
+    .input-err {
+        position: absolute;
+        top: 34px;
+        left: 3px;
+        line-height: normal;
+        color: @msgErr;
     }
 }
 
