@@ -43,7 +43,7 @@
 			$this.addClass(self.activeClass);
 			self.$selected = $this;
 			self.selected = idx;
-			self.change(self.items[idx]);
+			self.change(idx, self.items[idx]);
 		});
 	}
 

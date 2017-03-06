@@ -46,7 +46,7 @@
 	* @params {stirng} 当前路由地址
 	* @params {object} params 参数
 	*/
-	page.excute = function(name, path, params, reload) {
+	page.excute = function(name, path, params) {
 		var _ctrl = page.ctrls[name],
 			_$scope = page.$scope[name],
 			args = [];
@@ -54,11 +54,6 @@
 		if(!_$scope) return false;
 		_$scope.$params = params || {};
 		_$scope.$path = path;
-		if(reload) {
-			setTimeout(function(){
-				
-			})
-		}
 		if(_ctrl.refer && _ctrl.refer.length > 0) {
 			for(var i = 0, len = _ctrl.refer.length; i < len; i++) {
 				var referName = _ctrl.refer[i];
@@ -119,12 +114,31 @@
 		g.render.renderTitle(item.title);
 		var __currentPage = item.page;
 		if(page.ctrls[__currentPage]) {
-			return page.excute(__currentPage, key, params, true);
+			setTimeout(function() {
+				return page.excute(__currentPage, key, params, true);
+			}, 0);
 		}
 		$.getScript(internal.script(__currentPage))
 			.done(function() {
 				page.excute(__currentPage, key, params);
 			});
+	}
+	/**
+	* 点击tab跳转
+	*/
+	router.tab = function ($tab, tasks, activeTaskIdx, cb) {
+		if(tasks.length <= 1) { 
+			$tab.remove();
+			return false;
+		}
+		/**
+		router.render('loanProcess/' + item.key, {
+					tasks: tasks,
+					selected: activeTaskIdx,
+					path: 'loanProcess'
+				});	
+		*/
+		$.tabNavigator($tab, tasks, activeTaskIdx, cb);
 	}
 	/**
 	* 初始化界面
@@ -141,7 +155,7 @@
 		router.render(_origin, _params);
 		cb && typeof cb == 'function' && cb(_paths[0]);
 	}
-	/*
+
 	$(window).bind('hashchange', function() {
 		var path = g.location.hash.substr(1).split('?')[0];
 		if(!path) return false;
@@ -151,5 +165,5 @@
 		}
 		g.location.reload();
 	});
-	*/
+
 })(window);

@@ -1,7 +1,10 @@
 'use strict';
 page.ctrl('homeMaterialsUpload', function($scope) {
-	var $console = render.$console;
-	
+	var $console = render.$console,
+		$params = $scope.$params;
+	$scope.tasks = $params.tasks;
+	$scope.activeTaskIdx = $params.selected || 0;
+
 	/**
 	* 加载上门材料上传数据
 	* @params {object} params 请求参数
@@ -12,7 +15,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
 			// type: flag,
 			type: 'post',
-			url: $http.api('materials/index', 'zyj'),
+			url: $http.api('materials/index'),
 			data: {
 				// taskId: $scope.$params.taskId
 				taskId: 2
@@ -68,6 +71,19 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 			$backReason.backReason();
 		}
 	}
+	/**
+	* 并行任务切换触发事件
+	* @params {int} idx 触发的tab下标
+	* @params {object} item 触发的tab对象
+	*/
+	var tabChange = function (idx, item) {
+		console.log('saveData:' + $scope.activeTaskIdx);
+		router.render('loanProcess/' + item.key, {
+			tasks: $scope.tasks,
+			selected: idx,
+			path: 'loanProcess'
+		});
+	}
 
 	/**
 	 * 编译完成后绑定事件
@@ -95,6 +111,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 			// $tab: $console.find('#creditTabs'),
 			$loanPanel: $console.find('#loanUploadPanel')
 		}
+		router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
 		loadOrderInfo();
 	})
 });

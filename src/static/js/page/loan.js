@@ -67,7 +67,6 @@ page.ctrl('loan', function($scope) {
 		**/
 		$console.find('#search').on('keydown', function(evt) {
 			if(evt.which == 13) {
-				alert("查询");
 				var that = $(this),
 					searchText = $.trim(that.val());
 				if(!searchText) {

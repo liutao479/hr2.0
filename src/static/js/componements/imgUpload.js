@@ -50,18 +50,7 @@
 		} else {
 			if(self.options.editable) {
 				if(self.options.err != undefined) {
-<<<<<<< HEAD
 					self.errImg = imgs[self.options.err];
-=======
-					switch(self.options.err) {
-						case 0:
-							self.errImg = imgs.blank; break;
-						case 1:
-							self.errImg = imgs.unclear; break;
-						case 2:
-							self.errImg = imgs.error; break;
-					}
->>>>>>> ldf
 				}
 				if(self.options.msg != undefined) {
 					self.errMsg = internalTemplates.msg.format(self.options.msg);

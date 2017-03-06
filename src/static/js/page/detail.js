@@ -20,8 +20,7 @@ page.ctrl('detail', function($scope) {
 			return false;
 		}
 		$.tabNavigator($tab, tasks, activeTaskIdx, function(item){
-			console.log($tab);
-			console.log(item);
+			
 		})
 	}
 
