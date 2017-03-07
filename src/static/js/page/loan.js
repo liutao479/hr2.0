@@ -19,7 +19,7 @@ page.ctrl('loan', function($scope) {
 			url: $http.api('loan.list'),
 			// url: $http.api('material/addOrUpdate', 'wl'),
 			success: $http.ok(function(result) {
-				console.log(result);
+				$scope.pageData = result.data;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page, true);
 				setupEvent();
@@ -86,9 +86,18 @@ page.ctrl('loan', function($scope) {
 		*/
 		$console.find('#loanTable .button').on('click', function() {
 			var that = $(this);
+			var idx = that.data('idx');
+			var loanTasks = $scope.pageData[idx].loanTasks;
+			var taskObj = {};
+			for(var i = 0, len = loanTasks.length; i < len; i++) {
+				var obj = loanTasks[i];
+				taskObj[obj.category] = {
+					taskId: obj.id,
+					scene: obj.sceneName
+				}
+			}
 			router.render(that.data('href'), {
-				taskId: that.data('id'), 
-				date: that.data('date'),
+				tasks: taskObj,
 				path: 'loanProcess'
 			});
 		});
