@@ -6,19 +6,31 @@
 				<!--tab切换-->
 				<div class="tab-bar tab-bar-special">
 					<ul class="role-bar-ul clearfix">
-						<li class="role-bar-li" id="aaa"><a href="#" class="role-item role-item-active">审核电话审核表</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">贷款信息表</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">征信结果</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">贷款材料</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">上门材料</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">订单日志</a></li>
+						<li class="role-bar-li">
+							<a data-href="checkAudit/phoneAudit" data-idx="0" class="role-item role-item-active">审核电话审核表</a>
+						</li>
+						<li class="role-bar-li">
+							<a data-href="checkAudit/loanInfo" data-idx="1" class="role-item">贷款信息表</a>
+						</li>
+						<li class="role-bar-li">
+							<a data-href="checkAudit/detail" data-idx="2" class="role-item">征信结果</a>
+						</li>
+						<li class="role-bar-li">
+							<a data-href="checkAudit/detail" data-idx="3" class="role-item">贷款材料</a>
+						</li>
+						<li class="role-bar-li">
+							<a data-href="checkAudit/detail" data-idx="4" class="role-item">上门材料</a>
+						</li>
+						<li class="role-bar-li">
+							<a data-href="checkAudit/detail" data-idx="5" class="role-item">订单日志</a>
+						</li>
 					</ul>
 				</div>
 				
 				<!-- tab切换栏 -->
-				<!--<div class="tab-bar mt15" id="userTabs">
-					<ul class="role-bar-ul clearfix" id="creditTabs"></ul>
-				</div>-->
+				<div class="tab-bar tab-bar-special" id="userTabs">
+					<ul class="role-bar-ul clearfix" id="checkTabs"></ul>
+				</div>
 				<!-- tab切换栏 end-->
 				
 				
@@ -43,11 +55,16 @@
 				</div>
 			</div>
 			
-			<!--<script type="text/x-dot-template" id="checkResultTabsTmpl">
-				{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i];  }}
-				<li class="role-bar-li"><a href="javascript:;" class="role-item{{= (i == 0 ? ' role-item-active':'')}} tabEvt" data-type="{{=row.userType}}">{{=row.userTypeName}}</a></li>
+			<script type="text/x-dot-template" id="checkResultTabsTmpl">
+				{{ for(var i = 0, len = it.frames.length; i < len; i++) { var row = it.frames[i];  }}
+				<li class="role-bar-li">
+					<a href="javascript:;" class="role-item{{= (i == 0 ? ' role-item-active':'')}} tabEvt" data-type="{{=row.code}}">{{=row.name}}</a>
+				</li>
+				<!--<li class="role-bar-li">
+					<a data-href="checkAudit/detail" data-idx="5" class="role-item{{= (i == 0 ? ' role-item-active':'')}} tabEvt">订单日志</a>
+				</li>-->
 				{{ } }}
-			</script>-->
+			</script>
 			
 			
 			<!--<script type="text/x-dot-template" id="selectOpttmpl">
