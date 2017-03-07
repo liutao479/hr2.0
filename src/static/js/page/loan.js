@@ -67,7 +67,6 @@ page.ctrl('loan', function($scope) {
 		**/
 		$console.find('#search').on('keydown', function(evt) {
 			if(evt.which == 13) {
-				alert("查询");
 				var that = $(this),
 					searchText = $.trim(that.val());
 				if(!searchText) {
@@ -88,13 +87,14 @@ page.ctrl('loan', function($scope) {
 			var that = $(this);
 			var idx = that.data('idx');
 			var loanTasks = $scope.pageData[idx].loanTasks;
-			var taskObj = {};
+			var taskObj = [];
 			for(var i = 0, len = loanTasks.length; i < len; i++) {
 				var obj = loanTasks[i];
-				taskObj[obj.category] = {
-					taskId: obj.id,
-					scene: obj.sceneName
-				}
+				taskObj.push({
+					key: obj.category,
+					id: obj.id,
+					name: obj.sceneName
+				})
 			}
 			router.render(that.data('href'), {
 				tasks: taskObj,
