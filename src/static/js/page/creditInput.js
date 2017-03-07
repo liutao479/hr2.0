@@ -29,16 +29,16 @@ page.ctrl('creditInput', [], function($scope) {
 		$.ajax({
 			// url: 'http://127.0.0.1:8083/mock/creditInput',
 			type: 'post',
-			url: $http.api('creditUser/getCreditInfo', 'zyj'),
+			url: $http.api('creditUser/getCreditInfo', 'jbs'),
 			data: {
-				taskId : 80872
+				taskId: 80876
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				result.index = idx;
 				$scope.result = result;
-				
+				setupTab($scope.result);
 				// 编译tab项对应内容
 				setupCreditPanel(idx, $scope.result);
 				// 启动绑定事件
@@ -99,6 +99,9 @@ page.ctrl('creditInput', [], function($scope) {
 	* 绑定立即处理事件
 	*/
 	var setupEvt = function() {
+		$console.find('#submitOrders').on('click', function() {
+
+		})
 		$console.find('.uploadEvt').imgUpload();
 	}
 
@@ -111,9 +114,10 @@ page.ctrl('creditInput', [], function($scope) {
 	* 加载页面模板
 	*/
 	render.$console.load(router.template('iframe/credit-result-typing'), function() {
-		$scope.def.tabTmpl = $console.find('#creditResultTabsTmpl').html();
-		$scope.def.listTmpl = $console.find('#creditResultListTmpl').html();
-		// console.log($console.find('#creditResultPanel'))
+		$scope.def = {
+			tabTmpl: $console.find('#creditResultTabsTmpl').html(),
+			listTmpl: $console.find('#creditResultListTmpl').html()
+		}
 		$scope.$el = {
 			$tbls: $console.find('#creditResultPanel > .tabTrigger'),
 			$tab: $console.find('#creditTabs'),
@@ -121,7 +125,6 @@ page.ctrl('creditInput', [], function($scope) {
 		}
 		loadOrderInfo($scope.idx, function() {
 			setupLocation();
-			setupTab($scope.result);
 		});
 	});
 

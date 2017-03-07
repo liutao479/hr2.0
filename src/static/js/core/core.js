@@ -50,7 +50,7 @@
 					break;
 				// 季本松ip
 				case 'jbs':
-					return 'http://192.168.0.180:8080/' + method;
+					return 'http://192.168.0.123:8080/' + method;
 					break;
 				// 王亮ip 
 				case 'wl':
