@@ -42,7 +42,7 @@
 			switch (name) {
 				// 周宜俭ip
 				case 'zyj':
-					return 'http://192.168.0.193:8080/' + method;
+					return 'http://192.168.0.103:8080/' + method;
 					break;
 				// 蔡延军ip
 				case 'cyj':
@@ -210,8 +210,8 @@
 			materialsCode: 'zxsqs',
 			name: '征信授权书'
 		},{
-			materialsCode: 'xtzqtzs',
-			name: '系统知情通知书'
+			materialsCode: 'xtsyzqs',
+			name: '系统授权通知书'
 		},{
 			materialsCode: 'zxsqszp',
 			name: '授权书签字照片'

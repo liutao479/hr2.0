@@ -1,6 +1,7 @@
 "use strict";
 page.ctrl('creditMaterialsUpload', function($scope) {
-	var $console = render.$console;
+	var $console = render.$console,
+		$params = $scope.$params;
 	$scope.userMap = [
 		{
 			userType: 0,
@@ -21,6 +22,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	$scope.tabs = [];
 	$scope.currentType = $scope.$params.type || 0;
 	$scope.$el = {};
+	$scope.apiParams = {};
 
 	
 	/**
@@ -93,101 +95,83 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		$scope.tabs[_type] = $console.find('#creditUploadPanel').html();
 		setupEvt();
 	}
-	
-	// 编译完成后绑定事件
-	var setupEvent = function () {
-		// tab栏点击事件
-		$scope.$el.$tab.find('.tabEvt').on('click', function () {
-			var $this = $(this);
-			if($this.hasClass('role-item-active')) return;
-			var _type = $this.data('type');
-			if(!$scope.tabs[_type]) {
-				$scope.$el.$creditPanel.html('');
-				render.compile($scope.$el.$creditPanel, $scope.def.listTmpl, $scope.result.data.creditUsers[_type], true);
-				var _tabTrigger = $console.find('#creditUploadPanel').html();
-				$scope.tabs[_type] = _tabTrigger;
-				// $scope.result.index = _type;
-			}
-			$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
-			$this.addClass('role-item-active');
-			$scope.currentType = _type;
-			$scope.$el.$creditPanel.html($scope.tabs[$scope.currentType]);
+
+	/**
+	 * 首次加载页面时绑定的事件（增加共同还款人和反担保人，以及底部提交按钮）
+	 */
+	var evt = function() {
+		/**
+		 * 增加共同还款人
+		 */
+		$console.find('#btnNewLoanPartner').on('click', function() {
+			// 后台接口修改完成时使用
+			$.ajax({
+				type: 'post',
+				url: $http.api('creditUser/add', 'zyj'),
+				data: {
+					orderNo: $scope.orderNo,
+					userType: 1
+				},
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result);
+					loadOrderInfo(1);
+				})
+			}) 
 		})
-		$scope.$el.$creditPanel.find('.uploadEvt').imgUpload();
+
+		/**
+		 * 增加反担保人
+		 */
+		$console.find('#btnNewGuarantor').on('click', function() {
+			// 后台接口修改完成时使用
+			$.ajax({
+				type: 'post',
+				url: $http.api('creditUser/add', 'zyj'),
+				data: {
+					orderNo: $scope.orderNo,
+					userType: 2
+				},
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result);
+					loadOrderInfo(2);
+				})
+			}) 		
+		});
+		/**
+		 * 征信查询按钮
+		 */
+		$console.find('#creditQuery').on('click', function() {
+			var that = $(this);
+			that.openWindow({
+				title: "征信查询",
+				content: dialogTml.wContent.creditQuery,
+				commit: dialogTml.wCommit.cancelNext
+			}, function($dialog) {
+				$dialog.find('.w-next').on('click', function() {
+					alert('下一步');
+				})
+			})
+		});
+
+		/**
+		 * 取消订单按钮
+		 */
+		$console.find('#cancelOrders').on('click', function() {
+			var that = $(this);
+			that.openWindow({
+				title: "取消订单",
+				content: "<div>确定要取消该笔贷款申请吗？</div>",
+				commit: dialogTml.wCommit.cancelSure
+			}, function($dialog) {
+				$dialog.find('.w-sure').on('click', function() {
+					alert('删除该订单接口！');
+					$dialog.remove();
+				})
+			})
+		});
 	}
-
-
-	/**
-	 * 增加共同还款人
-	 */
-	$(document).on('click', '#btnNewLoanPartner', function() {
-		// 后台接口修改完成时使用
-		$.ajax({
-			type: 'post',
-			url: $http.api('creditUser/add', 'zyj'),
-			data: {
-				orderNo: $scope.orderNo,
-				userType: 1
-			},
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				console.log(result);
-				loadOrderInfo(1);
-			})
-		}) 
-	})
-
-	/**
-	 * 增加反担保人
-	 */
-	$(document).on('click', '#btnNewGuarantor', function() {
-		// 后台接口修改完成时使用
-		$.ajax({
-			type: 'post',
-			url: $http.api('creditUser/add', 'zyj'),
-			data: {
-				orderNo: $scope.orderNo,
-				userType: 2
-			},
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				console.log(result);
-				loadOrderInfo(2);
-			})
-		}) 		
-	});
-
-	/**
-	 * 征信查询按钮
-	 */
-	$(document).on('click', '#creditQuery', function() {
-		var that = $(this);
-		that.openWindow({
-			title: "征信查询",
-			content: wContent.creditQuery,
-			commit: wCommit.cancelNext
-		}, function() {
-			$('.w-next').on('click', function() {
-				alert('下一步');
-			})
-		})
-	});
-
-	/**
-	 * 取消订单按钮
-	 */
-	$(document).on('click', '#cancelOrders', function() {
-		var that = $(this);
-		that.openWindow({
-			title: "取消订单",
-			content: "<div>确定要取消该笔贷款申请吗？</div>",
-			commit: dialogTml.wCommit.cancelSure
-		}, function() {
-			$('.w-sure').on('click', function() {
-				alert('确定');
-			})
-		})
-	});
 
 
 
@@ -219,7 +203,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		 * 删除一个共同还款人或者反担保人
 		 */
 		$console.find('#creditUploadPanel .delete-credit-item').on('click', function() {
-			var _userId = $(this).data('id');
+			var that = $(this);
+			var _userId = that.data('id');
 			switch ($scope.currentType) {
 				case 1:
 					var flag = '共同还款人';
@@ -229,26 +214,41 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					break;
 			}
 			console.log(flag + ',' +_userId);
-			if(confirm('确认删除一个为' + _userId + '的' + flag + '?')) {
-				// 后台接口修改完成时使用
-				$.ajax({
-					type: 'post',
-					url: $http.api('creditUser/del', 'zyj'),
-					data: {
-						userId: _userId
-					},
-					dataType: 'json',
-					success: $http.ok(function(result) {
-						console.log(result);
-						if($scope.result.data.creditUsers[$scope.currentType].length == 1) {
-							loadOrderInfo(0);	
-						} else {
-							loadOrderInfo($scope.currentType);	
-						}
-					})
-				}) 
-			}
+			that.openWindow({
+				title: "提示",
+				content: "<div>确定要删除该用户吗？</div>",
+				commit: dialogTml.wCommit.cancelSure
+			}, function($dialog) {
+				$dialog.find('.w-sure').on('click', function() {
+					$dialog.remove();
+					console.log(_userId)
+					$.ajax({
+						type: 'post',
+						url: $http.api('creditUser/del', 'zyj'),
+						data: {
+							userId: _userId
+						},
+						dataType: 'json',
+						success: $http.ok(function(result) {
+							console.log(result);
+							if($scope.result.data.creditUsers[$scope.currentType].length == 1) {
+								loadOrderInfo(0);	
+							} else {
+								loadOrderInfo($scope.currentType);	
+							}
+						})
+					}) 
+				})
+			})
 		});
+
+		/**
+		 * 表单输入失去焦点保存信息
+		 */
+		$console.find('.input-text input').on('blur', function() {
+			var that = $(this);
+
+		})
 
 		/**
 		 * 启动上传图片控件
@@ -263,6 +263,26 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		$scope.def.listTmpl = $console.find('#creditUploadListTmpl').html();
 		$scope.$el.$tab = $console.find('#creditTabs');
 		$scope.$el.$creditPanel = $console.find('#creditUploadPanel');
-		loadOrderInfo($scope.currentType);
+		loadOrderInfo($scope.currentType, function() {
+			$scope.apiParams = {
+				taskId: $params.taskId,
+				orderNo: $scope.orderNo,
+				loanUser:[]
+			};
+			// for(var i = 0, len = $scope.result.data.creditUsers.length; i < len; i++) {
+			// 	var item = {};
+			// 	for(var j = 0, len2 = $scope.result.data.creditUsers[i].length; j < len2; j++) {
+			// 		var row = $scope.result.data.creditUsers[i][j];
+			// 		var item.userId = row.userId;
+			// 		var item.userName = row.userName || '';
+			// 		var item.idCard = row.idCard || '';
+			// 		var item.userType = row.userType || '';
+			// 		var item.userRelationship = row.userRelationship || '';
+			// 	}
+			// 	$scope.apiParams.loanUser.push(item);
+			// }
+			console.log($scope.apiParams);
+			evt();
+		});
 	});
 });

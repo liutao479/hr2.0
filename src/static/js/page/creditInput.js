@@ -31,7 +31,7 @@ page.ctrl('creditInput', [], function($scope) {
 			type: 'post',
 			url: $http.api('creditUser/getCreditInfo', 'zyj'),
 			data: {
-				taskId : 80871
+				taskId : 80872
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {

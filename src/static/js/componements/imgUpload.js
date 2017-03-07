@@ -147,6 +147,8 @@
 			return false;
 		}
 		params.id = self.options.id;
+		params.sceneCode = self.options.scene;
+		console.log(params)
 		$.ajax({
 			url: api.del,
 			type: 'post',

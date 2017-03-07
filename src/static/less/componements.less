@@ -354,8 +354,14 @@
     &.input-text-mini {
         width: 250px;
     }
+    &.input-name {
+        width: 100px;
+    }
     &.input-text-small {
         width: 60px;
+    }
+    &.input-idc {
+        width: 180px;
     }
     &.input-text-mini2 {
         width: 120px;
@@ -899,3 +905,33 @@
     }
 
 }
+
+.toast {  
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -60px;
+    margin-left: -150px;
+    z-index: 9998;
+    width: 300px;
+    height: 120px;
+    display:table;  
+    .borderRadius(10px);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #FFF;  
+    _position:relative;   
+    overflow:hidden; 
+    padding: 20px; 
+    font-size: 15px;
+    .subwrap {   
+        vertical-align:middle;   
+        display:table-cell;   
+        _position:absolute;   
+        _top:50%; 
+        .content {   
+            _position:relative;   
+            _top:-50%;   
+        }  
+    }   
+}   
+  
