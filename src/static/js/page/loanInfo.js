@@ -8,7 +8,7 @@ page.ctrl('loanInfo', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-	var urlStr = "http://192.168.0.123:8080";
+	var urlStr = "http://192.168.0.193:8080";
 	var apiMap = {
 		"serviceType": urlStr+"/loanConfigure/getItem",//业务类型
 		"brand": urlStr+"/demandBank/selectBank",//经办银行
@@ -202,6 +202,10 @@ page.ctrl('loanInfo', function($scope) {
 			dataType: 'json',
 			async:false,
 			success: $http.ok(function(result) {
+				$scope.result = result;
+				// 启动面包屑
+				var _loanUser = $scope.result.data.ZJKR[0].userName;
+				setupLocation(_loanUser);
 				result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				console.log(result.data.FQXX.renewalInfo);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
@@ -215,6 +219,21 @@ page.ctrl('loanInfo', function($scope) {
 				loanFinishedBxxb();
 			})
 		});
+	}
+	/**
+	* 设置面包屑
+	*/
+	var setupLocation = function(loanUser) {
+		if(!$scope.$params.path) return false;
+		var $location = $console.find('#location');
+		var _orderDate = tool.formatDate($scope.$params.date, true);
+		$location.data({
+			backspace: $scope.$params.path,
+			loanUser: loanUser,
+			current: '贷款信息录入',
+			orderDate: _orderDate
+		});
+		$location.location();
 	}
 //页面加载完成对所有带“*”的input进行必填绑定
 	var loanFinishedInput = function(){
@@ -430,6 +449,13 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		}
 	}
+	
+//保险续保及还款期限联动
+	$(document).on('click', '.dateBtn', function() {
+		$('#loaningDate').datepicker();
+	})
+	
+
 //保险续保及还款期限联动
 	$(document).on('click', '#repaymentTermBox li', function() {
 		loanFinishedrepay();

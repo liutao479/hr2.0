@@ -1,0 +1,59 @@
+	<!--电审zhy-->
+			<div class="container electric-check" id="electric-check">
+				<!--返回列表-->
+				<div id="location"></div>
+				
+				<!--tab切换-->
+				<div class="tab-bar tab-bar-special">
+					<ul class="role-bar-ul clearfix">
+						<li class="role-bar-li" id="aaa"><a href="#" class="role-item role-item-active">审核电话审核表</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">贷款信息表</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">征信结果</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">贷款材料</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">上门材料</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">订单日志</a></li>
+					</ul>
+				</div>
+				
+				<!-- tab切换栏 -->
+				<!--<div class="tab-bar mt15" id="userTabs">
+					<ul class="role-bar-ul clearfix" id="creditTabs"></ul>
+				</div>-->
+				<!-- tab切换栏 end-->
+				
+				
+				<!-- tab栏对应项 -->
+				<!--<div class="creditResultPanel" id="checkResultPanel">
+					<div class="panel no-top-border clearfix tabTrigger" data-trigger="0"></div>
+					<div class="panel no-top-border clearfix tabTrigger" data-trigger="1" style="display: none;"></div>
+					<div class="panel no-top-border clearfix tabTrigger" data-trigger="2" style="display: none;"></div>
+					<div class="panel no-top-border clearfix tabTrigger" data-trigger="3" style="display: none;"></div>
+					<div class="panel no-top-border clearfix tabTrigger" data-trigger="4" style="display: none;"></div>
+					<div class="panel no-top-border clearfix tabTrigger" data-trigger="5" style="display: none;"></div>
+				</div>-->
+				<!-- tab栏对应项 end-->
+				
+				
+				<!--面板-->
+				<div id="eleCheck"></div>
+				
+				<!--提交订单按钮-->
+				<div class="commit-orders-box">
+					<div id="" class="button saveBtn">提交订单</div>
+				</div>
+			</div>
+			
+			<!--<script type="text/x-dot-template" id="checkResultTabsTmpl">
+				{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i];  }}
+				<li class="role-bar-li"><a href="javascript:;" class="role-item{{= (i == 0 ? ' role-item-active':'')}} tabEvt" data-type="{{=row.userType}}">{{=row.userTypeName}}</a></li>
+				{{ } }}
+			</script>-->
+			
+			
+			<!--<script type="text/x-dot-template" id="selectOpttmpl">
+				<ul class="selectOptBox">
+					{{for(var a = 0, len = it.length; a < len; a++) { var op1 = it[a]; }}
+						<li data-key="{{= op1.value}}">{{= op1.name}}</li>
+					{{ } }}
+				</ul>
+			</script>-->

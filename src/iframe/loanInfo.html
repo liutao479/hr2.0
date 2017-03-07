@@ -1,8 +1,8 @@
 	<!--贷款信息录入zhy-->
 			<div class="container" id="loan-info">
-				<!-- 返回列表 -->
-				<!--<div id="location"></div>-->
-				<!-- 返回列表 end-->
+				<!--返回列表-->
+				<div id="location"></div>
+				<!--返回列表 end-->
 				
 				<!--面板-->
 				<div id="loanInfoTable" class="mt15"></div>
@@ -679,7 +679,7 @@
 									{{ } }} 
 									{{= seg.name}}：</span>
 								<span class="info-value">
-									<input type="text" class="dateBtn" readonly="readonly" name="utilityTime" value="{{= it.data.FQXX.utilityTimeStr}}" />
+									<input id="loaningDate" type="text" class="dateBtn" readonly="readonly" name="utilityTime" value="{{= it.data.FQXX.utilityTimeStr}}" />
 								</span>
 							</div>
 							{{ } }}

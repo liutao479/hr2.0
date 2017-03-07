@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('phoneAudit', function($scope) {
+page.ctrl('checkAudit', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
@@ -55,11 +55,11 @@ page.ctrl('phoneAudit', function($scope) {
 //				// 启动面包屑
 //				var _loanUser = $scope.result.data[0].loanUserCredits[0].userName;
 //				setupLocation(_loanUser);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
-				loanFinishedSelect();
+//				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+//				if(cb && typeof cb == 'function') {
+//					cb();
+//				}
+//				loanFinishedSelect();
 			})
 		})
 	}
@@ -87,6 +87,15 @@ page.ctrl('phoneAudit', function($scope) {
 	$(document).on('click','.selecter', function() {
 		$(".selectOptBox1",$(this)).show();
 	})
+	
+//	$(document).on('click','#aaa', function() {
+//		$.getScript("static/js/page/phoneAudit.js", function() {
+//			$("#eleCheck").load("iframe/phoneAudit.html");
+//		);
+//	})
+	
+	
+	
 	//点击下拉选项赋值zhy
 	$(document).on('click', '.selectOptBox1 li', function() {
 		var value = $(this).data('key');
@@ -168,7 +177,7 @@ page.ctrl('phoneAudit', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	$console.load(router.template('iframe/phoneAudit'), function() {
+	$console.load(router.template('iframe/checkAudit'), function() {
 //		$scope.def.tabTmpl = $console.find('#checkResultTabsTmpl').html();
 		$scope.def.listTmpl = $console.find('#eleChecktmpl').html();
 //		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
@@ -176,7 +185,7 @@ page.ctrl('phoneAudit', function($scope) {
 //			$tab: $console.find('#checkTabs'),
 			$tbl: $console.find('#eleCheck')
 		}
-		loadLoanList(apiParams);
+//		loadLoanList(apiParams);
 	})
 });
 
