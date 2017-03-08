@@ -152,7 +152,7 @@
 		$.ajax({
 			url: api.del,
 			type: 'post',
-			data: params,
+			data: {id: self.options.id},
 			dataType: 'json',
 			success: function(xhr) {
 				console.log(xhr)
@@ -223,7 +223,6 @@
 			type: 'post',
 			dataType: 'json',
 			success: function(xhr) {
-				console.log(xhr);
 				if(!xhr.code) {
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.options.name, url, self.errImg, self.errMsg));

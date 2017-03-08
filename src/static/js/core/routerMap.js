@@ -105,6 +105,10 @@
 			refer: [],
 			page: 'organizationManage'
 		},
+		'loanProcess/detail': {
+			page: 'detail',
+			title: '贷款办理'
+		},
 		'loanProcess/creditMaterialsUpload': {
 			title: '征信材料上传',
 			page: 'creditMaterialsUpload'

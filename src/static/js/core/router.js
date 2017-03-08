@@ -105,7 +105,7 @@
 		render.$console.html('');
 		router.closeRefresh = true;
 		if(!opts || !opts.bStatic) {
-			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + $.param(params) : '');
+			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + Base64.btoa($.param(params)) : '');
 		}
 		var item = g.routerMap[key];
 		if(!item) {
@@ -113,10 +113,25 @@
 		}
 		g.render.renderTitle(item.title);
 		var __currentPage = item.page;
+		if(page.ctrls[__currentPage]) {
+			return setTimeout(function() {
+				return page.excute(__currentPage, key, params, true);
+			}, 0);
+		}
 		$.getScript(internal.script(__currentPage))
 			.done(function() {
 				page.excute(__currentPage, key, params);
 			});
+	}
+	/**
+	* 点击tab跳转
+	*/
+	router.tab = function ($tab, tasks, activeTaskIdx, cb) {
+		if(tasks.length <= 1) { 
+			$tab.remove();
+			return false;
+		}
+		$.tabNavigator($tab, tasks, activeTaskIdx, cb);
 	}
 	/**
 	* 初始化界面
@@ -127,14 +142,13 @@
 		if(!hash) { return cb(); }
 		var sp = hash.split('?');
 		var _origin = sp[0],
-			_search = !!sp[1] ? ('?' + sp[1]) : undefined;
-			
-			// _search = decodeURI(_search);
+			_search = !!sp[1] ? sp[1] : undefined;
 		var _paths = _origin.split('/'),
-			_params = !!_search ? $.parseParams(_search) : undefined;
+			_params = !!_search ? $.deparam(Base64.atob(decodeURI(_search))) : undefined;
 		router.render(_origin, _params);
 		cb && typeof cb == 'function' && cb(_paths[0]);
 	}
+
 	$(window).bind('hashchange', function() {
 		var path = g.location.hash.substr(1).split('?')[0];
 		if(!path) return false;
@@ -144,4 +158,5 @@
 		}
 		g.location.reload();
 	});
+
 })(window);

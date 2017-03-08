@@ -2,7 +2,9 @@
 page.ctrl('loanMaterialsUpload', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params;
-	
+	$scope.tasks = $params.tasks;
+	$scope.activeTaskIdx = $params.selected || 0;
+
 	/**
 	* 加载贷款材料上传数据
 	* @params {object} params 请求参数
@@ -13,7 +15,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
 			// type: flag,
 			type: 'post',
-			url: $http.api('loanMaterials/index', 'zyj'),
+			url: $http.api('loanMaterials/index'),
 			data: {
 				// taskId: $scope.$params.taskId
 				taskId: 1
@@ -93,17 +95,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 						}
 					});
 				})
-					// var $this = $(this);
-					// if($this.data('checked')) {
-					// 	addUserType = $this.data('type');
-					// 	console.lof($checks.not($this))
-					// 	$checks.not($this).removeClass('checked').html('');
-					// }
-					// this.onChange(function() {
-					// 	$checks.not(this).removeClass('checked').html('');
-					// })
-				// });
-
+				
 				$dialog.find('.w-sure').on('click', function() {
 					// var _params = {
 					// 	orderNo: $params.orderNo,
@@ -120,10 +112,9 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 					// 		console.log(result);
 					// 	})
 					// })
-				})
+				})			
 			})
 		})
-
 		// 提交订单按钮 
 		$console.find('#submitOrders').on('click', function() {
 			var that = $(this);
@@ -157,12 +148,27 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		$scope.$el.$loanPanel.find('.uploadEvt').imgUpload();
 	}
 
+	/**
+	* 并行任务切换触发事件
+	* @params {int} idx 触发的tab下标
+	* @params {object} item 触发的tab对象
+	*/
+	var tabChange = function (idx, item) {
+		console.log(item);
+		router.render('loanProcess/' + item.key, {
+			tasks: $scope.tasks,
+			selected: idx,
+			path: 'loanProcess'
+		});
+	}
 
 	$console.load(router.template('iframe/loan-material-upload'), function() {
 		$scope.def.listTmpl = $console.find('#loanUploadTmpl').html();
 		$scope.$el = {
 			$loanPanel: $console.find('#loanUploadPanel')
 		}
+		router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
+		//setupTaskNavigator($scope.tasks, $scope.activeTaskIdx);
 		loadOrderInfo();
 	})
 });
