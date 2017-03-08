@@ -8,7 +8,7 @@ page.ctrl('loanInfo', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-	var urlStr = "http://192.168.0.193:8080";
+	var urlStr = "http://192.168.0.103:8080";
 	var apiMap = {
 		"serviceType": urlStr+"/loanConfigure/getItem",//业务类型
 		"brand": urlStr+"/demandBank/selectBank",//经办银行

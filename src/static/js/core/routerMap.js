@@ -167,7 +167,7 @@
 		},
 		'loanProcess/loanTelApproval': {
 			title: '审核列表',
-			page: 'checkAudit'
+			page: 'phoneAudit'
 		},
 		'loanProcess/loanAudit': {
 			title: '贷款审核',
