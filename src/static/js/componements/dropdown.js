@@ -30,11 +30,45 @@
 			};
 		self.$el = $el;
 		self.opts = $.extend(opts, options || {});
+		
 		self.sourceData = {};
+		self.picked = {};
+		self.text = [];
+		self.textInstance = [];
+		self.actionIdx = 0;
 		self.defautKey = '__internaldefaultkey__';
+
+		self.defaults();
+
 		self.setup();
 		return this;
 	}
+	dropdown.prototype.defaults = function(){
+		var self = this;
+		self.opts.tabs = self.opts.tabs || [];
+		self.onDropdown = $.noop;
+		self.onTrigger = internal.noop;
+		if(self.opts.dropdown) {
+			try {
+				self.onDropdown = eval(self.options.dropdown);
+			} catch(e) {
+				self.onDropdown = $.noop;
+			}
+			if(typeof self.onDropdown != 'function') {
+				self.onDropdown = $.noop;
+			}
+		}
+		if(self.opts.trigger) {
+			try {
+				self.onTrigger = eval(self.opts.trigger);
+			} catch(e) {
+				self.onTrigger = internal.noop;
+			}
+			if(typeof self.onTrigger != 'function') {
+				self.onTrigger = internal.noop;
+			}
+		}
+	};
 	/**
 	* 构造dropdown
 	*/
@@ -42,14 +76,14 @@
 		var self = this;
 		self.$el.append(_.template(internal.template.fields)({readonly: !self.search}));
 		self.$dropdown = $('<div class="select-box"></div>').appendTo(self.$el);
+		self.$text = self.$el.find('.select-text');
 		if(self.opts.tabs) {
 			self.opts.tabs = self.opts.tabs.split('|');
-			self.$dropdown.append(_.template(internal.template.tab)(self.opts.tabs));
+			self.$tabPanel = $(_.template(internal.template.tab)(self.opts.tabs)).appendTo(self.$dropdown);
+			self.$tabs = self.$tabPanel.find('.select-tab-item');
 		}
 		self.$content = $('<div class="select-content-box"></div>').appendTo(self.$dropdown);
 		self.$items = $('<div class="select-content select-content-brand select-content-active"></div>').appendTo(self.$content);
-		// self.$items.append(_.template(internal.template.brandContent)())
-
 		self.__addEventListener();
 	};
 	/**
@@ -64,8 +98,7 @@
 		self.$el.on('click', function (evt) {
 			if(self.opened) return false;
 		})
-		$(document).on('click', function(e){
-			// if(self.$el.has($(e.target)).length === 0)
+		$(document).on('click', function(e) {
 			if(self.opened) {
 				self.opened = false;
 				self.close();
@@ -75,14 +108,15 @@
 	/**
 	* 渲染下拉列表
 	*/
-	dropdown.prototype.compileItems = function(idx){
+	dropdown.prototype.compileItems = function(idx, parentId){
 		var self = this;
 		var items = self.sourceData[self.opts.tabs[idx] || self.defautKey];
 		if(!items) {
-			self.__getData(self.opts.tabs[idx], null, function(data) {
-				self.sourceData[self.opts.tabs[idx] || self.defautKey] = data;
+			self.onTrigger(self.opts.tabs[idx], parentId, function(data) {
+				if(idx == 0) {
+					self.sourceData[self.opts.tabs[idx] || self.defautKey] = data;	
+				}
 				self.listenItem(data);
-				
 			});
 		} else {
 			self.listenItem(items);
@@ -91,12 +125,36 @@
 	};
 	dropdown.prototype.listenItem = function(items){
 		var self = this;
-		self.$items.append(_.template(internal.template.brandContent)(items));
+		self.$items.html(_.template(internal.template.brandContent)(items));
 		self.$items.find('.itemEvt').on('click', function() {
 			var $that = $(this);
 			var id = $that.data('id'),
 				name = $that.text();
-			
+			self.text.push(name);
+			//只有一级，选中即表示结束
+			if(self.opts.tabs.length == 0) {
+				self.picked = {
+					id: id,
+					name: name
+				}
+				self.onDropdown(self.picked);
+				self.close(true);
+			} else {
+				self.picked[self.opts.tabs[self.actionIdx]] = {
+					id: id,
+					name: name
+				}
+				//选中最后一级，也关闭
+				if(self.actionIdx == self.opts.tabs.length - 1) {
+					self.onDropdown(self.picked);
+					self.close(true);
+				} else {
+					self.$tabs.eq(self.actionIdx).removeClass('select-tab-item-active');
+					self.actionIdx++;
+					self.$tabs.eq(self.actionIdx).addClass('select-tab-item-active');
+					self.compileItems(self.actionIdx, id);
+				}	
+			}
 		})
 	};
 	/**
@@ -104,48 +162,30 @@
 	*/
 	dropdown.prototype.open = function() {
 		var self = this;
+		self.textInstance = self.text;
+		self.text = [];
+		self.actionIdx = 0;
 		self.$el.find('.select-box').show();
 		self.$el.find('#arrow').removeClass('arrow-bottom').addClass('arrow-top');
-		self.compileItems(0);
+		self.$tabPanel.find('.select-tab-item-active').removeClass('select-tab-item-active');
+		self.$tabs.eq(0).addClass('select-tab-item-active');
+		self.compileItems(self.actionIdx);
 	};
 	
 	/**
 	* 关闭dropdown
 	*/
-	dropdown.prototype.close = function() {
+	dropdown.prototype.close = function(finished) {
 		var self = this;
+		if(finished) {
+			self.$text.val(self.text.join('-'));
+		} else {
+			self.text = self.textInstance;
+			self.textInstance = [];
+		}
 		self.$el.find('.select-box').hide();
 		self.$el.find('#arrow').removeClass('arrow-top').addClass('arrow-bottom');
 	}
-	/**
-	* 打开下一级
-	*/
-	dropdown.prototype.openNext = function() {
-		
-	};
-	/**
-	* 拉取数据
-	* @params {int} parentId 父节点ID
-	* @params {function} internalCallback 内部回调方法
-	*/
-	dropdown.prototype.__getData = function(tab, parentId, internalCallback) {
-		var fn, self = this;
-		if(self.opts.trigger) {
-			try {
-				fn = eval(self.opts.trigger);
-			} catch(e) {
-				fn = internal.noop;
-			}
-			if(typeof fn != 'function') {
-				fn = internal.noop;
-			}
-		} else {
-			fn = internal.noop;
-		}
-		fn(tab, parentId, function(data) {
-			internalCallback(data);
-		})
-	};
 
 	var internal = {};
 	internal.template = {};
@@ -156,7 +196,7 @@
 								</div>';
 	internal.template.tab = '<ul class="select-tab">\
 								{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
-								<li class="select-tab-item">{{= row }}</li>\
+								<li class="select-tab-item{{=(i==0?\" select-tab-item-active\":\"\")}}">{{= row }}</li>\
 								{{ } }}\
 							</ul>';
 	internal.template.brandContent = '<dl class="word-area">\
