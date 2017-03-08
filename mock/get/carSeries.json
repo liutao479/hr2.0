@@ -1,0 +1,94 @@
+{
+    "code": 0,
+    "data": [
+        {
+            "id": 13,
+            "serieName": "奥迪A3"
+        }, {
+            "id": 14,
+            "serieName": "奥迪A4L"
+        }, {
+            "id": 15,
+            "serieName": "奥迪A6L"
+        }, {
+            "id": 16,
+            "serieName": "奥迪Q3"
+        }, {
+            "id": 17,
+            "serieName": "奥迪Q5"
+        }, {
+            "id": 18,
+            "serieName": "奥迪A4"
+        }, {
+            "id": 19,
+            "serieName": "奥迪A6"
+        }, {
+            "id": 20,
+            "serieName": "奥迪A1"
+        }, {
+            "id": 21,
+            "serieName": "奥迪A3(进口)"
+        }, {
+            "id": 22,
+            "serieName": "奥迪S3"
+        }, {
+            "id": 23,
+            "serieName": "奥迪A4(进口)"
+        }, {
+            "id": 24,
+            "serieName": "奥迪A5"
+        }, {
+            "id": 25,
+            "serieName": "奥迪S5"
+        }, {
+            "id": 26,
+            "serieName": "奥迪A6(进口)"
+        }, {
+            "id": 27,
+            "serieName": "奥迪S6"
+        }, {
+            "id": 28,
+            "serieName": "奥迪A7"
+        }, {
+            "id": 29,
+            "serieName": "奥迪S7"
+        }, {
+            "id": 30,
+            "serieName": "奥迪A8"
+        }, {
+            "id": 31,
+            "serieName": "奥迪S8"
+        }, {
+            "id": 32,
+            "serieName": "奥迪Q3(进口)"
+        }, {
+            "id": 33,
+            "serieName": "奥迪Q5(进口)"
+        }, {
+            "id": 34,
+            "serieName": "奥迪SQ5"
+        }, {
+            "id": 35,
+            "serieName": "奥迪Q7"
+        }, {
+            "id": 36,
+            "serieName": "奥迪TT"
+        }, {
+            "id": 37,
+            "serieName": "奥迪TTS"
+        }, {
+            "id": 38,
+            "serieName": "奥迪R8"
+        }, {
+            "id": 39,
+            "serieName": "奥迪RS 5"
+        }, {
+            "id": 40,
+            "serieName": "奥迪RS 7"
+        }, {
+            "id": 1446,
+            "serieName": "奥迪RS 6"
+        }
+    ],
+    "msg": "success"
+}

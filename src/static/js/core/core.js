@@ -59,7 +59,7 @@
 	_.$http.authorization = function(key) {
 		$.ajaxSetup({
 			beforeSend: function(xhr) {
-				xhr.setRequestHeader('Authorization', btoa('test'));
+				xhr.setRequestHeader('Authorization', "Bearer " + key);
 			}		
 		})
 	}
@@ -124,8 +124,24 @@
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
 		// console.log(arguments);
-	});		
+	});
 	/*****************http end*******************/
+	//授权校验 begin
+	function localAuth() {
+		var u = {};
+		u.token = Cookies.get('_hr_token');
+		u.account = Cookies.get('_hr_account');
+		u.dept = Cookies.get('_hr_dept');
+		u.role = Cookies.get('_hr_role');
+		u.phone = Cookies.get('_hr_phone');
+		if(!u.token || !u.account) {
+			window.location.href = 'login.html';
+		}
+		_.hrLocalInformation = u;
+	}
+	localAuth();
+	//授权校验 end
+
 	/************功能辅助类 begin************/
 	var tool = _.tool = {};
 	/**
@@ -179,7 +195,6 @@
 			_hours = new Date(result).getHours();
 			_minutes = new Date(result).getMinutes();
 			_seconds = new Date(result).getSeconds();
-		console.log(_date)
 		if(_date > 0) return _date + '天';	
 		if(_hours > 0) return _hours + '小时';
 		if(_seconds > 0 && _minutes < 60) return '1小时';

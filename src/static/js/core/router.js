@@ -114,7 +114,7 @@
 		g.render.renderTitle(item.title);
 		var __currentPage = item.page;
 		if(page.ctrls[__currentPage]) {
-			setTimeout(function() {
+			return setTimeout(function() {
 				return page.excute(__currentPage, key, params, true);
 			}, 0);
 		}
@@ -131,13 +131,6 @@
 			$tab.remove();
 			return false;
 		}
-		/**
-		router.render('loanProcess/' + item.key, {
-					tasks: tasks,
-					selected: activeTaskIdx,
-					path: 'loanProcess'
-				});	
-		*/
 		$.tabNavigator($tab, tasks, activeTaskIdx, cb);
 	}
 	/**

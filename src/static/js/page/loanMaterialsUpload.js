@@ -104,7 +104,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	* @params {object} item 触发的tab对象
 	*/
 	var tabChange = function (idx, item) {
-		console.log('saveData:' + $scope.activeTaskIdx);
+		console.log(item);
 		router.render('loanProcess/' + item.key, {
 			tasks: $scope.tasks,
 			selected: idx,

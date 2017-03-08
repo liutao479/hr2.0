@@ -1,0 +1,79 @@
+{
+    "code": 0,
+    "data": [
+        {
+            "advisePrics": 41.8,
+            "carName": "奥迪-奥迪A4(进口)-2014款 40 TFSI allroad quattro plus版",
+            "carSerieId": 23,
+            "createdAt": 1447941350,
+            "id": 360,
+            "originId": 18320,
+            "specName": "2014款 40 TFSI allroad quattro plus版",
+            "state": 20,
+            "updatedAt": 1447941350,
+            "yearId": 5552,
+            "yearName": "2014款"
+        }, {
+            "advisePrics": 46.98,
+            "carName": "奥迪-奥迪A4(进口)-2014款 40 TFSI allroad quattro",
+            "carSerieId": 23,
+            "createdAt": 1447941350,
+            "id": 361,
+            "originId": 18019,
+            "specName": "2014款 40 TFSI allroad quattro",
+            "state": 40,
+            "updatedAt": 1447941350,
+            "yearId": 5552,
+            "yearName": "2014款"
+        }, {
+            "advisePrics": 51.98,
+            "carName": "奥迪-奥迪A4(进口)-2013款 40 TFSI allroad quattro 豪华型",
+            "carSerieId": 23,
+            "createdAt": 1447941350,
+            "id": 362,
+            "originId": 11191,
+            "specName": "2013款 40 TFSI allroad quattro 豪华型",
+            "state": 40,
+            "updatedAt": 1447941350,
+            "yearId": 3312,
+            "yearName": "2013款"
+        }, {
+            "advisePrics": 48.98,
+            "carName": "奥迪-奥迪A4(进口)-2013款 40 TFSI allroad quattro 舒适型",
+            "carSerieId": 23,
+            "createdAt": 1447941350,
+            "id": 363,
+            "originId": 13878,
+            "specName": "2013款 40 TFSI allroad quattro 舒适型",
+            "state": 40,
+            "updatedAt": 1447941350,
+            "yearId": 3312,
+            "yearName": "2013款"
+        }, {
+            "advisePrics": 42.8,
+            "carName": "奥迪-奥迪A4(进口)-2003款 2.0",
+            "carSerieId": 23,
+            "createdAt": 1447941350,
+            "id": 364,
+            "originId": 6837,
+            "specName": "2003款 2.0",
+            "state": 40,
+            "updatedAt": 1447941350,
+            "yearId": 1892,
+            "yearName": "2003款"
+        }, {
+            "advisePrics": 78.0,
+            "carName": "奥迪-奥迪A4(进口)-2003款 A4 3.0敞篷版",
+            "carSerieId": 23,
+            "createdAt": 1447941350,
+            "id": 365,
+            "originId": 6736,
+            "specName": "2003款 A4 3.0敞篷版",
+            "state": 40,
+            "updatedAt": 1447941350,
+            "yearId": 1892,
+            "yearName": "2003款"
+        }
+    ],
+    "msg": "success"
+}
