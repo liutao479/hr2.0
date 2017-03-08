@@ -99,18 +99,24 @@
 					{{ if(ml.code !== 'ZXBGP' && ml.code !== 'ZXZD') { }}
 						{{ for(var k = 0, len3 = ml.segments.length; k < len3; k ++) { var nl = ml.segments[k]; }}
 							{{ if(nl.type == 0) { }}
-								{{ if(col.loanUserCredits[i].creditReportFile){ }}
+								{{ if(!col.loanUserCredits[i].creditReportFile){ }}
 									<div class="panel-value-item">
 										<div class="input-text">
 											<input type="text" value="{{=col.loanUserCredits[i].creditReportFile}}" readonly="true" />	
 										</div>
 									</div>
 									<div class="panel-value-item">
-										<div class="button button-mini">重新上传</div>	
+										<div class="file-wrap">
+											<div class="button button-mini">重新上传</div>
+											<input type="file" class="pdfUpload" data-value="true" />
+										</div>	
 									</div>
 								{{ }else{ }}
 									<div class="panel-value-item">
-										<div class="button button-mini">上传文件</div>
+										<div class="file-wrap">
+											<div class="button button-mini">上传文件</div>
+											<input type="file" class="pdfUpload" data-value="false" />
+										</div>
 									</div>
 									<div class="panel-value-item">
 										<span class="color-tiper">文件格式：*.pdf</span>

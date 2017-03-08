@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="static/js/vendor/third.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			// window.location.href = 'app.html';
 			$('#submit').on('click', function () {
 				var $acc = $('#account'),
 					$pwd = $('#password');
@@ -19,8 +20,10 @@
 				if(!acc || !pwd) {
 					return alert('请输入账号和密码');
 				}
+				console.log(acc)
+				console.log(pwd)
 				$.ajax({
-					url: 'http://192.168.0.103:8080/login/doLogin',
+					url: 'http://192.168.0.104:8080/login/doLogin',
 					type: 'post',
 					dataType: 'json',
 					data: {

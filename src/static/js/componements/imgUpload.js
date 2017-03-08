@@ -152,7 +152,7 @@
 		$.ajax({
 			url: api.del,
 			type: 'post',
-			data: {id: self.options.id},
+			data: params,
 			dataType: 'json',
 			success: function(xhr) {
 				console.log(xhr)
@@ -227,10 +227,12 @@
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.options.name, url, self.errImg, self.errMsg));
 						self.options.id = xhr.data;
+						self.$el.data('img', url);
 						self.status = 1;	
 						self.listen();
 					} else {
 						self.options.id = xhr.data;
+						self.$el.data('img', url);
 						self.$el.find('img').attr('src', url);
 					}
 				}
@@ -272,10 +274,12 @@
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.options.name, url, self.errImg, self.errMsg));
 						self.options.id = xhr.data;
+						self.$el.data('img', url);
 						self.status = 1;	
 						self.listen();
 					} else {
 						self.options.id = xhr.data;
+						self.$el.data('img', url);
 						self.$el.find('img').attr('src', url);
 					}
 					if(self.options.uploadcb) {

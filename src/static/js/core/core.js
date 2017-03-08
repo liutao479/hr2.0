@@ -145,6 +145,7 @@
 		if(!u.token || !u.account) {
 			window.location.href = 'login.html';
 		}
+		// _.$http.authorization(u.token);
 		_.hrLocalInformation = u;
 	}
 	localAuth();

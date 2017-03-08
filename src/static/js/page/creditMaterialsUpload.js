@@ -19,7 +19,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			userTypeName: '反担保人'
 		}
 	];
-	$scope.tabs = [];
+	$scope.tabs = {};
 	$scope.currentType = $scope.$params.type || 0;
 	$scope.$el = {};
 	$scope.apiParams = {};
@@ -33,7 +33,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	var loadOrderInfo = function(_type, cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('creditMaterials/index', 'jbs'),
+			url: $http.api('creditMaterials/index', 'zyj'),
 			data: {
 				// taskId: $scope.$params.taskId
 				taskId: 80885
@@ -44,14 +44,16 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$scope.result = result;
 				$scope.orderNo = result.data.loanTask.orderNo;
 				$scope.result.data.currentType = _type;
+
 				// 编译tab
-				setupTab($scope.result.data || {}, _type);
+				setupTab($scope.result.data || {}, function() {
+					setupTabEvt();
+				});
+
 				// 编译tab项对应内容
-				setupCreditPanel($scope.result.data, _type);
-				// 编译tab栏事件
-				setupTabEvt();
-				// 编译立即处理事件
-				setupEvt();
+				setupCreditPanel(_type, $scope.result.data, function() {
+					setupEvt();
+				});
 
 				if( cb && typeof cb == 'function' ) {
 					cb();
@@ -79,35 +81,35 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 渲染tab栏
 	 * @param  {object} data tab栏操作的数据
 	 */
-	var setupTab = function(data, _type) {
+	var setupTab = function(data, cb) {
 		data.types = ['借款人', '共同还款人', '反担保人'];
 		render.compile($scope.$el.$tab, $scope.def.tabTmpl, data, true);
 		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
+		if( cb && typeof cb == 'function' ) {
+			cb();
+		}
 	}
 
 	/**
 	 * 渲染tab栏对应项内容
 	 * @param  {object} result 请求获得的数据
 	 */
-	var setupCreditPanel = function(data, _type) {
-		// 若要渲染的_type为当前的tab对应项索引,直接编译
-		if(_type == $scope.currentType) {
-			var _tabTrigger = $scope.$el.$tbls.eq(_type);
-			$scope.tabs.push(_tabTrigger);
-			render.compile(_tabTrigger, $scope.def.listTmpl, data, true);
-			$scope.currentType = _type;
-		} else {
-			if(!$scope.tabs[_type]) {
-				var _tabTrigger = $scope.$el.$tbls.eq(_type);
-				$scope.tabs[_type] = _tabTrigger;
-				$scope.result.data.currentType = _type;
-				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result.data, function() {
-					setupEvt();
-				}, true);
+	var setupCreditPanel = function(_type, data, cb) {
+		// 编译对应_type的tab项内容，将目标编译tab项内容页显示，隐藏其他tab项内容
+		var _tabTrigger = $scope.$el.$tbls.eq(_type);
+		$scope.tabs[_type] = _tabTrigger;
+		render.compile(_tabTrigger, $scope.def.listTmpl, data, true);
+		for(var i = 0, len = $scope.$el.$tbls.length; i < len; i++) {
+			if(i == _type) {
+				$scope.$el.$tbls.eq(i).show();
+			} else {
+				$scope.$el.$tbls.eq(i).hide();
 			}
-			$scope.$el.$tbls.eq($scope.currentType).hide();
-			$scope.$el.$tbls.eq(_type).show();
-			$scope.currentType = _type;
+		}
+		$scope.currentType = _type;
+
+		if( cb && typeof cb == 'function' ) {
+			cb();
 		}
 	}
 
@@ -122,7 +124,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			// 后台接口修改完成时使用
 			$.ajax({
 				type: 'post',
-				url: $http.api('creditUser/add', 'jbs'),
+				url: $http.api('creditUser/add', 'zyj'),
 				data: {
 					orderNo: $scope.orderNo,
 					userType: 1
@@ -142,7 +144,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			// 后台接口修改完成时使用
 			$.ajax({
 				type: 'post',
-				url: $http.api('creditUser/add', 'jbs'),
+				url: $http.api('creditUser/add', 'zyj'),
 				data: {
 					orderNo: $scope.orderNo,
 					userType: 2
@@ -184,8 +186,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 						// toast.show();
 						$.ajax({
 							type: 'post',
-							// url: $http.api('creditMaterials/submit/' + $params.taskId, 'jbs'),
-							url: $http.api('creditMaterials/submit/80885', 'jbs'),
+							// url: $http.api('creditMaterials/submit/' + $params.taskId, 'zyj'),
+							url: $http.api('creditMaterials/submit/80885', 'zyj'),
 							data: JSON.stringify($scope.apiParams),
 							dataType: 'json',
 							contentType: 'application/json;charset=utf-8',
@@ -221,11 +223,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * tab栏点击事件
 	 */
 	var setupTabEvt = function() {
-		// $(document).on('click', '.tabEvt', function() {
 		$console.find('#creditTabs .tabEvt').on('click', function() {
 			var $this = $(this);
 			if($this.hasClass('role-item-active')) return;
-			// console.log($console.find('#creditUploadPanel').html())
 			var _type = $this.data('type');
 			if(!$scope.tabs[_type]) {
 				var _tabTrigger = $scope.$el.$tbls.eq(_type);
@@ -269,7 +269,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					console.log(_userId)
 					$.ajax({
 						type: 'post',
-						url: $http.api('creditUser/del', 'jbs'),
+						url: $http.api('creditUser/del', 'zyj'),
 						data: {
 							userId: _userId
 						},
@@ -313,6 +313,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				var item = $scope.apiParams.loanUsers[i];
 				if(that.data('userId') == item.userId) {
 					item[that.data('type')] = that.val();
+					item['userRelationship'] = 0;
 				}
 			}
 			console.log($scope.apiParams);

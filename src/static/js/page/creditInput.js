@@ -2,7 +2,7 @@
 page.ctrl('creditInput', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params;
-	$scope.tabs = [];
+	$scope.tabs = {};
 	$scope.idx = 0;
 
 	/**
@@ -38,12 +38,17 @@ page.ctrl('creditInput', [], function($scope) {
 				console.log(result);
 				result.index = idx;
 				$scope.result = result;
-				setupTab($scope.result);
+
+				// 编译tab栏
+				setupTab($scope.result, function() {
+					setupTabEvt();
+				});
+
 				// 编译tab项对应内容
-				setupCreditPanel(idx, $scope.result);
-				// 启动绑定事件
-				setupTabEvt();
-				setupEvt();
+				setupCreditPanel(idx, $scope.result, function() {
+					setupEvt();
+				});
+
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -55,20 +60,35 @@ page.ctrl('creditInput', [], function($scope) {
 	 * 渲染tab栏
 	 * @param  {object} result 请求获得的数据
 	 */
-	var setupTab = function(result) {
+	var setupTab = function(result, cb) {
 		render.compile($scope.$el.$tab, $scope.def.tabTmpl, result, true);
 		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
+
+		if(cb && typeof cb == 'function') {
+			cb();
+		}
 	}
 
 	/**
 	 * 渲染tab栏对应项内容
 	 * @param  {object} result 请求获得的数据
 	 */
-	var setupCreditPanel = function(idx, result) {
+	var setupCreditPanel = function(idx, result, cb) {
+		// 编译对应idx的tab项内容，将目标编译tab项内容页显示，隐藏其他tab项内容
 		var _tabTrigger = $scope.$el.$tbls.eq(idx);
-		$scope.tabs.push(_tabTrigger);
-		$scope.result.index = idx;
+		$scope.tabs[idx] = _tabTrigger;
 		render.compile(_tabTrigger, $scope.def.listTmpl, result, true);
+		for(var i = 0, len = $scope.$el.$tbls.length; i < len; i++) {
+			if(i == idx) {
+				$scope.$el.$tbls.eq(i).show();
+			} else {
+				$scope.$el.$tbls.eq(i).hide();
+			}
+		}
+		$scope.currentType = idx;
+		if( cb && typeof cb == 'function' ) {
+			cb();
+		}
 	}
 
 	
@@ -84,7 +104,9 @@ page.ctrl('creditInput', [], function($scope) {
 				var _tabTrigger = $scope.$el.$tbls.eq(_type);
 				$scope.tabs[_type] = _tabTrigger;
 				$scope.result.index = _type;
-				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, true);
+				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, function() {
+					setupEvt();
+				}, true);
 			}
 			$scope.$el.$tabs.eq($scope.idx).removeClass('role-item-active');
 			$this.addClass('role-item-active');
@@ -95,14 +117,88 @@ page.ctrl('creditInput', [], function($scope) {
 		})
 	}
 
+	var pdfCb = function(res, file, cb) {
+		if(!res) {
+			throw "can not get the license";
+		}
+		console.log(res);
+		// var suffix = file.name.substr(file.name.lastIndexOf('.'));
+		var key = res.dir + 'credit-report-file/' + file.name;
+		var fd = new FormData();
+		fd.append('OSSAccessKeyId', res.accessId);
+		fd.append('policy', res.policy);
+		fd.append('Signature', res.signature);
+		fd.append('key', key);
+		fd.append('file', file, file.name);
+		fd.append('success_action_status', 200);
+		$.ajax({
+			url: res.host,
+			data: fd,
+			type: 'post',
+			processData: false,
+			dataType: 'xml',
+			contentType: false,
+			success: function(response) {
+				// var _url = res.host + '/' + fd.get('key');
+				var _name = fd.get('key');
+				_name = _name.substr(_name.lastIndexOf('/') + 1);
+				if(cb && typeof cb == 'function') {
+					cb(_name);
+				}
+
+			}
+		})
+	}
+
 	/**
 	* 绑定立即处理事件
 	*/
 	var setupEvt = function() {
+
+		// 上传pdf文件
+		$console.find('.pdfUpload').on('change', function() {
+			var tml = '<div class="panel-value-item">\
+							<div class="input-text">\
+								<input type="text" value="{0}" readonly="true" />\
+							</div>\
+						</div>',
+				that = $(this),
+				$parent = that.parent().parent(),
+				file = this.files[0];
+			$.ajax({
+				url: 'http://112.74.99.75:8089/oss/video/sign',
+				dataType: 'json'
+			}).done(function(response) {
+				if(!response.code) {
+					pdfCb(response.data, file, function(reportName) {
+						console.log(reportName)
+						console.log(that.data('value'));
+						if(!that.data('value')) {
+							$parent.before(tml.format(reportName));
+							that.prev().html('重新上传');
+							that.data('value', true);
+						} else {
+							$parent.before(tml.format(reportName));
+						}
+					});
+				} else {
+					pdfCb(false, file);
+				}
+				
+			});
+			
+		});
+
+		$console.find('.uploadEvt').imgUpload();
+	}
+
+	/**
+	* 页面首次加载绑定立即处理事件
+	*/
+	var evt = function() {
 		$console.find('#submitOrders').on('click', function() {
 
 		})
-		$console.find('.uploadEvt').imgUpload();
 	}
 
 
