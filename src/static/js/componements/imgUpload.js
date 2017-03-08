@@ -357,7 +357,7 @@
 		// upload: 'http://127.0.0.1:8083/mock/addOrUpdate',
 		upload: $http.api('material/addOrUpdate', 'zyj'),
 		del: $http.api('material/del', 'zyj'),
-		creditUpload: $http.api('creditReport/reportUpd', 'zyj')
+		creditUpload: $http.api('creditReport/reportUpd', 'jbs')
 	}
 
 })(jQuery);
