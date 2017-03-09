@@ -66,9 +66,10 @@
 	}
 	_.$http.authorization = function(key) {
 		$.ajaxSetup({
-			beforeSend: function(xhr) {
-				xhr.setRequestHeader('Authorization', "Bearer " + key);
-			}		
+			headers: {'Authorization': "Bearer " + key}
+			// beforeSend: function(xhr) {
+			// 	xhr.setRequestHeader();
+			// }		
 		})
 	}
 	/**
@@ -81,6 +82,21 @@
 				cb(response);
 			} else {
 				//统一的失败处理
+				var code = response.code;
+				switch (code) {
+					case 1001:
+						$.alert('非法的参数');
+						break;
+					case 1004:
+						unAuth();
+						break;
+					case -1:
+
+						break;
+					default:
+						// statements_def
+						break;
+				}
 				console.log('failed');
 			}
 		}
@@ -134,6 +150,22 @@
 		// console.log(arguments);
 	});
 	/*****************http end*******************/
+	function unAuth() {
+		$.alert({
+			title: '提示',
+			content: '你的登录授权无效或已过期',
+			useBootstrap: false,
+			theme: 'material',
+			buttons:{
+				ok: {
+					text: '确定',
+					action: function() {
+						// location.href = 'login.html';
+					}
+				}
+			}
+		})
+	}
 	//授权校验 begin
 	function localAuth() {
 		var u = {};
@@ -143,7 +175,7 @@
 		u.role = Cookies.get('_hr_role');
 		u.phone = Cookies.get('_hr_phone');
 		if(!u.token || !u.account) {
-			window.location.href = 'login.html';
+			return unAuth();
 		}
 		// _.$http.authorization(u.token);
 		_.hrLocalInformation = u;
@@ -232,5 +264,11 @@
 			materialsCode: 'zxsqszp',
 			name: '授权书签字照片'
 		}];
-
+	/**
+	* for plugin
+	*/
+	jconfirm.defaults = {
+		useBootstrap: false,
+		theme: 'material'
+	}
 })(window);
