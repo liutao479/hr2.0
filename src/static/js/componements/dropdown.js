@@ -45,7 +45,7 @@
 	}
 	dropdown.prototype.defaults = function(){
 		var self = this;
-		self.opts.tabs = self.opts.tabs || [];
+		self.opts.tabs = self.opts.tabs ? self.opts.tabs.split('|') : [];
 		self.onDropdown = $.noop;
 		self.onTrigger = internal.noop;
 		if(self.opts.dropdown) {
@@ -77,8 +77,7 @@
 		self.$el.append(_.template(internal.template.fields)({readonly: !self.search}));
 		self.$dropdown = $('<div class="select-box"></div>').appendTo(self.$el);
 		self.$text = self.$el.find('.select-text');
-		if(self.opts.tabs) {
-			self.opts.tabs = self.opts.tabs.split('|');
+		if(self.opts.tabs.length > 0) {
 			self.$tabPanel = $(_.template(internal.template.tab)(self.opts.tabs)).appendTo(self.$dropdown);
 			self.$tabs = self.$tabPanel.find('.select-tab-item');
 		}
@@ -167,8 +166,10 @@
 		self.actionIdx = 0;
 		self.$el.find('.select-box').show();
 		self.$el.find('#arrow').removeClass('arrow-bottom').addClass('arrow-top');
-		self.$tabPanel.find('.select-tab-item-active').removeClass('select-tab-item-active');
-		self.$tabs.eq(0).addClass('select-tab-item-active');
+		if(!!self.opts.tabs.length) {
+			self.$tabPanel.find('.select-tab-item-active').removeClass('select-tab-item-active');
+			self.$tabs.eq(0).addClass('select-tab-item-active');	
+		}
 		self.compileItems(self.actionIdx);
 	};
 	

@@ -230,7 +230,7 @@ page.ctrl('loan', function($scope) {
 			if(!cb && typeof cb != 'function') {
 				cb = $.noop;
 			}
-			if(!tab) return cb();
+			// if(!tab) return cb();
 			switch (tab) {
 				case '品牌':
 					car.brand(cb);
@@ -242,7 +242,8 @@ page.ctrl('loan', function($scope) {
 					car.specs(parentId, cb);
 					break;
 				default:
-					cb();
+					car.brand(cb);
+					// cb();
 					break;
 			}
 		}
