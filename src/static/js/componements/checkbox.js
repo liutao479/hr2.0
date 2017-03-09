@@ -23,7 +23,6 @@
 	}
 
 	checking.prototype.onChange = function(fn) {
-		console.log(this);
 		this.evt.onchange = fn;
 	}
 

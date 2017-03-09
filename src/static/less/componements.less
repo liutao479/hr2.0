@@ -543,7 +543,7 @@
             //品牌车系车型
             .select-content {
                 display: none;
-                padding: 0 15px 15px 15px;
+                padding: 0 20px 15px 15px;
                 width: 248px;
                 &.select-content-active {
                     display: block;
@@ -576,6 +576,14 @@
                             color: @fontColor;
                             margin-left: 25px;
                             line-height: 23px;
+                            padding: 0 3px; 
+                            &:hover {
+                                cursor: pointer;
+                                background-color: @buttonBgColor;
+                                color: #FFF;
+                                border-radius: 3px;
+                            }
+                            
                         }
                     }
                 }
