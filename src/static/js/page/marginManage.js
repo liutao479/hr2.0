@@ -56,6 +56,7 @@ page.ctrl('marginManage',function($scope) {
 	*/
 	var setupEvt = function() {
 		$console.find('#queryDeposit').on('click', function() {
+			console.log(1)
 			apiParams.callBankQuery = 1;
 			loadMarginManageList(apiParams, function() {
 				apiParams.callBankQuery = 0;

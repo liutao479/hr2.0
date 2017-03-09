@@ -74,7 +74,7 @@ page.ctrl('myCustomer', [], function($scope) {
 	var makeLoan = function(that) {
 		$.ajax({
 			type: "post",
-			url: $http.api('financePayment/get', 'zyj'),
+			url: $http.api('financePayment/get', 'cyj'),
 			data:{
 				orderNo: that.data('orderno')
 				// orderNo: 'nfdb2015091812345678'
@@ -133,7 +133,7 @@ page.ctrl('myCustomer', [], function($scope) {
 	var makeloanSubmit = function(params, $dialog) {
 		$.ajax({
 			type: "post",
-			url: $http.api('financePayment/update', 'zyj'),
+			url: $http.api('financePayment/update', 'cyj'),
 			data: params,
 			dataType: "json",
 			success: $http.ok(function(result) {
@@ -252,7 +252,7 @@ page.ctrl('myCustomer', [], function($scope) {
 			var loanOrderApplyCount = function(that) {
 				$.ajax({
 					type: "post",
-					url: $http.api('loanOrderApply/count', 'zyj'),
+					url: $http.api('loanOrderApply/count', 'cyj'),
 					data:{
 						orderNo: _orderNo
 					},
@@ -296,7 +296,7 @@ page.ctrl('myCustomer', [], function($scope) {
 						$dialog.remove();
 						$.ajax({
 							type: "post",
-							url: $http.api('loanOrderApply/terminate', 'zyj'),
+							url: $http.api('loanOrderApply/terminate', 'cyj'),
 							data:{
 								orderNo: _orderNo,
 								applyReason: $dialog.find('#suggestion').val(),

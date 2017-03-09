@@ -46,7 +46,7 @@
 					break;
 				// 蔡延军ip
 				case 'cyj':
-					return 'http://192.168.0.105:8080/' + method;
+					return 'http://192.168.0.121:8080/' + method;
 					break;
 				// 季本松ip
 				case 'jbs':
