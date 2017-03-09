@@ -33,7 +33,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	var loadOrderInfo = function(_type, cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('creditMaterials/index', 'zyj'),
+			url: $http.api('creditMaterials/index', 'jbs'),
 			data: {
 				// taskId: $scope.$params.taskId
 				taskId: 80885
@@ -124,7 +124,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			// 后台接口修改完成时使用
 			$.ajax({
 				type: 'post',
-				url: $http.api('creditUser/add', 'zyj'),
+				url: $http.api('creditUser/add', 'jbs'),
 				data: {
 					orderNo: $scope.orderNo,
 					userType: 1
@@ -144,7 +144,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			// 后台接口修改完成时使用
 			$.ajax({
 				type: 'post',
-				url: $http.api('creditUser/add', 'zyj'),
+				url: $http.api('creditUser/add', 'jbs'),
 				data: {
 					orderNo: $scope.orderNo,
 					userType: 2
@@ -186,8 +186,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 						// toast.show();
 						$.ajax({
 							type: 'post',
-							// url: $http.api('creditMaterials/submit/' + $params.taskId, 'zyj'),
-							url: $http.api('creditMaterials/submit/80885', 'zyj'),
+							// url: $http.api('creditMaterials/submit/' + $params.taskId, 'jbs'),
+							url: $http.api('creditMaterials/submit/80885', 'jbs'),
 							data: JSON.stringify($scope.apiParams),
 							dataType: 'json',
 							contentType: 'application/json;charset=utf-8',
@@ -269,7 +269,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					console.log(_userId)
 					$.ajax({
 						type: 'post',
-						url: $http.api('creditUser/del', 'zyj'),
+						url: $http.api('creditUser/del', 'jbs'),
 						data: {
 							userId: _userId
 						},

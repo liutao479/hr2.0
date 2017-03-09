@@ -1,7 +1,10 @@
 'use strict';
 page.ctrl('signMaterialsUpload', function($scope) {
-	var $console = render.$console;
-	
+	var $console = render.$console,
+		$params = $scope.$params;
+	$scope.tasks = $params.tasks;
+	$scope.activeTaskIdx = $params.selected || 0;
+
 	/**
 	* 加载签约材料上传数据
 	* @params {object} params 请求参数
@@ -21,12 +24,12 @@ page.ctrl('signMaterialsUpload', function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				// 编译面包屑
+				$scope.result.tasks = $params.tasks.length;
 				setupLocation();
-				// 设置退回原因
 				setupBackReason(result.data.loanTask.backApprovalInfo);
-				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, true);
-				setupEvent();
+				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, function() {
+					setupEvt();
+				}, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -42,7 +45,7 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: $scope.result.cfgData.name,
+			current: $scope.result.data.loanTask.sceneName,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 		});
@@ -68,9 +71,11 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		}
 	}
 
-	// 编译完成后绑定事件
-	var setupEvent = function () {
-
+	/**
+	 * 首次加载完页面时绑定事件
+	 */
+	var evt = function () {
+		// 增加征信人员
 		$console.find('#addCreditUser').on('click', function() {
 			$.ajax({
 				// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
@@ -92,14 +97,72 @@ page.ctrl('signMaterialsUpload', function($scope) {
 				})
 			})
 		})
+	}
+
+	/**
+	 * 多次渲染页面立即处理事件
+	 */
+	var setupEvt = function() {
+		// 图片控件
 		$scope.$el.$loanPanel.find('.uploadEvt').imgUpload();
 	}
 
+	/**
+	* 并行任务切换触发事件
+	* @params {int} idx 触发的tab下标
+	* @params {object} item 触发的tab对象
+	*/
+	var tabChange = function (idx, item) {
+		console.log(item);
+		router.render('loanProcess/' + item.key, {
+			tasks: $scope.tasks,
+			selected: idx,
+			path: 'loanProcess'
+		});
+	}
+
+	/**
+	 * 加载页面模板
+	 */
+
 	$console.load(router.template('iframe/loan-material-upload'), function() {
-		$scope.def.listTmpl = $console.find('#loanUploadTmpl').html();
+		$scope.def = {
+			listTmpl: $console.find('#loanUploadTmpl').html()
+		}
 		$scope.$el = {
 			$loanPanel: $console.find('#loanUploadPanel')
 		}
-		loadOrderInfo();
-	})
+		loadOrderInfo(function() {
+			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
+			evt();
+		});
+	});
+
+	/**
+	 * 监听其它材料最后一个控件的名称
+	 */
+	var otherMaterialsListen = function() {
+		var $imgel = $console.find('.otherMaterials .uploadEvt');
+		$imgel.last().data('name', '其它材料' + $imgel.length);
+		$imgel.last().data('count', $imgel.length);
+		$imgel.last().find('.input-text input').val('其它材料' + $imgel.length);
+	}
+	
+	/***
+	* 删除图片后的回调函数
+	*/
+	$scope.deletecb = function(self) {
+		self.$el.remove();
+		otherMaterialsListen();
+	}
+
+	/***
+	* 上传图片成功后的回调函数
+	*/
+	$scope.uploadcb = function(self) {
+		self.$el.after(self.outerHTML);
+		otherMaterialsListen();
+		self.$el.next().imgUpload();
+
+	}
 });

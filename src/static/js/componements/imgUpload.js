@@ -57,7 +57,7 @@
 		var self = this;
 		self.$el = $el;
 		self.options = $.extend(def, opts, params);
-		if(!self.options.orderno && !self.options.user && !self.options.scene) return false;
+		if(!self.options.orderno && !self.options.scene) return false;
 		self.init();
 	}
 
@@ -68,7 +68,12 @@
 		self.errMsg = '';
 		if(!self.options.img || self.options.img == 'undefined') {
 			self.status = 0;
-			tmp = internalTemplates.edit.format(self.options.name)
+			if(self.options.other) {
+				self.name = internalTemplates.other.format(self.options.name);
+			} else {
+				self.name = internalTemplates.name.format(self.options.name);
+			}
+			tmp = internalTemplates.edit.format(self.name)
 		} else {
 			if(self.options.editable) {
 				if(self.options.err != undefined) {
@@ -77,7 +82,12 @@
 				if(self.options.msg != undefined) {
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
-				tmp = internalTemplates.modify.format(self.options.name, self.options.img, self.errImg, self.errMsg);
+				if(self.options.other) {
+					self.name = internalTemplates.other.format(self.options.name);
+				} else {
+					self.name = internalTemplates.name.format(self.options.name);
+				}
+				tmp = internalTemplates.modify.format(self.name, self.options.img, self.errImg, self.errMsg);
 				self.status = 1;
 			} else {
 				tmp = internalTemplates.view.format(self.options.name, self.options.img || '');
@@ -97,9 +107,24 @@
 			self.$el.find('.activeEvt').on('change', function() {
 				// console.log(this.files[0])
 				// console.log(this.value.split("\\\\"));
+				if(!this.files[0]) {
+					return false;
+				}
 				self.$el.find('.imgs-error').remove();
 				self.onUpload(this.files[0]);
 			});
+			self.$el.find('.imgs-input-text input').on('blur', function() {
+				var newVal = $(this).val().trim();
+				if(newVal == self.options.name) {
+					return false;
+				}
+				self.options.name = newVal;
+				self.$el.data('name', self.options.name);
+				if(self.options.img) {
+					console.log(self.options.img)
+					self.saveImage(self.options.img);
+				}				
+			})
 		}
 		if(self.status == 1) {
 			self.$el.find('.imgs-delete').on('click', function() {
@@ -122,6 +147,7 @@
 			}
 			var suffix = file.name.substr(file.name.lastIndexOf('.'));
 			var key = res.dir + md5(res.signature) + suffix;
+			// var key = res.dir  + file.name;
 			var fd = new FormData();
 			fd.append('OSSAccessKeyId', res.accessId);
 			fd.append('policy', res.policy);
@@ -138,42 +164,24 @@
 	imgUpload.prototype.onDelete = function() {
 		var self = this;
 		var params = {};
-		console.log(self)
+		var _url = '';
 		if(self.options.id == undefined) {
 			return false;
 		}
+		params.id = self.options.id;
+		// 删除征信材料或者其他材料
 		if(self.options.request) {
-			self.creditDeleteImage();
-			return false;
+			_url = api.creditUpload;
+		} else if(self.options.other) {
+			// params.sceneCode = self.options.scene;
+			_url = api.otherDel;
+		} else {
+			params.sceneCode = self.options.scene;
+			_url = api.del;
 		}
-		params.id = self.options.id;
-		params.sceneCode = self.options.scene;
 		console.log(params)
 		$.ajax({
-			url: api.del,
-			type: 'post',
-			data: params,
-			dataType: 'json',
-			success: function(xhr) {
-				console.log(xhr)
-				if(!xhr.code) {
-					self.$el.html(internalTemplates.edit.format(self.options.name));
-					self.status = 0;
-					self.listen();			
-				}
-			}
-		});
-	};
-	/**
-	* 征信删除图片
-	*/
-	imgUpload.prototype.creditDeleteImage = function() {
-		var self = this;
-		var params = {};
-		params.id = self.options.id;
-		console.log(params)
-		$.ajax({
-			url: api.creditUpload,
+			url: _url,
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -182,7 +190,7 @@
 				if(!xhr.code) {
 					if(self.options.deletecb) {
 						self.options.deletecb = eval(self.options.deletecb);
-						self.options.deletecb && self.options.deletecb();
+						self.options.deletecb && self.options.deletecb(self);
 						return false;
 					}
 					self.$el.html(internalTemplates.edit.format(self.options.name));
@@ -199,94 +207,78 @@
 	imgUpload.prototype.saveImage = function(url) {
 		var self = this;
 		var params = {};
+		var _url = '';
 		if(self.options.request) {
-			self.creditSaveImage(url);
-			return false;
-		}
-		if(self.options.orderno) {
+			if(self.options.id) {
+				params.id = self.options.id;
+			}
+			if(self.options.thumbnailpic) {
+				params.thumbnailPic = self.options.thumbnailpic;
+			}
+			if(self.options.materialsaduitresult) {
+				params.materialsAduitResult = self.options.materialsaduitresult;
+			}
+			if(self.options.materialsaduitopinion) {
+				params.materialsAduitOpinion = self.options.materialsaduitopinion;
+			}
 			params.orderNo = self.options.orderno;
+			params.creditId = self.options.creditid;
+			params.materialsPic = url;
+			_url = api.creditUpload;
+		} else if(self.options.other) {
+			if(self.options.name) {
+				params.materialsName = self.options.name;
+			}
+			if(self.options.id) {
+				params.id = self.options.id;
+			}
+			params.orderNo = self.options.orderno;
+			params.materialsType = self.options.type;
+			params.sceneCode = self.options.scene;
+			params.materialsPic = url;
+			_url = api.otherUpload;
+		} else {
+			if(self.options.orderno) {
+				params.orderNo = self.options.orderno;
+			}
+			if(self.options.user) {
+				params.userId = self.options.user;
+			}
+			if(self.options.owner) {
+				params.ownerCode = self.options.owner;
+			}
+			params.materialsCode = self.options.code;
+			params.materialsType = self.options.type;
+			params.sceneCode = self.options.scene;
+			params.materialsPic = url;
+			_url = api.upload;
 		}
-		if(self.options.user) {
-			params.userId = self.options.user;
-		}
-		if(self.options.owner) {
-			params.ownerCode = self.options.owner;
-		}
-		params.materialsCode = self.options.code;
-		params.materialsType = self.options.type;
-		params.sceneCode = self.options.scene;
-		params.materialsPic = url;
 		console.log(params);
 		$.ajax({
-			url: api.upload,
+			url: _url,
 			data: params,
 			type: 'post',
 			dataType: 'json',
 			success: function(xhr) {
+				console.log(xhr)
 				if(!xhr.code) {
 					if(self.status != 1) {
-						self.$el.html(internalTemplates.modify.format(self.options.name, url, self.errImg, self.errMsg));
+						self.$el.html(internalTemplates.modify.format(self.name, url, self.errImg, self.errMsg));
 						self.options.id = xhr.data;
 						self.$el.data('img', url);
 						self.status = 1;	
 						self.listen();
+						if(self.options.uploadcb) {
+							self.options.uploadcb = eval(self.options.uploadcb);
+							self.options.uploadcb && self.options.uploadcb(self);
+							return false;
+						}
 					} else {
 						self.options.id = xhr.data;
 						self.$el.data('img', url);
 						self.$el.find('img').attr('src', url);
 					}
-				}
-			}
-		})
-	};
-
-	/**
-	* 征信结果录入保存图片
-	* @params {string} url 征信报告图片地址
-	*/
-	imgUpload.prototype.creditSaveImage = function(url) {
-		var self = this;
-		var params = {};
-		if(self.options.id) {
-			params.id = self.options.id;
-		}
-		if(self.options.thumbnailpic) {
-			params.thumbnailPic = self.options.thumbnailpic;
-		}
-		if(self.options.materialsaduitresult) {
-			params.materialsAduitResult = self.options.materialsaduitresult;
-		}
-		if(self.options.materialsaduitopinion) {
-			params.materialsAduitOpinion = self.options.materialsaduitopinion;
-		}
-		params.orderNo = self.options.orderno;
-		params.creditId = self.options.creditid;
-		params.materialsPic = self.options.img;
-		console.log(params)
-		$.ajax({
-			url: api.creditUpload,
-			data: params,
-			type: 'post',
-			dataType: 'json',
-			success: function(xhr) {
-				console.log(xhr);
-				if(!xhr.code) {
-					if(self.status != 1) {
-						self.$el.html(internalTemplates.modify.format(self.options.name, url, self.errImg, self.errMsg));
-						self.options.id = xhr.data;
-						self.$el.data('img', url);
-						self.status = 1;	
-						self.listen();
-					} else {
-						self.options.id = xhr.data;
-						self.$el.data('img', url);
-						self.$el.find('img').attr('src', url);
-					}
-					if(self.options.uploadcb) {
-						self.options.uploadcb = eval(self.options.uploadcb);
-						self.options.uploadcb && self.options.uploadcb(self);
-						return false;
-					}
+					
 				}
 			}
 		})
@@ -339,19 +331,21 @@
 				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
 				<span class="i-tips">点击上传图片</span>\
 				<input type="file" class="input-file activeEvt" />\
-			   </div>\
-			   <span class="imgs-item-p">{0}</span>',
+			   </div>{0}',
 		modify: '<div class="imgs-item-upload">\
 				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt"/></div>\
 				<div class="imgs-delete"><i class="iconfont">&#xe602;</i></div>\
 				<img src="{1}" class="imgs-view" />\
-				{2}{3}</div>\
-			   <span class="imgs-item-p">{0}</span>',
+				{2}{3}</div>{0}',
 		view: '<div class="imgs-item-upload">\
 				<img src="{1}" class="imgs-view viewEvt" />\
 			   </div>\
 			   <span class="imgs-item-p">{0}</span>',
-		msg: '<div class="imgs-describe">{0}</div>'
+		msg: '<div class="imgs-describe">{0}</div>',
+		name: '<span class="imgs-item-p">{0}</span>',
+		other: '<div class="input-text imgs-input-text">\
+					<input type="text" value="{0}">\
+				</div>'
 	}
 
 	var api = {
@@ -360,7 +354,9 @@
 		// upload: 'http://127.0.0.1:8083/mock/addOrUpdate',
 		upload: $http.api('material/addOrUpdate', 'zyj'),
 		del: $http.api('material/del', 'zyj'),
-		creditUpload: $http.api('creditReport/reportUpd', 'jbs')
+		creditUpload: $http.api('creditReport/reportUpd', 'jbs'),
+		otherUpload: $http.api('otherMaterials/addOrUpdate', 'zyj'),
+		otherDel: $http.api('otherMaterials/del', 'zyj')
 	}
 
 })(jQuery);

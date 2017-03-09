@@ -1075,6 +1075,9 @@ input[disabled]{
     //面板详细内容
     .panel-content {
         padding: 0 0 29px 23px;
+        &.panel-content-imgs {
+            padding: 25px 60px !important;
+        }
         &.panel-content-layout {
             padding: 20px 17px;
         }
@@ -1784,11 +1787,6 @@ input[disabled]{
 
 .loan-imgs-bar {
     padding: 24px 0 0 0;
-    .imgs-item-group {
-        &:nth-last-of-type(1) {
-            margin-right: 0;
-        }
-    }
 }
 //返回列表条目下，退回原因（退回增加XX） zhy
 .add-credit-bar {

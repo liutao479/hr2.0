@@ -7,12 +7,14 @@
 				<!-- 退回原因 -->
 				<div id="backReason"></div>
 				<!-- 退回原因 end-->
-				<!--并发tab-->
-				<div id="tabPanel" class="tab-bar tab-bar-special"></div>
+
+				<!-- 并发tab -->
+				<div id="tabPanel" class="tab-bar mt15"></div>
+				<!-- 并发tab end-->
+
 				<!-- 渲染栏 -->
-				<div class="loanUploadPanel" id="loanUploadPanel">
-					
-				</div>
+				<div class="loanUploadPanel" id="loanUploadPanel"></div>
+				<!-- 渲染栏 end-->
 				
 				<!--提交订单按钮-->
 				<div class="commit-orders-box">
@@ -24,7 +26,11 @@
 				{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i]; }}
 					{{ if(row.code != 'QTCL') { }}
 						{{ for(var j = 0, len2 = it.data[row.code].length; j < len2; j++) { var col = it.data[row.code][j]; }}
-						<div class="panel mt15 clearfix">
+						{{ if(i == 0 && j == 0 && it.tasks > 1) { }}
+							<div class="panel no-top-border">
+						{{ } else { }}
+							<div class="panel mt15">
+						{{ } }}
 							<!-- 贷款材料类别名 -->
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -35,8 +41,7 @@
 							<!-- 贷款材料类别名 -->
 
 							<!-- 贷款材料对应上传材料项 -->
-							<div class="panel-content clearfix">
-								<div class="loan-imgs-bar">
+							<div class="panel-content panel-content-imgs clearfix">
 								{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m], flag = 0; }}
 									{{ for(var n = 0, len4 = col.materials.length; n < len4; n++) { var nl = col.materials[n]; }}
 										{{ if(ml.code == nl.materialsCode) { }}
@@ -49,7 +54,6 @@
 										<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-owner="{{=col.userType}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="" data-err="{{=row.auditResult}}" data-editable="1" data-empty="{{=ml.empty}}"></div>
 									{{ } }}
 								{{ } }}
-								</div>
 							</div>
 							<!-- 贷款材料对应上传材料项 -->
 						</div>
@@ -67,33 +71,11 @@
 						<!-- 其他材料类别名 -->
 
 						<!-- 其他材料对应上传材料项 -->
-						<div class="panel-content clearfix">
-							<div class="loan-imgs-bar">
-								{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m], flag = 0; }}
-									{{ for(var n = 0, len4 = col.materials.length; n < len4; n++) { var nl = col.materials[n]; }}
-										{{ if(ml.code == nl.materialsCode) { }}
-											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.mame}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=row.auditResult}}" data-editable="1" data-empty="{{=ml.empty}}"></div>
-										{{ break; }}
-										{{ } else { flag++; }}
-										{{ } }}
-									{{ } }}
-									{{ if(flag == len4) { }}
-										<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-name="{{=ml.mame}}" data-code="{{=ml.code}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="" data-err="{{=row.auditResult}}" data-editable="1" data-empty="{{=ml.empty}}"></div>
-									{{ } }}
-								{{ } }}
-								<div class="imgs-item-group">
-									<div class="imgs-item-upload">
-										<div class="iconfont-upload">
-											<i class="iconfont">&#xe61f;</i>
-										</div>
-										<span class="i-tips">点击或拖拽上传图片</span>
-										<input type="file" id="" class="input-file" />
-									</div>
-									<div class="input-text imgs-input-text">
-										<input type="text" id="">
-									</div>
-								</div>
-							</div>
+						<div class="panel-content panel-content-imgs clearfix">
+							{{ for(var n = 0, len4 = it.data.QTCL[0].materials.length; n < len4; n++) { var nl = it.data.QTCL[0].materials[n]; }}
+								<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.data.loanTask.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.data.loanTask.category}}'].uploadcb" data-other="true" data-orderno="{{=it.data.loanTask.orderNo}}" data-name="{{=nl.materialsName}}" data-scene="{{=it.data.loanTask.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult}}" data-editable="1"></div>
+							{{ } }}
+							<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.data.loanTask.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.data.loanTask.category}}'].uploadcb"  data-other="true" data-orderno="{{=it.data.loanTask.orderNo}}" data-name="其他材料{{=(n + 1)}}" data-count="{{=(n + 1)}}" data-scene="{{=it.data.loanTask.category}}" data-editable="1"></div>
 						</div>
 						<!-- 其他材料对应上传材料项 -->
 					</div>

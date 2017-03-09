@@ -13,7 +13,7 @@ page.ctrl('creditInput', [], function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			loanUser: $scope.result.data[0].loanUserCredits[0].userName,
+			loanUser: $scope.result.data[0][0].userName,
 			current: '征信结果录入',
 			orderDate: '2017-12-12 12:12'
 		});
@@ -61,6 +61,12 @@ page.ctrl('creditInput', [], function($scope) {
 	 * @param  {object} result 请求获得的数据
 	 */
 	var setupTab = function(result, cb) {
+		result.types = ['借款人', '共同还款人', '反担保人'];
+		result.format = {
+			'ZJR': 0,
+			'GTHKR': 1,
+			'FDBR': 2
+		};
 		render.compile($scope.$el.$tab, $scope.def.tabTmpl, result, true);
 		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
 
@@ -154,7 +160,6 @@ page.ctrl('creditInput', [], function($scope) {
 	* 绑定立即处理事件
 	*/
 	var setupEvt = function() {
-
 		// 上传pdf文件
 		$console.find('.pdfUpload').on('change', function() {
 			var tml = '<div class="panel-value-item">\
