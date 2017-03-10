@@ -29,10 +29,7 @@ page.ctrl('loan', function($scope) {
 				// 测试复选框
 				$scope.$checks = $('.checkbox').checking();
 
-				$scope.$checks[0].$checking.onChange(function(a) {
-					console.log(a);
-				})
-
+				$scope.$checks[0].$checking.onChange();
 
 				// 测试弹窗
 				$console.find('#newBusiness').on('click', function() {
@@ -61,6 +58,9 @@ page.ctrl('loan', function($scope) {
 		$('#pageToolbar').paging();
 	}
 
+	/**
+	* 绑定表格中立即处理事件
+	*/
 	var setupEvent = function() {
 		$console.find('#processTagClose').on('click', function() {
 			router.render('loanProcess');
@@ -100,11 +100,11 @@ page.ctrl('loan', function($scope) {
 				})
 			}
 			router.render(that.data('href'), {
+				taskId: that.data('id'), 
 				tasks: taskObj,
 				path: 'loanProcess'
 			});
 		});
-		// $('.select').dropdown($scope);
 
 		/**
 		* 任务类型点击显示/隐藏
@@ -125,31 +125,34 @@ page.ctrl('loan', function($scope) {
 			}
 		})
 
-		/**
-		* 任务类型点击排序
-		*/
 	}
- 	
- 	// 订单列表的排序
-	$(document).on('click', '#time-sort', function() {
-		var that = $(this);
-		if(!that.data('sort')) {
-			apiParams.createTimeSort = 1;
-			$params.createTimeSort = 1;
-			loadLoanList(apiParams, function() {
-				that.data('sort', true);
-				that.removeClass('time-sort-up').addClass('time-sort-down');
-			});
 
-		} else {
-			delete apiParams.createTimeSort;
-			delete $params.createTimeSort;
-			loadLoanList(apiParams, function() {
-				that.data('sort', false);
-				that.removeClass('time-sort-down').addClass('time-sort-up');
-			});
-		}
-	});
+	/**
+	* 页面首次载入时绑定事件
+	*/
+ 	var setupEvt = function() {
+ 		// 订单列表的排序
+		$console.find('#time-sort').on('click', function() {
+			var that = $(this);
+			if(!that.data('sort')) {
+				apiParams.createTimeSort = 1;
+				$params.createTimeSort = 1;
+				loadLoanList(apiParams, function() {
+					that.data('sort', true);
+					that.removeClass('time-sort-up').addClass('time-sort-down');
+				});
+
+			} else {
+				delete apiParams.createTimeSort;
+				delete $params.createTimeSort;
+				loadLoanList(apiParams, function() {
+					that.data('sort', false);
+					that.removeClass('time-sort-down').addClass('time-sort-up');
+				});
+			}
+		});
+ 	}
+ 	
 	/***
 	* 加载页面模板
 	*/
@@ -164,7 +167,9 @@ page.ctrl('loan', function($scope) {
 		} else {
 			$('#processTag').parent().remove();
 		}
-		loadLoanList(apiParams);
+		loadLoanList(apiParams, function() {
+			setupEvt();
+		});
 		setupDropDown();
 	});
 
@@ -180,7 +185,7 @@ page.ctrl('loan', function($scope) {
 
 	/**dropdown 测试*/
 	function setupDropDown() {
-		$console.find('#dropDown').dropdown();
+		$console.find('.select').dropdown();
 	}
 
 	var car = {
@@ -229,6 +234,9 @@ page.ctrl('loan', function($scope) {
 			})
 		}
 	}
+	var area = {
+
+	}
 
 	$scope.dropdownTrigger = {
 		car: function(tab, parentId, cb) {
@@ -251,6 +259,21 @@ page.ctrl('loan', function($scope) {
 					// cb();
 					break;
 			}
+		},
+		bank: function(cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'carSerieId',
+						name: 'specName'
+					};
+					cb(sourceData);
+				})
+			})
 		}
 	}
 });

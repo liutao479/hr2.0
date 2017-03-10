@@ -7,12 +7,15 @@
 				<!-- 退回原因 -->
 				<div id="backReason"></div>
 				<!-- 退回原因 end-->
-				<div id="tabPanel" class="tab-bar tab-bar-special"></div>
+
+				<!-- 并发tab -->
+				<div id="tabPanel" class="tab-bar mt15"></div>
+				<!-- 并发tab end-->
+
 				<!-- 渲染栏 -->
-				<div class="loanUploadPanel" id="loanUploadPanel">
-					
-				</div>
-				
+				<div class="loanUploadPanel" id="loanUploadPanel"></div>
+				<!-- 渲染栏 end-->
+
 				<!--提交订单按钮-->
 				<div class="commit-orders-box">
 					<div id="addCreditUser" class="button">增加征信人员</div><div id="submitOrder" class="button button-deep">提交订单</div>
@@ -20,9 +23,13 @@
 			</div>
 			<!-- 材料上传 end-->
 			<script type="text/dot-x-template" id="loanUploadTmpl">
-				{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i]; console.log(row); }}
+				{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i]; }}
 					{{ if(row.code == 'SMCL') { }}
-						<div class="panel mt15 clearfix">
+						{{ if(it.tasks > 1) { }}
+							<div class="panel no-top-border">
+						{{ } else { }}
+							<div class="panel mt15">
+						{{ } }}
 							<!-- {{=it.cfgData.name}}标题 -->
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -33,27 +40,29 @@
 							<!-- {{=it.cfgData.name}}标题 -->
 
 							<!-- {{=it.cfgData.name}}对应上传材料项 -->
-							<div class="panel-content clearfix">
-								<div class="loan-imgs-bar">
-									{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m], flag = 0; }}
-										{{ for(var n = 0, len4 = it.data.materials.length; n < len4; n++) { var nl = it.data.materials[n]; }}
-											{{ if(ml.code == nl.materialsCode) { }}
-												<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
-											{{ break; }}
-											{{ } else { flag++; }}
-											{{ } }}
-										{{ } }}
-										{{ if(flag == len4) { }}
-											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
+							<div class="panel-content panel-content-imgs clearfix">
+								{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m], flag = 0; }}
+									{{ for(var n = 0, len4 = it.data.materials.length; n < len4; n++) { var nl = it.data.materials[n]; }}
+										{{ if(ml.code == nl.materialsCode) { }}
+											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult}}" data-editable="1"></div>
+										{{ break; }}
+										{{ } else { flag++; }}
 										{{ } }}
 									{{ } }}
-								</div>
+									{{ if(flag == len4) { }}
+										<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-err="{{=nl.auditResult}}" data-editable="1"></div>
+									{{ } }}
+								{{ } }}
 							</div>
 							<!-- {{=it.cfgData.name}}对应上传材料项 -->
 						</div>
 					{{ } }}
 					{{ if(row.code == 'DZCL') { }}
-						<div class="panel mt15 clearfix">
+						{{ if(it.tasks > 1) { }}
+							<div class="panel no-top-border">
+						{{ } else { }}
+							<div class="panel mt15">
+						{{ } }}
 							<!-- {{=it.cfgData.name}}标题 -->
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -64,27 +73,29 @@
 							<!-- {{=it.cfgData.name}}标题 -->
 
 							<!-- {{=it.cfgData.name}}对应上传材料项 -->
-							<div class="panel-content clearfix">
-								<div class="loan-imgs-bar">
-									{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m], flag = 0; }}
-										{{ for(var n = 0, len4 = it.data.materials.length; n < len4; n++) { var nl = it.data.materials[n]; }}
-											{{ if(ml.code == nl.materialsCode) { }}
-												<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
-											{{ break; }}
-											{{ } else { flag++; }}
-											{{ } }}
-										{{ } }}
-										{{ if(flag == len4) { }}
-											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
+							<div class="panel-content panel-content-imgs clearfix">
+								{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m], flag = 0; }}
+									{{ for(var n = 0, len4 = it.data.materials.length; n < len4; n++) { var nl = it.data.materials[n]; }}
+										{{ if(ml.code == nl.materialsCode) { }}
+											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
+										{{ break; }}
+										{{ } else { flag++; }}
 										{{ } }}
 									{{ } }}
-								</div>
+									{{ if(flag == len4) { }}
+										<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
+									{{ } }}
+								{{ } }}
 							</div>
 							<!-- {{=it.cfgData.name}}对应上传材料项 -->
 						</div>
 					{{ } }}
 					{{ if(row.code == 'TCCL') { }}
-						<div class="panel mt15 clearfix">
+						{{ if(it.tasks > 1) { }}
+							<div class="panel no-top-border">
+						{{ } else { }}
+							<div class="panel mt15">
+						{{ } }}
 							<!-- {{=it.cfgData.name}}标题 -->
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -95,27 +106,25 @@
 							<!-- {{=it.cfgData.name}}标题 -->
 
 							<!-- {{=it.cfgData.name}}对应上传材料项 -->
-							<div class="panel-content clearfix">
-								<div class="loan-imgs-bar">
-									{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m], flag = 0; }}
-										{{ for(var n = 0, len4 = it.data.materials.length; n < len4; n++) { var nl = it.data.materials[n]; }}
-											{{ if(ml.code == nl.materialsCode) { }}
-												<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
-											{{ break; }}
-											{{ } else { flag++; }}
-											{{ } }}
-										{{ } }}
-										{{ if(flag == len4) { }}
-											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
+							<div class="panel-content panel-content-imgs clearfix">
+								{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m], flag = 0; }}
+									{{ for(var n = 0, len4 = it.data.materials.length; n < len4; n++) { var nl = it.data.materials[n]; }}
+										{{ if(ml.code == nl.materialsCode) { }}
+											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
+										{{ break; }}
+										{{ } else { flag++; }}
 										{{ } }}
 									{{ } }}
-								</div>
+									{{ if(flag == len4) { }}
+										<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
+									{{ } }}
+								{{ } }}
 							</div>
 							<!-- {{=it.cfgData.name}}对应上传材料项 -->
 						</div>
 					{{ } }}
 					{{ if(row.code == 'QTCL') { }}
-						<div class="panel mt15 clearfix">
+						<div class="panel mt15">
 							<!-- {{=it.cfgData.name}}标题 -->
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -126,33 +135,11 @@
 							<!-- {{=it.cfgData.name}}标题 -->
 
 							<!-- {{=it.cfgData.name}}对应上传材料项 -->
-							<div class="panel-content clearfix">
-								<div class="loan-imgs-bar">
-									{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m], flag = 0; }}
-										{{ for(var n = 0, len4 = it.data.otherMaterials.length; n < len4; n++) { var nl = it.data.materials[n]; }}
-											{{ if(ml.code == nl.materialsCode) { }}
-												<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
-											{{ break; }}
-											{{ } else { flag++; }}
-											{{ } }}
-										{{ } }}
-										{{ if(flag == len4) { }}
-											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=nl.userId}}" data-err="{{=row.auditResult}}" data-editable="1"></div>
-										{{ } }}
-									{{ } }}
-									<div class="imgs-item-group">
-										<div class="imgs-item-upload">
-											<div class="iconfont-upload">
-												<i class="iconfont">&#xe61f;</i>
-											</div>
-											<span class="i-tips">点击或拖拽上传图片</span>
-											<input type="file" id="" class="input-file" />
-										</div>
-										<div class="input-text imgs-input-text">
-											<input type="text" id="">
-										</div>
-									</div>
-								</div>
+							<div class="panel-content panel-content-imgs otherMaterials clearfix">
+								{{ for(var n = 0, len4 = it.data.otherMaterials.length; n < len4; n++) { var nl = it.data.otherMaterials[n]; }}
+									<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.data.loanTask.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.data.loanTask.category}}'].uploadcb" data-other="true" data-orderno="{{=it.data.loanTask.orderNo}}" data-name="{{=nl.materialsName}}" data-scene="{{=it.data.loanTask.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult}}" data-editable="1"></div>
+								{{ } }}
+								<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.data.loanTask.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.data.loanTask.category}}'].uploadcb" data-other="true" data-orderno="{{=it.data.loanTask.orderNo}}" data-name="其他材料{{=(n + 1)}}" data-count="{{=(n + 1)}}" data-scene="{{=it.data.loanTask.category}}" data-err="{{=nl.auditResult}}" data-editable="1"></div>
 							</div>
 							<!-- {{=it.cfgData.name}}对应上传材料项 -->
 						</div>

@@ -12,6 +12,14 @@
 		    });
 		};
 	}
+	/**
+	* 添加string.trim方法
+	*/
+	if(!String.prototype.trim) {
+		String.prototype.trim = function(){
+			return this.replace(/(^\s*)|(\s*$)/g, '');
+		};
+	}
 	/*
 	* 本地验证规则
 	*/
@@ -34,15 +42,15 @@
 			switch (name) {
 				// 周宜俭ip
 				case 'zyj':
-					return 'http://192.168.0.121:8080/' + method;
+					return 'http://192.168.0.138:8080/' + method;
 					break;
 				// 蔡延军ip
 				case 'cyj':
-					return 'http://192.168.0.105:8080/' + method;
+					return 'http://192.168.0.124:8080/' + method;
 					break;
 				// 季本松ip
 				case 'jbs':
-					return 'http://192.168.0.180:8080/' + method;
+					return 'http://192.168.0.123:8080/' + method;
 					break;
 				// 王亮ip 
 				case 'wl':
@@ -147,14 +155,20 @@
 			title: '提示',
 			content: '你的登录授权无效或已过期',
 			useBootstrap: false,
-			theme: 'material',
 			buttons:{
 				ok: {
 					text: '确定',
 					action: function() {
 						// location.href = 'login.html';
+						// alert(1)
+					}
+				},
+				close: {
+					text: '取消',
+					action: function() {
 					}
 				}
+
 			}
 		})
 	}
@@ -169,7 +183,7 @@
 		if(!u.token || !u.account) {
 			return unAuth();
 		}
-		_.$http.authorization(u.token);
+		// _.$http.authorization(u.token);
 		_.hrLocalInformation = u;
 	}
 	localAuth();
@@ -248,16 +262,13 @@
 			name: '身份证反面'
 		},{
 			materialsCode: 'zxsqs',
-			name: '征信申请书'
+			name: '征信授权书'
 		},{
-			materialsCode: 'xtzqtzs',
-			name: '系统知情通知书'
+			materialsCode: 'xtsyzqs',
+			name: '系统授权通知书'
 		},{
-			materialsCode: 'hkbhzy',
-			name: '户口本户主页'
-		},{
-			materialsCode: 'hkbsy',
-			name: '户口本首页'
+			materialsCode: 'zxsqszp',
+			name: '授权书签字照片'
 		}];
 	/**
 	* for plugin

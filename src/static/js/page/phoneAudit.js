@@ -1,46 +1,71 @@
 'use strict';
 page.ctrl('phoneAudit', function($scope) {
 	var $console = render.$console,
-		$params = $scope.$params,
-		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
-		};
-	var urlStr1 = "http://192.168.0.134:8080";
-	var urlStr = "http://127.0.0.1:8083";
-//	var urlStr1 = "http://127.0.0.1:8083";
-	var apiMap = {
-		"dealerName": urlStr+"/mock/sex",
-		"dealerId": urlStr+"/mock/busiSourceName",
-		"sex": urlStr+"/mock/sex",
-		"hprovince": urlStr+"/mock/province",
-		"hcity": urlStr+"/mock/city",
-		"hcounty": urlStr+"/mock/country",
-		"cprovince": urlStr+"/mock/province",
-		"ccity": urlStr+"/mock/city",
-		"ccounty": urlStr+"/mock/country",
-		"isSecond": urlStr+"/mock/busiSourceName"
-		}
+		$params = $scope.$params;
+	var urlStr = "http://192.168.0.121:8080";
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadLoanList = function(params, cb) {
+	var loadLoanList = function(cb) {
+		var data={};
+		data['taskId']=80873;
+//		data['pageCode']='loanTelResApproval';
 		$.ajax({
-			url: $http.api($http.apiMap.phoneAudit),
-			data: params,
+			url: urlStr+'/telAdudit/info',
+			data: data,
+			dataType: 'json',
 			success: $http.ok(function(result) {
+//				$scope.result = result;
+//				// 启动面包屑
+//				var _loanUser = $scope.result.data[0].loanUserCredits[0].userName;
+//				setupLocation(_loanUser);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
 				loanFinishedSelect();
+				setupEvent();
 			})
 		})
 	}
-//页面加载完成对所有下拉框进行赋值	
+	var loadTabList = function(cb) {
+		var data={};
+		data['taskId']=80872;
+		$.ajax({
+			url: urlStr+'/loanTelApproval/info',
+			data: data,
+			dataType: 'json',
+			async:false,
+			success: $http.ok(function(result) {
+				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.cfgData, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	var setupEvent = function() {
+		$console.find('#checkTabs a').on('click', function() {
+			$('.role-item').each(function(){
+				$(this).removeClass('role-item-active');
+			})
+			var that = $(this);
+			var idx = that.data('idx');
+			that.addClass('role-item-active');
+			$(".tabTrigger").each(function(){
+				$(this).hide();
+				var trig = $(this).data('trigger');
+				if(trig == idx){
+					$(this).show();
+					return false;
+				}
+			})
+		});
+	}
+	//页面加载完成对所有下拉框进行赋值	
 	var loanFinishedSelect = function(){
 		$(".selecter").each(function(){
 			$("li",$(this)).each(function(){
@@ -60,7 +85,7 @@ page.ctrl('phoneAudit', function($scope) {
 			$(".selectOptBox1").hide(); 
 		});
 	}
-//点击下拉框拉取选项	
+	//点击下拉框拉取选项	
 	$(document).on('click','.selecter', function() {
 		$(".selectOptBox1",$(this)).show();
 	})
@@ -84,78 +109,18 @@ page.ctrl('phoneAudit', function($scope) {
 		return false;
 	})
 	/***
-	* 保存按钮
-	*/
-	$(document).on('click', '.saveBtn', function() {
-		var isTure = true;
-		var requireList = $(this).parent().siblings().find("form").find(".required");
-		requireList.each(function(){
-			var value = $(this).val();
-			if(!value){
-				$(this).parent().addClass("error-input");
-				$(this).after('<i class="error-input-tip">请完善该必填项</i>');
-				console.log($(this).index());
-				isTure = false;
-//				return false;
-			}
-		});
-		if(isTure){
-			var data;
-	        var formList = $(this).parent().siblings().find('form');
-	        console.log("form的个数为："+formList.length);
-	        if(formList.length == 1){
-		        var params = formList.serialize();
-	            params = decodeURIComponent(params,true);
-	            var paramArray = params.split("&");
-	            var data1 = {};
-	            for(var i=0;i<paramArray.length;i++){
-	                var valueStr = paramArray[i];
-	                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
-	            }
-	            data = data1;
-	        }else{
-	        	data = [];
-		        formList.each(function(index){
-			        var params = $(this).serialize();
-		            params = decodeURIComponent(params,true);
-		            var paramArray = params.split("&");
-		            var data1 = {};
-		            for(var i=0;i<paramArray.length;i++){
-		                var valueStr = paramArray[i];
-		                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
-		            }
-					console.log(data1);
-					data[index]=data1;
-		        })
-	        }
-	        console.log(data);
-	        
-			$.ajax({
-				type: 'POST',
-				url: '127.0.0.1',
-				data:JSON.stringify(data),
-				dataType:"json",
-				contentType : 'application/json;charset=utf-8',
-				success: function(result){
-					console.log(result.msg);
-				}
-			});
-		}
-	})
-	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('phoneAudit'), function() {
-		$scope.def.listTmpl = render.$console.find('#eleChecktmpl').html();
-//		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
+	$console.load(router.template('iframe/phoneAudit'), function() {
+		$scope.def.listTmpl = $console.find('#eleChecktmpl').html();
+		$scope.def.tabTmpl = $console.find('#checkResultTabsTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#eleCheck'),
+			$tab: $console.find('#checkTabs'),
+			$tbl: $console.find('#eleCheck')
 		}
-		if($params.process) {
-			
-		}
-		loadLoanList(apiParams);
-	});
+		loadLoanList();
+		loadTabList();
+	})
 });
 
 

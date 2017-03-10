@@ -2,21 +2,20 @@
 page.ctrl('creditInput', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params;
-	$scope.tabs = [];
+	$scope.tabs = {};
 	$scope.idx = 0;
 
 	/**
 	* 设置面包屑
 	*/
-	var setupLocation = function(loanUser) {
+	var setupLocation = function() {
 		if(!$scope.$params.path) return false;
 		var $location = $console.find('#location');
-		var _orderDate = tool.formatDate($scope.$params.date, true);
 		$location.data({
 			backspace: $scope.$params.path,
-			loanUser: loanUser,
+			loanUser: $scope.result.data[0][0].userName,
 			current: '征信结果录入',
-			orderDate: _orderDate
+			orderDate: '2017-12-12 12:12'
 		});
 		$location.location();
 	}
@@ -26,27 +25,33 @@ page.ctrl('creditInput', [], function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadOrderInfo = function() {
+	var loadOrderInfo = function(idx, cb) {
 		$.ajax({
-			url: 'http://127.0.0.1:8083/mock/creditInput',
-			// type: 'post',
-			// url: $http.api(''),
-			// data: {
-			// 	taskId : 80871
-			// },
-			// dataType: 'json',
+			// url: 'http://127.0.0.1:8083/mock/creditInput',
+			type: 'post',
+			url: $http.api('creditUser/getCreditInfo', 'jbs'),
+			data: {
+				taskId: 80876
+			},
+			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				result.index = idx;
 				$scope.result = result;
-				// 启动面包屑
-				var _loanUser = $scope.result.data[0].loanUserCredits[0].userName;
-				setupLocation(_loanUser);
-				// 编译tab
-				setupTab($scope.result);
+
+				// 编译tab栏
+				setupTab($scope.result, function() {
+					setupTabEvt();
+				});
+
 				// 编译tab项对应内容
-				setupCreditPanel($scope.result);
-				// 启动绑定事件
-				setupEvent();
+				setupCreditPanel(idx, $scope.result, function() {
+					setupEvt();
+				});
+
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
 			})
 		})
 	}
@@ -55,25 +60,48 @@ page.ctrl('creditInput', [], function($scope) {
 	 * 渲染tab栏
 	 * @param  {object} result 请求获得的数据
 	 */
-	var setupTab = function(result) {
-		render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.data, true);
+	var setupTab = function(result, cb) {
+		result.types = ['借款人', '共同还款人', '反担保人'];
+		result.format = {
+			'ZJR': 0,
+			'GTHKR': 1,
+			'FDBR': 2
+		};
+		render.compile($scope.$el.$tab, $scope.def.tabTmpl, result, true);
 		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
+
+		if(cb && typeof cb == 'function') {
+			cb();
+		}
 	}
 
 	/**
 	 * 渲染tab栏对应项内容
 	 * @param  {object} result 请求获得的数据
 	 */
-	var setupCreditPanel = function(result) {
-		var _tabTrigger = $scope.$el.$tbls.eq(0);
-		$scope.tabs.push(_tabTrigger);
-		$scope.result.index = 0;
+	var setupCreditPanel = function(idx, result, cb) {
+		// 编译对应idx的tab项内容，将目标编译tab项内容页显示，隐藏其他tab项内容
+		var _tabTrigger = $scope.$el.$tbls.eq(idx);
+		$scope.tabs[idx] = _tabTrigger;
 		render.compile(_tabTrigger, $scope.def.listTmpl, result, true);
+		for(var i = 0, len = $scope.$el.$tbls.length; i < len; i++) {
+			if(i == idx) {
+				$scope.$el.$tbls.eq(i).show();
+			} else {
+				$scope.$el.$tbls.eq(i).hide();
+			}
+		}
+		$scope.currentType = idx;
+		if( cb && typeof cb == 'function' ) {
+			cb();
+		}
 	}
 
 	
-
-	var setupEvent = function () {
+	/**
+	* 绑定tab栏立即处理事件
+	*/
+	var setupTabEvt = function () {
 		$scope.$el.$tab.find('.tabEvt').on('click', function () {
 			var $this = $(this);
 			if($this.hasClass('role-item-active')) return;
@@ -82,45 +110,139 @@ page.ctrl('creditInput', [], function($scope) {
 				var _tabTrigger = $scope.$el.$tbls.eq(_type);
 				$scope.tabs[_type] = _tabTrigger;
 				$scope.result.index = _type;
-				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, true);
+				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, function() {
+					setupEvt();
+				}, true);
 			}
 			$scope.$el.$tabs.eq($scope.idx).removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.$el.$tbls.eq($scope.idx).hide();
 			$scope.$el.$tbls.eq(_type).show();
 			$scope.idx = _type;
+			$console.find('.uploadEvt').imgUpload();
 		})
 	}
+
+	var pdfCb = function(res, file, cb) {
+		if(!res) {
+			throw "can not get the license";
+		}
+		console.log(res);
+		// var suffix = file.name.substr(file.name.lastIndexOf('.'));
+		var key = res.dir + 'credit-report-file/' + file.name;
+		var fd = new FormData();
+		fd.append('OSSAccessKeyId', res.accessId);
+		fd.append('policy', res.policy);
+		fd.append('Signature', res.signature);
+		fd.append('key', key);
+		fd.append('file', file, file.name);
+		fd.append('success_action_status', 200);
+		$.ajax({
+			url: res.host,
+			data: fd,
+			type: 'post',
+			processData: false,
+			dataType: 'xml',
+			contentType: false,
+			success: function(response) {
+				// var _url = res.host + '/' + fd.get('key');
+				var _name = fd.get('key');
+				_name = _name.substr(_name.lastIndexOf('/') + 1);
+				if(cb && typeof cb == 'function') {
+					cb(_name);
+				}
+
+			}
+		})
+	}
+
 	/**
 	* 绑定立即处理事件
 	*/
-	$(document).on('click', '#submitOrders', function() {
-		var that = $(this);
-		that.openWindow({
-			title: "提交",
-			content: dialogTml.wContent.suggestion,
-			commit: dialogTml.wCommit.cancelSure
-		}, function($dialog) {
-			$dialog.find('.w-sure').on('click', function() {
-				var _suggestion = $dialog.find('#suggestion').val();
-				alert(_suggestion);
-				$dialog.remove();
-			})
+	var setupEvt = function() {
+		// 上传pdf文件
+		$console.find('.pdfUpload').on('change', function() {
+			var tml = '<div class="panel-value-item">\
+							<div class="input-text">\
+								<input type="text" value="{0}" readonly="true" />\
+							</div>\
+						</div>',
+				that = $(this),
+				$parent = that.parent().parent(),
+				file = this.files[0];
+			$.ajax({
+				url: 'http://112.74.99.75:8089/oss/video/sign',
+				dataType: 'json'
+			}).done(function(response) {
+				if(!response.code) {
+					pdfCb(response.data, file, function(reportName) {
+						console.log(reportName)
+						console.log(that.data('value'));
+						if(!that.data('value')) {
+							$parent.before(tml.format(reportName));
+							that.prev().html('重新上传');
+							that.data('value', true);
+						} else {
+							$parent.before(tml.format(reportName));
+						}
+					});
+				} else {
+					pdfCb(false, file);
+				}
+				
+			});
+			
+		});
+
+		$console.find('.uploadEvt').imgUpload();
+	}
+
+	/**
+	* 页面首次加载绑定立即处理事件
+	*/
+	var evt = function() {
+		$console.find('#submitOrders').on('click', function() {
+
 		})
-	});
+	}
+
+
+	var commitData = function() {
+		
+	}
 
 	/***
 	* 加载页面模板
 	*/
 	render.$console.load(router.template('iframe/credit-result-typing'), function() {
-		$scope.def.tabTmpl = $console.find('#creditResultTabsTmpl').html();
-		$scope.def.listTmpl = $console.find('#creditResultListTmpl').html();
-		// console.log($console.find('#creditResultPanel'))
+		$scope.def = {
+			tabTmpl: $console.find('#creditResultTabsTmpl').html(),
+			listTmpl: $console.find('#creditResultListTmpl').html()
+		}
 		$scope.$el = {
 			$tbls: $console.find('#creditResultPanel > .tabTrigger'),
 			$tab: $console.find('#creditTabs'),
 			$paging: $console.find('#pageToolbar')
 		}
-		loadOrderInfo();
+		loadOrderInfo($scope.idx, function() {
+			setupLocation();
+		});
 	});
+
+	/***
+	* 删除图片后的回调函数
+	*/
+	$scope.deletecb = function() {
+		loadOrderInfo($scope.idx);
+	}
+
+	/***
+	* 上传图片成功后的回调函数
+	*/
+	$scope.uploadcb = function(self) {
+		console.log(self.$el);
+		self.$el.find('.imgs-item-p').html('征信报告' + self.$el.data('count'));
+		self.$el.after(self.outerHTML);
+		self.$el.next().imgUpload();
+	}
 });

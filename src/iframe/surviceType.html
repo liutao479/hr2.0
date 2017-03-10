@@ -29,29 +29,19 @@
 				<form id="dataform">
 				<div class="panel panel-loan clearfix">
 					<div class="panel-content choose-content clearfix">
-						<div class="choose-items" data-key='xyms'>
+						{{ for(var i=0,len = it.DATA.length;i<len;i++){ var role = it.DATA[i]; }}
+						<div class="choose-items" data-key='{{= role.value}}'>
 							<div>
 								<div class="choose-items-icon"><i class="iconfont">&#xe626;</i></div>
-								<div class="choose-items-title">信用模式</div>
+								<div class="choose-items-title">{{= role.name}}</div>
 							</div>
 						</div>
-						<div class="choose-items" data-key='dyms'>
-							<div>
-								<div class="choose-items-icon"><i class="iconfont">&#xe626;</i></div>
-								<div class="choose-items-title">抵押模式</div>
-							</div>
-						</div>
-						<div class="choose-items" data-key='dbms'>
-							<div>
-								<div class="choose-items-icon"><i class="iconfont">&#xe626;</i></div>
-								<div class="choose-items-title">担保模式</div>
-							</div>
-						</div>
+						{{ } }}
 					</div>
 				</div>
-				<input type="hidden" id="dataKey" name="datakey"" />
-				<input type="hidden" name="id" value="{{= it.id}}" />
-				<input type="hidden" name="orderNo" value="{{= it.orderNo}}" />
+				<input type="hidden" id="dataKey" value="{{= it.SERVICETYPECODE}}" />
+				<!--<input type="hidden" name="id" value="{{= it.id}}" />-->
+				<!--<input type="hidden" name="orderNo" value="{{= it.orderNo}}" />-->
 				</form>
 			</script>
 			
