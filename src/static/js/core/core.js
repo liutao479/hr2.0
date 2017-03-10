@@ -155,14 +155,20 @@
 			title: '提示',
 			content: '你的登录授权无效或已过期',
 			useBootstrap: false,
-			theme: 'material',
 			buttons:{
 				ok: {
 					text: '确定',
 					action: function() {
 						// location.href = 'login.html';
+						// alert(1)
+					}
+				},
+				close: {
+					text: '取消',
+					action: function() {
 					}
 				}
+
 			}
 		})
 	}
@@ -180,7 +186,7 @@
 		// _.$http.authorization(u.token);
 		_.hrLocalInformation = u;
 	}
-	// localAuth();
+	localAuth();
 	//授权校验 end
 
 	/************功能辅助类 begin************/
