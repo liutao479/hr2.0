@@ -14,8 +14,10 @@ page.ctrl('expireInfoInputSingle', [], function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadExpireProcessList = function(params, cb) {
+		var data = {};
+			data['detailId'] = 123;
 		$.ajax({
-			url: $http.api($http.apiMap.expireProcess),
+			url: $http.api('loanOverdueImport/checkOverdueOrderList','wl'),
 			data: params,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
@@ -40,21 +42,21 @@ page.ctrl('expireInfoInputSingle', [], function($scope) {
  	/**
 	* 绑定搜索事件
 	**/
-	$(document).on('keydown', '#search', function(evt) {
-		if(evt.which == 13) {
-			alert("查询");
-			var that = $(this),
-				searchText = $.trim(that.val());
-			if(!searchText) {
-				return false;
-			}
-			apiParams.search = searchText;
-			$params.search = searchText;
-			apiParams.page = 1;
-			$params.page = 1;
-			loadExpireProcessList(apiParams);
-			// router.updateQuery($scope.$path, $params);
-		}
+	$(document).on('keydown', '#search', function() {
+		var searchKey = $("#searchInp").val();
+//		var data = {};
+//			data['detailId'] = 123;
+		$.ajax({
+			url: $http.api('loanOverdueImport/checkOverdueOrderList','wl'),
+			data: searchKey,
+			success: $http.ok(function(result) {
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				setupPaging(result.page.pages, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
 	});
 	/**
 	* 绑定立即处理事件
@@ -76,7 +78,7 @@ page.ctrl('expireInfoInputSingle', [], function($scope) {
 		if($params.process) {
 			
 		}
-		loadExpireProcessList(apiParams);
+//		loadExpireProcessList(apiParams);
 	});
 
 	$scope.paging = function(_page, _size, $el, cb) {

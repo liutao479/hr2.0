@@ -67,7 +67,7 @@
 // }
 
 (function($, _){
-    $.fn.openWindow = function(options, cb) {
+    $.fn.openWindow = function(options,callback) {
         return this.each(function() {
             var that = $(this);
             this.$openWindow = new openWindow(that, options, cb);
@@ -92,20 +92,13 @@
     	var self = this;
     	self.$dialog = $(_.template(dialogTml)(self.opts)).prependTo("body");
     	self.$content = self.$dialog.find('.w-content');
+    	self.close();
     	if(self.opts.move) {
     		self.move();
     	}
-    	if(self.opts.content) {
+    	if(self.opts.html) {
     		self.render();
-            if(self.opts.commit) {
-                $(_.template(self.opts.commit)(self.opts)).appendTo(self.$content);
-            }
-            if(self.opts.remind) {
-                $(_.template(self.opts.remind)(self.opts)).insertBefore(self.$content);
-            }
     	}
-
-        self.close();
     }
 
     // 窗口关闭
@@ -163,6 +156,7 @@
 
 
     $.fn.openWindow.defaults = {
+        html: "",
         move: false,
 		bgClose: false,
         data:{},

@@ -165,15 +165,15 @@
 			title: '二手车评估信息录入',
 			page: 'secondhandInput'
 		},
-		'loanProcess/phoneAudit': {
-			title: '电审',
+		'loanProcess/loanTelApproval': {
+			title: '审核列表',
 			page: 'phoneAudit'
 		},
 		'loanProcess/loanAudit': {
 			title: '贷款审核',
 			page: 'loanAudit'
 		},
-		'loanProcess/lendAudit': {
+		'loanProcess/makeLoanApproval': {
 			title: '放款审核',
 			page: 'lendAudit'
 		},
@@ -200,6 +200,10 @@
 		'loanProcess/carAudit':{
 			title: '提车审核',
 			page: 'carAudit'
+		},
+		'expireProcess/importHistory':{
+			title: '逾期导入历史记录',
+			page: 'importHistory'
 		},
 		'expireProcess/expireProcessDetail':{
 			title: '逾期处理',

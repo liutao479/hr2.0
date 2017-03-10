@@ -8,8 +8,7 @@ page.ctrl('surviceType', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-	var getUrl = "http://127.0.0.1:8080";
-	var postUrl = "http://127.0.0.1:8080/serviceType/submit";
+	var urlStr = "http://192.168.0.103:8080";
 
 	/**
 	* 加载车贷办理数据
@@ -20,12 +19,12 @@ page.ctrl('surviceType', function($scope) {
 		var data={};
 			data['taskId']=80871;
 		$.ajax({
-			url: $http.api($http.apiMap.loanInfo),
+			url: urlStr+'/serviceType/index',
 			data: data,
 			dataType: 'json',
 			async:false,
 			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -45,6 +44,7 @@ page.ctrl('surviceType', function($scope) {
 				var key = $(this).data('key');
 				if(key == val){
 					$(this).addClass('surviceClick');
+					$(this).siblings().removeClass('surviceClick');
 					return false;
 				}
 			})
@@ -88,7 +88,7 @@ page.ctrl('surviceType', function($scope) {
 	        
 			$.ajax({
 				type: 'POST',
-				url: getUrl,
+				url:  urlStr+'/serviceType/submit',
 				data:JSON.stringify(data1),
 				dataType:"json",
 				contentType : 'application/json;charset=utf-8',
@@ -102,7 +102,7 @@ page.ctrl('surviceType', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('surviceType'), function() {
+	render.$console.load(router.template('iframe/surviceType'), function() {
 		$scope.def.listTmpl = render.$console.find('#surviceTypetmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#surviceTypeTable')

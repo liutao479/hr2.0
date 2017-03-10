@@ -175,7 +175,6 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		$scope.$el = {
 			$loanPanel: $console.find('#loanUploadPanel')
 		}
-		//setupTaskNavigator($scope.tasks, $scope.activeTaskIdx);
 		loadOrderInfo(function() {
 			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
 			evt();

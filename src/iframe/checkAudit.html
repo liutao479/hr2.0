@@ -9,20 +9,8 @@
 				</div>
 				<!-- tab切换栏 end-->
 				
-				<!-- tab栏对应项 -->
-				<!--<div class="creditResultPanel" id="checkResultPanel">
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="0"></div>
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="1" style="display: none;"></div>
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="2" style="display: none;"></div>
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="3" style="display: none;"></div>
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="4" style="display: none;"></div>
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="5" style="display: none;"></div>
-				</div>-->
-				<!-- tab栏对应项 end-->
-				
-				
 				<!--面板-->
-				<div id="eleCheck"></div>
+				<div id="checkResultPaneltable"></div>
 				
 				<!--提交订单按钮-->
 				<div class="commit-orders-box">
@@ -39,8 +27,18 @@
 			</script>
 			
 			
-			<script type="text/x-dot-template" id="eleChecktmpl">
-				<div class="panel panel-loan no-top-border">
+			<script type="text/x-dot-template" id="checkResultPaneltmpl">
+				<!-- tab栏对应项 -->
+					<div id="pagePhone" class="panel panel-loan no-top-border clearfix tabTrigger" data-trigger="0"></div>
+					<div id="pageLoaninfo" class="panel panel-loan no-top-border clearfix tabTrigger" data-trigger="1" style="display: none;"></div>
+					<div id="pagePhone1" class="panel panel-loan no-top-border clearfix tabTrigger" data-trigger="2" style="display: none;"></div>
+					<div id="pagePhone2" class="panel panel-loan no-top-border clearfix tabTrigger" data-trigger="3" style="display: none;"></div>
+					<div id="pagePhone3" class="panel panel-loan no-top-border clearfix tabTrigger" data-trigger="4" style="display: none;"></div>
+					<div id="pagePhone4" class="panel panel-loan no-top-border clearfix tabTrigger" data-trigger="5" style="display: none;"></div>
+				<!-- tab栏对应项 end-->
+			</script>
+			<script type="text/x-dot-template" id="pagePhonetmpl">
+				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
@@ -63,7 +61,7 @@
 									<span class="info-value selecter">
 										<div>
 											<ul class="selectOptBox1">
-												{{for(var a = 0, length = row.configCheckOptionList.length; a < length; a++) { var op1 = row.configCheckOptionList[a]; }}
+												{{for(var a = 0, len = row.configCheckOptionList.length; a < len; a++) { var op1 = row.configCheckOptionList[a]; }}
 													<li data-select="{{= op1.selected}}" data-key="{{= op1.value}}">{{= op1.name}}</li>
 												{{ } }}
 											</ul>
@@ -76,11 +74,7 @@
 								<div class="question-box-cont">
 									<span class="info-key">备注：</span>
 									<span class="info-value info-value-long">
-									{{if(row.answer){ }}
 										<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>
-									{{ }else{ }}
-										<textarea name="editInfo" rows="4"></textarea>
-									{{ } }}	
 									</span>
 								</div>
 							</div>
@@ -101,13 +95,13 @@
 					</div>
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
-						{{for(var j = 0, lenj = it.XWWT.length; j < len; j++) { var role = it.XWWT[j]; }}
+						{{for(var i = 0, len = it.XWWT.length; i < len; i++) { var row = it.XWWT[i]; }}
 							<form>
 							<div class="question-box">
 								<div class="question-box-title">
-									<span class="que">{{= j+1}}.{{= role.question}}</span>
-									{{if(role.answer){ }}
-									<span class="ans">({{= role.answer}})</span>
+									<span class="que">{{= i+1}}.{{= row.question}}</span>
+									{{if(row.answer){ }}
+									<span class="ans">({{= row.answer}})</span>
 									{{ } }}
 								</div>
 								<div class="question-box-cont">
@@ -115,8 +109,8 @@
 									<span class="info-value selecter">
 										<div>
 											<ul class="selectOptBox1">
-												{{for(var b = 0, lengthb = role.configCheckOptionList.length; b < lengthb; b++) { var opt = role.configCheckOptionList[b]; }}
-													<li data-select="{{= opt.selected}}" data-key="{{= opt.value}}">{{= opt.name}}</li>
+												{{for(var a = 0, len = row.configCheckOptionList.length; a < len; a++) { var op1 = row.configCheckOptionList[a]; }}
+													<li data-select="{{= op1.selected}}" data-key="{{= op1.value}}">{{= op1.name}}</li>
 												{{ } }}
 											</ul>
 										</div>
@@ -128,17 +122,13 @@
 								<div class="question-box-cont">
 									<span class="info-key">备注：</span>
 									<span class="info-value info-value-long">
-									{{if(role.answer){ }}
-										<textarea name="editInfo" rows="4" value="{{= role.editInfo}}"></textarea>
-									{{ }else{ }}
-										<textarea name="editInfo" rows="4"></textarea>
-									{{ } }}	
+										<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>
 									</span>
 								</div>
 							</div>
-							<input type="hidden" name="qid" value="{{= role.id}}"  />
-							<input type="hidden" name="id" value="{{= role.id}}"  />
-							<input type="hidden" name="orderNo" value="{{= role.id}}"  />
+							<input type="hidden" name="qid" value="{{= row.id}}"  />
+							<input type="hidden" name="id" value="{{= row.id}}"  />
+							<input type="hidden" name="orderNo" value="{{= row.id}}"  />
 							</form>
 						{{ } }}
 						</div>

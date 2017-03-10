@@ -39,37 +39,51 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	$(document).on('change', '#fileData', function() {
         ajaxFileUpload();
     })
+	
+	
+	
+	
+	
+	
+	
+	
+	
     function ajaxFileUpload() {
-    	console.log("启动");
-        $.ajaxFileUpload({
-            url: postUrl+'loanOverdueImport/uploadOverdue', //用于文件上传的服务器端请求地址
-            secureuri: false, //是否需要安全协议，一般设置为false
-            fileElementId: 'fileData', //文件上传域的ID
-            dataType: 'json', //返回值类型 一般设置为json
-            success: function (data, status){
-                console.log("成功");
-                if (typeof (data.error) != 'undefined') {
-                    if (data.error != '') {
-                            console.log(data.error);
-                    } else {
-                            console.log(data.msg);
-                    }
-                }
-            },
-            error: function (data, status, e)//服务器响应失败处理函数
-            {
-                    console.log(e);
-            }
-        })
-        return false;
+		$.ajaxFileUpload({
+		    url: postUrl+'loanOverdueImport/uploadOverdue',
+		    secureuri: false,
+		    fileElementId: 'fileData',
+		    dataType: 'json',
+//		    complete: function() {
+//		    	console.log('执行了complete');
+//		    },
+		    success: function(data, status){
+//		        if (typeof(data.msg) != 'undefined') {
+//		            if (data.msg != '') {
+//		                alert(data.msg);
+//		                return;
+//		            } else {
+//		                console.log(data);
+//		            }
+//		        }else{
+//		        	console.log(data);
+//		        };
+		        console.log(data);
+		    },
+		    error: function(data, status, e){
+		        console.log(data+','+status);
+		    }
+		})	
     }
     /***
 	* 加载页面模板
 	*/
 	render.$console.load(router.template('iframe/expire-info-input'), function() {
 		$scope.def.listTmpl = render.$console.find('#expireInputTmpl').html();
+		$scope.def.iRTTmpl = render.$console.find('#importResultTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#expireInputPanel')
+			$tbl: $console.find('#expireInputPanel'),
+			$iRTtbl: $console.find('#importResultTable')
 		}
 		if($params.process) {
 			
