@@ -3,7 +3,8 @@ page.ctrl('loan', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			pageNum: $params.pageNum || 1
+			pageNum: $params.pageNum || 1,
+			process: $params.process || ''
 		};
 	/**
 	* 加载车贷办理数据
@@ -15,8 +16,8 @@ page.ctrl('loan', function($scope) {
 			// type: 'get',
 			// url: 'http://192.168.0.144:8080/loanOrder/workbench',
 			// dataType:"json",
-			// data: params,
 			url: $http.api('loan.list'),
+			data: params,
 			// url: $http.api('material/addOrUpdate', 'wl'),
 			success: $http.ok(function(result) {
 				$scope.pageData = result.data;
@@ -61,7 +62,9 @@ page.ctrl('loan', function($scope) {
 	}
 
 	var setupEvent = function() {
-		
+		$console.find('#processTagClose').on('click', function() {
+			router.render('loanProcess');
+		})
 		/**
 		* 绑定搜索事件
 		**/
@@ -157,7 +160,9 @@ page.ctrl('loan', function($scope) {
 			$paging: $console.find('#pageToolbar')
 		}
 		if($params.process) {
-			
+			$('#processTag').data('category', $params.process).text($params.name);
+		} else {
+			$('#processTag').parent().remove();
 		}
 		loadLoanList(apiParams);
 		setupDropDown();

@@ -1,21 +1,22 @@
 
 // 待办提醒框
-var isOpen = false; 
-$(document).on('click', '#remind-tips', function (){
-	if(!isOpen) {
-		$('#remind').animate({
-			right: '155px'
-		},200);
-		$(this).find('.iconfont').html('&#xe605;');
-		isOpen = true;
-	} else {
-		$('#remind').animate({
-			right: '0'
-		},200);
-		$(this).find('.iconfont').html('&#xe697;');
-		isOpen = false;
-	}
-});
+// var isOpen = false; 
+// $(document).on('click', '#remind-tips', function (){
+// 	if(!isOpen) {
+// 		$('#remind').animate({
+// 			right: '155px'
+// 		},200);
+// 		$(this).find('.iconfont').html('&#xe605;');
+// 		isOpen = true;
+// 	} else {
+// 		$('#remind').animate({
+// 			right: '0'
+// 		},200);
+// 		$(this).find('.iconfont').html('&#xe697;');
+// 		isOpen = false;
+// 	}
+// });
+
 
 //复选框
 $(document).on('selectstart', '.checkbox-normal', false);
