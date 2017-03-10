@@ -261,7 +261,5 @@
 			title: '新建合作车商',
 			page: 'newCar'
 		}
-		
-
 	}
 })(window);
