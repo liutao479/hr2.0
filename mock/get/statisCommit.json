@@ -1,0 +1,10 @@
+{
+	"code": 0,
+	"data": {
+		"submit": false,
+		"back": false,
+		"cancel": false,
+		"verify": false
+	},
+	"msg": "success"
+}

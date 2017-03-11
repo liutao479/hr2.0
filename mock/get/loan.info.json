@@ -10,41 +10,57 @@
     "data":[
         {
             "model":"订单信息",
+            "cellName":"ddxx",
+            "isNeedSave":"1",
             "modelcontent":[
                 {
                     "name":"业务来源",
                     "value":"1",
-                    "type":"1"
+                    "type":"1",
+                    "isMustCheck":"0",
+                    "isEdit":"1"
                 },
                 {
                     "name":"业务模式",
                     "value":"1",
-                    "type":"1"
+                    "type":"1",
+                    "isMustCheck":"1",
+                    "isEdit":"0"
                 },
                 {
                     "name":"牌照类型",
                     "value":"浙A",
-                    "type":"0"
+                    "type":"0",
+                    "isMustCheck":"1",
+                    "isEdit":"1"
                 }
             ]
         },
         {
             "model":"购车信息",
+            "cellName":"gcxx",
+            "isNeedSave":"0",       
             "modelcontent":[
                 {
                     "name":"业务来源",
                     "value":"1",
-                    "type":"1"
+                    "type":"1",
+                    "isMustCheck":"0",
+                    "isEdit":"0"
                 },
                 {
                     "name":"业务模式",
                     "value":"1",
-                    "type":"1"
+                    "type":"1",
+                    "isMustCheck":"1",
+                    "isEdit":"0"
                 },
                 {
                     "name":"牌照类型",
                     "value":"浙A",
-                    "type":"0"
+                    "type":"0",
+                    "isMustCheck":"1",
+                    "isEdit":"0"
                 }
             ]
         }

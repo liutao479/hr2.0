@@ -33,7 +33,8 @@
 		if(typeof fn != 'function') {
 			fn = $.noop;
 		}
-		page.ctrl[name] = {
+		if(page.ctrls[name]) return;
+		page.ctrls[name] = {
 			refer: refer,
 			fn: fn
 		}
@@ -46,7 +47,7 @@
 	* @params {object} params 参数
 	*/
 	page.excute = function(name, path, params) {
-		var _ctrl = page.ctrl[name],
+		var _ctrl = page.ctrls[name],
 			_$scope = page.$scope[name],
 			args = [];
 		router.closeRefresh = false;
@@ -75,130 +76,6 @@
 		}
 	}
 	/**
-	* 页面路由
-	* routerKey: {
-	* 	template: 'template url',
-	* 	paegs: ['page js url'],
-	* 	style: ['page style url']
-	* }
-	*/
-	g.routerMap = {
-		'loanProcess': {
-			title: '车贷办理',
-			page: "loan"
-		},
-		'myCustomer': {
-			title: '我的客户',
-			page: 'myCustomer'
-		},
-		'orderModifyAudit': {
-			title: '订单修改审核',
-			page: 'orderModifyAudit'
-		},
-		'cancelOrderAudit': {
-			title: '订单修改审核',
-			page: 'cancelOrderAudit'
-		},
-		'loanManage': {
-			title: '借款管理',
-			refer: ['navigator'],
-			page: 'loanManage'
-		},
-		'marginManage': {
-			title: '保证金管理',
-			refer: [],
-			page: 'marginManage'
-		},
-		'licenceProcess': {
-			title: '上牌办理',
-			refer: [],
-			page: 'licenceProcess'
-		},
-		'licenceAudit': {
-			title: '上牌审核',
-			refer: [],
-			page: 'licenceAudit'
-		},
-		'licenceStatis': {
-			title: '上牌进度统计',
-			refer: [],
-			page: 'licenceStatis'
-		},
-		'mortgageProcess': {
-			title: '抵押办理',
-			refer: [],
-			page: 'mortgageProcess'
-		},
-		'mortgageAudit': {
-			title: '抵押审核',
-			refer: [],
-			page: 'mortgageAudit'
-		},
-		'mortgageStatis': {
-			title: '抵押进度统计',
-			refer: [],
-			page: 'mortgageStatis'
-		},
-		'moneyBusinessAuditPrint': {
-			title: '财务业务审批表',
-			refer: [],
-			page: 'moneyBusinessAuditPrint'
-		},
-		'auditPrint': {
-			title: '审批表',
-			refer: [],
-			page: 'auditPrint'
-		},
-		'expireInfoInput': {
-			title: '逾期信息录入',
-			refer: [],
-			page: 'expireInfoInput'
-		},
-		'expireProcess': {
-			title: '逾期处理',
-			refer: [],
-			page: 'expireProcess'
-		},
-		'creditArchiveDownload': {
-			title: '征信资料下载',
-			refer: [],
-			page: 'creditArchiveDownload'
-		},
-		'loadArchiveDownload': {
-			title: '贷款资料下载',
-			refer: [],
-			page: 'loadArchiveDownload'
-		},
-		'operationsAnalysis': {
-			title: '运营分析',
-			refer: [],
-			page: 'operationsAnalysis'
-		},
-		'organizationManage': {
-			title: '合作机构维护',
-			refer: [],
-			page: 'organizationManage'
-		},
-		'loanProcess/creditUpload': {
-			title: '征信材料上传',
-			page: 'creditUpload'
-		},
-		'loanProcess/creditInput': {
-			title: '征信结果录入',
-			page: 'creditInput'
-		},
-		'loanProcess/loanInfo': {
-			title: '信息表修改',
-			page: 'loanInfo'
-		},
-		'loanManage/ordersDetail': {
-			title: '订单详情',
-			page: 'ordersDetail'
-		}
-		
-
-	}
-	/**
 	* router 内部方法
 	*/
 	var internal = {}
@@ -214,21 +91,21 @@
 	* 获取路由模板
 	*/
 	router.template = function(key) {
-		return 'iframe/' + key + '.html';
+		return key + '.html';
 	}
 	router.closeRefresh = false;
 	/**
 	* 执行渲染
 	* @params {string} key 要渲染的页面键名
 	* @params {object} params 要传递的参数
-	* @params {object} opts 参数
+	* @params {object}  opts 参数
 	* --@opts.bStatic 是否更新路由
 	*/
 	router.render = function(key, params, opts) {
 		render.$console.html('');
 		router.closeRefresh = true;
 		if(!opts || !opts.bStatic) {
-			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + $.param(params) : '');
+			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + Base64.btoa($.param(params)) : '');
 		}
 		var item = g.routerMap[key];
 		if(!item) {
@@ -236,10 +113,25 @@
 		}
 		g.render.renderTitle(item.title);
 		var __currentPage = item.page;
+		if(page.ctrls[__currentPage]) {
+			return setTimeout(function() {
+				return page.excute(__currentPage, key, params, true);
+			}, 0);
+		}
 		$.getScript(internal.script(__currentPage))
 			.done(function() {
 				page.excute(__currentPage, key, params);
 			});
+	}
+	/**
+	* 点击tab跳转
+	*/
+	router.tab = function ($tab, tasks, activeTaskIdx, cb) {
+		if(tasks.length <= 1) { 
+			$tab.remove();
+			return false;
+		}
+		$.tabNavigator($tab, tasks, activeTaskIdx, cb);
 	}
 	/**
 	* 初始化界面
@@ -250,12 +142,13 @@
 		if(!hash) { return cb(); }
 		var sp = hash.split('?');
 		var _origin = sp[0],
-			_search = !!sp[1] ? ('?' + sp[1]) : undefined;
+			_search = !!sp[1] ? sp[1] : undefined;
 		var _paths = _origin.split('/'),
-			_params = !!_search ? $.parseParams(_search) : undefined;
+			_params = !!_search ? $.deparam(Base64.atob(decodeURI(_search))) : undefined;
 		router.render(_origin, _params);
 		cb && typeof cb == 'function' && cb(_paths[0]);
 	}
+
 	$(window).bind('hashchange', function() {
 		var path = g.location.hash.substr(1).split('?')[0];
 		if(!path) return false;
@@ -265,5 +158,5 @@
 		}
 		g.location.reload();
 	});
-})(window);
 
+})(window);

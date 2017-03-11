@@ -1,0 +1,108 @@
+	<!-- 登记证材料 -->
+			<div class="container">
+				<!-- 面包屑 -->
+				<div id="location"></div>
+				<!-- 面包屑 end-->
+
+				<!-- 退回原因 -->
+				<div id="backReason"></div>
+				<!-- 退回原因 end-->
+				
+				<!-- 抵押信息 -->
+				<div class="mortgageInfoPanel">
+					<div class="panel mt15 clearfix">
+						<!-- 标题名 -->
+						<div class="panel-title-box">
+							<div class="panel-title">
+								<i class="iconfont">&#xe626;</i>
+								<span class="panel-title-name">登记证抵押信息</span>
+							</div>
+						</div>
+						<!-- 标题名 end-->
+
+						<!-- 标题对应项 -->
+						<div class="panel-content padding20" id="mortgageInfoPanel">
+							
+						</div>
+					</div>
+				</div>
+				<!-- 抵押信息 end-->
+				
+				<!-- 抵押登记证 -->
+				<div class="registerPanel" id="registerPanel"></div>
+				<!-- 抵押登记证 end-->
+				
+				<!-- 底部按钮操作 -->
+				<div id="commitPanel"></div>
+				<!-- 底部按钮操作 end-->
+
+			</div>
+			<!-- 登记证材料 end-->
+
+			<script type="text/x-dot-template" id="mortgageInfoTmpl">
+				<table border="1" class="field-table">
+					<tbody>
+						<tr class="tr-odd">
+							<td class="td-key">抵押权人</td>
+							<td class="td-value">
+								<input class="input" id="pledgee" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=it.pledgee || ''}}">
+							</td>
+							<td class="td-key">身份证明名称</td>
+							<td class="td-value">
+								<input class="input" id="cardName" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=it.cardName || ''}}">
+							</td>
+						</tr>
+						<tr class="tr-even">
+							<td class="td-key">身份证号码</td>
+							<td class="td-value">
+								<input class="input" id="idCard" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=it.idCard || ''}}">
+							</td>
+							<td class="td-key">登记机关</td>
+							<td class="td-value">
+								<input class="input" id="pledgeDept" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=it.pledgeDept || ''}}">
+							</td>
+						</tr>
+						<tr class="tr-odd">
+							<td class="td-key">机动车登记编号</td>
+							<td class="td-value">
+								<input class="input" id="vehileRegNo" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=it.vehileRegNo || ''}}">
+							</td>
+							<td class="td-key">抵押登记日期</td>
+							<td class="td-value">
+								<input class="input" id="pledgeDate" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=(it.pledgeDate ? tool.formatDate(it.pledgeDate) : '')}}">
+							</td>
+						</tr>
+						<tr class="tr-even">
+							<td class="td-key">解除抵押日期</td>
+							<td class="td-value">
+								<input class="input" id="unPledgeDate" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=(it.unPledgeDate ? tool.formatDate(it.unPledgeDate) : '')}}">
+							</td>
+							<td class="td-key"></td>
+							<td class="td-value">
+								<input class="input" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</script>
+
+			<script type="text/x-dot-template" id="loanUploadTmpl">
+				<div class="panel mt15 clearfix">
+					<!-- 标题名 -->
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">登记证材料</span>
+						</div>
+					</div>
+					<!-- 标题名 end-->
+
+					<!-- 标题对应项 -->
+					<div class="panel-content clearfix">
+						<div class="loan-imgs-bar">
+							<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderInfo.orderNo}}" data-code="zcdjzydy" data-name="注册登记证（已抵押）" data-scene="{{=it.loanTask.category}}" data-img="{{=(it.userMaterials[0] ? it.userMaterials[0].materialsPic : undefined)}}" data-id="{{=(it.userMaterials[0] ? it.userMaterials[0].id : undefined)}}" data-err="{{=(it.userMaterials[0] ? it.userMaterials[0].auditResult : undefined)}}" data-editable="{{=it.loanTask.editable}}"></div>
+						</div>
+					</div>
+					<!-- 标题对应项 end-->
+				</div>
+			</script>

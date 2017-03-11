@@ -1,0 +1,42 @@
+	<!-- 登记证材料 -->
+			<div class="container">
+				<!-- 面包屑 -->
+				<div id="location"></div>
+				<!-- 面包屑 end-->
+
+				<!-- 退回原因 -->
+				<div id="backReason"></div>
+				<!-- 退回原因 end-->
+
+				<!-- 渲染栏 -->
+				<div class="registerPanel" id="registerPanel">
+					
+				</div>
+				
+				<!-- 底部按钮操作 -->
+				<div id="commitPanel"></div>
+				<!-- 底部按钮操作 end-->
+				
+			</div>
+			<!-- 登记证材料 end-->
+			<script type="text/x-dot-template" id="loanUploadTmpl">
+				<div class="panel mt15 clearfix">
+					<!-- 标题名 -->
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">登记证材料</span>
+						</div>
+					</div>
+					<!-- 标题名 end-->
+
+					<!-- 标题对应项 -->
+					<div class="panel-content clearfix">
+						<div class="loan-imgs-bar">
+							<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderInfo.orderNo}}" data-code="zcdjz" data-name="注册登记证" data-scene="{{=it.loanTask.category}}" data-img="{{=(it.userMaterials[0] ? it.userMaterials[0].materialsPic : undefined)}}" data-id="{{=(it.userMaterials[0] ? it.userMaterials[0].id : undefined)}}" data-err="{{=(it.userMaterials[0] ? it.userMaterials[0].auditResult : undefined)}}" data-editable="{{=it.loanTask.editable}}"></div>
+							<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderInfo.orderNo}}" data-code="djzysjbh" data-name="登记证右上角编号" data-scene="{{=it.loanTask.category}}" data-img="{{=(it.userMaterials[1] ? it.userMaterials[1].materialsPic : undefined)}}" data-id="{{=(it.userMaterials[1] ? it.userMaterials[1].id : undefined)}}" data-err="{{=(it.userMaterials[1] ? it.userMaterials[1].auditResult : undefined)}}" data-editable="{{=it.loanTask.editable}}"></div>
+						</div>
+					</div>
+					<!-- 标题对应项 end-->
+				</div>
+			</script>

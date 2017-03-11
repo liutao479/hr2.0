@@ -43,6 +43,14 @@ gulp.task('concat', function() {
         .pipe($.concat('app.js'))
         .pipe(gulp.dest(path.dist.js()));
 })
+gulp.task('concat-mini', function () {
+    return gulp.src([
+            path.src.js('plugin/cookie.js'),
+            path.src.js('core/md5.js')
+        ])
+        .pipe($.concat('third.js'))
+        .pipe(gulp.dest(path.dist.js('/vendor')))
+})
 gulp.task('clean', function() {
     return gulp.src('dist').pipe($.clean());
 })
@@ -57,10 +65,13 @@ gulp.task('copy', function() {
     return gulp.src([
             path.src.root('templates/**/*.html'),
             path.src.root('app.html'),
+            path.src.root('login.html'),
             path.src.js('vendor/**/*.js'),
             path.src.js('page/**/*.js'),
             path.src.root('static/css/img/**/*'),
-            path.src.root('iframe/**/*.html')
+            path.src.root('static/css/jquery.dialog.css'),
+            path.src.root('iframe/**/*.html'),
+            path.src.root('defs/**/*.html')
         ])
         .pipe($.copy('dist', {prefix: 1}))
 })
@@ -73,6 +84,7 @@ gulp.task('default', function(cb) {
         'html',
         'less',
         'concat',
+        'concat-mini',
         cb);
 });
 gulp.task('release', function(cb) {

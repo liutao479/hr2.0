@@ -1,0 +1,144 @@
+	<!--电审zhy-->
+			<div class="container electric-check" id="electric-check">
+				<!--返回列表-->
+				<div class="path-back-bar">
+					<div class="path-back">
+						<i class="iconfont">&#xe626;</i>
+						<a href="#">返回列表</a>&nbsp;&gt;
+						<span class="current-page">电审</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">借款人：</span>
+						<span class="value">张三</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">订单生成时间：</span>
+						<span class="value">2016-11-03 14:02</span>
+					</div>
+				</div>
+				
+				<!--tab切换-->
+				<div class="tab-bar tab-bar-special">
+					<ul class="role-bar-ul clearfix">
+						<li class="role-bar-li"><a href="#" class="role-item role-item-active">电话审核表</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">贷款信息表</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">征信结果</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">贷款材料</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">上门材料</a></li>
+						<li class="role-bar-li"><a href="#" class="role-item">订单日志</a></li>
+					</ul>
+				</div>
+				<!--面板-->
+				<div id="eleCheck"></div>
+				
+				<!--提交订单按钮-->
+				<div class="commit-orders-box">
+					<div id="" class="button saveBtn">提交订单</div>
+				</div>
+			</div>
+			
+			<script type="text/x-dot-template" id="eleChecktmpl">
+				<div class="panel panel-loan">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">必问问题</span>
+						</div>
+					</div>
+					<div class="panel-detail-content-layout">
+						<div class="loan-info">
+						{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+							<form>
+							<div class="question-box">
+								<div class="question-box-title">
+									<span class="que">{{= i+1}}.{{= row.question}}</span>
+									{{if(row.answer){ }}
+									<span class="ans">({{= row.answer}})</span>
+									{{ } }}
+								</div>
+								<div class="question-box-cont">
+									<span class="info-key">客户回答：</span>
+									<span class="info-value selecter">
+										<div>
+											<ul class="selectOptBox1">
+												{{for(var a = 0, len = row.configCheckOptionList.length; a < len; a++) { var op1 = row.configCheckOptionList[a]; }}
+													<li data-select="{{= op1.selected}}" data-key="{{= op1.value}}">{{= op1.name}}</li>
+												{{ } }}
+											</ul>
+										</div>
+										<span class="placeholder">请选择</span>
+										<span class="arrow arrow-bottom right8px"></span>
+										<input type="hidden" name="qvalue" class="required" />
+									</span>
+								</div>
+								<div class="question-box-cont">
+									<span class="info-key">备注：</span>
+									<span class="info-value info-value-long">
+										<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>
+									</span>
+								</div>
+							</div>
+							<input type="hidden" name="qid" value="{{= row.id}}"  />
+							<input type="hidden" name="id" value="{{= row.id}}"  />
+							<input type="hidden" name="orderNo" value="{{= row.id}}"  />
+							</form>
+						{{ } }}
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-loan">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">选问问题</span>
+						</div>
+					</div>
+					<div class="panel-detail-content-layout">
+						<div class="loan-info">
+						{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+							<form>
+							<div class="question-box">
+								<div class="question-box-title">
+									<span class="que">{{= i+1}}.{{= row.question}}</span>
+									{{if(row.answer){ }}
+									<span class="ans">({{= row.answer}})</span>
+									{{ } }}
+								</div>
+								<div class="question-box-cont">
+									<span class="info-key">客户回答：</span>
+									<span class="info-value selecter">
+										<div>
+											<ul class="selectOptBox1">
+												{{for(var a = 0, len = row.configCheckOptionList.length; a < len; a++) { var op1 = row.configCheckOptionList[a]; }}
+													<li data-select="{{= op1.selected}}" data-key="{{= op1.value}}">{{= op1.name}}</li>
+												{{ } }}
+											</ul>
+										</div>
+										<span class="placeholder">请选择</span>
+										<span class="arrow arrow-bottom right8px"></span>
+										<input type="hidden" name="qvalue" class="required" />
+									</span>
+								</div>
+								<div class="question-box-cont">
+									<span class="info-key">备注：</span>
+									<span class="info-value info-value-long">
+										<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>
+									</span>
+								</div>
+							</div>
+							<input type="hidden" name="qid" value="{{= row.id}}"  />
+							<input type="hidden" name="id" value="{{= row.id}}"  />
+							<input type="hidden" name="orderNo" value="{{= row.id}}"  />
+							</form>
+						{{ } }}
+						</div>
+					</div>
+				</div>
+			</script>
+			<!--<script type="text/x-dot-template" id="selectOpttmpl">
+				<ul class="selectOptBox">
+					{{for(var a = 0, len = it.length; a < len; a++) { var op1 = it[a]; }}
+						<li data-key="{{= op1.value}}">{{= op1.name}}</li>
+					{{ } }}
+				</ul>
+			</script>-->

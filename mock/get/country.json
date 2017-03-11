@@ -1,0 +1,18 @@
+{
+    "code":0,
+    "data":[
+        {
+            "areaCode":99999,
+            "areaId":99999,
+            "areaName":"区县1",
+            "belongAreaId":152
+        },
+        {
+            "areaCode":88888,
+            "areaId":99999,
+            "areaName":"区县2",
+            "belongAreaId":152
+        }
+    ],
+    "msg":"success"
+}

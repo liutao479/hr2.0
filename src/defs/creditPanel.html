@@ -1,0 +1,55 @@
+<script type="text/dot-x-template" id="creditUploadListTmpl">
+	<!--借款人信息填写栏-->
+	{{ for(var i = 0, len = it.creditUsers[it.currentType].length; i < len; i++){ var row = it.creditUsers[it.currentType][i]; }}
+		{{ if(i == 0){ }}
+			<div class="credit-datas-bar credit-datas-bar-special clearfix">
+		{{ }else{ }}
+			<div class="credit-datas-bar clearfix">
+		{{ } }}
+			<div class="key-item-box">
+				<div class="key-item">真实姓名：</div>
+				<div class="key-value">
+					<div class="input-text input-name">
+						<input type="text" value="{{=row.userName || ''}}" data-user-id="{{=row.userId}}" data-type="userName"/>
+					</div>
+				</div>
+			</div>
+			<div class="key-item-box">
+				<div class="key-item">身份证号：</div>
+				<div class="key-value">
+					<div class="input-text input-idc">
+						<input type="text" value="{{=row.idCard || ''}}" data-user-id="{{=row.userId}}" data-type="idCard"/>		
+					</div>	
+				</div>
+			</div>
+		{{ if(row.userType != 0){ }}
+			<div class="key-item-box">
+				<div class="key-item">与借款人关系：</div>
+				<div class="key-value">
+					<span class="select select-common">
+						<span class="placeholder placeholder-mini">请选择</span>
+						<span class="arrow arrow-bottom"></span>
+					</span>
+				</div>
+			</div>
+			<a href="javascript:;" class="delete-credit-item" data-id="{{=row.userId}}"><i class="iconfont">&#xe602;</i></a>
+		{{ } }}
+		</div>
+		<!--借款人照片嵌入栏-->
+		<div class="credit-imgs-bar clearfix">
+		{{ for(var j = 0, len2 = tool.cfgMaterials.length; j < len2; j++) { var nl = tool.cfgMaterials[j], flag = 0; }}
+			{{ var len3 = row.loanUserCredit.creditMaterials.length; if(len3) { }}
+				{{ for(var k = 0; k < len3; k++) { var mr = row.loanUserCredit.creditMaterials[k]; }}
+					{{ if(mr.materialsCode == nl.materialsCode) { }}
+						<div class="imgs-item-group uploadEvt" data-id="{{=mr.id}}" data-orderno="{{=it.loanTask.orderNo}}" data-code="{{=nl.materialsCode}}" data-name="{{=it.types[it.currentType]}}{{=nl.name}}" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-err="{{=mr.auditResult || 0}}" data-editable="1"></div>
+					{{ break;} else { flag++; }}
+					{{ } }}
+				{{ } }}
+			{{ } }}
+			{{ if(flag == len3) { }}
+			<div class="imgs-item-group uploadEvt" data-orderno="{{=it.loanTask.orderNo}}" data-code="{{=nl.materialsCode}}" data-name="{{=it.types[it.currentType]}}{{=nl.name}}" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-err="0" data-editable="1"></div>
+			{{ } }}
+		{{ } }}
+		</div>
+	{{ } }}
+</script>

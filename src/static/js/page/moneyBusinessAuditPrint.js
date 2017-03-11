@@ -6,13 +6,13 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 			pageNum: $params.page || 1
 		};
 	/**
-	* 加载抵押办理信息表数据
+	* 加载财务业务审批表数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
 	var loadMoneyPrintList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.moneyBusinessAuditPrint,
+			url: $http.api('loanUserStage/getFinancialData'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -48,7 +48,7 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('money-business-audit-print'), function() {
+	render.$console.load(router.template('iframe/money-business-audit-print'), function() {
 		$scope.def.listTmpl = render.$console.find('#moneyAuditPrintListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#moneyAuditPrintTable'),

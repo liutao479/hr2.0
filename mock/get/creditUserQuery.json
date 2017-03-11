@@ -1,0 +1,146 @@
+{
+    "code":0,
+    "data":{
+        "creditUsers":{    //征信用户
+            "0":[    //借款人
+                {
+                    "company":"公司A",    //所在单位
+                    "companyTel":"13334333334",     //单位电话
+                    "idCard":"330621197410036800", //身份证
+                    "isDel":0,
+                    "isServe":0,    //是否服兵役(0：否 1：是)
+                    "loanUserCredit":{    //用户征信
+                        "creditBatchNo":"21341324214",    //征信批次
+                        "creditId":100002,    //征信id
+                        "creditMaterials":[    //征信材料
+                            {
+                                "creditId":100002,    //征信Id
+                                "id":28,    //征信材料结果id
+                                "isDel":0,
+                                "materialsCode":"2",    //材料编码
+                                "materialsPic":"asdfasf",    //材料地址
+                                "thumnailPic":"sadfsaf"    //缩略图地址
+                            }
+                        ],
+                        "creditReportId":"AD--2e94ikdj002",    //征信报告编号
+                        "orgId":82,    //征信机构
+                        "internalCreditInfo":"备注11111",     //内部征信信息
+                        "orderNo":"nfdb2016102820480799",    //订单号
+                        "remark":"备注0000000000002",    //备注
+                        "submitDate":1481614439000,    //征信提交日期
+                        "userId":990001,    //用户id
+                        "userName":"张三",    //征信用户名字
+                        "userType":0    //用户类型(0本人1共同还款人2反担保人)
+                    },
+                    "mobile":"13334333331",    //征信人手机
+                    "orderNo":"nfdb2016102820480799",    //订单号
+                    "userId":990001,    //用户Id
+                    "userName":"张三",    //用户姓名
+                    "userRelationship":0,    //与贷款人关系(本人:0;配偶：1；父母：2；子女：3；其他）
+                    "userType":0    //用户类型(0本人1共同还款人2反担保人)
+                }
+            ],
+            "1":[//共同还款人
+                {
+                    "company":"公司B",
+                    "companyTel":"13334333335",
+                    "idCard":"330999939393939393",
+                    "isDel":0,
+                    "isServe":0,
+                    "loanUserCredit":{
+                        "creditBatchNo":"21341324214",
+                        "creditId":100003,
+                        "creditMaterials":[
+                            {
+                                "creditId":100003,
+                                "id":29,
+                                "isDel":0,
+                                "materialsCode":"3",
+                                "materialsPic":"safdasf",
+                                "thumnailPic":"sadfsfs"
+                            }
+                        ],
+                        "creditReportId":"AD--2e94ikdj003",
+                        "deptId":82,
+                        "idCard":"330999939393939393",
+                        "internalCreditInfo":"备注2222222",
+                        "orderNo":"nfdb2016102820480799",
+                        "remark":"备注0000000000003",
+                        "submitDate":1481614434000,
+                        "userId":990002,
+                        "userName":"李四",
+                        "userType":1
+                    },
+                    "mobile":"13334333332",
+                    "orderNo":"nfdb2016102820480799",
+                    "userId":990002,
+                    "userName":"李四",
+                    "userRelationship":1,
+                    "userType":1
+                }
+            ],
+            "2":[//反担保人
+                {
+                    "company":"公司C",
+                    "companyTel":"13334333336",
+                    "idCard":"330999939393939394",
+                    "isDel":0,
+                    "isServe":0,
+                    "loanUserCredit":{
+                        "creditBatchNo":"21341324214",
+                        "creditId":100004,
+                        "creditMaterials":[
+                            {
+                                "creditId":100004,
+                                "id":30,
+                                "isDel":0,
+                                "materialsCode":"4",
+                                "materialsPic":"asdfasf",
+                                "thumnailPic":"sadfasfas"
+                            }
+                        ],
+                        "creditReportId":"AD--2e94ikdj003",
+                        "deptId":82,
+                        "idCard":"330999939393939394",
+                        "internalCreditInfo":"备注33333333",
+                        "orderNo":"nfdb2016102820480799",
+                        "remark":"备注0000000000004",
+                        "submitDate":1481614436000,
+                        "userId":990003,
+                        "userName":"王五",
+                        "userType":2
+                    },
+                    "mobile":"13334333333",
+                    "orderNo":"nfdb2016102820480799",
+                    "userId":990003,
+                    "userName":"王五",
+                    "userRelationship":0,
+                    "userType":2
+                }
+            ]
+        },
+        "loanTask":{    //代办任务
+            "assignee":0,    //任务指派人
+            "category":"creditInput",    //场景编码
+            "id":1,    //任务id
+            "loanOrder":{    //订单
+                "bankId":82,    //经办银行
+                "createDate":1481613850000,
+                "creditBatchNo":"21341324214",    //征信批次号
+                "id":100001,    //订单Id
+                "idCard":"330621197410036800",    //借款人身份证
+                "isDel":0,
+                "orderNo":"nfdb2016102820480799",    //订单号
+                "orderStatus":0,    //订单状态
+                "processInstId":"1243214214",    //流程实例id
+                "realName":"张三"    //借款人
+            },
+            "orderNo":"nfdb2016102820480799",    //订单号
+            "sceneName":"征信结果录入",    //场景名字
+            "status":0,    //任务状态:0正常2已完成-1已刪除
+            "taskCode":"null_null",    //任务编码
+            "taskId":"243321"    //流程任务id
+        }
+    },
+    "msg":"success"
+}

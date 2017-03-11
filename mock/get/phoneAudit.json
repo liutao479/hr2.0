@@ -1,0 +1,44 @@
+{
+    "code":0,
+    "data":[
+        {
+        	"answer": "1",
+            "configCheckOptionList":[
+                {
+                    "name":"一致",
+                    "selected":false,
+                    "value":0
+                },
+                {
+                    "name":"不一致",
+                    "selected":false,
+                    "value":1
+                }
+            ],
+            "id":1,
+            "editInfo":"wowowowo",
+            "question":"你好这里是联合银行，请问是蒋贵燕吗？",
+            "type":0
+        },
+        {
+        	"answer": "01223123",
+            "configCheckOptionList":[
+                {
+                    "name":"是",
+                    "selected":false,
+                    "value":0
+                },
+                {
+                    "name":"否",
+                    "selected":true,
+                    "value":1
+                }
+            ],
+            "id":2,
+            "editInfo":"wowowowo",
+            "question":"您是否办理了我行的汽车分期业务？",
+            "type":0
+        }
+    ],
+    "msg":"success"
+}

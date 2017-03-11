@@ -3,7 +3,8 @@ page.ctrl('mortgageAudit', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			process: $params.process || 0,
+			overdue:0,
+			operation: 3, 
 			page: $params.page || 1,
 			pageSize: 20
 		};
@@ -14,11 +15,13 @@ page.ctrl('mortgageAudit', [], function($scope) {
 	*/
 	var loadMortgageAuditList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.mortgageAudit,
+			url: $http.api('loanPledge/List', 'cyj'),
+			type: 'post',
+			dataType: 'json',
 			data: params,
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
 				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -29,35 +32,92 @@ page.ctrl('mortgageAudit', [], function($scope) {
 	/**
 	* 构造分页
 	*/
-	var setupPaging = function(count, isPage) {
+	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
-			current: parseInt(apiParams.page),
-			pages: isPage ? count : (tool.pages(count || 0, apiParams.pageSize)),
-			size: apiParams.pageSize
+			current: parseInt(apiParams.pageNum),
+			pages: isPage ? _page.pages : (tool.pages(count.pages || 0, _page.pageSize)),
+			size: _page.pageSize
 		});
 		$('#pageToolbar').paging();
 	}
+
 	/**
-	* 绑定立即处理事件
-	*/
-	// $(document).on('click', '#myCustomerTable .button', function() {
-	// 	var that = $(this);
-	// 	router.render(that.data('href'));
-	// });
+	 * 绑定立即处理事件
+	 */
+	var setupEvt = function() {
+
+		// 绑定搜索框模糊查询事件
+		$console.find('#searchInput').on('keydown', function(evt) {
+			if(evt.which == 13) {
+				var that = $(this),
+					searchText = $.trim(that.val());
+				if(!searchText) {
+					return false;
+				}
+				apiParams.keyWord = searchText;
+				$params.keyWord = searchText;
+				apiParams.pageNum = 1;
+				$params.pageNum = 1;
+				loadMortgageAuditList(apiParams, function() {
+					delete apiParams.keyWord;
+					delete $params.keyWord;
+					that.blur();
+				});
+				// router.updateQuery($scope.$path, $params);
+			}
+		});
+
+		// 绑定只显示超期记录
+		$console.find('#overdue').on('click', function() {
+			var that = $(this);
+			if(!$(this).hasClass('checked')) {
+				apiParams.overdue = 1;
+				$params.overdue = 1;
+			} else {
+				apiParams.overdue = 0;
+				$params.overdue = 0;
+			}
+			loadMortgageAuditList(apiParams);
+		});
+		
+		//绑定搜索按钮事件
+		$console.find('#search').on('click', function() {
+			loadMortgageAuditList(apiParams);
+			// router.updateQuery($scope.$path, $params);
+			
+		});
+
+		//绑定重置按钮事件
+		$console.find('#search-reset').on('click', function() {
+			// 下拉框数据以及输入框数据重置
+			// router.updateQuery($scope.$path, $params);
+			
+		});
+
+		// 进入详情页
+		$console.find('#mortgageAuditTable .button').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				// taskId: that.data('id'), 
+				// date: that.data('date'),
+				orderNo: that.data('id'),
+				path: 'mortgageAudit'
+			});
+		});
+	}
 
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('mortgage-audit'), function() {
+	render.$console.load(router.template('iframe/mortgage-audit'), function() {
 		$scope.def.listTmpl = render.$console.find('#mortgageAuditListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#mortgageAuditTable'),
 			$paging: $console.find('#pageToolbar')
 		}
-		if($params.process) {
-			
-		}
-		loadMortgageAuditList(apiParams);
+		loadMortgageAuditList(apiParams, function() {
+			setupEvt();
+		});
 	});
 
 	$scope.paging = function(_page, _size, $el, cb) {

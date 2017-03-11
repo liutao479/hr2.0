@@ -34,7 +34,7 @@
 	var tpl = '<div class="path-back-bar">\
 					<div class="path-back">\
 						<i class="iconfont">&#xe626;</i>\
-						<a id="backspace" data-href="{{=it.backspace}}">返回列表</a>&nbsp;&gt;&nbsp;\
+						<a href="javascript:;" id="backspace" class="link" data-href="{{=it.backspace}}">返回列表</a>&nbsp;&gt;&nbsp;\
 						<span class="current-page">{{=it.current}}</span>\
 					</div>\
 					{{ if(it.loanUser) { }}\
@@ -43,9 +43,11 @@
 						<span class="value">{{=it.loanUser}}</span>\
 					</div>\
 					{{ } }}\
+					{{ if(it.orderDate) { }}\
 					<div class="key-value-box">\
 						<span class="key">订单生成时间：</span>\
 						<span class="value">{{=it.orderDate}}</span>\
 					</div>\
+					{{ } }}\
 				</div>'
 })(jQuery, doT);

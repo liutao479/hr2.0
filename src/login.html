@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录</title>
+</head>
+<body>
+	<input type="text" id="account">
+	<input type="password" id="password">
+	<a id="submit">提交</a>
+	<script type="text/javascript" src="static/js/vendor/jquery.min.js"></script>
+	<script type="text/javascript" src="static/js/vendor/third.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			// window.location.href = 'app.html';
+			$('#submit').on('click', function () {
+				var $acc = $('#account'),
+					$pwd = $('#password');
+				var acc = $.trim($acc.val()),
+					pwd = $.trim($pwd.val());
+				if(!acc || !pwd) {
+					return alert('请输入账号和密码');
+				}
+				console.log(acc)
+				console.log(pwd)
+				$.ajax({
+					url: 'http://192.168.0.104:8080/login/doLogin',
+					type: 'post',
+					dataType: 'json',
+					data: {
+						account: acc,
+						password: md5(pwd),
+						LoginAgent: 'WEB'
+					},
+					success: function (xhr) {
+						if(xhr && !xhr.code) {
+							var result = xhr.data;
+							var token = result.token,
+								info = result.loginInfo;
+							Cookies.set('_hr_token', result.token);
+							Cookies.set('_hr_account', info.account);
+							Cookies.set('_hr_dept', info.organization.name + info.dept.name);
+							Cookies.set('_hr_role', info.role.name);
+							Cookies.set('_hr_phone', info.phone1);
+							window.location.href = 'app.html';
+						} else {
+							alert('登录失败');
+						}
+					}
+				})
+			})	
+		})
+	</script>
+</body>
+</html>

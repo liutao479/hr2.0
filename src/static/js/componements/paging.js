@@ -13,7 +13,7 @@
 	$.fn.paging = function() {
 		return this.each(function() {
 			var that = $(this);
-			that.$paging = new paging(that, that.data());
+			this.$paging = new paging(that, that.data());
 		})
 	};
 	//分页函数

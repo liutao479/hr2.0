@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.eot');
-  src: url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_gidklbol8sdwvcxr.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_kicdgl33vlxo5hfr.eot');
+  src: url('//at.alicdn.com/t/font_kicdgl33vlxo5hfr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_kicdgl33vlxo5hfr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_kicdgl33vlxo5hfr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_kicdgl33vlxo5hfr.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -18,10 +18,22 @@
 }
 
 .float-right{
-    float: right;
+    float: right !important;
+}
+.float-left{
+    float: left !important;
 }
 .pt24{
     padding-top: 24px !important;
+}
+.pl200 {
+    padding-left: 200px !important;
+}
+.pl150 {
+    padding-left: 150px !important;
+}
+.pr150 {
+    padding-right: 150px !important;
 }
 .mb15{
     margin-bottom: 15px !important;
@@ -29,18 +41,62 @@
 .mt15 {
     margin-top: 15px !important;
 }
+.ml15 {
+    margin-left: 15px !important;
+}
 .padding0{
     padding: 0 !important;
 }
+.padding20 {
+    padding: 20px !important;
+}
+.positionRela{
+    position: relative;
+}
+.right8px{
+    position: absolute;
+    right: 8px;
+    top: 50%;
+}
+input[disabled]{
+    background-color:#fff;
+}
+.displayBlock{
+    display: block !important; 
+}
+.width33{
+    width: 33.333333% !important;
+}
+.width100{
+    width: 100% !important;
+}
+.opcity0{
+    opacity: 0;
+}
+//上传按钮，点击选取文件
+.btnInfoFile{
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9;
+}
+//输入错误提示
 .error-input{
     border: 1px solid @messageNumberBgColor !important;
 }
 .error-input-tip{
     color: @messageNumberBgColor !important;
     position: absolute;
-    left: 0;
+    right: 0;
     bottom: -16px;
     font-size: 12px;
+}
+.link {
+    color: @linkColor;
 }
 
 // 边框灰色背景白色的框
@@ -118,9 +174,11 @@
 .key-value-box {
     display: inline-block;
     .key {
+        display: inline-block;
         color: @tiperColor;
     }
     .value {
+        display: inline-block;
         color: @fontColor;
     }
 }
@@ -320,8 +378,22 @@
         height: 52px;
         margin: 0 30px 0 0;
         padding: 10px 0; 
+        &.search-item-disabled {
+            .select-name, input {
+                color: @borderColor;
+            } 
+        }
         .select {
             float: left;
+        }
+        .stopUse, .deleteItem {
+            display: inline-block;
+            line-height: 30px;
+            margin-left: 10px;
+            color: @buttonBgColor;
+        }
+        .deleteItem {
+            margin-left: 20px;
         }
         .select-name {
             float: left;
@@ -384,8 +456,39 @@
         .orders-item-data-blank {
             width: 22%;
         } 
+        .orders-item-data-view {
+            .view-fee {
+                color: @buttonBgColor;
+            }
+        }
+        .meanwhile {
+            width: 100%;
+            text-align: center;
+            .arrow-trigger {
+                position: relative;
+                height: 21px;
+                .arrow-bottom {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -4px;
+                    margin-left: -4px;
+                    cursor: pointer;
+                    border-width: 6px;
+                }
+                .arrow-top {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -10px;
+                    margin-left: -4px;
+                    cursor: pointer;
+                    border-width: 6px;
+                }
+            }
+        }
     }
-    tbody tr {
+    tbody .orders-item {
         border-top:1px dashed #cdd9e9;
         &.tr-noborder {
             border: none;
@@ -398,7 +501,7 @@
         }
         td.order-item-first {
             position: relative;
-            width: 50px; 
+            width: 60px; 
         }
         .orders-item-data {
             height: 78px;
@@ -578,6 +681,50 @@
     }
 }
 
+//征信字段的表格
+.field-table {
+    width: 100%;
+    border-collapse: collapse;
+    tr.tr-odd {
+        background-color: #f3f4f9;
+        .input {
+            background-color: #f3f4f9;
+        }
+    }
+    tr.tr-even {
+        background-color: #FFF;
+        .input {
+            background-color: #FFF;
+        }
+    }
+    td {
+        position: relative;
+        border: 1px solid @borderColor;
+        text-align: center;
+        height: 40px;
+        &.td-key {
+            width: 15%;
+        }
+        &.td-value {
+            width: 35%;
+        }
+        .input {
+            float: left;
+            text-align: center;
+            width: 80%;
+            height: 40px;
+            border: none;
+            padding-left: 30px;
+        }
+        .unit {
+            float: right;
+            width: 20%;
+            text-align: center;
+            line-height: 40px;
+        }
+    }
+}
+
 
 //带有内部边框线的表格，在原有表格基础加上此属性 zhy
 .orders-table-borders{
@@ -594,18 +741,21 @@
     padding: 0 15px 0 20px;
     text-align: right;
     line-height: 50px;
+    height: 52px;
     .path-back {
         float: left;
         color: @mainColor;
         height: 50px;
         line-height: 50px;
         .iconfont {
-            position: relative;
-            top: 3px;
-            font-size: 22px;
+            float: left;
+            font-size: 20px;
         }
         .current-page {
             color: @fontColor;
+        }
+        a {
+            color: @mainColor;
         }
     }
     .key-value-box {
@@ -619,7 +769,6 @@
     .layout;
     border-top: 3px solid @blue;
     margin-bottom: 15px;
-    overflow: hidden;
     &.panel-credit {
         margin: 0;
     }
@@ -661,6 +810,9 @@
                    border-width: 6px;
                    right: -13px;
                    border-left-color: #d4d6fc;
+                   display: block;
+                   position: absolute;
+                   top: 50%;
                }
            }
        }
@@ -722,6 +874,7 @@
     
     //工作台有左侧菜单的右侧详标题区域（title）
     .panel-content-title {
+        position: relative;
         text-align: left;
         padding: 0 20px;
         border-top: 1px dashed @borderColor;
@@ -734,15 +887,29 @@
         }
         .key-value-box {
             margin-right: 24px;
-            line-height: 60px;
-            height: 60px;
+            line-height: 52px;
+            .value {
+                .input-text {
+                    top: 10px;
+                }
+                .select {
+                    top: 10px;
+                }
+            }
             &.key-value-box-special {
-                float: right;
+                position: absolute;
+                top: 0;
+                right: 20px;
             }
         }
         .panel-title {
             height: 50px;
             line-height: 50px;
+        }
+        .button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
         }
         
     }
@@ -828,14 +995,33 @@
             }
             .panel-value-area {
                 overflow: hidden;
-                margin-left: 200px;
+                margin-left: 210px;
                 //文字元素给行高保持与左侧水平
                 .panel-value-item {
                     float: left;
                     line-height: 32px;
                     margin-right: 10px;
                     .input-text {
-                        width: 250px;
+                        width: 270px;
+                    }
+                    .file-wrap {
+                        position: relative;
+                        height: 32px;
+                        min-width: 100px;
+                    }
+                    .button {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                    }
+                    .pdfUpload {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        display: inline-block;
+                        height: 32px;
+                        width: 92px;
+                        opacity: 0;
                     }
                 }
                 //备注信息
@@ -857,28 +1043,12 @@
                     .borderRadius(3px);
                     margin-right: 25px;
                 }
-                //征信字段的表格
-                .field-table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    tr:nth-of-type(odd) {
-                        background-color: #f3f4f9;
-                    }
-                    tr:nth-of-type(even) {
-                        background-color: #FFF;
-                    }
-                    td {
-                        padding: 0 37px;
-                        border: 1px solid @borderColor;
-                        text-align: center;
-                        height: 40px;
-                    }
-                }
+                
                 .remark {
                     line-height: 25px;
                 }
                 .import-doc {
-                    margin-top: 30px;
+                    margin-top: 20px;
                     .button {
                         height: 32px;
                         line-height: 32px;
@@ -894,6 +1064,7 @@
         color: @blue;
         border-bottom: 1px solid @borderColor;
         .panel-title {
+            position: relative;
             padding-left: 20px;
             .iconfont {
                 position: relative;
@@ -904,35 +1075,46 @@
                 margin-left: 7px;
                 font-size: 15px;
             }
-            .button{
-                float:right;
-                margin:7px 20px 0 0;
+            .button {
+                position: absolute;
+                top: 50%;
+                margin-top: -16px;
+                right: 20px;
             }
         }
     }
     //面板详细内容
     .panel-content {
         padding: 0 0 29px 23px;
+        &.panel-content-imgs {
+            padding: 25px 60px !important;
+        }
         &.panel-content-layout {
             padding: 20px 17px;
         }
         .loanman-material-item {
-            .box;
             padding-top: 5px;
             .check-item {
+                float: left;
                 width: 75px;
                 text-align: center;
                 padding-top: 30px;
             }
             .checkname-item {
+                float: left;
                 width: 115px;
                 text-align: left;
                 padding: 30px 0 0 10px;
             }
             .block-item {
-                .box-flex(1);
+                margin-left: 192px;
                 padding-top: 10px;
                 .block-item-data {
+                    -moz-user-select: none; /*火狐*/
+                    -webkit-user-select: none; /*webkit浏览器*/
+                    -ms-user-select: none; /*IE10*/
+                    -khtml-user-select: none; /*早期浏览器*/
+                    user-select: none;
                     position: relative;
                     display: inline-block;
                     border: 1px solid #cad2e1;
@@ -943,6 +1125,7 @@
                     height: 38px;
                     line-height: 38px;
                     color: @fontColor;
+                    cursor: pointer;
                     &.selected {
                         color: @tableActiveColor;
                         border-color: @tableActiveColor;
@@ -1048,6 +1231,55 @@
     }
 }
 
+// 合作银行/合作车商打款账户
+.account {
+    position: relative;
+    margin: 20px 0;
+    padding-right: 90px;
+    .account-left {
+        .search-item {
+            float: left;
+            line-height: 32px;
+            margin: 10px 30px 10px 0;
+            &.search-item-disabled {
+                .select-name {
+                    color: @borderColor !important;
+                }
+                .input-text input {
+                    color: @borderColor !important;
+                }
+            }
+            .select-name {
+                width: 80px;
+                display: inline-block;
+                text-align: right;
+                float: left;
+            }
+            .input-text {
+                float: left;
+            }
+
+        }
+    }
+    .account-right {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        .stopUse {
+            margin-right: 30px;
+        }
+    }
+}
+
+//textarea输入框
+.remarks-box {
+    width: 100%;
+    .borderRadius(3px);
+    border: 1px solid @borderColor;
+    resize:none;
+    padding: 7px;
+    color: @fontColor; 
+}
 
 //特殊的带虚线标题处理 zhy
 .panel-layout{
@@ -1298,9 +1530,7 @@
 } 
 //箭头
 .arrow {
-    position: absolute;
     border-width: 5px;
-    top: 50%;
     &&-left, &&-right {
         margin-top: -6px;
     }
@@ -1337,6 +1567,15 @@
     &.tab-bar-special {
         margin-top: 15px;
     }
+    &:before {
+        content: '';
+        height: 3px;
+        background-color: @blue;
+        position: absolute;
+        left: -1px;
+        bottom: 0;
+        right: -1px;
+    }
     .role-bar-ul {
         position: relative;
         top: -1px;
@@ -1354,6 +1593,7 @@
                 padding: 0 20px;
                 float: left;
                 color: @fontColor;
+                cursor: pointer;
                 border-left: 1px solid @borderColor;
                 &.role-item-active {
                     background-color: @buttonBgColor;
@@ -1377,11 +1617,7 @@
 // tab切换栏对应信息
 .tab-content {
     .tab-content-item {
-        overflow: hidden;
-        padding-bottom: 100px;
-        &.tab-content-item-layout {
-            padding: 15px 20px;
-        }
+        padding: 15px 20px 100px 20px;
     }
 }
 
@@ -1418,18 +1654,12 @@
 .all-select-panel {
     .layout;
     padding: 0 20px;
-    &.all-select-panel-nobottomborder {
-        border-bottom: none;
-    }
-    &.all-select-special {
-        border: none;
-        border-top: 1px solid @borderColor; 
-    }
     .all-check-box {
         float: left;
         height: 50px;
         line-height: 50px;
         margin-right: 15px;
+        color: @fontColor;
         strong {
             color: @mainColor;
             font-size: 15px;
@@ -1451,6 +1681,14 @@
         }
         .all-import {
             color: @buttonBgColor;
+        }
+        .all-describe {
+        }
+        .iconfont-exipre {
+            font-size: 22px;
+            color: @mainColor;
+            position: relative;
+            top: 2px;
         }
     }
 }
@@ -1488,6 +1726,10 @@
     .delete-credit-item {
         float: right;
         line-height: 60px;
+        color: @buttonBgColor;
+        .iconfont {
+            font-size: 20px;
+        }
     }
 }
 // 消息列表
@@ -1532,19 +1774,23 @@
 //类似键值对的组合
 .key-item-box {
     display: inline-block;
-    float: left;
     margin-right: 25px;
-    line-height: 60px;
+    height: 70px;
     .key-item {
-        margin-right: 25px;
+        float: left;
+        line-height: 70px;
+        margin-right: 10px;
     }
     .key-value {
-        width: 175px;
-    }
-    .select {
-        position: relative;
-        top: -2px;
-        vertical-align: middle;
+        float: left;
+        overflow: hidden;
+        height: 70px;
+        .input-text {
+            margin-top: 17px; 
+        }
+        .select {
+            margin-top: 17px;
+        }
     }
 }
 
@@ -1554,11 +1800,6 @@
 
 .loan-imgs-bar {
     padding: 24px 0 0 0;
-    .imgs-item-group {
-        &:nth-last-of-type(1) {
-            margin-right: 0;
-        }
-    }
 }
 //返回列表条目下，退回原因（退回增加XX） zhy
 .add-credit-bar {
@@ -1598,6 +1839,7 @@
 .info-key-value-box{
     width: calc(~"50% - 2px");
     display: inline-block;
+    text-align: center;
     margin: 10px 0;
     position: relative;
     i{
@@ -1609,6 +1851,30 @@
         width:120px;
         text-align:right;
         margin-right: 25px;
+        position: relative;
+        left: 0;
+    }
+    .inputSearch{
+        position: absolute;
+        left: 5px;
+        top: 0px;
+        height: 28px;
+        width: 170px;
+        border-right: 1px solid @selectBorderColor;
+        z-index: 9;
+        input{
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #fff;
+        }
+    }
+    .placeholder{
+        width: calc(~"100% - 25px");
+        height: 100%;
+        overflow: hidden;
+        display: block;
     }
     .info-value{
         border:1px solid @selectBorderColor;
@@ -1618,6 +1884,7 @@
         display:inline-block;
         width:200px;
         position: relative;
+        text-align: left;
         .unit-text{
             position: absolute;
             top:0;
@@ -1641,16 +1908,11 @@
     .gps{
         width: 64px !important;
     }
-    &:nth-of-type(odd) {
-        text-align:left;
-    }
-    &:nth-of-type(even) {
-        text-align:right;
-    }
 }
 //左右结构的输入框及下拉框布局下面的多选check zhy
 .info-key-check-box{
     margin: 10px 0;
+    padding: 0 calc(~"25% - 174px");
     .box;
     i{
         color:@backReasonBorderColor;
@@ -1699,7 +1961,6 @@
 .back-creditRes-bar {
     .backReason;
     padding: 15px 20px;
-    margin: 10px 0;
     .borderRadius(3px); 
     .back-credit {
         color: @backReasonBorderColor;
@@ -1714,6 +1975,7 @@
             }
             .value{
                 color: @backReasonBorderColor;
+                margin-right: 10px;
             }
         }
     }
@@ -1800,10 +2062,24 @@
         }
     }
 }
-
+.surviceClick{
+    background: @mainColor !important;
+    color: #fff !important;
+    .iconfont{
+        color: #fff !important;
+    }
+}
 /**
 * 页面特殊部分处理
 **/
+//开卡申请表图片上传居中显示
+.openCardPic{
+    left: 50%;
+    transform: translateX(-50%);
+    .iconfont{
+        font-size: 65px;
+    }
+}
 //合作机构维护
 .cooperation-maintenance {
     .cooperation-maintenance-table  .button{
@@ -1909,5 +2185,143 @@
                 margin: 0 2px;
             }
         }
+    }
+}
+//下拉选项样式 zhy
+.selectOptBox,.selectOptBox1{
+    width: inherit;
+    max-height: 200px;
+    overflow-y: scroll;
+    border: 1px solid @buttonBgColor;
+    position: absolute;
+    left: 0;
+    top: 28px;
+    z-index: 19;
+    background: #FFFFFF;
+    li{
+        line-height: inherit;
+        box-sizing: border-box;
+        padding: 5px 10px;
+        cursor: pointer;
+        &:hover{
+            color: #FFFFFF;
+            background: @buttonBgColor;
+        }
+    }
+}
+.selecter{
+    div{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+    }
+}
+//三级下拉带有详细地址的显示框
+.addressDetail{
+    max-height: 400px;
+    border: 1px solid @buttonBgColor;
+    position: absolute;
+    width: 100%;
+    padding:5px;
+    left: 0;
+    top: 28px;
+    z-index: 9;
+    background: #FFFFFF;
+    display: none;
+    .selectOptBox{
+        width: 185px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .addDiv{
+        margin-top: 5px;
+        p{
+            line-height: 20px;
+        }
+        .info-value{
+            width: 100%;
+        }
+    }
+    .button{
+        line-height: 30px;
+        height: 30px; 
+        font-size: 12px; 
+        padding: 0 10px; 
+        margin-top: 5px;
+        float: right;
+    }
+}
+//禁止点击样式
+.pointDisabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.8;
+}
+//电审类型问题板块样式 zhy
+.question-box{
+    line-height: 30px;
+    margin: 10px 0;
+    &:first-child{
+        margin-top: -15px;
+    }
+    .info-key{
+        color:@fontColor;
+        display:inline-block;
+        width:120px;
+        text-align:right;
+        margin-right: 25px;
+        position: absolute;
+        top: 0;
+    }
+    .info-value{
+        border:1px solid @selectBorderColor;
+//      height:30px;
+        padding: 0 5px;
+        border-radius:4px;
+        display:inline-block;
+        width:200px;
+        position: relative;
+        margin-left: 145px;
+        .unit-text{
+            position: absolute;
+            top:0;
+            right:3px;
+            line-height: 28px;
+            color: @unitTextColor;
+        }
+        input,select{
+            border:none;
+            outline:none;
+            display:block;
+            width:100%;
+        }
+        &-long{
+            width: calc(~"100% - 150px");
+        }
+    }
+    &-title{
+        line-height: 50px;
+        .que{
+            margin-left: 43px;
+        }
+        .ans{
+            color: @orange;
+        }
+    }
+    &-cont{
+        margin: 10px 0 30px 0;
+        position: relative;
+    }
+    textarea{
+        resize: none;
+        width: 100%;
+        border: none;
+        padding: 5px 0;
+    }
+    .error-input-tip{
+        bottom: -25px;
     }
 }

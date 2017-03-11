@@ -6,7 +6,8 @@ page.ctrl('expireInfoInput', [], function($scope) {
 			process: $params.process || 0,
 			page: $params.page || 1,
 			pageSize: 20
-		};
+		},
+		postUrl='http://192.168.0.113:8888/';
 	/**
 	* 加载逾期信息录入数据
 	* @params {object} params 请求参数
@@ -14,7 +15,7 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	*/
 	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.expireProcess),
+			url: $http.api('expire.process'),
 			data: params,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
@@ -25,40 +26,64 @@ page.ctrl('expireInfoInput', [], function($scope) {
 			})
 		})
 	}
- 	/**
-	* 绑定搜索事件
-	**/
-	// $(document).on('keydown', '#search', function(evt) {
-	// 	if(evt.which == 13) {
-	// 		alert("查询");
-	// 		var that = $(this),
-	// 			searchText = $.trim(that.val());
-	// 		if(!searchText) {
-	// 			return false;
-	// 		}
-	// 		apiParams.search = searchText;
-	// 		$params.search = searchText;
-	// 		apiParams.page = 1;
-	// 		$params.page = 1;
-	// 		loadExpireProcessList(apiParams);
-	// 		// router.updateQuery($scope.$path, $params);
-	// 	}
-	// });
 	/**
-	* 绑定立即处理事件
+	* 下载模板
 	*/
-	// $(document).on('click', '#expireProcessTable .button', function() {
-	// 	var that = $(this);
-	// 	router.render(that.data('href'), {orderNo: that.data('id')});
-	// });
-
-	/***
+	 $(document).on('click', '#modelDownload', function() {
+	 	window.open(postUrl+'loanOverdueImport/downExcel','_self')
+	 });
+	 
+	/**
+	* 模板上传
+	*/
+	$(document).on('change', '#fileData', function() {
+        ajaxFileUpload();
+    })
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    function ajaxFileUpload() {
+		$.ajaxFileUpload({
+		    url: postUrl+'loanOverdueImport/uploadOverdue',
+		    secureuri: false,
+		    fileElementId: 'fileData',
+		    dataType: 'json',
+//		    complete: function() {
+//		    	console.log('执行了complete');
+//		    },
+		    success: function(data, status){
+//		        if (typeof(data.msg) != 'undefined') {
+//		            if (data.msg != '') {
+//		                alert(data.msg);
+//		                return;
+//		            } else {
+//		                console.log(data);
+//		            }
+//		        }else{
+//		        	console.log(data);
+//		        };
+		        console.log(data);
+		    },
+		    error: function(data, status, e){
+		        console.log(data+','+status);
+		    }
+		})	
+    }
+    /***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('expire-info-input'), function() {
+	render.$console.load(router.template('iframe/expire-info-input'), function() {
 		$scope.def.listTmpl = render.$console.find('#expireInputTmpl').html();
+		$scope.def.iRTTmpl = render.$console.find('#importResultTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#expireInputPanel')
+			$tbl: $console.find('#expireInputPanel'),
+			$iRTtbl: $console.find('#importResultTable')
 		}
 		if($params.process) {
 			

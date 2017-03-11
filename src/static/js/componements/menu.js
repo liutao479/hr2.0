@@ -20,14 +20,14 @@
 			icon: '&#xe60e;'
 		},
 		'orderModifyAudit': {
-			parent: 'orderManage',
 			name: '信息修改审核',
-			route: 'orderModifyAudit'
+			route: 'orderModifyAudit',
+			icon: '&#xe60e;'
 		},
 		'cancelOrderAudit': {
-			parent: 'orderManage',
 			name: '终止订单审核',
-			route: 'cancelOrderAudit'
+			route: 'cancelOrderAudit',
+			icon: '&#xe60e;'
 		},
 		moneyManage: {
 			name: '财务管理',
@@ -130,7 +130,7 @@
 			route: 'auditPrint'
 		},
 		operationsAnalysis: {
-			name: '运营分析',
+			name: '统计分析',
 			route: 'operationsAnalysis',
 			icon: '&#xe603;'
 		},

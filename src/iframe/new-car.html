@@ -1,0 +1,151 @@
+	<!--新建合作车商管理zhy-->
+			<div class="container new-carshop-manage" id="new-carshop-manage">
+				<!-- 返回列表 -->
+				<div id="location"></div>
+				<!-- 返回列表 end-->
+				
+				<!-- 面板 -->
+				<div class="panel mt15" id="carPanel">
+					<div class="panel-content-title no-top-border">
+						<span class="panel-title">车商资料</span>
+						<div class="button button-mini">保存</div>
+					</div>
+					<div class="panel-detail-content" id="carDataPanel"></div>
+
+					<div class="panel-content-title">
+						<span class="panel-title">打款账户</span>
+					</div>
+					<div class="panel-detail-content pl150 pr150" id="carAccountPanel"></div>
+
+					<div class="panel-content-title">
+						<span class="panel-title">车商费率表</span>
+					</div>
+					<div class="panel-detail-content pl150 pr150" id="carRatePanel"></div>
+
+				</div>
+				<!-- 面板 end-->
+			</div>
+			
+			<!-- 车商资料模板 -->
+			<script type="text/x-dot-template" id="carDataTmpl">
+				<div class="loan-info">
+					<div class="info-key-value-box">
+						<span class="info-key"><i>*</i>车商名称：</span>
+						<span class="info-value"><input id="bankName" type="text" value="{{=it.shopName || ''}}" /></span>
+					</div>
+					<div class="info-key-value-box">
+						<span class="info-key"><i>*</i>车商类型：</span>
+						<span data-type='self' data-key="isSecond" class="info-value selecter">
+							<div></div>
+							<span class="placeholder">{{=(it.shopType == 0 ? '4S' : '二级经销商')}}</span>
+							<span class="arrow arrow-bottom right8px"></span>
+							<input type="hidden" name="isSecond"  value="{{=(it.shopType == 0 ? '4S' : '二级经销商')}}" />
+						</span>
+					</div>
+					<div class="info-key-value-box">
+						<span class="info-key">车商所在地：</span>
+						<span data-type='self' data-key="isSecond" class="info-value selecter">
+							<div></div>
+							<span class="placeholder">{{=it.shopAddress}}</span>
+							<span class="arrow arrow-bottom right8px"></span>
+							<input type="hidden" name="isSecond" value="{{=it.shopAddress}}" />
+						</span>
+					</div>
+					<div class="info-key-value-box">
+						<span class="info-key">汽车品牌：</span>
+						<span data-type='self' data-key="isSecond" class="info-value selecter">
+							<div></div>
+							<span class="placeholder">{{=it.operateBrand}}</span>
+							<span class="arrow arrow-bottom right8px"></span>
+							<input type="hidden" name="isSecond" value="{{=it.operateBrand}}" />
+						</span>
+					</div>
+				</div>
+			</script>
+			<!-- 车上资料模板 end-->
+
+			<!-- 打款账户模板 -->
+			<script type="text/x-dot-template" id="carAccountTmpl">
+				<div class="account">
+					<div class="account-left clearfix">
+						<div class="search-item">
+							<span class="select-name">开户行名称：</span>
+							<span class="input-text input-text-mini accountBankName">
+								<input type="text" value="">
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">开户账户：</span>
+							<span class="input-text input-text-mini accountNumber">
+								<input type="text" value="">
+							</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">账户户名：</span>
+							<span class="input-text input-text-mini accountName">
+								<input type="text" value="">
+							</span>
+						</div>
+					</div>
+					<div class="account-right">
+						<div class="button button-mini" id="addCard">
+							<i class="iconfont">&#xe615;</i>
+							增加
+						</div>
+					</div>
+				</div>
+				{{ for(var i = 0, len = it.demandCarShopAccountList.length; i < len; i++) { var row = it.demandCarShopAccountList[i]; }}
+				<div class="account">
+					<div class="account-left clearfix">
+						<div class="search-item{{=(row.status == 0 ? '' : ' search-item-disabled')}}">
+							<span class="select-name">开户行名称：</span>
+							<span class="input-text input-text-mini accountBankName">
+								<input type="text" value="{{=row.bankName}}" class="accountBankName"{{=(row.status == 0 ? '' : ' disabled')}}>
+							</span>
+						</div>
+						<div class="search-item{{=(row.status == 0 ? '' : ' search-item-disabled')}}">
+							<span class="select-name">开户账户：</span>
+							<span class="input-text input-text-mini accountNumber">
+								<input type="text" value="{{=row.accountNumber}}" class="accountNumber"{{=(row.status == 0 ? '' : ' disabled')}}>
+							</span>
+						</div>
+						<div class="search-item{{=(row.status == 0 ? '' : ' search-item-disabled')}}">
+							<span class="select-name">账户户名：</span>
+							<span class="input-text input-text-mini accountName">
+								<input type="text" value="{{=row.accountName}}" class="accountName"{{=(row.status == 0 ? '' : ' disabled')}}>
+							</span>
+						</div>
+					</div>
+					<div class="account-right">
+						<a href="javascript:;" class="stopUse" data-id="{{=row.id}}" data-status="{{=row.status}}">{{=(row.status == 0 ? '停用' : '启用')}}</a>
+						<a href="javascript:;" class="deleteItem" data-id="{{=row.id}}">删除</a>
+					</div>
+				</div>
+				{{ } }}
+			</script>
+			<!-- 打款账户模板 end-->
+
+			<!-- 打款账户模板 -->
+			<script type="text/x-dot-template" id="carRateTmpl">
+				<div class="select-search-bar no-border clearfix">
+					<div class="search-item">
+						<span class="select-name">费率1：</span>
+						<span class="input-text input-text-mini accountBankName">
+							<input type="text" value=""><span class="unit">%</span>
+						</span>
+					</div>
+					<div class="search-item">
+						<span class="select-name">费率2：</span>
+						<span class="input-text input-text-mini accountNumber">
+							<input type="text" value=""><span class="unit">%</span>
+						</span>
+					</div>
+					<div class="search-item">
+						<div class="button button-mini" id="addCard">
+							<i class="iconfont">&#xe615;</i>
+							增加
+						</div>
+					</div>
+				</div>
+			</script>
+			<!-- 打款账户模板 end-->
