@@ -354,6 +354,7 @@
     height: 32px;
     border: 1px solid @borderColor;
     padding: 0 10px;
+    background-color: #FFF;
     .borderRadius(3px);
     &.input-text-mini {
         width: 250px;
@@ -369,6 +370,14 @@
     }
     &.input-text-mini2 {
         width: 120px;
+    }
+    &.input-date {
+        padding: 0; 
+        width: 150px;
+        input {
+            padding-left: 10px;
+            background: url(img/datePicker.gif) no-repeat 124px 4px;
+        }
     }
     input {
         float: left;

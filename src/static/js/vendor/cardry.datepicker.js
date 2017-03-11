@@ -30,7 +30,7 @@ if(typeof WdatePicker == 'undefined'){
 			var target = $(this), div, input, icon;
 			
 			if(target.is('div')){
-				
+				console.log(2)
 				div = target;
 				
 				// 文本框
@@ -68,7 +68,6 @@ if(typeof WdatePicker == 'undefined'){
 					
 					// 设置 el 参数，指定文本框用于存储日历值
 					opts['el'] = input.attr('id');
-						
 					WdatePicker(opts);
 					
 				});
@@ -81,7 +80,6 @@ if(typeof WdatePicker == 'undefined'){
 					
 					// 设置 el 参数，指定文本框用于存储日历值
 					opts['el'] = input.attr('id');
-					
 					WdatePicker(opts);
 					
 				});

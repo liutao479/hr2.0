@@ -148,6 +148,8 @@ page.ctrl('myCustomer', [], function($scope) {
 	 * 绑定立即处理事件
 	 */
 	var setupEvt = function() {
+
+
 		// 绑定搜索框模糊查询事件
 		$console.find('#searchInput').on('keydown', function(evt) {
 			if(evt.which == 13) {
@@ -362,6 +364,17 @@ page.ctrl('myCustomer', [], function($scope) {
 		if($params.process) {
 			
 		}
+		// 启动日期控件
+		$console.find('.dateBtn').on('click', function() {
+			var that = $(this);
+			if(that.attr('id') == 'dateEnd') {
+				that.datepicker({
+					minDate: $console.find('#dateStart').val()
+				});
+			} else {
+				$(this).datepicker();
+			}
+		})
 		loadCustomerList(apiParams, function() {
 			setupEvt();
 		});

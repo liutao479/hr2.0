@@ -39,6 +39,12 @@ page.ctrl('loan', function($scope) {
 					})
 				})
 
+				// 启动日期控件
+				$console.find('.dateBtn').on('click', function() {
+					$(this).datepicker();
+				})
+
+
 				if(cb && typeof cb == 'function') {
 					cb();
 				}  
@@ -98,6 +104,7 @@ page.ctrl('loan', function($scope) {
 			}
 			router.render(that.data('href'), {
 				taskId: that.data('id'), 
+				orderNo: that.data('orderNo'),
 				tasks: taskObj,
 				path: 'loanProcess'
 			});
@@ -255,7 +262,7 @@ page.ctrl('loan', function($scope) {
 					break;
 			}
 		},
-		bank: function(cb) {
+		bank: function(tab, parentId, cb) {
 			$.ajax({
 				type: 'post',
 				url: $http.api('demandBank/selectBank', 'zyj'),
