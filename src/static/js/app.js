@@ -16,5 +16,8 @@ $(function() {
 				$menu.setup(menuId, true);
 			})
 		})
-	})
+	});
+	setTimeout(function() {
+		new Todo($('#remind'));	
+	}, 1000)
 });

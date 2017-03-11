@@ -13,7 +13,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	*/
 	var loadArchiveDownloadList = function(params, cb) {
 		$.ajax({
-			url: $http.api('creditUser/getCreditMaterials', 'zyj'),
+			url: $http.api('creditUser/getCreditMaterials1'),
 			type: 'post',
 			data: params,
 			dataType: 'json',

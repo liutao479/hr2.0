@@ -39,11 +39,11 @@
 		addCreditUsers: '<div class="w-add clearfix">\
 							<div class="w-select clearfix">增加征信人员：</div>\
 							<div class="w-select clearfix">\
-								<div class="checkbox checkbox-normal" data-checked="true" name="addCreditUsers" data-type="1"></div>\
+								<div class="checkbox checkbox-normal" data-checked="true" data-type="1"></div>\
 								<span class="w-select-item">反担保人</span>\
 							</div>\
 							<div class="w-select clearfix">\
-								<div class="checkbox checkbox-normal"  name="addCreditUsers" data-type="2"></div>\
+								<div class="checkbox checkbox-normal" data-type="2"></div>\
 								<span class="w-select-item">共同还款人</span>\
 							</div>\
 						</div>',

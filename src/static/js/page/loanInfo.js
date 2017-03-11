@@ -200,7 +200,6 @@ page.ctrl('loanInfo', function($scope) {
 			url: urlStr+'/loanInfoInput/info',
 			data: data,
 			dataType: 'json',
-			async:false,
 			success: $http.ok(function(result) {
 				$scope.result = result;
 				// 启动面包屑

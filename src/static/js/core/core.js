@@ -12,6 +12,14 @@
 		    });
 		};
 	}
+	/**
+	* 添加string.trim方法
+	*/
+	if(!String.prototype.trim) {
+		String.prototype.trim = function(){
+			return this.replace(/(^\s*)|(\s*$)/g, '');
+		};
+	}
 	/*
 	* 本地验证规则
 	*/
@@ -34,15 +42,15 @@
 			switch (name) {
 				// 周宜俭ip
 				case 'zyj':
-					return 'http://192.168.0.121:8080/' + method;
+					return 'http://192.168.0.138:8080/' + method;
 					break;
 				// 蔡延军ip
 				case 'cyj':
-					return 'http://192.168.0.105:8080/' + method;
+					return 'http://192.168.0.124:8080/' + method;
 					break;
 				// 季本松ip
 				case 'jbs':
-					return 'http://192.168.0.180:8080/' + method;
+					return 'http://192.168.0.123:8080/' + method;
 					break;
 				// 王亮ip 
 				case 'wl':
@@ -58,9 +66,7 @@
 	}
 	_.$http.authorization = function(key) {
 		$.ajaxSetup({
-			beforeSend: function(xhr) {
-				xhr.setRequestHeader('Authorization', btoa('test'));
-			}		
+			headers: {'Authorization': "Bearer " + key }
 		})
 	}
 	/**
@@ -73,6 +79,21 @@
 				cb(response);
 			} else {
 				//统一的失败处理
+				var code = response.code;
+				switch (code) {
+					case 1001:
+						$.alert('非法的参数');
+						break;
+					case 1004:
+						unAuth();
+						break;
+					case -1:
+
+						break;
+					default:
+						// statements_def
+						break;
+				}
 				console.log('failed');
 			}
 		}
@@ -124,8 +145,41 @@
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
 		// console.log(arguments);
-	});		
+	});
 	/*****************http end*******************/
+	function unAuth() {
+		$.alert({
+			title: '提示',
+			content: '你的登录授权无效或已过期',
+			useBootstrap: false,
+			buttons:{
+				ok: {
+					text: '确定',
+					action: function() {
+						// location.href = 'login.html';
+						// alert(1)
+					}
+				}
+			}
+		})
+	}
+	//授权校验 begin
+	function localAuth() {
+		var u = {};
+		u.token = Cookies.get('_hr_token');
+		u.account = Cookies.get('_hr_account');
+		u.dept = Cookies.get('_hr_dept');
+		u.role = Cookies.get('_hr_role');
+		u.phone = Cookies.get('_hr_phone');
+		if(!u.token || !u.account) {
+			return unAuth();
+		}
+		// _.$http.authorization(u.token);
+		_.hrLocalInformation = u;
+	}
+	localAuth();
+	//授权校验 end
+
 	/************功能辅助类 begin************/
 	var tool = _.tool = {};
 	/**
@@ -179,7 +233,6 @@
 			_hours = new Date(result).getHours();
 			_minutes = new Date(result).getMinutes();
 			_seconds = new Date(result).getSeconds();
-		console.log(_date)
 		if(_date > 0) return _date + '天';	
 		if(_hours > 0) return _hours + '小时';
 		if(_seconds > 0 && _minutes < 60) return '1小时';
@@ -200,16 +253,19 @@
 			name: '身份证反面'
 		},{
 			materialsCode: 'zxsqs',
-			name: '征信申请书'
+			name: '征信授权书'
 		},{
-			materialsCode: 'xtzqtzs',
-			name: '系统知情通知书'
+			materialsCode: 'xtsyzqs',
+			name: '系统授权通知书'
 		},{
-			materialsCode: 'hkbhzy',
-			name: '户口本户主页'
-		},{
-			materialsCode: 'hkbsy',
-			name: '户口本首页'
+			materialsCode: 'zxsqszp',
+			name: '授权书签字照片'
 		}];
-
+	/**
+	* for plugin
+	*/
+	jconfirm.defaults = {
+		useBootstrap: false,
+		theme: 'material'
+	}
 })(window);

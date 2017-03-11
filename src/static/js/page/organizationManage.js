@@ -268,6 +268,15 @@ page.ctrl('organizationManage', [], function($scope) {
 				$tr.eq(1).show();
 			}
 		})
+
+		// 编辑合作银行按钮
+		$console.find('#organizationManageTable .toNewCar').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				shopId: that.data('shopId'),
+				path: 'organizationManage'
+			});
+		})
 	}
 
 	/***

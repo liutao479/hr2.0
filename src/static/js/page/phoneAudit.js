@@ -66,6 +66,22 @@ page.ctrl('phoneAudit', function($scope) {
 //			})
 //		})
 //	}
+	var loadTabList = function(cb) {
+		var data={};
+		data['taskId']=80872;
+		data['pageCode']='loanTelResApproval';
+		$.ajax({
+			url: urlStr+'/telAdudit/info',
+			data: data,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.cfgData, true);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
 
 	var setupEvent = function() {
 		$console.find('#checkTabs a').on('click', function() {

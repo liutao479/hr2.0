@@ -5,12 +5,20 @@
 	<title>惠融车贷业务云</title>
 	<link rel="shortcut icon" href="static/css/img/public/hrfax.ico" />
 	<link rel="stylesheet" type="text/css" href="static/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="static/css/jquery.dialog.css">
 	<!--[if lt IE 9]>
 	    <script src="/hr2.0/dist/static/js/vendor/respond.js"></script>
 	<![endif]-->
 </head>
 <body>
-	<!--导航条-->
+	<div class="toast" style="display: none;">
+		<div class="subwrap">
+			<div class="content">
+				提交订单后，订单将退回至征信材料上传节点。
+			</div>
+		</div>
+	</div>
+	<!-- 导航条 -->
 	<div class="navigator" id="navigator">
 		<a class="logo-field">
 			<span class="logo"><img src="/hr2.0/dist/static/css/img/public/logo.png" alt=""></span>
@@ -101,44 +109,17 @@
 			</li>
 		</ul>
 	</div>
-	<!--导航条 end-->
-	
+	<!-- 导航条 end-->
+	<!-- 左侧菜单栏 -->
 	<div id="menu"></div>
-	<!--左侧菜单栏 end-->
+	<!-- 左侧菜单栏 end-->
 	
 	<!--主工作台-->
-	<div class="console" id="console">
-	test word for load
-	</div>
+	<div class="console" id="console"></div>
 	<!--主工作台 end-->
-
 	<!--待办事项-->
-	<div class="remind" id="remind">
-		<div class="remind-tips" id="remind-tips">
-			<i class="iconfont" id="iconfont-shouqi">&#xe697;</i>
-			<div class="remind-tips-text">待办提醒</div>
-			<span class="message-number">0</span>
-		</div>
-		<div class="remind-content">
-			<ul class="remind-box">
-				<li class="remind-item">征信材料上传<span class="message-number">10</span></li>
-				<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
-				<li class="remind-item">征信预审核<span class="message-number">10</span></li>
-				<li class="remind-item">开卡信息录入<span class="message-number">10</span></li>
-				<li class="remind-item">征信材料上传<span class="message-number">10</span></li>
-				<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
-				<li class="remind-item">征信预审核<span class="message-number">10</span></li>
-				<li class="remind-item">开卡信息录入<span class="message-number">10</span></li>
-				<li class="remind-item">征信结果录入<span class="message-number">10</span></li>
-				<li class="remind-item">征信预审核<span class="message-number">10</span></li>
-				<li class="remind-item">开卡信息录入</li>
-				<li class="remind-item">开卡信息录入</li>
-				<li class="remind-item">开卡信息录入</li>
-			</ul>
-		</div>
-	</div>
+	<div class="remind" id="remind"></div>
 	<!--代办事项 end-->
-
 	<script type="text/javascript" src="static/js/vendor/jquery.min.js"></script>
 	<script type="text/javascript" src="static/js/vendor/dot.min.js"></script>
 	<script type="text/javascript" src="static/js/app.js"></script>

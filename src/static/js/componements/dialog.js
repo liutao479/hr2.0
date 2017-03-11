@@ -104,7 +104,7 @@
     // 窗口关闭
     openWindow.prototype.close = function() {
     	var self = this;
-    	self.$dialog.find('.w-close').on('click', function() {
+    	self.$dialog.delegate('.w-close', 'click', function() {
     		self.$dialog.remove();
     	})
     }

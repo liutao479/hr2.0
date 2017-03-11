@@ -98,6 +98,7 @@
 .imgs-item-group {
     position: relative;
     display: inline-block;
+    float: left;
     width: 220px;
     text-align: center;
     margin-right: 30px;
@@ -241,6 +242,9 @@
     .imgs-input-text {
         width: 100%;
         margin-top: 10px;
+        input {
+            text-align: center;
+        }
     }
     .imgs-item-p {
         line-height: 42px;
@@ -348,15 +352,20 @@
     display: inline-block;
     width: 348px;
     height: 32px;
-    line-height: 32px;
-    padding: 0 10px;
     border: 1px solid @borderColor;
+    padding: 0 10px;
     .borderRadius(3px);
     &.input-text-mini {
         width: 250px;
     }
+    &.input-name {
+        width: 100px;
+    }
     &.input-text-small {
-        width: 50px;
+        width: 60px;
+    }
+    &.input-idc {
+        width: 180px;
     }
     &.input-text-mini2 {
         width: 120px;
@@ -376,6 +385,14 @@
         right: 5px;
         display: inline-block;
         line-height: 30px;
+    }
+    .input-err {
+        position: absolute;
+        top: 34px;
+        left: 3px;
+        line-height: normal;
+        color: @msgErr;
+        width: 120px;
     }
 }
 
@@ -480,9 +497,8 @@
             .select-item {
                 color: @fontColor;
                 width: auto;
-                height: 32px;
-                line-height: 32px;
-                padding: 0 9px;
+                line-height: 18px;
+                padding: 5px 9px;
                 cursor: pointer;
                 &:hover {
                     color: #FFF;
@@ -524,14 +540,14 @@
             }
         }
         .select-content-box {
-            width: 246px;
+            width: 100%;
             height: 336px;
             overflow-x: hidden;
             overflow-y: auto;
             //品牌车系车型
             .select-content {
                 display: none;
-                padding: 0 15px 15px 15px;
+                padding: 0 20px 15px 15px;
                 width: 248px;
                 &.select-content-active {
                     display: block;
@@ -563,7 +579,20 @@
                             display: inline-block;
                             color: @fontColor;
                             margin-left: 25px;
-                            line-height: 23px;
+                            line-height: 18px;
+                            cursor: pointer;
+                            padding: 5px 3px; 
+                            &.picked {
+                                background-color: @buttonBgColor;
+                                color: #fff;
+                                .borderRadius(3px);
+                            }
+                            &:hover {
+                                cursor: pointer;
+                                background-color: @buttonBgColor;
+                                color: #FFF;
+                                border-radius: 3px;
+                            }
                         }
                     }
                 }
@@ -580,6 +609,12 @@
                             line-height: 23px;
                             margin-right: 23px;
                             color: @fontColor;
+                            cursor: pointer;
+                            &.picked {
+                                background-color: @buttonBgColor;
+                                color: #fff;
+                                .borderRadius(3px);
+                            }
                         }
                     }
                 }
@@ -893,3 +928,33 @@
     }
 
 }
+
+.toast {  
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -60px;
+    margin-left: -150px;
+    z-index: 9998;
+    width: 300px;
+    height: 120px;
+    display:table;  
+    .borderRadius(10px);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #FFF;  
+    _position:relative;   
+    overflow:hidden; 
+    padding: 20px; 
+    font-size: 15px;
+    .subwrap {   
+        vertical-align:middle;   
+        display:table-cell;   
+        _position:absolute;   
+        _top:50%; 
+        .content {   
+            _position:relative;   
+            _top:-50%;   
+        }  
+    }   
+}   
+  

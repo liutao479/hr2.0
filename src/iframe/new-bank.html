@@ -5,174 +5,187 @@
 				<!-- 返回列表 end-->
 				
 				<!-- 面板 -->
-				<div class="panel mt15" id="bankPanel"></div>
-				<!-- 面板 end-->
+				<div class="panel mt15" id="bankPanel">
+					<!-- 银行资料 -->
+					<div class="panel-content-title no-top-border">
+						<span class="panel-title">银行资料</span>
+						<div class="button button-mini">保存</div>
+					</div>
+					<div class="panel-detail-content pl150 pr150">
+						<div class="select-search-bar no-border clearfix">
+							<div class="search-item">
+								<span class="select-name">银行名称：</span>
+								<span class="select select-date">
+									<span class="placeholder">请选择</span>
+									<span class="arrow arrow-bottom"></span>
+								</span>
+							</div>
+						</div>	
+					</div>
+					<!-- 银行资料 end-->
+					
+					<!-- 打款账户 -->
+					<div class="panel-content-title panel-detail-bank">
+						<span class="panel-title">打款账户</span>
+					</div>
+					<div class="panel-detail-content pl150 pr150" id="bankAccountPanel"></div>
+					<!-- 打款账户 end-->
+						
+					<div class="panel-content-title panel-detail-bank">
+						<span class="panel-title">银行费率表</span>
+					</div>
+					<div class="panel-detail-content panel-detail-table" id="bankRatePanel"></div>
 
+				</div>
+				<!-- 面板 end-->
 			</div>
 
-			<script type="text/dot-x-template" id="bankTmpl">
-				<div class="panel-content-title no-top-border">
-					<span class="panel-title">银行资料</span>
-				</div>
-				<div class="panel-detail-content panel-detail-bank">
-					<div class="select-search-bar no-border clearfix">
-						<div class="search-item">
-							<span class="select-name">银行名称：</span>
-							<span class="select select-date">
-								<span class="placeholder">{{=it.bankName}}</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
-						</div>
-					</div>	
-				</div>
-				<div class="panel-content-title panel-detail-bank">
-					<span class="panel-title">打款账户</span>
-				</div>
-				<div class="panel-detail-content panel-detail-bank">
-					<div class="select-search-bar no-border clearfix">
+			<script type="text/dot-x-template" id="bankAccountTmpl">
+				<div class="account">
+					<div class="account-left clearfix">
 						<div class="search-item">
 							<span class="select-name">开户账户：</span>
-							<span class="input-text input-text-mini">
+							<span class="input-text input-text-mini accountNumber">
 								<input type="text" value="">
 							</span>
 						</div>
 						<div class="search-item">
 							<span class="select-name">账户户名：</span>
-							<span class="input-text input-text-mini">
+							<span class="input-text input-text-mini accountName">
 								<input type="text" value="">
 							</span>
 						</div>
-						<div class="search-item">
-							<div class="button button-mini" id="addCard">
-								<i class="iconfont">&#xe615;</i>
-								增加
-							</div>
+					</div>
+					<div class="account-right">
+						<div class="button button-mini" id="addCard">
+							<i class="iconfont">&#xe615;</i>
+							增加
 						</div>
 					</div>
-					{{ for(var i = 0, len = it.demandBankAccountList.length; i < len; i++) { var row = it.demandBankAccountList[i]; }}
-					<div class="select-search-bar no-border clearfix">
-						<div class="search-item">
+				</div>
+				{{ for(var i = 0, len = it.demandBankAccountList.length; i < len; i++) { var row = it.demandBankAccountList[i]; }}
+				<div class="account">
+					<div class="account-left clearfix">
+						<div class="search-item{{=(row.status == 0 ? '' : ' search-item-disabled')}}">
 							<span class="select-name">开户账户：</span>
-							<span class="input-text input-text-mini">
-								<input type="text" value="{{=row.accountNumber}}">
+							<span class="input-text input-text-mini accountNumber">
+								<input type="text" value="{{=row.accountNumber}}"{{=(row.status == 0 ? '' : ' disabled')}}>
 							</span>
 						</div>
-						<div class="search-item">
+						<div class="search-item{{=(row.status == 0 ? '' : ' search-item-disabled')}}">
 							<span class="select-name">账户户名：</span>
-							<span class="input-text input-text-mini">
-								<input type="text" value="{{=row.accountName}}">
+							<span class="input-text input-text-mini accountName">
+								<input type="text" value="{{=row.accountName}}"{{=(row.status == 0 ? '' : ' disabled')}}>
 							</span>
-						</div>
-						<div class="search-item">
-							<a href="javascript:;" class="stopUse">停用</a>
-							<a href="javascript:;" class="deleteItem">删除</a>
 						</div>
 					</div>
-					{{ } }}
+					<div class="account-right">
+						<a href="javascript:;" class="stopUse" data-id="{{=row.id}}" data-status="{{=row.status}}">{{=(row.status == 0 ? '停用' : '启用')}}</a>
+						<a href="javascript:;" class="deleteItem" data-id="{{=row.id}}">删除</a>
+					</div>
 				</div>
-				<div class="panel-content-title panel-detail-bank">
-					<span class="panel-title">银行费率表</span>
-				</div>
-				<div class="panel-detail-content panel-detail-table">
-					<table class="orders-table orders-table-borders" width="100%">
-						<thead>
-							<tr class="orders-bar-title">
-								<td class="orders-item-data">序号</td>
-								<td class="orders-item-data">新手车/二手车</td>
-								<td class="orders-item-data">省份</td>
-								<td class="orders-item-data">12期利率</td>
-								<td class="orders-item-data">18期利率</td>
-								<td class="orders-item-data">24期利率</td>
-								<td class="orders-item-data">30期利率</td>
-								<td class="orders-item-data">36期利率</td>
-								<td class="orders-item-data">48期利率</td>
-								<td class="orders-item-data">60期利率</td>
-								<td class="orders-item-data">操作</td>
-						</thead>
-						<tbody>
-							<tr class="orders-item tr-odd tr-noborder">
-								<td class="orders-item-data">/</td>
-								<td class="orders-item-data">
-									<select name="" id="">
-										<option value="">新车</option>
-										<option value="">二手车</option>
-									</select>
-								</td>
-								<td class="orders-item-data">
-									<select name="" id="">
-										<option value="">浙江</option>
-										<option value="">江苏</option>
-									</select>
-								</td>
-								<td class="orders-item-data">
-									<div class="input-text input-text-small">
-										<input type="text">%
-									</div>
-								</td>
-								<td class="orders-item-data">
-									<div class="input-text input-text-small">
-										<input type="text">%
-									</div>
-								</td>
-								<td class="orders-item-data">
-									<div class="input-text input-text-small">
-										<input type="text">%
-									</div>
-								</td>
-								<td class="orders-item-data">
-									<div class="input-text input-text-small">
-										<input type="text">%
-									</div>
-								</td>
-								<td class="orders-item-data">
-									<div class="input-text input-text-small">
-										<input type="text">%
-									</div>
-								</td>
-								<td class="orders-item-data">
-									<div class="input-text input-text-small">
-										<input type="text">%
-									</div>
-								</td>
-								<td class="orders-item-data">
-									<div class="input-text input-text-small">
-										<input type="text">%
-									</div>
-								</td>
-								<td class="orders-item-data">
-									<div class="button button-mini">
-										<i class="iconfont">&#xe615;</i>
-										增加
-									</div>
-								</td>
-							</tr>
-							{{ for(var i = 0, len = it.demandBankRateList.length; i < len; i++) { var col = it.demandBankRateList[i]; }}
-							{{ if(i % 2 !== 0) { }}
-								<tr class="orders-item tr-odd">
-								{{ } else if(i % 2 == 0 && i == 0) { }}
-								<tr class="orders-item tr-even tr-noborder">
-								{{ } else { }}
-								<tr class="orders-item tr-even">
-								{{ } }}
-								<td class="orders-item-data">{{=(i + 1)}}</td>
-								<td class="orders-item-data">新车</td>
-								<td class="orders-item-data">浙江</td>
-								<td class="orders-item-data">{{=col.interestRate12}}%</td>
-								<td class="orders-item-data">{{=col.interestRate18}}%</td>
-								<td class="orders-item-data">{{=col.interestRate24}}%</td>
-								<td class="orders-item-data">{{=col.interestRate30}}%</td>
-								<td class="orders-item-data">{{=col.interestRate36}}%</td>
-								<td class="orders-item-data">{{=col.interestRate48}}%</td>
-								<td class="orders-item-data">{{=col.interestRate60}}%</td>
-								<td class="orders-item-data">
-									<div class="button button-mini button-special">
-										<i class="iconfont">&#xe602;</i>
-										删除
-									</div>
-								</td>
-							</tr>
+				{{ } }}
+			</script>
+
+			<script type="text/dot-x-template" id="bankRateTmpl">
+				<table class="orders-table orders-table-borders" width="100%">
+					<thead>
+						<tr class="orders-bar-title">
+							<td class="orders-item-data">序号</td>
+							<td class="orders-item-data">新手车/二手车</td>
+							<td class="orders-item-data">省份</td>
+							<td class="orders-item-data">12期利率</td>
+							<td class="orders-item-data">18期利率</td>
+							<td class="orders-item-data">24期利率</td>
+							<td class="orders-item-data">30期利率</td>
+							<td class="orders-item-data">36期利率</td>
+							<td class="orders-item-data">48期利率</td>
+							<td class="orders-item-data">60期利率</td>
+							<td class="orders-item-data">操作</td>
+					</thead>
+					<tbody id="bankRateTable">
+						<tr class="orders-item tr-odd tr-noborder">
+							<td class="orders-item-data">/</td>
+							<td class="orders-item-data">
+								<select name="" id="">
+									<option value="">新车</option>
+									<option value="">二手车</option>
+								</select>
+							</td>
+							<td class="orders-item-data">
+								<select name="" id="">
+									<option value="">浙江</option>
+									<option value="">江苏</option>
+								</select>
+							</td>
+							<td class="orders-item-data">
+								<div class="input-text input-text-small">
+									<input type="text"><span class="unit">%</span>
+								</div>
+							</td>
+							<td class="orders-item-data">
+								<div class="input-text input-text-small">
+									<input type="text"><span class="unit">%</span>
+								</div>
+							</td>
+							<td class="orders-item-data">
+								<div class="input-text input-text-small">
+									<input type="text"><span class="unit">%</span>
+								</div>
+							</td>
+							<td class="orders-item-data">
+								<div class="input-text input-text-small">
+									<input type="text"><span class="unit">%</span>
+								</div>
+							</td>
+							<td class="orders-item-data">
+								<div class="input-text input-text-small">
+									<input type="text"><span class="unit">%</span>
+								</div>
+							</td>
+							<td class="orders-item-data">
+								<div class="input-text input-text-small">
+									<input type="text"><span class="unit">%</span>
+								</div>
+							</td>
+							<td class="orders-item-data">
+								<div class="input-text input-text-small">
+									<input type="text"><span class="unit">%</span>
+								</div>
+							</td>
+							<td class="orders-item-data">
+								<div class="button button-mini" id="addBankRate">
+									<i class="iconfont">&#xe615;</i>
+									增加
+								</div>
+							</td>
+						</tr>
+						{{ for(var i = 0, len = it.demandBankRateList.length; i < len; i++) { var col = it.demandBankRateList[i]; }}
+						{{ if(i % 2 !== 0) { }}
+							<tr class="orders-item tr-odd">
+							{{ } else if(i % 2 == 0 && i == 0) { }}
+							<tr class="orders-item tr-even tr-noborder">
+							{{ } else { }}
+							<tr class="orders-item tr-even">
 							{{ } }}
-						</tbody>
-					</table>
-				</div>
+							<td class="orders-item-data">{{=(i + 1)}}</td>
+							<td class="orders-item-data">{{=(col.isSecond == 0 ? '二手车' : '新车')}}</td>
+							<td class="orders-item-data">{{=col.provinceName}}</td>
+							<td class="orders-item-data">{{=col.interestRate12}}%</td>
+							<td class="orders-item-data">{{=col.interestRate18}}%</td>
+							<td class="orders-item-data">{{=col.interestRate24}}%</td>
+							<td class="orders-item-data">{{=col.interestRate30}}%</td>
+							<td class="orders-item-data">{{=col.interestRate36}}%</td>
+							<td class="orders-item-data">{{=col.interestRate48}}%</td>
+							<td class="orders-item-data">{{=col.interestRate60}}%</td>
+							<td class="orders-item-data">
+								<div class="button button-mini button-special deleteBankRate" data-is-second="{{=col.isSecond}}" data-province-id="{{=col.provinceId}}">
+									<i class="iconfont">&#xe602;</i>
+									删除
+								</div>
+							</td>
+						</tr>
+						{{ } }}
+					</tbody>
+				</table>
 			</script>
