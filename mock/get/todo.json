@@ -1,0 +1,29 @@
+{
+"code": 0,
+"data": {
+"taskCategorys": [
+{
+"size": 1,
+"sceneCode": "homeMaterialsUpload",
+"category": "上门材料上传"
+},
+{
+"size": 1,
+"sceneCode": "advanceMaterialsUpload",
+"category": "垫资材料上传"
+},
+{
+"size": 1,
+"sceneCode": "signMaterialsUpload",
+"category": "签约材料上传"
+},
+{
+"size": 1,
+"sceneCode": "loanMaterialsUpload",
+"category": "贷款材料上传"
+}
+],
+"taskSize": 5
+},
+"msg": "success"
+}
