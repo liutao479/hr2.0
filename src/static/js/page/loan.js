@@ -189,6 +189,12 @@ page.ctrl('loan', function($scope) {
 		cb();
 	}
 
+	$scope.carPicker = function(picked) {
+		console.log(picked);
+	}
+	$scope.bankPicker = function(picked) {
+		console.log(picked);
+	}
 
 	/**dropdown 测试*/
 	function setupDropDown() {
