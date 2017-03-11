@@ -127,6 +127,7 @@
 	};
 	dropdown.prototype.listenItem = function(items){
 		var self = this;
+		items.actionName = self.text[self.actionIdx];
 		if(self.opts.tabs.length <= 1) {
 			self.$items.html(_.template(internal.template.single)(items));
 		} else {
@@ -213,8 +214,8 @@
 	internal.template.brandContent = '<dl class="word-area">\
 										<dt>A</dt>\
 										<dd class="clearfix">\
-											{{ for(var i = 0, len=it.items.length; i < len; i++) { var row = it.items[i]; }}\
-											<a class="car-item itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</a>\
+											{{ for(var i = 0, len=it.items.length; i < len; i++) { var row = it.items[i]; name=row[it.name]; }}\
+											<a class="car-item{{=(it.actionName == name ? \" picked\":\"\")}} itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</a>\
 											{{ } }}\
 										</dd>\
 									</dl>';
