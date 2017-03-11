@@ -42,6 +42,8 @@
         }
     }
     &&-empty {
+        height: 32px;
+        line-height: 30px;
         border:1px solid @buttonBgColor;
         background-color: #ffffff;
         color: @buttonBgColor;
@@ -431,9 +433,9 @@
         width: 248px;
     }
     &&-bank {
-        width: 250px;
+        width: 350px;
         .placeholder {
-            width: 210px;
+            width: 285px;
         }
     }
     
@@ -592,6 +594,11 @@
                             line-height: 18px;
                             cursor: pointer;
                             padding: 5px 3px; 
+                            &.picked {
+                                background-color: @buttonBgColor;
+                                color: #fff;
+                                .borderRadius(3px);
+                            }
                             &:hover {
                                 cursor: pointer;
                                 background-color: @buttonBgColor;
@@ -615,6 +622,11 @@
                             margin-right: 23px;
                             color: @fontColor;
                             cursor: pointer;
+                            &.picked {
+                                background-color: @buttonBgColor;
+                                color: #fff;
+                                .borderRadius(3px);
+                            }
                         }
                     }
                 }
@@ -706,6 +718,8 @@
     background-color: #efad4f;
     color: #FFF;
     .borderRadius(8px);
+    top: -8px;
+    right: -8px;
     cursor: pointer;
     .iconfont {
         font-size: 16px;

@@ -3,11 +3,9 @@
 				<!--返回列表-->
 				<div id="location"></div>
 				
-				<!-- tab切换栏 -->
-				<div class="tab-bar" id="userTabs">
-					<ul class="role-bar-ul clearfix" id="checkTabs"></ul>
-				</div>
-				<!-- tab切换栏 end-->
+				<!--工作台左侧菜单面板-->
+				<div class="panel panel-menu mt15" id="checkTabs"></div>
+				<!--工作台左侧菜单面板 end-->
 				
 				<!-- tab栏对应项 -->
 				<!--<div class="creditResultPanel" id="checkResultPanel">
@@ -22,25 +20,26 @@
 				
 				
 				<!--面板-->
-				<div id="eleCheck"></div>
+				<div id="eleCheck" class="mt15"></div>
 				
 				<!--提交订单按钮-->
-				<div class="commit-orders-box">
+				<div class="commit-orders-box mt15" style="margin-left: 162px;">
 					<div id="" class="button saveBtn">提交订单</div>
 				</div>
 			</div>
 			
 			<script type="text/x-dot-template" id="checkResultTabsTmpl">
 				{{ for(var i = 0, len = it.frames.length; i < len; i++) { var row = it.frames[i];  }}
-				<li class="role-bar-li">
-					<a href="javascript:;" data-idx="{{= i}}" class="role-item{{= (i == 0 ? ' role-item-active':'')}} tabEvt" data-type="{{=row.code}}">{{=row.name}}</a>
-				</li>
+					<a href="javascript:;" data-idx="{{= i}}" data-href="loanProcess/loanTelApproval/{{=row.code}}" class="panel-menu-item{{= (i == 0 ? ' panel-menu-item-active':'')}} tabLeftEvt" data-type="{{=row.code}}">
+						{{=row.name}}
+						<span class='arrow arrow-right'></span>
+					</a>
 				{{ } }}
 			</script>
 			
 			
 			<script type="text/x-dot-template" id="eleChecktmpl">
-				<div class="panel panel-loan no-top-border">
+				<div class="panel panel-loan panel-detail">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
@@ -92,7 +91,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan">
+				<div class="panel panel-loan panel-detail">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>

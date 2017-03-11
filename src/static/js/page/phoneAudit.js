@@ -2,7 +2,22 @@
 page.ctrl('phoneAudit', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params;
-	var urlStr = "http://192.168.0.121:8080";
+	var urlStr = "http://192.168.1.124:8080";
+	/**
+	* 设置面包屑
+	*/
+	var setupLocation = function(loanUser) {
+		if(!$scope.$params.path) return false;
+		var $location = $console.find('#location');
+		var _orderDate = tool.formatDate($scope.$params.date, true);
+		$location.data({
+			backspace: $scope.$params.path,
+			loanUser: loanUser,
+			current: '审核列表',
+			orderDate: _orderDate
+		});
+		$location.location();
+	}
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
@@ -10,31 +25,53 @@ page.ctrl('phoneAudit', function($scope) {
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-		data['taskId']=80873;
-//		data['pageCode']='loanTelResApproval';
+		data['taskId']=80872;
+		data['pageCode']='loanTelResApproval';
 		$.ajax({
 			url: urlStr+'/telAdudit/info',
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
-//				$scope.result = result;
-//				// 启动面包屑
-//				var _loanUser = $scope.result.data[0].loanUserCredits[0].userName;
-//				setupLocation(_loanUser);
+				$scope.result = result;
+				// 启动面包屑
+				var _loanUser = $scope.result.data.KHXX.userName;
+				setupLocation(_loanUser);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.cfgData, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
 				loanFinishedSelect();
 				setupEvent();
+				leftArrow();
 			})
 		})
 	}
+	
+//	var loadTabList = function(cb) {
+//		var data={};
+//		data['taskId']=80872;
+//		$.ajax({
+//			url: urlStr+'/telAdudit/info',
+//			data: data,
+//			dataType: 'json',
+//			async:false,
+//			success: $http.ok(function(result) {
+//				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.cfgData, true);
+//				if(cb && typeof cb == 'function') {
+//					cb();
+//				}
+//				setupEvent();
+//				leftArrow();
+//			})
+//		})
+//	}
 	var loadTabList = function(cb) {
 		var data={};
 		data['taskId']=80872;
+		data['pageCode']='loanTelResApproval';
 		$.ajax({
-			url: urlStr+'/loanTelApproval/info',
+			url: urlStr+'/telAdudit/info',
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -48,21 +85,22 @@ page.ctrl('phoneAudit', function($scope) {
 
 	var setupEvent = function() {
 		$console.find('#checkTabs a').on('click', function() {
-			$('.role-item').each(function(){
-				$(this).removeClass('role-item-active');
+			$('.panel-menu-item').each(function(){
+				$(this).removeClass('panel-menu-item-active');
 			})
 			var that = $(this);
 			var idx = that.data('idx');
-			that.addClass('role-item-active');
-			$(".tabTrigger").each(function(){
-				$(this).hide();
-				var trig = $(this).data('trigger');
-				if(trig == idx){
-					$(this).show();
-					return false;
-				}
-			})
+			that.addClass('panel-menu-item-active');
+			leftArrow();
 		});
+	}
+	var leftArrow = function(){
+		$('.panel-menu-item').each(function(){
+			$(this).find('.arrow').hide();
+			if($(this).hasClass('panel-menu-item-active')){
+				$(this).find('.arrow').show();
+			}
+		})
 	}
 	//页面加载完成对所有下拉框进行赋值	
 	var loanFinishedSelect = function(){
@@ -102,7 +140,6 @@ page.ctrl('phoneAudit', function($scope) {
 		}else{
 			$(this).parent().parent().parent().removeClass("error-input");
 			$(this).parent().parent().siblings("i").remove();
-//			$(this).parent().parent().after("<div class='opcity0'>这个是新增的div</div>");
 		}
 		$(".selectOptBox1").hide();
 		return false;
@@ -118,7 +155,7 @@ page.ctrl('phoneAudit', function($scope) {
 			$tbl: $console.find('#eleCheck')
 		}
 		loadLoanList();
-		loadTabList();
+//		loadTabList();
 	})
 });
 

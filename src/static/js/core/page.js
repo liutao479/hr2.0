@@ -144,25 +144,3 @@ $(document).on('hover', '#navigator .user', function() {
 		}
 	})
 
-		function timeShow() {        
-			$('.dateBtn').mobiscroll().datetime({
-				theme: 'android-ics light', //皮肤样式
-		        display: 'modal', //显示方式 
-		        mode: 'scroller', //日期选择模式
-		    	dateOrder: 'yyMdd',
-				dateFormat: 'yy-mm-dd',
-				showNow: true,
-				setText: "确定",
-				nowText: "今天",
-				cancelText: "取消",
-				timeWheels: 'HHii',
-				timeFormat: 'HH:ii',
-		        minuteText: '分',
-		        hourText: '时',
-		        dayText: '日',
-		        monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-		        monthText: '月',
-		        yearText: '年',
-		        startYear: 2015, //开始年份
-		    });
-		}	
