@@ -26,7 +26,7 @@ page.ctrl('phoneAudit', function($scope) {
 	var loadLoanList = function(cb) {
 		var data={};
 		data['taskId']=80872;
-		data['pageCode']='loanTelResApproval';
+		data['frameCode']='T0046';
 		$.ajax({
 			url: urlStr+'/telAdudit/info',
 			data: data,
@@ -69,7 +69,7 @@ page.ctrl('phoneAudit', function($scope) {
 	var loadTabList = function(cb) {
 		var data={};
 		data['taskId']=80872;
-		data['pageCode']='loanTelResApproval';
+//		data['pageCode']='loanTelResApproval';
 		$.ajax({
 			url: urlStr+'/telAdudit/info',
 			data: data,
@@ -92,6 +92,10 @@ page.ctrl('phoneAudit', function($scope) {
 			var idx = that.data('idx');
 			that.addClass('panel-menu-item-active');
 			leftArrow();
+		});
+		$console.find('.textArea').on('blur', function() {
+			var textVal = $(this).innerHTML;
+			console.log(textVal);
 		});
 	}
 	var leftArrow = function(){

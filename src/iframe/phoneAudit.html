@@ -39,11 +39,49 @@
 			
 			
 			<script type="text/x-dot-template" id="eleChecktmpl">
+				
+				<div class="panel panel-loan panel-detail">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">客户信息</span>
+						</div>
+					</div>
+					<div class="panel-detail-content-layout">
+						<div class="loan-info">
+							<div class="info-key-value-box">
+								<span class="info-key">
+									客户姓名：</span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName}}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key">
+									客户姓名：</span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName}}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key">
+									客户姓名：</span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName}}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key">
+									客户姓名：</span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName}}" /></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
 				<div class="panel panel-loan panel-detail">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">必问问题</span>
+							<div class="button button-mini-nowidth saveBtn" data-key="saveOrderInfo">
+								保存
+							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
@@ -81,7 +119,8 @@
 									{{ }else{ }}
 										<!--<textarea name="editInfo" rows="4"></textarea>-->
 										<div class="textArea" contenteditable="true"></div>
-									{{ } }}	
+									{{ } }}
+										<input type="hidden" name="editInfo" value="{{= row.editInfo}}" />
 									</span>
 								</div>
 							</div>
@@ -93,11 +132,16 @@
 						</div>
 					</div>
 				</div>
+				
+				
 				<div class="panel panel-loan panel-detail">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">选问问题</span>
+							<div class="button button-mini-nowidth saveBtn" data-key="saveOrderInfo">
+								保存
+							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
@@ -136,6 +180,7 @@
 										<!--<textarea name="editInfo" rows="4"></textarea>-->
 										<div class="textArea" contenteditable="true"></div>
 									{{ } }}	
+										<input type="hidden" name="editInfo" value="{{= row.editInfo}}" />
 									</span>
 								</div>
 							</div>
