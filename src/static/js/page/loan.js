@@ -39,13 +39,6 @@ page.ctrl('loan', function($scope) {
 						content: "<div>测试弹窗功能</div>"
 					})
 				})
-
-				// 启动日期控件
-				$console.find('.dateBtn').on('click', function() {
-					$(this).datepicker();
-				})
-
-
 				if(cb && typeof cb == 'function') {
 					cb();
 				}  
@@ -62,6 +55,13 @@ page.ctrl('loan', function($scope) {
 			size: apiParams.pageSize
 		});
 		$('#pageToolbar').paging();
+	}
+
+	/**
+	* 日历控件
+	*/
+	var setupDatepicker = function() {
+		$('.dateBtn').datepicker();
 	}
 
 	/**
@@ -184,8 +184,8 @@ page.ctrl('loan', function($scope) {
 		apiParams.pageNum = _page;
 		$params.pageNum = _page;
 		// router.updateQuery($scope.$path, $params);
-		
 		loadLoanList(apiParams);
+		setupDatepicker();
 		cb();
 	}
 

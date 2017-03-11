@@ -28,6 +28,14 @@ if(typeof WdatePicker == 'undefined'){
 		return this.each(function(){
 			
 			var target = $(this), div, input, icon;
+			var io = target.data();
+			var internalOpts = $.extend({}, opts);
+			if(io.min) {
+				internalOpts.minDate = "#F{$dp.$D("+io.min+")}";
+			}
+			if(io.max) {
+				internalOpts.maxDate = "#F{$dp.$D("+io.max+")}";
+			}
 			
 			if(target.is('div')){
 				console.log(2)
@@ -61,14 +69,14 @@ if(typeof WdatePicker == 'undefined'){
 			if(id){
 				
 				// 文本框触发日历控件
-				input[opts.eventType](function(){
+				input[internalOpts.eventType](function(){
 					
 					// 隐藏或清除其他控件
 //					cardry.controls.hide();
 					
 					// 设置 el 参数，指定文本框用于存储日历值
-					opts['el'] = input.attr('id');
-					WdatePicker(opts);
+					internalOpts['el'] = input.attr('id');
+					WdatePicker(internalOpts);
 					
 				});
 				
@@ -79,8 +87,8 @@ if(typeof WdatePicker == 'undefined'){
 //					cardry.controls.hide();
 					
 					// 设置 el 参数，指定文本框用于存储日历值
-					opts['el'] = input.attr('id');
-					WdatePicker(opts);
+					internalOpts['el'] = input.attr('id');
+					WdatePicker(internalOpts);
 					
 				});
 				

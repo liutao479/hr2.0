@@ -59,6 +59,13 @@ page.ctrl('myCustomer', [], function($scope) {
 	}
 
 	/**
+	* 日历控件
+	*/
+	var setupDatepicker = function() {
+		$('.dateBtn').datepicker();
+	}
+
+	/**
 	* 编译翻单页栏
 	*/
 	var setupScroll = function(page, cb) {
@@ -348,7 +355,6 @@ page.ctrl('myCustomer', [], function($scope) {
 			loadCustomerList(apiParams);
 		});
 	}
-		
 
 	/***
 	* 加载页面模板
@@ -361,23 +367,12 @@ page.ctrl('myCustomer', [], function($scope) {
 			$paging: $console.find('#pageToolbar'),
 			$scrollBar: $console.find('#scrollBar')
 		}
-		if($params.process) {
-			
-		}
-		// 启动日期控件
-		$console.find('.dateBtn').on('click', function() {
-			var that = $(this);
-			if(that.attr('id') == 'dateEnd') {
-				that.datepicker({
-					minDate: $console.find('#dateStart').val()
-				});
-			} else {
-				$(this).datepicker();
-			}
-		})
+		
 		loadCustomerList(apiParams, function() {
 			setupEvt();
 		});
+		setupDropDown();
+		setupDatepicker();
 	});
 
 	$scope.paging = function(_pageNum, _size, $el, cb) {
@@ -386,6 +381,130 @@ page.ctrl('myCustomer', [], function($scope) {
 		// router.updateQuery($scope.$path, $params);
 		loadCustomerList(apiParams);
 		cb();
+	}
+
+	/**dropdown 测试*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
+	var car = {
+		brand: function(cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carBrandlist',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'brandId',
+						name: 'carBrandName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		series: function(brandId, cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carSeries',
+				data: {brandId: brandId},
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'serieName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		specs: function(seriesId, cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carSpecs',
+				data: {
+					serieId: seriesId
+				},
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'carSerieId',
+						name: 'specName'
+					};
+
+					cb(sourceData);
+				}
+			})
+		}
+	}
+
+	$scope.dropdownTrigger = {
+		car: function(tab, parentId, cb) {
+			if(!cb && typeof cb != 'function') {
+				cb = $.noop;
+			}
+			if(!tab) return cb();
+			switch (tab) {
+				case '品牌':
+					car.brand(cb);
+					break;
+				case "车系":
+					car.series(parentId, cb);
+					break;
+				case "车型":
+					car.specs(parentId, cb);
+					break;
+				default:
+					break;
+			}
+		},
+		busiSource: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('carshop/list', 'zyj'),
+				// url: 'http://localhost:8083/mock/carSpecs',
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		deptCompany: function(t, p, cb) {
+			$.ajax({
+				type: 'get',
+				url: $http.api('pmsDept/getPmsDeptList', 'zyj'),
+				data: {
+					parentId: 99
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					console.log(xhr)
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		demandBank: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'bankId',
+						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		}
 	}
 });
 
