@@ -77,12 +77,15 @@
 		self.$el.append(_.template(internal.template.fields)({readonly: !self.search}));
 		self.$dropdown = $('<div class="select-box"></div>').appendTo(self.$el);
 		self.$text = self.$el.find('.select-text');
-		if(self.opts.tabs.length > 0) {
+		if(self.opts.tabs.length > 1) {
 			self.$tabPanel = $(_.template(internal.template.tab)(self.opts.tabs)).appendTo(self.$dropdown);
 			self.$tabs = self.$tabPanel.find('.select-tab-item');
+			self.$content = $('<div class="select-content-box"></div>').appendTo(self.$dropdown);
+			self.$items = $('<div class="select-content select-content-brand select-content-active"></div>').appendTo(self.$content);
+		} else {
+			self.$items = $('<ul class="select-area"></ul>').appendTo(self.$dropdown);
 		}
-		self.$content = $('<div class="select-content-box"></div>').appendTo(self.$dropdown);
-		self.$items = $('<div class="select-content select-content-brand select-content-active"></div>').appendTo(self.$content);
+		
 		self.__addEventListener();
 	};
 	/**
@@ -124,14 +127,18 @@
 	};
 	dropdown.prototype.listenItem = function(items){
 		var self = this;
-		self.$items.html(_.template(internal.template.brandContent)(items));
+		if(self.opts.tabs.length <= 1) {
+			self.$items.html(_.template(internal.template.single)(items));
+		} else {
+			self.$items.html(_.template(internal.template.brandContent)(items));
+		}
 		self.$items.find('.itemEvt').on('click', function() {
 			var $that = $(this);
 			var id = $that.data('id'),
 				name = $that.text();
 			self.text.push(name);
 			//只有一级，选中即表示结束
-			if(self.opts.tabs.length == 0) {
+			if(self.opts.tabs.length <= 1) {
 				self.picked = {
 					id: id,
 					name: name
@@ -200,6 +207,9 @@
 								<li class="select-tab-item{{=(i==0?\" select-tab-item-active\":\"\")}}">{{= row }}</li>\
 								{{ } }}\
 							</ul>';
+	internal.template.single = '{{ for(var i = 0, len = it.items.length; i < len; i++) { var row = it.items[i]; }}\
+									<li class="select-item itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</li>\
+								{{ } }}';
 	internal.template.brandContent = '<dl class="word-area">\
 										<dt>A</dt>\
 										<dd class="clearfix">\

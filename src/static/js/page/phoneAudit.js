@@ -37,7 +37,6 @@ page.ctrl('phoneAudit', function($scope) {
 			url: urlStr+'/loanTelApproval/info',
 			data: data,
 			dataType: 'json',
-			async:false,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.cfgData, true);
 				if(cb && typeof cb == 'function') {

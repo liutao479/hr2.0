@@ -234,16 +234,13 @@ page.ctrl('loan', function($scope) {
 			})
 		}
 	}
-	var area = {
-
-	}
 
 	$scope.dropdownTrigger = {
 		car: function(tab, parentId, cb) {
 			if(!cb && typeof cb != 'function') {
 				cb = $.noop;
 			}
-			// if(!tab) return cb();
+			if(!tab) return cb();
 			switch (tab) {
 				case '品牌':
 					car.brand(cb);
@@ -255,20 +252,18 @@ page.ctrl('loan', function($scope) {
 					car.specs(parentId, cb);
 					break;
 				default:
-					car.brand(cb);
-					// cb();
 					break;
 			}
 		},
-		bank: function(cb) {
+		bank: function(t, p, cb) {
 			$.ajax({
-				type: 'post',
-				url: $http.api('demandBank/selectBank', 'zyj'),
+				// url: $http.api('demandBank/selectBank', 'zyj'),
+				url: 'http://localhost:8083/mock/carSpecs',
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
-						id: 'carSerieId',
+						id: 'id',
 						name: 'specName'
 					};
 					cb(sourceData);

@@ -113,6 +113,10 @@
 		function internal(e) {
 			$.ajax({
 				url: 'http://localhost:8083/mock/todo?t='+new Date(),
+				beforeSend: function(xhr) {
+					xhr.closeLoading = true;
+					return true;
+				},
 				success: function(xhr) {
 					if(!xhr.code && xhr.data) {
 						e.addItems(xhr.data);

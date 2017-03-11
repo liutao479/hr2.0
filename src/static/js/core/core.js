@@ -66,10 +66,7 @@
 	}
 	_.$http.authorization = function(key) {
 		$.ajaxSetup({
-			headers: {'Authorization': "Bearer " + key}
-			// beforeSend: function(xhr) {
-			// 	xhr.setRequestHeader();
-			// }		
+			headers: {'Authorization': "Bearer " + key }
 		})
 	}
 	/**
@@ -162,13 +159,7 @@
 						// location.href = 'login.html';
 						// alert(1)
 					}
-				},
-				close: {
-					text: '取消',
-					action: function() {
-					}
 				}
-
 			}
 		})
 	}
