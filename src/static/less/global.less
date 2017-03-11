@@ -1306,10 +1306,6 @@ input[disabled]{
 
 //订单日志记录表
 .catalog {
-//  border: 1px solid #999;
-    .catalog-item:nth-last-child(1) .catalog-content{
-        border-color: #FFF;
-    }
     .blue {
         color: @buttonBgColor;   
     }
@@ -1336,12 +1332,23 @@ input[disabled]{
         padding: 3px 25px 25px 25px;
         min-height: 80px;
         border-left: 1px solid @buttonBgColor;
+        &.catalog-content-special {
+            border-left: 1px solid #FFF !important;
+        }
         .catalog-content-item {
             position: relative;
-            &.catalog-content-item-special .pointer {
-                .pointer1, .pointer3 {
-                    background-color: #ff5c57;
+            &.catalog-content-item-special {
+                .pointer {
+                    .pointer1, .pointer3 {
+                        background-color: #ff5c57;
+                    }
                 }
+                .catalog-back {
+                    color: #ff5c57;
+                }
+            }
+            .color-gray {
+                color: @tiperColor;
             }
             .catalog-content-text {
                 line-height: 18px;

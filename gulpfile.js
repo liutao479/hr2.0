@@ -66,7 +66,7 @@ gulp.task('copy', function() {
             path.src.root('templates/**/*.html'),
             path.src.root('app.html'),
             path.src.root('login.html'),
-            path.src.js('vendor/**/*.js'),
+            path.src.js('vendor/**/*'),
             path.src.js('page/**/*.js'),
             path.src.root('static/css/img/**/*'),
             path.src.root('static/css/jquery.dialog.css'),

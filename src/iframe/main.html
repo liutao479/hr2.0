@@ -2,6 +2,10 @@
 <div class="select select-common" data-dropdown="page.$scope['loan'].bankPicker" data-trigger="page.$scope['loan'].dropdownTrigger.bank"></div>
 <div class="checkbox checkbox-normal" data-checked="true" id='haha'></div>
 <div class="checkbox checkbox-normal" data-checked="false"></div>
+<div class="input-text input-date">
+	<input id="loaningDate" type="text" class="dateBtn" readonly="readonly" name="utilityTime" value="" />	
+</div>
+
 <!--订单表格-->
 <div class="container workplat">
 	<div class="search-bar">
@@ -66,7 +70,7 @@
 						{{ } }}
 					</table>
 				</td>
-				<td class="orders-item-data"><a data-href="loanProcess/{{=row.loanTasks[0].category}}" data-idx="{{=i}}" data-id="{{=row.loanTasks[0].id}}" data-date="{{=row.createDate}}" class="button button-mini button-gray">立即处理</a></td> -->
+				<td class="orders-item-data"><a data-href="loanProcess/{{=row.loanTasks[0].category}}" data-idx="{{=i}}" data-id="{{=row.loanTasks[0].id}}" data-order-no="{{=row.orderNo}}" class="button button-mini button-gray">立即处理</a></td> -->
 				<!-- <td class="orders-item-data"><a data-href="loanProcess/detail" data-idx="{{=i}}" class="button button-mini button-gray">立即处理</a></td> -->
 			</tr>
 		{{ } }}

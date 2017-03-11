@@ -181,6 +181,10 @@
 			title: '申请修改贷款信息',
 			page: 'applyModify'
 		},
+		'loanProcess/loanLog': {
+			title: '订单日志',
+			page: 'loanLog'
+		},
 //		'loanProcess/cardAudit': {
 //			title: '开卡审核',
 //			page: 'cardAudit'
@@ -200,6 +204,10 @@
 		'loanProcess/carAudit':{
 			title: '提车审核',
 			page: 'carAudit'
+		},
+		'loanProcess/creditApproval': {
+			title: '征信结果录入',
+			page: 'creditApproval'
 		},
 		'expireProcess/importHistory':{
 			title: '逾期导入历史记录',

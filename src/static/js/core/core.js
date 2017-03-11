@@ -42,23 +42,23 @@
 			switch (name) {
 				// 周宜俭ip
 				case 'zyj':
-					return 'http://192.168.0.138:8080/' + method;
+					return 'http://192.168.1.116:8080/' + method;
 					break;
 				// 蔡延军ip
 				case 'cyj':
-					return 'http://192.168.0.124:8080/' + method;
+					return 'http://192.168.1.116:8080/' + method;
 					break;
 				// 季本松ip
 				case 'jbs':
-					return 'http://192.168.0.123:8080/' + method;
+					return 'http://192.168.1.124:8080/' + method;
 					break;
 				// 王亮ip 
 				case 'wl':
-					return 'http://192.168.0.113:8888/' + method;
+					return 'http://192.168.1.113:8888/' + method;
 					break;
 				// 李艳波ip 
 				case 'lyb':
-					return 'http://192.168.0.44:8080/' + method;
+					return 'http://192.168.1.44:8080/' + method;
 					break;
 			}
 		//Todo 发布时增加prefix
@@ -152,6 +152,7 @@
 			title: '提示',
 			content: '你的登录授权无效或已过期',
 			useBootstrap: false,
+			boxWidth: '500px',
 			buttons:{
 				ok: {
 					text: '确定',
@@ -177,7 +178,7 @@
 		// _.$http.authorization(u.token);
 		_.hrLocalInformation = u;
 	}
-	localAuth();
+	// localAuth();
 	//授权校验 end
 
 	/************功能辅助类 begin************/
