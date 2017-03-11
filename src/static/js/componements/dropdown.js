@@ -50,7 +50,7 @@
 		self.onTrigger = internal.noop;
 		if(self.opts.dropdown) {
 			try {
-				self.onDropdown = eval(self.options.dropdown);
+				self.onDropdown = eval(self.opts.dropdown);
 			} catch(e) {
 				self.onDropdown = $.noop;
 			}
