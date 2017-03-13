@@ -13,6 +13,7 @@
 * 				data-editable="是否可编辑" 
 * 				data-msg="退回原因" 
 * 				data-err="图片不清晰/图片错误"
+* 				data-getimg="图片预览外部事件句柄"
 * 				data-request="征信材料图片上传" 
 * 				data-creditid="征信人id" 
 * 				data-materialspic="征信报告照片"
@@ -132,9 +133,18 @@
 			});	
 		}
 		self.$el.find('.viewEvt').on('click', function() {
+			var loadImg;
+			try {
+				loadImg = eval(self.options.getimg);
+			} catch(e) {
+				loadImg = $.noop;
+			}
+			loadImg(function(imgs) {
 
+			})
 		})
 	};
+
 	/**
 	* 图片上传
 	* @params {object} file 要上传的文件
@@ -359,4 +369,14 @@
 		otherDel: $http.api('otherMaterials/del', 'zyj')
 	}
 
+	/**
+	* 图片预览
+	*/
+	function Preview(imgs) {
+
+	}
+
+	Preview.prototype.init = function(){
+		
+	};
 })(jQuery);

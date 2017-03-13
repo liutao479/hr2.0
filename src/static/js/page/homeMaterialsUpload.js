@@ -1,7 +1,8 @@
 'use strict';
 page.ctrl('homeMaterialsUpload', function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params;
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console;
+		
 	$scope.tasks = $params.tasks;
 	$scope.activeTaskIdx = $params.selected || 0;
 
@@ -25,7 +26,9 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 				console.log(result);
 				$scope.result = result;
 				$scope.result.tasks = $params.tasks.length;
-				setupLocation();
+				if($params.path) {
+					setupLocation();	
+				}
 				setupBackReason(result.data.loanTask.backApprovalInfo);
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, function() {
 					setupEvt();

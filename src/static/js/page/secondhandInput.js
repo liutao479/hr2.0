@@ -80,7 +80,7 @@ page.ctrl('secondhandInput', function($scope) {
 				url: apiMap[key],
 				data: data,
 				dataType: 'json',
-				async:false,
+				  ,
 				success: $http.ok(function(result) {
 					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
 //					$source.selectType = result.data;

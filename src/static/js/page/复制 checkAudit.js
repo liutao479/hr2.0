@@ -32,7 +32,7 @@ page.ctrl('checkAudit', function($scope) {
 			url: urlStr+'/loanTelApproval/info',
 			data: data,
 			dataType: 'json',
-			async:false,
+			  ,
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
@@ -80,7 +80,7 @@ page.ctrl('checkAudit', function($scope) {
 				url: urlStr+'telAdudit/info',
 				data: data111,
 				dataType: 'json',
-				async:false,
+				  ,
 				success: $http.ok(function(xhr) {
 					console.log(xhr);
 					render.compile(that, $scope.def.phoneTmpl, xhr.data, true);

@@ -60,7 +60,7 @@ page.ctrl('carAudit', function($scope) {
 			url: $http.api($http.apiMap.loanInfo),
 			data: data,
 			dataType: 'json',
-			async:false,
+			  ,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				if(cb && typeof cb == 'function') {
@@ -107,7 +107,7 @@ page.ctrl('carAudit', function($scope) {
 				url: apiMap[key],
 				data: data,
 				dataType: 'json',
-				async:false,
+				  ,
 				success: $http.ok(function(result) {
 					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
 					$source.selectType = result.data;
