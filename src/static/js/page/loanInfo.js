@@ -8,7 +8,7 @@ page.ctrl('loanInfo', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-	var urlStr = "http://192.168.0.123:8080";
+	var urlStr = "http://192.168.1.108:8080";
 	var apiMap = {
 		"serviceType": urlStr+"/loanConfigure/getItem",//业务类型
 		"brand": urlStr+"/demandBank/selectBank",//经办银行
@@ -194,6 +194,7 @@ page.ctrl('loanInfo', function($scope) {
 	var loadLoanList = function(params, cb) {
 		var data={};
 			data['taskId']=80871;
+//			data['taskId']=$params.taskId;
 		$.ajax({
 //			 url: $http.api('loan.infoBak'),
 			// url: $http.api('loanInfoInput/info','jbs'),
@@ -204,7 +205,7 @@ page.ctrl('loanInfo', function($scope) {
 				$scope.result = result;
 				// 启动面包屑
 				var _loanUser = $scope.result.data.ZJKR[0].userName;
-				setupLocation(_loanUser);
+//				setupLocation(_loanUser);
 				result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				console.log(result.data.FQXX.renewalInfo);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
@@ -222,18 +223,18 @@ page.ctrl('loanInfo', function($scope) {
 	/**
 	* 设置面包屑
 	*/
-	var setupLocation = function(loanUser) {
-		if(!$scope.$params.path) return false;
-		var $location = $console.find('#location');
-		var _orderDate = tool.formatDate($scope.$params.date, true);
-		$location.data({
-			backspace: $scope.$params.path,
-			loanUser: loanUser,
-			current: '贷款信息录入',
-			orderDate: _orderDate
-		});
-		$location.location();
-	}
+//	var setupLocation = function() {
+//		if(!$scope.$params.path) return false;
+//		var $location = $console.find('#location');
+////		var _orderDate = tool.formatDate($scope.$params.date, true);
+//		$location.data({
+//			backspace: $scope.$params.path,
+//			loanUser: loanUser,
+//			current: '贷款信息录入',
+//			orderDate: tool.formatDate($scope.$params.date, true)
+//		});
+//		$location.location();
+//	}
 //页面加载完成对所有带“*”的input进行必填绑定
 	var loanFinishedInput = function(){
 		$(".info-key").each(function(){
@@ -412,6 +413,38 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		})
 	}
+//复选框
+//$(document).on('selectstart', '.checkbox-normal', false);
+   $(document).on('click', '.checkbox-normal', function() {
+   	var keyData = $(this).attr("data-key");
+   	var keyCode = $(this).attr("data-code");
+   	var keyMark = $(this).attr("data-mark");
+   	if(keyData){
+   		$(".hklx").each(function(){
+   			$(this).removeClass('checked').attr('checked',false);
+   			$(this).html('');
+   		})
+   	}
+   	if(keyCode){
+   		$(".gzd").each(function(){
+   			$(this).removeClass('checked').attr('checked',false);
+   			$(this).html('');
+   		})
+   	}
+   	if(keyMark){
+   		$(".jzlx").each(function(){
+   			$(this).removeClass('checked').attr('checked',false);
+   			$(this).html('');
+   		})
+   	}
+   	if(!$(this).attr('checked')) {
+   		$(this).addClass('checked').attr('checked',true);
+   		$(this).html('<i class="iconfont">&#xe659;</i>');
+   	} else {
+   		$(this).removeClass('checked').attr('checked',false);
+   		$(this).html('');
+   	}
+   })
 
 //gps
 	$(document).on('click', '#isInstallGps li', function() {
@@ -559,7 +592,7 @@ page.ctrl('loanInfo', function($scope) {
 				$(this).after('<i class="error-input-tip">请完善该必填项</i>');
 				console.log($(this).index());
 				isTure = false;
-				return false;
+//				return false;
 			}
 		});
 		if(isTure){
