@@ -38,11 +38,17 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
+
+	/**
+	* 启动dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
 	
 	/**
 	 * 绑定立即处理事件
 	 */
-	
 	var setupEvt = function() {
 
 		// 绑定搜索框模糊查询事件
@@ -119,17 +125,42 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 			$tbl: $console.find('#creditArchiveDownloadTable'),
 			$paging: $console.find('#pageToolbar')
 		}
+		setupDropDown();
 		loadCreaditList(apiParams, function() {
 			setupEvt();
 		});
 	});
 
+	/**
+	 * 分页请求数据回调
+	 */
 	$scope.paging = function(_pageNum, _size, $el, cb) {
 		apiParams.pageNum = _pageNum;
 		$params.pageNum = _pageNum;
 		// router.updateQuery($scope.$path, $params);
 		loadCreaditList(apiParams);
 		cb();
+	}
+
+	/**
+	 * 下拉框请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		demandBank: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'bankId',
+						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		}
 	}
 });
 

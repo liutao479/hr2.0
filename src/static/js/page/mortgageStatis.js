@@ -44,6 +44,14 @@ page.ctrl('mortgageStatis', [], function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
+
+	/**
+	* 启动dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
 	/**
 	 * 绑定立即处理事件
 	 */
@@ -109,16 +117,86 @@ page.ctrl('mortgageStatis', [], function($scope) {
 			$tbl: $console.find('#mortgageStatisTable'),
 			$paging: $console.find('#pageToolbar')
 		}
+		setupDropDown();
 		loadMortgageStatisList(apiParams, function() {
 			setupEvt();
 		});
 	});
 
+	/**
+	 * 分页请求数据回调
+	 */
 	$scope.paging = function(_pageNum, _size, $el, cb) {
 		apiParams.pageNum = _pageNum;
 		$params.pageNum = _pageNum;
 		// router.updateQuery($scope.$path, $params);
 		loadMortgageStatisList(apiParams);
 		cb();
+	}
+
+	/**
+	 * 下拉框请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		deptCompany: function(t, p, cb) {
+			$.ajax({
+				type: 'get',
+				url: $http.api('pmsDept/getPmsDeptList', 'zyj'),
+				data: {
+					parentId: 99
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					console.log(xhr)
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		demandBank: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'bankId',
+						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		status: function(t, p, cb) {
+			var data = [
+				{
+					id: 0,
+					name: '未办理'
+				},
+				{
+					id: 1,
+					name: '待审核'
+				},
+				{
+					id: 2,
+					name: '已审核'
+				},
+				{
+					id: 4,
+					name: '审核退回'
+				}
+			];
+			var sourceData = {
+				items: data,
+				id: 'id',
+				name: 'name'
+			};
+			cb(sourceData);
+		}
 	}
 });

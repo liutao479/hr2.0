@@ -74,7 +74,10 @@
 	*/
 	dropdown.prototype.setup = function() {
 		var self = this;
-		self.$el.append(_.template(internal.template.fields)({readonly: !self.search}));
+		if(!self.opts.selected) {
+			self.opts.selected = '';
+		}
+		self.$el.append(_.template(internal.template.fields)({readonly: !self.search, selected: self.opts.selected}));
 		self.$dropdown = $('<div class="select-box"></div>').appendTo(self.$el);
 		self.$text = self.$el.find('.select-text');
 		if(self.opts.tabs.length > 1) {
@@ -199,7 +202,7 @@
 	var internal = {};
 	internal.template = {};
 	internal.template.fields = '<div class="select-field{{=(it.readonly ? \" readonly\": \"\")}}">\
-									<input type="text" placeholder="{{=(it.readonly ? \"请选择\":\"可输入过滤条件\")}}" class="select-text" />\
+									<input type="text" placeholder="{{=(it.readonly ? \"请选择\":\"可输入过滤条件\")}}" class="select-text" value="{{=it.selected}}" />\
 									<span class="arrow arrow-bottom" id="arrow"></span>\
 									<a class="arrow-trigger"></a>\
 								</div>';

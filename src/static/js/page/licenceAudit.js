@@ -40,6 +40,15 @@ page.ctrl('licenceAudit', [], function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
+
+	/**
+	* 启动dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
+
 	var setupEvt = function() {
 
 		// 绑定搜索框模糊查询事件
@@ -111,6 +120,7 @@ page.ctrl('licenceAudit', [], function($scope) {
 			$tbl: $console.find('#licenceAuditTable'),
 			$paging: $console.find('#pageToolbar')
 		}
+		setupDropDown();
 		loadLicenceAuditList(apiParams, function() {
 			setupEvt();
 		});
@@ -122,5 +132,45 @@ page.ctrl('licenceAudit', [], function($scope) {
 		// router.updateQuery($scope.$path, $params);
 		loadLicenceAuditList(apiParams);
 		cb();
+	}
+
+	/**
+	 * 下拉框请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		deptCompany: function(t, p, cb) {
+			$.ajax({
+				type: 'get',
+				url: $http.api('pmsDept/getPmsDeptList', 'zyj'),
+				data: {
+					parentId: 99
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					console.log(xhr)
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		demandBank: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'bankId',
+						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		}
 	}
 });
