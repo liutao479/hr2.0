@@ -371,12 +371,62 @@
 
 	/**
 	* 图片预览
+	* @params {array} imgs 图片对象集合
+	*	[{id: '', tiele: '', origin: '', thumb: '', mark: '', reason: ''}]
+	* @params {function} marker 标记后的回调
+	* 	回调参数：img object
 	*/
-	function Preview(imgs) {
-
+	function Preview(imgs, marker) {
+		var self = this;
+		self.imgs = imgs || [];
+		self.marker = marker ? $.noop;
+		self.init();
 	}
 
-	Preview.prototype.init = function(){
+	Preview.prototype.init = function() {
+		var self = this;
+		self.setMask();
+		self.setViewBox();
+	};
+
+	Preview.prototype.setMask = function() { 
 		
+	};
+
+	Preview.prototype.setViewBox = function() {
+		
+	};
+
+	Preview.prototype.listen = function() {
+		
+	};
+
+	Preview.prototype.next = function() {
+		
+	};
+
+	Preview.prototype.prev = function() {
+		
+	};
+
+	Preview.prototype.zoom = function() {
+		
+	};
+
+	Preview.prototype.rotate = function() {
+		
+	};
+
+	Preview.prototype.marked = function() {
+		
+	};
+
+	Preview.prototype.drag = function() {
+		
+	};
+
+	Preview.prototype.close = function() {
+		self.$preview.remove();
+		self.$mask.remove();
 	};
 })(jQuery);
