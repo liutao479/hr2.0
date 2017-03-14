@@ -1,13 +1,9 @@
 'use strict';
 page.ctrl('loanInfo', function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
 		$source = $scope.$source = {},
-		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
-		};
+		apiParams = {};
 	var urlStr = "http://192.168.0.123:8080";
 	var apiMap = {
 		"serviceType": urlStr+"/loanConfigure/getItem",//业务类型
@@ -195,16 +191,19 @@ page.ctrl('loanInfo', function($scope) {
 		var data={};
 			data['taskId']=80871;
 		$.ajax({
-//			 url: $http.api('loan.infoBak'),
+			 url: $http.api('loan.infoBak'),
 			// url: $http.api('loanInfoInput/info','jbs'),
-			url: urlStr+'/loanInfoInput/info',
+			// url: urlStr+'/loanInfoInput/info',
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
 				// 启动面包屑
-				var _loanUser = $scope.result.data.ZJKR[0].userName;
-				setupLocation(_loanUser);
+				if($params.path) {
+					var _loanUser = $scope.result.data.ZJKR[0].userName;
+					setupLocation(_loanUser);	
+				}
+				
 				result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				console.log(result.data.FQXX.renewalInfo);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
@@ -275,7 +274,6 @@ page.ctrl('loanInfo', function($scope) {
 				url: apiMap[key],
 				data: data,
 				dataType: 'json',
-				async:false,
 				success: $http.ok(function(result) {
 					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
 					$source.selectType = result.data;

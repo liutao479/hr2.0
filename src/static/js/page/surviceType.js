@@ -22,7 +22,7 @@ page.ctrl('surviceType', function($scope) {
 			url: urlStr+'/serviceType/index',
 			data: data,
 			dataType: 'json',
-			async:false,
+			  ,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {

@@ -1,1243 +1,1103 @@
 {
-    "cfgData":{
-        "code":"loanInfoInput",
-        "frames":[
+    "cfgData": {
+        "code": "loanTelApproval",
+        "frames": [
             {
-                "code":"T0004",
-                "name":"贷款信息表录入",
-                "orderBy":0,
-                "sections":[
+                "code": "T0047",
+                "name": "贷款信息表",
+                "orderBy": 2,
+                "sections": [
                     {
-                        "code":"DDXX",
-                        "name":"订单信息",
-                        "orderBy":0,
-                        "segments":[
+                        "code": "DDXX",
+                        "name": "订单信息",
+                        "orderBy": 1,
+                        "segments": [
                             {
-                                "code":"isSecond",
-                                "empty":0,
-                                "fieldName":"isSecond",
-                                "name":"新车还是二手车",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"serviceType",
-                                "empty":0,
-                                "fieldName":"serviceType",
-                                "name":"业务类型",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"busiSourceType",
-                                "empty":1,
-                                "fieldName":"busiSourceType",
-                                "name":"业务来源类型",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"busiSourceName",
-                                "empty":0,
-                                "fieldName":"busiSourceName",
-                                "name":"业务来源方名称",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"remitAccount",
-                                "empty":0,
-                                "fieldName":"remitAccount",
-                                "name":"打款账号和账户名和开户行",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"demandBankId",
-                                "empty":0,
-                                "fieldName":"demandBankId",
-                                "name":"经办银行",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"busiArea",
-                                "empty":0,
-                                "fieldName":"busiArea",
-                                "name":"业务区域",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"orderNo",
-                                "empty":0,
-                                "fieldName":"orderNo",
-                                "name":"订单编号",
-                                "orderBy":0,
-                                "type":0
+                                "code": "isSecond",
+                                "empty": 0,
+                                "fieldName": "isSecond",
+                                "name": "新车还是二手车",
+                                "orderBy": 1,
+                                "type": 3
+                            }, {
+                                "code": "serviceTypeCode",
+                                "empty": 0,
+                                "fieldName": "serviceType",
+                                "name": "业务类型",
+                                "orderBy": 2,
+                                "type": 3
+                            }, {
+                                "code": "busiSourceTypeCode",
+                                "empty": 0,
+                                "fieldName": "busiSourceType",
+                                "name": "业务来源类型",
+                                "orderBy": 3,
+                                "type": 3
+                            }, {
+                                "code": "busiSourceId",
+                                "empty": 0,
+                                "fieldName": "busiSourceName",
+                                "name": "业务来源方名称",
+                                "orderBy": 4,
+                                "type": 3
+                            }, {
+                                "code": "remitAccountNumber",
+                                "empty": 0,
+                                "fieldName": "remitAccount",
+                                "name": "打款账号和账户名和开户行",
+                                "orderBy": 5,
+                                "type": 3
+                            }, {
+                                "code": "demandBankId",
+                                "empty": 0,
+                                "fieldName": "demandBankId",
+                                "name": "经办银行",
+                                "orderBy": 6,
+                                "type": 3
+                            }, {
+                                "code": "busiAreaCode",
+                                "empty": 0,
+                                "fieldName": "busiArea",
+                                "name": "业务区域",
+                                "orderBy": 7,
+                                "type": 3
                             }
                         ]
-                    },
-                    {
-                        "code":"CLXX",
-                        "name":"车辆信息",
-                        "orderBy":1,
-                        "segments":[
+                    }, {
+                        "code": "CLXX",
+                        "name": "车辆信息",
+                        "orderBy": 2,
+                        "segments": [
                             {
-                                "code":"carPrice",
-                                "empty":0,
-                                "fieldName":"carPrice",
-                                "name":"车辆价格",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"billingDeptName",
-                                "empty":0,
-                                "fieldName":"billingDeptName",
-                                "name":"开票单位名称",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"licenseType",
-                                "empty":0,
-                                "fieldName":"licenseType",
-                                "name":"车辆上公牌还是私牌",
-                                "orderBy":0,
-                                "type":1
-                            },
-                            {
-                                "code":"isFinanceLeaseVehicle",
-                                "empty":0,
-                                "fieldName":"isFinanceLeaseVehicle",
-                                "name":"车辆是否为融资租赁的乘用车",
-                                "orderBy":0,
-                                "type":1
-                            },
-                            {
-                                "code":"isOperationVehicle",
-                                "empty":0,
-                                "fieldName":"isOperationVehicle",
-                                "name":"车辆是否为营运车",
-                                "orderBy":0,
-                                "type":1
-                            },
-                            {
-                                "code":"onLicensePlace",
-                                "empty":0,
-                                "fieldName":"onLicensePlace",
-                                "name":"上牌地",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"licenseCategory",
-                                "empty":0,
-                                "fieldName":"licenseCategory",
-                                "name":"牌照类型",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"car",
-                                "empty":0,
-                                "fieldName":"car",
-                                "name":"车辆型号",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"systemCarPrice",
-                                "empty":0,
-                                "fieldName":"systemCarPrice",
-                                "name":"系统查询价",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"isInstallGps",
-                                "empty":0,
-                                "fieldName":"isInstallGps",
-                                "name":"是否加装GPS",
-                                "orderBy":0,
-                                "type":1
-                            },
-                            {
-                                "code":"gpsNumber1",
-                                "empty":0,
-                                "fieldName":"gpsNumber1",
-                                "name":"GPS编号1",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"gpsNumber2",
-                                "empty":0,
-                                "fieldName":"gpsNumber2",
-                                "name":"GPS编号2",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"frameNo",
-                                "empty":0,
-                                "fieldName":"frameNo",
-                                "name":"车架号",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"engineNo",
-                                "empty":0,
-                                "fieldName":"engineNo",
-                                "name":"发动机号",
-                                "orderBy":0,
-                                "type":3
+                                "code": "carPrice",
+                                "empty": 0,
+                                "fieldName": "carPrice",
+                                "name": "车辆价格",
+                                "orderBy": 8,
+                                "type": 0
+                            }, {
+                                "code": "billingDeptName",
+                                "empty": 0,
+                                "fieldName": "billingDeptName",
+                                "name": "牌照类型",
+                                "orderBy": 9,
+                                "type": 0
+                            }, {
+                                "code": "carName",
+                                "empty": 0,
+                                "fieldName": "car",
+                                "name": "车辆型号",
+                                "orderBy": 10,
+                                "type": 0
+                            }, {
+                                "code": "systemCarPrice",
+                                "empty": 0,
+                                "fieldName": "systemCarPrice",
+                                "name": "系统查询价",
+                                "orderBy": 11,
+                                "type": 0
+                            }, {
+                                "code": "isInstallGps",
+                                "empty": 0,
+                                "fieldName": "isInstallGps",
+                                "name": "是否加装GPS",
+                                "orderBy": 12,
+                                "type": 0
+                            }, {
+                                "code": "gpsNumber1",
+                                "empty": 0,
+                                "fieldName": "gpsNumber1",
+                                "name": "GPS编号1",
+                                "orderBy": 13,
+                                "type": 0
+                            }, {
+                                "code": "gpsNumber2",
+                                "empty": 0,
+                                "fieldName": "gpsNumber2",
+                                "name": "GPS编号2",
+                                "orderBy": 14,
+                                "type": 0
+                            }, {
+                                "code": "frameNo",
+                                "empty": 0,
+                                "fieldName": "frameNo",
+                                "name": "车架号",
+                                "orderBy": 15,
+                                "type": 0
+                            }, {
+                                "code": "engineNo",
+                                "empty": 0,
+                                "fieldName": "engineNo",
+                                "name": "发动机号",
+                                "orderBy": 16,
+                                "type": 0
                             }
                         ]
-                    },
-                    {
-                        "code":"FQXX",
-                        "name":"分期信息",
-                        "orderBy":2,
-                        "segments":[
+                    }, {
+                        "code": "FQXX",
+                        "name": "分期信息",
+                        "orderBy": 3,
+                        "segments": [
                             {
-                                "code":"businessModel",
-                                "empty":0,
-                                "fieldName":"businessModel",
-                                "name":"业务模式",
-                                "orderBy":0,
-                                "type":1
-                            },
-                            {
-                                "code":"sfProportion",
-                                "empty":0,
-                                "fieldName":"sfProportion",
-                                "name":"首付比例",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"sfMoney",
-                                "empty":1,
-                                "fieldName":"sfMoney",
-                                "name":"首付金额",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"commissionFeeRate",
-                                "empty":0,
-                                "fieldName":"commissionFeeRate",
-                                "name":"分期手续费率",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"loanMoney",
-                                "empty":0,
-                                "fieldName":"loanMoney",
-                                "name":"贷款金额",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"advancedMoney",
-                                "empty":0,
-                                "fieldName":"advancedMoney",
-                                "name":"垫资金额",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"stageMoney",
-                                "empty":0,
-                                "fieldName":"stageMoney",
-                                "name":"分期金额",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"firstMonthMoney",
-                                "empty":0,
-                                "fieldName":"firstMonthMoney",
-                                "name":"首月还款金额",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"isDiscount",
-                                "empty":0,
-                                "fieldName":"isDiscount",
-                                "name":"是否贴息",
-                                "orderBy":0,
-                                "type":1
-                            },
-                            {
-                                "code":"bankFeeMoney",
-                                "empty":0,
-                                "fieldName":"bankFeeMoney",
-                                "name":"银行手续费",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"loanFeeMoney",
-                                "empty":0,
-                                "fieldName":"loanFeeMoney",
-                                "name":"办贷款手续费",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"contractSfMoney",
-                                "empty":0,
-                                "fieldName":"contractSfMoney",
-                                "name":"合同首付",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"contractSfRatio",
-                                "empty":0,
-                                "fieldName":"contractSfRatio",
-                                "name":"合同首付比例",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"repayPeriod",
-                                "empty":0,
-                                "fieldName":"repayPeriod",
-                                "name":"还款期限",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"bankBaseRates",
-                                "empty":0,
-                                "fieldName":"bankBaseRates",
-                                "name":"银行基准利率",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"bareRate",
-                                "empty":0,
-                                "fieldName":"bareRate",
-                                "name":"毛利率",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"discountRate",
-                                "empty":0,
-                                "fieldName":"discountRate",
-                                "name":"贴息利率",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"discountMoney",
-                                "empty":0,
-                                "fieldName":"discountMoney",
-                                "name":"贴息金额",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"renewalMode",
-                                "empty":0,
-                                "fieldName":"renewalMode",
-                                "name":"保险续保",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"isAdvanced",
-                                "empty":0,
-                                "fieldName":"isAdvanced",
-                                "name":"是否需要垫资",
-                                "orderBy":0,
-                                "type":1
-                            },
-                            {
-                                "code":"cardNo",
-                                "empty":0,
-                                "fieldName":"cardNo",
-                                "name":"信用卡卡号",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"utilityTime",
-                                "empty":0,
-                                "fieldName":"utilityTime",
-                                "name":"用款时间",
-                                "orderBy":0,
-                                "type":3
+                                "code": "businessModel",
+                                "empty": 0,
+                                "fieldName": "businessModel",
+                                "name": "业务模式",
+                                "orderBy": 17,
+                                "type": 0
+                            }, {
+                                "code": "sfProportion",
+                                "empty": 0,
+                                "fieldName": "sfProportion",
+                                "name": "首付比例",
+                                "orderBy": 18,
+                                "type": 0
+                            }, {
+                                "code": "sfMoney",
+                                "empty": 0,
+                                "fieldName": "sfMoney",
+                                "name": "首付金额",
+                                "orderBy": 19,
+                                "type": 0
+                            }, {
+                                "code": "commissionFeeRate",
+                                "empty": 0,
+                                "fieldName": "commissionFeeRate",
+                                "name": "分期手续费率",
+                                "orderBy": 20,
+                                "type": 0
+                            }, {
+                                "code": "loanMoney",
+                                "empty": 0,
+                                "fieldName": "loanMoney",
+                                "name": "贷款金额",
+                                "orderBy": 21,
+                                "type": 0
+                            }, {
+                                "code": "advancedMoney",
+                                "empty": 0,
+                                "fieldName": "advancedMoney",
+                                "name": "垫资金额",
+                                "orderBy": 22,
+                                "type": 0
+                            }, {
+                                "code": "stageMoney",
+                                "empty": 0,
+                                "fieldName": "stageMoney",
+                                "name": "分期金额",
+                                "orderBy": 23,
+                                "type": 0
+                            }, {
+                                "code": "firstMonthMoney",
+                                "empty": 0,
+                                "fieldName": "firstMonthMoney",
+                                "name": "首月还款金额",
+                                "orderBy": 24,
+                                "type": 0
+                            }, {
+                                "code": "isDiscount",
+                                "empty": 0,
+                                "fieldName": "isDiscount",
+                                "name": "是否贴息",
+                                "orderBy": 25,
+                                "type": 0
+                            }, {
+                                "code": "bankFeeMoney",
+                                "empty": 0,
+                                "fieldName": "bankFeeMoney",
+                                "name": "银行手续费",
+                                "orderBy": 26,
+                                "type": 0
+                            }, {
+                                "code": "loanFeeMoney",
+                                "empty": 0,
+                                "fieldName": "loanFeeMoney",
+                                "name": "办贷款手续费",
+                                "orderBy": 27,
+                                "type": 0
+                            }, {
+                                "code": "contractSfMoney",
+                                "empty": 0,
+                                "fieldName": "contractSfMoney",
+                                "name": "合同首付",
+                                "orderBy": 28,
+                                "type": 0
+                            }, {
+                                "code": "contractSfRatio",
+                                "empty": 0,
+                                "fieldName": "contractSfRatio",
+                                "name": "合同首付比例",
+                                "orderBy": 29,
+                                "type": 0
+                            }, {
+                                "code": "repayPeriod",
+                                "empty": 0,
+                                "fieldName": "repayPeriod",
+                                "name": "还款期限",
+                                "orderBy": 30,
+                                "type": 0
+                            }, {
+                                "code": "bankBaseRates",
+                                "empty": 0,
+                                "fieldName": "bankBaseRates",
+                                "name": "银行基准利率",
+                                "orderBy": 31,
+                                "type": 0
+                            }, {
+                                "code": "bareRate",
+                                "empty": 0,
+                                "fieldName": "bareRate",
+                                "name": "毛利率",
+                                "orderBy": 32,
+                                "type": 0
+                            }, {
+                                "code": "discountRate",
+                                "empty": 0,
+                                "fieldName": "discountRate",
+                                "name": "贴息利率",
+                                "orderBy": 33,
+                                "type": 0
+                            }, {
+                                "code": "discountMoney",
+                                "empty": 0,
+                                "fieldName": "discountMoney",
+                                "name": "贴息金额",
+                                "orderBy": 34,
+                                "type": 0
+                            }, {
+                                "code": "renewalMode",
+                                "empty": 0,
+                                "fieldName": "renewalMode",
+                                "name": "保险续保",
+                                "orderBy": 35,
+                                "type": 0
+                            }, {
+                                "code": "cardNo",
+                                "empty": 0,
+                                "fieldName": "cardNo",
+                                "name": "信用卡卡号",
+                                "orderBy": 36,
+                                "type": 0
+                            }, {
+                                "code": "utilityTime",
+                                "empty": 0,
+                                "fieldName": "utilityTime",
+                                "name": "用款时间",
+                                "orderBy": 37,
+                                "type": 0
                             }
                         ]
-                    },
-                    {
-                        "code":"ZJKR",
-                        "name":"主借款人信息",
-                        "orderBy":3,
-                        "segments":[
+                    }, {
+                        "code": "ZJKR",
+                        "name": "主借款人信息",
+                        "orderBy": 4,
+                        "segments": [
                             {
-                                "code":"maritalStatus",
-                                "empty":0,
-                                "fieldName":"maritalStatus",
-                                "name":"主借款人目前婚姻状况",
-                                "orderBy":0,
-                                "type":4
-                            },
-                            {
-                                "code":"houseStatus",
-                                "empty":0,
-                                "fieldName":"houseStatus",
-                                "name":"购车地房屋所有权情况",
-                                "orderBy":0,
-                                "type":4
-                            },
-                            {
-                                "code":"isEnterprise",
-                                "empty":0,
-                                "fieldName":"isEnterprise",
-                                "name":"是否企业法人",
-                                "orderBy":0,
-                                "type":4
-                            },
-                            {
-                                "code":"userName",
-                                "empty":0,
-                                "fieldName":"userName",
-                                "name":"姓名",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"idCard",
-                                "empty":0,
-                                "fieldName":"idCard",
-                                "name":"身份证号码",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"sex",
-                                "empty":0,
-                                "fieldName":"sex",
-                                "name":"性别",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"mobile",
-                                "empty":0,
-                                "fieldName":"mobile",
-                                "name":"联系电话",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"accountLocation",
-                                "empty":0,
-                                "fieldName":"accountLocation",
-                                "name":"户籍",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"age",
-                                "empty":0,
-                                "fieldName":"age",
-                                "name":"申请时年龄",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"familyAddress",
-                                "empty":0,
-                                "fieldName":"familyAddress",
-                                "name":"家庭地址",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"xx4familyZipcode",
-                                "empty":0,
-                                "fieldName":"familyZipcode",
-                                "name":"家庭地址邮编",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"familyTel",
-                                "empty":0,
-                                "fieldName":"familyTel",
-                                "name":"家庭电话",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campany",
-                                "empty":0,
-                                "fieldName":"campany",
-                                "name":"单位名称",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campanyAddress",
-                                "empty":0,
-                                "fieldName":"campanyAddress",
-                                "name":"单位地址",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campanyZipcode",
-                                "empty":0,
-                                "fieldName":"campanyZipcode",
-                                "name":"单位地址邮编",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campanyTel",
-                                "empty":0,
-                                "fieldName":"campanyTel",
-                                "name":"单位电话",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"monthIncomeMoney",
-                                "empty":0,
-                                "fieldName":"monthIncomeMoney",
-                                "name":"税后月收入",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"averageDailyBalance",
-                                "empty":0,
-                                "fieldName":"averageDailyBalance",
-                                "name":"日均存款余额",
-                                "orderBy":0,
-                                "type":5
-                            },
-                            {
-                                "code":"balance",
-                                "empty":0,
-                                "fieldName":"balance",
-                                "name":"存款余额",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
+                                "code": "maritalStatus",
+                                "empty": 0,
+                                "fieldName": "maritalStatus",
+                                "name": "主借款人目前婚姻状况",
+                                "orderBy": 38,
+                                "type": 0
+                            }, {
+                                "code": "houseStatus",
+                                "empty": 0,
+                                "fieldName": "houseStatus",
+                                "name": "购车地房屋所有权情况",
+                                "orderBy": 39,
+                                "type": 0
+                            }, {
+                                "code": "isEnterprise",
+                                "empty": 0,
+                                "fieldName": "isEnterprise",
+                                "name": "是否企业法人",
+                                "orderBy": 40,
+                                "type": 0
+                            }, {
+                                "code": "userName",
+                                "empty": 0,
+                                "fieldName": "userName",
+                                "name": "姓名",
+                                "orderBy": 41,
+                                "type": 0
+                            }, {
+                                "code": "idCard",
+                                "empty": 0,
+                                "fieldName": "idCard",
+                                "name": "身份证号码",
+                                "orderBy": 42,
+                                "type": 0
+                            }, {
+                                "code": "sex",
+                                "empty": 0,
+                                "fieldName": "sex",
+                                "name": "性别",
+                                "orderBy": 43,
+                                "type": 0
+                            }, {
+                                "code": "mobile",
+                                "empty": 0,
+                                "fieldName": "mobile",
+                                "name": "联系电话",
+                                "orderBy": 44,
+                                "type": 0
+                            }, {
+                                "code": "accountLocation",
+                                "empty": 0,
+                                "fieldName": "accountLocation",
+                                "name": "户籍",
+                                "orderBy": 45,
+                                "type": 0
+                            }, {
+                                "code": "age",
+                                "empty": 0,
+                                "fieldName": "age",
+                                "name": "申请时年龄",
+                                "orderBy": 46,
+                                "type": 0
+                            }, {
+                                "code": "familyAddress",
+                                "empty": 0,
+                                "fieldName": "familyAddress",
+                                "name": "家庭地址",
+                                "orderBy": 47,
+                                "type": 0
+                            }, {
+                                "code": "familyZipcode",
+                                "empty": 0,
+                                "fieldName": "familyZipcode",
+                                "name": "家庭地址邮编",
+                                "orderBy": 48,
+                                "type": 0
+                            }, {
+                                "code": "familyTel",
+                                "empty": 0,
+                                "fieldName": "familyTel",
+                                "name": "家庭电话",
+                                "orderBy": 49,
+                                "type": 0
+                            }, {
+                                "code": "company",
+                                "empty": 0,
+                                "fieldName": "company",
+                                "name": "单位名称",
+                                "orderBy": 50,
+                                "type": 0
+                            }, {
+                                "code": "companyAddress",
+                                "empty": 0,
+                                "fieldName": "companyAddress",
+                                "name": "单位地址",
+                                "orderBy": 51,
+                                "type": 0
+                            }, {
+                                "code": "companyZipcode",
+                                "empty": 0,
+                                "fieldName": "companyZipcode",
+                                "name": "单位地址邮编",
+                                "orderBy": 52,
+                                "type": 0
+                            }, {
+                                "code": "companyTel",
+                                "empty": 0,
+                                "fieldName": "companyTel",
+                                "name": "单位电话",
+                                "orderBy": 53,
+                                "type": 0
+                            }, {
+                                "code": "residentType",
+                                "empty": 0,
+                                "fieldName": "residentType",
+                                "name": "本地常驻类型",
+                                "orderBy": 54,
+                                "type": 0
+                            }, {
+                                "code": "monthIncomeMoney",
+                                "empty": 0,
+                                "fieldName": "monthIncomeMoney",
+                                "name": "税后月收入",
+                                "orderBy": 55,
+                                "type": 0
+                            }, {
+                                "code": "averageDailyBalance",
+                                "empty": 0,
+                                "fieldName": "averageDailyBalance",
+                                "name": "日均存款余额",
+                                "orderBy": 56,
+                                "type": 0
                             }
                         ]
-                    },
-                    {
-                        "code":"GTHK",
-                        "name":"共同还款人信息",
-                        "orderBy":4,
-                        "segments":[
+                    }, {
+                        "code": "GTHK",
+                        "name": "共同还款人信息",
+                        "orderBy": 5,
+                        "segments": [
                             {
-                                "code":"userName",
-                                "empty":0,
-                                "fieldName":"userName",
-                                "name":"姓名",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"idCard",
-                                "empty":0,
-                                "fieldName":"idCard",
-                                "name":"身份证号码",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"sex",
-                                "empty":0,
-                                "fieldName":"sex",
-                                "name":"性别",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"mobile",
-                                "empty":0,
-                                "fieldName":"mobile",
-                                "name":"联系电话",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"accountLocation",
-                                "empty":0,
-                                "fieldName":"accountLocation",
-                                "name":"户籍",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"age",
-                                "empty":0,
-                                "fieldName":"age",
-                                "name":"申请时年龄",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"familyAddress",
-                                "empty":0,
-                                "fieldName":"familyAddress",
-                                "name":"家庭地址",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"xx24",
-                                "empty":0,
-                                "fieldName":"familyZipcode",
-                                "name":"家庭地址邮编",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"familyTel",
-                                "empty":0,
-                                "fieldName":"familyTel",
-                                "name":"家庭电话",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campany",
-                                "empty":0,
-                                "fieldName":"campany",
-                                "name":"单位名称",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campanyAddress",
-                                "empty":0,
-                                "fieldName":"campanyAddress",
-                                "name":"单位地址",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campanyZipcode",
-                                "empty":0,
-                                "fieldName":"campanyZipcode",
-                                "name":"单位地址邮编",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campanyTel",
-                                "empty":0,
-                                "fieldName":"campanyTel",
-                                "name":"单位电话",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"monthIncomeMoney",
-                                "empty":0,
-                                "fieldName":"monthIncomeMoney",
-                                "name":"税后月收入",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"averageDailyBalance",
-                                "empty":0,
-                                "fieldName":"averageDailyBalance",
-                                "name":"日均存款余额",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"balance",
-                                "empty":0,
-                                "fieldName":"balance",
-                                "name":"存款余额",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"userRelationship",
-                                "empty":0,
-                                "fieldName":"userRelationship",
-                                "name":"与借款人关系",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
+                                "code": "userName",
+                                "empty": 0,
+                                "fieldName": "userName",
+                                "name": "姓名",
+                                "orderBy": 57,
+                                "type": 0
+                            }, {
+                                "code": "idCard",
+                                "empty": 0,
+                                "fieldName": "idCard",
+                                "name": "身份证号码",
+                                "orderBy": 58,
+                                "type": 0
+                            }, {
+                                "code": "sex",
+                                "empty": 0,
+                                "fieldName": "sex",
+                                "name": "性别",
+                                "orderBy": 59,
+                                "type": 0
+                            }, {
+                                "code": "mobile",
+                                "empty": 0,
+                                "fieldName": "mobile",
+                                "name": "联系电话",
+                                "orderBy": 60,
+                                "type": 0
+                            }, {
+                                "code": "accountLocation",
+                                "empty": 0,
+                                "fieldName": "accountLocation",
+                                "name": "户籍",
+                                "orderBy": 61,
+                                "type": 0
+                            }, {
+                                "code": "age",
+                                "empty": 0,
+                                "fieldName": "age",
+                                "name": "申请时年龄",
+                                "orderBy": 62,
+                                "type": 0
+                            }, {
+                                "code": "familyAddress",
+                                "empty": 0,
+                                "fieldName": "familyAddress",
+                                "name": "家庭地址",
+                                "orderBy": 63,
+                                "type": 0
+                            }, {
+                                "code": "familyZipcode",
+                                "empty": 0,
+                                "fieldName": "familyZipcode",
+                                "name": "家庭地址邮编",
+                                "orderBy": 64,
+                                "type": 0
+                            }, {
+                                "code": "familyTel",
+                                "empty": 0,
+                                "fieldName": "familyTel",
+                                "name": "家庭电话",
+                                "orderBy": 65,
+                                "type": 0
+                            }, {
+                                "code": "company",
+                                "empty": 0,
+                                "fieldName": "company",
+                                "name": "单位名称",
+                                "orderBy": 66,
+                                "type": 0
+                            }, {
+                                "code": "companyAddress",
+                                "empty": 0,
+                                "fieldName": "companyAddress",
+                                "name": "单位地址",
+                                "orderBy": 67,
+                                "type": 0
+                            }, {
+                                "code": "companyZipcode",
+                                "empty": 0,
+                                "fieldName": "companyZipcode",
+                                "name": "单位地址邮编",
+                                "orderBy": 68,
+                                "type": 0
+                            }, {
+                                "code": "companyTel",
+                                "empty": 0,
+                                "fieldName": "companyTel",
+                                "name": "单位电话",
+                                "orderBy": 69,
+                                "type": 0
+                            }, {
+                                "code": "residentType",
+                                "empty": 0,
+                                "fieldName": "residentType",
+                                "name": "本地常驻类型",
+                                "orderBy": 70,
+                                "type": 0
+                            }, {
+                                "code": "monthIncomeMoney",
+                                "empty": 0,
+                                "fieldName": "monthIncomeMoney",
+                                "name": "税后月收入",
+                                "orderBy": 71,
+                                "type": 0
+                            }, {
+                                "code": "averageDailyBalance",
+                                "empty": 0,
+                                "fieldName": "averageDailyBalance",
+                                "name": "日均存款余额",
+                                "orderBy": 72,
+                                "type": 0
+                            }, {
+                                "code": "balance",
+                                "empty": 0,
+                                "fieldName": "balance",
+                                "name": "存款余额",
+                                "orderBy": 73,
+                                "type": 0
+                            }, {
+                                "code": "userRelationship",
+                                "empty": 0,
+                                "fieldName": "userRelationship",
+                                "name": "与借款人关系",
+                                "orderBy": 74,
+                                "type": 0
                             }
                         ]
-                    },
-                    {
-                        "code":"FDBR",
-                        "name":"反担保人信息",
-                        "orderBy":5,
-                        "segments":[
+                    }, {
+                        "code": "FDBR",
+                        "name": "反担保人信息",
+                        "orderBy": 6,
+                        "segments": [
                             {
-                                "code":"userName",
-                                "empty":0,
-                                "fieldName":"userName",
-                                "name":"姓名",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"idCard",
-                                "empty":0,
-                                "fieldName":"idCard",
-                                "name":"身份证号码",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"sex",
-                                "empty":0,
-                                "fieldName":"sex",
-                                "name":"性别",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"mobile",
-                                "empty":0,
-                                "fieldName":"mobile",
-                                "name":"联系电话",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"accountLocation",
-                                "empty":0,
-                                "fieldName":"accountLocation",
-                                "name":"户籍",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"age",
-                                "empty":0,
-                                "fieldName":"age",
-                                "name":"申请时年龄",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"familyAddress",
-                                "empty":0,
-                                "fieldName":"familyAddress",
-                                "name":"家庭地址",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"familyZipcode",
-                                "empty":0,
-                                "fieldName":"familyZipcode",
-                                "name":"家庭地址邮编",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"familyTel",
-                                "empty":0,
-                                "fieldName":"familyTel",
-                                "name":"家庭电话",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campany",
-                                "empty":0,
-                                "fieldName":"campany",
-                                "name":"单位名称",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campanyAddress",
-                                "empty":0,
-                                "fieldName":"campanyAddress",
-                                "name":"单位地址",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campanyZipcode",
-                                "empty":0,
-                                "fieldName":"campanyZipcode",
-                                "name":"单位地址邮编",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"campanyTel",
-                                "empty":0,
-                                "fieldName":"campanyTel",
-                                "name":"单位电话",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"monthIncomeMoney",
-                                "empty":0,
-                                "fieldName":"monthIncomeMoney",
-                                "name":"税后月收入",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"averageDailyBalance",
-                                "empty":0,
-                                "fieldName":"averageDailyBalance",
-                                "name":"日均存款余额",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"balance",
-                                "empty":0,
-                                "fieldName":"balance",
-                                "name":"存款余额",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"userRelationship",
-                                "empty":0,
-                                "fieldName":"userRelationship",
-                                "name":"与借款人关系",
-                                "orderBy":0,
-                                "type":2
-                            },
-                            {
-                                "code":"residentType",
-                                "empty":0,
-                                "fieldName":"residentType",
-                                "name":"本地常驻类型",
-                                "orderBy":0,
-                                "type":3
+                                "code": "userName",
+                                "empty": 0,
+                                "fieldName": "userName",
+                                "name": "姓名",
+                                "orderBy": 75,
+                                "type": 0
+                            }, {
+                                "code": "idCard",
+                                "empty": 0,
+                                "fieldName": "idCard",
+                                "name": "身份证号码",
+                                "orderBy": 76,
+                                "type": 0
+                            }, {
+                                "code": "sex",
+                                "empty": 0,
+                                "fieldName": "sex",
+                                "name": "性别",
+                                "orderBy": 77,
+                                "type": 0
+                            }, {
+                                "code": "mobile",
+                                "empty": 0,
+                                "fieldName": "mobile",
+                                "name": "联系电话",
+                                "orderBy": 78,
+                                "type": 0
+                            }, {
+                                "code": "accountLocation",
+                                "empty": 0,
+                                "fieldName": "accountLocation",
+                                "name": "户籍",
+                                "orderBy": 79,
+                                "type": 0
+                            }, {
+                                "code": "age",
+                                "empty": 0,
+                                "fieldName": "age",
+                                "name": "申请时年龄",
+                                "orderBy": 80,
+                                "type": 0
+                            }, {
+                                "code": "familyAddress",
+                                "empty": 0,
+                                "fieldName": "familyAddress",
+                                "name": "家庭地址",
+                                "orderBy": 81,
+                                "type": 0
+                            }, {
+                                "code": "familyZipcode",
+                                "empty": 0,
+                                "fieldName": "familyZipcode",
+                                "name": "家庭地址邮编",
+                                "orderBy": 82,
+                                "type": 0
+                            }, {
+                                "code": "familyTel",
+                                "empty": 0,
+                                "fieldName": "familyTel",
+                                "name": "家庭电话",
+                                "orderBy": 83,
+                                "type": 0
+                            }, {
+                                "code": "company",
+                                "empty": 0,
+                                "fieldName": "company",
+                                "name": "单位名称",
+                                "orderBy": 84,
+                                "type": 0
+                            }, {
+                                "code": "companyAddress",
+                                "empty": 0,
+                                "fieldName": "companyAddress",
+                                "name": "单位地址",
+                                "orderBy": 85,
+                                "type": 0
+                            }, {
+                                "code": "companyZipcode",
+                                "empty": 0,
+                                "fieldName": "companyZipcode",
+                                "name": "单位地址邮编",
+                                "orderBy": 86,
+                                "type": 0
+                            }, {
+                                "code": "companyTel",
+                                "empty": 0,
+                                "fieldName": "companyTel",
+                                "name": "单位电话",
+                                "orderBy": 87,
+                                "type": 0
+                            }, {
+                                "code": "residentType",
+                                "empty": 0,
+                                "fieldName": "residentType",
+                                "name": "本地常驻类型",
+                                "orderBy": 88,
+                                "type": 0
+                            }, {
+                                "code": "monthIncomeMoney",
+                                "empty": 0,
+                                "fieldName": "monthIncomeMoney",
+                                "name": "税后月收入",
+                                "orderBy": 89,
+                                "type": 0
+                            }, {
+                                "code": "averageDailyBalance",
+                                "empty": 0,
+                                "fieldName": "averageDailyBalance",
+                                "name": "日均存款余额",
+                                "orderBy": 90,
+                                "type": 0
+                            }, {
+                                "code": "balance",
+                                "empty": 0,
+                                "fieldName": "balance",
+                                "name": "存款余额",
+                                "orderBy": 91,
+                                "type": 0
+                            }, {
+                                "code": "userRelationship",
+                                "empty": 0,
+                                "fieldName": "userRelationship",
+                                "name": "与借款人关系",
+                                "orderBy": 92,
+                                "type": 0
                             }
                         ]
-                    },
-                    {
-                        "code":"JJLXR",
-                        "name":"紧急联系人信息",
-                        "orderBy":6,
-                        "segments":[
+                    }, {
+                        "code": "JJLXR",
+                        "name": "紧急联系人信息",
+                        "orderBy": 7
+                    }, {
+                        "code": "HKKXX",
+                        "name": "还款卡信息",
+                        "orderBy": 8,
+                        "segments": [
                             {
-                                "code":"name",
-                                "empty":0,
-                                "fieldName":"name",
-                                "name":"姓名",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"relationship",
-                                "empty":0,
-                                "fieldName":"relationship",
-                                "name":"关系",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"phone",
-                                "empty":0,
-                                "fieldName":"phone",
-                                "name":"电话",
-                                "orderBy":0,
-                                "type":3
+                                "code": "accountNumber",
+                                "empty": 0,
+                                "fieldName": "accountNumber",
+                                "name": "账号",
+                                "orderBy": 93,
+                                "type": 0
+                            }, {
+                                "code": "bankName",
+                                "empty": 0,
+                                "fieldName": "bankName",
+                                "name": "开户行",
+                                "orderBy": 94,
+                                "type": 0
+                            }, {
+                                "code": "accountName",
+                                "empty": 0,
+                                "fieldName": "accountName",
+                                "name": "账户名",
+                                "orderBy": 95,
+                                "type": 0
                             }
                         ]
-                    },
-                    {
-                        "code":"HKKXX",
-                        "name":"还款卡信息",
-                        "orderBy":6,
-                        "segments":[
-                            {
-                                "code":"accountNumber",
-                                "empty":0,
-                                "fieldName":"accountNumber",
-                                "name":"账号",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"bankName",
-                                "empty":0,
-                                "fieldName":"bankName",
-                                "name":"开户行",
-                                "orderBy":0,
-                                "type":3
-                            },
-                            {
-                                "code":"accountName",
-                                "empty":0,
-                                "fieldName":"accountName",
-                                "name":"账户名",
-                                "orderBy":0,
-                                "type":3
-                            }
-                        ]
-                    },
-                    {
-                        "code":"FYXX",
-                        "name":"费用信息",
-                        "orderBy":6,
-                        "segments":[
-                            {
-                                "code":"feeField",
-                                "empty":0,
-                                "fieldName":"feeField",
-                                "name":"自定义费用字段",
-                                "orderBy":0,
-                                "type":9
-                            }
-                        ]
-                    },
-                    {
-                        "code":"QTXX",
-                        "name":"其他信息",
-                        "orderBy":6,
-                        "segments":[
-                            {
-                                "code":"otherField",
-                                "empty":0,
-                                "fieldName":"otherField",
-                                "name":"其他信息字段",
-                                "orderBy":0,
-                                "type":9
-                            }
-                        ]
+                    }, {
+                        "code": "FYXX",
+                        "name": "费用信息",
+                        "orderBy": 9
+                    }, {
+                        "code": "QTXX",
+                        "name": "其他信息",
+                        "orderBy": 10
                     }
                 ]
             }
-        ],
-        "name":"贷款信息录入"
+        ]
     },
-    "code":0,
-    "data":{
-        "FYXX":[
+    "code": 0,
+    "data": {
+        "FYXX": [
             {
-                "fieldCode":"name",
-                "fieldId":1,
-                "fieldName":"税务名称",
-                "fieldType":0,
-                "loanFeeId":1,
-                "required":0,
-                "value":"地税"
-            },
-            {
-                "fieldCode":"rate",
-                "fieldId":2,
-                "fieldName":"费率",
-                "fieldType":0,
-                "loanFeeId":2,
-                "required":0,
-                "value":"费率"
+                "fieldCode": "benchmarkrate",
+                "fieldId": 3,
+                "fieldName": "银行基准利率",
+                "fieldType": 0,
+                "fieldUnit": "%",
+                "orgType": 1
+            }, {
+                "fieldCode": "name",
+                "fieldId": 1,
+                "fieldName": "税务名称",
+                "fieldType": 0,
+                "loanFeeId": 1,
+                "orgType": 0,
+                "required": 0,
+                "value": "地税"
+            }, {
+                "fieldCode": "rate",
+                "fieldId": 2,
+                "fieldName": "费率",
+                "fieldType": 0,
+                "fieldUnit": "%",
+                "loanFeeId": 2,
+                "orgType": 0,
+                "required": 0,
+                "value": "费率"
             }
         ],
-        "HKKXX":{
-            "accountName":"3245252352",
-            "accountNumber":"ewr223",
-            "bankName":"中国银行",
-            "id":2
+        "HKKXX": {
+            "accountName": "3245252352",
+            "accountNumber": "ewr223",
+            "bankName": "中国银行",
+            "createDate": 1488086060000,
+            "createUser": 1,
+            "id": 2,
+            "orderNo": "nfdb2016102421082285",
+            "updateDate": 1488086065000,
+            "updateUser": 1
         },
-        "GTHK":[
+        "GTHK": [
             {
-                "accountLocation":"并州",
-                "age":42,
-                "averageDailyBalance":5000,
-                "company":"荆州分公司",
-                "companyAddress":"湖北荆州分厂",
-                "companyTel":"0577-86759603",
-                "companyZipcode":"334334",
-                "familyAddress":"湖北省荆州皇叔街1号",
-                "familyTel":"111111",
-                "familyZipcode":"112112",
-                "houseStatus":0,
-                "idCard":"513029197305261956",
-                "isEnterprise":0,
-                "maritalStatus":1,
-                "mobile":"13551469163",
-                "monthIncomeMoney":15000,
-                "residentType":"554",
-                "sex":0,
-                "userId":1000002,
-                "userName":"关云长",
-                "userRelationship":0,
-                "userType":1
-            },
-            {
-                "accountLocation":"并州",
-                "age":41,
-                "averageDailyBalance":5000,
-                "company":"益州分公司",
-                "companyAddress":"四川益州分厂",
-                "companyTel":"0577-86759604",
-                "companyZipcode":"335335",
-                "familyAddress":"四川省益州皇叔街1号",
-                "familyTel":"112112",
-                "familyZipcode":"113113",
-                "houseStatus":0,
-                "idCard":"513029197305261957",
-                "isEnterprise":0,
-                "maritalStatus":1,
-                "mobile":"13551469164",
-                "monthIncomeMoney":15000,
-                "residentType":"555",
-                "sex":0,
-                "userId":1000003,
-                "userName":"张翼德",
-                "userRelationship":0,
-                "userType":1
+                "accountLocation": "并州",
+                "age": 42,
+                "averageDailyBalance": 100.0000,
+                "balance": 150000.0000,
+                "company": "荆州分公司",
+                "companyAddress": "湖北荆州分厂",
+                "companyTel": "0577-867596",
+                "companyZipcode": "334334",
+                "familyAddress": "湖北省荆州皇叔街1号",
+                "familyTel": "111111",
+                "familyZipcode": "112112",
+                "houseStatus": 0,
+                "idCard": "513029197305261956",
+                "isDel": 0,
+                "isEnterprise": 1,
+                "isServe": 0,
+                "maritalStatus": 1,
+                "mobile": "13551469999",
+                "monthIncomeMoney": 999900.000000,
+                "orderNo": "nfdb2016102421082285",
+                "residentType": "553,554,563",
+                "sex": 0,
+                "updateDate": 1488792583000,
+                "updateUser": 1111,
+                "userId": 1000002,
+                "userName": "关云长",
+                "userRelationship": 0,
+                "userType": 1,
+                "userTypeCode": "GTHKRCL"
+            }, {
+                "accountLocation": "并州",
+                "age": 41,
+                "averageDailyBalance": 5000.0000,
+                "balance": 150000.0000,
+                "company": "益州分公司",
+                "companyAddress": "四川益州分厂",
+                "companyTel": "0577-867596",
+                "companyZipcode": "335335",
+                "familyAddress": "四川省益州皇叔街1号",
+                "familyTel": "112112",
+                "familyZipcode": "113113",
+                "houseStatus": 0,
+                "idCard": "513029197305261957",
+                "isDel": 0,
+                "isEnterprise": 1,
+                "isServe": 0,
+                "maritalStatus": 1,
+                "mobile": "13556666666",
+                "monthIncomeMoney": 15000.000000,
+                "orderNo": "nfdb2016102421082285",
+                "residentType": "553,554,563",
+                "sex": 0,
+                "updateDate": 1488792587000,
+                "updateUser": 1111,
+                "userId": 1000003,
+                "userName": "张翼德",
+                "userRelationship": 0,
+                "userType": 1,
+                "userTypeCode": "GTHKRCL"
             }
         ],
-        "ZJKR":[
+        "ZJKR": [
             {
-                "accountLocation":"涿州",
-                "age":43,
-                "averageDailyBalance":5000,
-                "company":"四川大竹煤电有限责任公司柏林煤矿",
-                "companyAddress":"大竹县柏林镇柏林煤矿厂",
-                "companyTel":"0577-86759602",
-                "companyZipcode":"331331",
-                "familyAddress":"四川省大竹县柏林镇街道柏煤街13号",
-                "familyTel":"110110",
-                "familyZipcode":"110110",
-                "houseStatus":0,
-                "idCard":"110000198902281234",
-                "isEnterprise":0,
-                "maritalStatus":1,
-                "mobile":"13551469162",
-                "monthIncomeMoney":20000,
-                "residentType":"553",
-                "sex":0,
-                "userId":334322,
-                "userName":"蒋贵燕",
-                "userRelationship":0,
-                "userType":0
+                "accountLocation": "涿州",
+                "age": 43,
+                "averageDailyBalance": 5000.0000,
+                "balance": 200000.0000,
+                "company": "四川大竹煤电有限责任公司柏林煤矿",
+                "companyAddress": "大竹县柏林镇柏林煤矿厂",
+                "companyTel": "0577-86759602",
+                "companyZipcode": "331331",
+                "createUser": 8304,
+                "familyAddress": "四川省大竹县柏林镇街道柏煤街13号",
+                "familyTel": "110110",
+                "familyZipcode": "110110",
+                "houseStatus": 0,
+                "idCard": "110000198902281234",
+                "isDel": 0,
+                "isEnterprise": 1,
+                "isServe": 1,
+                "maritalStatus": 0,
+                "mobile": "13551469162",
+                "monthIncomeMoney": 20000.000000,
+                "orderNo": "nfdb2016102421082285",
+                "realnameResult": "一致",
+                "residentType": "553,554,563",
+                "sex": 0,
+                "updateDate": 1487147880000,
+                "updateUser": 1,
+                "userId": 334322,
+                "userName": "蒋贵燕",
+                "userRelationship": 0,
+                "userType": 0,
+                "userTypeCode": "JKRCL"
             }
         ],
-        "QTXX":[
+        "QTXX": [
             {
-                "cIndividuationFieldList":[
+                "cIndividuationFieldList": [
                     {
-                        "code":"other1",
-                        "dataColumn":"extString01",
-                        "individuationId":89140,
-                        "name":"其他信息1",
-                        "otherRemark":"aaaa",
-                        "required":0,
-                        "type":2,
-                        "value":"123.000"
-                    },
-                    {
-                        "code":"other2",
-                        "dataColumn":"extString02",
-                        "individuationId":89140,
-                        "name":"其他信息2",
-                        "otherRemark":"aaaa",
-                        "required":0,
-                        "type":2,
-                        "value":"112.000"
-                    },
-                    {
-                        "code":"other3",
-                        "dataColumn":"extString03",
-                        "individuationId":89140,
-                        "name":"其他信息3",
-                        "otherRemark":"aaaa",
-                        "required":0,
-                        "type":2,
-                        "value":"245.000"
+                        "code": "other1",
+                        "dataColumn": "extString01",
+                        "individuationId": 95072,
+                        "name": "其他信息1",
+                        "otherRemark": "aaaa",
+                        "required": 0,
+                        "type": 2,
+                        "value": "123.000"
+                    }, {
+                        "code": "other2",
+                        "dataColumn": "extString02",
+                        "individuationId": 95072,
+                        "name": "其他信息2",
+                        "otherRemark": "aaaa",
+                        "required": 0,
+                        "type": 2,
+                        "value": "112.000"
+                    }, {
+                        "code": "other3",
+                        "dataColumn": "extString03",
+                        "individuationId": 95072,
+                        "name": "其他信息3",
+                        "otherRemark": "aaaa",
+                        "required": 0,
+                        "type": 2,
+                        "value": "245.000"
                     }
                 ],
-                "groupId":300,
-                "groupName":"其他信息"
+                "groupId": 300,
+                "groupName": "其他信息"
             }
         ],
-        "CLXX":{
-            "billingDeptName":"UFO",
-            "car":{
-                "carMode":21819,
-                "carName":"奇瑞瑞虎32016款 1.6L 手动智尚版"
-            },
-            "carId":278342,
-            "carMode":21819,
-            "carName":"奇瑞瑞虎32016款 1.6L 手动智尚版",
-            "carPrice":1233333,
-            "carSerieId":21819,
-            "cardBrandId":977,
-            "engineNo":"SDFQAE2432",
-            "frameNo":"dfadfa324234",
-            "gpsNumber1":"110",
-            "gpsNumber2":"111",
-            "isFinanceLeaseVehicle":0,
-            "isInstallGps":1,
-            "isOperationVehicle":0,
-            "licenseCategory":"浙A",
-            "licenseType":0,
-            "onLicensePlace":{
-                "onLicensePlaceCode":320925,
-                "onLicensePlaceName":"江苏省盐城市建湖县"
-            },
-            "onLicensePlaceCode":320925,
-            "onLicensePlaceName":"江苏省盐城市建湖县",
-            "systemCarPrice":75900
+        "CLXX": {
+            "billingDeptName": "UFO",
+            "carId": 278342,
+            "carMode": 1,
+            "carName": "阿斯顿·马丁Rapide2010款 6.0L",
+            "carPrice": 1233333.00,
+            "carSerieId": 1,
+            "carType": 0,
+            "cardBrandId": 1,
+            "certificateNo": "1102230230",
+            "createDate": 1488089986000,
+            "createUser": 1,
+            "discountMoney": 0.00,
+            "discountRate": "0",
+            "engineNo": "SDFQAE2432",
+            "frameNo": "dfadfa324234",
+            "gpsNumber1": "110",
+            "gpsNumber2": "111",
+            "isDel": 0,
+            "isDiscount": 0,
+            "isFinanceLeaseVehicle": 0,
+            "isInstallGps": 1,
+            "isOperationVehicle": 0,
+            "licenseCategory": "浙a",
+            "licenseType": 1,
+            "onLicensePlaceCode": 620500,
+            "orderNo": "nfdb2016102421082285",
+            "systemCarPrice": 75900.00,
+            "updateDate": 1487147880000,
+            "updateUser": 1
         },
-        "JJLXR":[
+        "JJLXR": [
             {
-                "id":3,
-                "name":"张三",
-                "phone":"110",
-                "relationship":"哥们"
-            },
-            {
-                "id":4,
-                "name":"你妹妹",
-                "phone":"139139",
-                "relationship":"旁系"
-            },
-            {
-                "id":5,
-                "name":"你姥姥",
-                "phone":"12334",
-                "relationship":"旁系"
+                "id": 3,
+                "isDel": 0,
+                "name": "张三",
+                "orderNo": "nfdb2016102421082285",
+                "phone": "110",
+                "relationship": "0",
+                "sortNo": 1,
+                "updateDate": 1486710878000
+            }, {
+                "id": 4,
+                "isDel": 0,
+                "name": "你妹妹",
+                "orderNo": "nfdb2016102421082285",
+                "phone": "139139",
+                "relationship": "旁系",
+                "sortNo": 2,
+                "updateDate": 1487758761000
+            }, {
+                "id": 5,
+                "isDel": 0,
+                "name": "你姥姥",
+                "orderNo": "nfdb2016102421082285",
+                "phone": "12334",
+                "relationship": "旁系",
+                "sortNo": 3,
+                "updateDate": 1487758762000
             }
         ],
-        "FQXX":{
-            "advancedMoney":46000,
-            "bankBaseRates":0,
-            "bankFeeMoney":20000,
-            "bareRate":10,
-            "businessModel":"21",
-            "cardNo":"325464533",
-            "commissionFeeRate":"9.49",
-            "contractSfMoney":300000,
-            "contractSfRatio":30,
-            "discountMoney":30000,
-            "discountRate":"5",
-            "firstMonthMoney":1473.16,
-            "isAdvanced":0,
-            "isDiscount":0,
-            "loanFeeMoney":5000,
-            "loanMoney":48400,
-            "renewalMode":0,
-            "renewalInfoList":[
-	           {
-	            	"value":1,
-	            	"yaerNumber":1
-	           },{
-	            	"value":1,
-	            	"yaerNumber":2
-	           }
-            ],
-            "repayPeriod":36,
-            "sfMoney":28400,
-            "sfProportion":0.3817,
-            "stageId":277792,
-            "stageMoney":52993.16,
-            "utilityTime":1483942301000
+        "FQXX": {
+            "advancedMoney": 46000.0000,
+            "advancedWay": 0,
+            "bankBaseRates": 0.0000,
+            "bankBaseRatesTemp": 0.0000,
+            "bankFeeMoney": 20000.0000,
+            "bareRate": 10.0000,
+            "businessModel": "11",
+            "cardNo": "325464533",
+            "commissionFeeRate": "9.49",
+            "contractSfMoney": 300000.0000,
+            "contractSfRatio": 30.0000,
+            "createDate": 1488773341000,
+            "createUser": 8304,
+            "discountMoney": 400.0000,
+            "discountRate": "0",
+            "firstMonthMoney": 1473.1600,
+            "isDel": 0,
+            "isDiscount": 0,
+            "loanFeeMoney": 5000.0000,
+            "loanMoney": 48400.0000,
+            "monthMoney": 1472.0000,
+            "orderNo": "nfdb2016102421082285",
+            "renewalInfo": "0,1,0,1,0,1",
+            "renewalMode": 0,
+            "repayPeriod": 72,
+            "sfMoney": 28400.0000,
+            "sfProportion": 0.3817,
+            "stageId": 277792,
+            "stageMoney": 52993.1600,
+            "updateDate": 1488773341000,
+            "updateUser": 1111,
+            "utilityTime": 1488773220000,
+            "utilityTimeStr": "2017-03-06 12:07"
         },
-        "ORDERNO":"nfdb2016102421082285",
-        "DDXX":{
-            "busiArea":{
-                "busiAreaCode":320925,
-                "busiAreaName":"江苏省盐城市建湖县"
-            },
-            "busiAreaCode":320925,
-            "busiAreaName":"江苏省盐城市建湖县",
-            "busiSourceId":1001,
-            "busiSourceTypeCode":"555",
-            "demandBankId":62,
-            "id":334663,
-            "isSecond":0,
-            "orderNo":"nfdb2016102421082285",
-            "remitAccountNumber":"111111111111111112",
-            "serviceTypeCode":"2"
+        "ORDERNO": "nfdb2016102421082285",
+        "DDXX": {
+            "acceptId": 8304,
+            "bankCode": "2134",
+            "busiAreaCode": 211200,
+            "busiSourceId": 22,
+            "busiSourceTypeCode": "2",
+            "createDate": 1477314549000,
+            "createUser": 8304,
+            "demandBankId": 12,
+            "deptId": 62,
+            "id": 334663,
+            "idCard": "110000198902281234",
+            "isNeedVisit": 0,
+            "isSecond": 0,
+            "orderNo": "nfdb2016102421082285",
+            "orgId": 62,
+            "phone": "12315443",
+            "processInstId": "6",
+            "productId": 27,
+            "realName": "蒋贵燕",
+            "remitAccountNumber": "12434242424",
+            "serviceTypeCode": "2",
+            "status": 3,
+            "updateDate": 1487147880000,
+            "updateUser": 1
         },
-        "FDBR":[
+        "FDBR": [
             {
-                "accountLocation":"隆中",
-                "age":40,
-                "averageDailyBalance":2000,
-                "company":"隆中分公司",
-                "companyAddress":"湖北隆中分厂",
-                "companyTel":"0577-86759605",
-                "companyZipcode":"336336",
-                "familyAddress":"湖北省隆中皇叔街1号",
-                "familyTel":"113113",
-                "familyZipcode":"114114",
-                "houseStatus":0,
-                "idCard":"513029197305261958",
-                "isEnterprise":0,
-                "maritalStatus":1,
-                "mobile":"13551469165",
-                "monthIncomeMoney":10000,
-                "residentType":"556",
-                "sex":0,
-                "userId":1000004,
-                "userName":"诸葛孔明",
-                "userRelationship":0,
-                "userType":2
-            },
-            {
-                "accountLocation":"河北常山",
-                "age":39,
-                "averageDailyBalance":1000,
-                "company":"常山分公司",
-                "companyAddress":"河北常山分厂",
-                "companyTel":"0577-86759606",
-                "companyZipcode":"337337",
-                "familyAddress":"河北省隆中皇叔街1号",
-                "familyTel":"114114",
-                "familyZipcode":"115115",
-                "houseStatus":0,
-                "idCard":"513029197305261959",
-                "isEnterprise":0,
-                "maritalStatus":1,
-                "mobile":"13551469166",
-                "monthIncomeMoney":10000,
-                "residentType":"557",
-                "sex":0,
-                "userId":1000005,
-                "userName":"赵常山",
-                "userRelationship":0,
-                "userType":2
+                "accountLocation": "隆中",
+                "age": 40,
+                "averageDailyBalance": 2000.0000,
+                "balance": 100000.0000,
+                "company": "隆中分公司",
+                "companyAddress": "湖北隆中分厂",
+                "companyTel": "0577-86759605",
+                "companyZipcode": "336336",
+                "familyAddress": "湖北省隆中皇叔街1号",
+                "familyTel": "113113",
+                "familyZipcode": "114114",
+                "houseStatus": 0,
+                "idCard": "513029197305261958",
+                "isDel": 0,
+                "isEnterprise": 1,
+                "isServe": 0,
+                "maritalStatus": 1,
+                "mobile": "13551469165",
+                "monthIncomeMoney": 10000.000000,
+                "orderNo": "nfdb2016102421082285",
+                "residentType": "553,554,563",
+                "sex": 0,
+                "updateUser": 1,
+                "userId": 1000004,
+                "userName": "诸葛孔明",
+                "userRelationship": 0,
+                "userType": 2,
+                "userTypeCode": "FDBRCL"
+            }, {
+                "accountLocation": "河北常山",
+                "age": 39,
+                "averageDailyBalance": 1000.0000,
+                "balance": 100000.0000,
+                "company": "常山分公司",
+                "companyAddress": "河北常山分厂",
+                "companyTel": "0577-86759606",
+                "companyZipcode": "337337",
+                "familyAddress": "河北省隆中皇叔街1号",
+                "familyTel": "114114",
+                "familyZipcode": "115115",
+                "houseStatus": 0,
+                "idCard": "513029197305261959",
+                "isDel": 0,
+                "isEnterprise": 1,
+                "isServe": 0,
+                "maritalStatus": 1,
+                "mobile": "13551469166",
+                "monthIncomeMoney": 10000.000000,
+                "orderNo": "nfdb2016102421082285",
+                "residentType": "553,554,563",
+                "sex": 0,
+                "updateUser": 1,
+                "userId": 1000005,
+                "userName": "赵常山",
+                "userRelationship": 0,
+                "userType": 2,
+                "userTypeCode": "FDBRCL"
             }
         ]
     },
-    "msg":"success"
+    "msg": "success"
 }
