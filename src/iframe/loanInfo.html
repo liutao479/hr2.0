@@ -54,12 +54,14 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="serviceType" class="info-value selecter">
+								<div class="select select-common" data-dropdown="page.$scope['loanInfo'].serviceTypePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.serviceType"></div>
+
+								<!--<span data-key="serviceType" class="info-value selecter">
 									<div></div>
 									<span class="placeholder" id="selectType">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="serviceTypeCode" value="{{= it.data.DDXX.serviceTypeCode}}" />
-								</span>
+								</span>-->
 							</div>
 							{{  };if(seg.code == 'demandBankId'){  }}
 							<div class="info-key-value-box">
@@ -68,12 +70,13 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="brand" class="info-value selecter">
+								<div class="select select-common" data-dropdown="page.$scope['loanInfo'].brandPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.brand"></div>
+								<!--<span data-key="brand" class="info-value selecter">
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="demandBankId" value="{{= it.data.DDXX.demandBankId}}" />
-								</span>
+								</span>-->
 							</div>
 							{{  };if(seg.code == 'busiSourceTypeCode'){  }}
 							<div class="info-key-value-box">
@@ -83,12 +86,14 @@
 									{{ } }} 
 									{{= seg.name}}：
 								</span>
-								<span data-key="busiSourceType" class="info-value selecter">
+								<div class="select select-common" data-dropdown="page.$scope['loanInfo'].busiSourceTypePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.busiSourceType"></div>
+
+								<!--<span data-key="busiSourceType" class="info-value selecter">
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="busiSourceTypeCode" value="{{= it.data.DDXX.busiSourceTypeCode}}" />
-								</span>
+								</span>-->
 							</div>
 							{{  };if(seg.code == 'busiAreaCode'){  }}
 							<div class="info-key-value-box">
@@ -97,7 +102,6 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<!--<div class="select info-value" data-tabs="省|市|区" data-dropdown="page.$scope['loanInfo'].areaPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.area"></div>-->
 								<span class="info-value">
 									<div class="select" style="width: 300px;" data-tabs="省|市|区" data-dropdown="page.$scope['loanInfo'].areaPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
 								</span>
@@ -115,13 +119,14 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="busiSourceName" class="info-value selecter">
+								<div class="select select-common" data-dropdown="page.$scope['loanInfo'].busiSourceNamePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.busiSourceName"></div>
+								<!--<span data-key="busiSourceName" class="info-value selecter">
 									<span class="inputSearch"><input class="searchInp" data-key = "busiSourceNameSearch" type="text" /></span>
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" id="busiSourceId" name="busiSourceId" value="{{= it.data.DDXX.busiSourceId}}" />
-								</span>
+								</span>-->
 							</div>
 							{{  };if(seg.code == 'remitAccountNumber'){  }}
 							<div class="info-key-value-box">
@@ -130,12 +135,13 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="remitAccountNumber" class="info-value selecter">
+								<div class="select select-common" data-dropdown="page.$scope['loanInfo'].remitAccountNumberPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.remitAccountNumber"></div>
+								<!--<span data-key="remitAccountNumber" class="info-value selecter">
 									<div></div>
 									<span class="placeholder">{{= it.data.DDXX.remitAccountNumber}}</span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="remitAccountNumber" value="{{= it.data.DDXX.remitAccountNumber}}" />
-								</span>
+								</span>-->
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
@@ -227,13 +233,17 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="onLicensePlace" class="info-value selecter">
+								<!--<div class="select select-common" data-dropdown="page.$scope['loanInfo'].remitAccountNumberPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.remitAccountNumber"></div>-->
+								<span class="info-value">
+									<div class="select" style="width: 300px;" data-tabs="省|市|区" data-dropdown="page.$scope['loanInfo'].areaPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+								</span>
+								<!--<span data-key="onLicensePlace" class="info-value selecter">
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="onLicensePlaceCode" />
 									<input type="hidden" name="onLicensePlaceName" />
-								</span>
+								</span>-->
 							</div>
 							{{  };if(seg.code == 'licenseCategory'){  }}
 							<div class="info-key-value-box">
@@ -251,7 +261,10 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="carName" class="info-value selecter">
+								<span class="info-value">
+									<div class="select select-car" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['loanInfo'].carPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.car"></div>
+								</span>
+								<!--<span data-key="carName" class="info-value selecter">
 									<span class="inputSearch"><input class="searchInp" data-key = "carNameSearch" type="text" /></span>
 									<div></div>
 									<span class="placeholder">请选择</span>
@@ -260,7 +273,7 @@
 									<input type="hidden" name="carSerieId" placeholder="车系" value="1111" />
 									<input type="hidden" name="cardBrandId" placeholder="车辆品牌" value="1111" />
 									<input type="hidden" name="carMode" placeholder="车型" value="1111" />
-								</span>
+								</span>-->
 							</div>
 							{{  };if(seg.code == 'carPrice'){  }}
 							<div class="info-key-value-box">
@@ -353,12 +366,13 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="busimode" class="info-value selecter">
+								<div class="select select-common" data-dropdown="page.$scope['loanInfo'].busimodePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.busimode"></div>
+								<!--<span data-key="busimode" class="info-value selecter">
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="businessModel" value="{{= it.data.FQXX.businessModel }}" />
-								</span>
+								</span>-->
 							</div>
 							{{  };if(seg.code == 'sfMoney'){  }}
 							<div class="info-key-value-box">
@@ -421,12 +435,13 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="repaymentTerm" class="info-value selecter">
+								<div class="select select-common" data-dropdown="page.$scope['loanInfo'].repaymentTermPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.repaymentTerm"></div>
+								<!--<span data-key="repaymentTerm" class="info-value selecter">
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="repayPeriod" id="repayPeriod" value="{{= it.data.FQXX.repayPeriod }}" />
-								</span>
+								</span>-->
 							</div>
 							{{  };if(seg.code == 'bankBaseRates'){  }}
 							<div class="info-key-value-box">

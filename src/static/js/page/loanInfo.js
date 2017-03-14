@@ -27,9 +27,9 @@ page.ctrl('loanInfo', function($scope) {
 			data['taskId']=80871;
 //			data['taskId']=$params.taskId;
 		$.ajax({
-			 url: $http.api('loan.infoBak'),
+//			 url: $http.api('loan.infoBak'),
 			// url: $http.api('loanInfoInput/info','jbs'),
-			// url: urlStr+'/loanInfoInput/info',
+			 url: urlStr+'/loanInfoInput/info',
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -43,7 +43,6 @@ page.ctrl('loanInfo', function($scope) {
 //				}
 				
 				result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
-				console.log(result.data.FQXX.renewalInfo);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -525,9 +524,85 @@ page.ctrl('loanInfo', function($scope) {
 	$scope.areaPicker = function(picked) {
 		console.log(picked);
 	}
+	$scope.serviceTypePicker = function(picked) {
+		console.log(picked);
+	}
+	$scope.brandPicker = function(picked) {
+		console.log(picked);
+	}
+	$scope.busiSourceTypePicker = function(picked) {
+		console.log(picked);
+	}
+	$scope.busiSourceNamePicker = function(picked) {
+		console.log(picked);
+		$scope.busiSourceNameId = picked.id
+	}
+	$scope.remitAccountNumberPicker = function(picked) {
+		console.log(picked);
+		$("#bankName").val(picked.bankName)
+		$("#accountName").val(picked.accountName)
+	}
+	$scope.busimodePicker = function(picked) {
+		console.log(picked);
+	}
+	$scope.repaymentTermPicker = function(picked) {
+		console.log(picked);
+	}
+	$scope.carPicker = function(picked) {
+		console.log(picked);
+	}
+	$scope.bankPicker = function(picked) {
+		console.log(picked);
+	}
+	
 	/**dropdown 测试*/
 	function setupDropDown() {
 		$console.find('.select').dropdown();
+	}
+	var car = {
+		brand: function(cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carBrandlist',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'brandId',
+						name: 'carBrandName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		series: function(brandId, cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carSeries',
+				data: {brandId: brandId},
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'serieName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		specs: function(seriesId, cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carSpecs',
+				data: {
+					serieId: seriesId
+				},
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'carSerieId',
+						name: 'specName'
+					};
+					cb(sourceData);
+				}
+			})
+		}
 	}
 
 	var areaSel = {
@@ -584,6 +659,25 @@ page.ctrl('loanInfo', function($scope) {
 	}
 
 	$scope.dropdownTrigger = {
+		car: function(tab, parentId, cb) {
+			if(!cb && typeof cb != 'function') {
+				cb = $.noop;
+			}
+			if(!tab) return cb();
+			switch (tab) {
+				case '品牌':
+					car.brand(cb);
+					break;
+				case "车系":
+					car.series(parentId, cb);
+					break;
+				case "车型":
+					car.specs(parentId, cb);
+					break;
+				default:
+					break;
+			}
+		},
 		areaSel: function(tab, parentId, cb) {
 			if(!cb && typeof cb != 'function') {
 				cb = $.noop;
@@ -602,6 +696,134 @@ page.ctrl('loanInfo', function($scope) {
 				default:
 					break;
 			}
+		},
+		serviceType: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+'/loanConfigure/getItem',
+				data:{
+					'code':'serviceType'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		}
+		,
+		brand: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/demandBank/selectBank",
+				data:{
+					'code':'brand'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'bankId',
+						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		busiSourceType: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/loanConfigure/getItem",
+				data:{
+					'code':'busiSourceType'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		busiSourceName: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/carshop/list",
+				data:{
+					'code':'busiSourceName'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		remitAccountNumber: function(t, p, cb) {
+			if(!$scope.busiSourceNameId){
+				alert("填写前面");
+				return false;
+			}else{
+				$.ajax({
+					url: urlStr+"/demandCarShopAccount/getAccountList",
+					data:{
+						'carShopId':$scope.busiSourceNameId
+					},
+					dataType: 'json',
+					success: $http.ok(function(xhr) {
+						var sourceData = {
+							items: xhr.data,
+							id: 'id',
+							name: 'account',
+							accountName: 'accountName',
+							bankName: 'bankName'
+						};
+						console.log(sourceData);
+						cb(sourceData);
+					})
+				})
+			}
+		},
+		busimode: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/loanConfigure/getItem",
+				data:{
+					'code':'busimode'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		repaymentTerm: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/loanConfigure/getItem",
+				data:{
+					'code':'repaymentTerm'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
 		}
 	}
 
