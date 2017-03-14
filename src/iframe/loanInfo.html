@@ -18,7 +18,7 @@
 
 			<script type="text/x-dot-template" id="loanlisttmpl">
 				{{for(var z = 0, lenthz = it.cfgData.frames.length; z < lenthz; z++) { var cfg = it.cfgData.frames[z]; }}
-				{{for(var y = 0, lenthy = cfg.sections.length; y < lenthy; y++) { var sec = cfg.sections[y];if(sec.code == 'DDXX'){ }}
+				{{for(var y = 0, lenthy = cfg.sections.length; y < lenthy; y++) { var sec = cfg.sections[y]; if(!sec.segments || !sec.segments.length) {continue;} if(sec.code == 'DDXX'){ }}
 				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">

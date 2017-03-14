@@ -1,7 +1,7 @@
 'use strict';
 page.ctrl('phoneAudit', function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params;
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console;
 	var urlStr = "http://192.168.1.124:8080";
 	/**
 	* 设置面包屑
@@ -13,7 +13,7 @@ page.ctrl('phoneAudit', function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: loanUser,
-			current: '审核列表',
+			current: '电核',
 			orderDate: _orderDate
 		});
 		$location.location();
@@ -27,17 +27,21 @@ page.ctrl('phoneAudit', function($scope) {
 		var data={};
 		data['taskId']=80872;
 		data['frameCode']='T0046';
+//		data['taskId']=$params.taskId;
 		$.ajax({
-			url: urlStr+'/telAdudit/info',
+			url: 'http://localhost:8083/mock/phoneaudit',
 			data: data,
+			type: 'post',
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
 				// 启动面包屑
-				var _loanUser = $scope.result.data.KHXX.userName;
-				setupLocation(_loanUser);
+				if($params.path) {
+					var _loanUser = $scope.result.data.KHXX.userName;
+					setupLocation(_loanUser);
+					loadGuide(result.cfgData)
+				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.cfgData, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -55,7 +59,7 @@ page.ctrl('phoneAudit', function($scope) {
 //			url: urlStr+'/telAdudit/info',
 //			data: data,
 //			dataType: 'json',
-//			async:false,
+//			  ,
 //			success: $http.ok(function(result) {
 //				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.cfgData, true);
 //				if(cb && typeof cb == 'function') {
@@ -66,20 +70,42 @@ page.ctrl('phoneAudit', function($scope) {
 //			})
 //		})
 //	}
-	var loadTabList = function(cb) {
-		var data={};
-		data['taskId']=80872;
-//		data['pageCode']='loanTelResApproval';
+	/**
+	* 加载左侧导航菜单
+	* @params {object} cfg 配置对象
+	*/
+	function loadGuide(cfg) {
+		if(cfg) {
+			render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
+			return listenGuide()
+		}
+		var params = {
+			taskId: $params.taskId,
+			pageCode: "loanTelApproval"
+		}
 		$.ajax({
-			url: urlStr+'/telAdudit/info',
-			data: data,
+			url: 'http://localhost:8083/mock/phoneaudit',
+			data: params,
+			type: 'post',
 			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.cfgData, true);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
+			success: $http.ok(function(res) {
+				render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.cfgData, true);
+				listenGuide();
 			})
+		})
+	}
+
+	function listenGuide() {
+		$console.find('.tabLeftEvt').on('click', function() {
+			var $that = $(this);
+			var code = $that.data('type');
+			var pageCode = subRouterMap[code];
+			if(!pageCode) return false;
+			var params = {
+				code: code,
+				orderNo: 0
+			}
+			router.innerRender('#eleCheck', 'loanProcess/'+pageCode, params);
 		})
 	}
 
@@ -147,7 +173,8 @@ page.ctrl('phoneAudit', function($scope) {
 		}
 		$(".selectOptBox1").hide();
 		return false;
-	})
+	});
+
 	/***
 	* 加载页面模板
 	*/

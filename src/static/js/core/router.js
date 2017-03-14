@@ -107,11 +107,39 @@
 		if(!opts || !opts.bStatic) {
 			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + Base64.btoa($.param(params)) : '');
 		}
+		router.get(key, params, true);
+		/*
 		var item = g.routerMap[key];
 		if(!item) {
 			return g.location.href = '404.html';
 		}
 		g.render.renderTitle(item.title);
+		var __currentPage = item.page;
+		if(page.ctrls[__currentPage]) {
+			return setTimeout(function() {
+				return page.excute(__currentPage, key, params, true);
+			}, 0);
+		}
+		$.getScript(internal.script(__currentPage))
+			.done(function() {
+				page.excute(__currentPage, key, params);
+			});
+			*/
+	}
+
+	router.innerRender = function(el, key, params, opts) {
+		params.refer = el;
+		router.get(key, params);
+	}
+
+	router.get = function(key, params, title) {
+		var item = g.routerMap[key];
+		if(!item) {
+			return g.location.href = '404.html';
+		}
+		if(title) {
+			g.render.renderTitle(item.title);
+		}
 		var __currentPage = item.page;
 		if(page.ctrls[__currentPage]) {
 			return setTimeout(function() {

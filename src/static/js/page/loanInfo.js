@@ -1,14 +1,11 @@
 'use strict';
 page.ctrl('loanInfo', function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
 		$source = $scope.$source = {},
-		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
-		};
+		apiParams = {};
 	var urlStr = "http://192.168.1.108:8080";
+
 	var postUrl = {
 		"saveOrderInfo": urlStr+"/loanInfoInput/updLoanOrder",
 		"saveCarInfo": urlStr+"/loanInfoInput/updLoanUserCar",
@@ -30,15 +27,21 @@ page.ctrl('loanInfo', function($scope) {
 			data['taskId']=80871;
 //			data['taskId']=$params.taskId;
 		$.ajax({
-//			 url: $http.api('loan.infoBak'),
+			 url: $http.api('loan.infoBak'),
 			// url: $http.api('loanInfoInput/info','jbs'),
-			url: urlStr+'/loanInfoInput/info',
+			// url: urlStr+'/loanInfoInput/info',
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.pageData = result.data;
 				$scope.result = result;
 //				setupLocation();
+				// 启动面包屑
+//				if($params.path) {
+//					var _loanUser = $scope.result.data.ZJKR[0].userName;
+//					setupLocation(_loanUser);	
+//				}
+				
 				result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				console.log(result.data.FQXX.renewalInfo);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
