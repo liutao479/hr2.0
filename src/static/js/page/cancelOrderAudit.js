@@ -44,6 +44,13 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 	}
 
 	/**
+	* 启动dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
+	/**
 	* 编译翻单页栏
 	*/
 	var setupScroll = function(page, cb) {
@@ -174,6 +181,7 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 			$paging: $console.find('#pageToolbar'),
 			$scrollBar: $console.find('#scrollBar')
 		}
+		setupDropDown();
 		loadCancelOrderList(apiParams, function() {
 			setupEvt();
 		});
@@ -185,6 +193,83 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 		// router.updateQuery($scope.$path, $params);
 		loadCancelOrderList(apiParams);
 		cb();
+	}
+
+	$scope.dropdownTrigger = {
+		category: function(t, p, cb) {
+			var data = [
+				{
+					id: 'creditMaterialsUpload',
+					name: '征信材料上传'
+				},
+				{
+					id: 'creditInput',
+					name: '征信结果录入'
+				},
+				{
+					id: 'creditApproval',
+					name: '征信预审核'
+				},
+				{
+					id: 'cardInfoInput',
+					name: '贷款信息录入'
+				},
+				{
+					id: 'usedCarInfoInput',
+					name: '二手车信息录入'
+				},
+				{
+					id: 'loanMaterialsChoose',
+					name: '贷款材料选择'
+				},
+				{
+					id: 'busiModeChoose',
+					name: '业务模式选择'
+				},
+				{
+					id: 'homeMaterialsUpload',
+					name: '上门材料上传'
+				},
+				{
+					id: 'signMaterialsUpload',
+					name: '签约材料上传'
+				},
+				{
+					id: 'loanMaterialsUpload',
+					name: '贷款材料上传'
+				},
+				{
+					id: 'advanceMaterialsUpload',
+					name: '垫资材料上传'
+				},
+				{
+					id: 'loanTelApproval',
+					name: '电审'
+				},
+				{
+					id: 'loanApproval',
+					name: '贷款审核'
+				},
+				{
+					id: 'makeLoanApproval',
+					name: '放款审核'
+				},
+				{
+					id: 'pickMaterialsUpload',
+					name: '提车材料上传'
+				},
+				{
+					id: 'pickMaterialsApproval',
+					name: '提车审核'
+				},
+			];
+			var sourceData = {
+				items: data,
+				id: 'id',
+				name: 'name'
+			};
+			cb(sourceData);
+		}
 	}
 });
 

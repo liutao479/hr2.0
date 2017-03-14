@@ -40,6 +40,13 @@ page.ctrl('licenceProcess', [], function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
+
+	/**
+	* 启动dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
 	
 	/**
 	 * 绑定立即处理事件
@@ -122,6 +129,7 @@ page.ctrl('licenceProcess', [], function($scope) {
 			$tbl: $console.find('#licenceProcessTable'),
 			$paging: $console.find('#pageToolbar')
 		}
+		setupDropDown();
 		loadLicenceProcessList(apiParams, function() {
 			setupEvt();
 		});
@@ -133,5 +141,49 @@ page.ctrl('licenceProcess', [], function($scope) {
 		// router.updateQuery($scope.$path, $params);
 		loadLicenceProcessList(apiParams);
 		cb();
+	}
+
+	$scope.dropdownTrigger = {
+		demandBank: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'bankId',
+						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		status: function(t, p, cb) {
+			var data = [
+				{
+					id: 0,
+					name: '未办理'
+				},
+				{
+					id: 1,
+					name: '待审核'
+				},
+				{
+					id: 2,
+					name: '已审核'
+				},
+				{
+					id: 4,
+					name: '审核退回'
+				}
+			];
+			var sourceData = {
+				items: data,
+				id: 'id',
+				name: 'name'
+			};
+			cb(sourceData);
+		}
 	}
 });

@@ -3,17 +3,17 @@
 				<div class="select-search-bar clearfix">
 					<div class="search-item">
 						<span class="select-name">创建日期：</span>
-						<div class="input-text input-date">
-							<input id="dateStart" type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" name="utilityTime" value="" />	
+						<div class="input-text input-date-mini">
+							<input id="dateStart" type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="" />	
 						</div>
 						<span class="separator">-</span>
-						<div class="input-text input-date">
-							<input id="dateEnd" type="text" class="dateBtn" data-min="dateStart" readonly="readonly" name="utilityTime" value="" />	
+						<div class="input-text input-date-mini">
+							<input id="dateEnd" type="text" class="dateBtn" data-min="dateStart" readonly="readonly" value="" />	
 						</div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">业务来源方：</span>
-						<div class="select select-common" data-dropdown="page.$scope['myCustomer'].bankPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.busiSource"></div>
+						<div class="select select-dept-source" data-dropdown="page.$scope['myCustomer'].bankPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.busiSource"></div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">车辆品牌：</span>
@@ -29,10 +29,7 @@
 					</div>
 					<div class="search-item">
 						<span class="select-name">当前进度：</span>
-						<span class="select select-common">
-							<span class="placeholder placeholder-mini">请选择</span>
-							<span class="arrow arrow-bottom"></span>
-						</span>
+						<div class="select select-common" data-dropdown="page.$scope['myCustomer'].bankPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.category"></div>
 					</div>
 					<div class="search-item">
 						<div class="input-text">
@@ -104,8 +101,8 @@
 									<span id="customer-phone">{{=row.mobile}}</span>
 								</td>
 								<td class="td-last" rowspan="3">
-									<a href="javascript:;" data-orderno="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray makeLoan">放款预约</a><br>
-									<a href="javascript:;" data-orderno="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray applyTerminate">申请终止订单</a><br>
+									<a href="javascript:;" data-order-no="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray makeLoan">放款预约</a><br>
+									<a href="javascript:;" data-order-no="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray applyTerminate">申请终止订单</a><br>
 									<a href="javascript:;" data-href="loanProcess/applyModify" data-orderno="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray applyModify">申请修改贷款信息</a>
 								</td>
 							</tr>

@@ -89,7 +89,7 @@
 									</td>
 									<td class="orders-item-data orders-item-data-blank"></td>
 									<td class="orders-item-data orders-item-data-operate">
-										<a class="button button-gray button-mini toNewBank" data-bankid="{{=row.bankId}}" data-href="organizationManage/newBank">
+										<a class="button button-gray button-mini toNewBank" data-bank-id="{{=row.bankId}}" data-demand-bank-id="{{=row.id}}" data-href="organizationManage/newBank">
 											<i class="iconfont">&#xe640;</i>
 											编辑
 										</a>
@@ -118,20 +118,14 @@
 				<div class="select-search-bar select-search-bar-noborder clearfix">
 					<div class="search-item">
 						<span class="select-name">车商类型：</span>
-						<span class="select select-common">
-							<span class="placeholder">全部</span>
-							<span class="arrow arrow-bottom"></span>
-						</span>
+						<div class="select select-common" data-dropdown="page.$scope['organizationManage'].shopTypePicker" data-trigger="page.$scope['organizationManage'].dropdownTrigger.shopType"></div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">车商名称：</span>
-						<span class="select select-common">
-							<span class="placeholder">全部</span>
-							<span class="arrow arrow-bottom"></span>
-						</span>
+						<div class="select select-common" data-dropdown="page.$scope['organizationManage'].shopNamePicker" data-trigger="page.$scope['organizationManage'].dropdownTrigger.shopName"></div>
 					</div>
 					<div class="search-item">
-						<div id="" class="button button-mini">搜索</div>
+						<div id="carListSearch" class="button button-mini">搜索</div>
 					</div>
 				</div>
 				<table border="0" cellpadding="" width="100%" class="orders-table orders-table-noborder cooperation-maintenance-table">
@@ -160,10 +154,10 @@
 									<td class="orders-item-data">{{=row.operateBrand}}</td>
 									<td class="orders-item-data">
 										<table class="meanwhile" id="meanwhile">
-										{{for(var j = 0, len2 = row.bankAccountNameList.length; j < len2; j++) { var col = row.bankAccountNameList[j]; }}
+										{{for(var j = 0, len2 = row.demandCarShopAccountList.length; j < len2; j++) { var col = row.demandCarShopAccountList[j]; }}
 											{{ if(j < 2){ }}
 												<tr class="loantask-item">
-													<td>{{=col}}</td>
+													<td>{{=col.account}}-{{=col.accountName}}</td>
 												</tr>
 											{{ }else{ }}
 												<tr class="loantask-item" style="display: none;">
@@ -179,16 +173,16 @@
 										</table>
 									</td>
 									<td class="orders-item-data">
-										{{for(var j = 0, len2 = row.policyList.length; j < len2; j++) { var col = row.policyList[j]; }}
+										{{for(var j = 0, len2 = row.demandCarShopPolicyList.length; j < len2; j++) { var col = row.demandCarShopPolicyList[j]; }}
 											{{  if(j < len2 - 1) { }}
-												<span>{{=(col/100 + '%')}}</span>，
+												<span>{{=(col.costRate/100 + '%')}}</span>，
 											{{ } else { }}
-												<span>{{=(col/100 + '%')}}</span>
+												<span>{{=(col.costRate/100 + '%')}}</span>
 											{{ } }}
 										{{ } }}
 									</td>
 									<td class="orders-item-data orders-item-data-operate">
-										<a class="button button-gray button-mini toNewCar" data-shop-id="{{=row.shopId}}" data-href="organizationManage/newCar">
+										<a class="button button-gray button-mini toNewCar" data-shop-id="{{=row.shopId}}" data-car-shop-id="{{=row.id}}" data-href="organizationManage/newCar">
 											<i class="iconfont">&#xe640;</i>
 											编辑
 										</a>

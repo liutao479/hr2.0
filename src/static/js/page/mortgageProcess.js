@@ -40,6 +40,13 @@ page.ctrl('mortgageProcess', [], function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
+
+	/**
+	* 启动dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
 	
 	/**
 	 * 绑定立即处理事件
@@ -115,16 +122,68 @@ page.ctrl('mortgageProcess', [], function($scope) {
 			$tbl: $console.find('#mortgageProcessTable'),
 			$paging: $console.find('#pageToolbar')
 		}
+		setupDropDown();
 		loadMortgageProcessList(apiParams, function() {
 			setupEvt();
 		});
 	});
 
+
+	/**
+	 * 分页请求数据回调
+	 */
 	$scope.paging = function(_page, _size, $el, cb) {
 		apiParams.page = _page;
 		$params.page = _page;
 		// router.updateQuery($scope.$path, $params);
 		loadMortgageProcessList(apiParams);
 		cb();
+	}
+
+	/**
+	 * 下拉框请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		demandBank: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'bankId',
+						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		status: function(t, p, cb) {
+			var data = [
+				{
+					id: 0,
+					name: '未办理'
+				},
+				{
+					id: 1,
+					name: '待审核'
+				},
+				{
+					id: 2,
+					name: '已审核'
+				},
+				{
+					id: 4,
+					name: '审核退回'
+				}
+			];
+			var sourceData = {
+				items: data,
+				id: 'id',
+				name: 'name'
+			};
+			cb(sourceData);
+		}
 	}
 });

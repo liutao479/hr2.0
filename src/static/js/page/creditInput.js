@@ -45,15 +45,21 @@ page.ctrl('creditInput', [], function($scope) {
 				});
 
 				// 编译tab项对应内容
-				setupCreditPanel(idx, $scope.result, function() {
-					setupEvt();
-				});
+				setupCreditPanel(idx, $scope.result);
 
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
 			})
 		})
+	}
+
+
+	/**
+	* dropdown控件
+	*/
+	function setupDropDown($el) {
+		$el.find('.select').dropdown();
 	}
 
 	/**
@@ -83,7 +89,9 @@ page.ctrl('creditInput', [], function($scope) {
 		// 编译对应idx的tab项内容，将目标编译tab项内容页显示，隐藏其他tab项内容
 		var _tabTrigger = $scope.$el.$tbls.eq(idx);
 		$scope.tabs[idx] = _tabTrigger;
-		render.compile(_tabTrigger, $scope.def.listTmpl, result, true);
+		render.compile(_tabTrigger, $scope.def.listTmpl, result, function() {
+			setupEvt(_tabTrigger);
+		}, true);
 		for(var i = 0, len = $scope.$el.$tbls.length; i < len; i++) {
 			if(i == idx) {
 				$scope.$el.$tbls.eq(i).show();
@@ -111,7 +119,7 @@ page.ctrl('creditInput', [], function($scope) {
 				$scope.tabs[_type] = _tabTrigger;
 				$scope.result.index = _type;
 				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, function() {
-					setupEvt();
+					setupEvt(_tabTrigger);
 				}, true);
 			}
 			$scope.$el.$tabs.eq($scope.idx).removeClass('role-item-active');
@@ -119,7 +127,6 @@ page.ctrl('creditInput', [], function($scope) {
 			$scope.$el.$tbls.eq($scope.idx).hide();
 			$scope.$el.$tbls.eq(_type).show();
 			$scope.idx = _type;
-			$console.find('.uploadEvt').imgUpload();
 		})
 	}
 
@@ -159,9 +166,9 @@ page.ctrl('creditInput', [], function($scope) {
 	/**
 	* 绑定立即处理事件
 	*/
-	var setupEvt = function() {
+	var setupEvt = function($el) {
 		// 上传pdf文件
-		$console.find('.pdfUpload').on('change', function() {
+		$el.find('.pdfUpload').on('change', function() {
 			var tml = '<div class="panel-value-item">\
 							<div class="input-text">\
 								<input type="text" value="{0}" readonly="true" />\
@@ -193,8 +200,8 @@ page.ctrl('creditInput', [], function($scope) {
 			});
 			
 		});
-
-		$console.find('.uploadEvt').imgUpload();
+		setupDropDown($el);
+		$el.find('.uploadEvt').imgUpload();
 	}
 
 	/**
@@ -244,5 +251,34 @@ page.ctrl('creditInput', [], function($scope) {
 		self.$el.find('.imgs-item-p').html('征信报告' + self.$el.data('count'));
 		self.$el.after(self.outerHTML);
 		self.$el.next().imgUpload();
+	}
+
+
+	/**
+	 * 下拉框请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		isQualified: function(t, p, cb) {
+			var data = [
+				{
+					id: 0,
+					name: '合格'
+				},
+				{
+					id: 1,
+					name: '不合格'
+				}
+			];
+			var sourceData = {
+				items: data,
+				id: 'id',
+				name: 'name'
+			};
+			cb(sourceData);
+		}
+	}
+
+	$scope.isQualifiedPicker = function(picked) {
+		console.log(picked);	
 	}
 });

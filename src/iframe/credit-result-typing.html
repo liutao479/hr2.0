@@ -77,14 +77,7 @@
 				<div class="panel-key-area">征信是否合格：</div>
 				<div class="panel-value-area clearfix">
 					<div class="panel-value-item">
-						<span class="select select-common">
-							{{ if(col.isQualified == 0){ }}
-							<span class="placeholder placeholder-mini">合格</span>
-							{{ }else if(col.isQualified == 1){ }}
-							<span class="placeholder placeholder-mini">不合格</span>
-							{{ } }}
-							<span class="arrow arrow-bottom"></span>
-						</span>
+						<div class="select select-common" data-dropdown="page.$scope['creditInput'].isQualified" data-trigger="page.$scope['creditInput'].dropdownTrigger.isQualified" data-selected="{{=(col.isQualified == 0 ? '合格' : '不合格')}}"></div>
 					</div>
 				</div>
 			</div>

@@ -50,10 +50,9 @@
 		makeLoan: '<dl class="w-dropdown">\
 						<dt>用款时间：</dt>\
 						<dd>\
-							<span class="select select-bank">\
-								<input class="placeholder required" placeholder="请选择" id="loaningDate" value="{{=(it.loaningDate ? tool.formatDate(it.loaningDate) : "")}}" />\
-								<span class="arrow arrow-bottom"></span>\
-							</span>\
+							<div class="input-text input-date">\
+							<input type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="{{=it.date}}" />\
+						</div>\
 						</dd>\
 					</dl>\
 					<dl class="w-dropdown">\
@@ -94,10 +93,13 @@
 				<div class="button">确定</div>\
 			</div>',
 		cancelSure: '<div class="w-commit-area">\
-				<div class="button button-empty w-close">取消</div><div class="button w-sure">确定</div>\
+				<div class="button button-empty w-close">取消</div><div class="button button-mini w-sure">确定</div>\
 			</div>',
 		cancelNext: '<div class="w-commit-area">\
-				<div class="button button-empty w-close">取消</div><div class="button w-next">下一步</div>\
+				<div class="button button-empty w-close">取消</div><div class="button button-mini w-next">下一步</div>\
+			</div>',
+		sure: '<div class="w-commit-area">\
+				<div class="button w-sure">确定</div>\
 			</div>'
 	}
 	g.dialogTml.wRemind = {

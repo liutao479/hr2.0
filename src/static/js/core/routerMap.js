@@ -267,11 +267,11 @@
 			page: 'mortgageStatisDetail'
 		},
 		'organizationManage/newBank': {
-			title: '新建合作银行',
+			title: '新建/编辑合作银行',
 			page: 'newBank'
 		},
 		'organizationManage/newCar': {
-			title: '新建合作车商',
+			title: '新建/编辑合作车商',
 			page: 'newCar'
 		}
 	}

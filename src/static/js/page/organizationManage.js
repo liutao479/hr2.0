@@ -64,6 +64,13 @@ page.ctrl('organizationManage', [], function($scope) {
 	}
 
 	/**
+	* dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
+	/**
 	 * 删除合作银行
 	 */
 	 var deleteBank = function(params, cb) {
@@ -202,7 +209,8 @@ page.ctrl('organizationManage', [], function($scope) {
 		$console.find('#organizationManageTable .toNewBank').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
-				bankId: that.data('bankid'),
+				bankId: parseInt(that.data('bankId')),
+				demandBankId: parseInt(that.data('demandBankId')),
 				path: 'organizationManage'
 			});
 		})
@@ -273,10 +281,23 @@ page.ctrl('organizationManage', [], function($scope) {
 		$console.find('#organizationManageTable .toNewCar').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
-				shopId: that.data('shopId'),
+				shopId: parseInt(that.data('shopId')),
+				carShopId: parseInt(that.data('carShopId')),
 				path: 'organizationManage'
 			});
 		})
+
+		//搜索按钮
+		$console.find('#carListSearch').on('click', function() {
+			apiParams.shopType = $scope.shopType;
+			apiParams.shopName = $scope.shopName;
+			loadCarList(apiParams, function() {
+				delete apiParams.shopType;
+				delete apiParams.shopName;
+			});
+		})
+
+		setupDropDown();
 	}
 
 	/***
@@ -301,6 +322,9 @@ page.ctrl('organizationManage', [], function($scope) {
 		});
 	});
 
+	/**
+	 * 分页请求数据回调
+	 */
 	$scope.paging = function(_pageNum, _size, $el, cb) {
 		apiParams.pageNum = _pageNum;
 		$params.pageNum = _pageNum;
@@ -308,4 +332,57 @@ page.ctrl('organizationManage', [], function($scope) {
 		setupTablePanel($scope.idx);
 		cb();
 	}
+
+	/**
+	 * 下拉框请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		shopType: function(t, p, cb) {
+			var data = [
+				{
+					id: 0,
+					name: '4s'
+				},
+				{
+					id: 1,
+					name: '二级经销商'
+				}
+			];
+			var sourceData = {
+				items: data,
+				id: 'id',
+				name: 'name'
+			};
+			cb(sourceData);
+		},
+		shopName: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandCarShop/getList', 'zyj'),
+				data: {
+					shopType: $scope.shopType//车商类型   0:4s  1:二级经销商
+				}, 	
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'shopId',
+						name: 'shopName'
+					};
+					cb(sourceData);
+				})
+			})
+		}
+	}
+
+	$scope.shopTypePicker = function(picked) {
+		console.log(picked);
+		$scope.shopType = picked.id;
+	}
+
+	$scope.shopNamePicker = function(picked) {
+		console.log(picked);
+		$scope.shopName = picked.name;
+	}
+
 });

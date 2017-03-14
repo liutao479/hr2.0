@@ -373,12 +373,20 @@
     &.input-text-mini2 {
         width: 120px;
     }
-    &.input-date {
+    &.input-date-mini {
         padding: 0; 
         width: 150px;
         input {
             padding-left: 10px;
             background: url(img/datePicker.gif) no-repeat 124px 4px;
+        }
+    }
+    &.input-date {
+        padding: 0; 
+        width: 250px;
+        input {
+            padding-left: 10px;
+            background: url(img/datePicker.gif) no-repeat 226px 4px;
         }
     }
     input {
@@ -420,26 +428,28 @@
     color: @tiperColor;
     &&-common {
         width: 150px;
-        .placeholder {
-            width: 120px;
-        }
+    }
+    &&-bank-name {
+        width: 180px;
     }
     &&-date {
         width: 120px;
-        .placeholder {
-            width: 90px;
-        }
     }
     &&-car {
-        width: 248px;
+        width: 284px;
     }
     &&-bank {
         width: 350px;
-        .placeholder {
-            width: 285px;
-        }
     }
-    
+    &&-dept-source {
+        width: 280px;
+    }
+    &&-table {
+        width: 100px;
+    }
+    &&-mini {
+        width: 250px;
+    }
     .arrow {
         position: absolute;
         cursor: pointer;
@@ -560,8 +570,7 @@
             //品牌车系车型
             .select-content {
                 display: none;
-                padding: 0 20px 15px 15px;
-                width: 248px;
+                padding: 0 15px 15px 15px;
                 &.select-content-active {
                     display: block;
                 }
