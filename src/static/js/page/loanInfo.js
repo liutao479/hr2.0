@@ -9,172 +9,6 @@ page.ctrl('loanInfo', function($scope) {
 			pageSize: 20
 		};
 	var urlStr = "http://192.168.1.108:8080";
-	var apiMap = {
-		"serviceType": urlStr+"/loanConfigure/getItem",//业务类型
-		"brand": urlStr+"/demandBank/selectBank",//经办银行
-		"busiSourceType": urlStr+"/loanConfigure/getItem",//业务来源类型
-		"busiArea": urlStr+"/area/get",//三级下拉省市县
-		"busiSourceName": urlStr+"/carshop/list",//业务来源方名称
-		"busiSourceNameSearch": urlStr+"/carshop/searchCarShop",//业务来源方名称模糊搜索
-		"onLicensePlace": urlStr+"/area/get",//三级下拉省市县
-		"busimode": urlStr+"/loanConfigure/getItem",//业务模式
-		"carName": urlStr+"/car/carBrandList",//三级车辆型号:车辆品牌
-		"carNameSearch":  urlStr+"/car/searchCars",//车辆型号模糊搜索
-		"repaymentTerm": urlStr+"/loanConfigure/getItem", //还款期限
-		"remitAccountNumber": urlStr+"/demandCarShopAccount/getAccountList" //打款账号
-	};
-	var dataMap = {
-		    "sex":[
-		        {
-		            "name":"男",
-		            "value":"0"
-		        },
-		        {
-		            "name":"女",
-		            "value":"1"
-		        }
-		    ],
-		    "isSecond":[
-		        {
-		            "name":"新车",
-		            "value":"0"
-		        },
-		        {
-		            "name":"二手车",
-		            "value":"1"
-		        }
-		    ],
-		    "licenseType":[
-		        {
-		            "name":"公牌",
-		            "value":"0"
-		        },
-		        {
-		            "name":"私牌",
-		            "value":"1"
-		        }
-		    ],
-		    "isFinanceLeaseVehicle":[
-		        {
-		            "name":"是融资租赁车",
-		            "value":"0"
-		        },
-		        {
-		            "name":"不是融资租赁",
-		            "value":"1"
-		        }
-		    ],
-		    "isOperationVehicle":[
-		        {
-		            "name":"运营车",
-		            "value":"0"
-		        },
-		        {
-		            "name":"非运营车",
-		            "value":"1"
-		        }
-		    ],
-		    "isInstallGps":[
-		        {
-		            "name":"是",
-		            "value":"0"
-		        },
-		        {
-		            "name":"否",
-		            "value":"1"
-		        }
-		    ],
-		    "isDiscount":[
-		        {
-		            "name":"贴息",
-		            "value":"0"
-		        },
-		        {
-		            "name":"不贴息",
-		            "value":"1"
-		        }
-		    ],
-		    "renewalMode":[
-		        {
-		            "name":"自行办理",
-		            "value":"0"
-		        },
-		        {
-		            "name":"单位承保",
-		            "value":"1"
-		        }
-		    ],
-		    "renewalModeList":[
-		        {
-		            "name":"自行办理",
-		            "value":"0"
-		        },
-		        {
-		            "name":"单位承保",
-		            "value":"1"
-		        }
-		    ],
-		    "isAdvanced":[
-		        {
-		            "name":"需要垫资",
-		            "value":"0"
-		        },
-		        {
-		            "name":"不需要垫资",
-		            "value":"1"
-		        }
-		    ],
-		    "maritalStatus":[
-		        {
-		            "name":"已婚",
-		            "value":"0"
-		        },
-		        {
-		            "name":"未婚",
-		            "value":"1"
-		        }
-		    ],
-		    "houseStatus":[
-		        {
-		            "name":"有商品房",
-		            "value":"0"
-		        },
-		        {
-		            "name":"有房",
-		            "value":"1"
-		        }
-		    ],
-		    "isEnterprise":[
-		        {
-		            "name":"是企业法人",
-		            "value":"0"
-		        },
-		        {
-		            "name":"不是企业法人",
-		            "value":"1"
-		        }
-		    ],
-		    "userRelationship":[
-		        {
-		            "name":"父母",
-		            "value":"0"
-		        },
-		        {
-		            "name":"子女",
-		            "value":"1"
-		        }
-		    ],
-		    "relationship":[
-		        {
-		            "name":"同事",
-		            "value":"0"
-		        },
-		        {
-		            "name":"朋友",
-		            "value":"1"
-		        }
-		    ]
-		};
 	var postUrl = {
 		"saveOrderInfo": urlStr+"/loanInfoInput/updLoanOrder",
 		"saveCarInfo": urlStr+"/loanInfoInput/updLoanUserCar",
@@ -191,7 +25,7 @@ page.ctrl('loanInfo', function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadLoanList = function(params, cb) {
+	var loadLoanList = function(cb) {
 		var data={};
 			data['taskId']=80871;
 //			data['taskId']=$params.taskId;
@@ -202,10 +36,9 @@ page.ctrl('loanInfo', function($scope) {
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
+				$scope.pageData = result.data;
 				$scope.result = result;
-				// 启动面包屑
-				var _loanUser = $scope.result.data.ZJKR[0].userName;
-//				setupLocation(_loanUser);
+//				setupLocation();
 				result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				console.log(result.data.FQXX.renewalInfo);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
@@ -220,22 +53,25 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		});
 	}
+	
+	
 	/**
 	* 设置面包屑
 	*/
-//	var setupLocation = function() {
-//		if(!$scope.$params.path) return false;
-//		var $location = $console.find('#location');
-////		var _orderDate = tool.formatDate($scope.$params.date, true);
-//		$location.data({
-//			backspace: $scope.$params.path,
-//			loanUser: loanUser,
-//			current: '贷款信息录入',
-//			orderDate: tool.formatDate($scope.$params.date, true)
-//		});
-//		$location.location();
-//	}
-//页面加载完成对所有带“*”的input进行必填绑定
+	var setupLocation = function() {
+		if(!$scope.$params.path) return false;
+		var $location = $console.find('#location');
+		$location.data({
+			backspace: $scope.$params.path,
+			loanUser: $scope.result.data.loanTask.loanOrder.realName,
+			current: '贷款信息录入',
+			orderDate: $scope.result.data.loanTask.createDateStr
+		});
+		$location.location();
+	}
+	/**
+	* 页面加载完成对所有带“*”的input进行必填绑定
+	*/
 	var loanFinishedInput = function(){
 		$(".info-key").each(function(){
 			var jqObj = $(this);
@@ -273,10 +109,9 @@ page.ctrl('loanInfo', function($scope) {
 			render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
 		}else{
 			$.ajax({
-				url: apiMap[key],
+				url: urlApiMap[key],
 				data: data,
 				dataType: 'json',
-				async:false,
 				success: $http.ok(function(result) {
 					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
 					$source.selectType = result.data;
@@ -317,7 +152,7 @@ page.ctrl('loanInfo', function($scope) {
 		var data={};
             data['keyword'] = $(this).val();
 		$.ajax({
-			url: apiMap[key],
+			url: urlApiMap[key],
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -358,7 +193,7 @@ page.ctrl('loanInfo', function($scope) {
 			}
 			console.log(data);
 			$.ajax({
-				url: apiMap[key],
+				url: urlApiMap[key],
 				data: data,
 				dataType: 'json',
 				success: $http.ok(function(result) {
@@ -576,9 +411,14 @@ page.ctrl('loanInfo', function($scope) {
 	
 	
 	/***
-	* 时间插件
+	* 为完善项更改去掉错误提示
 	*/
-	
+	$(document).on('input','input', function() {
+		$(this).parents().removeClass("error-input");
+		$(this).siblings("i").remove();
+	})
+
+
     /***
 	* 保存按钮
 	*/
@@ -655,15 +495,120 @@ page.ctrl('loanInfo', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	$console.load(router.template('iframe/loanInfo'), function() {
-		$scope.def.listTmpl = $console.find('#loanlisttmpl').html();
+//	$console.load(router.template('iframe/loanInfo'), function() {
+//		$scope.def.listTmpl = $console.find('#loanlisttmpl').html();
+//		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
+//		$scope.$el = {
+//			$tbl: $console.find('#loanInfoTable')
+//		}
+//		loadLoanList(apiParams);
+//		setupDropDown();
+//	})
+	
+	render.$console.load(router.template('iframe/loanInfo'), function() {
+		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
 		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#loanInfoTable')
 		}
-		loadLoanList(apiParams);
-	})
+		loadLoanList(function(){
+			setupDropDown();
+		});
+		
+		
+	});
+	
+	
+	$scope.areaPicker = function(picked) {
+		console.log(picked);
+	}
+	/**dropdown 测试*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
+	var areaSel = {
+		province: function(cb) {
+			$.ajax({
+				url: urlStr+'/area/get',
+				dataType:'json',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					};
+					console.log('省：'+sourceData);
+					cb(sourceData);
+				}
+			})
+		},
+		city: function(areaId, cb) {
+			$.ajax({
+				url: urlStr+'/area/get',
+				data: {
+					parentId: areaId
+				},
+				dataType: 'json',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		country: function(areaId, cb) {
+			$.ajax({
+				url: urlStr+'/area/get',
+				data: {
+					parentId: areaId
+				},
+				dataType: 'json',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					};
+
+					cb(sourceData);
+				}
+			})
+		}
+	}
+
+	$scope.dropdownTrigger = {
+		areaSel: function(tab, parentId, cb) {
+			if(!cb && typeof cb != 'function') {
+				cb = $.noop;
+			}
+			if(!tab) return cb();
+			switch (tab) {
+				case '省':
+					areaSel.province(cb);
+					break;
+				case "市":
+					areaSel.city(parentId, cb);
+					break;
+				case "区":
+					areaSel.country(parentId, cb);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	
+	
+	
 });
+
+
+
 
 
 

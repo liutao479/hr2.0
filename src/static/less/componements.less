@@ -412,6 +412,7 @@
     position: relative;
     display: inline-block;
     height: 32px;
+    padding: 0 !important;
     line-height: 30px;
     .borderRadius(3px);
     border: 1px solid @selectBorderColor;
@@ -518,7 +519,7 @@
             }
         }
         .select-tab {
-            width: 248px;
+            width: 100%;
             height: 29px;
             .select-tab-item {
                 position: relative;
@@ -526,7 +527,7 @@
                 cursor: pointer;
                 color: @fontColor;
                 line-height: 30px;
-                width: 82px;
+                width: 33.33333%;
                 border: 1px solid @borderColor;
                 border-right: none;
                 text-align: center;
@@ -540,7 +541,7 @@
                     border-bottom-color: #FFF;
                     &:before {
                         content: "";
-                        width: 82px;
+                        width: 100%;
                         height: 3px;
                         background-color: @buttonBgColor;
                         position: absolute;

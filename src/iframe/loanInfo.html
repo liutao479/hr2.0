@@ -97,12 +97,16 @@
 									<i>*</i>
 									{{ } }} 
 									{{= seg.name}}：</span>
-								<span data-key="busiArea" class="info-value selecter">
+								<!--<div class="select info-value" data-tabs="省|市|区" data-dropdown="page.$scope['loanInfo'].areaPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.area"></div>-->
+								<span class="info-value">
+									<div class="select" style="width: 300px;" data-tabs="省|市|区" data-dropdown="page.$scope['loanInfo'].areaPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+								</span>
+								<!--<span data-key="busiArea" class="info-value selecter">
 									<div></div>
 									<span class="placeholder">请选择</span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="busiAreaCode" value="{{= it.data.DDXX.busiAreaCode}} />
-								</span>
+								</span>-->
 							</div>
 							{{  };if(seg.code == 'busiSourceId'){  }}
 							<div class="info-key-value-box">

@@ -185,12 +185,13 @@
 			title: '订单日志',
 			page: 'loanLog'
 		},
-//		'loanProcess/cardAudit': {
-//			title: '开卡审核',
-//			page: 'cardAudit'
-//		},
 		'loanProcess/cardAudit': {
 			title: '开卡审核',
+			page: 'cardAudit'
+		},
+		'loanProcess/cardInfoInput': {
+			title: '开卡审核',
+//			page: 'cardAudit'
 			page: 'openCardSheet'
 		},
 		'loanProcess/creditAudit':{
