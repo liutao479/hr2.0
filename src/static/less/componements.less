@@ -868,88 +868,88 @@
             margin-right: 5px;
         }
     }
-    // 内容部分
-    .w-content {
-        width: 500px;
-        background-color: #FFF;
-        padding: 20px 50px 50px 50px;
-        &.w-content-padding {
-            padding: 20px 32px 50px 32px;
-        }
+    
 
-        .w-select {
-            display: inline-block;
-            margin: 10px 25px 10px 0;
-            &.w-select-left {
-                margin-left: 30px;
-            }
-            .checkbox {
-                float: left;
-                margin-right: 10px;
+}
+// 内容部分
+.w-content {
+    width: 500px;
+    background-color: #FFF;
+    padding: 20px 50px 20px 50px;
+    &.w-content-padding {
+        padding: 20px 32px 50px 32px;
+    }
+    .w-select {
+        display: inline-block;
+        margin: 10px 25px 10px 0;
+        &.w-select-left {
+            margin-left: 30px;
+        }
+        .checkbox {
+            float: left;
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
+        }
+        .radio {
+            float: left;
+            margin-right: 10px;
+        }
+        .i-download {
+            float: left;
+            color: @mainColor;
+            font-size: 18px;
+            margin-right: 6px;
+        }
+        .w-select-item {
+            line-height: 20px;
+            float: left;
+        }
+    }
+    .w-add {
+        text-align: center;
+    }
+    // 批量下载
+    .w-download-area {
+        .w-download-title {
+            line-height: 40px;
+            color: @tiperColor;
+        }
+    }
+    // 选择框
+    .w-dropdown {
+        margin: 10px 0;
+        dt {
+            width: 100px;
+            float: left;
+            line-height: 30px;
+            text-align: right;
+        }
+        dd {
+            margin-left: 130px;
+            overflow: hidden;
+        }
+    }
+    .w-commit-area {
+        text-align: center;
+        margin-top: 20px;
+        .button {
+            margin-right: 20px;
+            &.button-empty {
                 position: relative;
-                top: 2px;
-            }
-            .radio {
-                float: left;
-                margin-right: 10px;
-            }
-            .i-download {
-                float: left;
-                color: @mainColor;
-                font-size: 18px;
-                margin-right: 6px;
-            }
-            .w-select-item {
-                line-height: 20px;
-                float: left;
-            }
-        }
-        .w-add {
-            text-align: center;
-        }
-        // 批量下载
-        .w-download-area {
-            .w-download-title {
-                line-height: 40px;
-                color: @tiperColor;
-            }
-        }
-        // 选择框
-        .w-dropdown {
-            margin: 10px 0;
-            dt {
-                width: 100px;
-                float: left;
-                line-height: 30px;
-                text-align: right;
-            }
-            dd {
-                margin-left: 130px;
-                overflow: hidden;
-            }
-        }
-        .w-commit-area {
-            text-align: center;
-            margin-top: 20px;
-            .button {
-                margin-right: 20px;
-                &.button-empty {
-                    position: relative;
-                    top: 1px;
-                }
-            }
-        }
-        .w-expire {
-            li {
-                text-align: center;
-                line-height: 30px;
-                b {
-                    margin: 0 5px;
-                }
+                top: 1px;
             }
         }
     }
-
+    .w-expire {
+        li {
+            text-align: center;
+            line-height: 30px;
+            b {
+                margin: 0 5px;
+            }
+        }
+    }
 }
 
 .toast {  
