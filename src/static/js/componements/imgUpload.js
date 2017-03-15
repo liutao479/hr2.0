@@ -379,7 +379,7 @@
 	function Preview(imgs, marker) {
 		var self = this;
 		self.imgs = imgs || [];
-//		self.marker = marker ? $.noop;
+		self.marker = marker || $.noop;
 		self.init();
 	}
 
