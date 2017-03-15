@@ -33,16 +33,21 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	var loadOrderInfo = function(_type, cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('creditMaterials/index', 'jbs'),
+			url: $http.api('creditMaterials/index', 'zyj'),
 			data: {
 				// taskId: $scope.$params.taskId
-				taskId: 80885
+				// taskId: 80885
+				taskId: 81035
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				$scope.orderNo = result.data.loanTask.orderNo;
+				$scope.result.data.cfgMaterials = eval(result.cfgData);
+				$scope.result.data.uplUrl = $http.api('creditMaterials/material/addOrUpdate', 'zyj');
+				$scope.result.data.delUrl = $http.api('creditMaterials/material/del', 'zyj');
+				$scope.result.data.category = 'creditMaterialsUpload';
+ 				$scope.orderNo = result.data.loanTask.orderNo;
 				$scope.result.data.currentType = _type;
 
 				// 编译tab
@@ -60,6 +65,107 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				}
 			})
 		})
+	}
+
+	/**
+	* 设置修改征信查询银行区域
+	*/
+	var setupCreditBank = function() {
+		$scope.currentType = 0;
+		if(!$scope.result.data.loanTask.loanOrder.demandBankId) {
+			setupWindow();
+		} else {
+			render.compile($scope.$el.$modifyBankPanel, $scope.def.modifyBankTmpl, $scope.result.data.loanTask.loanOrder, function() {
+				$scope.$el.$modifyBankPanel.find('.modifyBankEvt').on('click', function() {
+					setupWindow(true);
+				})
+			}, true);
+		}
+	}
+
+	/**
+	 * 征信订单更新
+	 */
+	 var updBank = function(cb) {
+	 	var params = {
+			orderNo: $scope.orderNo,
+			demandBankId: $scope.demandBankId,
+			busiAreaCode: $scope.areaSource
+		}
+	 	$.ajax({
+			type: 'post',
+			url: $http.api('creditMaterials/order/update', 'zyj'),
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if( cb && typeof cb == 'function' ) {
+					cb();
+				}
+			})
+		})
+		
+		
+	 }
+
+	/**
+	 * 启动征信查询银行弹窗
+	 */
+	var setupWindow = function(t) {
+		var isBack = true;
+		var buttons  = {
+	        ok: {
+	        	text: '确定',
+	            action: function () {
+	            	var $demandBank = $('#demandBank input').val();
+	            	var $areaSource = $('#areaSource input').val();
+	            	if(!$demandBank || !$areaSource) {
+	            		$.alert({
+	            			title: '提示',
+	            			content: '<div class="w-content"><div>请选择必选项！</div></div>',
+							ok: {
+								text: '确定'
+							}
+	            		});
+	            		return false;
+	            	}
+	            	isBack = false;
+	            	updBank(function() {
+	            		loadOrderInfo($scope.currentType, function() {
+							setupCreditBank();
+							setupLocation();
+							initApiParams();
+							evt();
+						});
+	            	});
+	            	
+	            }
+	        }
+		}	
+		if(t) {
+			buttons['close'] = {
+	        	text: '取消',
+	            action: function () {
+
+	            }
+	        };
+		}
+		var opt = {
+			title: '查询机构选择',
+			content: dialogTml.wContent.creditQuery.format('creditMaterialsUpload', 'creditMaterialsUpload', $scope.result.data.loanTask.loanOrder.demandBankId),
+			onContentReady: function(data, status, xhr){
+				$('.jconfirm').find('.select').dropdown();
+		    },
+		    onClose: function () {
+		    	if(!isBack) {
+		    		return false;
+		    	}
+		        router.render('loanProcess', {});
+		    }
+		}
+		opt['buttons'] = buttons;
+		
+		$.confirm(opt);
 	}
 
 	/**
@@ -113,6 +219,14 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		}
 	}
 
+
+	/**
+	 * dropdown
+	 */
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
 	/**
 	 * 首次加载页面时绑定的事件（增加共同还款人和反担保人，以及底部提交按钮）
 	 */
@@ -124,7 +238,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			// 后台接口修改完成时使用
 			$.ajax({
 				type: 'post',
-				url: $http.api('creditUser/add', 'jbs'),
+				url: $http.api('creditUser/add', 'zyj'),
 				data: {
 					orderNo: $scope.orderNo,
 					userType: 1
@@ -144,7 +258,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			// 后台接口修改完成时使用
 			$.ajax({
 				type: 'post',
-				url: $http.api('creditUser/add', 'jbs'),
+				url: $http.api('creditUser/add', 'zyj'),
 				data: {
 					orderNo: $scope.orderNo,
 					userType: 2
@@ -161,44 +275,59 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		 */
 		$console.find('#creditQuery').on('click', function() {
 			var that = $(this);
-			that.openWindow({
-				title: "征信查询",
-				content: dialogTml.wContent.creditQuery,
-				commit: dialogTml.wCommit.cancelNext,
-			}, function($dialog) {
-				$dialog.delegate('.w-next', 'click', function() {
-					$scope.apiParams.bankId = 12;
-					$scope.apiParams.busiAreaCode = 110000;
-					$scope.apiParams.reason = '原因在哪里都不知道';
-					var saveHtml = $dialog.find('.w-content').html();
-					var tml = '<div>确定所有被查人的征信材料已上传无误，并提交征信查询吗？</div>\
-								<div class="w-commit-area">\
-								<div class="button w-sure">确定</div>\
-								<div class="button button-empty w-back">上一步</div>\
-							</div>'
-					$dialog.find('.w-content').html(tml);
-					$dialog.find('.w-back').on('click', function() {
-						$dialog.find('.w-content').html(saveHtml);
-					})
-					$dialog.find('.w-sure').on('click', function() {
-						console.log($scope.apiParams)
-						$dialog.remove();
-						// toast.show();
-						$.ajax({
-							type: 'post',
-							// url: $http.api('creditMaterials/submit/' + $params.taskId, 'jbs'),
-							url: $http.api('creditMaterials/submit/80885', 'jbs'),
-							data: JSON.stringify($scope.apiParams),
-							dataType: 'json',
-							contentType: 'application/json;charset=utf-8',
-							success: $http.ok(function(result) {
-								console.log(result);
-								// toast.hide();
-							})
-						})
-					})
-				})
-			})
+			$.confirm({
+				title: '提示',
+				content: '<div class="w-content"><div>确定所有被查人的征信材料已上传无误，并提交征信查询吗？</div></div>',
+				buttons: {
+					close: {
+						text: '取消',
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							
+						}
+					}
+				}
+			});
+			// that.openWindow({
+			// 	title: "征信查询",
+			// 	content: dialogTml.wContent.creditQuery,
+			// 	commit: dialogTml.wCommit.cancelNext,
+			// }, function($dialog) {
+			// 	$dialog.delegate('.w-next', 'click', function() {
+			// 		$scope.apiParams.bankId = 12;
+			// 		$scope.apiParams.busiAreaCode = 110000;
+			// 		$scope.apiParams.reason = '原因在哪里都不知道';
+			// 		var saveHtml = $dialog.find('.w-content').html();
+			// 		var tml = '<div>确定所有被查人的征信材料已上传无误，并提交征信查询吗？</div>\
+			// 					<div class="w-commit-area">\
+			// 					<div class="button w-sure">确定</div>\
+			// 					<div class="button button-empty w-back">上一步</div>\
+			// 				</div>'
+			// 		$dialog.find('.w-content').html(tml);
+			// 		$dialog.find('.w-back').on('click', function() {
+			// 			$dialog.find('.w-content').html(saveHtml);
+			// 		})
+			// 		$dialog.find('.w-sure').on('click', function() {
+			// 			console.log($scope.apiParams)
+			// 			$dialog.remove();
+			// 			// toast.show();
+			// 			$.ajax({
+			// 				type: 'post',
+			// 				// url: $http.api('creditMaterials/submit/' + $params.taskId, 'zyj'),
+			// 				url: $http.api('creditMaterials/submit/80885', 'zyj'),
+			// 				data: JSON.stringify($scope.apiParams),
+			// 				dataType: 'json',
+			// 				contentType: 'application/json;charset=utf-8',
+			// 				success: $http.ok(function(result) {
+			// 					console.log(result);
+			// 					// toast.hide();
+			// 				})
+			// 			})
+			// 		})
+			// 	})
+			// })
 		});
 
 		/**
@@ -269,7 +398,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					console.log(_userId)
 					$.ajax({
 						type: 'post',
-						url: $http.api('creditUser/del', 'jbs'),
+						url: $http.api('creditUser/del', 'zyj'),
 						data: {
 							userId: _userId
 						},
@@ -352,18 +481,142 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		$console.append(t1[0] + t2[0]);
 		$scope.def = {
 			tabTmpl: $console.find('#creditUploadTabsTmpl').html(),
-			listTmpl: $console.find('#creditUploadListTmpl').html()
+			listTmpl: $console.find('#creditUploadListTmpl').html(),
+			modifyBankTmpl: $console.find('#modifyBankTmpl').html()
 		}
 		$scope.$el = {
 			$tbls: $console.find('#creditUploadPanel > .tabTrigger'),
 			$tab: $console.find('#creditTabs'),
-			$creditPanel: $console.find('#creditUploadPanel')
+			$creditPanel: $console.find('#creditUploadPanel'),
+			$modifyBankPanel: $console.find('#modifyBankPanel')
 		}
 		
 		loadOrderInfo($scope.currentType, function() {
+			setupCreditBank();
 			setupLocation();
 			initApiParams();
 			evt();
 		});
 	});
+
+	/**
+	 * 上传图片数据回调
+	 */
+	$scope.uploadcb = $scope.deletecb = function(self, xhr) {
+		if(xhr.data.refresh) {
+			$scope.currentType = 0;
+			loadOrderInfo($scope.currentType, function() {
+				setupCreditBank();
+				setupLocation();
+				initApiParams();
+				evt();
+			});
+		}
+		
+	}
+
+	/**
+	 * 下拉框点击回调
+	 */
+	$scope.demandBankPicker = function(picked) {
+		console.log(picked);
+		$scope.demandBankId = picked.id;
+	}
+
+	$scope.areaSourcePicker = function(picked) {
+		console.log(picked);
+		$scope.areaSource = picked['市'].id;
+	}
+
+	/**
+	 * 下拉框数据请求回调
+	 */
+	var area = {
+		province: function(cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('area/get', 'zyj'),
+				dataType: 'json',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'wholeName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		city: function(parentId, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('area/get', 'zyj'),
+				dataType: 'json',
+				data: {parentId: parentId},
+				success: function(xhr) {
+					console.log(xhr);
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'wholeName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		county: function(parentId, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('area/get', 'zyj'),
+				dataType: 'json',
+				data: {parentId: parentId},
+				success: function(xhr) {
+					console.log(xhr);
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'wholeName'
+					}
+					cb(sourceData);
+				}
+			})
+		}
+	}
+
+	/**
+	 * 希腊狂请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		areaSource: function(tab, parentId, cb) {
+			if(!cb && typeof cb != 'function') {
+				cb = $.noop;
+			}
+			if(!tab) return cb();
+			switch (tab) {
+				case '省':
+					area.province(cb);
+					break;
+				case "市":
+					area.city(parentId, cb);
+					break;
+				default:
+					break;
+			}
+		},
+		demandBank: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'bankId',
+						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		}
+	}
 });

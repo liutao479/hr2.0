@@ -20,4 +20,28 @@ $(function() {
 	setTimeout(function() {
 		new Todo($('#remind'));	
 	}, 1000)
+
+	/**
+	 * 弹窗默认设置
+	 */
+	jconfirm.defaults = {
+		closeIcon: true,
+		useBootstrap: false,
+		boxWidth: '500px',
+		theme: 'light',
+		type: 'purple'
+		// defaultButtons: {
+		// 	close: {
+	 //        	text: '取消',
+	 //            action: function () {
+	 //            }
+	 //        },
+	 //        ok: {
+	 //        	text: '确定',
+	 //            action: function () {
+	 //            }
+	 //        }
+	        
+	 //    }
+	}
 });

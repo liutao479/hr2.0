@@ -55,10 +55,6 @@ page.ctrl('loan', function($scope) {
 					        
 					    }
 					})
-					// that.openWindow({
-					// 	title: "新建业务",
-					// 	content: "<div>测试弹窗功能</div>"
-					// })
 				})
 				if(cb && typeof cb == 'function') {
 					cb();

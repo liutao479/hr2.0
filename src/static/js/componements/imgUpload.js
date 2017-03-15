@@ -16,10 +16,12 @@
 * 				data-getimg="图片预览外部事件句柄"
 * 				data-request="征信材料图片上传" 
 * 				data-creditid="征信人id" 
+* 				data-uplUrl="特殊材料上传url"
+* 				data-delUrl="特殊材料删除url"
 * 				data-materialspic="征信报告照片"
 * 				data-thumbnailpic="征信报告缩略图照片"
-* 				materialsAduitResult="",
-*				materialsAduitOpinion="图片意见">
+* 				data-materialsAduitResult="",
+*				data-materialsAduitOpinion="图片意见">
 * 		</element>
 */
 (function($) {
@@ -52,6 +54,7 @@
 			msg: undefined,	//退回消息
 			err: undefined,	//错误类型 0 图片错误；1 图片不清晰；2 其他
 			editable: undefined,
+			url: undefined,
 			deletecb: $.noop,
 			uploadcb: $.noop
 		}
@@ -93,6 +96,28 @@
 			} else {
 				tmp = internalTemplates.view.format(self.options.name, self.options.img || '');
 				self.status = 2;
+			}
+		}
+		self.delCb = $.noop;
+		self.uplCb = $.noop;
+		if(self.options.deletecb) {
+			try {
+				self.delCb = eval(self.options.deletecb);
+			} catch(e) {
+				self.delCb = $.noop;
+			}
+			if(typeof self.delCb != 'function') {
+				self.delCb = $.noop;
+			}
+		}
+		if(self.options.uploadcb) {
+			try {
+				self.uplCb = eval(self.options.uploadcb);
+			} catch(e) {
+				self.uplCb = $.noop;
+			}
+			if(typeof self.uplCb != 'function') {
+				self.uplCb = $.noop;
 			}
 		}
 		self.$el.html(tmp);
@@ -185,9 +210,14 @@
 		} else if(self.options.other) {
 			// params.sceneCode = self.options.scene;
 			_url = api.otherDel;
+		} else if(self.options.credit) {
+			
 		} else {
 			params.sceneCode = self.options.scene;
 			_url = api.del;
+		}
+		if(self.options.delUrl) {
+			_url = self.options.delUrl;
 		}
 		console.log(params)
 		$.ajax({
@@ -198,12 +228,8 @@
 			success: function(xhr) {
 				console.log(xhr)
 				if(!xhr.code) {
-					if(self.options.deletecb) {
-						self.options.deletecb = eval(self.options.deletecb);
-						self.options.deletecb && self.options.deletecb(self);
-						return false;
-					}
-					self.$el.html(internalTemplates.edit.format(self.options.name));
+					self.delCb();
+					self.$el.html(internalTemplates.edit.format(self.name));
 					self.status = 0;
 					self.listen();			
 				}
@@ -263,6 +289,9 @@
 			params.materialsPic = url;
 			_url = api.upload;
 		}
+		if(self.options.uplUrl) {
+			_url = self.options.uplUrl;
+		}
 		console.log(params);
 		$.ajax({
 			url: _url,
@@ -278,11 +307,7 @@
 						self.$el.data('img', url);
 						self.status = 1;	
 						self.listen();
-						if(self.options.uploadcb) {
-							self.options.uploadcb = eval(self.options.uploadcb);
-							self.options.uploadcb && self.options.uploadcb(self);
-							return false;
-						}
+						self.uplCb();
 					} else {
 						self.options.id = xhr.data;
 						self.$el.data('img', url);
@@ -292,7 +317,7 @@
 				}
 			}
 		})
-	};
+	}
 	/**
 	* 获取上传授权信息
 	* @params {int} type 选项

@@ -42,7 +42,7 @@
 			switch (name) {
 				// 周宜俭ip
 				case 'zyj':
-					return 'http://192.168.1.108:8080/' + method;
+					return 'http://192.168.1.132:8080/' + method;
 					break;
 				// 蔡延军ip
 				case 'cyj':
@@ -116,27 +116,7 @@
 			}
 		}
 	};
-	/**
-	 * 弹窗默认设置
-	 */
-	jconfirm.defaults = {
-		useBootstrap: false,
-		boxWidth: '500px',
-		theme: 'light',
-		draggable: true,
-		defaultButtons: {
-	        ok: {
-	        	text: '确定',
-	            action: function () {
-	            }
-	        },
-	        close: {
-	        	text: '取消',
-	            action: function () {
-	            }
-	        }
-	    }
-	}
+	
 
 	var gUrl='http://127.0.0.1:8083/';
 	_.$http.apiMap = {

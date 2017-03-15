@@ -57,7 +57,7 @@ body[class*=jconfirm-no-scroll-] {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	overflow-y: auto;
+	// overflow-y: auto;
 	-webkit-perspective: 500px;
 	perspective: 500px;
 	-webkit-perspective-origin: center;
@@ -70,7 +70,7 @@ body[class*=jconfirm-no-scroll-] {
 	position: relative;
 	outline: 0;
 	// padding: 15px 15px 0;
-	overflow: hidden
+	// overflow: hidden
 }
 
 @-webkit-keyframes type-blue {
@@ -362,7 +362,7 @@ body[class*=jconfirm-no-scroll-] {
 	display: inline-block;
 	width: 100%;
 	position: relative;
-	overflow: hidden
+	// overflow: hidden
 }
 
 .jconfirm .jconfirm-box div.jconfirm-content-pane .jconfirm-content img {

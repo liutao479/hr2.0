@@ -3,6 +3,12 @@
 	<!-- 返回列表 -->
 	<div id="location"></div>
 	<!-- 返回列表 end-->
+
+	<!-- 银行选择修改 -->
+	<div class="panel mt15 padding20 modifyBank" id="modifyBankPanel">
+		
+	</div>
+	<!-- 银行选择修改 -->
 	
 	<!-- tab切换栏 -->
 	<div class="tab-bar mt15">
@@ -36,4 +42,17 @@
 	{{ for(var item in it.creditUsers) { }}
 		<li class="role-bar-li"><a href="javascript:;" class="role-item{{=(item == it.currentType ? ' role-item-active' : '')}} tabEvt" data-type="{{=item}}">{{=it.types[item]}}</a></li>
 	{{ } }}
+</script>
+
+<script type="text/dot-x-template" id="modifyBankTmpl">
+	<div class="panel-item">
+		<div class="key-value-box">
+			<span class="key">征信查询银行：</span><span class="value">{{=it.demandBankId}}</span><a href="javascript:;" class="modifyBankEvt">修改</a>
+		</div>
+	</div>
+	<div class="panel-item">
+		<div class="key-value-box">
+			<span class="key">业务发生地：</span><span class="value">{{=it.area.wholeName || '未选择'}}</span>
+		</div>
+	</div>
 </script>

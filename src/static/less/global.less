@@ -191,6 +191,9 @@ input[disabled]{
         display: inline-block;
         color: @fontColor;
     }
+    .modifyBankEvt {
+        margin-left: 8px;
+    }
 }
 
 
@@ -778,6 +781,9 @@ input[disabled]{
         margin-left: 40px;
     }
 }
+.panel-detail {
+    padding-left: 162px;
+}
 
 //顶部为蓝条的面板
 .panel {
@@ -835,6 +841,9 @@ input[disabled]{
     //工作台有左侧菜单的右侧详细内容区域
     &&-detail {
         margin-left: 162px;
+    }
+    .panel-item {
+        margin: 8px 0; 
     }
     
     //订单统计面板
@@ -1069,6 +1078,12 @@ input[disabled]{
                         height: 32px;
                         line-height: 32px;
                     }
+                }
+                .to-view {
+                    display: inline-block;
+                    line-height: 32px;
+                    color: @buttonBgColor;
+                    cursor: pointer;
                 }
             }
         }
