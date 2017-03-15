@@ -56,18 +56,24 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
-									客户姓名：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName}}" /></span>
+									身份证号：</span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.idCard}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
-									客户姓名：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName}}" /></span>
+									手机号：</span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.mobile}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
-									客户姓名：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName}}" /></span>
+									性别：</span>
+								<span class="info-value">
+									{{ if(it.KHXX.sex == '0'){ }}
+										<input type="text" readonly="readonly" value="男" />
+									{{ }else{ }}
+										<input type="text" readonly="readonly" value="女" />
+									{{ } }}
+								</span>
 							</div>
 						</div>
 					</div>
