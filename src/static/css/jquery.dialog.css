@@ -66,10 +66,10 @@ body[class*=jconfirm-no-scroll-] {
 
 .jconfirm .jconfirm-box {
 	background: white;
-	border-radius: 4px;
+	border-radius: 3px;
 	position: relative;
 	outline: 0;
-	padding: 15px 15px 0;
+	// padding: 15px 15px 0;
 	overflow: hidden
 }
 
@@ -155,21 +155,21 @@ body[class*=jconfirm-no-scroll-] {
 
 @-webkit-keyframes type-purple {
 	1%,100% {
-		border-color: #9b59b6
+		border-color: #6b59c9
 	}
 
 	50% {
-		border-color: #b07cc6
+		border-color: #6b59c9
 	}
 }
 
 @keyframes type-purple {
 	1%,100% {
-		border-color: #9b59b6
+		border-color: #6b59c9
 	}
 
 	50% {
-		border-color: #b07cc6
+		border-color: #6b59c9
 	}
 }
 
@@ -225,7 +225,7 @@ body[class*=jconfirm-no-scroll-] {
 }
 
 .jconfirm .jconfirm-box.jconfirm-type-purple {
-	border-top: solid 7px #9b59b6;
+	border-top: solid 3px #6b59c9;
 	-webkit-animation-name: type-purple;
 	animation-name: type-purple
 }
@@ -309,7 +309,7 @@ body[class*=jconfirm-no-scroll-] {
 .jconfirm .jconfirm-box div.jconfirm-title-c {
 	display: block;
 	font-size: 22px;
-	line-height: 20px;
+	line-height: 46px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -347,7 +347,7 @@ body[class*=jconfirm-no-scroll-] {
 	font-family: inherit;
 	display: inline-block;
 	vertical-align: middle;
-	padding-bottom: 15px
+	// padding-bottom: 15px
 }
 
 .jconfirm .jconfirm-box div.jconfirm-title-c .jconfirm-title:empty {
@@ -375,7 +375,8 @@ body[class*=jconfirm-no-scroll-] {
 }
 
 .jconfirm .jconfirm-box .jconfirm-buttons {
-	padding-bottom: 11px
+	padding-bottom: 11px;
+	padding-right: 20px;
 }
 
 .jconfirm .jconfirm-box .jconfirm-buttons>button {
@@ -536,7 +537,7 @@ body[class*=jconfirm-no-scroll-] {
 .jconfirm.jconfirm-white .jconfirm-box,.jconfirm.jconfirm-light .jconfirm-box {
 	margin: 0 auto;
 	box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-	border-radius: 5px
+	border-radius: 3px
 }
 
 .jconfirm.jconfirm-white .jconfirm-box .jconfirm-buttons,.jconfirm.jconfirm-light .jconfirm-box .jconfirm-buttons {

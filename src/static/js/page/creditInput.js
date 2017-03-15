@@ -187,7 +187,7 @@ page.ctrl('creditInput', [], function($scope) {
 						for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 							var item = $scope.apiParams[i];
 							if(that.data('userId') == item.userId) {
-								item[that.data('type')] = value;
+								item[that.data('type')] = _url;
 							}
 						}
 						var reportName = _url.substr(_url.lastIndexOf('/') + 1);
@@ -200,7 +200,6 @@ page.ctrl('creditInput', [], function($scope) {
 						} else {
 							$parent.siblings().eq(0).html(tml.format(reportName));
 						}
-						$scope.creditReportFile = reportName;
 					});
 				} else {
 					pdfCb(false, file);
@@ -292,31 +291,84 @@ page.ctrl('creditInput', [], function($scope) {
 
 			// }
 			commitData(function() {
-				that.openWindow({
+				$.confirm({
 					title: '提交',
 					content: dialogTml.wContent.suggestion,
-					commit: dialogTml.wCommit.cancelSure
-				}, function($dialog) {
-					console.log($dialog)
-					$dialog.find('.w-sure').on('click', function() {
-						$dialog.remove();
-						var _reason = $dialog.find('#suggestion').text();
-						console.log(_reason)
-						$.ajax({
-							type: 'post',
-							url: $http.api('task/complete', 'jbs'),
-							data: {
-								taskId: $params.taskId,
-								orderNo: $params.orderNo,
-								reason: _reason
-							},
-							dataType: 'json',
-							success: $http.ok(function(result) {
-								console.log(result);
-							})
-						})
-					})
+					useBootstrap: false,
+					boxWidth: '500px',
+					theme: 'light',
+					type: 'purple',
+					buttons: {
+						'取消': {
+				            action: function () {
+
+				            }
+				        },
+				        '确定': {
+				            action: function () {
+		            			var _reason = $('#suggestion').val();
+		            			console.log(_reason);
+		            			if(!_reason) {
+		            				$.alert({
+		            					title: '提示',
+										content: '<div class="w-content"><div>请填写处理意见！</div></div>',
+										useBootstrap: false,
+										boxWidth: '500px',
+										theme: 'light',
+										type: 'purple',
+										buttons: {
+											'确定': {
+									            action: function () {
+									            }
+									        }
+									    }
+		            				})
+		            				return false;
+		            			} else {
+		            				$.ajax({
+										type: 'post',
+										url: $http.api('task/complete', 'jbs'),
+										data: {
+											taskId: $params.taskId,
+											orderNo: $params.orderNo,
+											reason: _reason
+										},
+										dataType: 'json',
+										success: $http.ok(function(result) {
+											console.log(result);
+										})
+									})
+		            			}
+				            }
+				        }
+				        
+				    }
 				})
+				// that.openWindow({
+				// 	title: '提交',
+				// 	content: dialogTml.wContent.suggestion,
+				// 	commit: dialogTml.wCommit.cancelSure
+				// }, function($dialog) {
+				// 	console.log($dialog)
+				// 	$dialog.find('.w-sure').on('click', function() {
+				// 		$dialog.remove();
+				// 		var _reason = $dialog.find('#suggestion').text();
+				// 		console.log(_reason)
+				// 		$.ajax({
+				// 			type: 'post',
+				// 			url: $http.api('task/complete', 'jbs'),
+				// 			data: {
+				// 				taskId: $params.taskId,
+				// 				orderNo: $params.orderNo,
+				// 				reason: _reason
+				// 			},
+				// 			dataType: 'json',
+				// 			success: $http.ok(function(result) {
+				// 				console.log(result);
+				// 			})
+				// 		})
+				// 	})
+				// })
 			})
 			
 		})
@@ -430,6 +482,13 @@ page.ctrl('creditInput', [], function($scope) {
 
 	$scope.isQualifiedPicker = function(picked) {
 		console.log(picked);
-		$scope.isQualified = picked.id;
+		var that = this.$el;
+		for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+			var item = $scope.apiParams[i];
+			if(that.data('userId') == item.userId) {
+				item[that.data('type')] = picked.id;
+			}
+		}
+		console.log($scope.apiParams);
 	}
 });

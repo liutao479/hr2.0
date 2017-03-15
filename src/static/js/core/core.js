@@ -116,6 +116,28 @@
 			}
 		}
 	};
+	/**
+	 * 弹窗默认设置
+	 */
+	jconfirm.defaults = {
+		useBootstrap: false,
+		boxWidth: '500px',
+		theme: 'light',
+		draggable: true,
+		defaultButtons: {
+	        ok: {
+	        	text: '确定',
+	            action: function () {
+	            }
+	        },
+	        close: {
+	        	text: '取消',
+	            action: function () {
+	            }
+	        }
+	    }
+	}
+
 	var gUrl='http://127.0.0.1:8083/';
 	_.$http.apiMap = {
 		menu: gUrl+'mock/menu',

@@ -7,7 +7,9 @@
 	*/
 	g.dialogTml = {};
 	g.dialogTml.wContent = {
-		suggestion: '<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>',
+		suggestion: '<div class="w-content">\
+						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					</div>',
 		loanOrderApply: '<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 						<dl class="w-dropdown">\
 							<dt>请选择审核人：</dt>\
@@ -18,33 +20,37 @@
 								</span>\
 							</dd>\
 						</dl>',
-		creditQuery: '<dl class="w-dropdown">\
-						<dt>经办银行：</dt>\
-						<dd>\
-							<span class="select select-bank">\
-								<input class="placeholder" placeholder="请选择" />\
-								<span class="arrow arrow-bottom"></span>\
-							</span>\
-						</dd>\
-					</dl>\
-					<dl class="w-dropdown">\
-						<dt>业务发生地：</dt>\
-						<dd>\
-							<span class="select select-bank">\
-								<input class="placeholder" placeholder="请选择" />\
-								<span class="arrow arrow-bottom"></span>\
-							</span>\
-						</dd>\
-					</dl>',
-		addCreditUsers: '<div class="w-add clearfix">\
-							<div class="w-select clearfix">增加征信人员：</div>\
-							<div class="w-select clearfix">\
-								<div class="checkbox checkbox-normal" data-checked="true" data-type="1"></div>\
-								<span class="w-select-item">反担保人</span>\
-							</div>\
-							<div class="w-select clearfix">\
-								<div class="checkbox checkbox-normal" data-type="2"></div>\
-								<span class="w-select-item">共同还款人</span>\
+		creditQuery: '<div class="w-content">\
+						<dl class="w-dropdown">\
+							<dt>经办银行：</dt>\
+							<dd>\
+								<span class="select select-bank">\
+									<input class="placeholder" placeholder="请选择" />\
+									<span class="arrow arrow-bottom"></span>\
+								</span>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt>业务发生地：</dt>\
+							<dd>\
+								<span class="select select-bank">\
+									<input class="placeholder" placeholder="请选择" />\
+									<span class="arrow arrow-bottom"></span>\
+								</span>\
+							</dd>\
+						</dl>\
+					</div>',
+		addCreditUsers: '<div class="w-content">\
+							<div class="w-add clearfix">\
+								<div class="w-select clearfix">增加征信人员：</div>\
+								<div class="w-select clearfix">\
+									<div class="checkbox checkbox-normal" data-checked="true" data-type="1"></div>\
+									<span class="w-select-item">反担保人</span>\
+								</div>\
+								<div class="w-select clearfix">\
+									<div class="checkbox checkbox-normal" data-type="2"></div>\
+									<span class="w-select-item">共同还款人</span>\
+								</div>\
 							</div>\
 						</div>',
 		makeLoan: '<dl class="w-dropdown">\
