@@ -515,11 +515,20 @@ page.ctrl('loanInfo', function($scope) {
 		}
 		loadLoanList(function(){
 			setupDropDown();
+//			dropLoaded();
 		});
 		
 		
 	});
-	
+
+//var dropLoaded= function(){
+//	$(".select").each(function(){
+//		var selectedV = $(this).data("selected");
+//		if(selectedV){
+//			$(this).;
+//		}
+//	})
+//}
 	
 	$scope.areaPicker = function(picked) {
 		console.log(picked);
