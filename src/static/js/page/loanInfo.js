@@ -33,15 +33,8 @@ page.ctrl('loanInfo', function($scope) {
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				$scope.pageData = result.data;
 				$scope.result = result;
-//				setupLocation();
-				// 启动面包屑
-//				if($params.path) {
-//					var _loanUser = $scope.result.data.ZJKR[0].userName;
-//					setupLocation(_loanUser);	
-//				}
-				
+				setupLocation();
 				result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				if(cb && typeof cb == 'function') {
@@ -182,41 +175,42 @@ page.ctrl('loanInfo', function($scope) {
 //			selectOptBox.show();
 			console.log(selectOptBox);
 			
-		}else{
-			if(inputSearch){
-				inputSearch.show();
-			}
-			$(this).attr("id",boxKey);
-			var data={};
-			if(key == 'remitAccountNumber'){
-				data['carShopId'] = $("#busiSourceId").val();
-			}else{
-				data['code'] = key;
-			}
-			console.log(data);
-			$.ajax({
-				url: urlApiMap[key],
-				data: data,
-				dataType: 'json',
-				success: $http.ok(function(result) {
-					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-					console.log(result.data);
-					$source.selectType = result.data;
-					var selectOptBox = $(".selectOptBox");
-					selectOptBox.attr("id",key);
-				})
-			})
 		}
+//		else{
+//			if(inputSearch){
+//				inputSearch.show();
+//			}
+//			$(this).attr("id",boxKey);
+//			var data={};
+//			if(key == 'remitAccountNumber'){
+//				data['carShopId'] = $("#busiSourceId").val();
+//			}else{
+//				data['code'] = key;
+//			}
+//			console.log(data);
+//			$.ajax({
+//				url: urlApiMap[key],
+//				data: data,
+//				dataType: 'json',
+//				success: $http.ok(function(result) {
+//					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
+//					console.log(result.data);
+//					$source.selectType = result.data;
+//					var selectOptBox = $(".selectOptBox");
+//					selectOptBox.attr("id",key);
+//				})
+//			})
+//		}
 	})
 //
-	$(document).on('click', '#remitAccountNumber li', function() {
-		var keyvalue = $(this).data('key');
-		var keybank = $(this).data('bank');
-		var keyname = $(this).data('name');
-		console.log(keyvalue);
-		$("#bankName").val(keybank);
-		$("#accountName").val(keyname);
-	})
+//	$(document).on('click', '#remitAccountNumber li', function() {
+//		var keyvalue = $(this).data('key');
+//		var keybank = $(this).data('bank');
+//		var keyname = $(this).data('name');
+//		console.log(keyvalue);
+//		$("#bankName").val(keybank);
+//		$("#accountName").val(keyname);
+//	})
 //点击本地常驻类型复选框
 	$(document).on('click', '.checkbox', function() {
 		returnCheckboxVal();
