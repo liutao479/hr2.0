@@ -102,19 +102,20 @@ page.ctrl('loanInfo', function($scope) {
 		var datatype = $(this).data('type');
 		if(datatype){
 			render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
-		}else{
-			$.ajax({
-				url: urlApiMap[key],
-				data: data,
-				dataType: 'json',
-				success: $http.ok(function(result) {
-					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-					$source.selectType = result.data;
-					var selectOptBox = $(".selectOptBox");
-					selectOptBox.attr("id",key);
-				})
-			})
-		}	
+		}
+//		else{
+//			$.ajax({
+//				url: urlApiMap[key],
+//				data: data,
+//				dataType: 'json',
+//				success: $http.ok(function(result) {
+//					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
+//					$source.selectType = result.data;
+//					var selectOptBox = $(".selectOptBox");
+//					selectOptBox.attr("id",key);
+//				})
+//			})
+//		}	
 			var value1 = $("input",$(this)).val();
 			$("li",$(this)).each(function(){
 				var val = $(this).data('key');
@@ -508,6 +509,7 @@ page.ctrl('loanInfo', function($scope) {
 			$tbl: $console.find('#loanInfoTable')
 		}
 		loadLoanList(function(){
+			console.log('zhixing');
 			setupDropDown();
 //			dropLoaded();
 		});
