@@ -3,11 +3,11 @@
 				<div class="select-search-bar clearfix">
 					<div class="search-item">
 						<span class="select-name">上牌进度：</span>
-						<div class="select select-common" data-dropdown="page.$scope['licenceProcess'].bankPicker" data-trigger="page.$scope['licenceProcess'].dropdownTrigger.status"></div>
+						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['licenceProcess'].statusPicker" data-trigger="page.$scope['licenceProcess'].dropdownTrigger.status"></div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">经办行：</span>
-						<div class="select select-common" data-dropdown="page.$scope['licenceProcess'].bankPicker" data-trigger="page.$scope['licenceProcess'].dropdownTrigger.demandBank"></div>
+						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['licenceProcess'].demandBankPicker" data-trigger="page.$scope['licenceProcess'].dropdownTrigger.demandBank"></div>
 					</div>
 					<div class="search-item">
 						<div class="input-text">
@@ -19,7 +19,7 @@
 						<div id="search" class="button button-mini button-deep">搜索</div>
 					</div>
 					<div class="search-item">
-						<div class="checkbox checkbox-normal" id="overdue"></div>
+						<div class="checkbox checkbox-normal" data-checked="false" id="overdue"></div>
 						<span>只显示已超期记录</span>
 					</div>
 				</div>

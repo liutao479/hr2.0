@@ -31,6 +31,7 @@
 				</div>
 				<div class="panel-detail-content">
 					<div class="select-search-bar loan-info no-border clearfix">
+					{{if(!it.shopId) { }}
 						<div class="search-item">
 							<span class="select-name"><i>*</i>车商类型：</span>
 							<div class="select select-mini" data-dropdown="page.$scope['newCar'].shopTypePicker" data-trigger="page.$scope['newCar'].dropdownTrigger.shopType" data-selected="{{=(it.shopType == 0 ? '4S' : (it.shopType == 1 ? '二级经销商' :''))}}"></div>
@@ -47,6 +48,24 @@
 							<span class="select-name">汽车品牌：</span>
 							<div class="select select-mini" data-dropdown="page.$scope['newCar'].operateBrandPicker" data- data-trigger="page.$scope['newCar'].dropdownTrigger.operateBrand" data-selected="{{=it.operateBrand || ''}}"></div>
 						</div>
+					{{ } else { }}
+						<div class="search-item">
+							<span class="select-name"><i>*</i>车商类型：</span>
+							<span class="select-name">{{=(it.shopType == 0 ? '4S' : (it.shopType == 1 ? '二级经销商' :''))}}</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name"><i>*</i>车商名称：</span>
+							<span class="select-name">{{=it.shopName}}</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">车商所在地：</span>
+							<span class="select-name">{{=it.shopAddress}}</span>
+						</div>
+						<div class="search-item">
+							<span class="select-name">汽车品牌：</span>
+							<span class="select-name">{{=it.operateBrand}}</span>
+						</div>
+					{{ } }}
 					</div>
 				</div>
 			</script>

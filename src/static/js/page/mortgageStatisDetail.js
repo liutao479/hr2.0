@@ -33,6 +33,9 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 		})
 	}
 
+	/**
+	 * 加载登记证抵押信息
+	 */
 	var loadInfo = function(params, cb) {
 		$.ajax({
 			url: $http.api('loanPledgeInfo/get', 'cyj'),
@@ -41,8 +44,8 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				result.data.disabled = true;
-				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result.data, true);
+				result.disabled = true;
+				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -104,7 +107,6 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 			$tbl: $console.find('#registerPanel'),
 			$infoPanel: $console.find('#mortgageInfoPanel')
 		}
-		$console.find('.commit-orders-box').remove();
 		loadMortgageDetail(apiParams, function() {
 			setupEvt();
 		});

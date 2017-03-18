@@ -41,6 +41,9 @@
 .pb50 {
     padding-bottom: 50px !important;
 }
+.pb30 {
+    padding-bottom: 30px !important;
+}
 .pt50 {
     padding-top: 50px !important;
 }
@@ -52,6 +55,9 @@
 }
 .ml15 {
     margin-left: 15px !important;
+}
+.mt30 {
+    margin-top: 30px !important;
 }
 .padding0{
     padding: 0 !important;
@@ -839,9 +845,9 @@ input[disabled]{
        }
     }
     //工作台有左侧菜单的右侧详细内容区域
-    &&-detail {
-        margin-left: 162px;
-    }
+    // &&-detail {
+    //     margin-left: 162px;
+    // }
     .panel-item {
         margin: 8px 0; 
     }
@@ -1826,21 +1832,24 @@ input[disabled]{
     display: inline-block;
     margin-right: 25px;
     height: 70px;
+    padding: 19px 0; 
+    float: left;
     .key-item {
         float: left;
-        line-height: 70px;
+        line-height: 32px;
         margin-right: 10px;
+        color: @tiperColor; 
     }
     .key-value {
         float: left;
-        overflow: hidden;
-        height: 70px;
-        .input-text {
-            margin-top: 17px; 
-        }
-        .select {
-            margin-top: 17px;
-        }
+        height: 32px;
+        line-height: 32px;
+        // .input-text {
+        //     margin-top: 17px; 
+        // }
+        // .select {
+        //     margin-top: 17px;
+        // }
     }
 }
 

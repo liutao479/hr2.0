@@ -67,7 +67,7 @@ page.ctrl('newBank', [], function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '新建合作银行'
+			current: $params.bankId ? '编辑合作银行' : '新建合作银行'
 		});
 		$location.location();
 	}

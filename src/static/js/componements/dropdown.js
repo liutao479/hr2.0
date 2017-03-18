@@ -77,7 +77,10 @@
 		if(!self.opts.selected) {
 			self.opts.selected = '';
 		}
-		self.$el.append(_.template(internal.template.fields)({readonly: !self.search, selected: self.opts.selected}));
+		if(!self.opts.placeholder) {
+			self.opts.placeholder = false;
+		}
+		self.$el.append(_.template(internal.template.fields)({readonly: !self.search, selected: self.opts.selected, placeholder: self.opts.placeholder}));
 		self.$dropdown = $('<div class="select-box"></div>').appendTo(self.$el);
 		self.$text = self.$el.find('.select-text');
 		if(self.opts.tabs.length > 1) {
@@ -116,7 +119,7 @@
 	dropdown.prototype.compileItems = function(idx, parentId){
 		var self = this;
 		var items = self.sourceData[self.opts.tabs[idx] || self.defautKey];
-		if(!items) {
+		if(!items || self.opts.forceload) {
 			self.onTrigger(self.opts.tabs[idx], parentId, function(data) {
 				if(idx == 0) {
 					self.sourceData[self.opts.tabs[idx] || self.defautKey] = data;	
@@ -202,7 +205,11 @@
 	var internal = {};
 	internal.template = {};
 	internal.template.fields = '<div class="select-field{{=(it.readonly ? \" readonly\": \"\")}}">\
-									<input type="text" placeholder="{{=(it.readonly ? \"请选择\":\"可输入过滤条件\")}}" class="select-text" value="{{=it.selected}}" />\
+									{{ if(it.placeholder) { }}\
+									<input type="text" placeholder="{{=(it.readonly ? \"全部\" : \"可输入过滤条件\")}}" class="select-text" value="{{=it.selected}}" />\
+									{{ } else { }}\
+									<input type="text" placeholder="{{=(it.readonly ? \"请选择\" : \"可输入过滤条件\")}}" class="select-text" value="{{=it.selected}}" />\
+									{{ } }}\
 									<span class="arrow arrow-bottom" id="arrow"></span>\
 									<a class="arrow-trigger"></a>\
 								</div>';

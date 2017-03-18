@@ -8,7 +8,7 @@
 $(function() {
 	var $menu;
 	$.ajax({
-		url: $http.apiMap.menu,
+		url: $http.api('menu'),
 		success: $http.ok(function(result) {
 			$menu = new menu('#menu', result.data, router.render);
 			router.init(function(menuId) {
@@ -33,6 +33,7 @@ $(function() {
 		// defaultButtons: {
 		// 	close: {
 	 //        	text: '取消',
+	 //        	btnClass: 'btn-default btn-cancel',
 	 //            action: function () {
 	 //            }
 	 //        },

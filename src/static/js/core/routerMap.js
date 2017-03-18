@@ -185,6 +185,10 @@
 			title: '订单日志',
 			page: 'loanLog'
 		},
+		'loanProcess/creditMaterialsApproval': {
+			title: '征信材料审核',
+			page: 'creditMaterialsApproval'
+		},
 //		'loanProcess/cardAudit': {
 //			title: '开卡审核',
 //			page: 'cardAudit'

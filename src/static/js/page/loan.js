@@ -29,7 +29,9 @@ page.ctrl('loan', function($scope) {
 				// 测试复选框
 				$scope.$checks = $('.checkbox').checking();
 
-				$scope.$checks[0].$checking.onChange();
+				$scope.$checks[0].$checking.onChange(function() {
+					console.log(this)
+				});
 
 				// 测试弹窗
 				$console.find('#newBusiness').on('click', function() {
@@ -194,6 +196,7 @@ page.ctrl('loan', function($scope) {
 		loadLoanList(apiParams, function() {
 			setupEvt();
 		});
+		setupDatepicker();
 		setupDropDown();
 	});
 
@@ -202,7 +205,6 @@ page.ctrl('loan', function($scope) {
 		$params.pageNum = _page;
 		// router.updateQuery($scope.$path, $params);
 		loadLoanList(apiParams);
-		setupDatepicker();
 		cb();
 	}
 

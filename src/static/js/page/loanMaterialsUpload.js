@@ -79,24 +79,40 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		// 增加征信人员
 		$console.find('#addCreditUser').on('click', function() {
 			var that = $(this);
-			that.openWindow({
-				title: "增加征信人员",
-				remind: dialogTml.wRemind.addCreditUsers,
+			$.confirm({
+				title: '增加征信人员',
 				content: dialogTml.wContent.addCreditUsers,
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				var addUserType;
-				$scope.$checks = $dialog.find('.checkbox').checking();
-				$scope.$checks.each(function() {
-					var _this = this;
-					_this.$checking.onChange(function() {
-						if(!$(_this).attr('checked') && $dialog.find('.checkbox').not($(_this)).attr('checked')) {
-							$dialog.find('.checkbox').not($(_this)).removeClass('checked').attr('checked', false).html('');
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							
 						}
-					});
-				})
+					}
+				}
+			});
+			// that.openWindow({
+			// 	title: "增加征信人员",
+			// 	remind: dialogTml.wRemind.addCreditUsers,
+			// 	content: dialogTml.wContent.addCreditUsers,
+			// 	commit: dialogTml.wCommit.cancelSure
+			// }, function($dialog) {
+			// 	var addUserType;
+			// 	$scope.$checks = $dialog.find('.checkbox').checking();
+			// 	$scope.$checks.each(function() {
+			// 		var _this = this;
+			// 		_this.$checking.onChange(function() {
+			// 			if(!$(_this).attr('checked') && $dialog.find('.checkbox').not($(_this)).attr('checked')) {
+			// 				$dialog.find('.checkbox').not($(_this)).removeClass('checked').attr('checked', false).html('');
+			// 			}
+			// 		});
+			// 	})
 				
-				$dialog.find('.w-sure').on('click', function() {
+			// 	$dialog.find('.w-sure').on('click', function() {
 					// var _params = {
 					// 	orderNo: $params.orderNo,
 					// 	userType: 
@@ -112,8 +128,8 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 					// 		console.log(result);
 					// 	})
 					// })
-				})			
-			})
+			// 	})			
+			// })
 		})
 		// 提交订单按钮 
 		$console.find('#submitOrders').on('click', function() {

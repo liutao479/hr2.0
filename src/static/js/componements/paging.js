@@ -30,6 +30,8 @@
 		if(self.opt.max == 0 && self.opt.pages == 0) {
 			$el.hide();
 			return self;
+		} else {
+			$el.show();
 		}
 		self.opt.pages = self.opt.pages || Math.round(self.opt.max / self.opt.size + 0.5) || 0;
 		self.init(self.opt);

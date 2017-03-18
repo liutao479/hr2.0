@@ -1,12 +1,11 @@
 'use strict';
 page.ctrl('licenceAudit', [], function($scope) {
 	var $console = render.$console,
-		$params = $scope.$params,
 		apiParams = {
 			overdue: 0,
 			operation: 3, //上牌审核接口
-			pageNum: $params.pageNum || 1,
-			pageSize: $params.pageSize || 20
+			pageNum: 1,
+			pageSize: 20
 		};
 	/**
 	* 加载上牌审核信息表数据
@@ -14,6 +13,7 @@ page.ctrl('licenceAudit', [], function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadLicenceAuditList = function(params, cb) {
+		console.log(params);
 		$.ajax({
 			type: 'post',
 			url: $http.api('loanRegistration/List', 'cyj'),
@@ -21,7 +21,9 @@ page.ctrl('licenceAudit', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, function() {
+					setupEvt();
+				}, true);
 				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -34,7 +36,7 @@ page.ctrl('licenceAudit', [], function($scope) {
 	*/
 	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
-			current: parseInt(apiParams.pageNum),
+			current: parseInt(_page.pageNum),
 			pages: isPage ? _page.pages : (tool.pages(count || 0, _page.pageSize)),
 			size: _page.pageSize
 		});
@@ -48,9 +50,10 @@ page.ctrl('licenceAudit', [], function($scope) {
 		$console.find('.select').dropdown();
 	}
 
-
-	var setupEvt = function() {
-
+	/**
+	 * 首次加载页面绑定立即处理事件
+	 */
+	var evt = function() {
 		// 绑定搜索框模糊查询事件
 		$console.find('#searchInput').on('keydown', function(evt) {
 			if(evt.which == 13) {
@@ -60,55 +63,62 @@ page.ctrl('licenceAudit', [], function($scope) {
 					return false;
 				}
 				apiParams.keyWord = searchText;
-				$params.keyWord = searchText;
 				apiParams.pageNum = 1;
-				$params.pageNum = 1;
 				loadLicenceAuditList(apiParams, function() {
-					delete apiParams.keyWord;
-					delete $params.keyWord;
 					that.blur();
 				});
-				// router.updateQuery($scope.$path, $params);
 			}
 		});
 
-		// 绑定只显示超期记录
-		$console.find('#overdue').on('click', function() {
-			var that = $(this);
-			if(!$(this).hasClass('checked')) {
-				apiParams.overdue = 1;
-				$params.overdue = 1;
-			} else {
+
+		// 初始化复选框
+		$console.find('.checkbox').checking(function($self) {
+			// 复选框回调函数（有问题）
+			if($self.attr('checked')) {
 				apiParams.overdue = 0;
-				$params.overdue = 0;
+			} else {
+				apiParams.overdue = 1;
 			}
+			apiParams.pageNum = 1;
 			loadLicenceAuditList(apiParams);
 		});
 
 		//绑定搜索按钮事件
 		$console.find('#search').on('click', function() {
+			apiParams.pageNum = 1;
 			loadLicenceAuditList(apiParams);
-			// router.updateQuery($scope.$path, $params);
 			
 		});
 
 		//绑定重置按钮事件
 		$console.find('#search-reset').on('click', function() {
 			// 下拉框数据以及输入框数据重置
-			// router.updateQuery($scope.$path, $params);
+			$console.find('.select input').val('');
+			$console.find('#searchInput').val('');
+			$console.find('.checkbox').removeClass('checked').attr('checked', false).html('');
+			apiParams = {
+				overdue: 0,
+				operation: 3, //上牌审核接口
+				pageNum: 1,
+				pageSize: 20
+			};
 			
 		});
-		
+	}
+
+	/**
+	 * 多次渲染列表内按钮的事件
+	 */
+	var setupEvt = function() {
 		// 进入详情页
 		$console.find('#licenceAuditTable .button').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
-				// taskId: that.data('id'), 
-				// date: that.data('date'),
 				orderNo: that.data('id'),
 				path: 'licenceAudit'
 			});
 		});
+
 	}
 
 	/***
@@ -122,16 +132,25 @@ page.ctrl('licenceAudit', [], function($scope) {
 		}
 		setupDropDown();
 		loadLicenceAuditList(apiParams, function() {
-			setupEvt();
+			evt();
 		});
 	});
 
 	$scope.paging = function(_pageNum, _size, $el, cb) {
 		apiParams.pageNum = _pageNum;
-		$params.pageNum = _pageNum;
-		// router.updateQuery($scope.$path, $params);
 		loadLicenceAuditList(apiParams);
 		cb();
+	}
+
+	/**
+	 * 下拉框点击回调
+	 */
+	$scope.deptCompanyPicker = function(picked) {
+		apiParams.deptName = picked.name;
+	}
+
+	$scope.demandBankPicker = function(picked) {
+		apiParams.bankName = picked.name;
 	}
 
 	/**
@@ -141,7 +160,7 @@ page.ctrl('licenceAudit', [], function($scope) {
 		deptCompany: function(t, p, cb) {
 			$.ajax({
 				type: 'get',
-				url: $http.api('pmsDept/getPmsDeptList', 'zyj'),
+				url: $http.api('pmsDept/getPmsDeptList', 'cyj'),
 				data: {
 					parentId: 99
 				},
@@ -160,7 +179,7 @@ page.ctrl('licenceAudit', [], function($scope) {
 		demandBank: function(t, p, cb) {
 			$.ajax({
 				type: 'post',
-				url: $http.api('demandBank/selectBank', 'zyj'),
+				url: $http.api('demandBank/selectBank', 'cyj'),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					var sourceData = {

@@ -57,26 +57,23 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 	* 底部操作按钮区域
 	*/	
 	var loadCommitBar = function(cb) {
-		$.ajax({
-			url: $http.api('processCommit'),
-			// type: 'post',
-			// data: params,
-			// dataType: 'json',
-			success: $http.ok(function(result) {
-				var $commitBar = $console.find('#commitPanel');
-				$commitBar.data({
-					back: result.data.back,
-					verify: result.data.verify,
-					cancel: result.data.cancel,
-					submit: result.data.submit
-				});
-				$commitBar.commitBar();
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
-			})
-		})
-		
+		var buttons = {
+			"submit": true,
+			"back": false,
+			"cancel": false,
+			"verify": false
+		};
+		var $commitBar = $console.find('#commitPanel');
+		$commitBar.data({
+			back: buttons.back,
+			verify: buttons.verify,
+			cancel: buttons.cancel,
+			submit: buttons.submit
+		});
+		$commitBar.commitBar();
+		if(cb && typeof cb == 'function') {
+			cb();
+		}		
 	}
 
 	/**
@@ -123,22 +120,31 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 	*/
 	var setupCommitEvt = function() {
 		$console.find('#submit').on('click', function() {
-			var that = $(this);
-			that.openWindow({
+			$.confirm({
 				title: '提交',
 				content: dialogTml.wContent.suggestion,
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				$dialog.find('.w-sure').on('click', function() {
-					var _params = {
-						id: $scope.id,
-						reason: $dialog.find('#suggestion').val()
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							var _reason = $.trim($('.jconfirm #suggestion').val()), 
+								_params = {
+									id: $scope.id
+								};
+							if(_reason) {
+								_params.reason = _reason;
+							}
+							submitOrders(_params, function() {
+								router.render('licenceProcess');
+							});
+						}
 					}
-					submitOrders(_params, function() {
-						$dialog.remove();
-					});
-				})
-			})
+				}
+			});
 		})
 	}
 
