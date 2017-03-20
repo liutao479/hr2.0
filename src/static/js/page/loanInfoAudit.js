@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('loanInfo', function($scope) {
+page.ctrl('loanInfoAudit', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console,
 		$source = $scope.$source = {},
@@ -24,8 +24,8 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-			data['taskId']=80871;
-//			data['taskId']=$params.taskId;
+			data['taskId']=80872;
+			data['frameCode']='T0047';
 		$.ajax({
 //			 url: $http.api('loan.infoBak'),
 			// url: $http.api('loanInfoInput/info','jbs'),
@@ -138,7 +138,7 @@ page.ctrl('loanInfo', function($scope) {
 			});
 		});
 	}
-	
+
 //点击下拉框拉取选项
 	$(document).on('click','.selecter', function() {
 		var that =$("div",$(this));
@@ -462,17 +462,20 @@ page.ctrl('loanInfo', function($scope) {
 		}
 	})
 	
-	$console.load(router.template('iframe/loanInfo'), function() {
+	$console.load(router.template('iframe/loanInfoAudit'), function() {
 		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
 		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#loanInfoTable')
+			$tbl: $console.find('#loanAudit')
 		}
 		loadLoanList(function(){
+			console.log('zhixing');
 			setupDropDown();
 		});
+		
+		
 	});
-
+	
 	$scope.areaPicker = function(picked) {
 		console.log(picked);
 	}
@@ -487,21 +490,18 @@ page.ctrl('loanInfo', function($scope) {
 	}
 	$scope.busiSourceNamePicker = function(picked) {
 		console.log(picked);
-		$scope.busiSourceNameId = picked.id;
-		$("#busiSourceId").val(picked.id);
+		$scope.busiSourceNameId = picked.id
 	}
-//	$scope.remitAccountNumberPicker = function(picked) {
-//		console.log(picked);
-//		$("#bankName").val(picked.bankName)
-//		$("#accountName").val(picked.accountName)
-//	}
+	$scope.remitAccountNumberPicker = function(picked) {
+		console.log(picked);
+		$("#bankName").val(picked.bankName)
+		$("#accountName").val(picked.accountName)
+	}
 	$scope.busimodePicker = function(picked) {
 		console.log(picked);
 	}
 	$scope.repaymentTermPicker = function(picked) {
 		console.log(picked);
-		$("#repayPeriod").val(picked.id);
-		loanFinishedrepay();
 	}
 	$scope.carPicker = function(picked) {
 		console.log(picked);
@@ -571,6 +571,7 @@ page.ctrl('loanInfo', function($scope) {
 						id: 'areaId',
 						name: 'name'
 					};
+					console.log('省：'+sourceData);
 					cb(sourceData);
 				}
 			})
@@ -605,6 +606,7 @@ page.ctrl('loanInfo', function($scope) {
 						id: 'areaId',
 						name: 'name'
 					};
+
 					cb(sourceData);
 				}
 			})

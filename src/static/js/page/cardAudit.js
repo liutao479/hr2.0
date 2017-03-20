@@ -7,8 +7,8 @@ page.ctrl('cardAudit', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-//	var urlStr = "http://192.168.0.135:8080";
-	var urlStr = "http://127.0.0.1:8083";
+	var urlStr = "http://192.168.0.108:8080";
+//	var urlStr = "http://127.0.0.1:8083";
 	var apiMap = {
 		"sex": urlStr+"/mock/sex",
 		"isSecond": urlStr+"/mock/isSecond",
@@ -50,18 +50,18 @@ page.ctrl('cardAudit', function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadLoanList = function(params, cb) {
+	var loadLoanList = function(cb) {
 		var data={};
 			data['taskId']=80871;
 		$.ajax({
-			url: $http.api($http.apiMap.cardAudit),
+			url: urlStr+'/icbcCreditCardForm/queryICBCCreditCardForm',
 			data: data,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				loanFinishedSelect();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
-				loanFinishedSelect();
 			})
 		})
 	}
@@ -108,16 +108,13 @@ page.ctrl('cardAudit', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('cardAudit'), function() {
+	$console.load(router.template('cardAudit'), function() {
 		$scope.def.listTmpl = render.$console.find('#openCardSheettmpl').html();
-		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
+		$scope.def.selectOpttmpl =  $console.find('#selectOpttmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#openCardSheet'),
 		}
-		if($params.process) {
-			
-		}
-		loadLoanList(apiParams);
+		loadLoanList();
 	});
 });
 

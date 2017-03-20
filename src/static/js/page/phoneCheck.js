@@ -74,7 +74,7 @@ page.ctrl('phoneCheck', function($scope) {
 				code: code,
 				orderNo: 0
 			}
-			router.innerRender('#eleCheck', 'loanProcess/'+pageCode, params);
+			router.innerRender('#phoneCheck', 'loanProcess/'+pageCode, params);
 		})
 	}
 
@@ -102,11 +102,9 @@ page.ctrl('phoneCheck', function($scope) {
 	* 加载页面模板
 	*/
 	$console.load(router.template('iframe/phoneCheck'), function() {
-//		$scope.def.listTmpl = $console.find('#phoneChecktmpl').html();
 		$scope.def.tabTmpl = $console.find('#checkResultTabsTmpl').html();
 		$scope.$el = {
 			$tab: $console.find('#checkTabs'),
-//			$tbl: $console.find('#phoneCheck')
 		}
 		loadTabList();
 	})

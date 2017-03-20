@@ -7,9 +7,7 @@ page.ctrl('openCardSheet', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-//	var urlStr1 = "http://192.168.0.134:8080";
-	var urlStr = "http://127.0.0.1:8083";
-	var urlStr1 = "http://127.0.0.1:8083";
+	var urlStr = "http://192.168.1.108:8080";
 	var apiMap = {
 		"dealerName": urlStr+"/mock/sex",
 		"dealerId": urlStr+"/mock/busiSourceName",
@@ -27,25 +25,39 @@ page.ctrl('openCardSheet', function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadLoanList = function(params, cb) {
+	var loadLoanList = function(cb) {
 		var data={};
 			data['taskId']=80871;
 		$.ajax({
-			url: urlStr1+'/icbcCreditCardForm/queryICBCCreditCardForm',
+			url: urlStr+'/icbcCreditCardForm/queryICBCCreditCardForm',
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				console.log(result.data);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				console.log(result.data);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
+				$scope.result = result;
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.creditCard, true);
+				setupLocation();
 				loanFinishedInput();
 				loanFinishedInputPic();
 				loanFinishedSelect();
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
 			})
 		})
+	}
+	/**
+	* 设置面包屑
+	*/
+	var setupLocation = function() {
+		if(!$scope.$params.path) return false;
+		var $location = $console.find('#location');
+		$location.data({
+			backspace: $scope.$params.path,
+			loanUser: $scope.result.data.loanTask.loanOrder.realName,
+			current: '开卡信息录入',
+			orderDate: $scope.result.data.loanTask.createDateStr
+		});
+		$location.location();
 	}
 //页面加载完成对所有带“*”的input进行必填绑定
 	var loanFinishedInput = function(){
@@ -82,38 +94,16 @@ page.ctrl('openCardSheet', function($scope) {
 		$(".selecter").each(function(){
 			var that =$("div",$(this));
 			var key = $(this).data('key');
+			var inputSearch = $(".searchInp",$(this));
+			if(inputSearch){
+				inputSearch.hide();
+			};
 			var boxKey = key + 'Box';
 			$(this).attr("id",boxKey);
-			var data={};
-                data['code'] = key;
-			$.ajax({
-				url: apiMap[key],
-				data: data,
-				dataType: 'json',
-				  ,
-				success: $http.ok(function(result) {
-					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//					$source.selectType = result.data;
-					var selectOptBox = $(".selectOptBox");
-					selectOptBox.attr("id",key);
-				})
-			})
-			var value1 = $("input",$(this)).val();
-			$("li",$(this)).each(function(){
-				var val = $(this).val();
-				var text = $(this).text();
-				if(value1 == val){
-					$(this).parent().parent().siblings(".placeholder").html(text);
-					$(this).parent().parent().siblings("input").val(val);
-					$(this).parent().parent().siblings(".placeholder").attr('title',val);
-					var value2 = $(this).parent().parent().siblings("input").val();
-					if(!value2){
-						$(this).parent().parent().siblings(".placeholder").html("请选择")
-					}
-					$(".selectOptBox").hide(); 
-				}
-			})
-			
+			var datatype = $(this).data('type');
+			if(datatype){
+				render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
+			}
 		});
 	}
 //单位电话特殊处理
@@ -286,7 +276,7 @@ page.ctrl('openCardSheet', function($scope) {
 	        
 			$.ajax({
 				type: 'POST',
-				url: urlStr1+'/icbcCreditCardForm/saveICBCCreditCardForm',
+				url: urlStr+'/icbcCreditCardForm/saveICBCCreditCardForm',
 				data:JSON.stringify(data1),
 				dataType:"json",
 				contentType : 'application/json;charset=utf-8',
@@ -300,7 +290,7 @@ page.ctrl('openCardSheet', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('open-card-sheet'), function() {
+	$console.load(router.template('iframe/open-card-sheet'), function() {
 		$scope.def.listTmpl = render.$console.find('#openCardSheettmpl').html();
 		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
 		$scope.$el = {
@@ -309,7 +299,7 @@ page.ctrl('openCardSheet', function($scope) {
 		if($params.process) {
 			
 		}
-		loadLoanList(apiParams);
+		loadLoanList();
 	});
 });
 
