@@ -167,7 +167,7 @@
 		},
 		'loanProcess/loanTelApproval': {
 			title: '电核',
-			page: 'phoneAudit'
+			page: 'phoneCheck'
 		},
 		'loanProcess/loanAudit': {
 			title: '贷款审核',
@@ -195,6 +195,11 @@
 //		},
 		'loanProcess/cardAudit': {
 			title: '开卡审核',
+			page: 'cardAudit'
+		},
+		'loanProcess/cardInfoInput': {
+			title: '开卡审核',
+//			page: 'cardAudit'
 			page: 'openCardSheet'
 		},
 		'loanProcess/creditAudit':{

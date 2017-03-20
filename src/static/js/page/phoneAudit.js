@@ -2,132 +2,34 @@
 page.ctrl('phoneAudit', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	var urlStr = "http://192.168.1.124:8080";
-	/**
-	* 设置面包屑
-	*/
-	var setupLocation = function(loanUser) {
-		if(!$scope.$params.path) return false;
-		var $location = $console.find('#location');
-		var _orderDate = tool.formatDate($scope.$params.date, true);
-		$location.data({
-			backspace: $scope.$params.path,
-			loanUser: loanUser,
-			current: '电核',
-			orderDate: _orderDate
-		});
-		$location.location();
-	}
+	var urlStr = "http://192.168.1.108:8080";
 	/**
 	* 加载车贷办理数据
-	* @params {object} params 请求参数
+	* @params {object} params 请求参数 
 	* @params {function} cb 回调函数
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-		data['taskId']=$params.taskId;
-		data['pageCode']='loanTelResApproval';
+//		data['taskId']=$params.taskId;
+		data['taskId']=80872;
+		data['frameCode']='T0046';
 		$.ajax({
-			url: 'http://localhost:8083/mock/phoneaudit',
+//			url: 'http://localhost:8083/mock/phoneaudit',
+			url: urlStr+'/telAdudit/info',
 			data: data,
-			type: 'post',
+//			type: 'post',
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
-				// 启动面包屑
-				if($params.path) {
-					var _loanUser = $scope.result.data.KHXX.userName;
-					setupLocation(_loanUser);
-					loadGuide(result.cfgData)
-				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
 				loanFinishedSelect();
-				setupEvent();
-				leftArrow();
 			})
 		})
 	}
 	
-//	var loadTabList = function(cb) {
-//		var data={};
-//		data['taskId']=80872;
-//		$.ajax({
-//			url: urlStr+'/telAdudit/info',
-//			data: data,
-//			dataType: 'json',
-//			  ,
-//			success: $http.ok(function(result) {
-//				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.cfgData, true);
-//				if(cb && typeof cb == 'function') {
-//					cb();
-//				}
-//				setupEvent();
-//				leftArrow();
-//			})
-//		})
-//	}
-	
-	/**
-	* 加载左侧导航菜单
-	* @params {object} cfg 配置对象
-	*/
-	function loadGuide(cfg) {
-		if(cfg) {
-			render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
-			return listenGuide()
-		}
-		var params = {
-			taskId: $params.taskId,
-			pageCode: "loanTelApproval"
-		}
-		$.ajax({
-			url: 'http://localhost:8083/mock/phoneaudit',
-			data: params,
-			type: 'post',
-			dataType: 'json',
-			success: $http.ok(function(res) {
-				render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.cfgData, true);
-				listenGuide();
-			})
-		})
-	}
-
-	function listenGuide() {
-		$console.find('.tabLeftEvt').on('click', function() {
-			var $that = $(this);
-			var code = $that.data('type');
-			var pageCode = subRouterMap[code];
-			if(!pageCode) return false;
-			var params = {
-				code: code,
-				orderNo: 0
-			}
-			router.innerRender('#eleCheck', 'loanProcess/'+pageCode, params);
-		})
-	}
-
-	var setupEvent = function() {
-		$console.find('#checkTabs a').on('click', function() {
-			$('.panel-menu-item').each(function(){
-				$(this).removeClass('panel-menu-item-active');
-			})
-			var that = $(this);
-			var idx = that.data('idx');
-			that.addClass('panel-menu-item-active');
-			leftArrow();
-		});
-	}
-	var leftArrow = function(){
-		$('.panel-menu-item').each(function(){
-			$(this).find('.arrow').hide();
-			if($(this).hasClass('panel-menu-item-active')){
-				$(this).find('.arrow').show();
-			}
-		})
-	}
 	//页面加载完成对所有下拉框进行赋值	
 	var loanFinishedSelect = function(){
 		$(".selecter").each(function(){
@@ -176,13 +78,12 @@ page.ctrl('phoneAudit', function($scope) {
 	*/
 	$console.load(router.template('iframe/phoneAudit'), function() {
 		$scope.def.listTmpl = $console.find('#eleChecktmpl').html();
-		$scope.def.tabTmpl = $console.find('#checkResultTabsTmpl').html();
+//		$scope.def.tabTmpl = $console.find('#checkResultTabsTmpl').html();
 		$scope.$el = {
-			$tab: $console.find('#checkTabs'),
+//			$tab: $console.find('#checkTabs'),
 			$tbl: $console.find('#eleCheck')
 		}
 		loadLoanList();
-//		loadTabList();
 	})
 });
 

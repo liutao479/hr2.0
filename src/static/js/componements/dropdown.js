@@ -142,13 +142,17 @@
 		self.$items.find('.itemEvt').on('click', function() {
 			var $that = $(this);
 			var id = $that.data('id'),
-				name = $that.text();
+				name = $that.text(),
+				accountName = $that.data('accountname'),
+				bankName = $that.data('bankname');
 			self.text.push(name);
 			//只有一级，选中即表示结束
 			if(self.opts.tabs.length <= 1) {
 				self.picked = {
 					id: id,
-					name: name
+					name: name,
+					accountName: accountName,
+					bankName: bankName
 				}
 				self.onDropdown(self.picked);
 				self.close(true);
@@ -215,11 +219,11 @@
 								</div>';
 	internal.template.tab = '<ul class="select-tab">\
 								{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
-								<li class="select-tab-item{{=(i==0?\" select-tab-item-active\":\"\")}}">{{= row }}</li>\
+									<li class="select-tab-item{{=(i==0?\" select-tab-item-active\":\"\")}}">{{= row }}</li>\
 								{{ } }}\
 							</ul>';
 	internal.template.single = '{{ for(var i = 0, len = it.items.length; i < len; i++) { var row = it.items[i]; }}\
-									<li class="select-item itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</li>\
+									<li class="select-item itemEvt" data-id="{{=row[it.id]}}" data-accountName="{{= row[it.accountName]}}" data-bankName="{{= row[it.bankName]}}">{{=row[it.name]}}</li>\
 								{{ } }}';
 	internal.template.brandContent = '<dl class="word-area">\
 										<dt>A</dt>\
