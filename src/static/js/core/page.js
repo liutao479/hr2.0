@@ -111,4 +111,3 @@ $(document).on('hover', '#navigator .user', function() {
 			return;
 		}
 	})
-

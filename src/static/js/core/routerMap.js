@@ -169,9 +169,13 @@
 			title: '电核',
 			page: 'phoneCheck'
 		},
-		'loanProcess/loanAudit': {
+		'loanProcess/phoneAudit': {
+			title: '电核',
+			page: 'phoneAudit'
+		},
+		'loanProcess/loanInfoAudit': {
 			title: '贷款审核',
-			page: 'loanAudit'
+			page: 'loanInfoAudit'
 		},
 		'loanProcess/makeLoanApproval': {
 			title: '放款审核',
@@ -185,12 +189,12 @@
 			title: '订单日志',
 			page: 'loanLog'
 		},
-		'loanProcess/cardAudit': {
+		'loanProcess/cardInfoApproval': {
 			title: '开卡审核',
-			page: 'cardAudit'
+			page: 'openCardSheet'
 		},
 		'loanProcess/cardInfoInput': {
-			title: '开卡审核',
+			title: '开卡信息录入',
 //			page: 'cardAudit'
 			page: 'openCardSheet'
 		},
@@ -276,7 +280,8 @@
 		}
 	}
 	g.subRouterMap = {
-		'T0047': 'loanInfoInput',
+		'T0046': 'phoneAudit',
+		'T0047': 'loanInfoAudit',
 		'T0013': 'loanMaterialsUpload',
 		'T0049': 'homeMaterialsUpload'
 	}

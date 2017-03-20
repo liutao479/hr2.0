@@ -138,20 +138,20 @@
 		}
 		self.$items.find('.itemEvt').on('click', function() {
 			var $that = $(this);
+			var inputItem = $(this).parents(".select").siblings("input");
 			var id = $that.data('id'),
-				name = $that.text(),
-				accountName = $that.data('accountname'),
-				bankName = $that.data('bankname');
+				name = $that.text();
 			self.text.push(name);
 			//只有一级，选中即表示结束
 			if(self.opts.tabs.length <= 1) {
 				self.picked = {
 					id: id,
-					name: name,
-					accountName: accountName,
-					bankName: bankName
+					name: name
 				}
 				self.onDropdown(self.picked);
+				if(inputItem){
+					inputItem.val(id)
+				}
 				self.close(true);
 			} else {
 				self.picked[self.opts.tabs[self.actionIdx]] = {
@@ -161,6 +161,9 @@
 				//选中最后一级，也关闭
 				if(self.actionIdx == self.opts.tabs.length - 1) {
 					self.onDropdown(self.picked);
+					if(inputItem){
+						inputItem.val(id)
+					}
 					self.close(true);
 				} else {
 					self.$tabs.eq(self.actionIdx).removeClass('select-tab-item-active');
@@ -216,7 +219,7 @@
 								{{ } }}\
 							</ul>';
 	internal.template.single = '{{ for(var i = 0, len = it.items.length; i < len; i++) { var row = it.items[i]; }}\
-									<li class="select-item itemEvt" data-id="{{=row[it.id]}}" data-accountName="{{= row[it.accountName]}}" data-bankName="{{= row[it.bankName]}}">{{=row[it.name]}}</li>\
+									<li class="select-item itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</li>\
 								{{ } }}';
 	internal.template.brandContent = '<dl class="word-area">\
 										<dt>A</dt>\
