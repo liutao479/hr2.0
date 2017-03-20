@@ -246,15 +246,18 @@
 	 * @params {boolean} deadline 上牌截止时间戳
 	 */
 	tool.overdue = function (pickDate, deadline) {
-		var currentTime = Math.round(new Date().getTime()/1000) * 1000;
-		var termTime = deadline - pickDate; //期限
+		var currentTime = new Date().getTime(); //当前时间
+		var termTime = deadline - pickDate; //超期期限
 		var duringTime = currentTime - pickDate; //至今距离提车日期的时间
-		var result = termTime - duringTime;
+		var result = termTime - duringTime;  //相差的毫秒数（倒计时）
 		if(result <= 0) return '已超期';
-		var _date = new Date(result).getDate(),
-			_hours = new Date(result).getHours();
-			_minutes = new Date(result).getMinutes();
-			_seconds = new Date(result).getSeconds();
+		var _date = Math.floor(result / (24 * 3600 * 1000));
+		var remain1 = result % (24 * 3600 * 1000);
+		var	_hours = Math.floor(remain1 / (3600 * 1000));
+		var remain2 = remain1 % (3600 * 1000);
+		var	_minutes = Math.floor(remain2/(60 * 1000));
+		var remain3 = remain2 % (60 * 1000);
+		var _seconds = Math.round(remain2 / 1000);
 		if(_date > 0) return _date + '天';	
 		if(_hours > 0) return _hours + '小时';
 		if(_seconds > 0 && _minutes < 60) return '1小时';

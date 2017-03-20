@@ -62,7 +62,7 @@
 							<td class="orders-item-data">{{=row.bankName}}</td>
 							<td class="orders-item-data">{{=tool.formatDate(row.pickDate)}}</td>
 							<td class="orders-item-data">{{=tool.formatDate(row.deadline)}}</td>
-							{{ if(row.status && row.status == 2) { }}
+							{{ if(row.status == 2) { }}
 							<td class="orders-item-data">--</td>
 							{{ } else if(tool.overdue(row.pickDate, row.deadline) == "已超期") { }}
 								<td class="orders-item-data status-back">{{=tool.overdue(row.pickDate, row.deadline)}}</td>

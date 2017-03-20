@@ -42,7 +42,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				};
  				$scope.orderNo = result.data.loanTask.orderNo;
  				$scope.demandBankId = result.data.loanTask.loanOrder.demandBankId || '';
- 				$scope.bankName = result.data.loanTask.loanOrder.demandBank.bankName || '';
+ 				$scope.bankName = result.data.loanTask.loanOrder.demandBankName || '';
  				$scope.busiAreaCode = result.data.loanTask.loanOrder.area.areaId || '';
  				$scope.areaName = result.data.loanTask.loanOrder.area.wholeName || '';
 				$scope.result.data.currentType = _type;
@@ -109,6 +109,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			demandBankId: $scope.demandBankId,
 			busiAreaCode: $scope.busiAreaCode
 		}
+		console.log(params)
 	 	$.ajax({
 			type: 'post',
 			url: $http.api('creditMaterials/order/update', 'zyj'),
@@ -153,13 +154,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
             		return false;
             	}
             	updBank(function() {
-            		loadOrderInfo($scope.currentType, function() {
-						setupCreditBank();
-						setupLocation();
-						initApiParams();
-						setupAddUsers();
-						evt();
-					});
+            		setupCreditBank();
+					initApiParams();
+					evt();
             	});
             	
             }
@@ -305,7 +302,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					ok: {
 						text: '确定',
 						action: function () {
-							console.log($scope.apiParams);
 							creditQuery();
 						}
 					}
@@ -332,8 +328,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			if(!_alert) {
 				$.ajax({
 					type: 'post',
-					// url: $http.api('creditMaterials/submit/' + $params.taskId, 'zyj'),
-					url: $http.api('creditMaterials/submit/81035', 'zyj'),
+					url: $http.api('creditMaterials/submit/' + $params.taskId, 'zyj'),
+					// url: $http.api('creditMaterials/submit/81035', 'zyj'),
 					data: JSON.stringify($scope.apiParams),
 					dataType: 'json',
 					contentType: 'application/json;charset=utf-8',
@@ -424,8 +420,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		/**
 		 * 删除一个共同还款人或者反担保人
 		 */
-		$self.find('#creditUploadPanel .delete-credit-item').on('click', function() {
+		$self.find('.delete-credit-item').on('click', function() {
 			var that = $(this);
+			console.log(that)
 			var _userId = that.data('id');
 			switch ($scope.currentType) {
 				case 1:
@@ -436,31 +433,36 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					break;
 			}
 			console.log(flag + ',' +_userId);
-			that.openWindow({
-				title: "提示",
-				content: "<div>确定要删除该用户吗？</div>",
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				$dialog.find('.w-sure').on('click', function() {
-					$dialog.remove();
-					console.log(_userId)
-					$.ajax({
-						type: 'post',
-						url: $http.api('creditUser/del', 'zyj'),
-						data: {
-							userId: _userId
-						},
-						dataType: 'json',
-						success: $http.ok(function(result) {
-							console.log(result);
-							if($scope.result.data.creditUsers[$scope.currentType].length == 1) {
-								loadOrderInfo(0);	
-							} else {
-								loadOrderInfo($scope.currentType);	
-							}
-						})
-					}) 
-				})
+			$.alert({
+				title: '提示',
+				content: tool.alert('确定要删除该用户吗？'),
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							$.ajax({
+								type: 'post',
+								url: $http.api('creditUser/del', 'zyj'),
+								data: {
+									userId: _userId
+								},
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									if($scope.result.data.creditUsers[$scope.currentType].length == 1) {
+										loadOrderInfo(0);	
+									} else {
+										loadOrderInfo($scope.currentType);	
+									}
+								})
+							}) 
+						}
+					}
+				}
 			})
 		});
 
@@ -559,7 +561,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				setupCreditBank();
 				setupLocation();
 				initApiParams();
-				setupAddUsers();
 				evt();
 			});
 		}
