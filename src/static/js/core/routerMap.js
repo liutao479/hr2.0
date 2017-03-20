@@ -291,7 +291,8 @@
 		'T0046': 'phoneAudit',
 		'T0047': 'loanInfoAudit',
 		'T0013': 'loanMaterialsUpload',
-		'T0049': 'homeMaterialsUpload'
+		'T0049': 'homeMaterialsUpload',
+		'T0015': 'loanLog'
 	}
 	var todoMap = {'T0004': '',
 	'T0005': '',

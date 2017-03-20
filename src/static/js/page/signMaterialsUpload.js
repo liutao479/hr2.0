@@ -1,9 +1,10 @@
 'use strict';
 page.ctrl('signMaterialsUpload', function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params;
-	$scope.tasks = $params.tasks;
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console;
+	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
+	// $params.taskId = 4;
 
 	/**
 	* 加载签约材料上传数据
@@ -11,20 +12,21 @@ page.ctrl('signMaterialsUpload', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadOrderInfo = function(cb) {
+		var params = {
+			taskId: $params.taskId
+		}
+		if($params.refer) {
+			params.frameCode = $params.code;
+		}
 		$.ajax({
-			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
-			// type: flag,
 			type: 'post',
 			url: $http.api('signMaterials/index', 'zyj'),
-			data: {
-				// taskId: $scope.$params.taskId
-				taskId: 4
-			},
+			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				$scope.result.tasks = $params.tasks.length;
+				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
 				setupLocation();
 				setupBackReason(result.data.loanTask.backApprovalInfo);
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, function() {
@@ -114,8 +116,11 @@ page.ctrl('signMaterialsUpload', function($scope) {
 	*/
 	var tabChange = function (idx, item) {
 		console.log(item);
+		console.log($scope.tasks);
 		router.render('loanProcess/' + item.key, {
 			tasks: $scope.tasks,
+			taskId: $scope.tasks[idx].id,
+			orderNo: $params.orderNo,
 			selected: idx,
 			path: 'loanProcess'
 		});

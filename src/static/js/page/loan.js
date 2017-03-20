@@ -20,6 +20,7 @@ page.ctrl('loan', function($scope) {
 			data: params,
 			// url: $http.api('material/addOrUpdate', 'wl'),
 			success: $http.ok(function(result) {
+				console.log(result);
 				$scope.pageData = result.data;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page, true);

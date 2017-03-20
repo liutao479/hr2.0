@@ -10,10 +10,12 @@
 */
 'use strict';
 (function($, _) {
+	window.dropdownCollections = [];
 	$.fn.dropdown = function() {
 		return this.each(function() {
 			var that = $(this);
 			that.$dropdown = new dropdown(that, that.data());
+			dropdownCollections.push(that.$dropdown);
 		})
 	}
 
@@ -37,7 +39,7 @@
 		self.textInstance = [];
 		self.actionIdx = 0;
 		self.defautKey = '__internaldefaultkey__';
-
+		self.originKey = md5(new Date().getTime());
 		self.defaults();
 
 		self.setup();
@@ -104,13 +106,10 @@
 			self.open();
 		})
 		self.$el.on('click', function (evt) {
-			if(self.opened) return false;
-		})
-		$(document).on('click', function(e) {
-			if(self.opened) {
-				self.opened = false;
-				self.close();
+			if(dropdownCollections.length > 0) {
+				closeDropDowns(self);
 			}
+			if(self.opened) return false;
 		})
 	};
 	/**
@@ -205,10 +204,23 @@
 			self.text = self.textInstance;
 			self.textInstance = [];
 		}
+		self.opened = false;
 		self.$el.find('.select-box').hide();
 		self.$el.find('#arrow').removeClass('arrow-top').addClass('arrow-bottom');
 	}
-
+	function closeDropDowns(current) {
+		for(var i = 0, len = dropdownCollections.length; i < len; i++) {
+			var $d = dropdownCollections[i];
+			if(current && current.originKey == $d.originKey) {
+				continue;
+			}
+			if($d.opened)
+				$d.close();
+		}
+	}
+	$(document).on('click', function(e) {
+		closeDropDowns();
+	})
 	var internal = {};
 	internal.template = {};
 	internal.template.fields = '<div class="select-field{{=(it.readonly ? \" readonly\": \"\")}}">\
