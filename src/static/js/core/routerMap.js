@@ -166,7 +166,7 @@
 			page: 'secondhandInput'
 		},
 		'loanProcess/loanTelApproval': {
-			title: '电核',
+			title: '电审',
 			page: 'phoneCheck'
 		},
 		'loanProcess/phoneAudit': {
@@ -219,8 +219,12 @@
 			page: 'carAudit'
 		},
 		'loanProcess/creditApproval': {
-			title: '征信结果录入',
+			title: '征信预审核',
 			page: 'creditApproval'
+		},
+		'loanProcess/creditResult': {
+			title: '征信结果',
+			page: 'creditResult'
 		},
 		'expireProcess/importHistory':{
 			title: '逾期导入历史记录',
@@ -292,7 +296,8 @@
 		'T0047': 'loanInfoAudit',
 		'T0013': 'loanMaterialsUpload',
 		'T0049': 'homeMaterialsUpload',
-		'T0015': 'loanLog'
+		'T0015': 'loanLog',
+		'T0048': 'creditResult'
 	}
 	var todoMap = {'T0004': '',
 	'T0005': '',

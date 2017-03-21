@@ -26,7 +26,7 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 				$scope.id = result.data.orderInfo.id;
 
 				setupLocation(result.data.orderInfo);
-				setupBackReason(result.data.orderInfo.loanOrderApproval);
+				setupBackReason(result.data.orderInfo.orderApproval);
 
 				// 编译两个抵押证
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
@@ -103,8 +103,8 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 		} else {
 			$backReason.data({
 				backReason: data.reason,
-				backUser: data.roleName,
-				backUserPhone: data.phone,
+				backUser: data.userName,
+				backUserPhone: '(后台未返回)',
 				backDate: tool.formatDate(data.transDate, true)
 			});
 			$backReason.backReason();

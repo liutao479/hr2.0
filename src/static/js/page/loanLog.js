@@ -20,7 +20,9 @@ page.ctrl('loanLog', function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				setupLocation();
+				if($params.path) {
+					setupLocation();	
+				}
 				render.compile($scope.$el.$modifyPanel, $scope.def.modifyTmpl, result.data.loanEditLog, true);
 				render.compile($scope.$el.$loanLogPanel, $scope.def.logTmpl, result.data, true);
 				if( cb && typeof cb == 'function' ) {

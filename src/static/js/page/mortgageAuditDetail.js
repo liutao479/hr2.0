@@ -25,7 +25,6 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 				$scope.result = result;
 				$scope.orderNo = result.data.orderInfo.orderNo;//订单号
 				setupLocation(result.data.orderInfo);
-				// console.log(result.data.backApprovalInfo)
 				setupBackReason(result.data.backApprovalInfo);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {

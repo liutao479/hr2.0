@@ -72,7 +72,6 @@
 		self.errMsg = '';
 		if(!self.options.img || self.options.img == 'undefined') {
 			if(self.options.editable) {
-				console.log(self.options.editable)
 				if(self.options.other) {
 					self.name = internalTemplates.other.format(self.options.name);
 				} else {
@@ -106,7 +105,8 @@
 				tmp = internalTemplates.modify.format(self.name, self.options.img, self.errImg, self.errMsg);
 				self.status = 1;
 			} else {
-				tmp = internalTemplates.view.format(self.options.name, self.options.img || '');
+				self.name = internalTemplates.name.format(self.options.name);
+				tmp = internalTemplates.view.format(self.name, self.options.img || '');
 				self.status = 2;
 			}
 		}
@@ -394,7 +394,7 @@
 		msg: '<div class="imgs-describe">{0}</div>',
 		name: '<span class="imgs-item-p">{0}</span>',
 		other: '<div class="input-text imgs-input-text">\
-					<input type="text" value="{0}">\
+					<input type="text" value="{0}" title="重新上传">\
 				</div>'
 	}
 

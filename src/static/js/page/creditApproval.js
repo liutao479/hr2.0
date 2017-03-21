@@ -16,7 +16,7 @@ page.ctrl('creditApproval', [], function($scope) {
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			current: '征信预审核',
-			orderDate: '2017-12-12 12:12'
+			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
 	}
@@ -40,6 +40,7 @@ page.ctrl('creditApproval', [], function($scope) {
 				console.log(result);
 				result.index = idx;
 				$scope.result = result;
+				$scope.result.editable = 0;
 				console.log($scope.result)
 				// 编译tab栏
 				setupTab($scope.result, function() {

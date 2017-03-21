@@ -155,10 +155,18 @@ page.ctrl('mortgageProcess', [], function($scope) {
 	 * 下拉框点击回调
 	 */
 	$scope.statusPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.status;
+			return false;
+		}
 		apiParams.status = picked.id;
 	}
 
 	$scope.demandBankPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.bankName;
+			return false;
+		}
 		apiParams.bankName = picked.name;
 	}
 
@@ -172,6 +180,10 @@ page.ctrl('mortgageProcess', [], function($scope) {
 				url: $http.api('demandBank/selectBank', 'cyj'),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						bankId: '全部',
+						bankName: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
 						id: 'bankId',
@@ -184,17 +196,13 @@ page.ctrl('mortgageProcess', [], function($scope) {
 		status: function(t, p, cb) {
 			var data = [
 				{
+					id: '全部',
+					name: '全部'
+				},
+				{
 					id: 0,
 					name: '未办理'
 				},
-				// {
-				// 	id: 1,
-				// 	name: '待审核'
-				// },
-				// {
-				// 	id: 2,
-				// 	name: '已审核'
-				// },
 				{
 					id: 4,
 					name: '审核退回'

@@ -5,7 +5,7 @@ page.ctrl('creditInput', [], function($scope) {
 	$scope.tabs = {};
 	$scope.idx = 0;
 	$scope.apiParams = [];
-
+	$params.taskId = 80876;
 	/**
 	* 设置面包屑
 	*/
@@ -16,7 +16,7 @@ page.ctrl('creditInput', [], function($scope) {
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			current: '征信结果录入',
-			orderDate: '2017-12-12 12:12'
+			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
 	}
@@ -30,17 +30,16 @@ page.ctrl('creditInput', [], function($scope) {
 		$.ajax({
 			// url: 'http://127.0.0.1:8083/mock/creditInput',
 			type: 'post',
-			// url: $http.api('creditUser/getCreditInfo', 'jbs'),
-			url: 'http://192.168.1.124:8080/creditUser/getCreditInfo',
+			url: $http.api('creditUser/getCreditInfo', 'jbs'),
 			data: {
-				taskId: 80871
+				taskId: $params.taskId
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				result.index = idx;
 				$scope.result = result;
-				console.log($scope.result)
+				$scope.result.editable = 1;
 				// 编译tab栏
 				setupTab($scope.result, function() {
 					setupTabEvt();

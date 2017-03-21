@@ -147,9 +147,8 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	}
 
 	var setupInfoEvt = function() {
-		$scope.$el.$infoPanel.find('.required').on('blur', function() {
-			console.log(!$(this).val())
-			if(!$(this).val()) {
+		$scope.$el.$infoPanel.find('.input').on('blur', function() {
+			if(!$.trim($(this).val())) {
 				$(this).removeClass('error-input').addClass('error-input');
 			} else {
 				$(this).removeClass('error-input');
@@ -170,10 +169,10 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 				var that = $(this);
 				var $inputs = $(this).find('.required');
 				$inputs.each(function() {
-					if(!$(this).val()) {
+					if(!$.trim($(this).val())) {
 						$(this).removeClass('error-input').addClass('error-input');
 					} else {
-						item[$(this).data('type')] = $(this).val().trim();
+						item[$(this).data('type')] = $.trim($(this).val());
 						$(this).removeClass('error-input');
 						flag++;
 					}
@@ -186,7 +185,7 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 			});
 			if(list == $tables.length) {
 				//去做提交
-				console.log(infoParams)
+				// console.log(infoParams)
 				$.confirm({
 					title: '提交',
 					content: dialogTml.wContent.suggestion,
@@ -201,7 +200,7 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 								var _reason = $.trim($('.jconfirm #suggestion').val());
 								if(_reason) {
 									for(var i = 0, len = infoParams.length; i < len; i++) {
-										infoParams[i].reason = _reason
+										infoParams[i].reason = _reason;
 									}
 								}
 								submitOrders(infoParams, function() {

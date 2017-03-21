@@ -28,6 +28,11 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 				$scope.result = result;
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
 				$scope.$params.orderNo = result.data.loanTask.orderNo;
+				if($params.refer) {
+					$scope.result.editable = 0;
+				} else {
+					$scope.result.editable = 1;
+				}
 				if($params.path) {
 					setupLocation();	
 				}

@@ -27,7 +27,14 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 				console.log(result);
 				$scope.result = result;
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
-				setupLocation();
+				if($params.refer) {
+					$scope.result.editable = 0;
+				} else {
+					$scope.result.editable = 1;
+				}
+				if($params.path) {
+					setupLocation();	
+				}
 				setupBackReason(result.data.loanTask.backApprovalInfo);
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, function(){
 					setupEvt();

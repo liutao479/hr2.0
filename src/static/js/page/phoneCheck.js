@@ -3,7 +3,7 @@ page.ctrl('phoneCheck', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
 	var urlStr = "http://192.168.1.108:8080";
-	$params.taskId = 80873;
+	// $params.taskId = 80873;
 	/**
 	* 设置面包屑
 	*/
@@ -20,16 +20,17 @@ page.ctrl('phoneCheck', function($scope) {
 	}
 
 	/**
-	* 加载车贷办理数据
+	* 加载电审数据
 	* @params {object} params 请求参数 
 	* @params {function} cb 回调函数
 	*/
 	var loadTabList = function(cb) {
-		var data={};
-		data['taskId']=80872;
+		var params = {
+			taskId: $params.taskId
+		};
 		$.ajax({
 			url: urlStr+'/loanApproval/info',
-			data: data,
+			data: params,
 			dataType: 'json',
 			success: $http.ok(function(xhr) {
 				$scope.result = xhr;

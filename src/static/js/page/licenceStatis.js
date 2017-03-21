@@ -152,14 +152,26 @@ page.ctrl('licenceStatis', [], function($scope) {
 	 * 下拉框点击回调
 	 */
 	$scope.statusPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.status;
+			return false;
+		}
 		apiParams.status = picked.id;
 	}
 
 	$scope.deptCompanyPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.deptName;
+			return false;
+		}
 		apiParams.deptName = picked.name;
 	}
 
 	$scope.demandBankPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.bankName;
+			return false;
+		}
 		apiParams.bankName = picked.name;
 	}
 
@@ -176,7 +188,10 @@ page.ctrl('licenceStatis', [], function($scope) {
 				},
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
-					console.log(xhr)
+					xhr.data.unshift({
+						id: '全部',
+						name: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
 						id: 'id',
@@ -192,6 +207,10 @@ page.ctrl('licenceStatis', [], function($scope) {
 				url: $http.api('demandBank/selectBank', 'cyj'),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						bankId: '全部',
+						bankName: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
 						id: 'bankId',
@@ -203,6 +222,10 @@ page.ctrl('licenceStatis', [], function($scope) {
 		},
 		status: function(t, p, cb) {
 			var data = [
+				{
+					id: '全部',
+					name: '全部'
+				},
 				{
 					id: 0,
 					name: '未办理'

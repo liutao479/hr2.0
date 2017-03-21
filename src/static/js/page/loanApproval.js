@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('lendAudit', function($scope) {
+page.ctrl('loanApproal', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
 	// var urlStr = "http://192.168.1.108:8080";
@@ -18,17 +18,19 @@ page.ctrl('lendAudit', function($scope) {
 		});
 		$location.location();
 	}
+
 	/**
-	* 加载车贷办理数据
+	* 加载电审数据
 	* @params {object} params 请求参数 
 	* @params {function} cb 回调函数
 	*/
 	var loadTabList = function(cb) {
-		var data={};
-		data['taskId']=80873;
+		var params = {
+			taskId: $params.taskId
+		};
 		$.ajax({
-			url: urlStr+'/loanApproval/info',
-			data: data,
+			url: $http.api('loanApproval/info'),
+			data: params,
 			dataType: 'json',
 			success: $http.ok(function(xhr) {
 				$scope.result = xhr;
@@ -47,7 +49,15 @@ page.ctrl('lendAudit', function($scope) {
 	function loadGuide(cfg) {
 		if(cfg) {
 			render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
-			return listenGuide()
+			var code = cfg.frames[0].code;
+			var pageCode = subRouterMap[code];
+			var params = {
+				code: code,
+				orderNo: $params.orderNo,
+				taskId: $params.taskId
+			}
+			router.innerRender('#phoneCheck', 'loanProcess/'+pageCode, params);
+			return listenGuide();
 		}
 		var params = {
 			taskId: $params.taskId,
@@ -73,9 +83,10 @@ page.ctrl('lendAudit', function($scope) {
 			if(!pageCode) return false;
 			var params = {
 				code: code,
-				orderNo: 0
+				orderNo: $params.orderNo,
+				taskId: $params.taskId
 			}
-			router.innerRender('#lendCheck', 'loanProcess/'+pageCode, params);
+			router.innerRender('#phoneCheck', 'loanProcess/'+pageCode, params);
 		})
 	}
 
@@ -102,7 +113,7 @@ page.ctrl('lendAudit', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	$console.load(router.template('iframe/lend-audit'), function() {
+	$console.load(router.template('iframe/phoneCheck'), function() {
 		$scope.def.tabTmpl = $console.find('#checkResultTabsTmpl').html();
 		$scope.$el = {
 			$tab: $console.find('#checkTabs'),
