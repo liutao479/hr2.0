@@ -123,7 +123,18 @@
 		$jumb.on('click', function() {
 			var _currentPage = $input.val();
 			if(!regulation.number.test(_currentPage) || _currentPage > self.opt.pages) {
-				alert('无效的页码');
+				$.alert({
+					title: '提示',
+					content: tool.alert('无效的页码！'),
+					buttons: {
+						ok: {
+							text: '确定',
+							actions: function() {
+								
+							}
+						}
+					}
+				});
 				return $input.val('');
 			}
 			self.direct(parseInt(_currentPage));

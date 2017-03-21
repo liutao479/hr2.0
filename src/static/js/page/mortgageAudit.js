@@ -69,6 +69,15 @@ page.ctrl('mortgageAudit', [], function($scope) {
 			}
 		});
 
+		// 文本框失去焦点记录文本框的值
+		$console.find('#searchInput').on('blur', function(evt) {
+			var that = $(this),
+				searchText = $.trim(that.val());
+			if(searchText) {
+				apiParams.keyWord = searchText;
+			}
+		});
+
 		// 初始化复选框
 		$console.find('.checkbox').checking(function($self) {
 			// 复选框回调函数（有问题）

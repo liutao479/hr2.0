@@ -71,13 +71,25 @@
 		self.errImg = '';
 		self.errMsg = '';
 		if(!self.options.img || self.options.img == 'undefined') {
-			self.status = 0;
-			if(self.options.other) {
-				self.name = internalTemplates.other.format(self.options.name);
+			if(self.options.editable) {
+				console.log(self.options.editable)
+				if(self.options.other) {
+					self.name = internalTemplates.other.format(self.options.name);
+				} else {
+					self.name = internalTemplates.name.format(self.options.name);
+				}
+				tmp = internalTemplates.edit.format(self.name);
+				self.status = 0;
 			} else {
-				self.name = internalTemplates.name.format(self.options.name);
+				if(self.options.other) {
+					self.name = internalTemplates.other.format(self.options.name);
+				} else {
+					self.name = internalTemplates.name.format(self.options.name);
+				}
+				tmp = internalTemplates.blank.format(self.name);
+				self.status = 2;
 			}
-			tmp = internalTemplates.edit.format(self.name)
+			
 		} else {
 			if(self.options.editable) {
 				if(self.options.err != undefined) {
@@ -374,8 +386,11 @@
 				{2}{3}</div>{0}',
 		view: '<div class="imgs-item-upload">\
 				<img src="{1}" class="imgs-view viewEvt" />\
-			   </div>\
-			   <span class="imgs-item-p">{0}</span>',
+			   </div>{0}',
+		blank: '<div class="imgs-item-upload imgs-item-upload-blank">\
+				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
+				<span class="i-tips">图片未上传</span>\
+			   </div>{0}',
 		msg: '<div class="imgs-describe">{0}</div>',
 		name: '<span class="imgs-item-p">{0}</span>',
 		other: '<div class="input-text imgs-input-text">\

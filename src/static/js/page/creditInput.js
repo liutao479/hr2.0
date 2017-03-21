@@ -30,9 +30,10 @@ page.ctrl('creditInput', [], function($scope) {
 		$.ajax({
 			// url: 'http://127.0.0.1:8083/mock/creditInput',
 			type: 'post',
-			url: $http.api('creditUser/getCreditInfo', 'jbs'),
+			// url: $http.api('creditUser/getCreditInfo', 'jbs'),
+			url: 'http://192.168.1.124:8080/creditUser/getCreditInfo',
 			data: {
-				taskId: 80876
+				taskId: 80871
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {

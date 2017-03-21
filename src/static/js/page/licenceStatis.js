@@ -70,6 +70,15 @@ page.ctrl('licenceStatis', [], function($scope) {
 			}
 		});
 
+		// 文本框失去焦点记录文本框的值
+		$console.find('#searchInput').on('blur', function(evt) {
+			var that = $(this),
+				searchText = $.trim(that.val());
+			if(searchText) {
+				apiParams.keyWord = searchText;
+			}
+		});
+
 		//绑定搜索按钮事件
 		$console.find('#search').on('click', function() {
 			apiParams.pageNum = 1;
