@@ -67,7 +67,6 @@ page.ctrl('mortgageProcess', [], function($scope) {
 				loadMortgageProcessList(apiParams, function() {
 					that.blur();
 				});
-				
 			}
 		});
 
@@ -75,7 +74,10 @@ page.ctrl('mortgageProcess', [], function($scope) {
 		$console.find('#searchInput').on('blur', function(evt) {
 			var that = $(this),
 				searchText = $.trim(that.val());
-			if(searchText) {
+			if(!searchText) {
+				delete apiParams.keyWord;
+				return false;
+			} else {
 				apiParams.keyWord = searchText;
 			}
 		});

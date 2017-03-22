@@ -162,13 +162,6 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 				$(this).removeClass('error-input');
 			}
 		});
-		// $scope.$el.$infoPanel.find('.dateBtn').on('foucs', function() {
-		// 	if(!$.trim($(this).val())) {
-		// 		$(this).removeClass('error-input').addClass('error-input');
-		// 	} else {
-		// 		$(this).removeClass('error-input');
-		// 	}
-		// });
 		setupDatepicker();
 	}
 
@@ -220,9 +213,9 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 										infoParams[i].reason = _reason;
 									}
 								}
-								submitOrders(infoParams, function() {
-									router.render('mortgageProcess');
-								})
+								// submitOrders(infoParams, function() {
+								// 	router.render('mortgageProcess');
+								// })
 							}
 						}
 					}

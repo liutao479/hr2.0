@@ -393,6 +393,10 @@ page.ctrl('organizationManage', [], function($scope) {
 		shopType: function(t, p, cb) {
 			var data = [
 				{
+					id: '全部',
+					name: '全部'
+				},
+				{
 					id: 0,
 					name: '4s'
 				},
@@ -409,9 +413,6 @@ page.ctrl('organizationManage', [], function($scope) {
 			cb(sourceData);
 		},
 		shopName: function(t, p, cb) {
-			// if(apiParams.shopType) {
-
-			// }
 			$.ajax({
 				type: 'post',
 				url: $http.api('demandCarShop/getList', 'cyj'),
@@ -420,9 +421,10 @@ page.ctrl('organizationManage', [], function($scope) {
 				}, 	
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
-					// if($scope.shopType != undefined) {
-					// 	$scope.sourceData = xhr.data;
-					// }
+					xhr.data.unshift({
+						shopId: '全部',
+						shopName: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
 						id: 'shopId',
@@ -435,13 +437,19 @@ page.ctrl('organizationManage', [], function($scope) {
 	}
 
 	$scope.shopTypePicker = function(picked) {
-		console.log(picked);
+		if(picked.id == '全部') {
+			delete apiParams.shopType;
+			return false;
+		}
 		apiParams.shopType = picked.id;
 		$scope.shopTypeName = picked.name;
 	}
 
 	$scope.shopNamePicker = function(picked) {
-		console.log(picked);
+		if(picked.shopName == '全部') {
+			delete apiParams.shopName;
+			return false;
+		}
 		apiParams.shopName = picked.name;
 		$scope.shopName = picked.name;
 	}

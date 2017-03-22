@@ -257,6 +257,7 @@ input[disabled]{
 // 排序
 .time-sort {
     display: inline-block;
+    white-space: nowrap;
     height: 38px;
     line-height: 38px;
     position: relative;
@@ -476,44 +477,12 @@ input[disabled]{
     .orders-bar-title {
         background-color: #717ea1;
     }
-    .orders-item-data {
-        height: 40px;
-        color: #FFF;
-        text-align: center;
-        font-size: 14px;
-        .orders-item-data-blank {
-            width: 22%;
-        } 
-        .orders-item-data-view {
-            .view-fee {
-                color: @buttonBgColor;
-            }
-        }
-        .meanwhile {
-            width: 100%;
+    thead {
+        .orders-item-data {
+            height: 40px;
+            color: #FFF;
             text-align: center;
-            .arrow-trigger {
-                position: relative;
-                height: 21px;
-                .arrow-bottom {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    margin-top: -4px;
-                    margin-left: -4px;
-                    cursor: pointer;
-                    border-width: 6px;
-                }
-                .arrow-top {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    margin-top: -10px;
-                    margin-left: -4px;
-                    cursor: pointer;
-                    border-width: 6px;
-                }
-            }
+            font-size: 14px;
         }
     }
     tbody .orders-item {
@@ -532,8 +501,10 @@ input[disabled]{
             width: 60px; 
         }
         .orders-item-data {
-            height: 78px;
+            position: relative;
+            padding: 23px 8px; 
             color: @fontColor;
+            text-align: center;
             //被退回
             &.status-back {
                 color: @messageNumberBgColor;
@@ -557,6 +528,48 @@ input[disabled]{
             }
             &.orders-item-data-blank-mini {
                 width: 10%;
+            }
+            .orders-item-data-blank {
+                width: 22%;
+            } 
+            .orders-item-data-view {
+                .view-fee {
+                    color: @buttonBgColor;
+                }
+            }
+            .meanwhile {
+                position: absolute;
+                height: 60px;
+                top: 50%;
+                margin-top: -30px;
+                width: 100%;
+                text-align: center;
+                tr td {
+                   padding: 0;
+                   margin: 0;  
+                }
+                .arrow-trigger {
+                    position: relative;
+                    top: 2px;
+                    .arrow-bottom {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        margin-top: -4px;
+                        margin-left: -4px;
+                        cursor: pointer;
+                        border-width: 6px;
+                    }
+                    .arrow-top {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        margin-top: -10px;
+                        margin-left: -4px;
+                        cursor: pointer;
+                        border-width: 6px;
+                    }
+                }
             }
             .table-inner {
                 min-width: 275px;
@@ -715,6 +728,9 @@ input[disabled]{
     border-collapse: collapse;
     tr.tr-odd {
         background-color: #f3f4f9;
+        .input-x {
+            background-color: #f3f4f9;
+        }
         .input {
             background-color: #f3f4f9;
         }
@@ -735,6 +751,18 @@ input[disabled]{
         }
         &.td-value {
             width: 35%;
+        }
+        .input-x {
+            float: left;
+            text-align: left;
+            width: 100%;
+            height: 40px;
+            border: none;
+            padding-left: 30px;
+        }
+        .input-text {
+            float: left;
+            margin-left: 24px;
         }
         .input {
             float: left;

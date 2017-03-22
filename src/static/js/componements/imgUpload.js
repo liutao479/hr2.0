@@ -240,7 +240,7 @@
 			success: function(xhr) {
 				console.log(xhr)
 				if(!xhr.code) {
-					self.delCb(self);
+					self.delCb(self, xhr);
 					self.$el.html(internalTemplates.edit.format(self.name));
 					self.status = 0;
 					self.listen();			
@@ -319,7 +319,7 @@
 						self.$el.data('img', url);
 						self.status = 1;	
 						self.listen();
-						self.uplCb(self);
+						self.uplCb(self, xhr);
 					} else {
 						self.options.id = xhr.data;
 						self.$el.data('img', url);

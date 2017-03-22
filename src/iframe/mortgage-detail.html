@@ -50,35 +50,35 @@
 						<tr class="tr-odd">
 							<td class="td-key">抵押权人{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input required" data-type="pledgee" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgee || ''}}">
+								<input class="input-x required" data-type="pledgee" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgee || ''}}">
 							</td>
 							<td class="td-key">身份证明名称{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input required" data-type="cardName" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.cardName || ''}}">
+								<input class="input-x required" data-type="cardName" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.cardName || ''}}">
 							</td>
 						</tr>
 						<tr class="tr-even">
 							<td class="td-key">身份证号码{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input required" data-type="idCard" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.idCard || ''}}">
+								<input class="input-x required" data-type="idCard" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.idCard || ''}}">
 							</td>
 							<td class="td-key">登记机关{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input required" data-type="pledgeDept" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgeDept || ''}}">
+								<input class="input-x required" data-type="pledgeDept" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgeDept || ''}}">
 							</td>
 						</tr>
 						<tr class="tr-odd">
 							<td class="td-key">机动车登记编号{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input required" data-type="vehileRegNo" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.vehileRegNo || ''}}">
+								<input class="input-x required" data-type="vehileRegNo" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.vehileRegNo || ''}}">
 							</td>
 							<td class="td-key">抵押登记日期{{=i+1}}</td>
 							<td class="td-value">
 								{{ if(it.disabled) { }}
-									<input class="input" data-type="pledgeDateString" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.pledgeDate ? tool.formatDate(row.pledgeDate) : '')}}">
+									<input class="input-x" data-type="pledgeDateString" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.pledgeDate ? tool.formatDate(row.pledgeDate) : '')}}">
 								{{ } else { }}
 								<div class="input-text input-date-mini">
-									<input id="srart{{=i}}" data-type="pledgeDateString" onFocus="WdatePicker({dchanging:cDayFunc, Mchanging:cMonthFunc, ychanging:cYearFunc, dchanged:cDayFunc, Mchanged:cMonthFunc, ychanged:cYearFunc})" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.pledgeDate ? tool.formatDate(row.pledgeDate) : '')}}" />	
+									<input id="srart{{=i}}" data-type="pledgeDateString" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.pledgeDate ? tool.formatDate(row.pledgeDate) : '')}}" />	
 								</div>
 								{{ } }}
 							</td>
@@ -87,7 +87,7 @@
 							<td class="td-key">解除抵押日期{{=i+1}}</td>
 							<td class="td-value">
 								{{ if(it.disabled) { }}
-									<input class="input" data-type="unPledgeDateString" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.unPledgeDate ? tool.formatDate(row.unPledgeDate) : '')}}">
+									<input class="input-x" data-type="unPledgeDateString" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.unPledgeDate ? tool.formatDate(row.unPledgeDate) : '')}}">
 								{{ } else { }}
 								<div class="input-text input-date-mini">
 									<input id="end{{=i}}" data-type="unPledgeDateString" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.unPledgeDate ? tool.formatDate(row.unPledgeDate) : '')}}" />	
@@ -95,9 +95,64 @@
 								{{ } }}
 							</td>
 							<td class="td-key"></td>
+							<td class="td-value"></td>
+						</tr>
+					</tbody>
+				</table>
+				{{ } }}
+
+				{{ if(!it.disabled) { }}
+				<table border="1" class="newPledgee field-table{{=(len > 0 ? ' mt30' : '')}}">
+					<tbody>
+						<tr class="tr-odd">
+							<td class="td-key">抵押权人{{=len + 1}}</td>
 							<td class="td-value">
-								
+								<input class="input-x" data-type="pledgee" type="text" value="">
 							</td>
+							<td class="td-key">身份证明名称{{=len + 1}}</td>
+							<td class="td-value">
+								<input class="input-x" data-type="cardName" type="text" value="">
+							</td>
+						</tr>
+						<tr class="tr-even">
+							<td class="td-key">身份证号码{{=len + 1}}</td>
+							<td class="td-value">
+								<input class="input-x" data-type="idCard" type="text" value="">
+							</td>
+							<td class="td-key">登记机关{{=len + 1}}</td>
+							<td class="td-value">
+								<input class="input-x" data-type="pledgeDept" type="text" value="">
+							</td>
+						</tr>
+						<tr class="tr-odd">
+							<td class="td-key">机动车登记编号{{=len + 1}}</td>
+							<td class="td-value">
+								<input class="input-x" data-type="vehileRegNo" type="text" value="">
+							</td>
+							<td class="td-key">抵押登记日期{{=len + 1}}</td>
+							<td class="td-value">
+								{{ if(it.disabled) { }}
+									<input class="input-x" data-type="pledgeDateString" type="text" value="">
+								{{ } else { }}
+								<div class="input-text input-date-mini">
+									<input id="srart{{=i}}" data-type="pledgeDateString" type="text" class="dateBtn" readonly="readonly" value="" />	
+								</div>
+								{{ } }}
+							</td>
+						</tr>
+						<tr class="tr-even">
+							<td class="td-key">解除抵押日期{{=len + 1}}</td>
+							<td class="td-value">
+								{{ if(it.disabled) { }}
+									<input class="input-x" data-type="unPledgeDateString" type="text" value="">
+								{{ } else { }}
+								<div class="input-text input-date-mini">
+									<input id="end{{=i}}" data-type="unPledgeDateString" type="text" class="dateBtn" readonly="readonly" value="" />	
+								</div>
+								{{ } }}
+							</td>
+							<td class="td-key"></td>
+							<td class="td-value"></td>
 						</tr>
 					</tbody>
 				</table>
