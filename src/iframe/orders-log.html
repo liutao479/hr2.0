@@ -82,13 +82,12 @@
 					</tbody>
 				</table>
 			{{ } else { }}
-				暂无记录
+				<div class="blank">暂无记录</div>
 			{{ } }}
 			</script>
 
 			<script type="text/x-dot-template" id="telApprovalTmpl">
 			{{ var len = it.length; if(it.length) { }}
-				{{ for(var i = 0; i < len; i++) { var row = it[i]; }}
 				<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">
 					<thead>
 						<tr class="orders-bar-title">
@@ -98,17 +97,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						{{  }}
+						{{ for(var i = 0; i < len; i++) { var row = it[i]; }}
 						<tr class="orders-item">
-							<td class="orders-item-data">111</td>
-							<td class="orders-item-data">借款人-北上</td>
-							<td class="orders-item-data">李四</td>
+							<td class="orders-item-data">{{=row.telApprovalDateStr}}</td>
+							<td class="orders-item-data">{{=row.telUserName}}</td>
+							<td class="orders-item-data">{{=row.telApprovalName}}</td>
 						</tr>
+						{{ } }}
 					</tbody>
 				</table>
-				{{ } }}
-			{{ } else }}
-				暂无记录
+			{{ } else { }}
+				<div class="blank">暂无记录</div>
 			{{ } }}
 			</script>
 

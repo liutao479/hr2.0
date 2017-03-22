@@ -157,29 +157,41 @@
 			title: '贷款信息表录入',
 			page: 'loanInfo'
 		},
-//		'loanProcess/secondhandInput': {
-//			title: '二手车评估信息录入',
-//			page: 'carTwohand'
-//		},
 		'loanProcess/secondhandInput':{
 			title: '二手车评估信息录入',
 			page: 'secondhandInput'
 		},
+
+
+
 		'loanProcess/loanTelApproval': {
 			title: '电审',
 			page: 'phoneCheck'
 		},
+		'loanProcess/makeLoanApproval': {
+			title: '放款审核',
+			page: 'lendAudit'
+		},
+		'loanProcess/loanApproval': {
+			title: '贷款审核',
+			page: 'loanApproval'
+		},
+		'loanProcess/pickMaterialsApproval': {
+			title: '贷款审核',
+			page: 'pickMaterialsApproval'
+		},
+
+
+
+
+
 		'loanProcess/phoneAudit': {
 			title: '电核',
 			page: 'phoneAudit'
 		},
 		'loanProcess/loanInfoAudit': {
-			title: '贷款审核',
+			title: '贷款信息表审核',
 			page: 'loanInfoAudit'
-		},
-		'loanProcess/makeLoanApproval': {
-			title: '放款审核',
-			page: 'lendAudit'
 		},
 		'loanProcess/applyModify': {
 			title: '申请修改贷款信息',
@@ -193,17 +205,12 @@
 			title: '征信材料审核',
 			page: 'creditMaterialsApproval'
 		},
-//		'loanProcess/cardAudit': {
-//			title: '开卡审核',
-//			page: 'cardAudit'
-//		},
 		'loanProcess/cardInfoApproval': {
 			title: '开卡审核',
 			page: 'openCardSheet'
 		},
 		'loanProcess/cardInfoInput': {
 			title: '开卡信息录入',
-//			page: 'cardAudit'
 			page: 'openCardSheet'
 		},
 		'loanProcess/creditAudit':{
@@ -292,12 +299,33 @@
 		}
 	}
 	g.subRouterMap = {
-		'T0046': 'phoneAudit',
-		'T0047': 'loanInfoAudit',
-		'T0013': 'loanMaterialsUpload',
-		'T0049': 'homeMaterialsUpload',
-		'T0015': 'loanLog',
-		'T0048': 'creditResult'
+		'T0013': 'loanMaterialsUpload',//贷款材料
+		'T0015': 'loanLog',//订单日志
+		'T0023': 'loanMaterialsUpload',//贷款材料
+		'T0024': '',//开卡信息表
+		'T0025': '',//材料验真
+		'T0026': '',//数据辅证
+		'T0027': '',//材料交叉验证
+		'T0028': 'loanLog',//订单日志
+		'T0038': 'loanLog',//订单日志
+		'T0040': '',//材料验真
+		'T0041': '',//数据辅证
+		'T0042': '',//材料交叉验证
+		'T0043': 'loanLog',//订单日志
+		'T0046': 'phoneAudit',//电核结果
+		'T0047': 'loanInfoAudit',//贷款信息表结果
+		'T0048': 'creditResult',//征信结果
+		'T0049': 'homeMaterialsUpload',//上门材料
+		'T0050': 'loanInfoAudit',//贷款信息表结果
+		'T0051': 'creditResult',//征信结果
+		'T0052': '',//二手评估结果
+		'T0053': 'homeMaterialsUpload',//上门材料
+		'T0054': 'signMaterialsUpload',//签约材料
+		'T0055': 'phoneAudit',//电核结果
+		'T0056': 'loanInfoAudit',//贷款信息表结果
+		'T0057': 'loanInfoAudit',//贷款信息表结果
+		'T0058': 'pickMaterialsUpload',//提车材料
+		'T0058': 'pickMaterialsUpload'//提车材料
 	}
 	var todoMap = {'T0004': '',
 	'T0005': '',

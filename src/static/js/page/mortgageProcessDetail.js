@@ -136,7 +136,15 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	* 日历控件
 	*/
 	var setupDatepicker = function() {
-		$scope.$el.$infoPanel.find('.dateBtn').datepicker();
+		$scope.$el.$infoPanel.find('.dateBtn').datepicker({
+			onpicked: function() {
+				if(!$.trim($(this).val())) {
+					$(this).removeClass('error-input').addClass('error-input');
+				} else {
+					$(this).removeClass('error-input');
+				}
+			}
+		});
 	}
 
 	/**
@@ -154,8 +162,16 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 				$(this).removeClass('error-input');
 			}
 		});
+		// $scope.$el.$infoPanel.find('.dateBtn').on('foucs', function() {
+		// 	if(!$.trim($(this).val())) {
+		// 		$(this).removeClass('error-input').addClass('error-input');
+		// 	} else {
+		// 		$(this).removeClass('error-input');
+		// 	}
+		// });
 		setupDatepicker();
 	}
+
 
 	/**
 	* 提交栏事件
@@ -180,6 +196,7 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 				if(flag == $inputs.length) {
 					list++;
 					item.pledgeId = that.data('pledgeId');
+					item.id = that.data('id');
 					infoParams.push(item);
 				}
 			});

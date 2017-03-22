@@ -42,9 +42,9 @@
 			<script type="text/x-dot-template" id="mortgageInfoTmpl">
 				{{ for(var i = 0, len = it.data.length; i < len; i++) { var row = it.data[i]; }}
 				{{ if(i == 0) { }}
-				<table border="1" class="field-table" data-pledge-id="{{=row.pledgeId}}">
+				<table border="1" class="field-table" data-pledge-id="{{=row.pledgeId}}" data-id="{{=row.id}}">
 				{{ } else { }}
-				<table border="1" class="field-table mt30" data-pledge-id="{{=row.pledgeId}}">
+				<table border="1" class="field-table mt30" data-pledge-id="{{=row.pledgeId}}" data-id="{{=row.id}}">
 				{{ } }}
 					<tbody>
 						<tr class="tr-odd">
@@ -78,7 +78,7 @@
 									<input class="input" data-type="pledgeDateString" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.pledgeDate ? tool.formatDate(row.pledgeDate) : '')}}">
 								{{ } else { }}
 								<div class="input-text input-date-mini">
-									<input id="srart{{=i}}" data-type="pledgeDateString" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.pledgeDate ? tool.formatDate(row.pledgeDate) : '')}}" />	
+									<input id="srart{{=i}}" data-type="pledgeDateString" onFocus="WdatePicker({dchanging:cDayFunc, Mchanging:cMonthFunc, ychanging:cYearFunc, dchanged:cDayFunc, Mchanged:cMonthFunc, ychanged:cYearFunc})" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.pledgeDate ? tool.formatDate(row.pledgeDate) : '')}}" />	
 								</div>
 								{{ } }}
 							</td>

@@ -37,12 +37,12 @@
 	_.$http.api = function(method, name) {
 		// name不传值，代表取mock中假数据
 		if(!name) 
-			return 'http://192.168.1.90:8083/mock/' + method;
+			return 'http://127.0.0.1:8083/mock/' + method;
 		else
 			// switch (name) {
 			// 	// 周宜俭ip
 			// 	case 'zyj':
-			// 		return 'http://192.168.1.132:8080/' + method;
+			// 		return 'http://192.168.1.108:8080/' + method;
 			// 		break;
 			// 	// 蔡延军ip
 			// 	case 'cyj':
