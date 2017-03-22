@@ -49,7 +49,6 @@ page.ctrl('loanInfo', function($scope) {
 		});
 	}
 	
-	
 	/**
 	* 设置面包屑
 	*/
@@ -138,6 +137,18 @@ page.ctrl('loanInfo', function($scope) {
 			});
 		});
 	}
+	
+	
+	
+	/**
+	* 绑定立即处理事件
+	*/
+	var setupEvt = function($el) {
+		// 上传pdf文件
+		$console.find('#submitOrder').on('click', function() {
+			console.log("提交订单");
+		})
+	}		
 	
 //点击下拉框拉取选项
 	$(document).on('click','.selecter', function() {
@@ -486,6 +497,7 @@ page.ctrl('loanInfo', function($scope) {
 		loadLoanList(function(){
 			setupDropDown();
 		});
+		setupEvt();
 	});
 
 	$scope.areaPicker = function(picked) {
