@@ -1,7 +1,8 @@
 "use strict";
 page.ctrl('loanLog', function($scope) {
-	var $console = render.$console;
-
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console;
+	// $params.orderNo = 'nfdb2016102421082285';
 	
 	/**
 	* 加载订单日志数据
@@ -13,14 +14,15 @@ page.ctrl('loanLog', function($scope) {
 			type: 'post',
 			url: $http.api('loanLog/getLoanLog', 'jbs'),
 			data: {
-				// orderNo: $scope.$params.orderNo
-				orderNo: 'nfdb2016102421082285'
+				orderNo: $params.orderNo
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				setupLocation();
+				if($params.path) {
+					setupLocation();	
+				}
 				render.compile($scope.$el.$modifyPanel, $scope.def.modifyTmpl, result.data.loanEditLog, true);
 				render.compile($scope.$el.$loanLogPanel, $scope.def.logTmpl, result.data, true);
 				if( cb && typeof cb == 'function' ) {

@@ -45,7 +45,7 @@ page.ctrl('newCar', [], function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '新建合作车商'
+			current: $scope.shopId ? '编辑合作车商' : '新建合作车商'
 		});
 		$location.location();
 	}

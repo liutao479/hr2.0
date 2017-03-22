@@ -20,6 +20,7 @@ page.ctrl('loan', function($scope) {
 			data: params,
 			// url: $http.api('material/addOrUpdate', 'wl'),
 			success: $http.ok(function(result) {
+				console.log(result);
 				$scope.pageData = result.data;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page, true);
@@ -29,7 +30,9 @@ page.ctrl('loan', function($scope) {
 				// 测试复选框
 				$scope.$checks = $('.checkbox').checking();
 
-				$scope.$checks[0].$checking.onChange();
+				$scope.$checks[0].$checking.onChange(function() {
+					console.log(this)
+				});
 
 				// 测试弹窗
 				$console.find('#newBusiness').on('click', function() {
@@ -55,10 +58,6 @@ page.ctrl('loan', function($scope) {
 					        
 					    }
 					})
-					// that.openWindow({
-					// 	title: "新建业务",
-					// 	content: "<div>测试弹窗功能</div>"
-					// })
 				})
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -198,6 +197,7 @@ page.ctrl('loan', function($scope) {
 		loadLoanList(apiParams, function() {
 			setupEvt();
 		});
+		setupDatepicker();
 		setupDropDown();
 	});
 
@@ -206,7 +206,6 @@ page.ctrl('loan', function($scope) {
 		$params.pageNum = _page;
 		// router.updateQuery($scope.$path, $params);
 		loadLoanList(apiParams);
-		setupDatepicker();
 		cb();
 	}
 

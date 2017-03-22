@@ -25,7 +25,6 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 				$scope.result = result;
 				$scope.orderNo = result.data.orderInfo.orderNo;//订单号
 				setupLocation(result.data.orderInfo);
-				// console.log(result.data.backApprovalInfo)
 				setupBackReason(result.data.backApprovalInfo);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
@@ -35,7 +34,9 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 		})
 	}
 
-	// 抵押信息获取
+	/**
+	 * 加载登记证抵押信息
+	 */
 	var loadInfo = function(params, cb) {
 		$.ajax({
 			url: $http.api('loanPledgeInfo/get', 'cyj'),
@@ -43,9 +44,9 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				console.log(result);
-				result.data.disabled = true;
-				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result.data, true);
+				result.disabled = true;
+				console.log(result)
+				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -53,7 +54,9 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 		})
 	}
 
-	// 审核弹窗确定按钮
+	/**
+	 * 审核通过接口
+	 */
 	var verifyOrders = function(params, cb) {
 		$.ajax({
 			url: $http.api('loanPledge/approval/pass', 'cyj'),
@@ -69,8 +72,11 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 		})
 	}
 
-	// 退回弹窗确定按钮
+	/**
+	 * 退回订单接口
+	 */
 	var backOrders = function(params, cb) {
+		console.log(params)
 		$.ajax({
 			url: $http.api('loanPledge/approval/back', 'cyj'),
 			type: 'post',
@@ -89,26 +95,23 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 	* 底部操作按钮区域
 	*/	
 	var loadCommitBar = function(cb) {
-		$.ajax({
-			url: $http.api('auditCommit'),
-			// type: 'post',
-			// data: params,
-			// dataType: 'json',
-			success: $http.ok(function(result) {
-				var $commitBar = $console.find('#commitPanel');
-				$commitBar.data({
-					back: result.data.back,
-					verify: result.data.verify,
-					cancel: result.data.cancel,
-					submit: result.data.submit
-				});
-				$commitBar.commitBar();
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
-			})
-		})
-		
+		var buttons = {
+			"submit": false,
+			"back": true,
+			"cancel": false,
+			"verify": true
+		};
+		var $commitBar = $console.find('#commitPanel');
+		$commitBar.data({
+			back: buttons.back,
+			verify: buttons.verify,
+			cancel: buttons.cancel,
+			submit: buttons.submit
+		});
+		$commitBar.commitBar();
+		if(cb && typeof cb == 'function') {
+			cb();
+		}
 	}
 
 	/**
@@ -156,42 +159,106 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 	var setupCommitEvt = function() {
 		// 审核退回
 		$console.find('#back').on('click', function() {
-			var that = $(this);
-			that.openWindow({
+			$.confirm({
 				title: '退回订单',
 				content: dialogTml.wContent.suggestion,
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				$dialog.find('.w-sure').on('click', function() {
-					var _params = {
-						orderNo: $scope.orderNo,
-						reason: $dialog.find('#suggestion').val()
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							var _reason = $.trim($('.jconfirm #suggestion').val()),
+								_params = {
+									orderNo: $scope.orderNo
+								};
+							if(!_reason) {
+								$.alert({
+									title: '提交',
+									content: dialogTml.wContent.handelSuggestion,
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function () {
+												
+											}
+										}
+									}
+								})
+								return false;
+							} else {
+								_params.reason = _reason;
+							}
+							backOrders(_params, function() {
+								router.render('mortgageAudit');
+							})
+						}
 					}
-					backOrders(_params, function() {
-						$dialog.remove();
-					});
-				})
-			})
+				}
+			});
+			// var that = $(this);
+			// that.openWindow({
+			// 	title: '退回订单',
+			// 	content: dialogTml.wContent.suggestion,
+			// 	commit: dialogTml.wCommit.cancelSure
+			// }, function($dialog) {
+			// 	$dialog.find('.w-sure').on('click', function() {
+			// 		var _params = {
+			// 			orderNo: $scope.orderNo,
+			// 			reason: $dialog.find('#suggestion').val()
+			// 		}
+			// 		backOrders(_params, function() {
+			// 			$dialog.remove();
+			// 		});
+			// 	})
+			// })
 		})
 
 		// 审核通过
 		$console.find('#verify').on('click', function() {
-			var that = $(this);
-			that.openWindow({
+			$.confirm({
 				title: '审核通过',
 				content: dialogTml.wContent.suggestion,
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				$dialog.find('.w-sure').on('click', function() {
-					var _params = {
-						orderNo: $scope.orderNo,
-						reason: $dialog.find('#suggestion').val()
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							var _reason = $.trim($('.jconfirm #suggestion').val()),
+								_params = {
+									orderNo: $scope.orderNo
+								};
+							if(_reason) {
+								_params.reason = _reason;
+							}
+							verifyOrders(_params, function() {
+								router.render('mortgageAudit');
+							})
+						}
 					}
-					verifyOrders(_params, function() {
-						$dialog.remove();
-					});
-				})
-			})
+				}
+			});
+			// var that = $(this);
+			// that.openWindow({
+			// 	title: '审核通过',
+			// 	content: dialogTml.wContent.suggestion,
+			// 	commit: dialogTml.wCommit.cancelSure
+			// }, function($dialog) {
+			// 	$dialog.find('.w-sure').on('click', function() {
+			// 		var _params = {
+			// 			orderNo: $scope.orderNo,
+			// 			reason: $dialog.find('#suggestion').val()
+			// 		}
+			// 		verifyOrders(_params, function() {
+			// 			$dialog.remove();
+			// 		});
+			// 	})
+			// })
 		})
 	}
 

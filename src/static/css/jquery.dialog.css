@@ -57,7 +57,7 @@ body[class*=jconfirm-no-scroll-] {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	overflow-y: auto;
+	// overflow-y: auto;
 	-webkit-perspective: 500px;
 	perspective: 500px;
 	-webkit-perspective-origin: center;
@@ -70,7 +70,7 @@ body[class*=jconfirm-no-scroll-] {
 	position: relative;
 	outline: 0;
 	// padding: 15px 15px 0;
-	overflow: hidden
+	// overflow: hidden
 }
 
 @-webkit-keyframes type-blue {
@@ -362,7 +362,7 @@ body[class*=jconfirm-no-scroll-] {
 	display: inline-block;
 	width: 100%;
 	position: relative;
-	overflow: hidden
+	// overflow: hidden
 }
 
 .jconfirm .jconfirm-box div.jconfirm-content-pane .jconfirm-content img {
@@ -467,7 +467,8 @@ body[class*=jconfirm-no-scroll-] {
 }
 
 .jconfirm .jconfirm-box .jconfirm-buttons button.btn-default {
-	background-color: #ecf0f1;
+	// background-color: #ecf0f1;
+	background-color: #6b59c9;
 	color: #000;
 	text-shadow: none;
 	-webkit-transition: background .2s;
@@ -499,8 +500,25 @@ body[class*=jconfirm-no-scroll-] {
 }
 
 .jconfirm .jconfirm-box .jconfirm-buttons button.btn-purple:hover {
-	background-color: #8e44ad;
+	background-color: #4e3bb4;
 	color: #FFF
+}
+
+.jconfirm .jconfirm-box .jconfirm-buttons button.btn-cancel {
+	// background-color: #9b59b6;
+	// color: #FFF;
+	text-shadow: none;
+	-webkit-transition: background .2s;
+	transition: background .2s;
+    border: 1px solid #5084fc;
+    background-color: #ffffff;
+    color: #5084fc !important;
+}
+
+.jconfirm .jconfirm-box .jconfirm-buttons button.btn-cancel:hover {
+	color: #FFF !important;
+  	border-color: #6b59c9 !important;
+  	background-color: #6b59c9 !important;
 }
 
 .jconfirm .jconfirm-box .jconfirm-buttons button.btn-dark {
@@ -541,7 +559,7 @@ body[class*=jconfirm-no-scroll-] {
 }
 
 .jconfirm.jconfirm-white .jconfirm-box .jconfirm-buttons,.jconfirm.jconfirm-light .jconfirm-box .jconfirm-buttons {
-	float: right
+	text-align: center;
 }
 
 .jconfirm.jconfirm-white .jconfirm-box .jconfirm-buttons button,.jconfirm.jconfirm-light .jconfirm-box .jconfirm-buttons button {

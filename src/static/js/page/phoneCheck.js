@@ -3,6 +3,7 @@ page.ctrl('phoneCheck', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
 	var urlStr = "http://192.168.1.108:8080";
+	// $params.taskId = 80873;
 	/**
 	* 设置面包屑
 	*/
@@ -17,17 +18,19 @@ page.ctrl('phoneCheck', function($scope) {
 		});
 		$location.location();
 	}
+
 	/**
-	* 加载车贷办理数据
+	* 加载电审数据
 	* @params {object} params 请求参数 
 	* @params {function} cb 回调函数
 	*/
 	var loadTabList = function(cb) {
-		var data={};
-		data['taskId']=80872;
+		var params = {
+			taskId: $params.taskId
+		};
 		$.ajax({
 			url: urlStr+'/loanApproval/info',
-			data: data,
+			data: params,
 			dataType: 'json',
 			success: $http.ok(function(xhr) {
 				$scope.result = xhr;
@@ -46,7 +49,15 @@ page.ctrl('phoneCheck', function($scope) {
 	function loadGuide(cfg) {
 		if(cfg) {
 			render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
-			return listenGuide()
+			var code = cfg.frames[0].code;
+			var pageCode = subRouterMap[code];
+			var params = {
+				code: code,
+				orderNo: $params.orderNo,
+				taskId: $params.taskId
+			}
+			router.innerRender('#phoneCheck', 'loanProcess/'+pageCode, params);
+			return listenGuide();
 		}
 		var params = {
 			taskId: $params.taskId,
@@ -72,7 +83,8 @@ page.ctrl('phoneCheck', function($scope) {
 			if(!pageCode) return false;
 			var params = {
 				code: code,
-				orderNo: 0
+				orderNo: $params.orderNo,
+				taskId: $params.taskId
 			}
 			router.innerRender('#phoneCheck', 'loanProcess/'+pageCode, params);
 		})

@@ -1,115 +1,58 @@
 	<!--订单日志-->
 			<div class="container orders-log" id="orders-log">
-				<!--返回列表-->
-				<div class="path-back-bar">
-					<div class="path-back">
-						<i class="iconfont">&#xe626;</i>
-						<a href="#">我的客户</a>&nbsp;&gt;
-						<span class="current-page">订单详情</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">借款人：</span>
-						<span class="value">张三</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">当前操作人：</span>
-						<span class="value">程辉（客户经理）</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">订单生成时间：</span>
-						<span class="value">2016-11-03 14:02</span>
-					</div>
-				</div>
+				<!-- 面包屑 -->
+				<div id="location"></div>
+				<!-- 面包屑 -->
 				
-				<!--提交修改等等按钮-->
-				<div class="commit-orders-box commit-orders-box-area">
-					<a href="javascript:;" class="commit-item">
-						<i class="iconfont">&#xe614;</i>
-						<span>放款预约</span>
-					</a>
-					<a href="javascript:;" class="commit-item">
-						<i class="iconfont">&#xe6fd;</i>
-						<span>申请终止订单</span>
-					</a>
-					<a href="javascript:;" class="commit-item">
-						<i class="iconfont">&#xe640;</i>
-						<span>申请修改分期信息</span>
-					</a>
-				</div>
-				<!--提交修改等等按钮   end-->
-				
-				<!--工作台左侧菜单面板-->
-				<div class="panel panel-menu">
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item panel-menu-item-active" href="#">
-						征信结果
-						<span class="arrow arrow-right"></span>
-					</a>
-					<a class="panel-menu-item" href="#">开卡信息</a>
-					<a class="panel-menu-item" href="#">二手车评估信息</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-				</div>
-				<!--工作台左侧菜单面板 end-->
-				
-				
-				<!--修改记录 面板-->
-				<div class="panel panel-detail">
-					<!--一级标题-->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe6f5;</i>
-							<span class="panel-title-name">修改记录</span>
+				<div class="mt15">
+					<!--修改记录 面板-->
+					<div class="panel">
+						<!--一级标题-->
+						<div class="panel-title-box">
+							<div class="panel-title">
+								<i class="iconfont">&#xe6f5;</i>
+								<span class="panel-title-name">修改记录</span>
+							</div>
 						</div>
-					</div>
-					<!--详细内容罗列-->
-					<div class="panel-detail-content" id="modifyPanel">
-						
-					</div>
-					<!--详细内容罗列结束 end-->
-				</div>
-				<!--修改记录 面板 end-->
-				
-				<!--电审记录 面板-->
-				<div class="panel panel-detail">
-					<!--一级标题-->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe6f5;</i>
-							<span class="panel-title-name">电审记录</span>
+						<!--详细内容罗列-->
+						<div class="panel-detail-content" id="modifyPanel">
+							
 						</div>
+						<!--详细内容罗列结束 end-->
 					</div>
-					<!--详细内容罗列-->
-					<div class="panel-detail-content" id="telApproval">
-						
-					</div>
-					<!--详细内容罗列结束 end-->
-				</div>
-				<!--电审记录 面板 end-->
-				
-				<!--订单流转记录 面板-->
-				<div class="panel panel-detail">
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe6f5;</i>
-							<span class="panel-title-name">订单流转记录</span>
+					<!--修改记录 面板 end-->
+					
+					<!--电审记录 面板-->
+					<div class="panel">
+						<!--一级标题-->
+						<div class="panel-title-box">
+							<div class="panel-title">
+								<i class="iconfont">&#xe6f5;</i>
+								<span class="panel-title-name">电审记录</span>
+							</div>
 						</div>
+						<!--详细内容罗列-->
+						<div class="panel-detail-content" id="telApproval">
+							
+						</div>
+						<!--详细内容罗列结束 end-->
 					</div>
-					<!-- 详细日志 -->
-					<div class="panel-detail-content panel-detail-content-catalog" id="loanLogPanel"></div>
-					<!-- 详细日志 end-->
+					<!--电审记录 面板 end-->
+					
+					<!--订单流转记录 面板-->
+					<div class="panel">
+						<div class="panel-title-box">
+							<div class="panel-title">
+								<i class="iconfont">&#xe6f5;</i>
+								<span class="panel-title-name">订单流转记录</span>
+							</div>
+						</div>
+						<!-- 详细日志 -->
+						<div class="panel-detail-content panel-detail-content-catalog" id="loanLogPanel"></div>
+						<!-- 详细日志 end-->
+					</div>
+					<!--订单流转记录记录 面板 end-->
 				</div>
-				<!--订单流转记录记录 面板 end-->
-
 			</div>
 
 			<script type="text/x-dot-template" id="modifyTmpl">

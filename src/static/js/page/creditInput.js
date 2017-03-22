@@ -5,7 +5,7 @@ page.ctrl('creditInput', [], function($scope) {
 	$scope.tabs = {};
 	$scope.idx = 0;
 	$scope.apiParams = [];
-
+	$params.taskId = 80876;
 	/**
 	* 设置面包屑
 	*/
@@ -16,7 +16,7 @@ page.ctrl('creditInput', [], function($scope) {
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			current: '征信结果录入',
-			orderDate: '2017-12-12 12:12'
+			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
 	}
@@ -32,14 +32,14 @@ page.ctrl('creditInput', [], function($scope) {
 			type: 'post',
 			url: $http.api('creditUser/getCreditInfo', 'jbs'),
 			data: {
-				taskId: 80876
+				taskId: $params.taskId
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				result.index = idx;
 				$scope.result = result;
-				console.log($scope.result)
+				$scope.result.editable = 1;
 				// 编译tab栏
 				setupTab($scope.result, function() {
 					setupTabEvt();
@@ -460,15 +460,19 @@ page.ctrl('creditInput', [], function($scope) {
 	 * 下拉框请求数据回调
 	 */
 	$scope.dropdownTrigger = {
-		isQualified: function(t, p, cb) {
+		creditLevel: function(t, p, cb) {
 			var data = [
 				{
-					id: 0,
-					name: '合格'
+					id: 1,
+					name: '正常'
 				},
 				{
-					id: 1,
-					name: '不合格'
+					id: 2,
+					name: '关注'
+				},
+				{
+					id: 3,
+					name: '禁入'
 				}
 			];
 			var sourceData = {
@@ -480,7 +484,7 @@ page.ctrl('creditInput', [], function($scope) {
 		}
 	}
 
-	$scope.isQualifiedPicker = function(picked) {
+	$scope.creditLevelPicker = function(picked) {
 		console.log(picked);
 		var that = this.$el;
 		for(var i = 0, len = $scope.apiParams.length; i < len; i++) {

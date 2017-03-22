@@ -1,11 +1,10 @@
 'use strict';
 page.ctrl('mortgageProcess', [], function($scope) {
 	var $console = render.$console,
-		$params = $scope.$params,
 		apiParams = {
 			overdue:0,
-			operation: 2, 					//抵押办理接口
-	    	pageNum: $params.pageNum || 1,       //当前页码
+			operation: 2, 		//抵押办理接口
+	    	pageNum: 1,       //当前页码
 			pageSize: 20
 		};
 	/**
@@ -14,6 +13,7 @@ page.ctrl('mortgageProcess', [], function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadMortgageProcessList = function(params, cb) {
+		console.log(params);
 		$.ajax({
 			url: $http.api('loanPledge/List', 'cyj'),
 			type: 'post',
@@ -21,7 +21,9 @@ page.ctrl('mortgageProcess', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, function() {
+					setupEvt();
+				}, true);
 				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -34,7 +36,7 @@ page.ctrl('mortgageProcess', [], function($scope) {
 	*/
 	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
-			current: parseInt(apiParams.pageNum),
+			current: parseInt(_page.pageNum),
 			pages: isPage ? _page.pages : (tool.pages(_page.pages || 0, _page.pageSize)),
 			size: _page.pageSize
 		});
@@ -51,8 +53,7 @@ page.ctrl('mortgageProcess', [], function($scope) {
 	/**
 	 * 绑定立即处理事件
 	 */
-	var setupEvt = function() {
-
+	var evt = function() {
 		// 绑定搜索框模糊查询事件
 		$console.find('#searchInput').on('keydown', function(evt) {
 			if(evt.which == 13) {
@@ -62,51 +63,63 @@ page.ctrl('mortgageProcess', [], function($scope) {
 					return false;
 				}
 				apiParams.keyWord = searchText;
-				$params.keyWord = searchText;
 				apiParams.pageNum = 1;
-				$params.pageNum = 1;
 				loadMortgageProcessList(apiParams, function() {
-					delete apiParams.keyWord;
-					delete $params.keyWord;
 					that.blur();
 				});
-				// router.updateQuery($scope.$path, $params);
+				
 			}
 		});
-		
-		// 绑定只显示超期记录
-		$console.find('#overdue').on('click', function() {
-			var that = $(this);
-			if(!$(this).hasClass('checked')) {
-				apiParams.overdue = 1;
-				$params.overdue = 1;
-			} else {
-				apiParams.overdue = 0;
-				$params.overdue = 0;
+
+		// 文本框失去焦点记录文本框的值
+		$console.find('#searchInput').on('blur', function(evt) {
+			var that = $(this),
+				searchText = $.trim(that.val());
+			if(searchText) {
+				apiParams.keyWord = searchText;
 			}
-			loadMortgageProcessList(apiParams);
 		});
 
 		//绑定搜索按钮事件
 		$console.find('#search').on('click', function() {
+			apiParams.pageNum = 1;
 			loadMortgageProcessList(apiParams);
-			// router.updateQuery($scope.$path, $params);
-			
 		});
 
 		//绑定重置按钮事件
 		$console.find('#search-reset').on('click', function() {
 			// 下拉框数据以及输入框数据重置
-			// router.updateQuery($scope.$path, $params);
-			
+			$console.find('.select input').val('');
+			$console.find('#searchInput').val('');
+			$console.find('.checkbox').removeClass('checked').attr('checked', false).html('');
+			apiParams = {
+				overdue: 0,
+				operation: 2, 		//上牌办理接口
+		    	pageNum: 1,       //当前页码
+				pageSize: 20
+			};
 		});
 
+		// 初始化复选框
+		$console.find('.checkbox').checking(function($self) {
+			// 复选框回调函数（有问题）
+			if($self.attr('checked')) {
+				apiParams.overdue = 0;
+			} else {
+				apiParams.overdue = 1;
+			}
+			apiParams.pageNum = 1;
+			loadMortgageProcessList(apiParams);
+		});
+
+		
+	}
+
+	var setupEvt = function() {
 		// 进入详情页
 		$console.find('#mortgageProcessTable .button').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
-				// taskId: that.data('id'), 
-				// date: that.data('date'),
 				orderNo: that.data('id'),
 				path: 'mortgageProcess'
 			});
@@ -124,7 +137,7 @@ page.ctrl('mortgageProcess', [], function($scope) {
 		}
 		setupDropDown();
 		loadMortgageProcessList(apiParams, function() {
-			setupEvt();
+			evt();
 		});
 	});
 
@@ -133,11 +146,28 @@ page.ctrl('mortgageProcess', [], function($scope) {
 	 * 分页请求数据回调
 	 */
 	$scope.paging = function(_page, _size, $el, cb) {
-		apiParams.page = _page;
-		$params.page = _page;
-		// router.updateQuery($scope.$path, $params);
+		apiParams.pageNum = _page;
 		loadMortgageProcessList(apiParams);
 		cb();
+	}
+
+	/**
+	 * 下拉框点击回调
+	 */
+	$scope.statusPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.status;
+			return false;
+		}
+		apiParams.status = picked.id;
+	}
+
+	$scope.demandBankPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.bankName;
+			return false;
+		}
+		apiParams.bankName = picked.name;
 	}
 
 	/**
@@ -147,9 +177,13 @@ page.ctrl('mortgageProcess', [], function($scope) {
 		demandBank: function(t, p, cb) {
 			$.ajax({
 				type: 'post',
-				url: $http.api('demandBank/selectBank', 'zyj'),
+				url: $http.api('demandBank/selectBank', 'cyj'),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						bankId: '全部',
+						bankName: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
 						id: 'bankId',
@@ -162,16 +196,12 @@ page.ctrl('mortgageProcess', [], function($scope) {
 		status: function(t, p, cb) {
 			var data = [
 				{
+					id: '全部',
+					name: '全部'
+				},
+				{
 					id: 0,
 					name: '未办理'
-				},
-				{
-					id: 1,
-					name: '待审核'
-				},
-				{
-					id: 2,
-					name: '已审核'
 				},
 				{
 					id: 4,

@@ -118,14 +118,15 @@
 				<div class="select-search-bar select-search-bar-noborder clearfix">
 					<div class="search-item">
 						<span class="select-name">车商类型：</span>
-						<div class="select select-common" data-dropdown="page.$scope['organizationManage'].shopTypePicker" data-trigger="page.$scope['organizationManage'].dropdownTrigger.shopType"></div>
+						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['organizationManage'].shopTypePicker" data-trigger="page.$scope['organizationManage'].dropdownTrigger.shopType" data-selected="{{=it.shopTypeName || ''}}"></div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">车商名称：</span>
-						<div class="select select-common" data-dropdown="page.$scope['organizationManage'].shopNamePicker" data-trigger="page.$scope['organizationManage'].dropdownTrigger.shopName"></div>
+						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['organizationManage'].shopNamePicker" data-forceload="true" data-trigger="page.$scope['organizationManage'].dropdownTrigger.shopName" data-selected="{{=it.shopName || ''}}"></div>
 					</div>
 					<div class="search-item">
-						<div id="carListSearch" class="button button-mini">搜索</div>
+						<a href="javascript:;" id="search-reset">重置</a>
+						<div id="carListSearch" class="button button-mini">查询</div>
 					</div>
 				</div>
 				<table border="0" cellpadding="" width="100%" class="orders-table orders-table-noborder cooperation-maintenance-table">
@@ -140,8 +141,8 @@
 						</tr>
 					</thead>
 					<tbody id="organizationManageTable">
-						{{ var len = it.length; if(len) { }}
-							{{for(var i = 0; i < len; i++) { var row = it[i]; }}
+						{{ var len = it.resultlist.length; if(len) { }}
+							{{for(var i = 0; i < len; i++) { var row = it.resultlist[i]; }}
 								{{ if(i % 2 !== 0) { }}
 								<tr class="orders-item tr-even">
 								{{ } else if(i % 2 == 0 && i == 0) { }}
@@ -186,7 +187,7 @@
 											<i class="iconfont">&#xe640;</i>
 											编辑
 										</a>
-										<a class="button button-gray button-mini deleteBank" data-id="{{=row.id}}">
+										<a class="button button-gray button-mini deleteCar" data-id="{{=row.id}}">
 											<i class="iconfont">&#xe602;</i>
 											删除
 										</a>

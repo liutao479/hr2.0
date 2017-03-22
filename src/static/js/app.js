@@ -8,7 +8,7 @@
 $(function() {
 	var $menu;
 	$.ajax({
-		url: $http.apiMap.menu,
+		url: $http.api('menu'),
 		success: $http.ok(function(result) {
 			$menu = new menu('#menu', result.data, router.render);
 			router.init(function(menuId) {
@@ -20,4 +20,29 @@ $(function() {
 	setTimeout(function() {
 		new Todo($('#remind'));	
 	}, 1000)
+
+	/**
+	 * 弹窗默认设置
+	 */
+	jconfirm.defaults = {
+		closeIcon: true,
+		useBootstrap: false,
+		boxWidth: '500px',
+		theme: 'light',
+		type: 'purple'
+		// defaultButtons: {
+		// 	close: {
+	 //        	text: '取消',
+	 //        	btnClass: 'btn-default btn-cancel',
+	 //            action: function () {
+	 //            }
+	 //        },
+	 //        ok: {
+	 //        	text: '确定',
+	 //            action: function () {
+	 //            }
+	 //        }
+	        
+	 //    }
+	}
 });

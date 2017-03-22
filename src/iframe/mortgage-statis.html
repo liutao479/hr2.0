@@ -3,19 +3,19 @@
 				<div class="select-search-bar clearfix">
 					<div class="search-item">
 						<span class="select-name">抵押进度：</span>
-						<div class="select select-common" data-dropdown="page.$scope['mortgageStatis'].bankPicker" data-trigger="page.$scope['mortgageStatis'].dropdownTrigger.status"></div>
+						<div class="select select-common" data-selected="全部" data-placeholder="全部" data-dropdown="page.$scope['mortgageStatis'].statusPicker" data-trigger="page.$scope['mortgageStatis'].dropdownTrigger.status"></div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">分公司：</span>
-						<div class="select select-common" data-dropdown="page.$scope['mortgageStatis'].bankPicker" data-trigger="page.$scope['mortgageStatis'].dropdownTrigger.deptCompany"></div>
+						<div class="select select-common" data-selected="全部" data-placeholder="全部" data-dropdown="page.$scope['mortgageStatis'].deptCompanyPicker" data-trigger="page.$scope['mortgageStatis'].dropdownTrigger.deptCompany"></div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">经办行：</span>
-						<div class="select select-common" data-dropdown="page.$scope['mortgageStatis'].bankPicker" data-trigger="page.$scope['mortgageStatis'].dropdownTrigger.demandBank"></div>
+						<div class="select select-common" data-selected="全部" data-placeholder="全部" data-dropdown="page.$scope['mortgageStatis'].demandBankPicker" data-trigger="page.$scope['mortgageStatis'].dropdownTrigger.demandBank"></div>
 					</div>
 					<div class="search-item">
 						<div class="input-text">
-							<input type="text" autocomplete="off" id="searchInput" placeholder="订单号\借款人姓名\身份证号手机号" />
+							<input type="text" autocomplete="off" id="searchInput" placeholder="订单号\借款人姓名\身份证号\手机号" />
 						</div>
 					</div>
 					<div class="search-item">
@@ -71,7 +71,7 @@
 							<td class="orders-item-data">{{=row.orderNo}}</td>
 							<td class="orders-item-data">{{=row.acceptName}}</td>
 							<td class="orders-item-data">{{=row.realName}}</td>
-							<td class="orders-item-data">{{=row.acceptCompany}}</td>
+							<td class="orders-item-data">{{=row.deptName}}</td>
 							<td class="orders-item-data">{{=row.bankName}}</td>
 							{{ if(row.status == 0){ }}
 							<td class="orders-item-data status-wait-verify">未办理</td>
@@ -84,7 +84,7 @@
 										{{ } }} 
 							<td class="orders-item-data">{{=tool.formatDate(row.pickDate)}}</td>
 							<td class="orders-item-data">{{=tool.formatDate(row.deadline)}}</td>
-							{{ if(row.status && row.status == 2) { }}
+							{{ if(row.status == 2) { }}
 							<td class="orders-item-data">--</td>
 							{{ } else if(tool.overdue(row.pickDate, row.deadline) == "已超期") { }}
 								<td class="orders-item-data status-back">{{=tool.overdue(row.pickDate, row.deadline)}}</td>

@@ -28,11 +28,15 @@
 					<div class="button button-mini" id="bankDataSave">保存</div>
 					{{ } }}
 				</div>
-				<div class="panel-detail-content pl150 pr150 pb50 pt15">
+				<div class="panel-detail-content pl150 pr150 pb30 pt15">
 					<div class="select-search-bar no-border clearfix">
 						<div class="search-item">
 							<span class="select-name">银行名称：</span>
+							{{ if(!it.bankName) { }}
 							<div class="select select-bank-name" data-dropdown="page.$scope['newBank'].bankPicker" data-trigger="page.$scope['newBank'].dropdownTrigger.bankName" data-selected="{{=it.bankName || ''}}"></div>
+							{{ } else { }}
+							<span class="select-name">{{=it.bankName}}</span>
+							{{ } }}
 						</div>
 					</div>	
 				</div>
