@@ -3,7 +3,7 @@ page.ctrl('lendAudit', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
 	 var urlStr = "http://192.168.1.108:8080";
-//	$params.taskId = 80874;
+	$params.taskId = 80874;
 	/**
 	* 设置面包屑
 	*/
@@ -24,11 +24,13 @@ page.ctrl('lendAudit', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadTabList = function(cb) {
-		var data={};
-		data['taskId']=80873;
+		var params = {
+			taskId: $params.taskId
+		};
 		$.ajax({
-			url: urlStr+'/loanApproval/info',
-			data: data,
+			type: 'post',
+			url: $http.api('loanApproval/info', 'jbs'),
+			data: params,
 			dataType: 'json',
 			success: $http.ok(function(xhr) {
 				$scope.result = xhr;
@@ -45,24 +47,17 @@ page.ctrl('lendAudit', function($scope) {
 	* @params {object} cfg 配置对象
 	*/
 	function loadGuide(cfg) {
-		if(cfg) {
-			render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
-			return listenGuide()
-		}
+		render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
+		var code = cfg.frames[0].code;
+		var pageCode = subRouterMap[code];
+		console.log(pageCode);
 		var params = {
-			taskId: $params.taskId,
-			pageCode: "loanTelApproval"
+			code: code,
+			orderNo: $params.orderNo,
+			taskId: $params.taskId
 		}
-		$.ajax({
-			url: urlStr+'/telAdudit/info',
-			data: params,
-//			type: 'post',
-			dataType: 'json',
-			success: $http.ok(function(res) {
-				render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.cfgData, true);
-				listenGuide();
-			})
-		})
+		router.innerRender('#innerPanel', 'loanProcess/' + pageCode, params);
+		return listenGuide();
 	}
 
 	function listenGuide() {
@@ -76,7 +71,7 @@ page.ctrl('lendAudit', function($scope) {
 				orderNo: $params.orderNo,
 				taskId: $params.taskId
 			}
-			router.innerRender('#lendCheck', 'loanProcess/'+pageCode, params);
+			router.innerRender('#innerPanel', 'loanProcess/' + pageCode, params);
 		})
 	}
 
@@ -103,10 +98,10 @@ page.ctrl('lendAudit', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	$console.load(router.template('iframe/lend-audit'), function() {
+	$console.load(router.template('iframe/phoneCheck'), function() {
 		$scope.def.tabTmpl = $console.find('#checkResultTabsTmpl').html();
 		$scope.$el = {
-			$tab: $console.find('#checkTabs'),
+			$tab: $console.find('#checkTabs')
 		}
 		loadTabList();
 	})

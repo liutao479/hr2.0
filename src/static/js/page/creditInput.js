@@ -178,7 +178,7 @@ page.ctrl('creditInput', [], function($scope) {
 				$parent = that.parent().parent(),
 				file = this.files[0];
 			$.ajax({
-				url: 'http://112.74.99.75:8089/oss/video/sign',
+				url: $http.api('oss/video/sign', 'zyj'),
 				dataType: 'json'
 			}).done(function(response) {
 				if(!response.code) {

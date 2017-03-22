@@ -12,7 +12,8 @@ page.ctrl('loanLog', function($scope) {
 	var loadloanLog = function(_type, cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('loanLog/getLoanLog', 'jbs'),
+			// url: $http.api('loanLog/getLoanLog', 'jbs'),
+			url: 'http://192.168.1.108:8080/loanLog/getLoanLog',
 			data: {
 				orderNo: $params.orderNo
 			},
@@ -23,8 +24,9 @@ page.ctrl('loanLog', function($scope) {
 				if($params.path) {
 					setupLocation();	
 				}
-				render.compile($scope.$el.$modifyPanel, $scope.def.modifyTmpl, result.data.loanEditLog, true);
-				render.compile($scope.$el.$loanLogPanel, $scope.def.logTmpl, result.data, true);
+				render.compile($scope.$el.$modifyPanel, $scope.def.modifyTmpl, $scope.result.data.loanEditLog, true);
+				render.compile($scope.$el.$telApproval, $scope.def.telApprovalTmpl, $scope.result.data.telPhoneApprovalLog, true);
+				render.compile($scope.$el.$loanLogPanel, $scope.def.logTmpl, $scope.result.data, true);
 				if( cb && typeof cb == 'function' ) {
 					cb();
 				}

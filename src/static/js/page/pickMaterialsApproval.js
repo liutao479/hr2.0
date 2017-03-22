@@ -1,8 +1,8 @@
 'use strict';
-page.ctrl('loanApproval', function($scope) {
+page.ctrl('pickMaterialsApproval', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	$params.taskId = 80873;
+	$params.taskId = 80875;
 
 	/**
 	* 加载贷款审核左侧列表项配置
@@ -37,7 +37,7 @@ page.ctrl('loanApproval', function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '贷款审核',
+			current: '提车审核',
 			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();

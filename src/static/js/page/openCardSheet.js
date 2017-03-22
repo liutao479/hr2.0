@@ -218,44 +218,42 @@ page.ctrl('openCardSheet', function($scope) {
 //		$(this).parent(".addressDetail").hide();
 	})
 //模糊搜索
-	$(document).on('input','.searchInp', function() {
-		var that = $(this).parent().siblings(".selecter").find("div");
-		var key = $(this).data('key');
-		var boxKey = key + 'Box';
-		$(this).attr("id",boxKey);
-		var data={};
-            data['code'] = key;
-		$.ajax({
-			url: apiMap[key],
-			data: data,
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//				$source.selectType = result.data;
-				var selectOptBox = $(".selectOptBox");
-				selectOptBox.attr("id",key);
-			})
-		})
-	})
+//	$(document).on('input','.searchInp', function() {
+//		var that = $(this).parent().siblings(".selecter").find("div");
+//		var key = $(this).data('key');
+//		var boxKey = key + 'Box';
+//		$(this).attr("id",boxKey);
+//		var data={};
+//          data['code'] = key;
+//		$.ajax({
+//			url: apiMap[key],
+//			data: data,
+//			dataType: 'json',
+//			success: $http.ok(function(result) {
+//				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
+////				$source.selectType = result.data;
+//				var selectOptBox = $(".selectOptBox");
+//				selectOptBox.attr("id",key);
+//			})
+//		})
+//	})
 //点击下拉框拉取选项	
 	$(document).on('click','.selecter', function() {
 		var that =$("div",$(this));
+		var inputSearch =$(".searchInp",$(this));
 		var key = $(this).data('key');
 		var boxKey = key + 'Box';
-		$(this).attr("id",boxKey);
-		var data={};
-            data['code'] = key;
-		$.ajax({
-			url: apiMap[key],
-			data: data,
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//				$source.selectType = result.data;
-				var selectOptBox = $(".selectOptBox");
-				selectOptBox.attr("id",key);
-			})
-		})
+		var datatype = $(this).data('type');
+		if(datatype){
+			console.log(datatype);
+			render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
+			console.log(dataMap[key]);
+			var selectOptBox = $(".selectOptBox",$(this));
+			selectOptBox.style.display = 'block';
+//			selectOptBox.show();
+			console.log(selectOptBox);
+			
+		}
 	})
 	/***
 	* 保存按钮

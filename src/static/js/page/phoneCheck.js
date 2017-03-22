@@ -2,8 +2,32 @@
 page.ctrl('phoneCheck', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	var urlStr = "http://192.168.1.108:8080";
 	// $params.taskId = 80873;
+	
+
+	/**
+	* 加载电审左侧列表项配置
+	* @params {function} cb 回调函数
+	*/
+	var loadTabList = function(cb) {
+		var params = {
+			taskId: $params.taskId
+		};
+		$.ajax({
+			type: 'post',
+			url: $http.api('loanApproval/info', 'jbs'),
+			data: params,
+			dataType: 'json',
+			success: $http.ok(function(xhr) {
+				$scope.result = xhr;
+				setupLocation();
+				loadGuide(xhr.cfgData)
+				setupEvent();
+				leftArrow();
+			})
+		})
+	}
+
 	/**
 	* 设置面包屑
 	*/
@@ -18,61 +42,22 @@ page.ctrl('phoneCheck', function($scope) {
 		});
 		$location.location();
 	}
-
-	/**
-	* 加载电审数据
-	* @params {object} params 请求参数 
-	* @params {function} cb 回调函数
-	*/
-	var loadTabList = function(cb) {
-		var params = {
-			taskId: $params.taskId
-		};
-		$.ajax({
-			url: urlStr+'/loanApproval/info',
-			data: params,
-			dataType: 'json',
-			success: $http.ok(function(xhr) {
-				$scope.result = xhr;
-				setupLocation();
-				loadGuide(xhr.cfgData)
-				setupEvent();
-				leftArrow();
-			})
-		})
-	}
 	
 	/**
 	* 加载左侧导航菜单
 	* @params {object} cfg 配置对象
 	*/
 	function loadGuide(cfg) {
-		if(cfg) {
-			render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
-			var code = cfg.frames[0].code;
-			var pageCode = subRouterMap[code];
-			var params = {
-				code: code,
-				orderNo: $params.orderNo,
-				taskId: $params.taskId
-			}
-			router.innerRender('#phoneCheck', 'loanProcess/'+pageCode, params);
-			return listenGuide();
-		}
+		render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
+		var code = cfg.frames[0].code;
+		var pageCode = subRouterMap[code];
 		var params = {
-			taskId: $params.taskId,
-			pageCode: "loanTelApproval"
+			code: code,
+			orderNo: $params.orderNo,
+			taskId: $params.taskId
 		}
-		$.ajax({
-			url: urlStr+'/telAdudit/info',
-			data: params,
-//			type: 'post',
-			dataType: 'json',
-			success: $http.ok(function(res) {
-				render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.cfgData, true);
-				listenGuide();
-			})
-		})
+		router.innerRender('#innerPanel', 'loanProcess/' + pageCode, params);
+		return listenGuide();
 	}
 
 	function listenGuide() {
@@ -86,7 +71,7 @@ page.ctrl('phoneCheck', function($scope) {
 				orderNo: $params.orderNo,
 				taskId: $params.taskId
 			}
-			router.innerRender('#phoneCheck', 'loanProcess/'+pageCode, params);
+			router.innerRender('#innerPanel', 'loanProcess/' + pageCode, params);
 		})
 	}
 
@@ -116,7 +101,7 @@ page.ctrl('phoneCheck', function($scope) {
 	$console.load(router.template('iframe/phoneCheck'), function() {
 		$scope.def.tabTmpl = $console.find('#checkResultTabsTmpl').html();
 		$scope.$el = {
-			$tab: $console.find('#checkTabs'),
+			$tab: $console.find('#checkTabs')
 		}
 		loadTabList();
 	})

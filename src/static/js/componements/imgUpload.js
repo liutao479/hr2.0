@@ -380,8 +380,8 @@
 				<input type="file" class="input-file activeEvt" />\
 			   </div>{0}',
 		modify: '<div class="imgs-item-upload">\
-				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt"/></div>\
-				<div class="imgs-delete"><i class="iconfont">&#xe602;</i></div>\
+				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传"/></div>\
+				<div class="imgs-delete" title="删除"><i class="iconfont">&#xe602;</i></div>\
 				<img src="{1}" class="imgs-view" />\
 				{2}{3}</div>{0}',
 		view: '<div class="imgs-item-upload">\

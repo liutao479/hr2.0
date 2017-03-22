@@ -38,7 +38,6 @@ if(typeof WdatePicker == 'undefined'){
 			}
 			
 			if(target.is('div')){
-				console.log(2)
 				div = target;
 				
 				// 文本框
