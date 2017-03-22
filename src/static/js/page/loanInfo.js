@@ -394,6 +394,7 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	$(document).on('click', '.saveBtn', function() {
 		var isTure = true;
+		var btnType = $(this).data('type');
 		var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 		requireList.each(function(){
 			var value = $(this).val();
@@ -425,6 +426,7 @@ page.ctrl('loanInfo', function($scope) {
 	        if(formList.length == 1){
 		        var params = formList.serialize();
 	            params = decodeURIComponent(params,true);
+//	            params = decodeURI(params,true);
 	            var paramArray = params.split("&");
 	            var data1 = {};
 	            for(var i=0;i<paramArray.length;i++){
@@ -447,18 +449,31 @@ page.ctrl('loanInfo', function($scope) {
 					data[index]=data1;
 		        })
 	        }
-	        console.log(data);
-	        
-			$.ajax({
-				type: 'POST',
-				url: postUrl[key],
-				data:JSON.stringify(data),
-				dataType:"json",
-				contentType : 'application/json;charset=utf-8',
-				success: function(result){
-					console.log(result.msg);
-				}
-			});
+	        var dataPost;
+	        if(btnType){
+	        	dataPost = JSON.stringify(data);
+				$.ajax({
+					type: 'POST',
+					url: postUrl[key],
+					data:dataPost,
+					dataType:"json",
+					contentType : 'application/json;charset=utf-8',
+					success: function(result){
+						console.log(result.msg);
+					}
+				});
+	        }else{
+	        	dataPost = data;
+				$.ajax({
+					type: 'POST',
+					url: postUrl[key],
+					data:dataPost,
+					dataType:"json",
+					success: function(result){
+						console.log(result.msg);
+					}
+				});
+	        }
 		}
 	})
 	
@@ -779,10 +794,6 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		}
 	}
-
-	
-	
-	
 });
 
 
