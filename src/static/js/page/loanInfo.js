@@ -144,9 +144,81 @@ page.ctrl('loanInfo', function($scope) {
 	* 绑定立即处理事件
 	*/
 	var setupEvt = function($el) {
-		// 上传pdf文件
+		// 提交
 		$console.find('#submitOrder').on('click', function() {
 			console.log("提交订单");
+			var that = $(this);
+			// if( ) {
+			// 	//判断必填项是否填全
+			// } else {
+
+			// }
+			$.confirm({
+				title: '提交',
+				content: dialogTml.wContent.suggestion,
+				useBootstrap: false,
+				boxWidth: '500px',
+				theme: 'light',
+				type: 'purple',
+				buttons: {
+					'取消': {
+			            action: function () {
+
+			            }
+			        },
+			        '确定': {
+			            action: function () {
+	            			var _reason = $('#suggestion').val();
+	            			console.log(_reason);
+	            			if(!_reason) {
+	            				$.alert({
+	            					title: '提示',
+									content: '<div class="w-content"><div>请填写处理意见！</div></div>',
+									useBootstrap: false,
+									boxWidth: '500px',
+									theme: 'light',
+									type: 'purple',
+									buttons: {
+										'确定': {
+								            action: function () {
+								            }
+								        }
+								    }
+	            				})
+	            				return false;
+	            			} else {
+	            				$.ajax({
+									type: 'post',
+//									url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
+									url: urlStr+'/loanInfoInput/submit/80871',
+//									data: {
+//										taskId: $params.taskId,
+//										orderNo: $params.orderNo,
+//										reason: _reason
+//									},
+									dataType: 'json',
+									success: $http.ok(function(xhr) {
+										console.log(xhr);
+									})
+								})
+	            				$.ajax({
+									type: 'post',
+									url: $http.api('task/complete', 'jbs'),
+									data: {
+										taskId: $params.taskId,
+										orderNo: $params.orderNo,
+										reason: _reason
+									},
+									dataType: 'json',
+									success: $http.ok(function(result) {
+										console.log(result);
+									})
+								})
+	            			}
+			            }
+			        }
+			    }
+			})
 		})
 	}		
 	

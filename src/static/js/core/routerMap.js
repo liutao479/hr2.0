@@ -173,8 +173,12 @@
 			title: '电核',
 			page: 'phoneAudit'
 		},
-		'loanProcess/loanInfoAudit': {
+		'loanProcess/loanApproval': {
 			title: '贷款审核',
+			page: 'loanApproval'
+		},
+		'loanProcess/loanInfoAudit': {
+			title: '贷款信息表审核',
 			page: 'loanInfoAudit'
 		},
 		'loanProcess/makeLoanApproval': {
@@ -297,7 +301,8 @@
 		'T0013': 'loanMaterialsUpload',
 		'T0049': 'homeMaterialsUpload',
 		'T0015': 'loanLog',
-		'T0048': 'creditResult'
+		'T0048': 'creditResult',
+		'T0050': 'loanInfoAudit'
 	}
 	var todoMap = {'T0004': '',
 	'T0005': '',
