@@ -40,13 +40,8 @@
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>经销商名称：</span>
-								<span data-key="dealerId" class="info-value selecter">
-									<span class="inputSearch"><input class="searchInp" data-key = "dealerName" type="text" name="dealerName" id="dealerName" value="{{= it.dealerName}}" title="{{= it.dealerName}}" /></span>
-									<div></div>
-									<span class="placeholder" style="overflow: hidden;">{{= it.dealerName}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="dealerId" value="{{= it.dealerId}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.dealerId}}" data-dropdown="page.$scope['openCardSheet'].dealerId" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.dealerId"></div>
+								<input type="hidden" name="dealerId" value="{{= it.dealerId}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>上牌地：</span>
@@ -70,12 +65,8 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>分期期数：</span>
-								<span data-key="isSecond" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.repayPeriod}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="repayPeriod" value="{{= it.repayPeriod}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.repayPeriod}}" data-dropdown="page.$scope['openCardSheet'].repayPeriod" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.repayPeriod"></div>
+								<input type="hidden" name="repayPeriod" value="{{= it.repayPeriod}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>车辆价格：</span>
@@ -111,21 +102,13 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>性别：</span>
-								<span data-key="sex" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.sex}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="sex" value="{{= it.sex}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.sex}}" data-dropdown="page.$scope['openCardSheet'].sex" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.sex"></div>
+								<input type="hidden" name="sex" value="{{= it.sex}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>证件类型：</span>
-								<span data-key="sex" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.custsort}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="custsort" value="{{= it.custsort}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.custsort}}" data-dropdown="page.$scope['openCardSheet'].custsort" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.custsort"></div>
+								<input type="hidden" name="custsort" value="{{= it.custsort}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>证件号码：</span>
@@ -141,12 +124,8 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>婚姻状况：</span>
-								<span data-key="isSecond" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.mrtlstat}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="mrtlstat" value="{{= it.mrtlstat}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.mrtlstat}}" data-dropdown="page.$scope['openCardSheet'].mrtlstat" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.mrtlstat"></div>
+								<input type="hidden" name="mrtlstat" value="{{= it.mrtlstat}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>手机：</span>
@@ -269,21 +248,13 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位性质：</span>
-								<span data-key="isSecond" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.modelcode}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="modelcode" value="{{= it.modelcode}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.modelcode}}" data-dropdown="page.$scope['openCardSheet'].modelcode" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.modelcode"></div>
+								<input type="hidden" name="modelcode" value="{{= it.modelcode}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>职业：</span>
-								<span data-key="isSecond" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.occptn}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="occptn" value="{{= it.occptn}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.occptn}}" data-dropdown="page.$scope['openCardSheet'].occptn" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.occptn"></div>
+								<input type="hidden" name="occptn" value="{{= it.occptn}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>何时进入现单位工作：</span>
@@ -307,12 +278,8 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>与您的关系：</span>
-								<span data-key="isSecond" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.reltship1}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="reltship1" value="{{= it.reltship1}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.reltship1}}" data-dropdown="page.$scope['openCardSheet'].reltship1" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.reltship1"></div>
+								<input type="hidden" name="reltship1" value="{{= it.reltship1}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>手机：</span>
@@ -328,12 +295,8 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>与您的关系：</span>
-								<span data-key="isSecond" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.reltship2}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="reltship2" value="{{= it.reltship2}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.reltship2}}" data-dropdown="page.$scope['openCardSheet'].reltship2" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.reltship2"></div>
+								<input type="hidden" name="reltship2" value="{{= it.reltship2}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>手机：</span>
@@ -364,21 +327,13 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>卡片领取方式：</span>
-								<span data-key="isSecond" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.drawmode}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="drawmode" value="{{= it.drawmode}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.drawmode}}" data-dropdown="page.$scope['openCardSheet'].drawmode" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.drawmode"></div>
+								<input type="hidden" name="drawmode" value="{{= it.drawmode}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>短信余额变动提醒：</span>
-								<span data-key="isSecond" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.machgf}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="machgf" value="{{= it.machgf}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.machgf}}" data-dropdown="page.$scope['openCardSheet'].machgf" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.machgf"></div>
+								<input type="hidden" name="machgf" value="{{= it.machgf}}" />
 							</div>
 						</div>
 					</div>

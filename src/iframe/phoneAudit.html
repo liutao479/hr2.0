@@ -119,12 +119,12 @@
 									<span class="info-value info-value-long">
 									{{if(row.answer){ }}
 										<!--<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>-->
-										<div class="textArea" contenteditable="true">{{= row.editInfo}}</div>
+										<div class="textArea" contenteditable="true">{{= row.remark}}</div>
 									{{ }else{ }}
 										<!--<textarea name="editInfo" rows="4"></textarea>-->
 										<div class="textArea" contenteditable="true"></div>
 									{{ } }}
-										<input type="hidden" name="editInfo" value="{{= row.editInfo}}" />
+										<input type="hidden" name="editInfo" value="{{= row.remark}}" />
 									</span>
 								</div>
 							</div>
@@ -176,13 +176,13 @@
 									<span class="info-key">备注：</span>
 									<span class="info-value info-value-long">
 									{{if(role.answer){ }}
-										<div class="textArea" contenteditable="true">{{= role.editInfo}}</div>
+										<div class="textArea" contenteditable="true">{{= role.remark}}</div>
 										<!--<textarea name="editInfo" rows="4" value="{{= role.editInfo}}"></textarea>-->
 									{{ }else{ }}
 										<!--<textarea name="editInfo" rows="4"></textarea>-->
 										<div class="textArea" contenteditable="true"></div>
 									{{ } }}	
-										<input type="hidden" name="editInfo" value="{{= row.editInfo}}" />
+										<input type="hidden" name="editInfo" value="{{= row.remark}}" />
 									</span>
 								</div>
 							</div>
