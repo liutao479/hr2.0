@@ -207,7 +207,7 @@
 		},
 		'loanProcess/cardInfoApproval': {
 			title: '开卡审核',
-			page: 'openCardSheet'
+			page: 'cardAudit'
 		},
 		'loanProcess/cardInfoInput': {
 			title: '开卡信息录入',

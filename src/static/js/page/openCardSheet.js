@@ -8,18 +8,6 @@ page.ctrl('openCardSheet', function($scope) {
 			pageSize: 20
 		};
 	var urlStr = "http://192.168.1.108:8080";
-	var apiMap = {
-		"dealerName": urlStr+"/mock/sex",
-		"dealerId": urlStr+"/mock/busiSourceName",
-		"sex": urlStr+"/mock/sex",
-		"hprovince": urlStr+"/mock/province",
-		"hcity": urlStr+"/mock/city",
-		"hcounty": urlStr+"/mock/country",
-		"cprovince": urlStr+"/mock/province",
-		"ccity": urlStr+"/mock/city",
-		"ccounty": urlStr+"/mock/country",
-		"isSecond": urlStr+"/mock/busiSourceName"
-		}
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
@@ -39,6 +27,7 @@ page.ctrl('openCardSheet', function($scope) {
 				loanFinishedInput();
 				loanFinishedInputPic();
 				loanFinishedSelect();
+				console.log(dataMap['sex']);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -85,7 +74,7 @@ page.ctrl('openCardSheet', function($scope) {
 			$("#preview").hide();
 		}else{
 			$("#preview").show();
-			$("#preview").attr('src',urlStr+'/'+imgSrc);
+			$("#preview").attr('src',imgSrc);
 		}
 	}
 
@@ -104,6 +93,27 @@ page.ctrl('openCardSheet', function($scope) {
 			if(datatype){
 				render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
 			}
+			var value1 = $("input",$(this)).val();
+			$("li",$(this)).each(function(){
+				var val = $(this).data('key');
+				var text = $(this).text();
+				var keybank = $(this).data('bank');
+				var keyname = $(this).data('name');
+				if(value1 == val){
+					$(this).parent().parent().siblings(".placeholder").html(text);
+					$(this).parent().parent().siblings("input").val(val);
+					if(keybank && keyname){
+						$("#bankName").val(keybank);
+						$("#accountName").val(keyname);
+						
+					}
+					var value2 = $(this).parent().parent().siblings("input").val();
+					if(!value2){
+						$(this).parent().parent().siblings(".placeholder").html("请选择")
+					}
+					$(".selectOptBox").hide()
+				}
+			});
 		});
 	}
 	$(document).on('click','.selecter', function() {
@@ -237,24 +247,6 @@ page.ctrl('openCardSheet', function($scope) {
 //			})
 //		})
 //	})
-//点击下拉框拉取选项	
-	$(document).on('click','.selecter', function() {
-		var that =$("div",$(this));
-		var inputSearch =$(".searchInp",$(this));
-		var key = $(this).data('key');
-		var boxKey = key + 'Box';
-		var datatype = $(this).data('type');
-		if(datatype){
-			console.log(datatype);
-			render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
-			console.log(dataMap[key]);
-			var selectOptBox = $(".selectOptBox",$(this));
-			selectOptBox.style.display = 'block';
-//			selectOptBox.show();
-			console.log(selectOptBox);
-			
-		}
-	})
 	/***
 	* 保存按钮
 	*/
@@ -306,18 +298,17 @@ page.ctrl('openCardSheet', function($scope) {
 	*/
 	$console.load(router.template('iframe/open-card-sheet'), function() {
 		$scope.def.listTmpl = render.$console.find('#openCardSheettmpl').html();
-		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
+		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#openCardSheet'),
-		}
-		if($params.process) {
-			
+			$tbl: $console.find('#openCardSheet')
 		}
 		loadLoanList(function(){
+			console.log('zhixing');
 			setupDropDown();
 		});
 	});
-});
+
+	
 
 	$scope.bankPicker = function(picked) {
 		console.log(picked);
@@ -463,59 +454,7 @@ page.ctrl('openCardSheet', function($scope) {
 					break;
 			}
 		},
-		serviceType: function(t, p, cb) {
-			$.ajax({
-				url: urlStr+'/loanConfigure/getItem',
-				data:{
-					'code':'serviceType'
-				},
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'value',
-						name: 'name'
-					};
-					cb(sourceData);
-				})
-			})
-		}
-		,
-		brand: function(t, p, cb) {
-			$.ajax({
-				url: urlStr+"/demandBank/selectBank",
-				data:{
-					'code':'brand'
-				},
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'bankId',
-						name: 'bankName'
-					};
-					cb(sourceData);
-				})
-			})
-		},
-		busiSourceType: function(t, p, cb) {
-			$.ajax({
-				url: urlStr+"/loanConfigure/getItem",
-				data:{
-					'code':'busiSourceType'
-				},
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'value',
-						name: 'name'
-					};
-					cb(sourceData);
-				})
-			})
-		},
-		busiSourceName: function(t, p, cb) {
+		dealerId: function(t, p, cb) {
 			$.ajax({
 				url: urlStr+"/carshop/list",
 				data:{
@@ -532,49 +471,7 @@ page.ctrl('openCardSheet', function($scope) {
 				})
 			})
 		},
-		remitAccountNumber: function(t, p, cb) {
-			if(!$scope.busiSourceNameId){
-				alert("填写前面");
-				return false;
-			}else{
-				$.ajax({
-					url: urlStr+"/demandCarShopAccount/getAccountList",
-					data:{
-						'carShopId':$scope.busiSourceNameId
-					},
-					dataType: 'json',
-					success: $http.ok(function(xhr) {
-						var sourceData = {
-							items: xhr.data,
-							id: 'id',
-							name: 'account',
-							accountName: 'accountName',
-							bankName: 'bankName'
-						};
-						console.log(sourceData);
-						cb(sourceData);
-					})
-				})
-			}
-		},
-		busimode: function(t, p, cb) {
-			$.ajax({
-				url: urlStr+"/loanConfigure/getItem",
-				data:{
-					'code':'busimode'
-				},
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'value',
-						name: 'name'
-					};
-					cb(sourceData);
-				})
-			})
-		},
-		repaymentTerm: function(t, p, cb) {
+		repayPeriod: function(t, p, cb) {
 			$.ajax({
 				url: urlStr+"/loanConfigure/getItem",
 				data:{
@@ -592,3 +489,4 @@ page.ctrl('openCardSheet', function($scope) {
 			})
 		}
 	}
+});

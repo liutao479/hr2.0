@@ -42,6 +42,7 @@ page.ctrl('loanInfo', function($scope) {
 				loanFinishedCheckbox();
 				loanFinishedGps();
 				loanFinishedBxxb();
+//				console.log(page.$scope.loanInfo.result.cfgData);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}

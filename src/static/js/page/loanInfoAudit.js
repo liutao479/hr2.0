@@ -472,8 +472,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 			console.log('zhixing');
 			setupDropDown();
 		});
-		
-		
 	});
 	
 	$scope.areaPicker = function(picked) {

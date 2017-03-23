@@ -47,7 +47,7 @@
 									<input type="hidden" name="isSecond" value="{{= it.data.DDXX.isSecond}}" />
 								</span>
 							</div>
-							{{ };if(seg.code == 'serviceTypeCode'){ }}
+							{{ };if(seg.code == 'serviceType'){ }}
 							<div class="info-key-value-box">
 								<span class="info-key">
 									{{ if(seg.empty == '0'){ }}
@@ -1404,7 +1404,7 @@
 										<div></div>
 										<span class="placeholder">请选择</span>
 										<span class="arrow arrow-bottom right8px"></span>
-										<input type="hidden" name="relationship" />
+										<input type="hidden" name="relationship" value="{{= role.relationship }}" />
 									</span>
 								</div>
 							{{  };if(seg.code == 'phone1'){  }}
