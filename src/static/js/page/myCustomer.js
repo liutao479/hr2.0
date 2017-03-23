@@ -59,6 +59,21 @@ page.ctrl('myCustomer', [], function($scope) {
 	}
 
 	/**
+	* 日历控件
+	*/
+	var setupDatepicker = function() {
+		$console.find('.dateBtn').datepicker();
+		$console.find('.dateBtn').val(tool.formatDate(new Date().getTime()));
+	}
+
+	/**
+	* dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
+	/**
 	* 编译翻单页栏
 	*/
 	var setupScroll = function(page, cb) {
@@ -76,7 +91,7 @@ page.ctrl('myCustomer', [], function($scope) {
 			type: "post",
 			url: $http.api('financePayment/get', 'cyj'),
 			data:{
-				orderNo: that.data('orderno')
+				orderNo: that.data('orderNo')
 				// orderNo: 'nfdb2015091812345678'
 			},
 			dataType:"json",
@@ -92,7 +107,7 @@ page.ctrl('myCustomer', [], function($scope) {
 				}, function($dialog) {
 					$dialog.find('.w-sure').on('click', function() {
 						var isTrue = true;
-						var _orderNo = that.data('orderno');
+						var _orderNo = that.data('orderNo');
 						var _loaningDate = $dialog.find('#loaningDate').val();
 						var _paymentMoney = $dialog.find('#paymentMoney').val();
 						var _receiveCompanyAddress = $dialog.find('#receiveCompanyAddress').val();
@@ -148,6 +163,7 @@ page.ctrl('myCustomer', [], function($scope) {
 	 * 绑定立即处理事件
 	 */
 	var setupEvt = function() {
+
 		// 绑定搜索框模糊查询事件
 		$console.find('#searchInput').on('keydown', function(evt) {
 			if(evt.which == 13) {
@@ -236,7 +252,7 @@ page.ctrl('myCustomer', [], function($scope) {
 		// 放款预约
 		$console.find('#myCustomerTable .makeLoan').on('click', function() {
 			var that = $(this);
-			console.log(that.data('orderno'))
+			console.log(that.data('orderNo'))
 			makeLoan(that);
 			return false;
 		});
@@ -244,7 +260,7 @@ page.ctrl('myCustomer', [], function($scope) {
 		// 申请终止订单
 		$console.find('#myCustomerTable .applyTerminate').on('click', function() {
 			var that = $(this);
-			var _orderNo = that.data('orderno');
+			var _orderNo = that.data('orderNo');
 			console.log(_orderNo)
 
 
@@ -346,7 +362,6 @@ page.ctrl('myCustomer', [], function($scope) {
 			loadCustomerList(apiParams);
 		});
 	}
-		
 
 	/***
 	* 加载页面模板
@@ -359,20 +374,216 @@ page.ctrl('myCustomer', [], function($scope) {
 			$paging: $console.find('#pageToolbar'),
 			$scrollBar: $console.find('#scrollBar')
 		}
-		if($params.process) {
-			
-		}
+		
 		loadCustomerList(apiParams, function() {
 			setupEvt();
 		});
+		setupDropDown();
+		setupDatepicker();
 	});
 
+	/**
+	 * 分页请求数据回调
+	 */
 	$scope.paging = function(_pageNum, _size, $el, cb) {
 		apiParams.pageNum = _pageNum;
 		$params.pageNum = _pageNum;
 		// router.updateQuery($scope.$path, $params);
 		loadCustomerList(apiParams);
 		cb();
+	}
+
+	var car = {
+		brand: function(cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carBrandlist',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'brandId',
+						name: 'carBrandName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		series: function(brandId, cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carSeries',
+				data: {brandId: brandId},
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'serieName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		specs: function(seriesId, cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carSpecs',
+				data: {
+					serieId: seriesId
+				},
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'carSerieId',
+						name: 'specName'
+					};
+
+					cb(sourceData);
+				}
+			})
+		}
+	}
+
+	$scope.dropdownTrigger = {
+		car: function(tab, parentId, cb) {
+			if(!cb && typeof cb != 'function') {
+				cb = $.noop;
+			}
+			if(!tab) return cb();
+			switch (tab) {
+				case '品牌':
+					car.brand(cb);
+					break;
+				case "车系":
+					car.series(parentId, cb);
+					break;
+				case "车型":
+					car.specs(parentId, cb);
+					break;
+				default:
+					break;
+			}
+		},
+		busiSource: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('carshop/list', 'zyj'),
+				// url: 'http://localhost:8083/mock/carSpecs',
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		deptCompany: function(t, p, cb) {
+			$.ajax({
+				type: 'get',
+				url: $http.api('pmsDept/getPmsDeptList', 'zyj'),
+				data: {
+					parentId: 99
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					console.log(xhr)
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		demandBank: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'bankId',
+						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		category: function(t, p, cb) {
+			var data = [
+				{
+					id: 'creditMaterialsUpload',
+					name: '征信材料上传'
+				},
+				{
+					id: 'creditInput',
+					name: '征信结果录入'
+				},
+				{
+					id: 'creditApproval',
+					name: '征信预审核'
+				},
+				{
+					id: 'cardInfoInput',
+					name: '贷款信息录入'
+				},
+				{
+					id: 'usedCarInfoInput',
+					name: '二手车信息录入'
+				},
+				{
+					id: 'loanMaterialsChoose',
+					name: '贷款材料选择'
+				},
+				{
+					id: 'busiModeChoose',
+					name: '业务模式选择'
+				},
+				{
+					id: 'homeMaterialsUpload',
+					name: '上门材料上传'
+				},
+				{
+					id: 'signMaterialsUpload',
+					name: '签约材料上传'
+				},
+				{
+					id: 'loanMaterialsUpload',
+					name: '贷款材料上传'
+				},
+				{
+					id: 'advanceMaterialsUpload',
+					name: '垫资材料上传'
+				},
+				{
+					id: 'loanTelApproval',
+					name: '电审'
+				},
+				{
+					id: 'loanApproval',
+					name: '贷款审核'
+				},
+				{
+					id: 'makeLoanApproval',
+					name: '放款审核'
+				},
+				{
+					id: 'pickMaterialsUpload',
+					name: '提车材料上传'
+				},
+				{
+					id: 'pickMaterialsApproval',
+					name: '提车审核'
+				},
+			];
+			var sourceData = {
+				items: data,
+				id: 'id',
+				name: 'name'
+			};
+			cb(sourceData);
+		}
 	}
 });
 

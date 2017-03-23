@@ -39,28 +39,29 @@
 		if(!name) 
 			return 'http://127.0.0.1:8083/mock/' + method;
 		else
-			switch (name) {
-				// 周宜俭ip
-				case 'zyj':
-					return 'http://192.168.0.138:8080/' + method;
-					break;
-				// 蔡延军ip
-				case 'cyj':
-					return 'http://192.168.0.124:8080/' + method;
-					break;
-				// 季本松ip
-				case 'jbs':
-					return 'http://192.168.0.123:8080/' + method;
-					break;
-				// 王亮ip 
-				case 'wl':
-					return 'http://192.168.0.113:8888/' + method;
-					break;
-				// 李艳波ip 
-				case 'lyb':
-					return 'http://192.168.0.44:8080/' + method;
-					break;
-			}
+			// switch (name) {
+			// 	// 周宜俭ip
+			// 	case 'zyj':
+			// 		return 'http://192.168.1.108:8080/' + method;
+			// 		break;
+			// 	// 蔡延军ip
+			// 	case 'cyj':
+			// 		return 'http://192.168.1.116:8080/' + method;
+			// 		break;
+			// 	// 季本松ip
+			// 	case 'jbs':
+			// 		return 'http://192.168.1.108:8080/' + method;
+			// 		break;
+			// 	// 王亮ip 
+			// 	case 'wl':
+			// 		return 'http://192.168.1.113:8888/' + method;
+			// 		break;
+			// 	// 李艳波ip 
+			// 	case 'lyb':
+			// 		return 'http://192.168.1.44:8080/' + method;
+			// 		break;
+			// }
+			return 'http://192.168.0.186:9999/' + method;
 		//Todo 发布时增加prefix
 		// return 'http://192.168.0.113:8080/' + method;
 	}
@@ -90,6 +91,24 @@
 					case -1:
 
 						break;
+					case 6011:
+						$.alert({
+							title: '提示',
+							content: '账户已存在',
+							useBootstrap: false,
+							boxWidth: '500px',
+							theme: 'light',
+							buttons:{
+								ok: {
+									text: '确定',
+									action: function() {
+										// location.href = 'login.html';
+										// alert(1)
+									}
+								}
+							}
+						})
+						break;
 					default:
 						// statements_def
 						break;
@@ -98,7 +117,9 @@
 			}
 		}
 	};
-	var gUrl='http://127.0.0.1:8083/';
+	
+
+	var gUrl='http://192.168.1.90:8083/';
 	_.$http.apiMap = {
 		menu: gUrl+'mock/menu',
 		loanList: gUrl+'mock/loan.list',
@@ -152,6 +173,7 @@
 			title: '提示',
 			content: '你的登录授权无效或已过期',
 			useBootstrap: false,
+			boxWidth: '500px',
 			buttons:{
 				ok: {
 					text: '确定',
@@ -177,7 +199,7 @@
 		// _.$http.authorization(u.token);
 		_.hrLocalInformation = u;
 	}
-	localAuth();
+	// localAuth();
 	//授权校验 end
 
 	/************功能辅助类 begin************/
@@ -224,20 +246,33 @@
 	 * @params {boolean} deadline 上牌截止时间戳
 	 */
 	tool.overdue = function (pickDate, deadline) {
-		var currentTime = Math.round(new Date().getTime()/1000) * 1000;
-		var termTime = deadline - pickDate; //期限
+		var currentTime = new Date().getTime(); //当前时间
+		var termTime = deadline - pickDate; //超期期限
 		var duringTime = currentTime - pickDate; //至今距离提车日期的时间
-		var result = termTime - duringTime;
+		var result = termTime - duringTime;  //相差的毫秒数（倒计时）
 		if(result <= 0) return '已超期';
-		var _date = new Date(result).getDate(),
-			_hours = new Date(result).getHours();
-			_minutes = new Date(result).getMinutes();
-			_seconds = new Date(result).getSeconds();
+		var _date = Math.floor(result / (24 * 3600 * 1000));
+		var remain1 = result % (24 * 3600 * 1000);
+		var	_hours = Math.floor(remain1 / (3600 * 1000));
+		var remain2 = remain1 % (3600 * 1000);
+		var	_minutes = Math.floor(remain2/(60 * 1000));
+		var remain3 = remain2 % (60 * 1000);
+		var _seconds = Math.round(remain2 / 1000);
 		if(_date > 0) return _date + '天';	
 		if(_hours > 0) return _hours + '小时';
 		if(_seconds > 0 && _minutes < 60) return '1小时';
 		
 	}
+
+	/**
+	 * 添加弹窗的提示内容html格式化方法
+	 * @params {number} pickDate 提车日期时间戳
+	 * @params {boolean} deadline 上牌截止时间戳
+	 */
+	 tool.alert = function(str) {
+	 	return '<div class="w-content"><div class="w-text">' + str + '</div></div>';
+	 }
+
 	/**
 	 * 添加材料名称转换方法
 	 * @params {number} materialsCode 材料code

@@ -5,6 +5,14 @@ page.ctrl('newCar', [], function($scope) {
 		apiParams = {
 			
 		};
+	$scope.result = {};
+	$scope.result.data = {};
+	$scope.shopId = $params.shopId || '';
+	$scope.carShopId = $params.carShopId || '';
+	$scope.shopType = '';
+	$scope.shopName = '';
+	$scope.shopAddress = '';
+	$scope.operateBrand = '';
 
 	/**
 	 * 加载编辑/新建合作车商详情
@@ -14,13 +22,12 @@ page.ctrl('newCar', [], function($scope) {
 			url: $http.api('demandCarShop/detail', 'cyj'),
 			type: 'post',
 			data: {
-				shopId: $params.shopId
+				shopId: $scope.shopId
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				
 				// render.compile($scope.$el.$carPanel, $scope.def.carTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -28,6 +35,7 @@ page.ctrl('newCar', [], function($scope) {
 			})
 		})
 	}
+
 
 	/**
 	* 设置面包屑
@@ -37,7 +45,7 @@ page.ctrl('newCar', [], function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '新建合作车商'
+			current: $scope.shopId ? '编辑合作车商' : '新建合作车商'
 		});
 		$location.location();
 	}
@@ -67,18 +75,72 @@ page.ctrl('newCar', [], function($scope) {
 	}
 
 	/**
-	 * 加载（银行资料）立即处理事件
+	* dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
+	/**
+	 * 加载（车商资料）立即处理事件
 	 */
 	 var setupCarDataEvt = function() {
+	 	setupDropDown();
 
+		$console.find('#carDataSave').on('click', function() {
+			if($scope.shopType === '' || $scope.shopName === '') {
+				$.alert({
+					title: '提示',
+					content: '请完善必填项',
+					useBootstrap: false,
+					boxWidth: '500px',
+					theme: 'light',
+					buttons:{
+						ok: {
+							text: '确定'
+						}
+					}
+				})
+			} else {
+				var _params = {
+					organId: 99,               				//机构ID
+					shopType: $scope.shopType,             //经销商类型 0:4s 1:二级经销商
+					shopName: $scope.shopName      //经销商名
+				};
+				if($scope.shopAddress) {
+					_params['shopAddress'] = $scope.shopAddress;
+				}
+				if($scope.operateBrand) {
+					_params['operateBrand'] = $scope.operateBrand;
+				}
+				console.log(_params);
+				$.ajax({
+					url: $http.api('demandCarShop/save', 'cyj'),
+					type: 'post',
+					data: _params,
+					dataType: 'json',
+					success: $http.ok(function(result) {
+						console.log(result);
+						$scope.demandBankId = result.data;
+						loadNewBank(function() {
+							loadBankData();
+							loadBankAccount();
+							loadBankRate();
+						});
+					})
+				})
+			}
+			
+			
+		});
 	 }
 
 	/**
-	 * 加载（银行账户）立即处理事件
+	 * 加载（合作车商银行账户）立即处理事件
 	 */
 	var setupCarAccountEvt = function() {
 		// 增加银行账户
-		$console.find('#addCard').on('click', function() {
+		$console.find('#addCarAccount').on('click', function() {
 			var that = $(this);
 			var $parent = that.parent().parent();
 			var _accountBankName = $parent.find('.accountBankName input').val();
@@ -96,10 +158,10 @@ page.ctrl('newCar', [], function($scope) {
 			}
 			if(_accountBankName != '' && _accountNumber != '' && _accountName != '') {
 				var _params = {
-					carShopId: ,
-					bankName: ,
-					accountNumber: _accountNumber.trim(),
-					account: _accountName.trim(),
+					carShopId: $scope.carShopId,
+					bankName: _accountBankName.trim(),
+					accountNumber: parseInt(_accountNumber.trim()),
+					account: _accountName.trim()
 				}
 				console.log(_params)
 				$.ajax({
@@ -129,7 +191,7 @@ page.ctrl('newCar', [], function($scope) {
 			var stopUseChange = function(params, cb) {
 				console.log(params)
 				$.ajax({
-					url: $http.api('demandBankAccount/save', 'cyj'),
+					url: $http.api('demandCarShopAccount/save', 'cyj'),
 					type: 'post',
 					data: params,
 					dataType: 'json',
@@ -170,7 +232,7 @@ page.ctrl('newCar', [], function($scope) {
 			}, function($dialog) {
 				$dialog.find('.w-sure').on('click', function() {
 					$.ajax({
-						url: $http.api('demandBankAccount/del', 'cyj'),
+						url: $http.api('demandCarShopAccount/del', 'cyj'),
 						type: 'post',
 						data: {
 							id: that.data('id')
@@ -193,58 +255,54 @@ page.ctrl('newCar', [], function($scope) {
 	 */
 	var setupCarRateEvt = function() {
 		// 银行费率表增加按钮事件
-		$console.find('#addBankRate').on('click', function() {
+		$console.find('#addCarRate').on('click', function() {
 			var that = $(this);
-			console.log(1);
-			$.ajax({
-				url: $http.api('demandBankRate/save', 'cyj'),
-				type: 'post',
-				data: {
-					demankBankId: 1, //银行ID
-					isSecond: 1, //新车
-					provinceId: 110000, //省份ID
-					provinceName: '北京市', //省份名称
-					interestRate12: 23, //12期银行基准利率
-					interestRate18: 23, //18期银行基准利率
-					interestRate24: 5, //24期银行基准利率
-					interestRate30: 43, //30期银行基准利率
-					interestRate36: 43,//36期银行基准利率
-					interestRate48: 43, //48期银行基准利率
-					interestRate60: 43 //60期银行基准利率
-				},
-				dataType: 'json',
-				success: $http.ok(function(result) {
-					console.log(result);
-					loadNewBank(function() {
-						loadCarRate();
+			var $parent = that.parent().parent().parent();
+			var _carRate = $parent.find('#carRate input').val();
+			var _costPolicy = $parent.find('.policy-item').length + 1;
+			if(_carRate != undefined) {
+				var _params = {
+					carShopId: $scope.carShopId,          //经销商ID
+					costPolicy: '费率' + _costPolicy,     //新车
+					costRate: _carRate      //费率
+				}
+				$.ajax({
+					url: $http.api('demandCarShopPolicy/save', 'cyj'),
+					type: 'post',
+					data: _params,
+					dataType: 'json',
+					success: $http.ok(function(result) {
+						console.log(result);
+						loadNewCar(function() {
+							loadCarRate();
+						})
 					})
 				})
-			})
+			} else {
+				$parent.find('#carRate').append('<span class="input-err">费率不能为空！</span>');
+			}
 		})
 
 		// 合作银行费率删除
-		$console.find('.deleteBankRate').on('click', function() {
+		$console.find('.deleteCarRate').on('click', function() {
 			var that = $(this);
 			that.openWindow({
 				title: '提示',
-				content: '<div>确定删除该条银行费率表吗？</div>',
+				content: '<div>确定删除该条车商费率吗？</div>',
 				commit: dialogTml.wCommit.cancelSure
 			}, function($dialog) {
 				$dialog.find('.w-sure').on('click', function() {
-					console.log(1)
 					$.ajax({
-						url: $http.api('demandBankRate/del', 'cyj'),
+						url: $http.api('demandCarShopPolicy/del', 'cyj'),
 						type: 'post',
 						data: {
-							demankBankId: $params.bankId, //银行ID
-							isSecond: that.data('isSecond'), //新车
-							provinceId: that.data('provinceId') //省份ID
+							policyId: that.data('policyId') 
 						},
 						dataType: 'json',
 						success: $http.ok(function(result) {
 							console.log(result);
 							$dialog.remove();
-							loadNewBank(function() {
+							loadNewCar(function() {
 								loadCarRate();
 							})
 						})
@@ -272,11 +330,115 @@ page.ctrl('newCar', [], function($scope) {
 			$carRatePanel: $console.find('#carRatePanel')
 		}
 		setupLocation();
-		loadNewCar(function() {
+		if($scope.shopId) {
+			loadNewCar(function() {
+				loadCarData();
+				loadCarAccount();
+				loadCarRate();
+			});
+		} else {
 			loadCarData();
-			loadCarAccount();
-			loadCarRate();
-		});
+		}
 	});
+
+
+	/**
+	 * 下拉框请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		shopType: function(t, p, cb) {
+			var data = [
+				{
+					id: 0,
+					name: '4s'
+				},
+				{
+					id: 1,
+					name: '二级经销商'
+				}
+			];
+			var sourceData = {
+				items: data,
+				id: 'id',
+				name: 'name'
+			};
+			cb(sourceData);
+		},
+		shopName: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandCarShop/getList', 'zyj'),
+				data: {
+					shopType: $scope.shopType//车商类型   0:4s  1:二级经销商
+				}, 	
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'shopId',
+						name: 'shopName'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		operateBrand: function(tab, parentId, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('car/carBrandList', 'cyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'brandId',
+						name: 'carBrandName'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		areaSource: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('area/get', 'cyj'),
+				data: {
+					parentId: 0
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		}
+
+	}
+
+	/**
+	 * 车商类型选定回调
+	 */
+	$scope.shopTypePicker = function(picked) {
+		console.log(picked);
+		$scope.shopType = picked.id;
+	}
+
+	$scope.shopNamePicker = function(picked) {
+		console.log(picked);
+		$scope.shopName = picked.name;
+	}
+
+	$scope.shopAddressPicker = function(picked) {
+		console.log(picked);
+		$scope.shopAddress = picked.name;	
+	}
+
+	$scope.operateBrandPicker = function(picked) {
+		console.log(picked);
+		$scope.operateBrand = picked.name;	
+	}
 
 })

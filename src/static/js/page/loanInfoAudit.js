@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('loanInfo', function($scope) {
+page.ctrl('loanInfoAudit', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console,
 		$source = $scope.$source = {},
@@ -24,8 +24,8 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-			data['taskId']=80871;
-//			data['taskId']=$params.taskId;
+			data['taskId']=80872;
+			data['frameCode']='T0047';
 		$.ajax({
 //			 url: $http.api('loan.infoBak'),
 			// url: $http.api('loanInfoInput/info','jbs'),
@@ -48,6 +48,7 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		});
 	}
+	
 	
 	/**
 	* 设置面包屑
@@ -137,91 +138,7 @@ page.ctrl('loanInfo', function($scope) {
 			});
 		});
 	}
-	
-	
-	
-	/**
-	* 绑定立即处理事件
-	*/
-	var setupEvt = function($el) {
-		// 提交
-		$console.find('#submitOrder').on('click', function() {
-			console.log("提交订单");
-			var that = $(this);
-			// if( ) {
-			// 	//判断必填项是否填全
-			// } else {
 
-			// }
-			$.confirm({
-				title: '提交',
-				content: dialogTml.wContent.suggestion,
-				useBootstrap: false,
-				boxWidth: '500px',
-				theme: 'light',
-				type: 'purple',
-				buttons: {
-					'取消': {
-			            action: function () {
-
-			            }
-			        },
-			        '确定': {
-			            action: function () {
-	            			var _reason = $('#suggestion').val();
-	            			console.log(_reason);
-	            			if(!_reason) {
-	            				$.alert({
-	            					title: '提示',
-									content: '<div class="w-content"><div>请填写处理意见！</div></div>',
-									useBootstrap: false,
-									boxWidth: '500px',
-									theme: 'light',
-									type: 'purple',
-									buttons: {
-										'确定': {
-								            action: function () {
-								            }
-								        }
-								    }
-	            				})
-	            				return false;
-	            			} else {
-	            				$.ajax({
-									type: 'post',
-//									url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
-									url: urlStr+'/loanInfoInput/submit/80871',
-//									data: {
-//										taskId: $params.taskId,
-//										orderNo: $params.orderNo,
-//										reason: _reason
-//									},
-									dataType: 'json',
-									success: $http.ok(function(xhr) {
-										console.log(xhr);
-									})
-								})
-	            				$.ajax({
-									type: 'post',
-									url: $http.api('task/complete', 'jbs'),
-									data: {
-										taskId: $params.taskId,
-										orderNo: $params.orderNo,
-										reason: _reason
-									},
-									dataType: 'json',
-									success: $http.ok(function(result) {
-										console.log(result);
-									})
-								})
-	            			}
-			            }
-			        }
-			    }
-			})
-		})
-	}		
-	
 //点击下拉框拉取选项
 	$(document).on('click','.selecter', function() {
 		var that =$("div",$(this));
@@ -477,7 +394,6 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	$(document).on('click', '.saveBtn', function() {
 		var isTure = true;
-		var btnType = $(this).data('type');
 		var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 		requireList.each(function(){
 			var value = $(this).val();
@@ -509,7 +425,6 @@ page.ctrl('loanInfo', function($scope) {
 	        if(formList.length == 1){
 		        var params = formList.serialize();
 	            params = decodeURIComponent(params,true);
-//	            params = decodeURI(params,true);
 	            var paramArray = params.split("&");
 	            var data1 = {};
 	            for(var i=0;i<paramArray.length;i++){
@@ -532,46 +447,35 @@ page.ctrl('loanInfo', function($scope) {
 					data[index]=data1;
 		        })
 	        }
-	        var dataPost;
-	        if(btnType){
-	        	dataPost = JSON.stringify(data);
-				$.ajax({
-					type: 'POST',
-					url: postUrl[key],
-					data:dataPost,
-					dataType:"json",
-					contentType : 'application/json;charset=utf-8',
-					success: function(result){
-						console.log(result.msg);
-					}
-				});
-	        }else{
-	        	dataPost = data;
-				$.ajax({
-					type: 'POST',
-					url: postUrl[key],
-					data:dataPost,
-					dataType:"json",
-					success: function(result){
-						console.log(result.msg);
-					}
-				});
-	        }
+	        console.log(data);
+	        
+			$.ajax({
+				type: 'POST',
+				url: postUrl[key],
+				data:JSON.stringify(data),
+				dataType:"json",
+				contentType : 'application/json;charset=utf-8',
+				success: function(result){
+					console.log(result.msg);
+				}
+			});
 		}
 	})
 	
-	$console.load(router.template('iframe/loanInfo'), function() {
+	$console.load(router.template('iframe/loanInfoAudit'), function() {
 		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
 		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#loanInfoTable')
+			$tbl: $console.find('#loanAudit')
 		}
 		loadLoanList(function(){
+			console.log('zhixing');
 			setupDropDown();
 		});
-		setupEvt();
+		
+		
 	});
-
+	
 	$scope.areaPicker = function(picked) {
 		console.log(picked);
 	}
@@ -586,21 +490,18 @@ page.ctrl('loanInfo', function($scope) {
 	}
 	$scope.busiSourceNamePicker = function(picked) {
 		console.log(picked);
-		$scope.busiSourceNameId = picked.id;
-		$("#busiSourceId").val(picked.id);
+		$scope.busiSourceNameId = picked.id
 	}
-//	$scope.remitAccountNumberPicker = function(picked) {
-//		console.log(picked);
-//		$("#bankName").val(picked.bankName)
-//		$("#accountName").val(picked.accountName)
-//	}
+	$scope.remitAccountNumberPicker = function(picked) {
+		console.log(picked);
+		$("#bankName").val(picked.bankName)
+		$("#accountName").val(picked.accountName)
+	}
 	$scope.busimodePicker = function(picked) {
 		console.log(picked);
 	}
 	$scope.repaymentTermPicker = function(picked) {
 		console.log(picked);
-		$("#repayPeriod").val(picked.id);
-		loanFinishedrepay();
 	}
 	$scope.carPicker = function(picked) {
 		console.log(picked);
@@ -670,6 +571,7 @@ page.ctrl('loanInfo', function($scope) {
 						id: 'areaId',
 						name: 'name'
 					};
+					console.log('省：'+sourceData);
 					cb(sourceData);
 				}
 			})
@@ -704,6 +606,7 @@ page.ctrl('loanInfo', function($scope) {
 						id: 'areaId',
 						name: 'name'
 					};
+
 					cb(sourceData);
 				}
 			})
@@ -878,6 +781,10 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		}
 	}
+
+	
+	
+	
 });
 
 

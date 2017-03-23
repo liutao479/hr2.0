@@ -40,50 +40,123 @@
 			<!-- 登记证材料 end-->
 
 			<script type="text/x-dot-template" id="mortgageInfoTmpl">
-				<table border="1" class="field-table">
+				{{ for(var i = 0, len = it.data.length; i < len; i++) { var row = it.data[i]; }}
+				{{ if(i == 0) { }}
+				<table border="1" class="field-table" data-pledge-id="{{=row.pledgeId}}" data-id="{{=row.id}}">
+				{{ } else { }}
+				<table border="1" class="field-table mt30" data-pledge-id="{{=row.pledgeId}}" data-id="{{=row.id}}">
+				{{ } }}
 					<tbody>
 						<tr class="tr-odd">
-							<td class="td-key">抵押权人</td>
+							<td class="td-key">抵押权人{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input" id="pledgee" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=it.pledgee || ''}}">
+								<input class="input-x required" data-type="pledgee" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgee || ''}}">
 							</td>
-							<td class="td-key">身份证明名称</td>
+							<td class="td-key">身份证明名称{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input" id="cardName" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=it.cardName || ''}}">
+								<input class="input-x required" data-type="cardName" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.cardName || ''}}">
 							</td>
 						</tr>
 						<tr class="tr-even">
-							<td class="td-key">身份证号码</td>
+							<td class="td-key">身份证号码{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input" id="idCard" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=it.idCard || ''}}">
+								<input class="input-x required" data-type="idCard" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.idCard || ''}}">
 							</td>
-							<td class="td-key">登记机关</td>
+							<td class="td-key">登记机关{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input" id="pledgeDept" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=it.pledgeDept || ''}}">
+								<input class="input-x required" data-type="pledgeDept" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgeDept || ''}}">
 							</td>
 						</tr>
 						<tr class="tr-odd">
-							<td class="td-key">机动车登记编号</td>
+							<td class="td-key">机动车登记编号{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input" id="vehileRegNo" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=it.vehileRegNo || ''}}">
+								<input class="input-x required" data-type="vehileRegNo" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.vehileRegNo || ''}}">
 							</td>
-							<td class="td-key">抵押登记日期</td>
+							<td class="td-key">抵押登记日期{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input" id="pledgeDate" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=(it.pledgeDate ? tool.formatDate(it.pledgeDate) : '')}}">
+								{{ if(it.disabled) { }}
+									<input class="input-x" data-type="pledgeDateString" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.pledgeDate ? tool.formatDate(row.pledgeDate) : '')}}">
+								{{ } else { }}
+								<div class="input-text input-date-mini">
+									<input id="srart{{=i}}" data-type="pledgeDateString" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.pledgeDate ? tool.formatDate(row.pledgeDate) : '')}}" />	
+								</div>
+								{{ } }}
 							</td>
 						</tr>
 						<tr class="tr-even">
-							<td class="td-key">解除抵押日期</td>
+							<td class="td-key">解除抵押日期{{=i+1}}</td>
 							<td class="td-value">
-								<input class="input" id="unPledgeDate" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="{{=(it.unPledgeDate ? tool.formatDate(it.unPledgeDate) : '')}}">
+								{{ if(it.disabled) { }}
+									<input class="input-x" data-type="unPledgeDateString" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.unPledgeDate ? tool.formatDate(row.unPledgeDate) : '')}}">
+								{{ } else { }}
+								<div class="input-text input-date-mini">
+									<input id="end{{=i}}" data-type="unPledgeDateString" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.unPledgeDate ? tool.formatDate(row.unPledgeDate) : '')}}" />	
+								</div>
+								{{ } }}
 							</td>
 							<td class="td-key"></td>
-							<td class="td-value">
-								<input class="input" type="text"{{=(it.disabled ? ' disabled' : '' )}}" value="">
-							</td>
+							<td class="td-value"></td>
 						</tr>
 					</tbody>
 				</table>
+				{{ } }}
+
+				{{ if(!it.disabled) { }}
+				<table border="1" class="newPledgee field-table{{=(len > 0 ? ' mt30' : '')}}">
+					<tbody>
+						<tr class="tr-odd">
+							<td class="td-key">抵押权人{{=len + 1}}</td>
+							<td class="td-value">
+								<input class="input-x" data-type="pledgee" type="text" value="">
+							</td>
+							<td class="td-key">身份证明名称{{=len + 1}}</td>
+							<td class="td-value">
+								<input class="input-x" data-type="cardName" type="text" value="">
+							</td>
+						</tr>
+						<tr class="tr-even">
+							<td class="td-key">身份证号码{{=len + 1}}</td>
+							<td class="td-value">
+								<input class="input-x" data-type="idCard" type="text" value="">
+							</td>
+							<td class="td-key">登记机关{{=len + 1}}</td>
+							<td class="td-value">
+								<input class="input-x" data-type="pledgeDept" type="text" value="">
+							</td>
+						</tr>
+						<tr class="tr-odd">
+							<td class="td-key">机动车登记编号{{=len + 1}}</td>
+							<td class="td-value">
+								<input class="input-x" data-type="vehileRegNo" type="text" value="">
+							</td>
+							<td class="td-key">抵押登记日期{{=len + 1}}</td>
+							<td class="td-value">
+								{{ if(it.disabled) { }}
+									<input class="input-x" data-type="pledgeDateString" type="text" value="">
+								{{ } else { }}
+								<div class="input-text input-date-mini">
+									<input id="srart{{=i}}" data-type="pledgeDateString" type="text" class="dateBtn" readonly="readonly" value="" />	
+								</div>
+								{{ } }}
+							</td>
+						</tr>
+						<tr class="tr-even">
+							<td class="td-key">解除抵押日期{{=len + 1}}</td>
+							<td class="td-value">
+								{{ if(it.disabled) { }}
+									<input class="input-x" data-type="unPledgeDateString" type="text" value="">
+								{{ } else { }}
+								<div class="input-text input-date-mini">
+									<input id="end{{=i}}" data-type="unPledgeDateString" type="text" class="dateBtn" readonly="readonly" value="" />	
+								</div>
+								{{ } }}
+							</td>
+							<td class="td-key"></td>
+							<td class="td-value"></td>
+						</tr>
+					</tbody>
+				</table>
+				{{ } }}
 			</script>
 
 			<script type="text/x-dot-template" id="loanUploadTmpl">

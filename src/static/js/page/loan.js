@@ -20,6 +20,7 @@ page.ctrl('loan', function($scope) {
 			data: params,
 			// url: $http.api('material/addOrUpdate', 'wl'),
 			success: $http.ok(function(result) {
+				console.log(result);
 				$scope.pageData = result.data;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page, true);
@@ -29,17 +30,35 @@ page.ctrl('loan', function($scope) {
 				// 测试复选框
 				$scope.$checks = $('.checkbox').checking();
 
-				$scope.$checks[0].$checking.onChange();
+				$scope.$checks[0].$checking.onChange(function() {
+					console.log(this)
+				});
 
 				// 测试弹窗
 				$console.find('#newBusiness').on('click', function() {
 					var that = $(this);
-					that.openWindow({
-						title: "新建业务",
-						content: "<div>测试弹窗功能</div>"
+					$.alert({
+						title: '测试弹窗功能',
+						content: dialogTml.wContent.addCreditUsers,
+						useBootstrap: false,
+						boxWidth: '500px',
+						theme: 'light',
+						type: 'purple',
+						buttons: {
+							close: {
+					        	text: '取消',
+					            action: function () {
+					            }
+					        },
+					        ok: {
+					        	text: '确定',
+					            action: function () {
+					            }
+					        }
+					        
+					    }
 					})
 				})
-
 				if(cb && typeof cb == 'function') {
 					cb();
 				}  
@@ -56,6 +75,13 @@ page.ctrl('loan', function($scope) {
 			size: apiParams.pageSize
 		});
 		$('#pageToolbar').paging();
+	}
+
+	/**
+	* 日历控件
+	*/
+	var setupDatepicker = function() {
+		$('.dateBtn').datepicker();
 	}
 
 	/**
@@ -101,6 +127,7 @@ page.ctrl('loan', function($scope) {
 			}
 			router.render(that.data('href'), {
 				taskId: that.data('id'), 
+				orderNo: that.data('orderNo'),
 				tasks: taskObj,
 				path: 'loanProcess'
 			});
@@ -170,6 +197,7 @@ page.ctrl('loan', function($scope) {
 		loadLoanList(apiParams, function() {
 			setupEvt();
 		});
+		setupDatepicker();
 		setupDropDown();
 	});
 
@@ -177,7 +205,6 @@ page.ctrl('loan', function($scope) {
 		apiParams.pageNum = _page;
 		$params.pageNum = _page;
 		// router.updateQuery($scope.$path, $params);
-		
 		loadLoanList(apiParams);
 		cb();
 	}

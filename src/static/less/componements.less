@@ -13,6 +13,7 @@
     user-select:none;
     color: #FFF;
     background-color: @buttonBgColor;
+    white-space: nowrap;
     &:hover {
         background-color: darken(@buttonBgColor, 10%);
     }
@@ -122,6 +123,12 @@
         text-align: center;
         color: #b7bfc5;
         cursor: pointer;
+        &.imgs-item-upload-blank {
+            cursor: default;
+            &:hover {
+                background-color: #f1f1f2 !important;
+            }
+        }
         &:hover {
             background-color: darken(#f1f1f2,5%);
         }
@@ -152,6 +159,7 @@
         .iconfont-upload {
             margin-top: 20px;
             .iconfont {
+                cursor: pointer;
                 font-size: 65px;    
             }
         }
@@ -356,6 +364,7 @@
     height: 32px;
     border: 1px solid @borderColor;
     padding: 0 10px;
+    background-color: #FFF;
     .borderRadius(3px);
     &.input-text-mini {
         width: 250px;
@@ -371,6 +380,22 @@
     }
     &.input-text-mini2 {
         width: 120px;
+    }
+    &.input-date-mini {
+        padding: 0; 
+        width: 150px;
+        input {
+            padding-left: 10px;
+            background: url(img/datePicker.gif) no-repeat 124px 4px;
+        }
+    }
+    &.input-date {
+        padding: 0; 
+        width: 250px;
+        input {
+            padding-left: 10px;
+            background: url(img/datePicker.gif) no-repeat 226px 4px;
+        }
     }
     input {
         float: left;
@@ -397,12 +422,18 @@
         width: 120px;
     }
 }
+.twoLiTab{
+    li{
+        width: 50% !important;
+    }
+}
 
 //选择框
 .select {
     position: relative;
     display: inline-block;
     height: 32px;
+    padding: 0 !important;
     line-height: 30px;
     .borderRadius(3px);
     border: 1px solid @selectBorderColor;
@@ -410,26 +441,44 @@
     color: @tiperColor;
     &&-common {
         width: 150px;
-        .placeholder {
-            width: 120px;
-        }
+    }
+    &&-bank-name {
+        width: 180px;
     }
     &&-date {
         width: 120px;
-        .placeholder {
-            width: 90px;
-        }
     }
     &&-car {
-        width: 248px;
+        width: 284px;
     }
     &&-bank {
-        width: 350px;
-        .placeholder {
-            width: 285px;
+        width: 260px;
+    }
+    &&-dept-source {
+        width: 280px;
+    }
+    &&-table {
+        width: 100px;
+    }
+    &&-mini {
+        width: 250px;
+    }
+    &&-two-tab {
+        .select-tab {
+            width: 100% !important;
+            .select-tab-item {
+                width: 50% !important;
+                &:first-child {
+                    border-left: none;
+                }
+                &.select-tab-item-active {
+                    &:before {
+                        width: 100% !important;
+                    }
+                }
+            }
         }
     }
-    
     .arrow {
         position: absolute;
         cursor: pointer;
@@ -439,9 +488,8 @@
     .select-field {
         position: relative;
         height: 30px;
-        z-index: 99;
-        overflow: hidden;
-        border-radius: 3px;
+        z-index: 100000;
+        .borderRadius(3px);
         .select-text {
             position: absolute;
             left: 0;
@@ -452,6 +500,7 @@
             outline: none;
             line-height: 30px;
             padding: 0 30px 0 10px;
+            .borderRadius(3px);
         }
         .arrow-trigger {
             position: absolute;
@@ -461,6 +510,7 @@
             top: 0;
             bottom: 0;
             cursor: pointer;
+            .borderRadius(3px);
         }
         &.readonly {
             .arrow-trigger {
@@ -484,18 +534,18 @@
         display: none;
         cursor: default;
         position: absolute;
-        z-index: 90;
+        z-index: 100001;
         top: -1px;
         left: -1px;
         right: -1px;
         .borderRadius(3px);
         border: 1px solid @buttonBgColor;
-        background-color: #FFF;
         padding-top: 30px;
         .select-area {
             border-top: 1px solid @buttonBgColor;
             overflow: auto;
             max-height: 170px;
+            background-color: #FFF;
             .select-item {
                 color: @fontColor;
                 width: auto;
@@ -509,7 +559,7 @@
             }
         }
         .select-tab {
-            width: 248px;
+            width: 100%;
             height: 29px;
             .select-tab-item {
                 position: relative;
@@ -517,7 +567,7 @@
                 cursor: pointer;
                 color: @fontColor;
                 line-height: 30px;
-                width: 82px;
+                width: 33.33333%;
                 border: 1px solid @borderColor;
                 border-right: none;
                 text-align: center;
@@ -531,7 +581,7 @@
                     border-bottom-color: #FFF;
                     &:before {
                         content: "";
-                        width: 82px;
+                        width: 100%;
                         height: 3px;
                         background-color: @buttonBgColor;
                         position: absolute;
@@ -546,11 +596,11 @@
             height: 336px;
             overflow-x: hidden;
             overflow-y: auto;
+            background-color: #FFF;
             //品牌车系车型
             .select-content {
                 display: none;
-                padding: 0 20px 15px 15px;
-                width: 248px;
+                padding: 0 15px 15px 15px;
                 &.select-content-active {
                     display: block;
                 }
@@ -849,88 +899,91 @@
             margin-right: 5px;
         }
     }
-    // 内容部分
-    .w-content {
-        width: 500px;
-        background-color: #FFF;
-        padding: 20px 50px 50px 50px;
-        &.w-content-padding {
-            padding: 20px 32px 50px 32px;
-        }
+    
 
-        .w-select {
-            display: inline-block;
-            margin: 10px 25px 10px 0;
-            &.w-select-left {
-                margin-left: 30px;
-            }
-            .checkbox {
-                float: left;
-                margin-right: 10px;
+}
+// 内容部分
+.w-content {
+    width: 500px;
+    background-color: #FFF;
+    padding: 20px 50px 20px 50px;
+    &.w-content-padding {
+        padding: 20px 32px 50px 32px;
+    }
+    .w-text {
+        line-height: 22px;
+        text-align: center;
+    }
+    .w-select {
+        display: inline-block;
+        margin: 10px 25px 10px 0;
+        &.w-select-left {
+            margin-left: 30px;
+        }
+        .checkbox {
+            float: left;
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
+        }
+        .radio {
+            float: left;
+            margin-right: 10px;
+        }
+        .i-download {
+            float: left;
+            color: @mainColor;
+            font-size: 18px;
+            margin-right: 6px;
+        }
+        .w-select-item {
+            line-height: 20px;
+            float: left;
+        }
+    }
+    .w-add {
+        text-align: center;
+    }
+    // 批量下载
+    .w-download-area {
+        .w-download-title {
+            line-height: 40px;
+            color: @tiperColor;
+        }
+    }
+    // 选择框
+    .w-dropdown {
+        margin: 10px 0;
+        .dt {
+            width: 100px;
+            float: left;
+            line-height: 30px;
+            text-align: right;
+        }
+        .dd {
+            margin-left: 130px;
+        }
+    }
+    .w-commit-area {
+        text-align: center;
+        margin-top: 20px;
+        .button {
+            margin-right: 20px;
+            &.button-empty {
                 position: relative;
-                top: 2px;
-            }
-            .radio {
-                float: left;
-                margin-right: 10px;
-            }
-            .i-download {
-                float: left;
-                color: @mainColor;
-                font-size: 18px;
-                margin-right: 6px;
-            }
-            .w-select-item {
-                line-height: 20px;
-                float: left;
-            }
-        }
-        .w-add {
-            text-align: center;
-        }
-        // 批量下载
-        .w-download-area {
-            .w-download-title {
-                line-height: 40px;
-                color: @tiperColor;
-            }
-        }
-        // 选择框
-        .w-dropdown {
-            margin: 10px 0;
-            dt {
-                width: 100px;
-                float: left;
-                line-height: 30px;
-                text-align: right;
-            }
-            dd {
-                margin-left: 130px;
-                overflow: hidden;
-            }
-        }
-        .w-commit-area {
-            text-align: center;
-            margin-top: 20px;
-            .button {
-                margin-right: 20px;
-                &.button-empty {
-                    position: relative;
-                    top: 1px;
-                }
-            }
-        }
-        .w-expire {
-            li {
-                text-align: center;
-                line-height: 30px;
-                b {
-                    margin: 0 5px;
-                }
+                top: 1px;
             }
         }
     }
-
+    .w-expire {
+        li {
+            text-align: center;
+            line-height: 30px;
+            b {
+                margin: 0 5px;
+            }
+        }
+    }
 }
 
 .toast {  
@@ -961,4 +1014,11 @@
         }  
     }   
 }   
+
+
+
+//日历控件
+.dateBtn {
+    cursor: pointer;
+}
   

@@ -1,11 +1,11 @@
 'use strict';
-page.ctrl('creditInput', [], function($scope) {
+page.ctrl('creditApproval', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params;
 	$scope.tabs = {};
 	$scope.idx = 0;
 	$scope.apiParams = [];
-	$params.taskId = 80876;
+
 	/**
 	* 设置面包屑
 	*/
@@ -15,31 +15,33 @@ page.ctrl('creditInput', [], function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '征信结果录入',
+			current: '征信预审核',
 			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
 	}
 
 	/**
-	* 加载征信结果录入数据
+	* 加载征信预审核数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
 	var loadOrderInfo = function(idx, cb) {
 		$.ajax({
+			// url: 'http://127.0.0.1:8083/mock/creditInput',
 			type: 'post',
-			url: 'http://192.168.1.124:8080/creditUser/getCreditInfo',
-			// url: $http.api('creditUser/getCreditInfo', 'jbs'),
+			url: $http.api('creditUser/getCreditInfo', 'jbs'),
 			data: {
-				taskId: $params.taskId
+				taskId: 80878,
+				frameCode: 'T0061'
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				result.index = idx;
 				$scope.result = result;
-				$scope.result.editable = 1;
+				$scope.result.editable = 0;
+				console.log($scope.result)
 				// 编译tab栏
 				setupTab($scope.result, function() {
 					setupTabEvt();
@@ -178,7 +180,7 @@ page.ctrl('creditInput', [], function($scope) {
 				$parent = that.parent().parent(),
 				file = this.files[0];
 			$.ajax({
-				url: $http.api('oss/video/sign', 'zyj'),
+				url: 'http://112.74.99.75:8089/oss/video/sign',
 				dataType: 'json'
 			}).done(function(response) {
 				if(!response.code) {
@@ -460,19 +462,15 @@ page.ctrl('creditInput', [], function($scope) {
 	 * 下拉框请求数据回调
 	 */
 	$scope.dropdownTrigger = {
-		creditLevel: function(t, p, cb) {
+		isQualified: function(t, p, cb) {
 			var data = [
 				{
+					id: 0,
+					name: '合格'
+				},
+				{
 					id: 1,
-					name: '正常'
-				},
-				{
-					id: 2,
-					name: '关注'
-				},
-				{
-					id: 3,
-					name: '禁入'
+					name: '不合格'
 				}
 			];
 			var sourceData = {
@@ -484,7 +482,7 @@ page.ctrl('creditInput', [], function($scope) {
 		}
 	}
 
-	$scope.creditLevelPicker = function(picked) {
+	$scope.isQualifiedPicker = function(picked) {
 		console.log(picked);
 		var that = this.$el;
 		for(var i = 0, len = $scope.apiParams.length; i < len; i++) {

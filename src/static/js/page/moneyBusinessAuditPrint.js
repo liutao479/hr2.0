@@ -37,6 +37,21 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
+
+	/**
+	* 日历控件
+	*/
+	var setupDatepicker = function() {
+		$console.find('.dateBtn').datepicker();
+	}
+
+	/**
+	* dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
 	/**
 	* 绑定立即处理事件
 	*/
@@ -54,17 +69,44 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 			$tbl: $console.find('#moneyAuditPrintTable'),
 			$paging: $console.find('#pageToolbar')
 		}
-		if($params.process) {
-			
-		}
+		setupDropDown();
+		setupDatepicker();
 		loadMoneyPrintList(apiParams);
 	});
 
+	/**
+	 * 分页请求数据回调
+	 */
 	$scope.paging = function(_page, _size, $el, cb) {
 		apiParams.pageNum = _page;
 		$params.pageNum = _page;
 		// router.updateQuery($scope.$path, $params);
 		loadMoneyPrintList(apiParams);
 		cb();
+	}
+
+	/**
+	 * 下拉框请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		deptCompany: function(t, p, cb) {
+			$.ajax({
+				type: 'get',
+				url: $http.api('pmsDept/getPmsDeptList', 'zyj'),
+				data: {
+					parentId: 99
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					console.log(xhr)
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		}
 	}
 });

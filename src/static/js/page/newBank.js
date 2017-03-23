@@ -5,6 +5,10 @@ page.ctrl('newBank', [], function($scope) {
 		apiParams = {
 			
 		};
+	$scope.result = {};
+	$scope.result.data = {};
+	$scope.bankId = $params.bankId || '';
+	$scope.demandBankId = $params.demandBankId || '';
 	var apiMap = {
 		bankName: 'http://192.168.0.105:8080/demandBank/getListByOrganId'
 	}
@@ -17,7 +21,7 @@ page.ctrl('newBank', [], function($scope) {
 			url: $http.api('demandBank/detail', 'cyj'),
 			type: 'post',
 			data: {
-				bankId: $params.bankId
+				bankId: $scope.bankId
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -29,6 +33,14 @@ page.ctrl('newBank', [], function($scope) {
 				}
 			})
 		})
+	}
+
+	/**
+	 * 加载银行账户信息
+	 */
+	var loadBankData = function() {
+		render.compile($scope.$el.$bankDataPanel, $scope.def.bankDataTmpl, $scope.result.data, true);
+		setupBankEvt();
 	}
 
 	/**
@@ -55,9 +67,47 @@ page.ctrl('newBank', [], function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '新建合作银行'
+			current: $params.bankId ? '编辑合作银行' : '新建合作银行'
 		});
 		$location.location();
+	}
+
+	/**
+	* dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
+	/**
+	 * 加载（银行信息）立即处理事件
+	 */
+	var setupBankEvt = function() {
+
+		setupDropDown();
+
+		$console.find('#bankDataSave').on('click', function() {
+			var _params = {
+				bankId: $scope.bankId,
+				bankName: $scope.bankName,
+				organId: 99
+			};
+			$.ajax({
+				url: $http.api('demandBank/save', 'cyj'),
+				type: 'post',
+				data: _params,
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result);
+					$scope.demandBankId = result.data;
+					loadNewBank(function() {
+						loadBankData();
+						loadBankAccount();
+						loadBankRate();
+					});
+				})
+			})
+		});
 	}
 
 	/**
@@ -80,7 +130,7 @@ page.ctrl('newBank', [], function($scope) {
 			if(_accountNumber != '' && _accountName != '') {
 				console.log(_accountNumber)
 				var _params = {
-					demandBankId: $params.bankId,
+					demandBankId: $scope.demandBankId,
 					accountNumber: _accountNumber.trim(),
 					accountName: _accountName.trim()
 				}
@@ -139,8 +189,6 @@ page.ctrl('newBank', [], function($scope) {
 					$parent.find('input').attr('disabled', false);
 				});
 			}
-			
-			
 		})
 
 		// 合作银行账户删除
@@ -167,7 +215,6 @@ page.ctrl('newBank', [], function($scope) {
 					})
 				})
 			});
-			
 		})
 	}
 
@@ -178,31 +225,54 @@ page.ctrl('newBank', [], function($scope) {
 		// 银行费率表增加按钮事件
 		$console.find('#addBankRate').on('click', function() {
 			var that = $(this);
-			console.log(1);
-			$.ajax({
-				url: $http.api('demandBankRate/save', 'cyj'),
-				type: 'post',
-				data: {
-					demankBankId: 1, //银行ID
-					isSecond: 1, //新车
-					provinceId: 110000, //省份ID
-					provinceName: '北京市', //省份名称
-					interestRate12: 23, //12期银行基准利率
-					interestRate18: 23, //18期银行基准利率
-					interestRate24: 5, //24期银行基准利率
-					interestRate30: 43, //30期银行基准利率
-					interestRate36: 43,//36期银行基准利率
-					interestRate48: 43, //48期银行基准利率
-					interestRate60: 43 //60期银行基准利率
-				},
-				dataType: 'json',
-				success: $http.ok(function(result) {
-					console.log(result);
-					loadNewBank(function() {
-						loadBankRate();
+			var $parent = that.parent().parent();
+			var rate12 = $parent.find('#rate12').val();
+			var rate18 = $parent.find('#rate18').val();
+			var rate24 = $parent.find('#rate24').val();
+			var rate30 = $parent.find('#rate30').val();
+			var rate36 = $parent.find('#rate36').val();
+			var rate48 = $parent.find('#rate48').val();
+			var rate60 = $parent.find('#rate60').val();
+			if($scope.provinceId != undefined && $scope.provinceId != undefined && rate12 != undefined && rate18 != undefined && rate24 != undefined && rate30 != undefined && rate36 != undefined && rate48 != undefined && rate60 != undefined) {
+				console.log('参数齐全');
+				var _params = {
+					demankBankId: $scope.demandBankId, //银行ID
+					isSecond: $scope.isSecond, //新车
+					provinceId: $scope.provinceId, //省份ID
+					provinceName: $scope.provinceName, //省份名称
+					interestRate12: parseInt(rate12.trim()), //12期银行基准利率
+					interestRate18: parseInt(rate18.trim()), //18期银行基准利率
+					interestRate24: parseInt(rate24.trim()), //24期银行基准利率
+					interestRate30: parseInt(rate30.trim()), //30期银行基准利率
+					interestRate36: parseInt(rate36.trim()),//36期银行基准利率
+					interestRate48: parseInt(rate48.trim()), //48期银行基准利率
+					interestRate60: parseInt(rate60.trim()) //60期银行基准利率
+				};
+				console.log(_params);
+				$.ajax({
+					url: $http.api('demandBankRate/save', 'cyj'),
+					type: 'post',
+					data: _params,
+					dataType: 'json',
+					success: $http.ok(function(result) {
+						console.log(result);
+						loadNewBank(function() {
+							loadBankRate();
+						})
 					})
 				})
-			})
+			} else {
+				that.openWindow({
+					title: '提示',
+					content: '<div>请完善必填项！</div>',
+					commit: dialogTml.wCommit.sure
+				}, function($dialog) {
+					$dialog.find('.w-sure').on('click', function() {
+						$dialog.remove();
+					})
+				});
+			}
+			
 		})
 
 		// 合作银行费率删除
@@ -219,7 +289,7 @@ page.ctrl('newBank', [], function($scope) {
 						url: $http.api('demandBankRate/del', 'cyj'),
 						type: 'post',
 						data: {
-							demankBankId: $params.bankId, //银行ID
+							demankBankId: $scope.demandBankId, 
 							isSecond: that.data('isSecond'), //新车
 							provinceId: that.data('provinceId') //省份ID
 						},
@@ -236,6 +306,9 @@ page.ctrl('newBank', [], function($scope) {
 			});
 			
 		})
+
+		// 下拉框初始化
+		$console.find('#bankRateTable .select').dropdown();
 	}
 	
 
@@ -244,18 +317,103 @@ page.ctrl('newBank', [], function($scope) {
 	*/
 	render.$console.load(router.template('iframe/new-bank'), function() {
 		$scope.def = {
+			bankDataTmpl: render.$console.find('#bankDataTmpl').html(),
 			bankAccountTmpl: render.$console.find('#bankAccountTmpl').html(),
 			bankRateTmpl: render.$console.find('#bankRateTmpl').html()
 		}
 		$scope.$el = {
+			$bankDataPanel: $console.find('#bankDataPanel'),
 			$bankAccountPanel: $console.find('#bankAccountPanel'),
 			$bankRatePanel: $console.find('#bankRatePanel')
 		}
-		loadNewBank(function() {
-			setupLocation();
-			loadBankAccount();
-			loadBankRate();
-		});
+		setupLocation();
+		if($scope.bankId) {
+			loadNewBank(function() {
+				loadBankData();
+				loadBankAccount();
+				loadBankRate();
+			});
+		} else {
+			loadBankData();
+		}
+		
 	});
+
+	/**
+	 * 下拉框请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		bankName: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('pmsBank/searchBank', 'cyj'),
+				data: {
+					// keyWord: undefined
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		carType: function(t, p, cb) {
+			var data = [
+				{
+					id: 0,
+					name: '新车'
+				},
+				{
+					id: 1,
+					name: '二手车'
+				}
+			];
+			var sourceData = {
+				items: data,
+				id: 'id',
+				name: 'name'
+			};
+			cb(sourceData);
+		},
+		areaSource: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('area/get', 'cyj'),
+				data: {
+					parentId: 0
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		}
+	}
+
+	$scope.bankPicker = function(picked) {
+		console.log(picked);
+		$scope.bankId = picked.id;
+		$scope.bankName = picked.name;		
+	}
+
+	$scope.isSecondPicker = function(picked) {
+		console.log(picked);
+		$scope.isSecond = picked.id;
+	}
+
+	$scope.areaPicker = function(picked) {
+		console.log(picked);
+		$scope.provinceId = picked.id;
+		$scope.provinceName = picked.name;
+	}
 
 })

@@ -27,14 +27,14 @@
 <!-- 征信结果录入 end-->
 
 <script type="text/x-dot-template" id="creditResultTabsTmpl">
-	{{ for(var i in it.data) { }}
+	{{ for(var i in it.data.creditUsers) { }}
 	<li class="role-bar-li"><a href="javascript:;" class="role-item{{= (i == it.index ? ' role-item-active':'')}} tabEvt" data-type="{{=i}}">{{=it.types[i]}}</a></li>
 	{{ } }}
 </script>
 
 
 <script type="text/x-dot-template" id="creditResultListTmpl">
-	{{ for(var i = 0, len = it.data[it.index].length; i < len; i++){ var col = it.data[it.index][i]; }}
+	{{ for(var i = 0, len = it.data.creditUsers[it.index].length; i < len; i++){ var col = it.data.creditUsers[it.index][i]; }}
 		{{ for(var m = 0, len2 = it.cfgData.frames[0].sections.length; m < len2; m++) { var item = it.cfgData.frames[0].sections[m]; }}
 			{{ if(it.format[item.code] == m) { var row = item; } }}
 		{{ } }}
@@ -71,81 +71,83 @@
 
 		<!-- 征信录入 -->
 		<div class="panel-detail-content panel-detail-table">
-
-			<!-- 征信是否合格 -->
-			<div class="panel-item-box mt15">
-				<div class="panel-key-area">征信是否合格：</div>
-				<div class="panel-value-area clearfix">
-					<div class="panel-value-item">
-						<span class="select select-common">
-							{{ if(col.isQualified == 0){ }}
-							<span class="placeholder placeholder-mini">合格</span>
-							{{ }else if(col.isQualified == 1){ }}
-							<span class="placeholder placeholder-mini">不合格</span>
-							{{ } }}
-							<span class="arrow arrow-bottom"></span>
-						</span>
+			{{ if(it.cfgData.code == 'creditInput') { }}
+				<!-- 征信是否合格 -->
+				<div class="panel-item-box mt15">
+					<div class="panel-key-area">征信是否合格：</div>
+					<div class="panel-value-area clearfix">
+						<div class="panel-value-item">
+							<div class="select select-common" data-user-id="{{=col.userId}}" data-type="creditLevel" data-dropdown="page.$scope['creditInput'].creditLevelPicker" data-trigger="page.$scope['creditInput'].dropdownTrigger.creditLevel" data-selected="{{=(col.creditLevel == 1 ? '正常' : (col.creditLevel == 2 ? '关注' : '不合格'))}}"></div>
+						</div>
 					</div>
 				</div>
-			</div>
-			<!-- 征信是否合格 end-->
-			
-			<!-- 征信报告文件 -->
-			<div class="panel-item-box mt15">
-				<div class="panel-key-area">征信报告文件：</div>
-				<div class="panel-value-area clearfix">
-					{{ if(!col.creditReportFile){ }}
-						<div class="panel-value-item">
-							<div class="input-text">
-								<input type="text" value="{{=col.creditReportFile}}" readonly="true" />	
+				<!-- 征信是否合格 end-->
+				
+				<!-- 征信报告文件 -->
+				<div class="panel-item-box mt15">
+					<div class="panel-key-area">征信报告文件：</div>
+					<div class="panel-value-area clearfix">
+						{{ if(col.creditReportFile){ }}
+							<div class="panel-value-item file-area">
+								<div class="input-text">
+									<input type="text" value="{{=(col.creditReportFile.substr(col.creditReportFile.lastIndexOf('/') + 1))}}" readonly="true" />	
+								</div>
 							</div>
-						</div>
-						<div class="panel-value-item">
-							<div class="file-wrap">
-								<div class="button button-mini">重新上传</div>
-								<input type="file" class="pdfUpload" data-value="true" />
-							</div>	
-						</div>
-					{{ }else{ }}
-						<div class="panel-value-item">
-							<div class="file-wrap">
-								<div class="button button-mini">上传文件</div>
-								<input type="file" class="pdfUpload" data-value="false" />
+							<div class="panel-value-item">
+								<div class="file-wrap">
+									<div class="button button-mini">重新上传</div>
+									<input type="file" class="pdfUpload" data-value="true" data-user-id="{{=col.userId}}" data-type="creditReportFile" />
+								</div>	
 							</div>
-						</div>
-						<div class="panel-value-item">
-							<span class="color-tiper">文件格式：*.pdf</span>
-						</div>
-					{{ } }}
+						{{ }else{ }}
+							<div class="panel-value-item file-area"></div>
+							<div class="panel-value-item">
+								<div class="file-wrap">
+									<div class="button button-mini">上传文件</div>
+									<input type="file" class="pdfUpload" data-value="false" />
+								</div>
+							</div>
+							<div class="panel-value-item">
+								<span class="color-tiper">文件格式：*.pdf</span>
+							</div>
+						{{ } }}
+					</div>
 				</div>
-			</div>
-			<!-- 征信报告文件 end-->
-
+				<!-- 征信报告文件 end-->
+			{{ } }}
 			{{ for(var j = 0, len2 = row.segments.length; j < len2; j++) { var ml = row.segments[j]; }}
 				<div class="panel-item-box mt15">
 					<div class="panel-key-area">{{=ml.name}}：</div>
-					<div class="panel-value-area clearfix">
-					<!-- 全配置区块 -->
+					<div class="panel-value-area{{=(ml.code == 'ZXBGP' ? ' creditMaterials' : '')}} clearfix">
 					{{ if(ml.code !== 'ZXBGP' && ml.code !== 'ZXZD') { }}
+						<!-- 全配置区块 -->
 						{{ if(ml.type == 0) { }}
-							<div class="panel-value-item">
-								<div class="input-text">
-									<input type="text" value="{{=col.creditReportId}}" />	
+							{{ if(it.cfgData.code == 'creditApproval') { }}
+								<div class="panel-value-item">{{=col.creditReportId}}</div>
+							{{ } else { }}
+								<div class="panel-value-item">
+									<div class="input-text">
+										<input type="text" value="{{=col.creditReportId}}" data-user-id="{{=col.userId}}" data-type="creditReportId" class="creditReportId" />	
+									</div>
 								</div>
-							</div>
+							{{ } }}
 						{{ } }}
 						{{ if(ml.type == 1) { }}
-							
+							{{ if(it.cfgData.code == 'creditApproval') { }}
+								<div class="panel-value-item">{{=col.orgName}}</div>
+							{{ } }}
 						{{ } }}
+						<!-- 全配置区块 end-->
 					{{ } }}
-					<!-- 全配置区块 end-->
+					
 
-					<!-- 只配置到显示区块 -->
+					
 					{{ if(ml.code == 'ZXBGP') { }}
+						<!-- 只配置到显示区块 -->
 						{{ for(var h = 0, len4 = col.loanCreditReportList.length; h < len4; h++) { var hl = col.loanCreditReportList[h], flag = 0; }}
-						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.materialsAduitResult}}" data-editable="1"></div>
+						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.materialsAduitResult}}" data-editable="{{=it.editable}}"></div>
 						{{ } }}
-						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="新增报告照片" data-count="{{=len4 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="1"></div>
+						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=len4 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}"></div>
 					{{ } if(ml.code == 'ZXZD') { }}
 						<table border="1" class="field-table">
 							{{ var zxzd = col.loanCreditResultList; }}
@@ -156,19 +158,19 @@
 								<tr class="tr-even">
 								{{ } }}
 									<td class="td-key">{{=zxzd[2 * k].fieldName}}</td>
-									<td class="td-value"><input class="input" type="text" value="{{=zxzd[2 * k].creditVal}}" /><span class="unit">次</span></td>
-									{{ if(k == len3 - 1) { }}
+									<td class="td-value"><input class="input zxzd" type="text"{{=(it.cfgData.code == 'creditApproval' ? ' disabled' : '')}} value="{{=zxzd[2 * k].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-id="{{=zxzd[2 * k].id}}" /><span class="unit">次</span></td>
+									{{ if(k == len3) { }}
 										<td class="td-key"></td>
 										<td class="td-value"></td>
 									{{ }else{ }}
 										<td class="td-key">{{=zxzd[2 * k + 1].fieldName}}</td>
-										<td class="td-value"><input class="input" type="text" value="{{=zxzd[2 * k + 1].creditVal}}" /><span class="unit">次</span></td>
+										<td class="td-value"><input class="input zxzd" type="text"{{=(it.cfgData.code == 'creditApproval' ? ' disabled' : '')}} value="{{=zxzd[2 * k + 1].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-id="{{=zxzd[2 * k + 1].id}}" /><span class="unit">次</span></td>
 									{{ } }}
 								</tr>
 							{{ } }}
 						</table>
+						<!-- 只配置到显示区块 end-->
 					{{ } }}
-					<!-- 只配置到显示区块 end-->
 					</div>
 				</div>	
 			{{ } }}
@@ -176,11 +178,35 @@
 			<!-- 备注信息 -->
 			<div class="panel-item-box">
 				<div class="panel-key-area">备注信息：</div>
-				<div class="panel-value-area">
-					<textarea name="" id="" cols="30" rows="6" class="remarks-box">{{=col.remark}}</textarea>
+				<div class="panel-value-area clearfix">
+					{{ if(it.cfgData.code == 'creditApproval') { }}
+						<div class="panel-value-item">{{=col.remark}}</div>
+					{{ } }}
+					{{ if(it.cfgData.code == 'creditInput') { }}
+					<textarea name="" id="" cols="30" rows="6" class="remarks-box remark" data-user-id="{{=col.userId}}" data-type="remark">{{=col.remark}}</textarea>
+					{{ } }}
 				</div>
 			</div>
 			<!-- 备注信息 end-->
+
+			{{ if(it.cfgData.code == 'creditApproval') { }}
+			<!-- 辅证数据 -->
+			<div class="panel-item-box">
+				<div class="panel-key-area">辅证数据：</div>
+				<div class="panel-value-area clearfix">
+					<a data-href="#" class="to-view">点击查看</a>
+				</div>
+			</div>
+			<!-- 辅证数据 end-->
+			<!-- 征信报告详表 -->
+			<div class="panel-item-box">
+				<div class="panel-key-area">征信报告详表：</div>
+				<div class="panel-value-area clearfix">
+					<a data-href="#" class="to-view">点击查看</a>
+				</div>
+			</div>
+			<!-- 征信报告详表 end-->
+			{{ } }}
 
 		</div>
 		<!-- 征信录入 end-->

@@ -11,7 +11,7 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 	var loadMaterialsChoose = function(_type, cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('materialsChoose/index', 'zyj'),
+			url: $http.api('materialsChoose/index', 'jbs'),
 			data: {
 				// taskId: $scope.$params.taskId
 				taskId: 80871
@@ -22,8 +22,9 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 				$scope.result = result;
 				$scope.orderNo = result.data.ORDERNO;
 				setupLocation();
-				render.compile($scope.$el.$mainPanel, $scope.def.mainTmpl, result.data.LOANMATERIALS, true);
-				setupEvt();
+				render.compile($scope.$el.$mainPanel, $scope.def.mainTmpl, result.data.LOANMATERIALS, function() {
+					setupEvt();	
+				}, true);
 				if( cb && typeof cb == 'function' ) {
 					cb();
 				}
@@ -40,8 +41,6 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			current: '贷款材料选择',
-			// loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			// orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 			loanUser: $scope.result.data.LOANORDER.realName,
 			orderDate: tool.formatDate($scope.result.data.LOANORDER.createDate, true)
 		});
@@ -118,15 +117,17 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 						}
 						_params.push(_item);
 					});
+					console.log(_params);
 					$.ajax({
 						type: 'post',
-						url: $http.api('materialsChoose/submit', 'zyj'),
+						url: $http.api('materialsChoose/submit', 'jbs'),
 						data: JSON.stringify(_params),
 						dataType: 'json',
 						contentType: 'application/json;charset=utf-8',
 						success: $http.ok(function(result) {
 							console.log(result);
 							$dialog.remove();
+							router.render('loanProcess');
 						})
 					})
 				})

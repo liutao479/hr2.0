@@ -72,27 +72,23 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 	* 底部操作按钮区域
 	*/	
 	var loadCommitBar = function(cb) {
-		$.ajax({
-			url: $http.api('auditCommit'),
-			// type: 'post',
-			// data: params,
-			// dataType: 'json',
-			success: $http.ok(function(result) {
-				console.log(result);
-				var $commitBar = $console.find('#commitPanel');
-				$commitBar.data({
-					back: result.data.back,
-					verify: result.data.verify,
-					cancel: result.data.cancel,
-					submit: result.data.submit
-				});
-				$commitBar.commitBar();
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
-			})
-		})
-		
+		var buttons = {
+			"submit": false,
+			"back": true,
+			"cancel": false,
+			"verify": true
+		};
+		var $commitBar = $console.find('#commitPanel');
+		$commitBar.data({
+			back: buttons.back,
+			verify: buttons.verify,
+			cancel: buttons.cancel,
+			submit: buttons.submit
+		});
+		$commitBar.commitBar();
+		if(cb && typeof cb == 'function') {
+			cb();
+		}
 	}
 
 	/**
@@ -141,42 +137,87 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 		// 审核退回
 		$console.find('#back').on('click', function() {
 			var that = $(this);
-			that.openWindow({
+			$.confirm({
 				title: '退回订单',
 				content: dialogTml.wContent.suggestion,
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				$dialog.find('.w-sure').on('click', function() {
-					var _params = {
-						orderNo: $scope.orderNo,
-						reason: $dialog.find('#suggestion').val()
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							var _reason = $('.jconfirm #suggestion').val().trim();
+							if(!_reason) {
+								$.alert({
+									title: '提示',
+									content: dialogTml.wContent.handelSuggestion,
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							} else {
+								var _params = {
+									orderNo: $scope.orderNo,
+									reason: _reason
+								}
+								backOrders(_params, function() {
+									router.render('licenceAudit', {});
+								});
+							}
+						}
 					}
-					console.log(_params);
-					backOrders(_params, function() {
-						$dialog.remove();
-					});
-				})
-			})
+				}
+			});
 		})
 
 		// 审核通过
 		$console.find('#verify').on('click', function() {
 			var that = $(this);
-			that.openWindow({
-				title: '审核通过',
+			$.confirm({
+				title: '提交',
 				content: dialogTml.wContent.suggestion,
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				$dialog.find('.w-sure').on('click', function() {
-					var _params = {
-						orderNo: $scope.orderNo,
-						reason: $dialog.find('#suggestion').val()
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							var _reason = $('.jconfirm #suggestion').val().trim();
+							if(!_reason) {
+								$.alert({
+									title: '提示',
+									content: dialogTml.wContent.handelSuggestion,
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							} else {
+								var _params = {
+									orderNo: $scope.orderNo,
+									reason: _reason
+								}
+								verifyOrders(_params, function() {
+									router.render('licenceAudit', {});
+								});
+							}
+						}
 					}
-					verifyOrders(_params, function() {
-						$dialog.remove();
-					});
-				})
-			})
+				}
+			});
 		})
 	}
 

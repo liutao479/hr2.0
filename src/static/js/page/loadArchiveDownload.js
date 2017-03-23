@@ -38,6 +38,13 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
+
+	/**
+	* 启动dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
 	
 	/**
 	 * 绑定立即处理事件
@@ -180,6 +187,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 			$tbl: $console.find('#loadArchiveDownloadTable'),
 			$paging: $console.find('#pageToolbar')
 		}
+		setupDropDown();
 		loadArchiveDownloadList(apiParams, function() {
 			setupEvt();
 		});
@@ -191,6 +199,27 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 		// router.updateQuery($scope.$path, $params);
 		loadArchiveDownloadList(apiParams);
 		cb();
+	}
+
+	/**
+	 * 下拉框请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		demandBank: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'bankId',
+						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		}
 	}
 });
 

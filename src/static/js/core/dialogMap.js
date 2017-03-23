@@ -7,7 +7,11 @@
 	*/
 	g.dialogTml = {};
 	g.dialogTml.wContent = {
-		suggestion: '<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>',
+		handelSuggestion: '<div class="w-content"><div class="w-text">请填写处理意见！</div></div>',
+		complete: '<div class="w-content"><div class="w-text">请完善必填项！</div></div>',
+		suggestion: '<div class="w-content">\
+						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					</div>',
 		loanOrderApply: '<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 						<dl class="w-dropdown">\
 							<dt>请选择审核人：</dt>\
@@ -18,42 +22,39 @@
 								</span>\
 							</dd>\
 						</dl>',
-		creditQuery: '<dl class="w-dropdown">\
-						<dt>经办银行：</dt>\
-						<dd>\
-							<span class="select select-bank">\
-								<input class="placeholder" placeholder="请选择" />\
-								<span class="arrow arrow-bottom"></span>\
-							</span>\
-						</dd>\
-					</dl>\
-					<dl class="w-dropdown">\
-						<dt>业务发生地：</dt>\
-						<dd>\
-							<span class="select select-bank">\
-								<input class="placeholder" placeholder="请选择" />\
-								<span class="arrow arrow-bottom"></span>\
-							</span>\
-						</dd>\
-					</dl>',
-		addCreditUsers: '<div class="w-add clearfix">\
-							<div class="w-select clearfix">增加征信人员：</div>\
-							<div class="w-select clearfix">\
-								<div class="checkbox checkbox-normal" data-checked="true" data-type="1"></div>\
-								<span class="w-select-item">反担保人</span>\
-							</div>\
-							<div class="w-select clearfix">\
-								<div class="checkbox checkbox-normal" data-type="2"></div>\
-								<span class="w-select-item">共同还款人</span>\
+		creditQuery: '<div class="w-content">\
+						<dl class="w-dropdown">\
+							<dt class="dt">经办银行：</dt>\
+							<dd class="dd">\
+								<div class="select select-bank" id="demandBank" data-dropdown="page.$scope[\'{0}\'].demandBankPicker" data-trigger="page.$scope[\'{1}\'].dropdownTrigger.demandBank" data-selected="{2}"></div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">业务发生地：</dt>\
+							<dd class="dd">\
+								<div class="select select-bank select-two-tab" id="areaSource" data-tabs="省|市" data-dropdown="page.$scope[\'{0}\'].areaSourcePicker" data-trigger="page.$scope[\'{1}\'].dropdownTrigger.areaSource" data-selected="{3}"></div>\
+							</dd>\
+						</dl>\
+					</div>',
+		addCreditUsers: '<div class="w-content">\
+							<div class="w-add clearfix">\
+								<div class="w-select clearfix">增加征信人员：</div>\
+								<div class="w-select clearfix">\
+									<div class="checkbox checkbox-normal" data-checked="true" data-type="1"></div>\
+									<span class="w-select-item">反担保人</span>\
+								</div>\
+								<div class="w-select clearfix">\
+									<div class="checkbox checkbox-normal" data-type="2"></div>\
+									<span class="w-select-item">共同还款人</span>\
+								</div>\
 							</div>\
 						</div>',
 		makeLoan: '<dl class="w-dropdown">\
 						<dt>用款时间：</dt>\
 						<dd>\
-							<span class="select select-bank">\
-								<input class="placeholder required" placeholder="请选择" id="loaningDate" value="{{=(it.loaningDate ? tool.formatDate(it.loaningDate) : "")}}" />\
-								<span class="arrow arrow-bottom"></span>\
-							</span>\
+							<div class="input-text input-date">\
+							<input type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="{{=it.date}}" />\
+						</div>\
 						</dd>\
 					</dl>\
 					<dl class="w-dropdown">\
@@ -94,10 +95,13 @@
 				<div class="button">确定</div>\
 			</div>',
 		cancelSure: '<div class="w-commit-area">\
-				<div class="button button-empty w-close">取消</div><div class="button w-sure">确定</div>\
+				<div class="button button-empty w-close">取消</div><div class="button button-mini w-sure">确定</div>\
 			</div>',
 		cancelNext: '<div class="w-commit-area">\
-				<div class="button button-empty w-close">取消</div><div class="button w-next">下一步</div>\
+				<div class="button button-empty w-close">取消</div><div class="button button-mini w-next">下一步</div>\
+			</div>',
+		sure: '<div class="w-commit-area">\
+				<div class="button w-sure">确定</div>\
 			</div>'
 	}
 	g.dialogTml.wRemind = {

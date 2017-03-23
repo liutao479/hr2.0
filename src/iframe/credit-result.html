@@ -1,201 +1,127 @@
 	<!--征信结果-->
 			<div class="container credit-result" id="credit-result">
 				<!--返回列表-->
-				<div class="path-back-bar">
-					<div class="path-back">
-						<i class="iconfont">&#xe626;</i>
-						<a href="#">我的客户</a>&nbsp;&gt;
-						<span class="current-page">征信结果</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">借款人：</span>
-						<span class="value">张三</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">当前操作人：</span>
-						<span class="value">程辉</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">角色：</span>
-						<span class="value">客户经理</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">订单生成时间：</span>
-						<span class="value">2016-11-03 14:02</span>
-					</div>
-					
-				</div>
+				<div id="location"></div>
+				<!--返回列表 end-->
 				
-				<!--提交修改等等按钮-->
-				<div class="commit-orders-box commit-orders-box-area mb15">
-					<a href="javascript:;" class="commit-item">
-						<i class="iconfont">&#xe614;</i>
-						<span>放款预约</span>
-					</a>
-					<a href="javascript:;" class="commit-item">
-						<i class="iconfont">&#xe6fd;</i>
-						<span>申请终止订单</span>
-					</a>
-					<a href="javascript:;" class="commit-item">
-						<i class="iconfont">&#xe640;</i>
-						<span>申请修改分期信息</span>
-					</a>
-				</div>
-				<!--提交修改等等按钮   end-->
-				
-				<!--工作台左侧菜单面板-->
-				<div class="panel panel-menu">
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item panel-menu-item-active" href="#">
-						征信结果
-						<span class="arrow arrow-right"></span>
-					</a>
-					<a class="panel-menu-item" href="#">开卡信息录入</a>
-					<a class="panel-menu-item" href="#">二手车评估信息</a>
-					<a class="panel-menu-item" href="#">贷款材料</a>
-					<a class="panel-menu-item" href="#">上门材料</a>
-					<a class="panel-menu-item" href="#">签约材料</a>
-					<a class="panel-menu-item" href="#">垫资材料</a>
-					<a class="panel-menu-item" href="#">提车材料</a>
-					<a class="panel-menu-item" href="#">登记证材料</a>
-					<a class="panel-menu-item" href="#">抵押信息</a>
-					<a class="panel-menu-item" href="#">材料验真</a>
-					<a class="panel-menu-item" href="#">数据辅证</a>
-					<a class="panel-menu-item" href="#">材料交叉校验</a>
-					<a class="panel-menu-item" href="#">订单日志</a>
-				</div>
-				<!--工作台左侧菜单面板 end-->
-				
-				
-				<!--工作台左侧菜单对应项详细面板（申请人）-->
-				<div class="panel panel-detail">
+				<div class="" id="resultPanel"></div>
 
-					<!--一级标题-->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe6f5;</i>
-							<span class="panel-title-name">申请人</span>
-						</div>
-					</div>
-					<!--一级标题  end-->
 
-					<!--二级标题（姓名，身份证等等...）-->
-					<div class="panel-content-title panel-title-box-special">
-						<div class="key-value-box">
-							<span class="key">姓名：</span>
-							<span class="value">北上</span>
-						</div>
-						<div class="key-value-box">
-							<span class="key">身份证号：</span>
-							<span class="value">412702199102033154</span>
-						</div>
-						<div class="key-value-box">
-							<span class="key">征信查询时间：</span>
-							<span class="value">2016-11-01 12:00</span>
-						</div>
-						<div class="key-value-box key-value-box-special">
-							<div class="button button-mini-nowidth">查看征信材料</div>
-						</div>
-					</div>
-					<!--二级标题（姓名，身份证等等...）end-->
-
-					<!--详细内容罗列-->
-					<div class="panel-detail-content">
-						<!-- 征信机构查询 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">征信查询机构：</div>
-							<div class="panel-value-area">
-								<div class="panel-value-item">广东工行</div>
-							</div>
-						</div>
-						<!-- 征信机构查询 end-->
-
-						<!-- 征信报告编号 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">征信报告编号：</div>
-							<div class="panel-value-area">
-								<div class="panel-value-item">ZXBG123456789</div>
-							</div>
-						</div>
-						<!-- 征信报告编号 end-->
-
-						<!-- 征信报告照片 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">征信报告照片：</div>
-							<div class="panel-value-area">
-								<div class="imgs-item-group">
-									<div class="imgs-item-view">
-										我是身份证照片
-									</div>
-								</div>
-								<div class="imgs-item-group">
-									<div class="imgs-item-view">
-										我是身份证照片
-									</div>
+				<script type="text/x-dot-template" id="resultTmpl">
+					{{ for(var i in it.data.creditUsers) { }}
+						<div class="panel">
+							<!--一级标题-->
+							<div class="panel-title-box">
+								<div class="panel-title">
+									<i class="iconfont">&#xe6f5;</i>
+									<span class="panel-title-name">{{=it.types[i]}}</span>
 								</div>
 							</div>
-						</div>
-						<!-- 征信报告照片 end-->
+							<!--一级标题  end-->
+							{{for(var j = 0, len2 = it.data.creditUsers[i].length; j < len2; j++) { var col = it.data.creditUsers[i][j]; }}
+								{{ for(var m = 0, len3 = it.cfgData.frames[0].sections.length; m < len3; m++) { var item = it.cfgData.frames[0].sections[m]; }}
+									{{ if(it.format[item.code] == m) { var row = item; } }}
+								{{ } }}
+								
 
-						<!-- 征信字段 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">征信字段：</div>
-							<div class="panel-value-area">
-								<table border="1" cellspacing="" cellpadding="" class="field-table">
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-									<tr>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-										<td>征信字段征信字段</td>
-										<td>1次</td>
-									</tr>
-								</table>
-							</div>
-						</div>
-						<!-- 征信字段 end-->
+								<!--二级标题（姓名，身份证等等...）-->
+								{{ if(j == 0 ) { }}
+									<div class="panel-content-title no-top-border">
+								{{ } else { }}
+									<div class="panel-content-title ">
+								{{ } }}
+									<div class="key-value-box">
+										<span class="key">姓名：</span>
+										<span class="value">{{=col.userName}}</span>
+									</div>
+									<div class="key-value-box">
+										<span class="key">身份证号：</span>
+										<span class="value">{{=col.idCard}}</span>
+									</div>
+									<div class="key-value-box">
+										<span class="key">征信查询时间：</span>
+										<span class="value">{{=col.submitDateStr}}</span>
+									</div>
+									<div class="button button-mini">查看征信材料</div>
+								</div>
+								<!--二级标题（姓名，身份证等等...）end-->
 
-						<!-- 备注信息 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">备注信息：</div>
-							<div class="panel-value-area">
-								<span class="panel-value-item">备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息</span>
-							</div>
-						</div>
-						<!-- 备注信息 end-->
+								<!--详细内容罗列-->
+								<div class="panel-detail-content panel-detail-table">
+									{{ for(var p = 0, len4 = row.segments.length; p < len4; p++) { var ml = row.segments[p]; }}
+									<div class="panel-item-box mt15">
+										<div class="panel-key-area">{{=ml.name}}：</div>
+										<div class="panel-value-area clearfix">
+										{{ if(ml.code !== 'ZXBGP' && ml.code !== 'ZXZD') { }}
+											<!-- 全配置区块 -->
+											{{ if(ml.type == 0) { }}
+												<div class="panel-value-item">{{=col.creditReportId}}</div>
+											{{ } }}
+											{{ if(ml.type == 1) { }}
+												<div class="panel-value-item">{{=col.orgName}}</div>
+											{{ } }}
+											<!-- 全配置区块 end-->
+										{{ } }}
 
-						<!-- 辅助证据 -->
-						<div class="panel-item-box">
-							<div class="panel-key-area">辅证数据：</div>
-							<div class="panel-value-area">
-								<a href="#" class="panel-value-item">点击查看</a>
-							</div>
+										{{ if(ml.code == 'ZXBGP') { }}
+											<!-- 只配置到显示区块 -->
+											{{ for(var h = 0, len5 = col.loanCreditReportList.length; h < len5; h++) { var hl = col.loanCreditReportList[h], flag = 0; }}
+											<div class="imgs-item-group uploadEvt" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.materialsAduitResult || ''}}" data-editable="{{=it.editable}}"></div>
+											{{ } }}
+											<div class="imgs-item-group uploadEvt" data-request="true" data-name="征信报告照片{{=len5 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}"></div>
+										{{ } if(ml.code == 'ZXZD') { }}
+											<table border="1" class="field-table">
+												{{ var zxzd = col.loanCreditResultList; }}
+												{{ for(var k = 0, len6 = parseInt((zxzd.length + 1) / 2) ; k < len6; k++){ }}
+													{{ if(k % 2 == 0) { }}
+													<tr class="tr-odd">
+													{{ }else{ }}
+													<tr class="tr-even">
+													{{ } }}
+														<td class="td-key">{{=zxzd[2 * k].fieldName}}</td>
+														<td class="td-value"><input class="input zxzd" type="text" disabled value="{{=zxzd[2 * k].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-id="{{=zxzd[2 * k].id}}" /><span class="unit">次</span></td>
+														{{ if(k == len6) { }}
+															<td class="td-key"></td>
+															<td class="td-value"></td>
+														{{ }else{ }}
+															<td class="td-key">{{=zxzd[2 * k + 1].fieldName}}</td>
+															<td class="td-value"><input class="input zxzd" type="text" disabled value="{{=zxzd[2 * k + 1].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-id="{{=zxzd[2 * k + 1].id}}" /><span class="unit">次</span></td>
+														{{ } }}
+													</tr>
+												{{ } }}
+											</table>
+											<!-- 只配置到显示区块 end-->
+										{{ } }}
+										</div>
+									</div>	
+									{{ } }}
+								
+									<!-- 备注信息 -->
+									<div class="panel-item-box">
+										<div class="panel-key-area">备注信息：</div>
+										<div class="panel-value-area clearfix">
+											<div class="panel-value-item">{{=col.remark}}</div>
+										</div>
+									</div>
+									<!-- 备注信息 end-->
+									<!-- 辅证数据 -->
+									<div class="panel-item-box">
+										<div class="panel-key-area">辅证数据：</div>
+										<div class="panel-value-area clearfix">
+											<a data-href="#" class="to-view">点击查看</a>
+										</div>
+									</div>
+									<!-- 辅证数据 end-->
+								</div>
+								<!--详细内容罗列结束 end-->
+								
+							{{ } }}
 						</div>
-						<!-- 辅助证据 end-->
-
-					</div>
-					<!--详细内容罗列结束 end-->
-					
-				</div>
+					{{ } }}
+				</script>
 				
 				<!--工作台左侧菜单对应项详细面板（共同还款人）-->
-				<div class="panel panel-detail">
+				<div class="panel">
 					<!--一级标题-->
 					<div class="panel-title-box">
 						<div class="panel-title">
@@ -216,9 +142,7 @@
 						<div class="key-value-box">
 							<span class="key special-word">征信查询中...</span>
 						</div>
-						<div class="key-value-box key-value-box-special">
-							<div class="button button-mini-nowidth">查看征信材料</div>
-						</div>
+						<div class="button button-mini">查看征信材料</div>
 					</div>
 					
 					<!--二级标题（姓名，身份证等等...）-->

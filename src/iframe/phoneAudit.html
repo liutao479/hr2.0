@@ -1,10 +1,10 @@
 	<!--电审zhy-->
 			<div class="container electric-check" id="electric-check">
 				<!--返回列表-->
-				<div id="location"></div>
+				<!--<div id="location"></div>-->
 				
 				<!--工作台左侧菜单面板-->
-				<div class="panel panel-menu mt15" id="checkTabs"></div>
+				<!--<div class="panel panel-menu mt15" id="checkTabs"></div>-->
 				<!--工作台左侧菜单面板 end-->
 				
 				<!-- tab栏对应项 -->
@@ -23,27 +23,69 @@
 				<div id="eleCheck" class="mt15"></div>
 				
 				<!--提交订单按钮-->
-				<div class="commit-orders-box mt15" style="margin-left: 162px;">
+				<!--<div class="commit-orders-box mt15" style="margin-left: 162px;">
 					<div id="" class="button saveBtn">提交订单</div>
-				</div>
+				</div>-->
 			</div>
 			
-			<script type="text/x-dot-template" id="checkResultTabsTmpl">
+			<!--<script type="text/x-dot-template" id="checkResultTabsTmpl">
 				{{ for(var i = 0, len = it.frames.length; i < len; i++) { var row = it.frames[i];  }}
 					<a href="javascript:;" data-idx="{{= i}}" class="panel-menu-item{{= (i == 0 ? ' panel-menu-item-active':'')}} tabLeftEvt" data-type="{{=row.code}}">
 						{{=row.name}}
 						<span class='arrow arrow-right'></span>
 					</a>
 				{{ } }}
-			</script>
+			</script>-->
 			
 			
 			<script type="text/x-dot-template" id="eleChecktmpl">
-				<div class="panel panel-loan panel-detail">
+				<div class="panel panel-loan">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">客户信息</span>
+						</div>
+					</div>
+					<div class="panel-detail-content-layout">
+						<div class="loan-info">
+							<div class="info-key-value-box">
+								<span class="info-key">
+									客户姓名：</span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName}}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key">
+									身份证号：</span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.idCard}}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key">
+									手机号：</span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.mobile}}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key">
+									性别：</span>
+								<span class="info-value">
+									{{ if(it.KHXX.sex == '0'){ }}
+										<input type="text" readonly="readonly" value="男" />
+									{{ }else{ }}
+										<input type="text" readonly="readonly" value="女" />
+									{{ } }}
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">必问问题</span>
+							<div class="button button-mini saveBtn" data-key="saveOrderInfo">
+								保存
+							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
@@ -76,10 +118,13 @@
 									<span class="info-key">备注：</span>
 									<span class="info-value info-value-long">
 									{{if(row.answer){ }}
-										<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>
+										<!--<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>-->
+										<div class="textArea" contenteditable="true">{{= row.remark}}</div>
 									{{ }else{ }}
-										<textarea name="editInfo" rows="4"></textarea>
-									{{ } }}	
+										<!--<textarea name="editInfo" rows="4"></textarea>-->
+										<div class="textArea" contenteditable="true"></div>
+									{{ } }}
+										<input type="hidden" name="editInfo" value="{{= row.remark}}" />
 									</span>
 								</div>
 							</div>
@@ -91,11 +136,14 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan panel-detail">
+				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">选问问题</span>
+							<div class="button button-mini saveBtn" data-key="saveOrderInfo">
+								保存
+							</div>
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
@@ -128,10 +176,13 @@
 									<span class="info-key">备注：</span>
 									<span class="info-value info-value-long">
 									{{if(role.answer){ }}
-										<textarea name="editInfo" rows="4" value="{{= role.editInfo}}"></textarea>
+										<div class="textArea" contenteditable="true">{{= role.remark}}</div>
+										<!--<textarea name="editInfo" rows="4" value="{{= role.editInfo}}"></textarea>-->
 									{{ }else{ }}
-										<textarea name="editInfo" rows="4"></textarea>
+										<!--<textarea name="editInfo" rows="4"></textarea>-->
+										<div class="textArea" contenteditable="true"></div>
 									{{ } }}	
+										<input type="hidden" name="editInfo" value="{{= row.remark}}" />
 									</span>
 								</div>
 							</div>

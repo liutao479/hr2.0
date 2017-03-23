@@ -30,6 +30,8 @@
 		if(self.opt.max == 0 && self.opt.pages == 0) {
 			$el.hide();
 			return self;
+		} else {
+			$el.show();
 		}
 		self.opt.pages = self.opt.pages || Math.round(self.opt.max / self.opt.size + 0.5) || 0;
 		self.init(self.opt);
@@ -121,7 +123,18 @@
 		$jumb.on('click', function() {
 			var _currentPage = $input.val();
 			if(!regulation.number.test(_currentPage) || _currentPage > self.opt.pages) {
-				alert('无效的页码');
+				$.alert({
+					title: '提示',
+					content: tool.alert('无效的页码！'),
+					buttons: {
+						ok: {
+							text: '确定',
+							actions: function() {
+								
+							}
+						}
+					}
+				});
 				return $input.val('');
 			}
 			self.direct(parseInt(_currentPage));

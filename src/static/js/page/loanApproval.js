@@ -1,29 +1,15 @@
 'use strict';
-page.ctrl('lendAudit', function($scope) {
+page.ctrl('loanApproval', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	 var urlStr = "http://192.168.1.108:8080";
-	$params.taskId = 80874;
+	$params.taskId = 80873;
+
 	/**
-	* 设置面包屑
-	*/
-	var setupLocation = function() {
-		if(!$scope.$params.path) return false;
-		var $location = $console.find('#location');
-		$location.data({
-			backspace: $scope.$params.path,
-			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '放款审核',
-			orderDate: $scope.result.data.loanTask.createDateStr
-		});
-		$location.location();
-	}
-	/**
-	* 加载车贷办理数据
-	* @params {object} params 请求参数 
+	* 加载贷款审核左侧列表项配置
 	* @params {function} cb 回调函数
 	*/
 	var loadTabList = function(cb) {
+
 		var params = {
 			taskId: $params.taskId
 		};
@@ -41,6 +27,21 @@ page.ctrl('lendAudit', function($scope) {
 			})
 		})
 	}
+
+	/**
+	* 设置面包屑
+	*/
+	var setupLocation = function() {
+		if(!$scope.$params.path) return false;
+		var $location = $console.find('#location');
+		$location.data({
+			backspace: $scope.$params.path,
+			loanUser: $scope.result.data.loanTask.loanOrder.realName,
+			current: '贷款审核',
+			orderDate: $scope.result.data.loanTask.createDateStr
+		});
+		$location.location();
+	}
 	
 	/**
 	* 加载左侧导航菜单
@@ -50,7 +51,6 @@ page.ctrl('lendAudit', function($scope) {
 		render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
 		var code = cfg.frames[0].code;
 		var pageCode = subRouterMap[code];
-		console.log(pageCode);
 		var params = {
 			code: code,
 			orderNo: $params.orderNo,

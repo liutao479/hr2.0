@@ -5,17 +5,13 @@
 				<div class="select-search-bar no-bottom-border clearfix">
 					<div class="search-item">
 						<span class="select-name">银行回款日期：</span>
-						<span class="select select-common">
-							<span class="placeholder">2016-12-19</span>
-							<span class="arrow arrow-bottom"></span>
-						</span>
+						<div class="input-text input-date">
+							<input id="dateStart" type="text" class="dateBtn" readonly="readonly" value="" />
+						</div>	
 					</div>
 					<div class="search-item">
 						<span class="select-name">分公司：</span>
-						<span class="select select-common">
-							<span class="placeholder">全部</span>
-							<span class="arrow arrow-bottom"></span>
-						</span>
+						<div class="select select-common" data-dropdown="page.$scope['moneyBusinessAuditPrint'].bankPicker" data-trigger="page.$scope['moneyBusinessAuditPrint'].dropdownTrigger.deptCompany"></div>
 					</div>
 					<div class="search-item">
 						<div class="input-text">

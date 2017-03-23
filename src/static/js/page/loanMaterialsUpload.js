@@ -1,9 +1,10 @@
 'use strict';
 page.ctrl('loanMaterialsUpload', function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params;
-	$scope.tasks = $params.tasks;
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console;
+	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
+	// $params.taskId = 1;
 
 	/**
 	* 加载贷款材料上传数据
@@ -11,22 +12,30 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadOrderInfo = function(cb) {
+		var params = {
+			taskId: $params.taskId
+		}
+		if($params.refer) {
+			params.frameCode = $params.code;
+		}
 		$.ajax({
-			// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
-			// type: flag,
 			type: 'post',
 			url: $http.api('loanMaterials/index', 'zyj'),
-			data: {
-				// taskId: $scope.$params.taskId
-				taskId: 1
-			},
+			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				$scope.result.tasks = $params.tasks.length;
+				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
 				$scope.$params.orderNo = result.data.loanTask.orderNo;
-				setupLocation();
+				if($params.refer) {
+					$scope.result.editable = 0;
+				} else {
+					$scope.result.editable = 1;
+				}
+				if($params.path) {
+					setupLocation();	
+				}
 				setupBackReason(result.data.loanTask.backApprovalInfo);
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, function() {
 					setupEvt();
@@ -79,24 +88,40 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		// 增加征信人员
 		$console.find('#addCreditUser').on('click', function() {
 			var that = $(this);
-			that.openWindow({
-				title: "增加征信人员",
-				remind: dialogTml.wRemind.addCreditUsers,
+			$.confirm({
+				title: '增加征信人员',
 				content: dialogTml.wContent.addCreditUsers,
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				var addUserType;
-				$scope.$checks = $dialog.find('.checkbox').checking();
-				$scope.$checks.each(function() {
-					var _this = this;
-					_this.$checking.onChange(function() {
-						if(!$(_this).attr('checked') && $dialog.find('.checkbox').not($(_this)).attr('checked')) {
-							$dialog.find('.checkbox').not($(_this)).removeClass('checked').attr('checked', false).html('');
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							
 						}
-					});
-				})
+					}
+				}
+			});
+			// that.openWindow({
+			// 	title: "增加征信人员",
+			// 	remind: dialogTml.wRemind.addCreditUsers,
+			// 	content: dialogTml.wContent.addCreditUsers,
+			// 	commit: dialogTml.wCommit.cancelSure
+			// }, function($dialog) {
+			// 	var addUserType;
+			// 	$scope.$checks = $dialog.find('.checkbox').checking();
+			// 	$scope.$checks.each(function() {
+			// 		var _this = this;
+			// 		_this.$checking.onChange(function() {
+			// 			if(!$(_this).attr('checked') && $dialog.find('.checkbox').not($(_this)).attr('checked')) {
+			// 				$dialog.find('.checkbox').not($(_this)).removeClass('checked').attr('checked', false).html('');
+			// 			}
+			// 		});
+			// 	})
 				
-				$dialog.find('.w-sure').on('click', function() {
+			// 	$dialog.find('.w-sure').on('click', function() {
 					// var _params = {
 					// 	orderNo: $params.orderNo,
 					// 	userType: 
@@ -112,8 +137,8 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 					// 		console.log(result);
 					// 	})
 					// })
-				})			
-			})
+			// 	})			
+			// })
 		})
 		// 提交订单按钮 
 		$console.find('#submitOrders').on('click', function() {
@@ -163,6 +188,8 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		console.log(item);
 		router.render('loanProcess/' + item.key, {
 			tasks: $scope.tasks,
+			taskId: $scope.tasks[idx].id,
+			orderNo: $params.orderNo,
 			selected: idx,
 			path: 'loanProcess'
 		});

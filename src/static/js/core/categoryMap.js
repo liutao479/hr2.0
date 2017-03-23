@@ -34,7 +34,7 @@
 
 		"advanceMaterialsUpload": "垫资材料上传",
 
-		"loanTelApproval": "电审",
+		"telAdudit": "电审",
 
 		"loanApproval": "贷款审核",
 

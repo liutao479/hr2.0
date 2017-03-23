@@ -7,9 +7,7 @@ page.ctrl('openCardSheet', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-//	var urlStr1 = "http://192.168.0.134:8080";
-	var urlStr = "http://127.0.0.1:8083";
-	var urlStr1 = "http://127.0.0.1:8083";
+	var urlStr = "http://192.168.1.108:8080";
 	var apiMap = {
 		"dealerName": urlStr+"/mock/sex",
 		"dealerId": urlStr+"/mock/busiSourceName",
@@ -25,28 +23,41 @@ page.ctrl('openCardSheet', function($scope) {
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
-	* @params {function} cb 回调函数
+	* @params {function} cb 回调ck函数
 	*/
-	var loadLoanList = function(params, cb) {
+	var loadLoanList = function(cb) {
 		var data={};
 			data['taskId']=80871;
 		$.ajax({
-			url: $http.api($http.apiMap.cardAudit),
-//			url: urlStr1+'/icbcCreditCardForm/queryICBCCreditCardForm',
+			url: urlStr+'/icbcCreditCardForm/queryICBCCreditCardForm',
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				console.log(result.data);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				console.log(result.data);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
+				$scope.result = result;
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.creditCard, true);
+				setupLocation();
 				loanFinishedInput();
 				loanFinishedInputPic();
 				loanFinishedSelect();
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
 			})
 		})
+	}
+	/**
+	* 设置面包屑
+	*/
+	var setupLocation = function() {
+		if(!$scope.$params.path) return false;
+		var $location = $console.find('#location');
+		$location.data({
+			backspace: $scope.$params.path,
+			loanUser: $scope.result.data.loanTask.loanOrder.realName,
+			current: '开卡信息录入',
+			orderDate: $scope.result.data.loanTask.createDateStr
+		});
+		$location.location();
 	}
 //页面加载完成对所有带“*”的input进行必填绑定
 	var loanFinishedInput = function(){
@@ -83,40 +94,34 @@ page.ctrl('openCardSheet', function($scope) {
 		$(".selecter").each(function(){
 			var that =$("div",$(this));
 			var key = $(this).data('key');
+			var inputSearch = $(".searchInp",$(this));
+			if(inputSearch){
+				inputSearch.hide();
+			};
 			var boxKey = key + 'Box';
 			$(this).attr("id",boxKey);
-			var data={};
-                data['code'] = key;
-			$.ajax({
-				url: apiMap[key],
-				data: data,
-				dataType: 'json',
-				  ,
-				success: $http.ok(function(result) {
-					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//					$source.selectType = result.data;
-					var selectOptBox = $(".selectOptBox");
-					selectOptBox.attr("id",key);
-				})
-			})
-			var value1 = $("input",$(this)).val();
-			$("li",$(this)).each(function(){
-				var val = $(this).val();
-				var text = $(this).text();
-				if(value1 == val){
-					$(this).parent().parent().siblings(".placeholder").html(text);
-					$(this).parent().parent().siblings("input").val(val);
-					$(this).parent().parent().siblings(".placeholder").attr('title',val);
-					var value2 = $(this).parent().parent().siblings("input").val();
-					if(!value2){
-						$(this).parent().parent().siblings(".placeholder").html("请选择")
-					}
-					$(".selectOptBox").hide(); 
-				}
-			})
-			
+			var datatype = $(this).data('type');
+			if(datatype){
+				render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
+			}
 		});
 	}
+	$(document).on('click','.selecter', function() {
+		var that =$("div",$(this));
+		var inputSearch =$(".searchInp",$(this));
+		var key = $(this).data('key');
+		var boxKey = key + 'Box';
+		var datatype = $(this).data('type');
+		if(datatype){
+			console.log(datatype);
+			render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
+			console.log(dataMap[key]);
+			var selectOptBox = $(".selectOptBox",$(this));
+			selectOptBox.style.display = 'block';
+//			selectOptBox.show();
+			console.log(selectOptBox);
+		}
+	})
 //单位电话特殊处理
 	$(document).on('change','#cophone', function() {
 		var cophone = $(this).val();
@@ -131,8 +136,8 @@ page.ctrl('openCardSheet', function($scope) {
 
 //为完善项更改去掉错误提示
 	$(document).on('input','input', function() {
-			$(this).parents().removeClass("error-input");
-			$(this).siblings("i").remove();
+		$(this).parents().removeClass("error-input");
+		$(this).siblings("i").remove();
 	})
 	$(document).on('change','#creditCardImg', function() {
 		$(this).parent().removeClass("error-input");
@@ -213,44 +218,42 @@ page.ctrl('openCardSheet', function($scope) {
 //		$(this).parent(".addressDetail").hide();
 	})
 //模糊搜索
-	$(document).on('input','.searchInp', function() {
-		var that = $(this).parent().siblings(".selecter").find("div");
-		var key = $(this).data('key');
-		var boxKey = key + 'Box';
-		$(this).attr("id",boxKey);
-		var data={};
-            data['code'] = key;
-		$.ajax({
-			url: apiMap[key],
-			data: data,
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//				$source.selectType = result.data;
-				var selectOptBox = $(".selectOptBox");
-				selectOptBox.attr("id",key);
-			})
-		})
-	})
+//	$(document).on('input','.searchInp', function() {
+//		var that = $(this).parent().siblings(".selecter").find("div");
+//		var key = $(this).data('key');
+//		var boxKey = key + 'Box';
+//		$(this).attr("id",boxKey);
+//		var data={};
+//          data['code'] = key;
+//		$.ajax({
+//			url: apiMap[key],
+//			data: data,
+//			dataType: 'json',
+//			success: $http.ok(function(result) {
+//				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
+////				$source.selectType = result.data;
+//				var selectOptBox = $(".selectOptBox");
+//				selectOptBox.attr("id",key);
+//			})
+//		})
+//	})
 //点击下拉框拉取选项	
 	$(document).on('click','.selecter', function() {
 		var that =$("div",$(this));
+		var inputSearch =$(".searchInp",$(this));
 		var key = $(this).data('key');
 		var boxKey = key + 'Box';
-		$(this).attr("id",boxKey);
-		var data={};
-            data['code'] = key;
-		$.ajax({
-			url: apiMap[key],
-			data: data,
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//				$source.selectType = result.data;
-				var selectOptBox = $(".selectOptBox");
-				selectOptBox.attr("id",key);
-			})
-		})
+		var datatype = $(this).data('type');
+		if(datatype){
+			console.log(datatype);
+			render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
+			console.log(dataMap[key]);
+			var selectOptBox = $(".selectOptBox",$(this));
+			selectOptBox.style.display = 'block';
+//			selectOptBox.show();
+			console.log(selectOptBox);
+			
+		}
 	})
 	/***
 	* 保存按钮
@@ -287,8 +290,7 @@ page.ctrl('openCardSheet', function($scope) {
 	        
 			$.ajax({
 				type: 'POST',
-//				url: '127.0.0.1',
-				url: urlStr1+'/icbcCreditCardForm/saveICBCCreditCardForm',
+				url: urlStr+'/icbcCreditCardForm/saveICBCCreditCardForm',
 				data:JSON.stringify(data1),
 				dataType:"json",
 				contentType : 'application/json;charset=utf-8',
@@ -302,7 +304,7 @@ page.ctrl('openCardSheet', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('open-card-sheet'), function() {
+	$console.load(router.template('iframe/open-card-sheet'), function() {
 		$scope.def.listTmpl = render.$console.find('#openCardSheettmpl').html();
 		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
 		$scope.$el = {
@@ -311,7 +313,282 @@ page.ctrl('openCardSheet', function($scope) {
 		if($params.process) {
 			
 		}
-		loadLoanList(apiParams);
+		loadLoanList(function(){
+			setupDropDown();
+		});
 	});
 });
 
+	$scope.bankPicker = function(picked) {
+		console.log(picked);
+	}
+	
+	/**dropdown 测试*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+	var car = {
+		brand: function(cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carBrandlist',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'brandId',
+						name: 'carBrandName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		series: function(brandId, cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carSeries',
+				data: {brandId: brandId},
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'serieName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		specs: function(seriesId, cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carSpecs',
+				data: {
+					serieId: seriesId
+				},
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'carSerieId',
+						name: 'specName'
+					};
+					cb(sourceData);
+				}
+			})
+		}
+	}
+
+	var areaSel = {
+		province: function(cb) {
+			$.ajax({
+				url: urlStr+'/area/get',
+				dataType:'json',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					};
+					cb(sourceData);
+				}
+			})
+		},
+		city: function(areaId, cb) {
+			$.ajax({
+				url: urlStr+'/area/get',
+				data: {
+					parentId: areaId
+				},
+				dataType: 'json',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		country: function(areaId, cb) {
+			$.ajax({
+				url: urlStr+'/area/get',
+				data: {
+					parentId: areaId
+				},
+				dataType: 'json',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					};
+					cb(sourceData);
+				}
+			})
+		}
+	}
+
+	$scope.dropdownTrigger = {
+		car: function(tab, parentId, cb) {
+			if(!cb && typeof cb != 'function') {
+				cb = $.noop;
+			}
+			if(!tab) return cb();
+			switch (tab) {
+				case '品牌':
+					car.brand(cb);
+					break;
+				case "车系":
+					car.series(parentId, cb);
+					break;
+				case "车型":
+					car.specs(parentId, cb);
+					break;
+				default:
+					break;
+			}
+		},
+		areaSel: function(tab, parentId, cb) {
+			if(!cb && typeof cb != 'function') {
+				cb = $.noop;
+			}
+			if(!tab) return cb();
+			switch (tab) {
+				case '省':
+					areaSel.province(cb);
+					break;
+				case "市":
+					areaSel.city(parentId, cb);
+					break;
+				case "区":
+					areaSel.country(parentId, cb);
+					break;
+				default:
+					break;
+			}
+		},
+		serviceType: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+'/loanConfigure/getItem',
+				data:{
+					'code':'serviceType'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		}
+		,
+		brand: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/demandBank/selectBank",
+				data:{
+					'code':'brand'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'bankId',
+						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		busiSourceType: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/loanConfigure/getItem",
+				data:{
+					'code':'busiSourceType'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		busiSourceName: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/carshop/list",
+				data:{
+					'code':'busiSourceName'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		remitAccountNumber: function(t, p, cb) {
+			if(!$scope.busiSourceNameId){
+				alert("填写前面");
+				return false;
+			}else{
+				$.ajax({
+					url: urlStr+"/demandCarShopAccount/getAccountList",
+					data:{
+						'carShopId':$scope.busiSourceNameId
+					},
+					dataType: 'json',
+					success: $http.ok(function(xhr) {
+						var sourceData = {
+							items: xhr.data,
+							id: 'id',
+							name: 'account',
+							accountName: 'accountName',
+							bankName: 'bankName'
+						};
+						console.log(sourceData);
+						cb(sourceData);
+					})
+				})
+			}
+		},
+		busimode: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/loanConfigure/getItem",
+				data:{
+					'code':'busimode'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		repaymentTerm: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/loanConfigure/getItem",
+				data:{
+					'code':'repaymentTerm'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		}
+	}
