@@ -4,7 +4,7 @@
 	function Todo($el) {
 		this.$el = $el;
 		this.opts = {
-			timeout: 10000,
+			timeout: 100000,
 			animation: 200
 		}
 		this.items = {};

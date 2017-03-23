@@ -75,13 +75,13 @@
 							<div class="search-item{{=(row.status == 0 ? '' : ' search-item-disabled')}}">
 								<span class="select-name">开户账户：</span>
 								<span class="input-text input-text-mini accountNumber">
-									<input type="text" value="{{=row.accountNumber}}"{{=(row.status == 0 ? '' : ' disabled')}}>
+									<input type="text" value="{{=row.accountNumber}}" disabled="disabled" />
 								</span>
 							</div>
 							<div class="search-item{{=(row.status == 0 ? '' : ' search-item-disabled')}}">
 								<span class="select-name">账户户名：</span>
 								<span class="input-text input-text-mini accountName">
-									<input type="text" value="{{=row.accountName}}"{{=(row.status == 0 ? '' : ' disabled')}}>
+									<input type="text" value="{{=row.accountName}}" disabled="disabled" >
 								</span>
 							</div>
 						</div>
@@ -114,7 +114,7 @@
 								<td class="orders-item-data">60期利率</td>
 								<td class="orders-item-data">操作</td>
 						</thead>
-						<tbody id="bankRateTable">
+						<tbody class="tbody" id="bankRateTable">
 							<tr class="orders-item tr-odd tr-noborder">
 								<td class="orders-item-data">/</td>
 								<td class="orders-item-data">
@@ -125,37 +125,37 @@
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small">
-										<input type="text" id="rate12"><span class="unit">%</span>
+										<input type="text" id="rate12" onkeyup="value=value.replace(/[^\d.]/g,'')"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small">
-										<input type="text" id="rate18"><span class="unit">%</span>
+										<input type="text" id="rate18" onkeyup="value=value.replace(/[^\d.]/g,'')"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small">
-										<input type="text" id="rate24"><span class="unit">%</span>
+										<input type="text" id="rate24" onkeyup="value=value.replace(/[^\d.]/g,'')"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small">
-										<input type="text" id="rate30"><span class="unit">%</span>
+										<input type="text" id="rate30" onkeyup="value=value.replace(/[^\d.]/g,'')"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small">
-										<input type="text" id="rate36"><span class="unit">%</span>
+										<input type="text" id="rate36" onkeyup="value=value.replace(/[^\d.]/g,'')"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small">
-										<input type="text" id="rate48"><span class="unit">%</span>
+										<input type="text" id="rate48" onkeyup="value=value.replace(/[^\d.]/g,'')"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small">
-										<input type="text" id="rate60"><span class="unit">%</span>
+										<input type="text" id="rate60" onkeyup="value=value.replace(/[^\d.]/g,'')"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">

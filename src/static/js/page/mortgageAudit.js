@@ -181,9 +181,6 @@ page.ctrl('mortgageAudit', [], function($scope) {
 			$.ajax({
 				type: 'get',
 				url: $http.api('pmsDept/getPmsDeptList', 'cyj'),
-				data: {
-					parentId: 99
-				},
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					xhr.data.unshift({

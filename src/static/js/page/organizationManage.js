@@ -185,7 +185,7 @@ page.ctrl('organizationManage', [], function($scope) {
 	*/
 	var setupBankEvt = function() {
 		// 模糊搜索
-		$console.find('#searchBankName').on('keydown', function(evt) {
+		$console.find('#searchBankName input').on('keydown', function(evt) {
 			if(evt.which == 13) {
 				var that = $(this),
 					searchText = $.trim(that.val());
@@ -198,9 +198,31 @@ page.ctrl('organizationManage', [], function($scope) {
 				}
 				loadBankList(apiParams, function() {
 					delete apiParams.bankName;
-					that.blur();
 				});
 			}
+		});
+
+		// 文本框失去焦点记录文本框的值
+		$console.find('#searchBankName input').on('blur', function(evt) {
+			var that = $(this),
+				searchText = $.trim(that.val());
+			if(!searchText) {
+				delete apiParams.bankName;
+				return false;
+			} else {
+				apiParams.bankName = searchText;
+			}
+		});
+
+		$console.find('#searchBankName .iconfont').on('click', function() {
+			apiParams.pageNum = 1;
+			if(!apiParams.bankName) {
+				$console.find('#searchBankName input').focus();
+				return false;
+			}
+			loadBankList(apiParams, function() {
+				delete apiParams.bankName;
+			});
 		});
 		
 		//  任务类型点击显示/隐藏
@@ -263,16 +285,7 @@ page.ctrl('organizationManage', [], function($scope) {
 		$console.find('#organizationManageTable .view-fee').on('click', function() {
 			var that = $(this);
 
-			that.openWindow({
-				title: '查看费率',
-				content: '<div>确定删除所选合作银行吗？</div>',
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				// 窗口确定按钮
-				$dialog.find('.w-sure').on('click', function() {
-					$dialog.remove();
-				})
-			})
+			alert('查看费率');
 		})
 	}
 

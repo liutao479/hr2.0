@@ -42,9 +42,9 @@
 			<script type="text/x-dot-template" id="mortgageInfoTmpl">
 				{{ for(var i = 0, len = it.data.length; i < len; i++) { var row = it.data[i]; }}
 				{{ if(i == 0) { }}
-				<table border="1" class="field-table" data-pledge-id="{{=row.pledgeId}}" data-id="{{=row.id}}">
+				<table border="1" class="submitTable field-table" data-pledge-id="{{=it.pledgeId}}" data-id="{{=row.id}}">
 				{{ } else { }}
-				<table border="1" class="field-table mt30" data-pledge-id="{{=row.pledgeId}}" data-id="{{=row.id}}">
+				<table border="1" class="submitTable field-table mt30" data-pledge-id="{{=it.pledgeId}}" data-id="{{=row.id}}">
 				{{ } }}
 					<tbody>
 						<tr class="tr-odd">
@@ -102,32 +102,32 @@
 				{{ } }}
 
 				{{ if(!it.disabled) { }}
-				<table border="1" class="newPledgee field-table{{=(len > 0 ? ' mt30' : '')}}">
+				<table border="1" class="{{=(len == 0 ? 'submitTable' : '')}} field-table{{=(len > 0 ? ' mt30' : '')}}" id="newSubmitTable" data-pledge-id="{{=it.pledgeId}}">
 					<tbody>
 						<tr class="tr-odd">
 							<td class="td-key">抵押权人{{=len + 1}}</td>
 							<td class="td-value">
-								<input class="input-x" data-type="pledgee" type="text" value="">
+								<input class="input-x{{=(len == 0 ? ' required' : '')}}" data-type="pledgee" type="text" value="">
 							</td>
 							<td class="td-key">身份证明名称{{=len + 1}}</td>
 							<td class="td-value">
-								<input class="input-x" data-type="cardName" type="text" value="">
+								<input class="input-x{{=(len == 0 ? ' required' : '')}}" data-type="cardName" type="text" value="">
 							</td>
 						</tr>
 						<tr class="tr-even">
 							<td class="td-key">身份证号码{{=len + 1}}</td>
 							<td class="td-value">
-								<input class="input-x" data-type="idCard" type="text" value="">
+								<input class="input-x{{=(len == 0 ? ' required' : '')}}" data-type="idCard" type="text" value="">
 							</td>
 							<td class="td-key">登记机关{{=len + 1}}</td>
 							<td class="td-value">
-								<input class="input-x" data-type="pledgeDept" type="text" value="">
+								<input class="input-x{{=(len == 0 ? ' required' : '')}}" data-type="pledgeDept" type="text" value="">
 							</td>
 						</tr>
 						<tr class="tr-odd">
 							<td class="td-key">机动车登记编号{{=len + 1}}</td>
 							<td class="td-value">
-								<input class="input-x" data-type="vehileRegNo" type="text" value="">
+								<input class="input-x{{=(len == 0 ? ' required' : '')}}" data-type="vehileRegNo" type="text" value="">
 							</td>
 							<td class="td-key">抵押登记日期{{=len + 1}}</td>
 							<td class="td-value">
@@ -135,7 +135,7 @@
 									<input class="input-x" data-type="pledgeDateString" type="text" value="">
 								{{ } else { }}
 								<div class="input-text input-date-mini">
-									<input id="srart{{=i}}" data-type="pledgeDateString" type="text" class="dateBtn" readonly="readonly" value="" />	
+									<input id="srart{{=i}}" data-type="pledgeDateString" type="text" class="dateBtn{{=(len == 0 ? ' required' : '')}}" readonly="readonly" value="" />	
 								</div>
 								{{ } }}
 							</td>
@@ -147,7 +147,7 @@
 									<input class="input-x" data-type="unPledgeDateString" type="text" value="">
 								{{ } else { }}
 								<div class="input-text input-date-mini">
-									<input id="end{{=i}}" data-type="unPledgeDateString" type="text" class="dateBtn" readonly="readonly" value="" />	
+									<input id="end{{=i}}" data-type="unPledgeDateString" type="text" class="dateBtn{{=(len == 0 ? ' required' : '')}}" readonly="readonly" value="" />	
 								</div>
 								{{ } }}
 							</td>

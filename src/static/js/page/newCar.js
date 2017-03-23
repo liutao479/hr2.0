@@ -9,8 +9,8 @@ page.ctrl('newCar', [], function($scope) {
 	$scope.result.data = {};
 	$scope.shopId = $params.shopId || '';
 	$scope.carShopId = $params.carShopId || '';
-	$scope.shopType = '';
-	$scope.shopName = '';
+	$scope.shopType = undefined;
+	$scope.shopName = undefined;
 	$scope.shopAddress = '';
 	$scope.operateBrand = '';
 
@@ -87,24 +87,41 @@ page.ctrl('newCar', [], function($scope) {
 	 var setupCarDataEvt = function() {
 	 	setupDropDown();
 
+	 	$scope.$el.$carDataPanel.find('#shopName input').on('blur', function() {
+	 		if(!$.trim($(this).val())) {
+	 			$('#shopName').removeClass('error-input').addClass('error-input');
+	 		} else {
+	 			$('#shopName').removeClass('error-input')
+	 			$scope.shopName = $.trim($(this).val());
+	 		}
+	 	})
+
 		$console.find('#carDataSave').on('click', function() {
-			if($scope.shopType === '' || $scope.shopName === '') {
+			console.log($scope)
+			var isPost = false;
+			var flag = 0;
+			if ($scope.shopType == undefined) {
+				$scope.$el.$carDataPanel.find('#shopType').removeClass('error-input').addClass('error-input');
+				flag++;
+			}
+			if ($scope.shopName == undefined) {
+				$scope.$el.$carDataPanel.find('#shopName').removeClass('error-input').addClass('error-input');
+				flag++;
+			}
+			console.log(flag)
+			if(flag > 0) {
 				$.alert({
 					title: '提示',
-					content: '请完善必填项',
-					useBootstrap: false,
-					boxWidth: '500px',
-					theme: 'light',
-					buttons:{
+					content: tool.alert('请完善必填项！'),
+					buttons: {
 						ok: {
 							text: '确定'
 						}
 					}
-				})
+				});
 			} else {
 				var _params = {
-					organId: 99,               				//机构ID
-					shopType: $scope.shopType,             //经销商类型 0:4s 1:二级经销商
+					shopType: $scope.shopType,      //经销商类型 0:4s 1:二级经销商
 					shopName: $scope.shopName      //经销商名
 				};
 				if($scope.shopAddress) {
@@ -121,18 +138,16 @@ page.ctrl('newCar', [], function($scope) {
 					dataType: 'json',
 					success: $http.ok(function(result) {
 						console.log(result);
-						$scope.demandBankId = result.data;
-						loadNewBank(function() {
-							loadBankData();
-							loadBankAccount();
-							loadBankRate();
+						$scope.shopId= result.data;
+						loadNewCar(function() {
+							loadCarData();
+							loadCarAccount();
+							loadCarRate();
 						});
 					})
-				})
+				});
 			}
-			
-			
-		});
+		})
 	 }
 
 	/**
@@ -160,8 +175,8 @@ page.ctrl('newCar', [], function($scope) {
 				var _params = {
 					carShopId: $scope.carShopId,
 					bankName: _accountBankName.trim(),
-					accountNumber: parseInt(_accountNumber.trim()),
-					account: _accountName.trim()
+					account: parseInt(_accountNumber.trim()),
+					accountName: _accountName.trim()
 				}
 				console.log(_params)
 				$.ajax({
@@ -266,6 +281,7 @@ page.ctrl('newCar', [], function($scope) {
 					costPolicy: '费率' + _costPolicy,     //新车
 					costRate: _carRate      //费率
 				}
+				console.log(_params);
 				$.ajax({
 					url: $http.api('demandCarShopPolicy/save', 'cyj'),
 					type: 'post',
@@ -286,6 +302,12 @@ page.ctrl('newCar', [], function($scope) {
 		// 合作银行费率删除
 		$console.find('.deleteCarRate').on('click', function() {
 			var that = $(this);
+			$.confirm({
+				title: '提示',
+				content: tool.alert('确定删除该条车商费率吗？'),
+				buttons
+
+			});
 			that.openWindow({
 				title: '提示',
 				content: '<div>确定删除该条车商费率吗？</div>',
@@ -364,24 +386,6 @@ page.ctrl('newCar', [], function($scope) {
 			};
 			cb(sourceData);
 		},
-		shopName: function(t, p, cb) {
-			$.ajax({
-				type: 'post',
-				url: $http.api('demandCarShop/getList', 'zyj'),
-				data: {
-					shopType: $scope.shopType//车商类型   0:4s  1:二级经销商
-				}, 	
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'shopId',
-						name: 'shopName'
-					};
-					cb(sourceData);
-				})
-			})
-		},
 		operateBrand: function(tab, parentId, cb) {
 			$.ajax({
 				type: 'post',
@@ -422,13 +426,10 @@ page.ctrl('newCar', [], function($scope) {
 	 * 车商类型选定回调
 	 */
 	$scope.shopTypePicker = function(picked) {
-		console.log(picked);
+		console.log(this.$el)
+		console.log(picked)
+		this.$el.removeClass('error-input');
 		$scope.shopType = picked.id;
-	}
-
-	$scope.shopNamePicker = function(picked) {
-		console.log(picked);
-		$scope.shopName = picked.name;
 	}
 
 	$scope.shopAddressPicker = function(picked) {

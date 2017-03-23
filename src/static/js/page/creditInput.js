@@ -29,7 +29,7 @@ page.ctrl('creditInput', [], function($scope) {
 	var loadOrderInfo = function(idx, cb) {
 		$.ajax({
 			type: 'post',
-			url: 'http://192.168.1.124:8080/creditUser/getCreditInfo',
+			url: 'http://192.168.1.108:8080/creditUser/getCreditInfo',
 			// url: $http.api('creditUser/getCreditInfo', 'jbs'),
 			data: {
 				taskId: $params.taskId

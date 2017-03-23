@@ -15,7 +15,8 @@ page.ctrl('mortgageProcess', [], function($scope) {
 	var loadMortgageProcessList = function(params, cb) {
 		console.log(params);
 		$.ajax({
-			url: $http.api('loanPledge/List', 'cyj'),
+			// url: $http.api('loanPledge/List', 'cyj'),
+			url: 'http://192.168.1.116:8080/loanPledge/List',
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -122,7 +123,8 @@ page.ctrl('mortgageProcess', [], function($scope) {
 		$console.find('#mortgageProcessTable .button').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
-				orderNo: that.data('id'),
+				orderNo: that.data('orderNo'),
+				pledgeId: that.data('pledgeId'),
 				path: 'mortgageProcess'
 			});
 		});

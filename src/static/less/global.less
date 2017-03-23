@@ -65,6 +65,9 @@
 .padding20 {
     padding: 20px !important;
 }
+.l-r-layout {
+    padding: 24px 125px;
+}
 
 .positionRela{
     position: relative;
@@ -485,6 +488,13 @@ input[disabled]{
             font-size: 14px;
         }
     }
+    .tbody {
+        .orders-item {
+            .orders-item-data {
+                padding: 10px 8px !important; 
+            }
+        }
+    }
     tbody .orders-item {
         border-top:1px dashed #cdd9e9;
         &.tr-noborder {
@@ -820,7 +830,7 @@ input[disabled]{
     }
 }
 .panel-detail {
-        margin-left: 162px;
+    padding-left: 162px;
 }
 
 //顶部为蓝条的面板
@@ -1346,7 +1356,7 @@ input[disabled]{
         float: left;
         .select-name {
             display: inline-block;
-            width: 50px;
+            width: 70px;
         }
     }
 }
@@ -2434,5 +2444,24 @@ input[disabled]{
     }
     .error-input-tip{
         bottom: -25px;
+    }
+}
+
+.l-key-value-box {
+    float: left;
+    margin: 15px 0; 
+    width: 50%;
+    text-align: center;
+    .l-key {
+        display: inline-block;
+        width: 120px;
+        line-height: 32px;
+        text-align: right;
+        vertical-align: top;
+        margin-right: 10px;
+    }
+    .l-value {
+        display: inline-block;
+        text-align: left;
     }
 }

@@ -40,7 +40,11 @@
 				<div class="select-search-bar select-search-bar-noborder clearfix">
 					<div class="search-item">
 						<span class="select-name">银行名称：</span>
-						<input type="text" class="input-text" id="searchBankName" />
+						<div class="input-text" id="searchBankName">
+							<input type="text"/>
+							<i class="iconfont">&#xe604;</i>
+						</div>
+						
 					</div>
 				</div>
 				<table width="100%" class="orders-table orders-table-noborder cooperation-maintenance-table">
@@ -162,7 +166,7 @@
 												</tr>
 											{{ }else{ }}
 												<tr class="loantask-item" style="display: none;">
-													<td>{{=col}}</td>
+													<td>{{=col.account}}-{{=col.accountName}}</td>
 												</tr>
 												{{ if(j == len2 - 1){ }}
 													<tr>
