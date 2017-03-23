@@ -133,14 +133,16 @@
 			});	
 		}
 		self.$el.find('.viewEvt').on('click', function() {
-			var loadImg;
+			var loadImg, marker;
 			try {
 				loadImg = eval(self.options.getimg);
+				marker = eval(self.options.marker);
 			} catch(e) {
 				loadImg = $.noop;
+				marker = $.noop;
 			}
 			loadImg(function(imgs) {
-
+				new Preview(imgs, marker);
 			})
 		})
 	};
@@ -376,10 +378,14 @@
 	* @params {function} marker 标记后的回调
 	* 	回调参数：img object
 	*/
-	function Preview(imgs, marker) {
+	function Preview(imgs, marker, opts) {
 		var self = this;
 		self.imgs = imgs || [];
-		self.marker = marker ? $.noop;
+		self.marker = marker || $.noop;
+		self.opts = $.extend({
+			minWidth: 500,
+			minHeight: 400
+		}, opts);
 		self.init();
 	}
 
@@ -387,14 +393,24 @@
 		var self = this;
 		self.setMask();
 		self.setViewBox();
+		self.listen();
 	};
 
 	Preview.prototype.setMask = function() { 
-		
+		var self = this;
+		self.$mask = $('<div style="position: fixed; left:0; top:0; bottom:0; right:0; background: #000; opactiy:.3;filter:alpha(opacity=30);"></div>').appendTo('body');
 	};
 
 	Preview.prototype.setViewBox = function() {
-		
+		var self = this;
+		var dw = document.documentElement.clientWidth || document.documentElement.offsetWidth,
+			dh = document.documentElement.clientHeight || document.documentElement.offsetHeight;
+		var vw = dw * 0.85,
+			vh = dh * 0.85;
+		if(vw < self.opts.minWidth || vh < self.opts.minHeight) {
+			return $.confirm('当前窗口过小，无法使用图片预览功能，请拉伸你的窗口');
+		}
+		self.$background = $('<div style="background: #000; position: absolute; width: '+vw+'px;height:'+vh+'px;border-raidus:3px;left:50%;top:50%;margin-left:-'+vw/2+'px;margin-top:-'+vh/2+'px;"></div>').appendTo('body');
 	};
 
 	Preview.prototype.listen = function() {

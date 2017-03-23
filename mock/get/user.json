@@ -1,0 +1,13 @@
+{
+	"code": 0,
+	"data": {
+		"receiverKey": 1,
+		"clientName": "赵又廷",
+		"clientIdCard": "330788888888888888",
+		"carType": "奥迪A4L",
+		"loanAmount": 30,
+		"location": "浙江省杭州市萧山区建设3路183号",
+		"orderNo": 1233992,
+		"pic": "http://unknow.jpg"
+	}
+}

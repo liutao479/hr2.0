@@ -1,0 +1,14 @@
+{
+    "code": 0,
+    "data": {
+        "signQuestionList": [
+            {
+				"questionText": "xxxx ",
+                "voiceUrl ": "语音URL ",
+                "result": "0",
+                "sort": 4
+            }
+        ]
+    },
+    "msg": "success"
+}
