@@ -25,13 +25,10 @@
 			<script type="text/x-dot-template" id="carDataTmpl">
 				<div class="panel-content-title no-top-border">
 					<span class="panel-title">车商资料</span>
-					{{if(!it.shopId) { }}
 					<div class="button button-mini" id="carDataSave">保存</div>
-					{{ } }}
 				</div>
 				<div class="panel-detail-content">
 					<div class="l-r-layout no-border clearfix">
-					{{if(!it.shopId) { }}
 						<div class="l-key-value-box">
 							<div class="l-key"><i class="color-red">*</i>车商类型：</div>
 							<div class="l-value">
@@ -42,7 +39,7 @@
 							<div class="l-key"><i class="color-red">*</i>车商名称：</div>
 							<div class="l-value">
 								<div class="input-text input-text-mini required" id="shopName">
-									<input type="text" value="">
+									<input type="text" value="{{=it.shopName || ''}}">
 								</div>
 								<!-- <div class="select select-mini" data-dropdown="page.$scope['newCar'].shopNamePicker" data-trigger="page.$scope['newCar'].dropdownTrigger.shopName" data-selected="{{=it.shopName || ''}}"></div> -->
 							</div>
@@ -59,40 +56,6 @@
 								<div class="select select-mini" data-dropdown="page.$scope['newCar'].operateBrandPicker" data- data-trigger="page.$scope['newCar'].dropdownTrigger.operateBrand" data-selected="{{=it.operateBrand || ''}}"></div>
 							</div>
 						</div>
-					{{ } else { }}
-						<div class="l-key-value-box">
-							<span class="l-key">车商类型：</span>
-							<span class="l-value">
-								<div class="input-text input-text-mini no-border">
-									<input type="text" disabled value="{{=(it.shopType == 0 ? '4S' : (it.shopType == 1 ? '二级经销商' :''))}}">
-								</div>
-							</span>
-						</div>
-						<div class="l-key-value-box">
-							<span class="l-key">车商名称：</span>
-							<span class="l-value">
-								<div class="input-text input-text-mini no-border">
-									<input type="text" disabled value="{{=it.shopName || ''}}">
-								</div>
-							</span>
-						</div>
-						<div class="l-key-value-box">
-							<span class="l-key">车商所在地：</span>
-							<span class="l-value">
-								<div class="input-text input-text-mini no-border">
-									<input type="text" disabled value="{{=it.shopAddress || ''}}">
-								</div>
-							</span>
-						</div>
-						<div class="l-key-value-box">
-							<span class="l-key">汽车品牌：</span>
-							<span class="l-value">
-								<div class="input-text input-text-mini no-border">
-									<input type="text" disabled value="{{=it.operateBrand || ''}}">
-								</div>
-							</span>
-						</div>
-					{{ } }}
 					</div>
 				</div>
 			</script>

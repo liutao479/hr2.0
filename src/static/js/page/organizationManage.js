@@ -30,6 +30,7 @@ page.ctrl('organizationManage', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				$scope.result = result;
 				render.compile($scope.$el.$tbl, $scope.def.bankListTmpl, result.data.resultlist, true);
 				setupPaging(result.page, true);
 				setupBankEvt();
@@ -284,8 +285,12 @@ page.ctrl('organizationManage', [], function($scope) {
 		// 查看费率
 		$console.find('#organizationManageTable .view-fee').on('click', function() {
 			var that = $(this);
-
-			alert('查看费率');
+			var idx = that.data('idx');
+			$.dialog({
+				title: '银行费率表',
+				boxWidth: '800px',
+				content: doT.template(dialogTml.wContent.viewFee)($scope.result.data.resultlist[idx].demandBankRateList)
+			});
 		})
 	}
 
@@ -314,7 +319,7 @@ page.ctrl('organizationManage', [], function($scope) {
 		$console.find('#organizationManageTable .toNewCar').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
-				shopId: parseInt(that.data('shopId')),
+				id: parseInt(that.data('id')),
 				carShopId: parseInt(that.data('carShopId')),
 				path: 'organizationManage'
 			});

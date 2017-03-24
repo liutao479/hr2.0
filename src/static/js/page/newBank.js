@@ -194,59 +194,108 @@ page.ctrl('newBank', [], function($scope) {
 		// 合作银行账户删除
 		$console.find('.deleteItem').on('click', function() {
 			var that = $(this);
-			that.openWindow({
+			$.alert({
 				title: '提示',
-				content: '<div>确定删除该条打款账户吗？</div>',
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				$dialog.find('.w-sure').on('click', function() {
-					$.ajax({
-						url: $http.api('demandBankAccount/del', 'cyj'),
-						type: 'post',
-						data: {
-							id: that.data('id')
-						},
-						dataType: 'json',
-						success: $http.ok(function(result) {
-							console.log(result);
-							that.parent().parent().remove();
-							$dialog.remove();
-						})
-					})
-				})
+				content: tool.alert('确定删除该条打款账户吗？'),
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							$.ajax({
+								url: $http.api('demandBankAccount/del', 'cyj'),
+								type: 'post',
+								data: {
+									id: that.data('id')
+								},
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									that.parent().parent().remove();
+								})
+							})
+						}
+					}
+				}
 			});
 		})
 	}
+
+	function clearNoNum(event,obj){   
+        //响应鼠标事件，允许左右方向键移动   
+        event = window.event||event;   
+        if(event.keyCode == 37 | event.keyCode == 39){   
+            return;   
+        }   
+        //先把非数字的都替换掉，除了数字和.   
+        obj.value = obj.value.replace(/[^\d.]/g,"");   
+        //必须保证第一个为数字而不是.   
+        obj.value = obj.value.replace(/^\./g,"");   
+        //保证只有出现一个.而没有多个.   
+        obj.value = obj.value.replace(/\.{2,}/g,".");   
+        //保证.只出现一次，而不能出现两次以上   
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");   
+      }   
 
 	/**
 	 * 加载（银行费率表）立即处理事件
 	 */
 	var setupBankRateEvt = function() {
+		// 银行费率鼠标失去焦点事件
+		$console.find('.rate input').each(function() {
+			$(this).on('keyup', function(event) {
+				clearNoNum(event,this)
+			});
+			$(this).on('afterpaste', function(event) {
+				clearNoNum(event,this)
+			});
+		})
+
 		// 银行费率表增加按钮事件
 		$console.find('#addBankRate').on('click', function() {
-			var that = $(this);
+			var that = $(this), flag = 0;
 			var $parent = that.parent().parent();
-			var rate12 = $parent.find('#rate12').val();
-			var rate18 = $parent.find('#rate18').val();
-			var rate24 = $parent.find('#rate24').val();
-			var rate30 = $parent.find('#rate30').val();
-			var rate36 = $parent.find('#rate36').val();
-			var rate48 = $parent.find('#rate48').val();
-			var rate60 = $parent.find('#rate60').val();
-			if($scope.provinceId != undefined && $scope.provinceId != undefined && rate12 != undefined && rate18 != undefined && rate24 != undefined && rate30 != undefined && rate36 != undefined && rate48 != undefined && rate60 != undefined) {
-				console.log('参数齐全');
+			if($scope.isSecond == undefined) {
+				$parent.find('#isSecond').removeClass('error-input').addClass('error-input');
+				flag++;
+			}
+			if($scope.provinceId == undefined) {
+				$parent.find('#provinceId').removeClass('error-input').addClass('error-input');
+				flag++;
+			}
+			if(flag > 0) {
+				$.alert({
+					title: '提示',
+					content: tool.alert('请完善必填项！'),
+					buttons: {
+						ok: {
+							text: '确定'
+						}
+					}
+				});
+			} else {
+				var rate12 = $.trim($parent.find('#rate12').val());
+				var rate18 = $.trim($parent.find('#rate18').val());
+				var rate24 = $.trim($parent.find('#rate24').val());
+				var rate30 = $.trim($parent.find('#rate30').val());
+				var rate36 = $.trim($parent.find('#rate36').val());
+				var rate48 = $.trim($parent.find('#rate48').val());
+				var rate60 = $.trim($parent.find('#rate60').val());
 				var _params = {
 					demankBankId: $scope.demandBankId, //银行ID
 					isSecond: $scope.isSecond, //新车
 					provinceId: $scope.provinceId, //省份ID
 					provinceName: $scope.provinceName, //省份名称
-					interestRate12: parseInt(rate12.trim()), //12期银行基准利率
-					interestRate18: parseInt(rate18.trim()), //18期银行基准利率
-					interestRate24: parseInt(rate24.trim()), //24期银行基准利率
-					interestRate30: parseInt(rate30.trim()), //30期银行基准利率
-					interestRate36: parseInt(rate36.trim()),//36期银行基准利率
-					interestRate48: parseInt(rate48.trim()), //48期银行基准利率
-					interestRate60: parseInt(rate60.trim()) //60期银行基准利率
+					interestRate12: parseInt(rate12) || 0, //12期银行基准利率
+					interestRate18: parseInt(rate18) || 0, //18期银行基准利率
+					interestRate24: parseInt(rate24) || 0, //24期银行基准利率
+					interestRate30: parseInt(rate30) || 0, //30期银行基准利率
+					interestRate36: parseInt(rate36) || 0,//36期银行基准利率
+					interestRate48: parseInt(rate48) || 0, //48期银行基准利率
+					interestRate60: parseInt(rate60) || 0 //60期银行基准利率
 				};
 				console.log(_params);
 				$.ajax({
@@ -261,48 +310,42 @@ page.ctrl('newBank', [], function($scope) {
 						})
 					})
 				})
-			} else {
-				that.openWindow({
-					title: '提示',
-					content: '<div>请完善必填项！</div>',
-					commit: dialogTml.wCommit.sure
-				}, function($dialog) {
-					$dialog.find('.w-sure').on('click', function() {
-						$dialog.remove();
-					})
-				});
 			}
-			
 		})
 
 		// 合作银行费率删除
 		$console.find('.deleteBankRate').on('click', function() {
 			var that = $(this);
-			that.openWindow({
+			$.alert({
 				title: '提示',
-				content: '<div>确定删除该条银行费率表吗？</div>',
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				$dialog.find('.w-sure').on('click', function() {
-					console.log(1)
-					$.ajax({
-						url: $http.api('demandBankRate/del', 'cyj'),
-						type: 'post',
-						data: {
-							demankBankId: $scope.demandBankId, 
-							isSecond: that.data('isSecond'), //新车
-							provinceId: that.data('provinceId') //省份ID
-						},
-						dataType: 'json',
-						success: $http.ok(function(result) {
-							console.log(result);
-							$dialog.remove();
-							loadNewBank(function() {
-								loadBankRate();
+				content: tool.alert('确定删除该条银行费率表吗？'),
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							$.ajax({
+								url: $http.api('demandBankRate/del', 'cyj'),
+								type: 'post',
+								data: {
+									demankBankId: $scope.demandBankId, 
+									isSecond: that.data('isSecond'), //新车
+									provinceId: that.data('provinceId') //省份ID
+								},
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									loadNewBank(function() {
+										loadBankRate();
+									});
+								})
 							})
-						})
-					})
-				})
+						}
+					}
+				}
 			});
 			
 		})
@@ -407,11 +450,13 @@ page.ctrl('newBank', [], function($scope) {
 
 	$scope.isSecondPicker = function(picked) {
 		console.log(picked);
+		this.$el.removeClass('error-input');
 		$scope.isSecond = picked.id;
 	}
 
 	$scope.areaPicker = function(picked) {
 		console.log(picked);
+		this.$el.removeClass('error-input');
 		$scope.provinceId = picked.id;
 		$scope.provinceName = picked.name;
 	}

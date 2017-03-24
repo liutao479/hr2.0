@@ -8,11 +8,8 @@ page.ctrl('newCar', [], function($scope) {
 	$scope.result = {};
 	$scope.result.data = {};
 	$scope.shopId = $params.shopId || '';
+	$scope.id = $params.id || '';
 	$scope.carShopId = $params.carShopId || '';
-	$scope.shopType = undefined;
-	$scope.shopName = undefined;
-	$scope.shopAddress = '';
-	$scope.operateBrand = '';
 
 	/**
 	 * 加载编辑/新建合作车商详情
@@ -22,12 +19,16 @@ page.ctrl('newCar', [], function($scope) {
 			url: $http.api('demandCarShop/detail', 'cyj'),
 			type: 'post',
 			data: {
-				shopId: $scope.shopId
+				id: $scope.id
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
+				$scope.shopType = result.data.shopType;
+				$scope.shopName = result.data.shopName;
+				$scope.shopAddress = result.data.shopAddress;
+				$scope.operateBrand = result.data.operateBrand;
 				// render.compile($scope.$el.$carPanel, $scope.def.carTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -45,7 +46,7 @@ page.ctrl('newCar', [], function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: $scope.shopId ? '编辑合作车商' : '新建合作车商'
+			current: $scope.id ? '编辑合作车商' : '新建合作车商'
 		});
 		$location.location();
 	}
@@ -90,6 +91,7 @@ page.ctrl('newCar', [], function($scope) {
 	 	$scope.$el.$carDataPanel.find('#shopName input').on('blur', function() {
 	 		if(!$.trim($(this).val())) {
 	 			$('#shopName').removeClass('error-input').addClass('error-input');
+	 			$scope.shopName = undefined;
 	 		} else {
 	 			$('#shopName').removeClass('error-input')
 	 			$scope.shopName = $.trim($(this).val());
@@ -108,7 +110,6 @@ page.ctrl('newCar', [], function($scope) {
 				$scope.$el.$carDataPanel.find('#shopName').removeClass('error-input').addClass('error-input');
 				flag++;
 			}
-			console.log(flag)
 			if(flag > 0) {
 				$.alert({
 					title: '提示',
@@ -125,10 +126,13 @@ page.ctrl('newCar', [], function($scope) {
 					shopName: $scope.shopName      //经销商名
 				};
 				if($scope.shopAddress) {
-					_params['shopAddress'] = $scope.shopAddress;
+					_params.shopAddress = $scope.shopAddress;
 				}
 				if($scope.operateBrand) {
-					_params['operateBrand'] = $scope.operateBrand;
+					_params.operateBrand = $scope.operateBrand;
+				}
+				if($scope.id) {
+					_params.id = $scope.id;
 				}
 				console.log(_params);
 				$.ajax({
@@ -138,7 +142,7 @@ page.ctrl('newCar', [], function($scope) {
 					dataType: 'json',
 					success: $http.ok(function(result) {
 						console.log(result);
-						$scope.shopId= result.data;
+						$scope.id= result.data;
 						loadNewCar(function() {
 							loadCarData();
 							loadCarAccount();
@@ -240,36 +244,64 @@ page.ctrl('newCar', [], function($scope) {
 		// 合作银行账户删除
 		$console.find('.deleteItem').on('click', function() {
 			var that = $(this);
-			that.openWindow({
+			$.alert({
 				title: '提示',
-				content: '<div>确定删除该条打款账户吗？</div>',
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				$dialog.find('.w-sure').on('click', function() {
-					$.ajax({
-						url: $http.api('demandCarShopAccount/del', 'cyj'),
-						type: 'post',
-						data: {
-							id: that.data('id')
-						},
-						dataType: 'json',
-						success: $http.ok(function(result) {
-							console.log(result);
-							that.parent().parent().remove();
-							$dialog.remove();
-						})
-					})
-				})
+				content: tool.alert('确定删除该条打款账户吗？'),
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							$.ajax({
+								url: $http.api('demandCarShopAccount/del', 'cyj'),
+								type: 'post',
+								data: {
+									id: that.data('id')
+								},
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									that.parent().parent().remove();
+								})
+							})
+						}
+					}
+				}
 			});
-			
 		})
 	}
+
+	function clearNoNum(event,obj){   
+        //响应鼠标事件，允许左右方向键移动   
+        event = window.event||event;   
+        if(event.keyCode == 37 | event.keyCode == 39){   
+            return;   
+        }   
+        //先把非数字的都替换掉，除了数字和.   
+        obj.value = obj.value.replace(/[^\d.]/g,"");   
+        //必须保证第一个为数字而不是.   
+        obj.value = obj.value.replace(/^\./g,"");   
+        //保证只有出现一个.而没有多个.   
+        obj.value = obj.value.replace(/\.{2,}/g,".");   
+        //保证.只出现一次，而不能出现两次以上   
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");   
+      } 
 
 	/**
 	 * 加载（银行费率表）立即处理事件
 	 */
 	var setupCarRateEvt = function() {
-		// 银行费率表增加按钮事件
+		// 车商费率格式校验
+		$console.find('#carRate input').on('keyup', function(event) {
+			clearNoNum(event,this)
+		});
+		$console.find('#carRate input').on('afterpaste', function(event) {
+			clearNoNum(event,this)
+		});
+		// 车商费率表增加按钮事件
 		$console.find('#addCarRate').on('click', function() {
 			var that = $(this);
 			var $parent = that.parent().parent().parent();
@@ -305,33 +337,33 @@ page.ctrl('newCar', [], function($scope) {
 			$.confirm({
 				title: '提示',
 				content: tool.alert('确定删除该条车商费率吗？'),
-				buttons
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							$.ajax({
+								url: $http.api('demandCarShopPolicy/del', 'cyj'),
+								type: 'post',
+								data: {
+									policyId: that.data('policyId') 
+								},
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									loadNewCar(function() {
+										loadCarRate();
+									})
+								})
+							})
+	           			}
+					}
+				}
 
 			});
-			that.openWindow({
-				title: '提示',
-				content: '<div>确定删除该条车商费率吗？</div>',
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				$dialog.find('.w-sure').on('click', function() {
-					$.ajax({
-						url: $http.api('demandCarShopPolicy/del', 'cyj'),
-						type: 'post',
-						data: {
-							policyId: that.data('policyId') 
-						},
-						dataType: 'json',
-						success: $http.ok(function(result) {
-							console.log(result);
-							$dialog.remove();
-							loadNewCar(function() {
-								loadCarRate();
-							})
-						})
-					})
-				})
-			});
-			
 		})
 	}
 	
@@ -352,7 +384,7 @@ page.ctrl('newCar', [], function($scope) {
 			$carRatePanel: $console.find('#carRatePanel')
 		}
 		setupLocation();
-		if($scope.shopId) {
+		if($scope.id) {
 			loadNewCar(function() {
 				loadCarData();
 				loadCarAccount();
@@ -405,9 +437,6 @@ page.ctrl('newCar', [], function($scope) {
 			$.ajax({
 				type: 'post',
 				url: $http.api('area/get', 'cyj'),
-				data: {
-					parentId: 0
-				},
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					var sourceData = {
@@ -426,19 +455,15 @@ page.ctrl('newCar', [], function($scope) {
 	 * 车商类型选定回调
 	 */
 	$scope.shopTypePicker = function(picked) {
-		console.log(this.$el)
-		console.log(picked)
 		this.$el.removeClass('error-input');
 		$scope.shopType = picked.id;
 	}
 
 	$scope.shopAddressPicker = function(picked) {
-		console.log(picked);
 		$scope.shopAddress = picked.name;	
 	}
 
 	$scope.operateBrandPicker = function(picked) {
-		console.log(picked);
 		$scope.operateBrand = picked.name;	
 	}
 

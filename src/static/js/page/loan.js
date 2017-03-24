@@ -34,31 +34,7 @@ page.ctrl('loan', function($scope) {
 					console.log(this)
 				});
 
-				// 测试弹窗
-				$console.find('#newBusiness').on('click', function() {
-					var that = $(this);
-					$.alert({
-						title: '测试弹窗功能',
-						content: dialogTml.wContent.addCreditUsers,
-						useBootstrap: false,
-						boxWidth: '500px',
-						theme: 'light',
-						type: 'purple',
-						buttons: {
-							close: {
-					        	text: '取消',
-					            action: function () {
-					            }
-					        },
-					        ok: {
-					        	text: '确定',
-					            action: function () {
-					            }
-					        }
-					        
-					    }
-					})
-				})
+				
 				if(cb && typeof cb == 'function') {
 					cb();
 				}  
@@ -132,6 +108,13 @@ page.ctrl('loan', function($scope) {
 				path: 'loanProcess'
 			});
 		});
+
+		$console.find('#newBusiness').on('click', function() {
+			var that = $(this);
+			router.render(that.data('href'), {
+				path: 'loanProcess'
+			});
+		})
 
 		/**
 		* 任务类型点击显示/隐藏
