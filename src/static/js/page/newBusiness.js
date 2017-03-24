@@ -15,7 +15,9 @@ page.ctrl('newBusiness', function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result.data, true);
+				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result.data, function() {
+					setupEvt();
+				}, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -38,6 +40,17 @@ page.ctrl('newBusiness', function($scope) {
 		$location.location();
 	}
 
+	var setupEvt = function() {
+		var $items = $console.find('.choose-items');
+		$items.on('click', function() {
+			var that = $(this);
+			$items.removeClass('choose-items-active');
+			that.removeClass('choose-items-active').addClass('choose-items-active');
+			$scope.productId = that.data('id');
+			console.log($scope.productId);
+		})
+	}
+
 	/**
 	 * 页面首次加载立即处理事件
 	 */
@@ -45,16 +58,47 @@ page.ctrl('newBusiness', function($scope) {
 		// 提交订单按钮 
 		$console.find('#submitOrders').on('click', function() {
 			var that = $(this);
+			if(!$scope.productId) {
+				$.alert({
+					title: '提示',
+					content: tool.alert('请选择一种产品！'),
+					buttons: {
+						ok: {
+							text: '确定',
+							action: function() {
+
+							}
+						}
+					}
+				})
+			} else {
+				$.ajax({
+					type: 'post',
+					url: $http.api('loanOrder/create', 'cyj'),
+					dataType: 'json',
+					data: {
+						productId: $scope.productId
+					},
+					success: $http.ok(function(result) {
+						console.log(result);
+						router.render('loanProcess');
+						if(cb && typeof cb == 'function') {
+							cb();
+						}
+					})
+				})
+			}
 		});
 	}
 
-	$console.load(router.template('iframe/newBusiness'), function() {
+	$console.load(router.template('iframe/new-business'), function() {
 		$scope.def = {
 			listTmpl: $console.find('#surviceTypetmpl').html()
 		}
 		$scope.$el = {
 			$loanPanel: $console.find('#surviceTypeTable')
 		}
+		evt();
 		loadOrderInfo();
 	});
 });

@@ -68,6 +68,12 @@
 .l-r-layout {
     padding: 24px 125px;
 }
+.w400 {
+    width: 400px !important;
+}
+.w155 {
+    width: 155px !important;
+}
 
 .positionRela{
     position: relative;
@@ -1173,6 +1179,7 @@ input[disabled]{
         }
         .loanman-material-item {
             padding-top: 5px;
+            min-height: 63px;
             .check-item {
                 float: left;
                 width: 75px;
@@ -2143,11 +2150,12 @@ input[disabled]{
 }
 //业务模式选择类型，大按钮样式 zhy
 .choose-content{
-    display: flex;
+    padding: 125px 80px;
     text-align: center;
-    justify-content:center;
     .choose-items{
-        margin: 120px 30px;
+        margin-right: 20px;
+        margin-bottom: 30px;
+        display: inline-block;
         border: 1px solid @mainColor;
         width: 240px;
         height: 240px;
@@ -2167,9 +2175,15 @@ input[disabled]{
             font-weight: bolder;
             line-height: 100px;
             letter-spacing: 3px;
-            -webkit-font-smoothing:antialiased;
         }
         &:hover{
+            background: @mainColor;
+            color: #fff;
+            .iconfont{
+                color: #fff;
+            }
+        }
+        &-active {
             background: @mainColor;
             color: #fff;
             .iconfont{
