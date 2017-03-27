@@ -2,8 +2,8 @@
 page.ctrl('loanMaterialsChoose', function($scope) {
 	var $params = $scope.$params,
 		$console = render.$console;
-	$params.orderNo = 'nfdb2016102421082285';
-	$params.taskId = 80871;
+	// $params.orderNo = 'nfdb2016102421082285';
+	// $params.taskId = 80871;
 	
 	/**
 	* 加载贷款材料选择数据
@@ -114,7 +114,43 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 				        },
 				        '确定': {
 				            action: function () {
-	            				router.render('loanProcess');
+				            	// 流程跳转
+	            				var params = {
+									taskIds: [$params.taskId],
+									orderNo: $params.orderNo
+								}
+								console.log(params)
+								$.ajax({
+									type: 'post',
+									url: $http.api('tasks/complete', 'zyj'),
+									data: JSON.stringify(params),
+									dataType: 'json',
+									contentType: 'application/json;charset=utf-8',
+									success: $http.ok(function(result) {
+										console.log(result);
+										var loanTasks = result.data;
+										var taskObj = [];
+										for(var i = 0, len = loanTasks.length; i < len; i++) {
+											var obj = loanTasks[i];
+											taskObj.push({
+												key: obj.category,
+												id: obj.id,
+												name: obj.sceneName
+											})
+										}
+										// target为即将跳转任务列表的第一个任务
+										var target = loanTasks[0];
+										router.render('loanProcess/' + target.category, {
+											taskId: target.id, 
+											orderNo: target.orderNo,
+											tasks: taskObj,
+											path: 'loanProcess'
+										});
+										// router.render('loanProcess');
+										// toast.hide();
+									})
+								})
+	            				// router.render('loanProcess');
 				            }
 				        }
 				    }
@@ -158,6 +194,7 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 		$scope.$el = {
 			$mainPanel: $console.find('#materialsChoosePanel')
 		}
+		console.log(0);
 		loadMaterialsChoose();
 	})
 });

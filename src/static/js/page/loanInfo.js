@@ -4,7 +4,7 @@ page.ctrl('loanInfo', function($scope) {
 		$console = $params.refer ? $($params.refer) : render.$console,
 		$source = $scope.$source = {},
 		apiParams = {};
-	var urlStr = "http://192.168.1.108:8080";
+	var urlStr = "http://192.168.1.86:8080";
 
 	var postUrl = {
 		"saveOrderInfo": urlStr+"/loanInfoInput/updLoanOrder",
@@ -24,8 +24,8 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-			data['taskId']=80871;
-//			data['taskId']=$params.taskId;
+			// data['taskId']=80871;
+			data['taskId']=$params.taskId;
 		$.ajax({
 //			 url: $http.api('loan.infoBak'),
 			// url: $http.api('loanInfoInput/info','jbs'),
@@ -153,6 +153,45 @@ page.ctrl('loanInfo', function($scope) {
 			// } else {
 
 			// }
+			// 流程跳转
+			var params = {
+				taskIds: [$params.taskId],
+				orderNo: $params.orderNo
+			}
+			console.log(params)
+			$.ajax({
+				type: 'post',
+				url: $http.api('tasks/complete', 'zyj'),
+				data: JSON.stringify(params),
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				success: $http.ok(function(result) {
+					console.log(result);
+					var loanTasks = result.data;
+					var taskObj = [];
+					for(var i = 0, len = loanTasks.length; i < len; i++) {
+						var obj = loanTasks[i];
+						taskObj.push({
+							key: obj.category,
+							id: obj.id,
+							name: obj.sceneName
+						})
+					}
+					// target为即将跳转任务列表的第一个任务
+					var target = loanTasks[0];
+					router.render('loanProcess/' + target.category, {
+						taskId: target.id, 
+						orderNo: target.orderNo,
+						tasks: taskObj,
+						path: 'loanProcess'
+					});
+					// router.render('loanProcess');
+					// toast.hide();
+				})
+			})
+
+			//下面为周海洋提交接口
+			/*
 			$.confirm({
 				title: '提交',
 				content: dialogTml.wContent.suggestion,
@@ -219,6 +258,7 @@ page.ctrl('loanInfo', function($scope) {
 			        }
 			    }
 			})
+			*/
 		})
 	}		
 	

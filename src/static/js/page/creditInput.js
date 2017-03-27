@@ -5,7 +5,7 @@ page.ctrl('creditInput', [], function($scope) {
 	$scope.tabs = {};
 	$scope.idx = 0;
 	$scope.apiParams = [];
-	$params.taskId = 80876;
+	// $params.taskId = 80876;
 	/**
 	* 设置面包屑
 	*/
@@ -29,8 +29,8 @@ page.ctrl('creditInput', [], function($scope) {
 	var loadOrderInfo = function(idx, cb) {
 		$.ajax({
 			type: 'post',
-			url: 'http://192.168.1.108:8080/creditUser/getCreditInfo',
-			// url: $http.api('creditUser/getCreditInfo', 'jbs'),
+			// url: 'http://192.168.1.108:8080/creditUser/getCreditInfo',
+			url: $http.api('creditUser/getCreditInfo', 'jbs'),
 			data: {
 				taskId: $params.taskId
 			},
@@ -290,7 +290,7 @@ page.ctrl('creditInput', [], function($scope) {
 			// } else {
 
 			// }
-			commitData(function() {
+			// commitData(function() {
 				$.confirm({
 					title: '提交',
 					content: dialogTml.wContent.suggestion,
@@ -325,25 +325,64 @@ page.ctrl('creditInput', [], function($scope) {
 		            				})
 		            				return false;
 		            			} else {
-		            				$.ajax({
+		            				// 流程跳转
+		            				var params = {
+										taskIds: [$params.taskId],
+										orderNo: $params.orderNo
+									}
+									console.log(params)
+									$.ajax({
 										type: 'post',
-										url: $http.api('task/complete', 'jbs'),
-										data: {
-											taskId: $params.taskId,
-											orderNo: $params.orderNo,
-											reason: _reason
-										},
+										url: $http.api('tasks/complete', 'zyj'),
+										data: JSON.stringify(params),
 										dataType: 'json',
+										contentType: 'application/json;charset=utf-8',
 										success: $http.ok(function(result) {
 											console.log(result);
+											var loanTasks = result.data;
+											var taskObj = [];
+											for(var i = 0, len = loanTasks.length; i < len; i++) {
+												var obj = loanTasks[i];
+												taskObj.push({
+													key: obj.category,
+													id: obj.id,
+													name: obj.sceneName
+												})
+											}
+											// target为即将跳转任务列表的第一个任务
+											var target = loanTasks[0];
+											router.render('loanProcess/' + target.category, {
+												taskId: target.id, 
+												orderNo: target.orderNo,
+												tasks: taskObj,
+												path: 'loanProcess'
+											});
+											// router.render('loanProcess');
+											// toast.hide();
 										})
 									})
+
+
+									// 之前的跳转链接
+		       //      				$.ajax({
+									// 	type: 'post',
+									// 	url: $http.api('task/complete', 'jbs'),
+									// 	data: {
+									// 		taskId: $params.taskId,
+									// 		orderNo: $params.orderNo,
+									// 		reason: _reason
+									// 	},
+									// 	dataType: 'json',
+									// 	success: $http.ok(function(result) {
+									// 		console.log(result);
+									// 	})
+									// })
 		            			}
 				            }
 				        }
 				        
 				    }
-				})
+				// })
 				// that.openWindow({
 				// 	title: '提交',
 				// 	content: dialogTml.wContent.suggestion,
