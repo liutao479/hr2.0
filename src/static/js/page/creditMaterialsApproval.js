@@ -177,16 +177,27 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 			})
 		});
 
-		
+		/**
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
 
 		/**
 		 * 退回订单按钮
 		 */
-		$console.find('#cancelOrders').on('click', function() {
+		$console.find('#backOrder').on('click', function() {
 			var that = $(this);
+			console.log($scope.result.data.loanTask.taskJumps)
+
 			$.alert({
-				title: '取消订单',
-				content: '<div class="w-content"><div class="w-text">确定要取消该笔贷款申请吗？</div></div>',
+				title: '退回订单',
+				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
+				onContentReady: function() {
+					dialogEvt(this.$content);
+				},
 				buttons: {
 					close: {
 						text: '取消',
@@ -195,12 +206,41 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 					ok: {
 						text: '确定',
 						action: function () {
-							
+							var _reason = $.trim(this.$content.find('#suggestion').val());
+							if(!_reason) {
+								$.alert({
+									title: '提示',
+									content: dialogTml.wContent.handelSuggestion,
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							} else {
+								var _params = {
+									taskId: $params.taskId,
+									jumpId: 1,
+									reason: _reason
+								}
+								backOrders(_params, function() {
+									router.render('licenceAudit', {});
+								});
+							}
 						}
 					}
 				}
 			})
 		});
+	}
+
+	var dialogEvt = function($dialog) {
+		var $reason = $dialog.find('#suggestion');
+		$scope.$checks = $dialog.find('.checkbox').checking();
+		console.log($scope.$checks.attr('id') == 'haha')
 	}
 
 	/**

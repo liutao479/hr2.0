@@ -17,7 +17,7 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				console.log(result);
+				
 				result.data.loanTask = {
 					category: 'registration',
 					editable: 1
@@ -30,13 +30,14 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 						djzysjbh: '登记证右上角编号'
 					}
 				];
+				console.log(result);
 				$scope.result = result;
 				$scope.id = result.data.orderInfo.id;
 				setupLocation(result.data.orderInfo);
 				setupBackReason(result.data.orderInfo.orderApproval);
 
 				// 编译两个抵押证
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, $scope.result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
