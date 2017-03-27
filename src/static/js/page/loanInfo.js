@@ -23,12 +23,12 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-			data['taskId']=80871;
-//			data['taskId']=$params.taskId;
+//			data['taskId']=80871;
+			data['taskId']=$params.taskId;
 		$.ajax({
 //			 url: $http.api('loan.infoBak'),
-			// url: $http.api('loanInfoInput/info','jbs'),
-			 url: urlStr+'/loanInfoInput/info',
+			 url: $http.api('loanInfoInput/info','jbs'),
+//			 url: urlStr+'/loanInfoInput/info',
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {

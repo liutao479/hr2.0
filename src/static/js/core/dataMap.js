@@ -1,6 +1,6 @@
 'use strict';
 (function(g) {
-	g.urlStr = "http://192.168.0.22:8080";
+	g.urlStr = "http://192.168.1.86:8080";
 	g.dataMap = {
 	    "sex":[
 	        {
