@@ -4,7 +4,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 		$console = $params.refer ? $($params.refer) : render.$console,
 		$source = $scope.$source = {},
 		apiParams = {};
-	var urlStr = "http://192.168.1.108:8080";
 
 	var postUrl = {
 		"saveOrderInfo": urlStr+"/loanInfoInput/updLoanOrder",

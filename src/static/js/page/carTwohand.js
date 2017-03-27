@@ -12,9 +12,12 @@ page.ctrl('carTwohand', function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadLoanList = function(params, cb) {
+	var loadLoanList = function(cb) {
+		var params = {
+			taskId:80871
+		}
 		$.ajax({
-			url: $http.api($http.apiMap.carTwohand),
+			url: urlStr+'/loanCarAssess/index',
 			data: params,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
@@ -27,16 +30,13 @@ page.ctrl('carTwohand', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('car-twohand'), function() {
+	$console.load(router.template('iframe/car-twohand'), function() {
 		$scope.def.listTmpl = render.$console.find('#carTwohandtmpl').html();
-		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
+		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#carTwohand'),
+			$tbl: $console.find('#carTwohand')
 		}
-		if($params.process) {
-			
-		}
-		loadLoanList(apiParams);
+		loadLoanList();
 	});
 });
 

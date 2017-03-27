@@ -2,7 +2,6 @@
 page.ctrl('checkAudit', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
-	var urlStr = "http://192.168.0.121:8080";
 	/**
 	* 设置面包屑
 	*/

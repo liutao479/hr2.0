@@ -1,6 +1,6 @@
 'use strict';
 (function(g) {
-	var urlStr = "http://192.168.1.108:8080";
+	g.urlStr = "http://192.168.0.22:8080";
 	g.dataMap = {
 	    "sex":[
 	        {
@@ -317,19 +317,4 @@
 	        }
 	    ]
 	}
-//	,
-//	g.urlApiMap = {
-//		"serviceType": urlStr+"/loanConfigure/getItem",//业务类型
-//		"brand": urlStr+"/demandBank/selectBank",//经办银行
-//		"busiSourceType": urlStr+"/loanConfigure/getItem",//业务来源类型
-//		"busiArea": urlStr+"/area/get",//三级下拉省市县
-//		"busiSourceName": urlStr+"/carshop/list",//业务来源方名称
-//		"busiSourceNameSearch": urlStr+"/carshop/searchCarShop",//业务来源方名称模糊搜索
-//		"onLicensePlace": urlStr+"/area/get",//三级下拉省市县
-//		"busimode": urlStr+"/loanConfigure/getItem",//业务模式
-//		"carName": urlStr+"/car/carBrandList",//三级车辆型号:车辆品牌
-//		"carNameSearch":  urlStr+"/car/searchCars",//车辆型号模糊搜索
-//		"repaymentTerm": urlStr+"/loanConfigure/getItem", //还款期限
-//		"remitAccountNumber": urlStr+"/demandCarShopAccount/getAccountList" //打款账号
-//	};
 })(window);

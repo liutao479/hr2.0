@@ -35,98 +35,172 @@
 						<div class="loan-info">
 							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'isSecond'){ }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="isSecond" class="info-value selecter">
-									<div></div>
-									<span class="placeholder"></span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isSecond" value="{{= it.data.DDXX.isSecond}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="isSecond" class="info-value selecter">
+												<div></div>
+												<span class="placeholder"></span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="isSecond" value="{{= it.data.DDXX.isSecond}}" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							{{ };if(seg.code == 'serviceType'){ }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<div class="select select-common" data-selected="{{= it.data.DDXX.serviceTypeName}}" data-dropdown="page.$scope['loanInfo'].serviceTypePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.serviceType"></div>
-								<input type="hidden" name="serviceTypeCode" value="{{= it.data.DDXX.serviceTypeCode}}" />
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：</span>
+										</td>
+										<td>
+											<div class="select select-common" data-selected="{{= it.data.DDXX.serviceTypeName}}" data-dropdown="page.$scope['loanInfo'].serviceTypePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.serviceType"></div>
+											<input type="hidden" name="serviceTypeCode" value="{{= it.data.DDXX.serviceTypeCode}}" />
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'demandBankId'){  }}
+							{{  };if(seg.code ==  'demandBankId'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<div class="select select-common" data-selected="{{= it.data.DDXX.demandBankName}}" data-dropdown="page.$scope['loanInfo'].brandPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.brand"></div>
-								<input type="hidden" name="demandBankId" value="{{= it.data.DDXX.demandBankId}}" />
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：</span>
+													</td>
+										<td>
+											<div class="select select-common" data-selected="{{= it.data.DDXX.demandBankName}}" data-dropdown="page.$scope['loanInfo'].brandPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.brand"></div>
+											<input type="hidden" name="demandBankId" value="{{= it.data.DDXX.demandBankId}}" />
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'busiSourceTypeCode'){  }}
+							{{  };if(seg.code ==  'busiSourceTypeCode'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：
-								</span>
-								<div class="select select-common" data-selected="{{= it.data.DDXX.busiSourceTypeName}}" data-dropdown="page.$scope['loanInfo'].busiSourceTypePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.busiSourceType"></div>
-								<input type="hidden" name="busiSourceTypeCode" value="{{= it.data.DDXX.busiSourceTypeCode}}" />
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<div class="select select-common" data-selected="{{= it.data.DDXX.busiSourceTypeName}}" data-dropdown="page.$scope['loanInfo'].busiSourceTypePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.busiSourceType"></div>
+											<input type="hidden" name="busiSourceTypeCode" value="{{= it.data.DDXX.busiSourceTypeCode}}" />
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'busiAreaCode'){  }}
+							{{  };if(seg.code ==  'busiAreaCode'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<div class="select twoLiTab" data-selected="{{= it.data.DDXX.busiAreaName}}" data-tabs="省|市" data-dropdown="page.$scope['loanInfo'].areaPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
-								<input type="hidden" name="busiAreaCode" value="{{= it.data.DDXX.busiAreaCode}}" />
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<div class="select twoLiTab" data-selected="{{= it.data.DDXX.busiAreaName}}" data-tabs="省|市" data-dropdown="page.$scope['loanInfo'].areaPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+											<input type="hidden" name="busiAreaCode" value="{{= it.data.DDXX.busiAreaCode}}" />
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'busiSourceId'){  }}
+							{{  };if(seg.code ==  'busiSourceId'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<div class="select select-common" data-selected="{{= it.data.DDXX.busiSourceName}}" data-dropdown="page.$scope['loanInfo'].busiSourceNamePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.busiSourceName"></div>
-								<input type="hidden" id="busiSourceId" name="busiSourceId" value="{{= it.data.DDXX.busiSourceId}}" />
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<div class="select select-common" data-selected="{{= it.data.DDXX.busiSourceName}}" data-dropdown="page.$scope['loanInfo'].busiSourceNamePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.busiSourceName"></div>
+											<input type="hidden" id="busiSourceId" name="busiSourceId" value="{{= it.data.DDXX.busiSourceId}}" />
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'remitAccountNumber'){  }}
+							{{  };if(seg.code ==  'remitAccountNumber'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									打款账号：</span>
-								<span data-key="remitAccountNumber" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.data.DDXX.remitAccountNumber}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="remitAccountNumber" value="{{= it.data.DDXX.remitAccountNumber}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												打款账号：</span>
+										</td>
+										<td>
+											<span data-key="remitAccountNumber" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">{{= it.data.DDXX.remitAccountNumber}}</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="remitAccountNumber" value="{{= it.data.DDXX.remitAccountNumber}}" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									开户行：</span>
-								<span class="info-value"><input id="bankName" type="text" readonly="readonly" value="{{= it.data.DDXX.bankName}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												开户行：</span>
+										</td>
+										<td>
+											<span class="info-value"><input id="bankName" type="text" readonly="readonly" value="{{= it.data.DDXX.bankName}}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									帐户名：</span>
-								<span class="info-value"><input id="accountName" type="text" readonly="readonly" value="{{= it.data.DDXX.accountName}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												帐户名：</span>
+										</td>
+										<td>
+											<span class="info-value"><input id="accountName" type="text" readonly="readonly" value="{{= it.data.DDXX.accountName}}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							{{ } }}
 							{{ } }}
@@ -155,139 +229,245 @@
 						<div class="loan-info">
 							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'licenseType'){ }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="licenseType" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="licenseType" value="{{= it.data.CLXX.licenseType}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="licenseType" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="licenseType" value="{{= it.data.CLXX.licenseType}}" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'isFinanceLeaseVehicle'){  }}
+							{{  };if(seg.code ==  'isFinanceLeaseVehicle'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="isFinanceLeaseVehicle" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isFinanceLeaseVehicle" value="{{= it.data.CLXX.isFinanceLeaseVehicle}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="isFinanceLeaseVehicle" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="isFinanceLeaseVehicle" value="{{= it.data.CLXX.isFinanceLeaseVehicle}}" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'isOperationVehicle'){  }}
+							{{  };if(seg.code ==  'isOperationVehicle'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="isOperationVehicle" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isOperationVehicle" value="{{= it.data.CLXX.isOperationVehicle}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="isOperationVehicle" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="isOperationVehicle" value="{{= it.data.CLXX.isOperationVehicle}}" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'onLicensePlaceCode'){  }}
+							{{  };if(seg.code ==  'onLicensePlaceCode'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value">
-									<div class="select" data-selected="{{= it.data.CLXX.onLicensePlaceName}}" data-tabs="省|市|区" data-dropdown="page.$scope['loanInfo'].areaPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
-									<input type="hidden" name="onLicensePlaceCode" value="{{= it.data.CLXX.onLicensePlaceCode}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<div class="select" data-selected="{{= it.data.CLXX.onLicensePlaceName}}" data-tabs="省|市|区" data-dropdown="page.$scope['loanInfo'].areaPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+											<input type="hidden" name="onLicensePlaceCode" value="{{= it.data.CLXX.onLicensePlaceCode}}" />
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'licenseCategory'){  }}
+							{{  };if(seg.code ==  'licenseCategory'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="licenseCategory" value="{{= it.data.CLXX.licenseCategory}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="licenseCategory" value="{{= it.data.CLXX.licenseCategory}}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'carName'){  }}
+							{{  };if(seg.code ==  'carName'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<div class="select select-car" data-selected="{{= it.data.CLXX.carName}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['loanInfo'].carPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.car"></div>
-								<input type="hidden" name="carMode" value="{{= it.data.CLXX.carMode}}" />
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<div class="select select-car" data-selected="{{= it.data.CLXX.carName}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['loanInfo'].carPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.car"></div>
+											<input type="hidden" name="carMode" value="{{= it.data.CLXX.carMode}}" />
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'carPrice'){  }}
+							{{  };if(seg.code ==  'carPrice'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="carPrice" value="{{= it.data.CLXX.carPrice}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="carPrice" value="{{= it.data.CLXX.carPrice}}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'systemCarPrice'){  }}
+							{{  };if(seg.code ==  'systemCarPrice'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="systemCarPrice" value="{{= it.data.CLXX.systemCarPrice}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="systemCarPrice" value="{{= it.data.CLXX.systemCarPrice}}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'isInstallGps'){  }}
+							{{  };if(seg.code ==  'isInstallGps'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value" style="padding: 0;border: none;">
-									<span data-type='self' data-key="isInstallGps" class="info-value selecter gpssel">
-										<div></div>
-										<span class="placeholder">请选择</span>
-										<span class="arrow arrow-bottom right8px"></span>
-										<input type="hidden" name="isInstallGps" id="gps" value="{{= it.data.CLXX.isInstallGps}}" />
-									</span>
-									<span class="info-value gps" id="gps1"><input type="text" name="gpsNumber1" value="{{= it.data.CLXX.gpsNumber1}}" /></span>
-									<span class="info-value gps" id="gps2"><input type="text" name="gpsNumber2" value="{{= it.data.CLXX.gpsNumber2}}" /></span>
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value" style="padding: 0;border: none;">
+												<span data-type='self' data-key="isInstallGps" class="info-value selecter gpssel">
+													<div></div>
+													<span class="placeholder">请选择</span>
+													<span class="arrow arrow-bottom right8px"></span>
+													<input type="hidden" name="isInstallGps" id="gps" value="{{= it.data.CLXX.isInstallGps}}" />
+												</span>
+												<span class="info-value gps" id="gps1"><input type="text" name="gpsNumber1" value="{{= it.data.CLXX.gpsNumber1}}" /></span>
+												<span class="info-value gps" id="gps2"><input type="text" name="gpsNumber2" value="{{= it.data.CLXX.gpsNumber2}}" /></span>
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'frameNo'){  }}
+							{{  };if(seg.code ==  'frameNo'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="frameNo" value="{{= it.data.CLXX.frameNo}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="frameNo" value="{{= it.data.CLXX.frameNo}}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'engineNo'){  }}
+							{{  };if(seg.code ==  'engineNo'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="engineNo" value="{{= it.data.CLXX.engineNo}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="engineNo" value="{{= it.data.CLXX.engineNo}}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'billingDeptName'){  }}
+							{{  };if(seg.code ==  'billingDeptName'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="billingDeptName" value="{{= it.data.CLXX.billingDeptName}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="billingDeptName" value="{{= it.data.CLXX.billingDeptName}}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							{{ } }}
 							{{ } }}
@@ -314,317 +494,561 @@
 						<div class="loan-info">
 							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'businessModel'){ }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<div class="select select-common" data-selected="{{= it.data.FQXX.busiModeName}}" data-dropdown="page.$scope['loanInfo'].busimodePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.busimode"></div>
-								<input type="hidden" name="businessModel" value="{{= it.data.FQXX.businessModel }}" />
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<div class="select select-common" data-selected="{{= it.data.FQXX.busiModeName}}" data-dropdown="page.$scope['loanInfo'].busimodePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.busimode"></div>
+											<input type="hidden" name="businessModel" value="{{= it.data.FQXX.businessModel }}" />
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'sfMoney'){  }}
+							{{  };if(seg.code ==  'sfMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="sfMoney" value="{{= it.data.FQXX.sfMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="sfMoney" value="{{= it.data.FQXX.sfMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'sfProportion'){  }}
+							{{  };if(seg.code ==  'sfProportion'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="sfProportion" value="{{= it.data.FQXX.sfProportion }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="sfProportion" value="{{= it.data.FQXX.sfProportion }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'commissionFeeRate'){  }}
+							{{  };if(seg.code ==  'commissionFeeRate'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="commissionFeeRate" value="{{= it.data.FQXX.commissionFeeRate }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="commissionFeeRate" value="{{= it.data.FQXX.commissionFeeRate }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'loanMoney'){  }}
+							{{  };if(seg.code ==  'loanMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="loanMoney" value="{{= it.data.FQXX.loanMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="loanMoney" value="{{= it.data.FQXX.loanMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'stageMoney'){  }}
+							{{  };if(seg.code ==  'stageMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="stageMoney" value="{{= it.data.FQXX.stageMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="stageMoney" value="{{= it.data.FQXX.stageMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'advancedMoney'){  }}
+							{{  };if(seg.code ==  'advancedMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="advancedMoney" value="{{= it.data.FQXX.advancedMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="advancedMoney" value="{{= it.data.FQXX.advancedMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'repayPeriod'){  }}
+							{{  };if(seg.code ==  'repayPeriod'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}12：</span>
-								<div class="select select-common repaymentTermBox" data-selected="{{= it.data.FQXX.repayPeriod}}" data-dropdown="page.$scope['loanInfo'].repaymentTermPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.repaymentTerm"></div>
-								<input type="hidden" name="repayPeriod" id="repayPeriod" value="{{= it.data.FQXX.repayPeriod }}" />
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<div class="select select-common repaymentTermBox" data-selected="{{= it.data.FQXX.repayPeriod}}" data-dropdown="page.$scope['loanInfo'].repaymentTermPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.repaymentTerm"></div>
+											<input type="hidden" name="repayPeriod" id="repayPeriod" value="{{= it.data.FQXX.repayPeriod }}" />
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'bankBaseRates'){  }}
+							{{  };if(seg.code ==  'bankBaseRates'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="bankBaseRates" value="{{= it.data.FQXX.bankBaseRates }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="bankBaseRates" value="{{= it.data.FQXX.bankBaseRates }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'bankFeeMoney'){  }}
+							{{  };if(seg.code ==  'bankFeeMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="bankFeeMoney" value="{{= it.data.FQXX.bankFeeMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="bankFeeMoney" value="{{= it.data.FQXX.bankFeeMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'contractSfMoney'){  }}
+							{{  };if(seg.code ==  'contractSfMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="contractSfMoney" value="{{= it.data.FQXX.contractSfMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="contractSfMoney" value="{{= it.data.FQXX.contractSfMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'firstMonthMoney'){  }}
+							{{  };if(seg.code ==  'firstMonthMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="firstMonthMoney" value="{{= it.data.FQXX.firstMonthMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="firstMonthMoney" value="{{= it.data.FQXX.firstMonthMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'contractSfRatio'){  }}
+							{{  };if(seg.code ==  'contractSfRatio'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="contractSfRatio" value="{{= it.data.FQXX.contractSfRatio }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="contractSfRatio" value="{{= it.data.FQXX.contractSfRatio }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'loanFeeMoney'){  }}
+							{{  };if(seg.code ==  'loanFeeMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="loanFeeMoney" value="{{= it.data.FQXX.loanFeeMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="loanFeeMoney" value="{{= it.data.FQXX.loanFeeMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'bareRate'){  }}
+							{{  };if(seg.code ==  'bareRate'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="bareRate" value="{{= it.data.FQXX.bareRate }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="bareRate" value="{{= it.data.FQXX.bareRate }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'isDiscount'){  }}
+							{{  };if(seg.code ==  'isDiscount'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="isDiscount" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isDiscount" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="isDiscount" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="isDiscount" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'discountMoney'){  }}
+							{{  };if(seg.code ==  'discountMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="discountMoney" value="{{= it.data.FQXX.discountMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="discountMoney" value="{{= it.data.FQXX.discountMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'discountRate'){  }}
+							{{  };if(seg.code ==  'discountRate'){  }}
 							<div class="info-key-value-box ">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="discountRate" value="{{= it.data.FQXX.discountRate }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="discountRate" value="{{= it.data.FQXX.discountRate }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'renewalMode'){  }}
+							{{  };if(seg.code ==  'renewalMode'){  }}
 							<div class="info-key-value-box ">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="renewalMode" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" id="bxxbInput" name="renewalMode" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="renewalMode" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" id="bxxbInput" name="renewalMode" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							{{ var renewal=it.data.FQXX.renewalInfo; }}
 							<div class="info-key-value-box bxxbYear" id="year1">
-								<span class="info-key">
-									<i>*</i>
-									第1年：
-								</span>
-								<span data-type='self' data-key="renewalModeList" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									{{ if(renewal[0]){ }}
-									<input type="hidden" class="bxxbyearIpt" value="{{= renewal[0]}}" />
-									{{ }else{ }}
-									<input type="hidden" class="bxxbyearIpt" value="555" />
-									{{ } }}
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												<i>*</i>
+												第1年：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="renewalModeList" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												{{ if(renewal[0]){ }}
+												<input type="hidden" class="bxxbyearIpt" value="{{= renewal[0]}}" />
+												{{ }else{ }}
+												<input type="hidden" class="bxxbyearIpt" value="555" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box  bxxbYear" id="year2">
-								<span class="info-key">
-									<i>*</i>
-									第2年：
-								</span>
-								<span data-type='self' data-key="renewalModeList" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									{{ if(renewal[1]){ }}
-									<input type="hidden" class="bxxbyearIpt" value="{{= renewal[1]}}" />
-									{{ }else{ }}
-									<input type="hidden" class="bxxbyearIpt" value="555" />
-									{{ } }}
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												<i>*</i>
+												第2年：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="renewalModeList" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												{{ if(renewal[1]){ }}
+												<input type="hidden" class="bxxbyearIpt" value="{{= renewal[1]}}" />
+												{{ }else{ }}
+												<input type="hidden" class="bxxbyearIpt" value="555" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box  bxxbYear" id="year3">
-								<span class="info-key">
-									<i>*</i>
-									第3年：
-								</span>
-								<span data-type='self' data-key="renewalModeList" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									{{ if(renewal[2]){ }}
-									<input type="hidden" class="bxxbyearIpt" value="{{= renewal[2]}}" />
-									{{ }else{ }}
-									<input type="hidden" class="bxxbyearIpt" value="555" />
-									{{ } }}
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												<i>*</i>
+												第3年：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="renewalModeList" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												{{ if(renewal[2]){ }}
+												<input type="hidden" class="bxxbyearIpt" value="{{= renewal[2]}}" />
+												{{ }else{ }}
+												<input type="hidden" class="bxxbyearIpt" value="555" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box  bxxbYear" id="year4">
-								<span class="info-key">
-									<i>*</i>
-									第4年：
-								</span>
-								<span data-type='self' data-key="renewalModeList" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									{{ if(renewal[3]){ }}
-									<input type="hidden" class="bxxbyearIpt" value="{{= renewal[3]}}" />
-									{{ }else{ }}
-									<input type="hidden" class="bxxbyearIpt" value="555" />
-									{{ } }}
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												<i>*</i>
+												第4年：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="renewalModeList" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												{{ if(renewal[3]){ }}
+												<input type="hidden" class="bxxbyearIpt" value="{{= renewal[3]}}" />
+												{{ }else{ }}
+												<input type="hidden" class="bxxbyearIpt" value="555" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box  bxxbYear" id="year5">
-								<span class="info-key">
-									<i>*</i>
-									第5年：
-								</span>
-								<span data-type='self' data-key="renewalModeList" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									{{ if(renewal[4]){ }}
-									<input type="hidden" class="bxxbyearIpt" value="{{= renewal[4]}}" />
-									{{ }else{ }}
-									<input type="hidden" class="bxxbyearIpt" value="555" />
-									{{ } }}
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												<i>*</i>
+												第5年：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="renewalModeList" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												{{ if(renewal[4]){ }}
+												<input type="hidden" class="bxxbyearIpt" value="{{= renewal[4]}}" />
+												{{ }else{ }}
+												<input type="hidden" class="bxxbyearIpt" value="555" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box bxxbYear" id="year6">
-								<span class="info-key">
-									<i>*</i>
-									第6年：
-								</span>
-								<span data-type='self' data-key="renewalModeList" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									{{ if(renewal[5]){ }}
-									<input type="hidden" class="bxxbyearIpt" value="{{= renewal[5]}}" />
-									{{ }else{ }}
-									<input type="hidden" class="bxxbyearIpt" value="555" />
-									{{ } }}
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												<i>*</i>
+												第6年：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="renewalModeList" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												{{ if(renewal[5]){ }}
+												<input type="hidden" class="bxxbyearIpt" value="{{= renewal[5]}}" />
+												{{ }else{ }}
+												<input type="hidden" class="bxxbyearIpt" value="555" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'cardNo'){  }}
+							{{  };if(seg.code ==  'cardNo'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="cardNo" value="{{= it.data.FQXX.cardNo}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="cardNo" value="{{= it.data.FQXX.cardNo}}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'isAdvanced'){  }}
+							{{  };if(seg.code ==  'isAdvanced'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="isAdvanced" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isAdvanced" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="isAdvanced" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="isAdvanced" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'utilityTime'){  }}
+							{{  };if(seg.code ==  'utilityTime'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value">
-									<input id="loaningDate" type="text" class="dateBtn" readonly="readonly" name="utilityTime" value="{{= it.data.FQXX.utilityTimeStr}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value">
+												<input id="loaningDate" type="text" class="dateBtn" readonly="readonly" name="utilityTime" value="{{= it.data.FQXX.utilityTimeStr}}" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							{{ } }}
 							{{ } }}
@@ -653,196 +1077,367 @@
 						<div class="loan-info">
 							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'maritalStatus'){ }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="maritalStatus" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="maritalStatus" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="maritalStatus" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="maritalStatus" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'houseStatus'){  }}
+							{{  };if(seg.code ==  'houseStatus'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="houseStatus" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="houseStatus" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="houseStatus" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="houseStatus" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'isEnterprise'){  }}
+							{{  };if(seg.code ==  'isEnterprise'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="isEnterprise" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isEnterprise" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="isEnterprise" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="isEnterprise" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'accountLocation'){  }}
+							{{  };if(seg.code ==  'accountLocation'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="accountLocation" value="{{= mainPerson.accountLocation }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="accountLocation" value="{{= mainPerson.accountLocation }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'userName'){  }}
+							{{  };if(seg.code ==  'userName'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="userName" value="{{= mainPerson.userName }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="userName" value="{{= mainPerson.userName }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'sex'){  }}
+							{{  };if(seg.code ==  'sex'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="sex" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="sex" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="sex" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="sex" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'idCard'){  }}
+							{{  };if(seg.code ==  'idCard'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="idCard" value="{{= mainPerson.idCard }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="idCard" value="{{= mainPerson.idCard }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'mobile'){  }}
+							{{  };if(seg.code ==  'mobile'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="mobile" value="{{= mainPerson.mobile }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="mobile" value="{{= mainPerson.mobile }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'age'){  }}
+							{{  };if(seg.code ==  'age'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="age" value="{{= mainPerson.age }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="age" value="{{= mainPerson.age }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'familyTel'){  }}
+							{{  };if(seg.code ==  'familyTel'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="familyTel" value="{{= mainPerson.familyTel }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="familyTel" value="{{= mainPerson.familyTel }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'familyAddress'){  }}
+							{{  };if(seg.code ==  'familyAddress'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="familyAddress" value="{{= mainPerson.familyAddress }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="familyAddress" value="{{= mainPerson.familyAddress }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'familyZipcode'){  }}
+							{{  };if(seg.code ==  'familyZipcode'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="familyZipcode" value="{{= mainPerson.familyZipcode }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="familyZipcode" value="{{= mainPerson.familyZipcode }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'company'){  }}
+							{{  };if(seg.code ==  'company'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="company" value="{{= mainPerson.company }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="company" value="{{= mainPerson.company }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'companyTel'){  }}
+							{{  };if(seg.code ==  'companyTel'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="companyTel" value="{{= mainPerson.companyTel }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="companyTel" value="{{= mainPerson.companyTel }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'companyAddress'){  }}
+							{{  };if(seg.code ==  'companyAddress'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="companyAddress" value="{{= mainPerson.companyAddress }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="companyAddress" value="{{= mainPerson.companyAddress }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'companyZipcode'){  }}
+							{{  };if(seg.code ==  'companyZipcode'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="companyZipcode" value="{{= mainPerson.companyZipcode }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="companyZipcode" value="{{= mainPerson.companyZipcode }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'monthIncomeMoney'){  }}
+							{{  };if(seg.code ==  'monthIncomeMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="monthIncomeMoney" value="{{= mainPerson.monthIncomeMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="monthIncomeMoney" value="{{= mainPerson.monthIncomeMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'balance'){  }}
+							{{  };if(seg.code ==  'balance'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="balance" value="{{= mainPerson.balance }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="balance" value="{{= mainPerson.balance }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'averageDailyBalance'){  }}
+							{{  };if(seg.code ==  'averageDailyBalance'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="averageDailyBalance" value="{{= mainPerson.averageDailyBalance }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="averageDailyBalance" value="{{= mainPerson.averageDailyBalance }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'residentType'){  }}
+							{{  };if(seg.code ==  'residentType'){  }}
 							<div class="info-key-check-box">
 								<span class="info-key">
 									{{ if(seg.empty == '0'){ }}
@@ -917,168 +1512,321 @@
 						<div class="loan-info">
 							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'userRelationship'){ }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="userRelationship" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="userRelationship" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="userRelationship" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="userRelationship" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'accountLocation'){  }}
+							{{  };if(seg.code ==  'accountLocation'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="accountLocation" value="{{= mainPerson.accountLocation }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="accountLocation" value="{{= mainPerson.accountLocation }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'userName'){  }}
+							{{  };if(seg.code ==  'userName'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="userName" value="{{= mainPerson.userName }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="userName" value="{{= mainPerson.userName }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'sex'){  }}
+							{{  };if(seg.code ==  'sex'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="sex" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="sex" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="sex" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="sex" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'idCard'){  }}
+							{{  };if(seg.code ==  'idCard'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="idCard" value="{{= mainPerson.idCard }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="idCard" value="{{= mainPerson.idCard }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'mobile'){  }}
+							{{  };if(seg.code ==  'mobile'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="mobile" value="{{= mainPerson.mobile }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="mobile" value="{{= mainPerson.mobile }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'age'){  }}
+							{{  };if(seg.code ==  'age'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="age" value="{{= mainPerson.age }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="age" value="{{= mainPerson.age }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'familyTel'){  }}
+							{{  };if(seg.code ==  'familyTel'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="familyTel" value="{{= mainPerson.familyTel }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="familyTel" value="{{= mainPerson.familyTel }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'familyAddress'){  }}
+							{{  };if(seg.code ==  'familyAddress'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="familyAddress" value="{{= mainPerson.familyAddress }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="familyAddress" value="{{= mainPerson.familyAddress }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'familyZipcode'){  }}
+							{{  };if(seg.code ==  'familyZipcode'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="familyZipcode" value="{{= mainPerson.familyZipcode }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="familyZipcode" value="{{= mainPerson.familyZipcode }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'company'){  }}
+							{{  };if(seg.code ==  'company'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="company" value="{{= mainPerson.company }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="company" value="{{= mainPerson.company }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'companyTel'){  }}
+							{{  };if(seg.code ==  'companyTel'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="companyTel" value="{{= mainPerson.companyTel }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="companyTel" value="{{= mainPerson.companyTel }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'companyAddress'){  }}
+							{{  };if(seg.code ==  'companyAddress'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="companyAddress" value="{{= mainPerson.companyAddress }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="companyAddress" value="{{= mainPerson.companyAddress }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'companyZipcode'){  }}
+							{{  };if(seg.code ==  'companyZipcode'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="companyZipcode" value="{{= mainPerson.companyZipcode }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="companyZipcode" value="{{= mainPerson.companyZipcode }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'monthIncomeMoney'){  }}
+							{{  };if(seg.code ==  'monthIncomeMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="monthIncomeMoney" value="{{= mainPerson.monthIncomeMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="monthIncomeMoney" value="{{= mainPerson.monthIncomeMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'balance'){  }}
+							{{  };if(seg.code ==  'balance'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="balance" value="{{= mainPerson.balance }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="balance" value="{{= mainPerson.balance }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'averageDailyBalance'){  }}
+							{{  };if(seg.code ==  'averageDailyBalance'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="averageDailyBalance" value="{{= mainPerson.averageDailyBalance }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="averageDailyBalance" value="{{= mainPerson.averageDailyBalance }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'residentType'){  }}
+							{{  };if(seg.code ==  'residentType'){  }}
 							<div class="info-key-check-box">
 								<span class="info-key">
 									{{ if(seg.empty == '0'){ }}
@@ -1151,168 +1899,321 @@
 						<div class="loan-info">
 							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x];if(seg.code == 'userRelationship'){ }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="userRelationship" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="userRelationship" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="userRelationship" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="userRelationship" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'accountLocation'){  }}
+							{{  };if(seg.code ==  'accountLocation'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="accountLocation" value="{{= mainPerson.accountLocation }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="accountLocation" value="{{= mainPerson.accountLocation }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'userName'){  }}
+							{{  };if(seg.code ==  'userName'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="userName" value="{{= mainPerson.userName }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="userName" value="{{= mainPerson.userName }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'sex'){  }}
+							{{  };if(seg.code ==  'sex'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span data-type='self' data-key="sex" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">请选择</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="sex" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span data-type='self' data-key="sex" class="info-value selecter">
+												<div></div>
+												<span class="placeholder">请选择</span>
+												<span class="arrow arrow-bottom right8px"></span>
+												<input type="hidden" name="sex" />
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'idCard'){  }}
+							{{  };if(seg.code ==  'idCard'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="idCard" value="{{= mainPerson.idCard }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="idCard" value="{{= mainPerson.idCard }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'mobile'){  }}
+							{{  };if(seg.code ==  'mobile'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="mobile" value="{{= mainPerson.mobile }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="mobile" value="{{= mainPerson.mobile }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'age'){  }}
+							{{  };if(seg.code ==  'age'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="age" value="{{= mainPerson.age }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="age" value="{{= mainPerson.age }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'familyTel'){  }}
+							{{  };if(seg.code ==  'familyTel'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="familyTel" value="{{= mainPerson.familyTel }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="familyTel" value="{{= mainPerson.familyTel }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'familyAddress'){  }}
+							{{  };if(seg.code ==  'familyAddress'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="familyAddress" value="{{= mainPerson.familyAddress }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="familyAddress" value="{{= mainPerson.familyAddress }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'familyZipcode'){  }}
+							{{  };if(seg.code ==  'familyZipcode'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="familyZipcode" value="{{= mainPerson.familyZipcode }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="familyZipcode" value="{{= mainPerson.familyZipcode }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'company'){  }}
+							{{  };if(seg.code ==  'company'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="company" value="{{= mainPerson.company }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="company" value="{{= mainPerson.company }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'companyTel'){  }}
+							{{  };if(seg.code ==  'companyTel'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="companyTel" value="{{= mainPerson.companyTel }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="companyTel" value="{{= mainPerson.companyTel }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'companyAddress'){  }}
+							{{  };if(seg.code ==  'companyAddress'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="companyAddress" value="{{= mainPerson.companyAddress }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="companyAddress" value="{{= mainPerson.companyAddress }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'companyZipcode'){  }}
+							{{  };if(seg.code ==  'companyZipcode'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="companyZipcode" value="{{= mainPerson.companyZipcode }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="companyZipcode" value="{{= mainPerson.companyZipcode }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'monthIncomeMoney'){  }}
+							{{  };if(seg.code ==  'monthIncomeMoney'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="monthIncomeMoney" value="{{= mainPerson.monthIncomeMoney }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="monthIncomeMoney" value="{{= mainPerson.monthIncomeMoney }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'balance'){  }}
+							{{  };if(seg.code ==  'balance'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="balance" value="{{= mainPerson.balance }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="balance" value="{{= mainPerson.balance }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'averageDailyBalance'){  }}
+							{{  };if(seg.code ==  'averageDailyBalance'){  }}
 							<div class="info-key-value-box">
-								<span class="info-key">
-									{{ if(seg.empty == '0'){ }}
-									<i>*</i>
-									{{ } }} 
-									{{= seg.name}}：</span>
-								<span class="info-value"><input type="text" name="averageDailyBalance" value="{{= mainPerson.averageDailyBalance }}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}：
+											</span>
+										</td>
+										<td>
+											<span class="info-value"><input type="text" name="averageDailyBalance" value="{{= mainPerson.averageDailyBalance }}" /></span>
+										</td>
+									</tr>
+								</table>
 							</div>
-							{{  };if(seg.code == 'residentType'){  }}
+							{{  };if(seg.code ==  'residentType'){  }}
 							<div class="info-key-check-box">
 								<span class="info-key">
 									{{ if(seg.empty == '0'){ }}
@@ -1393,7 +2294,7 @@
 									联系人{{= j+1 }}&nbsp;姓名：</span>
 									<span class="info-value"><input type="text" name="name" value="{{= role.name }}" /></span>
 								</div>
-							{{  };if(seg.code == 'relationship1'){  }}
+							{{  };if(seg.code ==  'relationship1'){  }}
 								<div class="info-key-value-box">
 									<span class="info-key">
 									{{ if(seg.empty == '0'){ }}
@@ -1407,7 +2308,7 @@
 										<input type="hidden" name="relationship" value="{{= role.relationship }}" />
 									</span>
 								</div>
-							{{  };if(seg.code == 'phone1'){  }}
+							{{  };if(seg.code ==  'phone1'){  }}
 								<div class="info-key-value-box">
 									<span class="info-key">
 									{{ if(seg.empty == '0'){ }}
@@ -1449,7 +2350,7 @@
 									账号：</span>
 								<span class="info-value"><input type="text" name="accountNumber" value="{{= it.data.HKKXX.accountNumber }}" /></span>
 							</div>
-							{{  };if(seg.code == 'bankName'){  }}
+							{{  };if(seg.code ==  'bankName'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key">
 									{{ if(seg.empty == '0'){ }}
@@ -1458,7 +2359,7 @@
 									开户行：</span>
 								<span class="info-value"><input type="text" name="bankName" value="{{= it.data.HKKXX.bankName }}" /></span>
 							</div>
-							{{  };if(seg.code == 'accountName'){  }}
+							{{  };if(seg.code ==  'accountName'){  }}
 							<div class="info-key-value-box">
 								<span class="info-key">
 									{{ if(seg.empty == '0'){ }}

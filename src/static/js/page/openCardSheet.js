@@ -7,7 +7,6 @@ page.ctrl('openCardSheet', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-	var urlStr = "http://192.168.1.108:8080";
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数

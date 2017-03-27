@@ -2,7 +2,6 @@
 page.ctrl('lendAudit', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	 var urlStr = "http://192.168.1.108:8080";
 	$params.taskId = 80874;
 	/**
 	* 设置面包屑

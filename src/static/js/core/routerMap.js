@@ -217,6 +217,14 @@
 			title: '开卡审核',
 			page: 'operateAnalysis'
 		},
+		'loanProcess/usedCarInfoInput':{
+			title: '二手车信息录入',
+			page: 'secondhandInput'
+		},
+//		'loanProcess/usedCarInfoInput':{
+//			title: '二手车信息录入',
+//			page: 'carTwohand'
+//		},
 		'loanProcess/choiseType':{
 			title: '业务类型选择',
 			page: 'surviceType'

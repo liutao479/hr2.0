@@ -4,7 +4,6 @@ page.ctrl('loanInfo', function($scope) {
 		$console = $params.refer ? $($params.refer) : render.$console,
 		$source = $scope.$source = {},
 		apiParams = {};
-	var urlStr = "http://192.168.1.108:8080";
 
 	var postUrl = {
 		"saveOrderInfo": urlStr+"/loanInfoInput/updLoanOrder",
@@ -617,7 +616,7 @@ page.ctrl('loanInfo', function($scope) {
 	var car = {
 		brand: function(cb) {
 			$.ajax({
-				url: 'http://localhost:8083/mock/carBrandlist',
+				url: urlStr+'/car/carBrandList',
 				success: function(xhr) {
 					var sourceData = {
 						items: xhr.data,
@@ -630,8 +629,10 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		series: function(brandId, cb) {
 			$.ajax({
-				url: 'http://localhost:8083/mock/carSeries',
-				data: {brandId: brandId},
+				url: urlStr+'/car/carSeries',
+				data: {
+					brandId: brandId
+				},
 				success: function(xhr) {
 					var sourceData = {
 						items: xhr.data,
@@ -644,7 +645,7 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		specs: function(seriesId, cb) {
 			$.ajax({
-				url: 'http://localhost:8083/mock/carSpecs',
+				url: urlStr+'/car/carSpecs',
 				data: {
 					serieId: seriesId
 				},

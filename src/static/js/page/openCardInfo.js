@@ -8,8 +8,6 @@ page.ctrl('loanInfo', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-//	var urlStr = "http://192.168.0.135:8080";
-	var urlStr = "http://127.0.0.1:8083";
 	var apiMap = {
 		"sex": urlStr+"/mock/sex",
 		"isSecond": urlStr+"/mock/isSecond",
