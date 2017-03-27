@@ -21,10 +21,17 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 				result.data.loanTask = {
 					category: 'registration',
 					editable: 1
-				}
+				};
+				result.data.cfgMaterials = [
+					{
+						zcdjz: '注册登记证'
+					},
+					{
+						djzysjbh: '登记证右上角编号'
+					}
+				];
 				$scope.result = result;
 				$scope.id = result.data.orderInfo.id;
-
 				setupLocation(result.data.orderInfo);
 				setupBackReason(result.data.orderInfo.orderApproval);
 
@@ -104,7 +111,7 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 			$backReason.data({
 				backReason: data.reason,
 				backUser: data.userName,
-				backUserPhone: '(后台未返回)',
+				backUserPhone: data.phone,
 				backDate: tool.formatDate(data.transDate, true)
 			});
 			$backReason.backReason();

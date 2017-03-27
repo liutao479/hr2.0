@@ -40,16 +40,19 @@
 				<div class="select-search-bar select-search-bar-noborder clearfix">
 					<div class="search-item">
 						<span class="select-name">银行名称：</span>
-						<input type="text" class="input-text" id="searchBankName" />
+						<div class="input-text" id="searchBankName">
+							<input type="text"/>
+							<i class="iconfont">&#xe604;</i>
+						</div>
+						
 					</div>
 				</div>
 				<table width="100%" class="orders-table orders-table-noborder cooperation-maintenance-table">
 					<thead>
 						<tr class="orders-bar-title">
 							<td class="orders-item-data">银行名称</td>
-							<td class="orders-item-data">开户账号-户名</td>
+							<td class="orders-item-data w400">开户账号-户名</td>
 							<td class="orders-item-data">费率表</td>
-							<td class="orders-item-data orders-item-data-blank"></td>
 							<td class="orders-item-data">操作</td>
 						</tr>
 					</thead>
@@ -85,9 +88,12 @@
 										</table>
 									</td>
 									<td class="orders-item-data orders-item-data-view">
-										<a href="javascript:;" class="view-fee">查看</a>
+										{{ if(row.demandBankRateList.length == 0) { }}
+											暂无
+										{{ } else { }}
+											<a href="javascript:;" class="view-fee color-blue" data-idx="{{=i}}">查看</a>
+										{{ } }}
 									</td>
-									<td class="orders-item-data orders-item-data-blank"></td>
 									<td class="orders-item-data orders-item-data-operate">
 										<a class="button button-gray button-mini toNewBank" data-bank-id="{{=row.bankId}}" data-demand-bank-id="{{=row.id}}" data-href="organizationManage/newBank">
 											<i class="iconfont">&#xe640;</i>
@@ -102,7 +108,7 @@
 							{{ } }}
 						{{ } else { }}
 						<tr class="tr-noborder">
-							<td colspan="5" class="orders-blank">
+							<td colspan="4" class="orders-blank">
 								<div class="blank-box">
 									<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
 									<p>暂无待办任务！</p>
@@ -118,11 +124,11 @@
 				<div class="select-search-bar select-search-bar-noborder clearfix">
 					<div class="search-item">
 						<span class="select-name">车商类型：</span>
-						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['organizationManage'].shopTypePicker" data-trigger="page.$scope['organizationManage'].dropdownTrigger.shopType" data-selected="{{=it.shopTypeName || ''}}"></div>
+						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['organizationManage'].shopTypePicker" data-trigger="page.$scope['organizationManage'].dropdownTrigger.shopType" data-selected="{{=it.shopTypeName || '全部'}}"></div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">车商名称：</span>
-						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['organizationManage'].shopNamePicker" data-forceload="true" data-trigger="page.$scope['organizationManage'].dropdownTrigger.shopName" data-selected="{{=it.shopName || ''}}"></div>
+						<div class="select select-bank" data-placeholder="全部" data-dropdown="page.$scope['organizationManage'].shopNamePicker" data-forceload="true" data-trigger="page.$scope['organizationManage'].dropdownTrigger.shopName" data-selected="{{=it.shopName || '全部'}}"></div>
 					</div>
 					<div class="search-item">
 						<a href="javascript:;" id="search-reset">重置</a>
@@ -135,7 +141,7 @@
 							<td class="orders-item-data">车商类型</td>
 							<td class="orders-item-data">车商名称</td>
 							<td class="orders-item-data">汽车品牌</td>
-							<td class="orders-item-data">开户账号-户名</td>
+							<td class="orders-item-data w400">开户账号-户名</td>
 							<td class="orders-item-data">所需费用</td>
 							<td class="orders-item-data">操作</td>
 						</tr>
@@ -162,11 +168,11 @@
 												</tr>
 											{{ }else{ }}
 												<tr class="loantask-item" style="display: none;">
-													<td>{{=col}}</td>
+													<td>{{=col.account}}-{{=col.accountName}}</td>
 												</tr>
 												{{ if(j == len2 - 1){ }}
 													<tr>
-														<td class="arrow-trigger"><span class="arrow arrow-bottom" data-ishow="false"></span></td>
+														<td class="arrow-trigger"><span class="arrow arrow-bottom" data-is-show="false"></span></td>
 													</tr>
 												{{ } }}
 											{{ } }}
@@ -183,7 +189,7 @@
 										{{ } }}
 									</td>
 									<td class="orders-item-data orders-item-data-operate">
-										<a class="button button-gray button-mini toNewCar" data-shop-id="{{=row.shopId}}" data-car-shop-id="{{=row.id}}" data-href="organizationManage/newCar">
+										<a class="button button-gray button-mini toNewCar" data-id="{{=row.id}}" data-car-shop-id="{{=row.id}}" data-href="organizationManage/newCar">
 											<i class="iconfont">&#xe640;</i>
 											编辑
 										</a>

@@ -57,7 +57,7 @@
 						<tr class="orders-item tr-odd">
 						{{ } }}
 							<td class="orders-item-data">{{=row.orderNo}}</td>
-							<td class="orders-item-data">{{=row.realName}}</td>
+							<td class="orders-item-data">{{=row.realName}}<br/>（{{=row.idCard}}）</td>
 							<td class="orders-item-data">{{=row.bankName}}</td>
 							{{ if(row.status == 0){ }}
 							<td class="orders-item-data status-wait-verify">未办理</td>

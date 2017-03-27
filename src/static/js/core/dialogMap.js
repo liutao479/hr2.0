@@ -88,7 +88,47 @@
 								<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || ""}}">\
 							</div>\
 						</dd>\
-					</dl>'
+					</dl>',
+		viewFee: '<div class="w-content">\
+					<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">\
+						<thead>\
+							<tr class="orders-bar-title">\
+								<td class="orders-item-data">序号</td>\
+									<td class="orders-item-data">新手车/二手车</td>\
+									<td class="orders-item-data">省份</td>\
+									<td class="orders-item-data">12期利率</td>\
+									<td class="orders-item-data">18期利率</td>\
+									<td class="orders-item-data">24期利率</td>\
+									<td class="orders-item-data">30期利率</td>\
+									<td class="orders-item-data">36期利率</td>\
+									<td class="orders-item-data">48期利率</td>\
+									<td class="orders-item-data">60期利率</td>\
+							</tr>\
+						</thead>\
+						<tbody class="tbody">\
+							{{for(var j = 0, len2 = it.length; j < len2; j++) { var col = it[j]; }}\
+								{{ if(j % 2 !== 0) { }}\
+								<tr class="orders-item tr-even">\
+								{{ } else if(j % 2 == 0 && j == 0) { }}\
+								<tr class="orders-item tr-odd tr-noborder">\
+								{{ } else { }}\
+								<tr class="orders-item tr-odd">\
+								{{ } }}\
+									<td class="orders-item-data">{{=(j + 1)}}</td>\
+									<td class="orders-item-data">{{=(col.isSecond == 0 ? \"新车\" : \"二手车\")}}</td>\
+									<td class="orders-item-data">{{=col.provinceName}}</td>\
+									<td class="orders-item-data">{{=col.interestRate12}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate18}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate24}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate30}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate36}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate48}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate60}}%</td>\
+								</tr>\
+							{{ } }}\
+						</tbody>\
+					</table>\
+				</div>'
 	}
 	g.dialogTml.wCommit = {
 		sure: '<div class="w-commit-area">\

@@ -14,6 +14,7 @@ page.ctrl('licenceProcess', [], function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadLicenceProcessList = function(params, cb) {
+		console.log(params);
 		$.ajax({
 			url: $http.api('loanRegistration/List', 'cyj'),
 			type: 'post',
@@ -74,7 +75,10 @@ page.ctrl('licenceProcess', [], function($scope) {
 		$console.find('#searchInput').on('blur', function(evt) {
 			var that = $(this),
 				searchText = $.trim(that.val());
-			if(searchText) {
+			if(!searchText) {
+				delete apiParams.keyWord;
+				return false;
+			} else {
 				apiParams.keyWord = searchText;
 			}
 		});

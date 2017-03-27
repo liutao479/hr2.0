@@ -161,6 +161,10 @@
 			title: '二手车评估信息录入',
 			page: 'secondhandInput'
 		},
+		'loanProcess/newBusiness':{
+			title: '新建业务',
+			page: 'newBusiness'
+		},
 
 
 

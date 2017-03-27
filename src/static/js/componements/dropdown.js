@@ -185,6 +185,7 @@
 		self.text = [];
 		self.actionIdx = 0;
 		self.$el.find('.select-box').show();
+		self.$el.find('.select-area').scrollTop(0);
 		self.$el.find('#arrow').removeClass('arrow-bottom').addClass('arrow-top');
 		if(!!self.opts.tabs.length) {
 			self.$tabPanel.find('.select-tab-item-active').removeClass('select-tab-item-active');

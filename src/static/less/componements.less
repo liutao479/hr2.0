@@ -13,6 +13,7 @@
     user-select:none;
     color: #FFF;
     background-color: @buttonBgColor;
+    white-space: nowrap;
     &:hover {
         background-color: darken(@buttonBgColor, 10%);
     }
@@ -362,7 +363,7 @@
     width: 348px;
     height: 32px;
     border: 1px solid @borderColor;
-    padding: 0 10px;
+    padding: 0 20px 0 10px;
     background-color: #FFF;
     .borderRadius(3px);
     &.input-text-mini {
@@ -372,7 +373,7 @@
         width: 100px;
     }
     &.input-text-small {
-        width: 60px;
+        width: 70px;
     }
     &.input-idc {
         width: 180px;
@@ -404,6 +405,14 @@
         margin: 0;
         padding: 0;
         border: none;
+    }
+    .iconfont {
+        position: absolute;
+        top: 50%;
+        margin-top: -8px;
+        right: 5px;
+        color: @fontColor;
+        cursor: pointer;
     }
     .unit {
         position: absolute;
@@ -903,7 +912,7 @@
 }
 // 内容部分
 .w-content {
-    width: 500px;
+    width: 100%;
     background-color: #FFF;
     padding: 20px 50px 20px 50px;
     &.w-content-padding {

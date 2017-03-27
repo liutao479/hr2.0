@@ -2,7 +2,8 @@
 page.ctrl('creditMaterialsUpload', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params;
-	$params.taskId = 81035;
+	// $params.taskId = 81035;
+	$params.taskId = 81200;
 	$scope.userMap = {
 		0: '借款人',
 		1: '共同还款人',

@@ -37,31 +37,31 @@
 	_.$http.api = function(method, name) {
 		// name不传值，代表取mock中假数据
 		if(!name) 
-			return 'http://127.0.0.1:8083/mock/' + method;
+			return 'http://192.168.1.90:8083/mock/' + method;
 		else
-			// switch (name) {
-			// 	// 周宜俭ip
-			// 	case 'zyj':
-			// 		return 'http://192.168.1.108:8080/' + method;
-			// 		break;
-			// 	// 蔡延军ip
-			// 	case 'cyj':
-			// 		return 'http://192.168.1.116:8080/' + method;
-			// 		break;
-			// 	// 季本松ip
-			// 	case 'jbs':
-			// 		return 'http://192.168.1.108:8080/' + method;
-			// 		break;
-			// 	// 王亮ip 
-			// 	case 'wl':
-			// 		return 'http://192.168.1.113:8888/' + method;
-			// 		break;
-			// 	// 李艳波ip 
-			// 	case 'lyb':
-			// 		return 'http://192.168.1.44:8080/' + method;
-			// 		break;
-			// }
-			return 'http://192.168.0.186:9999/' + method;
+			switch (name) {
+				// 周宜俭ip
+				case 'zyj':
+					return 'http://192.168.0.22:8080/' + method;
+					break;
+				// 蔡延军ip
+				case 'cyj':
+					return 'http://192.168.1.116:8080/' + method;
+					break;
+				// 季本松ip
+				case 'jbs':
+					return 'http://192.168.1.124:8080/' + method;
+					break;
+				// 王亮ip 
+				case 'wl':
+					return 'http://192.168.1.113:8888/' + method;
+					break;
+				// 李艳波ip 
+				case 'lyb':
+					return 'http://192.168.1.44:8080/' + method;
+					break;
+			}
+			// return 'http://192.168.0.186:9999/' + method;
 		//Todo 发布时增加prefix
 		// return 'http://192.168.0.113:8080/' + method;
 	}
