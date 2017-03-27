@@ -106,6 +106,50 @@ page.ctrl('signMaterialsUpload', function($scope) {
 				})
 			})
 		})
+
+		// 提交按钮
+		$console.find('#submitOrders').on('click', function() {
+			// 流程跳转
+			var taskIds = [];
+			for(var i = 0, len = $params.tasks.length; i < len; i++) {
+				taskIds.push(parseInt($params.tasks[i].id));
+			}
+			var params = {
+				taskIds: taskIds,
+				orderNo: $params.orderNo
+			}
+			console.log(params)
+			$.ajax({
+				type: 'post',
+				url: $http.api('tasks/complete', 'zyj'),
+				data: JSON.stringify(params),
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				success: $http.ok(function(result) {
+					console.log(result);
+					var loanTasks = result.data;
+					var taskObj = [];
+					for(var i = 0, len = loanTasks.length; i < len; i++) {
+						var obj = loanTasks[i];
+						taskObj.push({
+							key: obj.category,
+							id: obj.id,
+							name: obj.sceneName
+						})
+					}
+					// target为即将跳转任务列表的第一个任务
+					var target = loanTasks[0];
+					router.render('loanProcess/' + target.category, {
+						taskId: target.id, 
+						orderNo: target.orderNo,
+						tasks: taskObj,
+						path: 'loanProcess'
+					});
+					// router.render('loanProcess');
+					// toast.hide();
+				})
+			})
+		})
 	}
 
 	/**

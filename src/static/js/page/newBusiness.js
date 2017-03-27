@@ -15,9 +15,7 @@ page.ctrl('newBusiness', function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result.data, function() {
-					setupEvt();
-				}, true);
+				$scope.result = result;
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -40,6 +38,27 @@ page.ctrl('newBusiness', function($scope) {
 		$location.location();
 	}
 
+	/**
+	 * 创建订单（提交订单）
+	 */
+	var setupCommit = function() {
+		$.ajax({
+			type: 'post',
+			url: $http.api('loanOrder/create', 'cyj'),
+			dataType: 'json',
+			data: {
+				productId: $scope.productId
+			},
+			success: $http.ok(function(result) {
+				console.log(result);
+				router.render('loanProcess');
+			})
+		})
+	}
+
+	/**
+	 * 页面渲染后执行的事件
+	 */
 	var setupEvt = function() {
 		var $items = $console.find('.choose-items');
 		$items.on('click', function() {
@@ -72,33 +91,33 @@ page.ctrl('newBusiness', function($scope) {
 					}
 				})
 			} else {
-				$.ajax({
-					type: 'post',
-					url: $http.api('loanOrder/create', 'cyj'),
-					dataType: 'json',
-					data: {
-						productId: $scope.productId
-					},
-					success: $http.ok(function(result) {
-						console.log(result);
-						router.render('loanProcess');
-						if(cb && typeof cb == 'function') {
-							cb();
-						}
-					})
-				})
+				setupCommit();
 			}
 		});
 	}
 
-	$console.load(router.template('iframe/new-business'), function() {
-		$scope.def = {
-			listTmpl: $console.find('#surviceTypetmpl').html()
+
+	/**
+	 * 新建业务时，查找产品列表只有一个则直接创建，否则加载页面选择产品在进行操作
+	 */
+	loadOrderInfo(function() {
+		if($scope.result.data.length == 1) {
+			$scope.productId = $scope.result.data[0].productId;
+			setupCommit();
+		} else {
+			$console.load(router.template('iframe/new-business'), function() {
+				$scope.def = {
+					listTmpl: $console.find('#surviceTypetmpl').html()
+				}
+				$scope.$el = {
+					$loanPanel: $console.find('#surviceTypeTable')
+				}
+				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, $scope.result.data, function() {
+					setupEvt();
+				}, true);
+				evt();
+			});
 		}
-		$scope.$el = {
-			$loanPanel: $console.find('#surviceTypeTable')
-		}
-		evt();
-		loadOrderInfo();
-	});
+	})
+	
 });

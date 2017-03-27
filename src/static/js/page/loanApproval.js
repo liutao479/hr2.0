@@ -2,7 +2,7 @@
 page.ctrl('loanApproval', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	$params.taskId = 80873;
+	// $params.taskId = 80873;
 
 	/**
 	* 加载贷款审核左侧列表项配置
@@ -19,6 +19,7 @@ page.ctrl('loanApproval', function($scope) {
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(xhr) {
+				debugger
 				$scope.result = xhr;
 				setupLocation();
 				loadGuide(xhr.cfgData)

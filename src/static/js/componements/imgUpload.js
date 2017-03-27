@@ -399,9 +399,8 @@
 	}
 
 	var api = {
-		img: 'http://192.168.0.186:9999/oss/img/sign',
-		video: 'http://192.168.0.186:9999/oss/video/sign',
-		// upload: 'http://127.0.0.1:8083/mock/addOrUpdate',
+		img: $http.api('oss/img/sign', 'cyj'),
+		video: $http.api('oss/video/sign', 'cyj'),
 		upload: $http.api('material/addOrUpdate', 'cyj'),
 		del: $http.api('material/del', 'cyj'),
 		creditUpload: $http.api('creditReport/reportUpd', 'jbs'),

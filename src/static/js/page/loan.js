@@ -11,20 +11,24 @@ page.ctrl('loan', function($scope) {
 	* @params {object} params 请求参数
 	*/
 	var loadLoanList = function(params, cb) {
+		if(!params.process) {
+			delete params.process;
+		}
+		console.log(params);
 		$.ajax({
 			// 贷款办理列表的在线接口，为调试并行任务各页面，先使用假数据
 			type: 'post',
 			// url: 'http://192.168.0.144:8080/loanOrder/workbench',
 			dataType:"json",
-			url: $http.api('loan.list','jbs'),
+			url: $http.api('loanOrder/workbench', 'jbs'),
 			data: params,
-			// url: $http.api('material/addOrUpdate', 'wl'),
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.pageData = result.data;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page, true);
 				setupEvent();
+
 
 
 				// 测试复选框
@@ -64,27 +68,8 @@ page.ctrl('loan', function($scope) {
 	* 绑定表格中立即处理事件
 	*/
 	var setupEvent = function() {
-		$console.find('#processTagClose').on('click', function() {
-			router.render('loanProcess');
-		})
-		/**
-		* 绑定搜索事件
-		**/
-		$console.find('#search').on('keydown', function(evt) {
-			if(evt.which == 13) {
-				var that = $(this),
-					searchText = $.trim(that.val());
-				if(!searchText) {
-					return false;
-				}
-				apiParams.search = searchText;
-				$params.search = searchText;
-				apiParams.pageNum = 1;
-				$params.pageNum = 1;
-				loadLoanList(apiParams);
-				// router.updateQuery($scope.$path, $params);
-			}
-		});
+		
+
 		/**
 		* 绑定立即处理事件
 		*/
@@ -109,6 +94,66 @@ page.ctrl('loan', function($scope) {
 			});
 		});
 
+	}
+
+	/**
+	* 页面首次载入时绑定事件
+	*/
+ 	var evt = function() {
+ 		// 订单列表的排序
+		$console.find('#time-sort').on('click', function() {
+			var that = $(this);
+			if(!that.data('sort')) {
+				apiParams.createTimeSort = 1;
+				loadLoanList(apiParams, function() {
+					that.data('sort', true);
+					that.removeClass('time-sort-up').addClass('time-sort-down');
+				});
+
+			} else {
+				delete apiParams.createTimeSort;
+				loadLoanList(apiParams, function() {
+					that.data('sort', false);
+					that.removeClass('time-sort-down').addClass('time-sort-up');
+				});
+			}
+		});
+
+		//流程标签
+		$console.find('#processTagClose').on('click', function() {
+			router.render('loanProcess');
+		})
+
+		/**
+		* 绑定搜索事件
+		**/
+		$console.find('#search input').on('keydown', function(evt) {
+			if(evt.which == 13) {
+				var that = $(this),
+					searchText = $.trim(that.val());
+				if(!searchText) {
+					return false;
+				}
+				apiParams.fuzzyParam = searchText;
+				apiParams.pageNum = 1;
+				loadLoanList(apiParams);
+			}
+		});
+		$console.find('#search .iconfont').on('click', function() {
+			var searchText = $.trim($console.find('#search input').val());
+			if(!searchText) {
+				$console.find('#search input').focus();
+				loadLoanList(apiParams);
+				return false;
+			}
+			apiParams.fuzzyParam = searchText;
+			apiParams.pageNum = 1;
+			loadLoanList(apiParams, function() {
+				delete apiParams.fuzzyParam;
+			});
+		});
+
+		// 新建业务
 		$console.find('#newBusiness').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
@@ -134,33 +179,6 @@ page.ctrl('loan', function($scope) {
 				$tr.eq(1).show();
 			}
 		})
-
-	}
-
-	/**
-	* 页面首次载入时绑定事件
-	*/
- 	var setupEvt = function() {
- 		// 订单列表的排序
-		$console.find('#time-sort').on('click', function() {
-			var that = $(this);
-			if(!that.data('sort')) {
-				apiParams.createTimeSort = 1;
-				$params.createTimeSort = 1;
-				loadLoanList(apiParams, function() {
-					that.data('sort', true);
-					that.removeClass('time-sort-up').addClass('time-sort-down');
-				});
-
-			} else {
-				delete apiParams.createTimeSort;
-				delete $params.createTimeSort;
-				loadLoanList(apiParams, function() {
-					that.data('sort', false);
-					that.removeClass('time-sort-down').addClass('time-sort-up');
-				});
-			}
-		});
  	}
  	
 	/***
@@ -178,7 +196,7 @@ page.ctrl('loan', function($scope) {
 			$('#processTag').parent().remove();
 		}
 		loadLoanList(apiParams, function() {
-			setupEvt();
+			evt();
 		});
 		setupDatepicker();
 		setupDropDown();
@@ -186,8 +204,6 @@ page.ctrl('loan', function($scope) {
 
 	$scope.paging = function(_page, _size, $el, cb) {
 		apiParams.pageNum = _page;
-		$params.pageNum = _page;
-		// router.updateQuery($scope.$path, $params);
 		loadLoanList(apiParams);
 		cb();
 	}

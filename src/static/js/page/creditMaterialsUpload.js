@@ -3,7 +3,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params;
 	// $params.taskId = 81035;
-	$params.taskId = 81200;
+	// $params.taskId = 81200;
 	$scope.userMap = {
 		0: '借款人',
 		1: '共同还款人',
@@ -44,8 +44,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
  				$scope.orderNo = result.data.loanTask.orderNo;
  				$scope.demandBankId = result.data.loanTask.loanOrder.demandBankId || '';
  				$scope.bankName = result.data.loanTask.loanOrder.demandBankName || '';
- 				$scope.busiAreaCode = result.data.loanTask.loanOrder.area.areaId || '';
- 				$scope.areaName = result.data.loanTask.loanOrder.area.wholeName || '';
+ 				$scope.busiAreaCode = result.data.loanTask.loanOrder.area ? result.data.loanTask.loanOrder.area.areaId : '';
+ 				$scope.areaName = result.data.loanTask.loanOrder.area ? result.data.loanTask.loanOrder.area.wholeName : '';
 				$scope.result.data.currentType = _type;
 
 				// 编译tab
@@ -73,11 +73,13 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		if(!$scope.demandBankId) {
 			setupWindow();
 		} else {
-			render.compile($scope.$el.$modifyBankPanel, $scope.def.modifyBankTmpl, $scope.result.data.loanTask.loanOrder, function() {
-				$scope.$el.$modifyBankPanel.find('.modifyBankEvt').on('click', function() {
-					setupWindow(true);
-				})
-			}, true);
+			loadOrderInfo($scope.currentType, function() {
+				render.compile($scope.$el.$modifyBankPanel, $scope.def.modifyBankTmpl, $scope.result.data.loanTask.loanOrder, function() {
+					$scope.$el.$modifyBankPanel.find('.modifyBankEvt').on('click', function() {
+						setupWindow(true);
+					})
+				}, true);
+			});
 		}
 	}
 	/**
@@ -294,7 +296,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			var that = $(this);
 			$.confirm({
 				title: '提示',
-				content: '<div class="w-content"><div class="w-text">确定所有被查人的征信材料已上传无误，并提交征信查询吗？</div></div>',
+				content: tool.alert('确定所有被查人的征信材料已上传无误，并提交征信查询吗？'),
 				buttons: {
 					close: {
 						text: '取消',
@@ -330,15 +332,46 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$.ajax({
 					type: 'post',
 					url: $http.api('creditMaterials/submit/' + $params.taskId, 'zyj'),
-					// url: $http.api('creditMaterials/submit/81035', 'zyj'),
 					data: JSON.stringify($scope.apiParams),
 					dataType: 'json',
 					contentType: 'application/json;charset=utf-8',
 					success: $http.ok(function(result) {
 						console.log(result);
-						alert('toast提示"已发送征信查询"');
-						router.render('loanProcess', {});
-						// toast.hide();
+						var params = {
+							taskIds: [$params.taskId],
+							orderNo: $params.orderNo
+						}
+						console.log(params)
+						$.ajax({
+							type: 'post',
+							url: $http.api('tasks/complete', 'zyj'),
+							data: JSON.stringify(params),
+							dataType: 'json',
+							contentType: 'application/json;charset=utf-8',
+							success: $http.ok(function(result) {
+								console.log(result);
+								var loanTasks = result.data;
+								var taskObj = [];
+								for(var i = 0, len = loanTasks.length; i < len; i++) {
+									var obj = loanTasks[i];
+									taskObj.push({
+										key: obj.category,
+										id: obj.id,
+										name: obj.sceneName
+									})
+								}
+								// target为即将跳转任务列表的第一个任务
+								var target = loanTasks[0];
+								router.render('loanProcess/' + target.category, {
+									taskId: target.id, 
+									orderNo: target.orderNo,
+									tasks: taskObj,
+									path: 'loanProcess'
+								});
+								// router.render('loanProcess');
+								// toast.hide();
+							})
+						})
 					})
 				})
 				
@@ -678,7 +711,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'id',
 						name: 'bankName'
 					};
 					cb(sourceData);
