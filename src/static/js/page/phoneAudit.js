@@ -2,7 +2,6 @@
 page.ctrl('phoneAudit', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	var urlStr = "http://192.168.1.108:8080";
 	/**
 	* 加载电话审核数据
 	* @params {object} params 请求参数 

@@ -1,15 +1,15 @@
 'use strict';
-page.ctrl('loanApproval', function($scope) {
+page.ctrl('cardCheck', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	// $params.taskId = 80873;
+	 $params.taskId = 80872;
+	
 
 	/**
-	* 加载贷款审核左侧列表项配置
+	* 加载电审左侧列表项配置
 	* @params {function} cb 回调函数
 	*/
 	var loadTabList = function(cb) {
-
 		var params = {
 			taskId: $params.taskId
 		};
@@ -37,7 +37,7 @@ page.ctrl('loanApproval', function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '贷款审核',
+			current: '电核',
 			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
@@ -98,7 +98,7 @@ page.ctrl('loanApproval', function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	$console.load(router.template('iframe/phoneCheck'), function() {
+	$console.load(router.template('iframe/cardCheck'), function() {
 		$scope.def.tabTmpl = $console.find('#checkResultTabsTmpl').html();
 		$scope.$el = {
 			$tab: $console.find('#checkTabs')

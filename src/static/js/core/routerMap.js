@@ -211,7 +211,7 @@
 		},
 		'loanProcess/cardInfoApproval': {
 			title: '开卡审核',
-			page: 'openCardSheet'
+			page: 'cardAudit'
 		},
 		'loanProcess/cardInfoInput': {
 			title: '开卡信息录入',
@@ -221,6 +221,14 @@
 			title: '开卡审核',
 			page: 'operateAnalysis'
 		},
+		'loanProcess/usedCarInfoInput':{
+			title: '二手车信息录入',
+			page: 'secondhandInput'
+		},
+//		'loanProcess/usedCarInfoInput':{
+//			title: '二手车信息录入',
+//			page: 'carTwohand'
+//		},
 		'loanProcess/choiseType':{
 			title: '业务类型选择',
 			page: 'surviceType'
