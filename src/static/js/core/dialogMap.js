@@ -7,6 +7,25 @@
 	*/
 	g.dialogTml = {};
 	g.dialogTml.wContent = {
+		back: '<div class="w-content">\
+					<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
+					<div class="w-select-area mt15">\
+						<div class="w-select clearfix">\
+							<div id="haha" class="checkbox checkbox-radio" data-id="{{=row.id}}"></div>\
+							<div class="w-select-item">退回至{{=row.jumpName}}</div>\
+						</div>\
+					</div>\
+					<div class="w-select-area clearfix">\
+						{{ for(var j = 0, len2 = row.jumpReason.length; j < len2; j++) { }}\
+						<div class="w-select w-select-left clearfix">\
+							<div class="checkbox checkbox-normal" data-value="{{=row.jumpReason[j]}}"></div>\
+							<div class="w-select-item">{{=row.jumpReason[j]}}</div>\
+						</div>\
+						{{ } }}\
+					</div>\
+					{{ } }}\
+				</div>',
 		handelSuggestion: '<div class="w-content"><div class="w-text">请填写处理意见！</div></div>',
 		complete: '<div class="w-content"><div class="w-text">请完善必填项！</div></div>',
 		suggestion: '<div class="w-content">\

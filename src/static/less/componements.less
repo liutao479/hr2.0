@@ -273,19 +273,6 @@
     &:hover {
         border-color: @mainColor;
     }
-    // &&-select {
-    //     padding: 0 12px;
-    //     height: 23px;
-    //     line-height: 23px;
-    //     color: @fontColor;
-    //     &:hover {
-    //         color: @mainColor;
-    //     }
-    //     &.checked {
-    //         color: @mainColor;
-    //         border-color: @mainColor;
-    //     }
-    // }
     &&-select {
         height: 32px;
         line-height: 32px;
@@ -319,42 +306,70 @@
     &&-normal {
         width: 18px;
         height: 18px;
+        -webkit-user-select: none;
+           -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none;
         &.checked {
             color: #FFF;
             background-color: @mainColor;
             border-color: @mainColor;
+            &:after {
+                content: '\e659';
+                display: inline-block;
+                color: #FFF !important;
+                font-family: "iconfont";
+                float: left;
+                line-height: 16px;
+                font-size: 16px;
+            }
         }
     }
-    .iconfont {
-        color: #FFF !important;
-        float: left;
-        line-height: 18px;
+    &&-radio {
+        width: 20px;
+        height: 20px;
+        .borderRadius(10px);
+        &.checked {
+            background: #fff;
+            border: 1px solid @mainColor;
+            &:after {
+                content: '';
+                display: block;
+                position: relative;
+                top: 4px;
+                left: 4px;
+                width: 10px;
+                height: 10px;
+                background: @mainColor;
+                border-radius:50%;
+            }
+        }
     }
 }
 //单选框 
-.radio {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 1px solid @borderColor;
-    .borderRadius(10px);
-    cursor: pointer;
-    &.checked {
-        background: #fff;
-        border: 1px solid @mainColor;
-        &:after {
-            content: '';
-            display: block;
-            position: relative;
-            top: 4px;
-            left: 4px;
-            width: 10px;
-            height: 10px;
-            background: @mainColor;
-            border-radius:50%;
-        }
-    }
-}
+// .radio {
+//     display: inline-block;
+//     width: 20px;
+//     height: 20px;
+//     border: 1px solid @borderColor;
+//     .borderRadius(10px);
+//     cursor: pointer;
+//     &.checked {
+//         background: #fff;
+//         border: 1px solid @mainColor;
+//         &:after {
+//             content: '';
+//             display: block;
+//             position: relative;
+//             top: 4px;
+//             left: 4px;
+//             width: 10px;
+//             height: 10px;
+//             background: @mainColor;
+//             border-radius:50%;
+//         }
+//     }
+// }
 
 //输入框
 .input-text {
@@ -923,16 +938,18 @@
         text-align: center;
     }
     .w-select {
-        display: inline-block;
-        margin: 10px 25px 10px 0;
+        margin: 5px 0; 
         &.w-select-left {
-            margin-left: 30px;
+            float: left;
+            width: 50%;
+            text-align: left;
+            padding-left: 30px; 
         }
         .checkbox {
             float: left;
             margin-right: 10px;
             position: relative;
-            top: 2px;
+            top: 1px;
         }
         .radio {
             float: left;
@@ -945,8 +962,8 @@
             margin-right: 6px;
         }
         .w-select-item {
+            margin-left: 27px;
             line-height: 20px;
-            float: left;
         }
     }
     .w-add {
