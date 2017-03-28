@@ -19,7 +19,6 @@ page.ctrl('loanApproval', function($scope) {
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(xhr) {
-				debugger
 				$scope.result = xhr;
 				setupLocation();
 				loadGuide(xhr.cfgData)

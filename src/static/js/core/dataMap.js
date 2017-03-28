@@ -316,5 +316,21 @@
 	            "value":"6"
 	        }
 	    ]
-	}
+	},
+	g.urlApiMap = {
+		"serviceType": urlStr+"/loanConfigure/getItem",//业务类型
+		"brand": urlStr+"/demandBank/selectBank",//经办银行
+		"busiSourceTypeCode": urlStr+"/loanConfigure/getItem",//业务来源类型
+		"busiArea": urlStr+"/area/get",//三级下拉省市县
+		"busiSourceId": urlStr+"/carshop/list",//业务来源方名称
+		"busiSourceNameSearch": urlStr+"/carshop/searchCarShop",//业务来源方名称模糊搜索
+		"onLicensePlace": urlStr+"/area/get",//三级下拉省市县
+		"busimode": urlStr+"/loanConfigure/getItem",//业务模式
+		"carName": urlStr+"/car/carBrandList",//三级车辆型号:车辆品牌
+		"carNameSearch":  urlStr+"/car/searchCars",//车辆型号模糊搜索
+		"repayPeriod": urlStr+"/loanConfigure/getItem", //还款期限
+		"businessModel": urlStr+"/loanConfigure/getItem", // 业务模式
+		"remitAccountNumber": urlStr+"/demandCarShopAccount/getAccountList" //打款账号
+	};
+
 })(window);

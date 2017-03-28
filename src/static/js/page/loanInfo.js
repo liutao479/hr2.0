@@ -23,24 +23,27 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-			// data['taskId']=80871;
+//			 data['taskId']=80871;
 			data['taskId']=$params.taskId;
 		$.ajax({
 //			 url: $http.api('loan.infoBak'),
-			 url: $http.api('loanInfoInput/info','jbs'),
-//			 url: urlStr+'/loanInfoInput/info',
+//			 url: $http.api('loanInfoInput/info','jbs'),
+			 url: urlStr+'/loanInfoInput/info',
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
 				setupLocation();
-				result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
+				if(result.data.FQXX && result.data.FQXX.renewalInfo){
+					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
+				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result,true);
 				loanFinishedInput();
 				loanFinishedSelect();
 				loanFinishedCheckbox();
 				loanFinishedGps();
 				loanFinishedBxxb();
+				setupEvt();
 //				console.log(page.$scope.loanInfo.result.cfgData);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -70,7 +73,7 @@ page.ctrl('loanInfo', function($scope) {
 		$(".info-key").each(function(){
 			var jqObj = $(this);
 			if(jqObj.has('i').length > 0){
-				$(this).siblings().find("input").addClass("required");
+				$(this).parent().siblings().find("input").addClass("required");
 			}
 			loanFinishedInputReq();
 		});
@@ -143,7 +146,12 @@ page.ctrl('loanInfo', function($scope) {
 	/**
 	* 绑定立即处理事件
 	*/
+	var keyType;
 	var setupEvt = function($el) {
+//		$console.find('.select').on('click', function() {
+//			var keyType = $(this).data('key');
+//			console.log(keyType);
+//		});
 		// 提交
 		$console.find('#submitOrder').on('click', function() {
 			console.log("提交订单");
@@ -627,13 +635,12 @@ page.ctrl('loanInfo', function($scope) {
 	$scope.busiSourceNamePicker = function(picked) {
 		console.log(picked);
 		$scope.busiSourceNameId = picked.id;
-		$("#busiSourceId").val(picked.id);
 	}
-//	$scope.remitAccountNumberPicker = function(picked) {
-//		console.log(picked);
-//		$("#bankName").val(picked.bankName)
-//		$("#accountName").val(picked.accountName)
-//	}
+	$scope.remitAccountNumberPicker = function(picked) {
+		console.log(picked);
+		$("#bankName").val(picked.bankName)
+		$("#accountName").val(picked.accountName)
+	}
 	$scope.busimodePicker = function(picked) {
 		console.log(picked);
 	}
@@ -791,64 +798,31 @@ page.ctrl('loanInfo', function($scope) {
 					break;
 			}
 		},
-		serviceType: function(t, p, cb) {
-			$.ajax({
-				url: urlStr+'/loanConfigure/getItem',
-				data:{
-					'code':'serviceType'
-				},
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'value',
-						name: 'name'
-					};
-					cb(sourceData);
-				})
-			})
-		}
-		,
-		brand: function(t, p, cb) {
-			$.ajax({
-				url: urlStr+"/demandBank/selectBank",
-				data:{
-					'code':'brand'
-				},
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'bankId',
-						name: 'bankName'
-					};
-					cb(sourceData);
-				})
-			})
+		selfPicker: function(t, p, cb) {
+			var keyType = this.$el.data('key');
+			var sourceData = {
+				items: dataMap[keyType],
+				id: 'value',
+				name: 'name'
+			};
+			cb(sourceData);
 		},
-		busiSourceType: function(t, p, cb) {
+		postPicker: function(t, p, cb) {
+			var keyType = this.$el.data('key');
+			var data={};
+			if(keyType == 'busiSourceTypeCode'){
+				data['code']='serviceType';
+			}else if(keyType == 'businessModel'){
+				data['code']='busimode';
+			}else if(keyType == 'repayPeriod'){
+				data['code']='repaymentTerm';
+			}else{	
+				data['code']=keyType;
+			}
+			
 			$.ajax({
-				url: urlStr+"/loanConfigure/getItem",
-				data:{
-					'code':'busiSourceType'
-				},
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'value',
-						name: 'name'
-					};
-					cb(sourceData);
-				})
-			})
-		},
-		busiSourceName: function(t, p, cb) {
-			$.ajax({
-				url: urlStr+"/carshop/list",
-				data:{
-					'code':'busiSourceName'
-				},
+				url: urlApiMap[keyType],
+				data:data,
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					var sourceData = {
@@ -885,35 +859,18 @@ page.ctrl('loanInfo', function($scope) {
 				})
 			}
 		},
-		busimode: function(t, p, cb) {
+		demandBankId: function(t, p, cb) {
 			$.ajax({
-				url: urlStr+"/loanConfigure/getItem",
-				data:{
-					'code':'busimode'
-				},
+				url: urlStr+"/demandBank/selectBank",
+//				data:{
+//					'code':'busimode'
+//				},
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
-						id: 'value',
-						name: 'name'
-					};
-					cb(sourceData);
-				})
-			})
-		},
-		repaymentTerm: function(t, p, cb) {
-			$.ajax({
-				url: urlStr+"/loanConfigure/getItem",
-				data:{
-					'code':'repaymentTerm'
-				},
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'value',
-						name: 'name'
+						id: 'bankId',
+						name: 'bankName'
 					};
 					cb(sourceData);
 				})

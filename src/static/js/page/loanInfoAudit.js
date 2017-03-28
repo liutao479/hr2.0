@@ -23,21 +23,20 @@ page.ctrl('loanInfoAudit', function($scope) {
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-			// data['taskId']=80872;
-			// data['frameCode']='T0047';
-		data.taskId = $params.taskId;
-		data.frameCode = $params.frameCode;
+			 data['taskId']=$params.taskId;
+			 data['frameCode']=$params.code;
 		$.ajax({
-//			 url: $http.api('loan.infoBak'),
-			// url: $http.api('loanInfoInput/info','jbs'),
-			 url: urlStr+'/loanInfoInput/info',
+//			url: $http.api('loanInfoInput/info','jbs'),
+			url: urlStr+'/loanInfoInput/info',
 			data: data,
 			type: 'post',
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
 				setupLocation();
-				result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
+				if(result.data.FQXX.renewalInfo){
+					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
+				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result,true);
 				loanFinishedInput();
 				loanFinishedSelect();

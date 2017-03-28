@@ -14,7 +14,7 @@ page.ctrl('cardAudit', function($scope) {
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-			data['taskId']=80871;
+			data['taskId']=$params.taskId;
 		$.ajax({
 			url: urlStr+'/icbcCreditCardForm/queryICBCCreditCardForm',
 			data: data,
@@ -23,6 +23,7 @@ page.ctrl('cardAudit', function($scope) {
 				$scope.result = result;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.creditCard, true);
 				setupLocation();
+				setupEvt();
 				loanFinishedInput();
 				loanFinishedInputPic();
 				loanFinishedSelect();
@@ -120,6 +121,58 @@ page.ctrl('cardAudit', function($scope) {
 			});
 		});
 	}
+	var setupEvt = function($el) {
+//		$console.find('.select').on('click', function() {
+//			var keyType = $(this).data('key');
+//			console.log(keyType);
+//		});
+		// 提交
+		$console.find('.saveBtn').on('click', function() {
+			console.log("提交订单");
+			var that = $(this);
+			// if( ) {
+			// 	//判断必填项是否填全
+			// } else {
+
+			// }
+			// 流程跳转
+			var params = {
+				taskIds: [$params.taskId],
+				orderNo: $params.orderNo
+			}
+			console.log(params)
+			$.ajax({
+				type: 'post',
+				url: $http.api('tasks/complete', 'zyj'),
+				data: JSON.stringify(params),
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				success: $http.ok(function(result) {
+					console.log(result);
+					var loanTasks = result.data;
+					var taskObj = [];
+					for(var i = 0, len = loanTasks.length; i < len; i++) {
+						var obj = loanTasks[i];
+						taskObj.push({
+							key: obj.category,
+							id: obj.id,
+							name: obj.sceneName
+						})
+					}
+					// target为即将跳转任务列表的第一个任务
+					var target = loanTasks[0];
+					router.render('loanProcess/' + target.category, {
+						taskId: target.id, 
+						orderNo: target.orderNo,
+						tasks: taskObj,
+						path: 'loanProcess'
+					});
+					// router.render('loanProcess');
+					// toast.hide();
+				})
+			})
+		})
+	}		
 	$(document).on('click','.selecter', function() {
 		var that =$("div",$(this));
 		var inputSearch =$(".searchInp",$(this));
