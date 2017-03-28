@@ -6,13 +6,15 @@ page.ctrl('loanInfoAudit', function($scope) {
 		apiParams = {};
 
 	var postUrl = {
-		"saveOrderInfo": urlStr+"/loanInfoInput/updLoanOrder",
-		"saveCarInfo": urlStr+"/loanInfoInput/updLoanUserCar",
-		"saveStageInfo": urlStr+"/loanInfoInput/updLoanUserStage",
-		"saveCommonInfo": urlStr+"/loanInfoInput/updLoanUser",
-		"saveEmergencyInfo": urlStr+"/loanInfoInput/updLoanEmergencyConact",
-		"saveloanPayCardInfo": urlStr+"/loanInfoInput/updLoanPayCard",
-		"saveFYXXInfo": urlStr+"/loanInfoInput/updLoanFee",
+		"saveDDXX": urlStr+"/loanInfoInput/updLoanOrder",
+		"saveCLXX": urlStr+"/loanInfoInput/updLoanUserCar",
+		"saveFQXX": urlStr+"/loanInfoInput/updLoanUserStage",
+		"saveZJKR": urlStr+"/loanInfoInput/updLoanUser",
+		"saveGTHK": urlStr+"/loanInfoInput/updLoanUser",
+		"saveFDBR": urlStr+"/loanInfoInput/updLoanUser",
+		"saveJJLXR": urlStr+"/loanInfoInput/updLoanEmergencyConact",
+		"saveHKKXX": urlStr+"/loanInfoInput/updLoanPayCard",
+		"saveFYXX": urlStr+"/loanInfoInput/updLoanFee",
 		"saveQTXX": urlStr+"/loanInfoInput/updLoanIndividuation"
 	};
 
