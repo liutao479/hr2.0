@@ -47,7 +47,6 @@ app.all('/mock/*', function(req, res) {
     if (fs.existsSync(path)) {
       var content = fs.readFileSync(path, {encoding: "UTF-8"});
       res.json(JSON.parse(content));
-//       res.send(content);
     } else {
       res.json({code: 404, msg: 'can not find the mock data file'});
     }
