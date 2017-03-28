@@ -191,7 +191,6 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		$console.find('#backOrder').on('click', function() {
 			var that = $(this);
 			console.log($scope.result.data.loanTask.taskJumps)
-
 			$.alert({
 				title: '退回订单',
 				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
@@ -207,10 +206,16 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 						text: '确定',
 						action: function () {
 							var _reason = $.trim(this.$content.find('#suggestion').val());
+							this.$content.find('.checkbox-radio').each(function() {
+								if($(this).hasClass('checked')) {
+									$scope.jumpId = $(this).data('id');
+								}
+							})
+
 							if(!_reason) {
 								$.alert({
 									title: '提示',
-									content: dialogTml.wContent.handelSuggestion,
+									content: tool.alert('请填写处理意见！'),
 									buttons: {
 										ok: {
 											text: '确定',
@@ -220,16 +225,39 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 									}
 								});
 								return false;
-							} else {
-								var _params = {
-									taskId: $params.taskId,
-									jumpId: 1,
-									reason: _reason
-								}
-								backOrders(_params, function() {
-									router.render('licenceAudit', {});
+							} 
+							if(!$scope.jumpId) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请至少选择一项原因！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
 								});
+								return false;
 							}
+							var _params = {
+								taskId: $params.taskId,
+								jumpId: $scope.jumpId,
+								reason: _reason
+							}
+							console.log(_params)
+							$.ajax({
+								type: 'post',
+								url: $http.api('task/jump', 'zyj'),
+								data: _params,
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									
+									// router.render('loanProcess');
+									// toast.hide();
+								})
+							})
 						}
 					}
 				}
@@ -240,7 +268,42 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 	var dialogEvt = function($dialog) {
 		var $reason = $dialog.find('#suggestion');
 		$scope.$checks = $dialog.find('.checkbox').checking();
-		console.log($scope.$checks.attr('id') == 'haha')
+		// 复选框
+		$scope.$checks.filter('.checkbox-normal').each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				//用于监听意见有一个选中，则标题项选中
+				var flag = 0;
+				var str = '';
+				$(that).parent().parent().find('.checkbox-normal').each(function() {
+					if($(this).attr('checked')) {
+						str += $(this).data('value') + ',';
+						flag++;
+					}
+				})
+				str = '#' + str.substring(0, str.length - 1) + '#';				
+				$reason.val(str);
+				if(flag > 0) {
+					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
+				} else {
+					$reason.val('');
+					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
+				}
+				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+
+				// if()
+			});
+		})
+
+		// 单选框
+		$scope.$checks.filter('.checkbox-radio').each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				$reason.val('');
+				$(that).parent().parent().find('.checkbox-normal').removeClass('checked').attr('checked', false);
+				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+			});
+		})
 	}
 
 	/**

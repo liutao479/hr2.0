@@ -283,7 +283,7 @@ page.ctrl('creditInput', [], function($scope) {
 	*/
 	var evt = function() {
 		// 底部提交按钮事件
-		$console.find('#submitOrders').on('click', function() {
+		$console.find('#submitOrder').on('click', function() {
 			var that = $(this);
 			// if( ) {
 			// 	//判断必填项是否填全
@@ -291,6 +291,7 @@ page.ctrl('creditInput', [], function($scope) {
 
 			// }
 			// commitData(function() {
+			// 
 				$.confirm({
 					title: '提交',
 					content: dialogTml.wContent.suggestion,
@@ -361,22 +362,6 @@ page.ctrl('creditInput', [], function($scope) {
 											// toast.hide();
 										})
 									})
-
-
-									// 之前的跳转链接
-		       //      				$.ajax({
-									// 	type: 'post',
-									// 	url: $http.api('task/complete', 'jbs'),
-									// 	data: {
-									// 		taskId: $params.taskId,
-									// 		orderNo: $params.orderNo,
-									// 		reason: _reason
-									// 	},
-									// 	dataType: 'json',
-									// 	success: $http.ok(function(result) {
-									// 		console.log(result);
-									// 	})
-									// })
 		            			}
 				            }
 				        }

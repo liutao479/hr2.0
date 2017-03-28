@@ -10,7 +10,7 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadMaterialsChoose = function(_type, cb) {
+	var loadMaterialsChoose = function(cb) {
 		$.ajax({
 			type: 'post',
 			url: $http.api('materialsChoose/index', 'jbs'),
@@ -97,20 +97,21 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 				$items.removeClass('selected').addClass('selected');
 			}
 		});
+	}
 
+	var evt = function() {
 		// 底部操作按钮事件
-		$console.find('#submitOrders').on('click', function() {
+		$console.find('#submitOrder').on('click', function() {
+			alert(1);
 			var that = $(this);
-			saveData(function() {
+			// saveData(function() {
 				// 保存完数据用于提交订单
 				$.confirm({
 					title: '提交',
 					content: dialogTml.wContent.suggestion,
 					buttons: {
 						'取消': {
-				            action: function () {
-
-				            }
+				            action: function () {}
 				        },
 				        '确定': {
 				            action: function () {
@@ -155,7 +156,7 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 				        }
 				    }
 				})
-			});
+			// });
 			
 		})
 	}
@@ -194,7 +195,9 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 		$scope.$el = {
 			$mainPanel: $console.find('#materialsChoosePanel')
 		}
-		console.log(0);
-		loadMaterialsChoose();
+		loadMaterialsChoose(function() {
+			console.log(1);
+			evt();
+		});
 	})
 });
