@@ -196,7 +196,6 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 			$mainPanel: $console.find('#materialsChoosePanel')
 		}
 		loadMaterialsChoose(function() {
-			console.log(1);
 			evt();
 		});
 	})

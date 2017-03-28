@@ -1,7 +1,7 @@
 "use strict";
 page.ctrl('creditMaterialsUpload', function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params;
+	var $params = $scope.$params,
+		$console = render.$console;
 	// $params.taskId = 81035;
 	// $params.taskId = 81200;
 	$scope.userMap = {
@@ -82,26 +82,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			});
 		}
 	}
-	/**
-	 * 提交按钮区域
-	 */
-	var setupButton = function() {
-		$.ajax({
-			type: 'post',
-			url: $http.api('func/scene', 'zyj'),
-			data: {
-				taskId: $params.taskId
-			},
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				console.log(result);
-				if( cb && typeof cb == 'function' ) {
-					cb();
-				}
-			})
-		})
-		// render.compile();
-	}
 
 	/**
 	 * 征信银行更新
@@ -149,7 +129,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
             	if(!$demandBank || !$areaSource) {
             		$.alert({
             			title: '提示',
-            			content: '<div class="w-content"><div class="w-text">请选择必选项！</div></div>',
+            			content: '<div class="w-content"><div class="w-text">请选择经办银行和业务发生地！</div></div>',
 						ok: {
 							text: '确定'
 						}
@@ -161,7 +141,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					initApiParams();
 					evt();
             	});
-            	
             }
 		}
 		var opt = {
@@ -172,7 +151,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		    },
 		    onClose: function () {
 		    	if(!$scope.demandBankId) {
-            		router.render('loanProcess', {});
+            		router.render('loanProcess');
             	}
 		    }
 		}
@@ -194,6 +173,142 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		});
 		$location.location();
 	}
+
+	/**
+	* 设置底部按钮操作栏
+	*/
+	var setupSubmitBar = function() {
+		var $submitBar = $console.find('#submitBar');
+		$submitBar.data({
+			taskId: $params.taskId
+		});
+		$submitBar.submitBar(function($el) {
+			/**
+			 * 取消订单按钮
+			 */
+			$el.find('#cancelOrder').on('click', function() {
+				$.alert({
+					title: '取消订单',
+					content: '<div class="w-content"><div class="w-text">确定要取消该笔贷款申请吗？</div></div>',
+					buttons: {
+						close: {
+							text: '取消',
+							btnClass: 'btn-default btn-cancel'
+						},
+						ok: {
+							text: '确定',
+							action: function () {
+								
+							}
+						}
+					}
+				})
+			})
+
+			/**
+			 * 征信查询按钮
+			 */
+			$console.find('#creditQuery').on('click', function() {
+				var that = $(this);
+				$.confirm({
+					title: '提示',
+					content: tool.alert('确定所有被查人的征信材料已上传无误，并提交征信查询吗？'),
+					buttons: {
+						close: {
+							text: '取消',
+							btnClass: 'btn-default btn-cancel'
+						},
+						ok: {
+							text: '确定',
+							action: function () {
+								creditQuery();
+							}
+						}
+					}
+				});
+			});
+		});
+	}
+
+	function creditQuery() {
+		var _alert = '';
+		for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+			var item = $scope.apiParams[i];
+			for(var j in item) {
+				if(j == 'idCard' && !item[j]) {
+					_alert += '请填写' + $scope.userMap[item.userType] + '的身份证号！<br/>';
+				}
+				if(j == 'userName' && !item[j]) {
+					_alert += '请填写' + $scope.userMap[item.userType] + '的姓名！<br/>';
+				}
+				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType != 0) {
+					_alert += '请选择' + $scope.userMap[item.userType] + '与借款人的关系！<br/>';
+				}
+			}
+		}
+		if(!_alert) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('creditMaterials/submit/' + $params.taskId, 'zyj'),
+				data: JSON.stringify($scope.apiParams),
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				success: $http.ok(function(result) {
+					console.log(result);
+					var params = {
+						taskIds: [$params.taskId],
+						orderNo: $params.orderNo
+					}
+					console.log(params)
+					$.ajax({
+						type: 'post',
+						url: $http.api('tasks/complete', 'zyj'),
+						data: JSON.stringify(params),
+						dataType: 'json',
+						contentType: 'application/json;charset=utf-8',
+						success: $http.ok(function(result) {
+							console.log(result);
+							var loanTasks = result.data;
+							var taskObj = [];
+							for(var i = 0, len = loanTasks.length; i < len; i++) {
+								var obj = loanTasks[i];
+								taskObj.push({
+									key: obj.category,
+									id: obj.id,
+									name: obj.sceneName
+								})
+							}
+							// target为即将跳转任务列表的第一个任务
+							var target = loanTasks[0];
+							router.render('loanProcess/' + target.category, {
+								taskId: target.id, 
+								orderNo: target.orderNo,
+								tasks: taskObj,
+								path: 'loanProcess'
+							});
+							// router.render('loanProcess');
+							// toast.hide();
+						})
+					})
+				})
+			})
+			
+		} else {
+			$.alert({
+				title: '提示',
+				content: tool.alert(_alert),
+				buttons: {
+					ok: {
+						text: '确定',
+						action: function () {
+							console.log($scope.apiParams);
+						}
+					}
+				}
+			})
+		}
+		
+	} 
 
 	/**
 	 * 渲染tab按钮（增加共同还款人和反担保人）
@@ -289,108 +404,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				})
 			}) 		
 		});
-		/**
-		 * 征信查询按钮
-		 */
-		$console.find('#creditQuery').on('click', function() {
-			var that = $(this);
-			$.confirm({
-				title: '提示',
-				content: tool.alert('确定所有被查人的征信材料已上传无误，并提交征信查询吗？'),
-				buttons: {
-					close: {
-						text: '取消',
-						btnClass: 'btn-default btn-cancel'
-					},
-					ok: {
-						text: '确定',
-						action: function () {
-							creditQuery();
-						}
-					}
-				}
-			});
-		});
+		
 
-		function creditQuery() {
-			var _alert = '';
-			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-				var item = $scope.apiParams[i];
-				for(var j in item) {
-					if(j == 'idCard' && !item[j]) {
-						_alert += '请填写' + $scope.userMap[item.userType] + '的身份证号！<br/>';
-					}
-					if(j == 'userName' && !item[j]) {
-						_alert += '请填写' + $scope.userMap[item.userType] + '的姓名！<br/>';
-					}
-					if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType != 0) {
-						_alert += '请选择' + $scope.userMap[item.userType] + '与借款人的关系！<br/>';
-					}
-				}
-			}
-			if(!_alert) {
-				$.ajax({
-					type: 'post',
-					url: $http.api('creditMaterials/submit/' + $params.taskId, 'zyj'),
-					data: JSON.stringify($scope.apiParams),
-					dataType: 'json',
-					contentType: 'application/json;charset=utf-8',
-					success: $http.ok(function(result) {
-						console.log(result);
-						var params = {
-							taskIds: [$params.taskId],
-							orderNo: $params.orderNo
-						}
-						console.log(params)
-						$.ajax({
-							type: 'post',
-							url: $http.api('tasks/complete', 'zyj'),
-							data: JSON.stringify(params),
-							dataType: 'json',
-							contentType: 'application/json;charset=utf-8',
-							success: $http.ok(function(result) {
-								console.log(result);
-								var loanTasks = result.data;
-								var taskObj = [];
-								for(var i = 0, len = loanTasks.length; i < len; i++) {
-									var obj = loanTasks[i];
-									taskObj.push({
-										key: obj.category,
-										id: obj.id,
-										name: obj.sceneName
-									})
-								}
-								// target为即将跳转任务列表的第一个任务
-								var target = loanTasks[0];
-								router.render('loanProcess/' + target.category, {
-									taskId: target.id, 
-									orderNo: target.orderNo,
-									tasks: taskObj,
-									path: 'loanProcess'
-								});
-								// router.render('loanProcess');
-								// toast.hide();
-							})
-						})
-					})
-				})
-				
-			} else {
-				$.alert({
-					title: '提示',
-					content: '<div class="w-content"><div class="w-text">' + _alert + '</div></div>',
-					buttons: {
-						ok: {
-							text: '确定',
-							action: function () {
-								console.log($scope.apiParams);
-							}
-						}
-					}
-				})
-			}
-			
-		} 
+		
 
 		/**
 		 * 取消订单按钮
@@ -579,6 +595,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		loadOrderInfo($scope.currentType, function() {
 			setupCreditBank();
 			setupLocation();
+			setupSubmitBar();
 			initApiParams();
 			setupAddUsers();
 			evt();

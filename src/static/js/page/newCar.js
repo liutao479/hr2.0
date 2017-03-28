@@ -142,7 +142,7 @@ page.ctrl('newCar', [], function($scope) {
 					dataType: 'json',
 					success: $http.ok(function(result) {
 						console.log(result);
-						$scope.id= result.data;
+						$scope.carShopId = $scope.id= result.data;
 						loadNewCar(function() {
 							loadCarData();
 							loadCarAccount();
