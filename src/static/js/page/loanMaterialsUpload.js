@@ -85,11 +85,11 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	 * 页面首次加载立即处理事件
 	 */
 	var evt = function () {
-		// 增加征信人员
-		$console.find('#addCreditUser').on('click', function() {
+		// 增加征信人员（退回订单）
+		$console.find('#backOrder').on('click', function() {
 			var that = $(this);
 			$.confirm({
-				title: '增加征信人员',
+				title: '退回订单',
 				content: dialogTml.wContent.addCreditUsers,
 				buttons: {
 					close: {
@@ -141,8 +141,9 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 			// })
 		})
 		// 提交订单按钮 
-		$console.find('#submitOrders').on('click', function() {
+		$console.find('#submitOrder').on('click', function() {
 			var that = $(this);
+
 			that.openWindow({
 				title: "提交",
 				content: dialogTml.wContent.suggestion,
