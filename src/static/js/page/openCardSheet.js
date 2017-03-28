@@ -122,6 +122,45 @@ page.ctrl('openCardSheet', function($scope) {
 //		});
 		// 提交
 		$console.find('.saveBtn').on('click', function() {
+			var email = $("#email").val();
+			if(!email){
+				$("#emladdrf").val(0);
+			}else{
+				$("#emladdrf").val(1);
+			}
+			var isTure = true;
+			var requireList = $("#dataform").find(".required");
+			requireList.each(function(){
+				var value = $(this).val();
+				if(!value){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip">请完善该必填项</i>');
+					console.log($(this).index());
+					isTure = false;
+				}
+			});
+			if(isTure){
+		        var params = $("#dataform").serialize();
+	            params = decodeURIComponent(params,true);
+	            var paramArray = params.split("&");
+	            var data1 = {};
+	            for(var i=0;i<paramArray.length;i++){
+	                var valueStr = paramArray[i];
+	                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
+	            }
+				console.log(data1);
+		        
+				$.ajax({
+					type: 'POST',
+					url: urlStr+'/icbcCreditCardForm/saveICBCCreditCardForm',
+					data:JSON.stringify(data1),
+					dataType:"json",
+					contentType : 'application/json;charset=utf-8',
+					success: function(result){
+						console.log(result.msg);
+					}
+				});
+			}
 			console.log("提交订单");
 			var that = $(this);
 			// if( ) {
@@ -301,48 +340,48 @@ page.ctrl('openCardSheet', function($scope) {
 	/***
 	* 保存按钮
 	*/
-	$(document).on('click', '.saveBtn', function() {
-		var email = $("#email").val();
-		if(!email){
-			$("#emladdrf").val(0);
-		}else{
-			$("#emladdrf").val(1);
-		}
-		var isTure = true;
-		var requireList = $("#dataform").find(".required");
-		requireList.each(function(){
-			var value = $(this).val();
-			if(!value){
-				$(this).parent().addClass("error-input");
-				$(this).after('<i class="error-input-tip">请完善该必填项</i>');
-				console.log($(this).index());
-				isTure = false;
-//				return false;
-			}
-		});
-		if(isTure){
-	        var params = $("#dataform").serialize();
-            params = decodeURIComponent(params,true);
-            var paramArray = params.split("&");
-            var data1 = {};
-            for(var i=0;i<paramArray.length;i++){
-                var valueStr = paramArray[i];
-                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
-            }
-			console.log(data1);
-	        
-			$.ajax({
-				type: 'POST',
-				url: urlStr+'/icbcCreditCardForm/saveICBCCreditCardForm',
-				data:JSON.stringify(data1),
-				dataType:"json",
-				contentType : 'application/json;charset=utf-8',
-				success: function(result){
-					console.log(result.msg);
-				}
-			});
-		}
-	})
+//	$(document).on('click', '.saveBtn', function() {
+//		var email = $("#email").val();
+//		if(!email){
+//			$("#emladdrf").val(0);
+//		}else{
+//			$("#emladdrf").val(1);
+//		}
+//		var isTure = true;
+//		var requireList = $("#dataform").find(".required");
+//		requireList.each(function(){
+//			var value = $(this).val();
+//			if(!value){
+//				$(this).parent().addClass("error-input");
+//				$(this).after('<i class="error-input-tip">请完善该必填项</i>');
+//				console.log($(this).index());
+//				isTure = false;
+////				return false;
+//			}
+//		});
+//		if(isTure){
+//	        var params = $("#dataform").serialize();
+//          params = decodeURIComponent(params,true);
+//          var paramArray = params.split("&");
+//          var data1 = {};
+//          for(var i=0;i<paramArray.length;i++){
+//              var valueStr = paramArray[i];
+//              data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
+//          }
+//			console.log(data1);
+//	        
+//			$.ajax({
+//				type: 'POST',
+//				url: urlStr+'/icbcCreditCardForm/saveICBCCreditCardForm',
+//				data:JSON.stringify(data1),
+//				dataType:"json",
+//				contentType : 'application/json;charset=utf-8',
+//				success: function(result){
+//					console.log(result.msg);
+//				}
+//			});
+//		}
+//	})
 	
 	/***
 	* 加载页面模板

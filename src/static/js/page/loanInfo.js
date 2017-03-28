@@ -12,7 +12,7 @@ page.ctrl('loanInfo', function($scope) {
 		"saveCommonInfo": urlStr+"/loanInfoInput/updLoanUser",
 		"saveEmergencyInfo": urlStr+"/loanInfoInput/updLoanEmergencyConact",
 		"saveloanPayCardInfo": urlStr+"/loanInfoInput/updLoanPayCard",
-		"saveFYXXInfo": urlStr+"/loanInfoInput/updLoanFee",
+		"saveFYXX": urlStr+"/loanInfoInput/updLoanFee",
 		"saveQTXX": urlStr+"/loanInfoInput/updLoanIndividuation"
 	};
 
