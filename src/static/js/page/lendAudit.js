@@ -2,7 +2,7 @@
 page.ctrl('lendAudit', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	$params.taskId = 80874;
+//	$params.taskId = 80874;
 	/**
 	* 设置面包屑
 	*/
@@ -83,6 +83,74 @@ page.ctrl('lendAudit', function($scope) {
 			var idx = that.data('idx');
 			that.addClass('panel-menu-item-active');
 			leftArrow();
+		});
+		$console.find('#submitOrder').on('click', function() {
+			$.confirm({
+				title: '提交',
+				content: dialogTml.wContent.suggestion,
+				useBootstrap: false,
+				boxWidth: '500px',
+				theme: 'light',
+				type: 'purple',
+				buttons: {
+					'取消': {
+			            action: function () {
+
+			            }
+			        },
+			        '确定': {
+			            action: function () {
+	            			var _reason = $('#suggestion').val();
+	            			console.log(_reason);
+	            			if(!_reason) {
+	            				$.alert({
+	            					title: '提示',
+									content: '<div class="w-content"><div>请填写处理意见！</div></div>',
+									useBootstrap: false,
+									boxWidth: '500px',
+									theme: 'light',
+									type: 'purple',
+									buttons: {
+										'确定': {
+								            action: function () {
+								            }
+								        }
+								    }
+	            				})
+	            				return false;
+	            			} else {
+	            				$.ajax({
+									type: 'post',
+									url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
+//									url: urlStr+'/loanInfoInput/submit/80871',
+//									data: {
+//										taskId: $params.taskId,
+//										orderNo: $params.orderNo,
+//										reason: _reason
+//									},
+									dataType: 'json',
+									success: $http.ok(function(xhr) {
+										console.log(xhr);
+									})
+								})
+	            				$.ajax({
+									type: 'post',
+									url: $http.api('task/complete', 'jbs'),
+									data: {
+										taskId: $params.taskId,
+										orderNo: $params.orderNo,
+										reason: _reason
+										},
+									dataType: 'json',
+									success: $http.ok(function(result) {
+										console.log(result);
+									})
+								})
+	            			}
+			            }
+			        }
+			    }
+			})
 		});
 	}
 	var leftArrow = function(){

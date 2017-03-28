@@ -142,13 +142,24 @@
 			var $that = $(this);
 			var inputItem = $(this).parents(".select").siblings("input");
 			var id = $that.data('id'),
+				accountName = $that.data('accountname'),
+				bankName = $that.data('bankname'),
 				name = $that.text();
 			self.text.push(name);
 			//只有一级，选中即表示结束
 			if(self.opts.tabs.length <= 1) {
-				self.picked = {
-					id: id,
-					name: name
+				if(!accountName || !bankName){
+					self.picked = {
+						id: id,
+						name: name
+					}
+				}else{
+					self.picked = {
+						id: id,
+						name: name,
+						accountName: accountName,
+						bankName: bankName
+					}
 				}
 				self.onDropdown(self.picked);
 				if(inputItem){
@@ -238,8 +249,11 @@
 									<li class="select-tab-item{{=(i==0?\" select-tab-item-active\":\"\")}}">{{= row }}</li>\
 								{{ } }}\
 							</ul>';
-	internal.template.single = '{{ for(var i = 0, len = it.items.length; i < len; i++) { var row = it.items[i]; }}\
+	internal.template.single = '{{ for(var i = 0, len = it.items.length; i < len; i++) { var row = it.items[i];if(row[it.bankName] && row[it.accountName]){ }}\
+									<li class="select-item itemEvt" data-id="{{=row[it.id]}}" data-bankName="{{=row[it.bankName]}}" data-accountName="{{=row[it.accountName]}}">{{=row[it.name]}}</li>\
+								{{ }else{ }}\
 									<li class="select-item itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</li>\
+								{{ } }}\
 								{{ } }}';
 	internal.template.brandContent = '<dl class="word-area">\
 										<dt>A</dt>\

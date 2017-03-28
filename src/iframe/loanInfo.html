@@ -52,7 +52,7 @@
 															<input type="hidden" name="{{= detailCode}}"  value="{{= it.data[fieldCode][detailCode]}}" />
 														{{ }else{ }}
 															<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" name="{{= detailCode}}" />
+															<input type="hidden" name="{{= detailCode }}" />
 														{{ } }}
 													</td>
 												{{ }else if(detailCode == 'serviceType' || detailCode == 'businessModel' || detailCode == 'brand' || detailCode == 'busiSourceTypeCode' || detailCode == 'busimode' || detailCode == 'repayPeriod'){ }}
@@ -78,20 +78,20 @@
 												{{ }else if( detailCode == 'remitAccountNumber'){ }}
 													<td>
 														{{ if(it.data[fieldCode] && it.data[fieldCode][detailCode]){ }}
-															<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].remitAccountNumberPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.remitAccountNumber"></div>
-															<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
+															<div id="numSel" data-forceload="true" data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].remitAccountNumberPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.remitAccountNumber"></div>
+															<input id="numIpt" type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 														{{ }else{ }}
-															<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].remitAccountNumberPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.remitAccountNumber"></div>
-															<input type="hidden" name="{{= detailCode}}" />
+															<div id="numSel" data-forceload="true" data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].remitAccountNumberPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.remitAccountNumber"></div>
+															<input id="numIpt" type="hidden" name="{{= detailCode}}" />
 														{{ } }}
 													</td>
 												{{ }else if( detailCode == 'bankName'){ }}
 													<td>
 														<span class="info-value">
 															{{ if(it.data[fieldCode] && it.data[fieldCode][detailCode]){ }}
-																<input type="text" readonly="readonly" value="{{= it.data[fieldCode][detailCode]}}" />
+																<input type="text" readonly="readonly" id="bankName" value="{{= it.data[fieldCode][detailCode]}}" />
 															{{ }else{ }}
-																<input type="text" readonly="readonly" />
+																<input type="text" readonly="readonly" id="bankName" />
 															{{ } }}
 														</span>	
 													</td>
@@ -99,9 +99,9 @@
 													<td>
 														<span class="info-value">
 															{{ if(it.data[fieldCode] && it.data[fieldCode][detailCode]){ }}
-																<input type="text" readonly="readonly" value="{{= it.data[fieldCode][detailCode]}}" />
+																<input type="text" readonly="readonly" id="accountName" value="{{= it.data[fieldCode][detailCode]}}" />
 															{{ }else{ }}
-																<input type="text" readonly="readonly" />
+																<input type="text" readonly="readonly" id="accountName" />
 															{{ } }}
 														</span>	
 													</td>

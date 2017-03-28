@@ -635,8 +635,14 @@ page.ctrl('loanInfo', function($scope) {
 		console.log(picked);
 	}
 	$scope.busiSourceNamePicker = function(picked) {
+		debugger
 		console.log(picked);
 		$scope.busiSourceNameId = picked.id;
+		$("#numIpt").val('');
+		var numSeled = $("#numSel").data('selected');
+		if(numSeled){
+			numSeled = '';
+		}
 	}
 	$scope.remitAccountNumberPicker = function(picked) {
 		console.log(picked);
@@ -837,8 +843,21 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		},
 		remitAccountNumber: function(t, p, cb) {
-			if(!$scope.busiSourceNameId){
-				alert("填写前面");
+			if(!$scope.busiSourceNameId) {
+				$.alert({
+					title: '提示',
+					content: '<div class="w-content"><div>请填写业务来源方名称！</div></div>',
+					useBootstrap: false,
+					boxWidth: '500px',
+					theme: 'light',
+					type: 'purple',
+					buttons: {
+						'确定': {
+				            action: function () {
+				            }
+				        }
+				    }
+				})
 				return false;
 			}else{
 				$.ajax({
@@ -855,7 +874,6 @@ page.ctrl('loanInfo', function($scope) {
 							accountName: 'accountName',
 							bankName: 'bankName'
 						};
-						console.log(sourceData);
 						cb(sourceData);
 					})
 				})
