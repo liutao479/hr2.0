@@ -240,7 +240,7 @@
 			success: function(xhr) {
 				console.log(xhr)
 				if(!xhr.code) {
-					self.delCb(self);
+					self.delCb(self, xhr);
 					self.$el.html(internalTemplates.edit.format(self.name));
 					self.status = 0;
 					self.listen();			
@@ -319,7 +319,7 @@
 						self.$el.data('img', url);
 						self.status = 1;	
 						self.listen();
-						self.uplCb(self);
+						self.uplCb(self, xhr);
 					} else {
 						self.options.id = xhr.data;
 						self.$el.data('img', url);
@@ -399,9 +399,8 @@
 	}
 
 	var api = {
-		img: 'http://192.168.0.186:9999/oss/img/sign',
-		video: 'http://192.168.0.186:9999/oss/video/sign',
-		// upload: 'http://127.0.0.1:8083/mock/addOrUpdate',
+		img: $http.api('oss/img/sign', 'cyj'),
+		video: $http.api('oss/video/sign', 'cyj'),
 		upload: $http.api('material/addOrUpdate', 'cyj'),
 		del: $http.api('material/del', 'cyj'),
 		creditUpload: $http.api('creditReport/reportUpd', 'jbs'),

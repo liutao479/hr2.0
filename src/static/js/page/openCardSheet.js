@@ -7,27 +7,14 @@ page.ctrl('openCardSheet', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-	var urlStr = "http://192.168.1.108:8080";
-	var apiMap = {
-		"dealerName": urlStr+"/mock/sex",
-		"dealerId": urlStr+"/mock/busiSourceName",
-		"sex": urlStr+"/mock/sex",
-		"hprovince": urlStr+"/mock/province",
-		"hcity": urlStr+"/mock/city",
-		"hcounty": urlStr+"/mock/country",
-		"cprovince": urlStr+"/mock/province",
-		"ccity": urlStr+"/mock/city",
-		"ccounty": urlStr+"/mock/country",
-		"isSecond": urlStr+"/mock/busiSourceName"
-		}
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
-	* @params {function} cb 回调函数
+	* @params {function} cb 回调ck函数
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-			data['taskId']=80871;
+			data['taskId']=$params.taskId;
 		$.ajax({
 			url: urlStr+'/icbcCreditCardForm/queryICBCCreditCardForm',
 			data: data,
@@ -39,6 +26,7 @@ page.ctrl('openCardSheet', function($scope) {
 				loanFinishedInput();
 				loanFinishedInputPic();
 				loanFinishedSelect();
+				setupEvt();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -85,7 +73,7 @@ page.ctrl('openCardSheet', function($scope) {
 			$("#preview").hide();
 		}else{
 			$("#preview").show();
-			$("#preview").attr('src',urlStr+'/'+imgSrc);
+			$("#preview").attr('src',imgSrc);
 		}
 	}
 
@@ -104,8 +92,97 @@ page.ctrl('openCardSheet', function($scope) {
 			if(datatype){
 				render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
 			}
+			var value1 = $("input",$(this)).val();
+			$("li",$(this)).each(function(){
+				var val = $(this).data('key');
+				var text = $(this).text();
+				var keybank = $(this).data('bank');
+				var keyname = $(this).data('name');
+				if(value1 == val){
+					$(this).parent().parent().siblings(".placeholder").html(text);
+					$(this).parent().parent().siblings("input").val(val);
+					if(keybank && keyname){
+						$("#bankName").val(keybank);
+						$("#accountName").val(keyname);
+						
+					}
+					var value2 = $(this).parent().parent().siblings("input").val();
+					if(!value2){
+						$(this).parent().parent().siblings(".placeholder").html("请选择")
+					}
+					$(".selectOptBox").hide()
+				}
+			});
 		});
 	}
+	var setupEvt = function($el) {
+//		$console.find('.select').on('click', function() {
+//			var keyType = $(this).data('key');
+//			console.log(keyType);
+//		});
+		// 提交
+		$console.find('.saveBtn').on('click', function() {
+			console.log("提交订单");
+			var that = $(this);
+			// if( ) {
+			// 	//判断必填项是否填全
+			// } else {
+
+			// }
+			// 流程跳转
+			var params = {
+				taskIds: [$params.taskId],
+				orderNo: $params.orderNo
+			}
+			console.log(params)
+			$.ajax({
+				type: 'post',
+				url: $http.api('tasks/complete', 'zyj'),
+				data: JSON.stringify(params),
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				success: $http.ok(function(result) {
+					console.log(result);
+					var loanTasks = result.data;
+					var taskObj = [];
+					for(var i = 0, len = loanTasks.length; i < len; i++) {
+						var obj = loanTasks[i];
+						taskObj.push({
+							key: obj.category,
+							id: obj.id,
+							name: obj.sceneName
+						})
+					}
+					// target为即将跳转任务列表的第一个任务
+					var target = loanTasks[0];
+					router.render('loanProcess/' + target.category, {
+						taskId: target.id, 
+						orderNo: target.orderNo,
+						tasks: taskObj,
+						path: 'loanProcess'
+					});
+					// router.render('loanProcess');
+					// toast.hide();
+				})
+			})
+		})
+	}		
+	$(document).on('click','.selecter', function() {
+		var that =$("div",$(this));
+		var inputSearch =$(".searchInp",$(this));
+		var key = $(this).data('key');
+		var boxKey = key + 'Box';
+		var datatype = $(this).data('type');
+		if(datatype){
+			console.log(datatype);
+			render.compile(that, $scope.def.selectOpttmpl, dataMap[key], true);
+			console.log(dataMap[key]);
+			var selectOptBox = $(".selectOptBox",$(this));
+			selectOptBox.style.display = 'block';
+//			selectOptBox.show();
+			console.log(selectOptBox);
+		}
+	})
 //单位电话特殊处理
 	$(document).on('change','#cophone', function() {
 		var cophone = $(this).val();
@@ -202,45 +279,25 @@ page.ctrl('openCardSheet', function($scope) {
 //		$(this).parent(".addressDetail").hide();
 	})
 //模糊搜索
-	$(document).on('input','.searchInp', function() {
-		var that = $(this).parent().siblings(".selecter").find("div");
-		var key = $(this).data('key');
-		var boxKey = key + 'Box';
-		$(this).attr("id",boxKey);
-		var data={};
-            data['code'] = key;
-		$.ajax({
-			url: apiMap[key],
-			data: data,
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//				$source.selectType = result.data;
-				var selectOptBox = $(".selectOptBox");
-				selectOptBox.attr("id",key);
-			})
-		})
-	})
-//点击下拉框拉取选项	
-	$(document).on('click','.selecter', function() {
-		var that =$("div",$(this));
-		var key = $(this).data('key');
-		var boxKey = key + 'Box';
-		$(this).attr("id",boxKey);
-		var data={};
-            data['code'] = key;
-		$.ajax({
-			url: apiMap[key],
-			data: data,
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-//				$source.selectType = result.data;
-				var selectOptBox = $(".selectOptBox");
-				selectOptBox.attr("id",key);
-			})
-		})
-	})
+//	$(document).on('input','.searchInp', function() {
+//		var that = $(this).parent().siblings(".selecter").find("div");
+//		var key = $(this).data('key');
+//		var boxKey = key + 'Box';
+//		$(this).attr("id",boxKey);
+//		var data={};
+//          data['code'] = key;
+//		$.ajax({
+//			url: apiMap[key],
+//			data: data,
+//			dataType: 'json',
+//			success: $http.ok(function(result) {
+//				render.compile(that, $scope.def.selectOpttmpl, result.data, true);
+////				$source.selectType = result.data;
+//				var selectOptBox = $(".selectOptBox");
+//				selectOptBox.attr("id",key);
+//			})
+//		})
+//	})
 	/***
 	* 保存按钮
 	*/
@@ -292,14 +349,195 @@ page.ctrl('openCardSheet', function($scope) {
 	*/
 	$console.load(router.template('iframe/open-card-sheet'), function() {
 		$scope.def.listTmpl = render.$console.find('#openCardSheettmpl').html();
-		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
+		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#openCardSheet'),
+			$tbl: $console.find('#openCardSheet')
 		}
-		if($params.process) {
-			
-		}
-		loadLoanList();
+		loadLoanList(function(){
+			console.log('zhixing');
+			setupDropDown();
+		});
 	});
-});
 
+	
+
+	$scope.bankPicker = function(picked) {
+		console.log(picked);
+	}
+	
+	/**dropdown 测试*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+	var car = {
+		brand: function(cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carBrandlist',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'brandId',
+						name: 'carBrandName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		series: function(brandId, cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carSeries',
+				data: {brandId: brandId},
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'serieName'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		specs: function(seriesId, cb) {
+			$.ajax({
+				url: 'http://localhost:8083/mock/carSpecs',
+				data: {
+					serieId: seriesId
+				},
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'carSerieId',
+						name: 'specName'
+					};
+					cb(sourceData);
+				}
+			})
+		}
+	}
+
+	var areaSel = {
+		province: function(cb) {
+			$.ajax({
+				url: urlStr+'/area/get',
+				dataType:'json',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					};
+					cb(sourceData);
+				}
+			})
+		},
+		city: function(areaId, cb) {
+			$.ajax({
+				url: urlStr+'/area/get',
+				data: {
+					parentId: areaId
+				},
+				dataType: 'json',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					}
+					cb(sourceData);
+				}
+			})
+		},
+		country: function(areaId, cb) {
+			$.ajax({
+				url: urlStr+'/area/get',
+				data: {
+					parentId: areaId
+				},
+				dataType: 'json',
+				success: function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					};
+					cb(sourceData);
+				}
+			})
+		}
+	}
+
+	$scope.dropdownTrigger = {
+		car: function(tab, parentId, cb) {
+			if(!cb && typeof cb != 'function') {
+				cb = $.noop;
+			}
+			if(!tab) return cb();
+			switch (tab) {
+				case '品牌':
+					car.brand(cb);
+					break;
+				case "车系":
+					car.series(parentId, cb);
+					break;
+				case "车型":
+					car.specs(parentId, cb);
+					break;
+				default:
+					break;
+			}
+		},
+		areaSel: function(tab, parentId, cb) {
+			if(!cb && typeof cb != 'function') {
+				cb = $.noop;
+			}
+			if(!tab) return cb();
+			switch (tab) {
+				case '省':
+					areaSel.province(cb);
+					break;
+				case "市":
+					areaSel.city(parentId, cb);
+					break;
+				case "区":
+					areaSel.country(parentId, cb);
+					break;
+				default:
+					break;
+			}
+		},
+		dealerId: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/carshop/list",
+				data:{
+					'code':'busiSourceName'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		repayPeriod: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/loanConfigure/getItem",
+				data:{
+					'code':'repaymentTerm'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		}
+	}
+});

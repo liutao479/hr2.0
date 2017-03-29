@@ -7,6 +7,23 @@
 	*/
 	g.dialogTml = {};
 	g.dialogTml.wContent = {
+		back: '<div class="w-content">\
+					<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
+					<div class="w-select-area mt15 clearfix">\
+						<div class="w-select clearfix">\
+							<div id="haha" class="checkbox checkbox-radio" data-id="{{=row.id}}"></div>\
+							<div class="w-select-item">退回至{{=row.jumpName}}</div>\
+						</div>\
+						{{ for(var j = 0, len2 = row.jumpReason.length; j < len2; j++) { }}\
+						<div class="w-select w-select-left clearfix">\
+							<div class="checkbox checkbox-normal" data-value="{{=row.jumpReason[j]}}"></div>\
+							<div class="w-select-item">{{=row.jumpReason[j]}}</div>\
+						</div>\
+						{{ } }}\
+					</div>\
+					{{ } }}\
+				</div>',
 		handelSuggestion: '<div class="w-content"><div class="w-text">请填写处理意见！</div></div>',
 		complete: '<div class="w-content"><div class="w-text">请完善必填项！</div></div>',
 		suggestion: '<div class="w-content">\
@@ -88,7 +105,47 @@
 								<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || ""}}">\
 							</div>\
 						</dd>\
-					</dl>'
+					</dl>',
+		viewFee: '<div class="w-content">\
+					<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">\
+						<thead>\
+							<tr class="orders-bar-title">\
+								<td class="orders-item-data">序号</td>\
+									<td class="orders-item-data">新手车/二手车</td>\
+									<td class="orders-item-data">省份</td>\
+									<td class="orders-item-data">12期利率</td>\
+									<td class="orders-item-data">18期利率</td>\
+									<td class="orders-item-data">24期利率</td>\
+									<td class="orders-item-data">30期利率</td>\
+									<td class="orders-item-data">36期利率</td>\
+									<td class="orders-item-data">48期利率</td>\
+									<td class="orders-item-data">60期利率</td>\
+							</tr>\
+						</thead>\
+						<tbody class="tbody">\
+							{{for(var j = 0, len2 = it.length; j < len2; j++) { var col = it[j]; }}\
+								{{ if(j % 2 !== 0) { }}\
+								<tr class="orders-item tr-even">\
+								{{ } else if(j % 2 == 0 && j == 0) { }}\
+								<tr class="orders-item tr-odd tr-noborder">\
+								{{ } else { }}\
+								<tr class="orders-item tr-odd">\
+								{{ } }}\
+									<td class="orders-item-data">{{=(j + 1)}}</td>\
+									<td class="orders-item-data">{{=(col.isSecond == 0 ? \"新车\" : \"二手车\")}}</td>\
+									<td class="orders-item-data">{{=col.provinceName}}</td>\
+									<td class="orders-item-data">{{=col.interestRate12}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate18}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate24}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate30}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate36}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate48}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate60}}%</td>\
+								</tr>\
+							{{ } }}\
+						</tbody>\
+					</table>\
+				</div>'
 	}
 	g.dialogTml.wCommit = {
 		sure: '<div class="w-commit-area">\

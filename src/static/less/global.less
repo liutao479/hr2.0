@@ -65,6 +65,15 @@
 .padding20 {
     padding: 20px !important;
 }
+.l-r-layout {
+    padding: 24px 125px;
+}
+.w400 {
+    width: 400px !important;
+}
+.w155 {
+    width: 155px !important;
+}
 
 .positionRela{
     position: relative;
@@ -257,6 +266,7 @@ input[disabled]{
 // 排序
 .time-sort {
     display: inline-block;
+    white-space: nowrap;
     height: 38px;
     line-height: 38px;
     position: relative;
@@ -476,43 +486,18 @@ input[disabled]{
     .orders-bar-title {
         background-color: #717ea1;
     }
-    .orders-item-data {
-        height: 40px;
-        color: #FFF;
-        text-align: center;
-        font-size: 14px;
-        .orders-item-data-blank {
-            width: 22%;
-        } 
-        .orders-item-data-view {
-            .view-fee {
-                color: @buttonBgColor;
-            }
-        }
-        .meanwhile {
-            width: 100%;
+    thead {
+        .orders-item-data {
+            height: 40px;
+            color: #FFF;
             text-align: center;
-            .arrow-trigger {
-                position: relative;
-                height: 21px;
-                .arrow-bottom {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    margin-top: -4px;
-                    margin-left: -4px;
-                    cursor: pointer;
-                    border-width: 6px;
-                }
-                .arrow-top {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    margin-top: -10px;
-                    margin-left: -4px;
-                    cursor: pointer;
-                    border-width: 6px;
-                }
+            font-size: 14px;
+        }
+    }
+    .tbody {
+        .orders-item {
+            .orders-item-data {
+                padding: 10px 8px !important; 
             }
         }
     }
@@ -532,8 +517,10 @@ input[disabled]{
             width: 60px; 
         }
         .orders-item-data {
-            height: 78px;
+            position: relative;
+            padding: 23px 8px; 
             color: @fontColor;
+            text-align: center;
             //被退回
             &.status-back {
                 color: @messageNumberBgColor;
@@ -557,6 +544,48 @@ input[disabled]{
             }
             &.orders-item-data-blank-mini {
                 width: 10%;
+            }
+            .orders-item-data-blank {
+                width: 22%;
+            } 
+            .orders-item-data-view {
+                .view-fee {
+                    color: @buttonBgColor;
+                }
+            }
+            .meanwhile {
+                position: absolute;
+                height: 60px;
+                top: 50%;
+                margin-top: -30px;
+                width: 100%;
+                text-align: center;
+                tr td {
+                   padding: 0;
+                   margin: 0;  
+                }
+                .arrow-trigger {
+                    position: relative;
+                    top: 2px;
+                    .arrow-bottom {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        margin-top: -4px;
+                        margin-left: -4px;
+                        cursor: pointer;
+                        border-width: 6px;
+                    }
+                    .arrow-top {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        margin-top: -10px;
+                        margin-left: -4px;
+                        cursor: pointer;
+                        border-width: 6px;
+                    }
+                }
             }
             .table-inner {
                 min-width: 275px;
@@ -715,6 +744,9 @@ input[disabled]{
     border-collapse: collapse;
     tr.tr-odd {
         background-color: #f3f4f9;
+        .input-x {
+            background-color: #f3f4f9;
+        }
         .input {
             background-color: #f3f4f9;
         }
@@ -735,6 +767,18 @@ input[disabled]{
         }
         &.td-value {
             width: 35%;
+        }
+        .input-x {
+            float: left;
+            text-align: left;
+            width: 100%;
+            height: 40px;
+            border: none;
+            padding-left: 30px;
+        }
+        .input-text {
+            float: left;
+            margin-left: 24px;
         }
         .input {
             float: left;
@@ -1028,7 +1072,7 @@ input[disabled]{
                 line-height: 32px;
             }
             .panel-value-area {
-                overflow: hidden;
+                // overflow: hidden;
                 margin-left: 210px;
                 //文字元素给行高保持与左侧水平
                 .panel-value-item {
@@ -1135,6 +1179,7 @@ input[disabled]{
         }
         .loanman-material-item {
             padding-top: 5px;
+            min-height: 63px;
             .check-item {
                 float: left;
                 width: 75px;
@@ -1318,7 +1363,7 @@ input[disabled]{
         float: left;
         .select-name {
             display: inline-block;
-            width: 50px;
+            width: 70px;
         }
     }
 }
@@ -1908,6 +1953,9 @@ input[disabled]{
     i{
         color:@backReasonBorderColor;
     }
+    table{
+        margin: auto;
+    }
     .info-key{
         color:@fontColor;
         display:inline-block;
@@ -2105,11 +2153,12 @@ input[disabled]{
 }
 //业务模式选择类型，大按钮样式 zhy
 .choose-content{
-    display: flex;
+    padding: 125px 80px;
     text-align: center;
-    justify-content:center;
     .choose-items{
-        margin: 120px 30px;
+        margin-right: 20px;
+        margin-bottom: 30px;
+        display: inline-block;
         border: 1px solid @mainColor;
         width: 240px;
         height: 240px;
@@ -2129,9 +2178,15 @@ input[disabled]{
             font-weight: bolder;
             line-height: 100px;
             letter-spacing: 3px;
-            -webkit-font-smoothing:antialiased;
         }
         &:hover{
+            background: @mainColor;
+            color: #fff;
+            .iconfont{
+                color: #fff;
+            }
+        }
+        &-active {
             background: @mainColor;
             color: #fff;
             .iconfont{
@@ -2274,7 +2329,7 @@ input[disabled]{
     position: absolute;
     left: 0;
     top: 28px;
-    z-index: 100;
+    z-index: 999999;
     background: #FFFFFF;
     li{
         line-height: inherit;
@@ -2406,5 +2461,24 @@ input[disabled]{
     }
     .error-input-tip{
         bottom: -25px;
+    }
+}
+
+.l-key-value-box {
+    float: left;
+    margin: 15px 0; 
+    width: 50%;
+    text-align: center;
+    .l-key {
+        display: inline-block;
+        width: 120px;
+        line-height: 32px;
+        text-align: right;
+        vertical-align: top;
+        margin-right: 10px;
+    }
+    .l-value {
+        display: inline-block;
+        text-align: left;
     }
 }

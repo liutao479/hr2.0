@@ -8,10 +8,13 @@
 
 <!--订单表格-->
 <div class="container workplat">
-	<div class="search-bar">
-		<input type="text" name="" autocomplete="off" id="search" value="" placeholder="订单号\借款人姓名\身份证号\手机号" class="input-text" />
+	<div class="search-bar clearfix">
+		<div class="input-text" id="search">
+			<input type="text" name="" autocomplete="off" value="" placeholder="订单号\借款人姓名\身份证号\手机号" />
+			<i class="iconfont">&#xe604;</i>
+		</div>
 		<a class="location-tag" onclick="page.$scope['loan']"><span id="processTag"></span><span id="processTagClose" class="close">x</span></a>
-		<div class="button button-deep" id="newBusiness">
+		<div class="button button-deep" id="newBusiness" data-href="loanProcess/newBusiness">
 			<i class="iconfont">&#xe615;</i>新建业务
 		</div>
 	</div>

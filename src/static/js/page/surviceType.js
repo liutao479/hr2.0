@@ -8,7 +8,6 @@ page.ctrl('surviceType', function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-	var urlStr = "http://192.168.0.103:8080";
 
 	/**
 	* 加载车贷办理数据

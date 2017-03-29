@@ -2,261 +2,126 @@
 page.ctrl('carAudit', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
-		$source = $scope.$source = {},
-		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
-		};
-//	var urlStr = "http://192.168.0.135:8080";
-	var urlStr = "http://127.0.0.1:8083";
-	var apiMap = {
-		"sex": urlStr+"/mock/sex",
-		"isSecond": urlStr+"/mock/isSecond",
-		"serviceType": urlStr+"/mock/serviceType",
-		"demandBankId": urlStr+"/mock/demandBankId",
-		"busiSourceType": urlStr+"/mock/busiSourceType",
-		"busiArea": urlStr+"/mock/busiArea",
-		"busiSourceName": urlStr+"/mock/busiSourceName",
-//		"busiSourceName": urlStr+"/carshop/list",
-		"licenseType": urlStr+"/mock/busiSourceName",
-		"isFinanceLeaseVehicle": urlStr+"/mock/busiSourceName",
-		"isOperationVehicle": urlStr+"/mock/busiSourceName",
-		"onLicensePlace": urlStr+"/mock/busiSourceName",
-		"isInstallGps": urlStr+"/mock/yesOrNo",
-		"businessModel": urlStr+"/mock/busiSourceName",
-		"isDiscount": urlStr+"/mock/busiSourceName",
-		"carName": urlStr+"/mock/busiSourceName",
-		"repayPeriod": urlStr+"/mock/busiSourceName",
-		"renewalMode": urlStr+"/mock/busiSourceName",
-		"isAdvanced": urlStr+"/mock/busiSourceName",
-		"maritalStatus": urlStr+"/mock/busiSourceName",
-		"houseStatus": urlStr+"/mock/busiSourceName",
-		"isEnterprise": urlStr+"/mock/busiSourceName",
-		"userRelationship": urlStr+"/mock/busiSourceName",
-		"remitAccountNumber": urlStr+"/mock/bankNo",
-		"relationship": urlStr+"/mock/busiSourceName"
-		}
-	var postUrl = {
-		"saveOrderInfo": urlStr+"/loanInfoInput/updLoanOrder",
-		"saveCarInfo": urlStr+"/loanInfoInput/updLoanUserCar",
-		"saveStageInfo": urlStr+"/loanInfoInput/updLoanUserStage",
-		"saveCommonInfo": urlStr+"/loanInfoInput/updLoanUser",
-		"saveEmergencyInfo": urlStr+"/loanInfoInput/updLoanEmergencyConact",
-		"saveloanPayCardInfo": urlStr+"/loanInfoInput/updLoanPayCard",
-		"saveFYXXInfo": urlStr+"/loanInfoInput/updLoanFee",
-		"saveQTXX": urlStr+"/loanInfoInput/updLoanIndividuation"
-		}
-
+	/**
+	* 设置面包屑
+	*/
+	var setupLocation = function(loanUser) {
+		if(!$scope.$params.path) return false;
+		var $location = $console.find('#location');
+		var _orderDate = tool.formatDate($scope.$params.date, true);
+		$location.data({
+			backspace: $scope.$params.path,
+			loanUser: loanUser,
+			current: '审核列表',
+			orderDate: _orderDate
+		});
+		$location.location();
+	}
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadLoanList = function(params, cb) {
+	var loadTabList = function(cb) {
 		var data={};
-			data['taskId']=80871;
+		data['taskId']=80872;
 		$.ajax({
-			url: $http.api($http.apiMap.loanInfo),
+			url: urlStr+'/loanTelApproval/info',
 			data: data,
 			dataType: 'json',
 			  ,
 			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
+				$scope.result = result;
+//				// 启动面包屑
+//				var _loanUser = $scope.result.data[0].loanUserCredits[0].userName;
+//				setupLocation(_loanUser);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.cfgData, true);
+				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.cfgData, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
-				loanFinishedInput();
-				loanFinishedSelect();
-				loanFinishedCheckbox();
-				loanFinishedGps();
-				loanFinishedBxxb();
-			})
-		});
-	}
-//页面加载完成对所有带“*”的input进行必填绑定
-	var loanFinishedInput = function(){
-		$(".info-key").each(function(){
-			var jqObj = $(this);
-			if(jqObj.has('i').length > 0){
-				$(this).siblings().find("input").addClass("required");
-			}
-			loanFinishedInputReq();
-		});
-	}
-//页面加载完成对所有带“*”的input进行必填绑定,不需要必填的删除required
-	var loanFinishedInputReq = function(){
-		$("input[type='hidden'],input[type='text']").each(function(){
-			var required = $(this).attr("name");
-			if(!required){
-				$(this).removeClass("required");
-			}
-		});
-	}
-
-//页面加载完成对所有下拉框进行赋值	
-	var loanFinishedSelect = function(){
-		$(".selecter").each(function(){
-			var that =$("div",$(this));
-			var key = $(this).data('key');
-			var boxKey = key + 'Box';
-			$(this).attr("id",boxKey);
-			var data={};
-                data['code'] = key;
-			$.ajax({
-				url: apiMap[key],
-				data: data,
-				dataType: 'json',
-				  ,
-				success: $http.ok(function(result) {
-					render.compile(that, $scope.def.selectOpttmpl, result.data, true);
-					$source.selectType = result.data;
-					var selectOptBox = $(".selectOptBox");
-					selectOptBox.attr("id",key);
-				})
-			})
-			var value1 = $("input",$(this)).val();
-			$("li",$(this)).each(function(){
-				var val = $(this).data('key');
-				var text = $(this).text();
-				var keybank = $(this).data('bank');
-				var keyname = $(this).data('name');
-
-				if(value1 == val){
-					$(this).parent().parent().siblings(".placeholder").html(text);
-					$(this).parent().parent().siblings("input").val(val);
-					if(keybank && keyname){
-						$("#bankName").val(keybank);
-						$("#accountName").val(keyname);
-					}
-					var value2 = $(this).parent().parent().siblings("input").val();
-					if(!value2){
-						$(this).parent().parent().siblings(".placeholder").html("请选择")
-					}
-					$(".selectOptBox").hide(); 
-				}
-			})
-			
-		});
-	}
-	
-	var loanFinishedCheckbox = function(){
-		$(".info-key-check-box").each(function(){
-			var that =$("input",$(this)),
-				checkBox =$("div.checkbox",$(this));
-			var data={};
-			data = that.val().split(",");
-			$(".checkbox",$(this)).each(function(){
-				var thisVal = $(this).data('value');
-				var div = $(this);
-				$.each(data,function(n,value){
-					if(value == thisVal){
-						div.addClass('checked').attr('checked',true);
-						div.html('<i class="iconfont">&#xe659;</i>');
-					}
-				});
 			})
 		})
 	}
-
-	var loanFinishedGps = function(){
-		var gps = $("#gps").val();
-		if(gps != 1){
-			$("#isInstallGpsBox").removeClass("gps");
-			$("#gps1").hide();
-			$("#gps2").hide();
-		}else{
-			$("#isInstallGpsBox").addClass("gps");
-			$("#gps1").show();
-			$("#gps2").show();
-		}
-	}
-	var loanFinishedBxxb = function(){
-		var gps = $("#bxxbInput").val();
-		console.log(gps);
-		if(gps != 1){
-			$(".bxxbYear").hide();
-		}else{
-			$(".bxxbYear").show();
-		}
-	}
-
-
-	/***
-	* 保存按钮
-	*/
-	$(document).on('click', '.saveBtn', function() {
-		var isTure = true;
-		var requireList = $(this).parent().parent().siblings().find("form").find(".required");
-		requireList.each(function(){
-			var value = $(this).val();
-			if(!value){
-				$(this).parent().addClass("error-input");
-				$(this).after('<i class="error-input-tip">请完善该必填项</i>');
-				console.log($(this).index());
-				isTure = false;
-				return false;
-			}
-		});
-		if(isTure){
-			var key = $(this).data('key');
-			var data;
-	        var formList = $(this).parent().parent().siblings().find('form');
-	        console.log("form的个数为："+formList.length);
-	        if(formList.length == 1){
-		        var params = formList.serialize();
-	            params = decodeURIComponent(params,true);
-	            var paramArray = params.split("&");
-	            var data1 = {};
-	            for(var i=0;i<paramArray.length;i++){
-	                var valueStr = paramArray[i];
-	                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
-	            }
-	            data = data1;
-	        }else{
-	        	data = [];
-		        formList.each(function(index){
-			        var params = $(this).serialize();
-		            params = decodeURIComponent(params,true);
-		            var paramArray = params.split("&");
-		            var data1 = {};
-		            for(var i=0;i<paramArray.length;i++){
-		                var valueStr = paramArray[i];
-		                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
-		            }
-					console.log(data1);
-					data[index]=data1;
-		        })
-	        }
-	        console.log(data);
-	        
-			$.ajax({
-				type: 'POST',
-				url: postUrl[key],
-				data:JSON.stringify(data),
-				dataType:"json",
-				contentType : 'application/json;charset=utf-8',
-				success: function(result){
-					console.log(result.msg);
+	var loadPhoneList = function(cb) {
+		var data={};
+		data['taskId']=80872;
+		data['pageCode']='loanTelResApproval';
+		$.ajax({
+			url: urlStr+'/telAdudit/info',
+			data: data,
+			dataType: 'json',
+			  ,
+			success: $http.ok(function(res) {
+				$scope.res = res;
+				render.compile($scope.$el.$tphone, $scope.def.phoneTmpl, res.data, true);
+				if(cb && typeof cb == 'function') {
+					cb();
 				}
+			})
+		})
+	}
+	/**
+	* 绑定立即处理事件
+	*/
+	var setupEvent = function() {
+		$console.find('#checkTabs a').on('click', function() {
+			$('.role-item').each(function(){
+				$(this).removeClass('role-item-active');
+			})
+			var that = $(this);
+			var idx = that.data('idx');
+			that.addClass('role-item-active');
+			$(".tabTrigger").each(function(){
+				$(this).hide();
+				var trig = $(this).data('trigger');
+				if(trig == idx){
+					$(this).show();
+					return false;
+				}
+			})
+		});
+	}
+	var loadPage = function(){
+		$("#pagePhone").load("iframe/phoneAudit.html",function(){
+			var that =$("#eleCheck");
+			var data111={};
+			data111['taskId']=80872;
+			data111['pageCode']='loanTelTabApproval';
+			$.ajax({
+				url: urlStr+'telAdudit/info',
+				data: data111,
+				dataType: 'json',
+				  ,
+				success: $http.ok(function(xhr) {
+					console.log(xhr);
+					render.compile(that, $scope.def.phoneTmpl, xhr.data, true);
+				}),
+				error: $http.ok(function(err) {
+					console.log(err.msg);
+				})
 			});
-		}
-	})
+		});
+	};
+	
+	
+	
 	
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('carAudit'), function() {
-		$scope.def.listTmpl = render.$console.find('#pickCarchecktmpl').html();
-		$scope.def.selectOpttmpl =  render.$console.find('#selectOpttmpl').html();
+	$console.load(router.template('iframe/carAudit'), function() {
+		$scope.def.tabTmpl = $console.find('#checkResultTabsTmpl').html();
+		$scope.def.listTmpl = $console.find('#pickCarchecktmpl').html();
+		$scope.def.phoneTmpl = $console.find('#pagePhonetmpl').html();
 		$scope.$el = {
+			$tphone: $console.find('#pagePhone'),
+			$tab: $console.find('#checkTabs'),
 			$tbl: $console.find('#pickCarcheck')
 		}
-		if($params.process) {
-			
-		}
-		loadLoanList(apiParams);
-	});
+		loadTabList();
+		loadPhoneList();
+	})
 });
 
 

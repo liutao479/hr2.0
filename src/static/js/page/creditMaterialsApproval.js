@@ -1,8 +1,8 @@
 "use strict";
 page.ctrl('creditMaterialsApproval', function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params;
-	$params.taskId = 80877;
+	var $params = $scope.$params,
+		$console = render.$console;
+	// $params.taskId = 80877;
 	$scope.userMap = {
 		0: '借款人',
 		1: '共同还款人',
@@ -137,22 +137,66 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 	 */
 	var evt = function() {
 		/**
-		 * 征信查询按钮
+		 * 审核通过
 		 */
-		$console.find('#creditQuery').on('click', function() {
-			
+		$console.find('#auditPass').on('click', function() {
+			var params = {
+				taskIds: [$params.taskId],
+				orderNo: $params.orderNo
+			}
+			console.log(params)
+			$.ajax({
+				type: 'post',
+				url: $http.api('tasks/complete', 'zyj'),
+				data: JSON.stringify(params),
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				success: $http.ok(function(result) {
+					console.log(result);
+					var loanTasks = result.data;
+					var taskObj = [];
+					for(var i = 0, len = loanTasks.length; i < len; i++) {
+						var obj = loanTasks[i];
+						taskObj.push({
+							key: obj.category,
+							id: obj.id,
+							name: obj.sceneName
+						})
+					}
+					// target为即将跳转任务列表的第一个任务
+					var target = loanTasks[0];
+					router.render('loanProcess/' + target.category, {
+						taskId: target.id, 
+						orderNo: target.orderNo,
+						tasks: taskObj,
+						path: 'loanProcess'
+					});
+					// router.render('loanProcess');
+					// toast.hide();
+				})
+			})
 		});
 
-		
+		/**
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
 
 		/**
 		 * 退回订单按钮
 		 */
-		$console.find('#cancelOrders').on('click', function() {
+		$console.find('#backOrder').on('click', function() {
 			var that = $(this);
+			console.log($scope.result.data.loanTask.taskJumps)
 			$.alert({
-				title: '取消订单',
-				content: '<div class="w-content"><div class="w-text">确定要取消该笔贷款申请吗？</div></div>',
+				title: '退回订单',
+				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
+				onContentReady: function() {
+					dialogEvt(this.$content);
+				},
 				buttons: {
 					close: {
 						text: '取消',
@@ -161,12 +205,105 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 					ok: {
 						text: '确定',
 						action: function () {
-							
+							var _reason = $.trim(this.$content.find('#suggestion').val());
+							this.$content.find('.checkbox-radio').each(function() {
+								if($(this).hasClass('checked')) {
+									$scope.jumpId = $(this).data('id');
+								}
+							})
+
+							if(!_reason) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请填写处理意见！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							} 
+							if(!$scope.jumpId) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请至少选择一项原因！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							}
+							var _params = {
+								taskId: $params.taskId,
+								jumpId: $scope.jumpId,
+								reason: _reason
+							}
+							console.log(_params)
+							$.ajax({
+								type: 'post',
+								url: $http.api('task/jump', 'zyj'),
+								data: _params,
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									
+									// router.render('loanProcess');
+									// toast.hide();
+								})
+							})
 						}
 					}
 				}
 			})
 		});
+	}
+
+	var dialogEvt = function($dialog) {
+		var $reason = $dialog.find('#suggestion');
+		$scope.$checks = $dialog.find('.checkbox').checking();
+		// 复选框
+		$scope.$checks.filter('.checkbox-normal').each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				//用于监听意见有一个选中，则标题项选中
+				var flag = 0;
+				var str = '';
+				$(that).parent().parent().find('.checkbox-normal').each(function() {
+					if($(this).attr('checked')) {
+						str += $(this).data('value') + ',';
+						flag++;
+					}
+				})
+				str = '#' + str.substring(0, str.length - 1) + '#';				
+				$reason.val(str);
+				if(flag > 0) {
+					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
+				} else {
+					$reason.val('');
+					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
+				}
+				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+
+				// if()
+			});
+		})
+
+		// 单选框
+		$scope.$checks.filter('.checkbox-radio').each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				$reason.val('');
+				$(that).parent().parent().find('.checkbox-normal').removeClass('checked').attr('checked', false);
+				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+			});
+		})
 	}
 
 	/**

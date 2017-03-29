@@ -24,7 +24,7 @@
 				<div id="openCardSheet"></div>
 				<!--提交订单按钮-->
 				<div class="commit-orders-box">
-					<div id="" class="button saveBtn">提交订单</div>
+					<div id="submitOrder" class="button saveBtn">提交订单</div>
 				</div>
 			</div>	
 			<script type="text/x-dot-template" id="openCardSheettmpl">
@@ -40,13 +40,8 @@
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>经销商名称：</span>
-								<span data-key="dealerId" class="info-value selecter">
-									<span class="inputSearch"><input class="searchInp" data-key = "dealerName" type="text" name="dealerName" id="dealerName" value="{{= it.dealerName}}" title="{{= it.dealerName}}" /></span>
-									<div></div>
-									<span class="placeholder" style="overflow: hidden;">{{= it.dealerName}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="dealerId" value="{{= it.dealerId}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.dealerId}}" data-dropdown="page.$scope['openCardSheet'].dealerIdPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.dealerId"></div>
+								<input type="hidden" name="dealerId" value="{{= it.dealerId}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>上牌地：</span>
@@ -70,12 +65,8 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>分期期数：</span>
-								<span data-key="isSecond" class="info-value selecter">
-									<div></div>
-									<span class="placeholder">{{= it.repayPeriod}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="repayPeriod" value="{{= it.repayPeriod}}" />
-								</span>
+								<div class="select select-common" data-selected="{{= it.repayPeriod}}" data-dropdown="page.$scope['openCardSheet'].repayPeriod" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.repayPeriod"></div>
+								<input type="hidden" name="repayPeriod" value="{{= it.repayPeriod}}" />
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>车辆价格：</span>
@@ -111,18 +102,18 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>性别：</span>
-								<span data-key="sex" class="info-value selecter">
+								<span data-type="self" data-key="sex" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.sex}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="sex" value="{{= it.sex}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>证件类型：</span>
-								<span data-key="sex" class="info-value selecter">
+								<span data-type="self" data-key="custsort" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.custsort}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="custsort" value="{{= it.custsort}}" />
 								</span>
@@ -141,9 +132,9 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>婚姻状况：</span>
-								<span data-key="isSecond" class="info-value selecter">
+								<span data-type="self" data-key="mrtlstat" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.mrtlstat}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="mrtlstat" value="{{= it.mrtlstat}}" />
 								</span>
@@ -161,19 +152,19 @@
 									<input type="hidden" name="hcounty" id="hcounty1" value="{{= it.hcounty}}" />
 									<input type="hidden" name="haddress" id="haddress1" value="{{= it.haddress}}" />
 									<div class="addressDetail">
-										<span data-key="hprovince" class="info-value width33 selecter">
+										<span data-type="self" data-key="hprovince" class="info-value width33 selecter">
 											<div></div>
 											<span class="placeholder width100">省</span>
 											<span class="arrow arrow-bottom right8px"></span>
 											<input type="hidden" id="shprovince" />
 										</span>
-										<span data-key="hcity" class="info-value width33 selecter pointDisabled">
+										<span data-type="self" data-key="hcity" class="info-value width33 selecter pointDisabled">
 											<div></div>
 											<span class="placeholder width100">市</span>
 											<span class="arrow arrow-bottom right8px"></span>
 											<input type="hidden" id="shcity" />
 										</span>
-										<span data-key="hcounty" class="info-value width33 selecter pointDisabled">
+										<span data-type="self" data-key="hcounty" class="info-value width33 selecter pointDisabled">
 											<div></div>
 											<span class="placeholder width100">区/县</span>
 											<span class="arrow arrow-bottom right8px"></span>
@@ -185,7 +176,7 @@
 												<input type="text" id="shaddress" />
 											</span>
 										</div>
-										<div id="" data-key = "had" class="button addComplete">完成</div>
+										<div id="" data-key="had" class="button addComplete">完成</div>
 									</div>
 								</span>
 							</div>
@@ -269,18 +260,18 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>单位性质：</span>
-								<span data-key="isSecond" class="info-value selecter">
+								<span data-type="self" data-key="modelcode" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.modelcode}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="modelcode" value="{{= it.modelcode}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>职业：</span>
-								<span data-key="isSecond" class="info-value selecter">
+								<span data-type="self" data-key="occptn" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.occptn}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="occptn" value="{{= it.occptn}}" />
 								</span>
@@ -307,9 +298,9 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>与您的关系：</span>
-								<span data-key="isSecond" class="info-value selecter">
+								<span data-type="self" data-key="reltship1" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.reltship1}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="reltship1" value="{{= it.reltship1}}" />
 								</span>
@@ -328,9 +319,9 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>与您的关系：</span>
-								<span data-key="isSecond" class="info-value selecter">
+								<span data-type="self" data-key="relationship" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.reltship2}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="reltship2" value="{{= it.reltship2}}" />
 								</span>
@@ -364,18 +355,18 @@
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>卡片领取方式：</span>
-								<span data-key="isSecond" class="info-value selecter">
+								<span data-type="self" data-key="drawmode" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.drawmode}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="drawmode" value="{{= it.drawmode}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key"><i>*</i>短信余额变动提醒：</span>
-								<span data-key="isSecond" class="info-value selecter">
+								<span data-type="self" data-key="machgf" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.machgf}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="machgf" value="{{= it.machgf}}" />
 								</span>
@@ -413,7 +404,7 @@
 				<ul class="selectOptBox">
 					<!--<li value="100001">请选择</li>-->
 					{{for(var a = 0, len = it.length; a < len; a++) { var op1 = it[a]; }}
-						<li data-key="{{= op1.value || op1.areaId}}">{{= op1.name || op1.areaName}}</li>
+						<li data-key="{{= op1.value}}">{{= op1.name}}</li>
 					{{ } }}
 				</ul>
 			</script>

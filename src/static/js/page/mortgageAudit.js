@@ -73,7 +73,10 @@ page.ctrl('mortgageAudit', [], function($scope) {
 		$console.find('#searchInput').on('blur', function(evt) {
 			var that = $(this),
 				searchText = $.trim(that.val());
-			if(searchText) {
+			if(!searchText) {
+				delete apiParams.keyWord;
+				return false;
+			} else {
 				apiParams.keyWord = searchText;
 			}
 		});
@@ -178,9 +181,6 @@ page.ctrl('mortgageAudit', [], function($scope) {
 			$.ajax({
 				type: 'get',
 				url: $http.api('pmsDept/getPmsDeptList', 'cyj'),
-				data: {
-					parentId: 99
-				},
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					xhr.data.unshift({

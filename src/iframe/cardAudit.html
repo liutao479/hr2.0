@@ -1,21 +1,8 @@
 	<!--开卡信息zhy-->
 			<div class="container open-card-sheet" id="open-card-sheet">
 				<!--返回列表-->
-				<div class="path-back-bar">
-					<div class="path-back">
-						<i class="iconfont">&#xe626;</i>
-						<a href="#">返回列表</a>&nbsp;&gt;
-						<span class="current-page">开卡信息录入</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">借款人：</span>
-						<span class="value">张三</span>
-					</div>
-					<div class="key-value-box">
-						<span class="key">订单生成时间：</span>
-						<span class="value">2016-11-03 14:02</span>
-					</div>
-				</div>
+				<div id="location"></div>
+				<!--返回列表 end-->
 				<!--提交修改等等按钮-->
 				<div class="commit-orders-box commit-orders-box-area mb15">
 					<a href="javascript:;" class="commit-item">
@@ -32,325 +19,392 @@
 					</a>
 				</div>
 				<!--提交修改等等按钮   end-->
-				<!--工作台左侧菜单面板-->
-				<div class="panel panel-menu">
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">征信结果</a>
-					<a class="panel-menu-item" href="#">开卡信息</a>
-					<a class="panel-menu-item" href="#">二手车评估信息</a>
-					<a class="panel-menu-item panel-menu-item-active" href="#">
-						贷款材料
-						<span class="arrow arrow-right"></span>
-					</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-					<a class="panel-menu-item" href="#">贷款信息表</a>
-				</div>
-				<!--工作台左侧菜单面板 end-->
 				
 				<!--面板-->
 				<div id="openCardSheet"></div>
-				
+				<!--提交订单按钮-->
+				<div class="commit-orders-box">
+					<div id="submitOrder" class="button saveBtn">提交订单</div>
+				</div>
+			</div>	
 			<script type="text/x-dot-template" id="openCardSheettmpl">
-				<div class="panel panel-loan panel-detail">
+				<form id="dataform">
+				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">购车信息</span>
 						</div>
 					</div>
-					<div class="panel-detail-content panel-detail-layout padding0">
+					<div class="panel-detail-content-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
-								<span class="info-key">经销商名称：</span>
-								<span data-key="isSecond" class="info-value pointDisabled selecter">
-									<div></div>
-									<span class="placeholder">{{= it.dealerName}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="dealerId" value="{{= it.dealerId}}" />
-								</span>
+								<span class="info-key"><i>*</i>经销商名称：</span>
+								<div class="select select-common" data-selected="{{= it.dealerId}}" data-dropdown="page.$scope['cardAudit'].dealerIdPicker" data-trigger="page.$scope['cardAudit'].dropdownTrigger.dealerId"></div>
+								<input type="hidden" name="dealerId" value="{{= it.dealerId}}" />
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">上牌地：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" disabled="disabled" name="onLicensePlace" value="{{= it.onLicensePlace}}" /></span>
+								<span class="info-key"><i>*</i>上牌地：</span>
+								<span class="info-value"><input type="text" name="onLicensePlace" value="{{= it.onLicensePlace}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">年收入：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="yearIncomeMoney" value="{{= it.yearIncomeMoney}}" /></span>
+								<span class="info-key"><i>*</i>年收入：</span>
+								<span class="info-value"><input type="text" name="yearIncomeMoney" value="{{= it.yearIncomeMoney}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">贷款金额：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="loanMoney" value="{{= it.loanMoney}}" /></span>
+								<span class="info-key"><i>*</i>贷款金额：</span>
+								<span class="info-value"><input type="text" name="loanMoney" value="{{= it.loanMoney}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">手续费率：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="feeRate" value="{{= it.feeRate}}" /></span>
+								<span class="info-key"><i>*</i>手续费率：</span>
+								<span class="info-value"><input type="text" name="feeRate" value="{{= it.feeRate}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">手续费：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="feeamount" value="{{= it.feeamount}}" /></span>
+								<span class="info-value"><input type="text" name="feeamount" value="{{= it.feeamount}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">分期期数：</span>
-								<span data-key="isSecond" class="info-value pointDisabled selecter">
-									<div></div>
-									<span class="placeholder">{{= it.repayPeriod}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="repayPeriod" value="{{= it.repayPeriod}}" />
-								</span>
+								<span class="info-key"><i>*</i>分期期数：</span>
+								<div class="select select-common" data-selected="{{= it.repayPeriod}}" data-dropdown="page.$scope['cardAudit'].repayPeriod" data-trigger="page.$scope['cardAudit'].dropdownTrigger.repayPeriod"></div>
+								<input type="hidden" name="repayPeriod" value="{{= it.repayPeriod}}" />
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">车辆价格：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="carPrice" value="{{= it.carPrice}}" /></span>
+								<span class="info-key"><i>*</i>车辆价格：</span>
+								<span class="info-value"><input type="text" name="carPrice" value="{{= it.carPrice}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">调额额度：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="adjustAmount" value="{{= it.adjustAmount}}" /></span>
+								<span class="info-value"><input type="text" name="adjustAmount" value="{{= it.adjustAmount}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">贷款成数：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="loanRatio" value="{{= it.loanRatio}}" /></span>
+								<span class="info-value"><input type="text" name="loanRatio" value="{{= it.loanRatio}}" /></span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan panel-detail">
+				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">您的基本资料</span>
 						</div>
 					</div>
-					<div class="panel-detail-content panel-detail-layout padding0">
+					<div class="panel-detail-content-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
-								<span class="info-key">中文名：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="chnsname" value="{{= it.chnsname}}" /></span>
+								<span class="info-key"><i>*</i>中文名：</span>
+								<span class="info-value"><input type="text" name="chnsname" value="{{= it.chnsname}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">性别：</span>
-								<span data-key="isSecond" class="info-value pointDisabled selecter">
+								<span class="info-key"><i>*</i>姓名拼音：</span>
+								<span class="info-value"><input type="text" name="engname" value="{{= it.engname}}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>性别：</span>
+								<span data-type="self" data-key="sex" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.sex}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="sex" value="{{= it.sex}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">证件号码：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="idCard" value="{{= it.idCard}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key">发证机关：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="authref" value="{{= it.authref}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key">证件有效截止日期：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="statdate" value="{{= it.statdate}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key">婚姻状况：</span>
-								<span data-key="isSecond" class="info-value pointDisabled selecter">
+								<span class="info-key"><i>*</i>证件类型：</span>
+								<span data-type="self" data-key="custsort" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.mrtlstat}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isSecond" value="{{= it.mrtlstat}}" />
+									<input type="hidden" name="custsort" value="{{= it.custsort}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">手机：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="mvblno" value="{{= it.mvblno}}" /></span>
+								<span class="info-key"><i>*</i>证件号码：</span>
+								<span class="info-value"><input type="text" name="custcode" value="{{= it.custcode}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">住宅：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="haddress" value="{{= it.haddress}}" /></span>
+								<span class="info-key"><i>*</i>发证机关：</span>
+								<span class="info-value"><input type="text" name="authref" value="{{= it.authref}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">住宅电话：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="hphoneno" value="{{= it.hphoneno}}" /></span>
+								<span class="info-key"><i>*</i>证件有效截止日期：</span>
+								<span class="info-value"><input type="text" name="statdate" value="{{= it.statdate}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">邮政编码：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="homezip" value="{{= it.homezip}}" /></span>
+								<span class="info-key"><i>*</i>婚姻状况：</span>
+								<span data-type="self" data-key="mrtlstat" class="info-value selecter">
+									<div></div>
+									<span class="placeholder"></span>
+									<span class="arrow arrow-bottom right8px"></span>
+									<input type="hidden" name="mrtlstat" value="{{= it.mrtlstat}}" />
+								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">入住日期：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="indate" value="{{= it.indate}}" /></span>
+								<span class="info-key"><i>*</i>手机：</span>
+								<span class="info-value"><input type="text" name="mvblno" value="{{= it.mvblno}}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>住宅：</span>
+								<span class="info-value">
+									<input type="text" id='homeAdd' class="addInput" readonly="readonly" title="{{= it.hprovince+"省"+it.hcity+"市"+it.hcounty+it.haddress}}" value="{{= it.hprovince+"省"+it.hcity+"市"+it.hcounty+it.haddress}}" />
+									<input type="hidden" name="hprovince" id="hprovince1" value="{{= it.hprovince}}" />
+									<input type="hidden" name="hcity" id="hcity1" value="{{= it.hcity}}" />
+									<input type="hidden" name="hcounty" id="hcounty1" value="{{= it.hcounty}}" />
+									<input type="hidden" name="haddress" id="haddress1" value="{{= it.haddress}}" />
+									<div class="addressDetail">
+										<span data-type="self" data-key="hprovince" class="info-value width33 selecter">
+											<div></div>
+											<span class="placeholder width100">省</span>
+											<span class="arrow arrow-bottom right8px"></span>
+											<input type="hidden" id="shprovince" />
+										</span>
+										<span data-type="self" data-key="hcity" class="info-value width33 selecter pointDisabled">
+											<div></div>
+											<span class="placeholder width100">市</span>
+											<span class="arrow arrow-bottom right8px"></span>
+											<input type="hidden" id="shcity" />
+										</span>
+										<span data-type="self" data-key="hcounty" class="info-value width33 selecter pointDisabled">
+											<div></div>
+											<span class="placeholder width100">区/县</span>
+											<span class="arrow arrow-bottom right8px"></span>
+											<input type="hidden" id="shcounty" />
+										</span>
+										<div class="addDiv pointDisabled">
+											<p>详细地址：</p>
+											<span class="info-value">
+												<input type="text" id="shaddress" />
+											</span>
+										</div>
+										<div id="" data-key="had" class="button addComplete">完成</div>
+									</div>
+								</span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>住宅电话：</span>
+								<span class="info-value"><input type="text" name="hphoneno" value="{{= it.hphoneno}}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>邮政编码：</span>
+								<span class="info-value"><input type="text" name="homezip" value="{{= it.homezip}}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>入住日期：</span>
+								<span class="info-value"><input type="text" name="indate" value="{{= it.indate}}" /></span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan panel-detail">
+				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">您的职业资料</span>
 						</div>
 					</div>
-					<div class="panel-detail-content panel-detail-layout padding0">
+					<div class="panel-detail-content-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
-								<span class="info-key">单位名称：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="unitname" value="{{= it.unitname}}" /></span>
+								<span class="info-key"><i>*</i>单位名称：</span>
+								<span class="info-value"><input type="text" title="{{= it.unitname}}" name="unitname" value="{{= it.unitname}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">单位地址：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="caddress" value="{{= it.caddress}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key">单位电话：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="cophozono" value="{{= it.cophozono}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key">邮政编码：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="corpzip" value="{{= it.corpzip}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key">单位性质：</span>
-								<span data-key="isSecond" class="info-value pointDisabled selecter">
-									<div></div>
-									<span class="placeholder">{{= it.modelcode}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isSecond" value="{{= it.modelcode}}" />
+								<span class="info-key"><i>*</i>单位地址：</span>
+								<span class="info-value">
+									<input type="text" id='comeAdd' class="addInput" readonly="readonly" title="{{= it.cprovince+"省"+it.ccity+"市"+it.ccounty+it.caddress}}" value="{{= it.cprovince+"省"+it.ccity+"市"+it.ccounty+it.caddress}}" />
+									<input type="hidden" name="cprovince" id="cprovince1" value="{{= it.cprovince}}" />
+									<input type="hidden" name="ccity" id="ccity1" value="{{= it.ccity}}" />
+									<input type="hidden" name="ccounty" id="ccounty1" value="{{= it.ccounty}}" />
+									<input type="hidden" name="caddress" id="caddress1" value="{{= it.caddress}}" />
+									<div class="addressDetail">
+										<span data-key="cprovince" class="info-value width33 selecter">
+											<div></div>
+											<span class="placeholder width100">省</span>
+											<span class="arrow arrow-bottom right8px"></span>
+											<input type="hidden" id="scprovince" />
+										</span>
+										<span data-key="ccity" class="info-value width33 selecter pointDisabled">
+											<div></div>
+											<span class="placeholder width100">市</span>
+											<span class="arrow arrow-bottom right8px"></span>
+											<input type="hidden" id="sccity" />
+										</span>
+										<span data-key="ccounty" class="info-value width33 selecter pointDisabled">
+											<div></div>
+											<span class="placeholder width100">区/县</span>
+											<span class="arrow arrow-bottom right8px"></span>
+											<input type="hidden" id="sccounty" />
+										</span>
+										<div class="addDiv pointDisabled">
+											<p>详细地址：</p>
+											<span class="info-value">
+												<input type="text" id="scaddress" />
+											</span>
+										</div>
+										<div id="" data-key = "cad" class="button addComplete">完成</div>
+									</div>
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">职业：</span>
-								<span data-key="isSecond" class="info-value pointDisabled selecter">
+								<span class="info-key"><i>*</i>单位电话：</span>
+								<span class="info-value">
+									<input type="text" id="cophone" value="{{= it.cophozono+"--"+it.cophoneno+it.cophonext}}" />
+									<input type="hidden" id="cophozono" name="cophozono" value="{{= it.cophozono}}" />
+									<input type="hidden" id="cophoneno" name="cophoneno" value="{{= it.cophoneno}}" />
+									<input type="hidden" id="cophonext" name="cophonext" value="{{= it.cophonext}}" />
+								</span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>邮政编码：</span>
+								<span class="info-value"><input type="text" name="corpzip" value="{{= it.corpzip}}" /></span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>单位性质：</span>
+								<span data-type="self" data-key="modelcode" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.occptn}}</span>
+									<span class="placeholder"></span>
+									<span class="arrow arrow-bottom right8px"></span>
+									<input type="hidden" name="modelcode" value="{{= it.modelcode}}" />
+								</span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>职业：</span>
+								<span data-type="self" data-key="occptn" class="info-value selecter">
+									<div></div>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="occptn" value="{{= it.occptn}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">何时进入现单位工作：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="joindate" value="{{= it.joindate}}" /></span>
+								<span class="info-key"><i>*</i>何时进入现单位工作：</span>
+								<span class="info-value"><input type="text" name="joindate" value="{{= it.joindate}}" /></span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan panel-detail">
+				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">您的联系人资料</span>
 						</div>
 					</div>
-					<div class="panel-detail-content panel-detail-layout padding0">
+					<div class="panel-detail-content-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
-								<span class="info-key">亲属联系人姓名：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="reltname1" value="{{= it.reltname1}}" /></span>
+								<span class="info-key"><i>*</i>亲属联系人姓名：</span>
+								<span class="info-value"><input type="text" name="reltname1" value="{{= it.reltname1}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">与您的关系：</span>
-								<span data-key="isSecond" class="info-value pointDisabled selecter">
+								<span class="info-key"><i>*</i>与您的关系：</span>
+								<span data-type="self" data-key="reltship1" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.reltship1}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="reltship1" value="{{= it.reltship1}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">手机：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="reltmobl1" value="{{= it.reltmobl1}}" /></span>
+								<span class="info-key"><i>*</i>手机：</span>
+								<span class="info-value"><input type="text" name="reltmobl1" value="{{= it.reltmobl1}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">联系电话：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="relaphone1" value="{{= it.relaphone1}}" /></span>
+								<span class="info-key"><i>*</i>联系电话：</span>
+								<span class="info-value"><input type="text" name="relaphone1" value="{{= it.relaphone1}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">其他联系人姓名：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="reltname2" value="{{= it.reltname2}}" /></span>
+								<span class="info-key"><i>*</i>其他联系人姓名：</span>
+								<span class="info-value"><input type="text" name="reltname2" value="{{= it.reltname2}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">与您的关系：</span>
-								<span data-key="isSecond" class="info-value pointDisabled selecter">
+								<span class="info-key"><i>*</i>与您的关系：</span>
+								<span data-type="self" data-key="relationship" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.reltship2}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
 									<input type="hidden" name="reltship2" value="{{= it.reltship2}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">手机：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="reltmobl2" value="{{= it.reltmobl2}}" /></span>
+								<span class="info-key"><i>*</i>手机：</span>
+								<span class="info-value"><input type="text" name="reltmobl2" value="{{= it.reltmobl2}}" /></span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">联系电话：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" name="rtcophon2" value="{{= it.rtcophon2}}" /></span>
+								<span class="info-key"><i>*</i>联系电话：</span>
+								<span class="info-value"><input type="text" name="rtcophon2" value="{{= it.rtcophon2}}" /></span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan panel-detail">
+				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">定制个性服务</span>
 						</div>
 					</div>
-					<div class="panel-detail-content panel-detail-layout padding0">
+					<div class="panel-detail-content-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
 								<span class="info-key">E-mali地址(对账服务)：</span>
-								<span class="info-value pointDisabled"><input type="text" disabled="disabled" placeholder="选填" name="stmtemail" value="{{= it.stmtemail}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key">卡片领取方式：</span>
-								<span data-key="isSecond" class="info-value pointDisabled selecter">
-									<div></div>
-									<span class="placeholder">{{= it.drawmode}}</span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isSecond" value="{{= it.drawmode}}" />
+								<span class="info-value">
+									<input type="text" id="email" placeholder="选填" name="stmtemail" value="{{= it.stmtemail}}" />
+									<input type="hidden" id="emladdrf" name="emladdrf" value="{{= it.emladdrf}}" />
 								</span>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">短信余额变动提醒：</span>
-								<span data-key="isSecond" class="info-value pointDisabled selecter">
+								<span class="info-key"><i>*</i>卡片领取方式：</span>
+								<span data-type="self" data-key="drawmode" class="info-value selecter">
 									<div></div>
-									<span class="placeholder">{{= it.machgf}}</span>
+									<span class="placeholder"></span>
 									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="isSecond" value="{{= it.machgf}}" />
+									<input type="hidden" name="drawmode" value="{{= it.drawmode}}" />
+								</span>
+							</div>
+							<div class="info-key-value-box">
+								<span class="info-key"><i>*</i>短信余额变动提醒：</span>
+								<span data-type="self" data-key="machgf" class="info-value selecter">
+									<div></div>
+									<span class="placeholder"></span>
+									<span class="arrow arrow-bottom right8px"></span>
+									<input type="hidden" name="machgf" value="{{= it.machgf}}" />
 								</span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-loan panel-detail">
+				<div class="panel panel-loan">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">信用卡申请表</span>
 						</div>
 					</div>
-					<div class="panel-detail-content panel-detail-layout">
+					<div class="panel-detail-content-layout">
 						<div class="loan-imgs-bar clearfix">
 							<div class="imgs-item-group openCardPic clearfix">
-								<div class="imgs-item-upload pointDisabled">
+								<div class="imgs-item-upload">
 									<i class="iconfont">&#xe61f;</i><br />
 									<span class="imgs-describe">点击或拖拽上传图片</span>
-									<input type="file" id="" class="input-file" >
-								</div>
+									<input type="file" id="creditCardImg" class="input-file required" >
+									<img id="preview" style="width: 100%;height: 100%;position: absolute;left: 0;top: 0;">
+									<input type="hidden" name="creditCardImgUrl" id="creditCardImgUrl" value="{{= it.creditCardImgUrl}}" />
+								</div>	
 								<span class="imgs-item-p">信用卡申请表</span>
 							</div>
 						</div>
 					</div>
 				</div>
+				<input type="hidden" name="id" value="{{= it.id}}" />
+				<input type="hidden" name="orderNo" value="{{= it.orderNo}}" />
+				</form>
 			</script>
 			<script type="text/x-dot-template" id="selectOpttmpl">
 				<ul class="selectOptBox">
 					<!--<li value="100001">请选择</li>-->
 					{{for(var a = 0, len = it.length; a < len; a++) { var op1 = it[a]; }}
-						<li value="{{= op1.value}}">{{= op1.name}}</li>
+						<li data-key="{{= op1.value}}">{{= op1.name}}</li>
 					{{ } }}
 				</ul>
 			</script>
