@@ -98,7 +98,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 				taskIds.push(parseInt($params.tasks[0].id));
 			}
 			var params = {
-				taskIds: $params.taskId,
+				taskIds: taskIds,
 				orderNo: $params.orderNo
 			}
 			console.log(params)

@@ -37,7 +37,7 @@
 	_.$http.api = function(method, name) {
 		// name不传值，代表取mock中假数据
 		if(!name) 
-			return 'http://192.168.1.92:8083/mock/' + method;
+			return 'http://192.168.1.90:8083/mock/' + method;
 		else
 			// switch (name) {
 			// 	// 周宜俭ip
@@ -261,7 +261,8 @@
 		var _seconds = Math.round(remain2 / 1000);
 		if(_date > 0) return _date + '天';	
 		if(_hours > 0) return _hours + '小时';
-		if(_seconds > 0 && _minutes < 60) return '1小时';
+		if(_minutes > 0) return _minutes + '分钟';
+		return '不足1分钟';
 		
 	}
 

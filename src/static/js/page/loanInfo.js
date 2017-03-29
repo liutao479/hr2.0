@@ -4,6 +4,8 @@ page.ctrl('loanInfo', function($scope) {
 		$console = $params.refer ? $($params.refer) : render.$console,
 		$source = $scope.$source = {},
 		apiParams = {};
+	$scope.tasks = $params.tasks || [];
+	$scope.activeTaskIdx = $params.selected || 0;
 
 	var postUrl = {
 		"saveOrderInfo": urlStr+"/loanInfoInput/updLoanOrder",
@@ -66,6 +68,23 @@ page.ctrl('loanInfo', function($scope) {
 		});
 		$location.location();
 	}
+
+	/**
+	* 并行任务切换触发事件
+	* @params {int} idx 触发的tab下标
+	* @params {object} item 触发的tab对象
+	*/
+	var tabChange = function (idx, item) {
+		console.log(item);
+		router.render('loanProcess/' + item.key, {
+			tasks: $scope.tasks,
+			taskId: $scope.tasks[idx].id,
+			orderNo: $params.orderNo,
+			selected: idx,
+			path: 'loanProcess'
+		});
+	}
+
 	/**
 	* 页面加载完成对所有带“*”的input进行必填绑定
 	*/
@@ -615,6 +634,7 @@ page.ctrl('loanInfo', function($scope) {
 			$tbl: $console.find('#loanInfoTable')
 		}
 		loadLoanList(function(){
+			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
 			setupDropDown();
 		});
 		setupEvt();
