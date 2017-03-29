@@ -87,18 +87,40 @@
 				var code = response.code;
 				switch (code) {
 					case 1001:
-						$.alert('非法的参数');
+						$.alert({
+							title: '提示',
+							content: tool.alert('非法的参数！'),
+							buttons:{
+								ok: {
+									text: '确定',
+									action: function() {
+										// location.href = 'login.html';
+										// alert(1)
+									}
+								}
+							}
+						})
 						break;
 					case 1004:
 						unAuth();
 						break;
 					case -1:
-						$.alert('系统异常');
+						$.alert({
+							title: '提示',
+							content: tool.alert('系统异常！'),
+							buttons:{
+								ok: {
+									text: '确定',
+									action: function() {
+									}
+								}
+							}
+						})
 						break;
 					case 6011:
 						$.alert({
 							title: '提示',
-							content: '账户已存在',
+							content: tool.alert('账户已存在'),
 							buttons:{
 								ok: {
 									text: '确定',
