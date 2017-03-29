@@ -8,13 +8,15 @@ page.ctrl('loanInfo', function($scope) {
 	$scope.activeTaskIdx = $params.selected || 0;
 
 	var postUrl = {
-		"saveOrderInfo": urlStr+"/loanInfoInput/updLoanOrder",
-		"saveCarInfo": urlStr+"/loanInfoInput/updLoanUserCar",
-		"saveStageInfo": urlStr+"/loanInfoInput/updLoanUserStage",
-		"saveCommonInfo": urlStr+"/loanInfoInput/updLoanUser",
-		"saveEmergencyInfo": urlStr+"/loanInfoInput/updLoanEmergencyConact",
-		"saveloanPayCardInfo": urlStr+"/loanInfoInput/updLoanPayCard",
-		"saveFYXXInfo": urlStr+"/loanInfoInput/updLoanFee",
+		"saveDDXX": urlStr+"/loanInfoInput/updLoanOrder",
+		"saveCLXX": urlStr+"/loanInfoInput/updLoanUserCar",
+		"saveFQXX": urlStr+"/loanInfoInput/updLoanUserStage",
+		"saveZJKR": urlStr+"/loanInfoInput/updLoanUser",
+		"saveGTHK": urlStr+"/loanInfoInput/updLoanUser",
+		"saveFDBR": urlStr+"/loanInfoInput/updLoanUser",
+		"saveJJLXR": urlStr+"/loanInfoInput/updLoanEmergencyConact",
+		"saveHKKXX": urlStr+"/loanInfoInput/updLoanPayCard",
+		"saveFYXX": urlStr+"/loanInfoInput/updLoanFee",
 		"saveQTXX": urlStr+"/loanInfoInput/updLoanIndividuation"
 	};
 
@@ -713,8 +715,14 @@ page.ctrl('loanInfo', function($scope) {
 		console.log(picked);
 	}
 	$scope.busiSourceNamePicker = function(picked) {
+		debugger
 		console.log(picked);
 		$scope.busiSourceNameId = picked.id;
+		$("#numIpt").val('');
+		var numSeled = $("#numSel").data('selected');
+		if(numSeled){
+			numSeled = '';
+		}
 	}
 	$scope.remitAccountNumberPicker = function(picked) {
 		console.log(picked);
@@ -915,8 +923,21 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		},
 		remitAccountNumber: function(t, p, cb) {
-			if(!$scope.busiSourceNameId){
-				alert("填写前面");
+			if(!$scope.busiSourceNameId) {
+				$.alert({
+					title: '提示',
+					content: '<div class="w-content"><div>请填写业务来源方名称！</div></div>',
+					useBootstrap: false,
+					boxWidth: '500px',
+					theme: 'light',
+					type: 'purple',
+					buttons: {
+						'确定': {
+				            action: function () {
+				            }
+				        }
+				    }
+				})
 				return false;
 			}else{
 				$.ajax({
@@ -933,7 +954,6 @@ page.ctrl('loanInfo', function($scope) {
 							accountName: 'accountName',
 							bankName: 'bankName'
 						};
-						console.log(sourceData);
 						cb(sourceData);
 					})
 				})

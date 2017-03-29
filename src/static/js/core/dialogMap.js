@@ -106,6 +106,92 @@
 							</div>\
 						</dd>\
 					</dl>',
+		zxdzContent: '<div class="w-content">\
+						<dl class="w-dropdown">\
+							<dt>用款时间：</dt>\
+							<dd>\
+								<div class="input-text input-date">\
+								<input type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="{{=it.date}}" />\
+							</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt>垫资金额：</dt>\
+							<dd>\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="paymentMoney" value="{{=it.paymentMoney || ""}}"><span class="unit">元</span>\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt>收款账户名称：</dt>\
+							<dd>\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveCompanyAddress" value="{{=it.receiveCompanyAddress || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt>收款账户：</dt>\
+							<dd>\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveAccount" value="{{=it.receiveAccount || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt>开户行：</dt>\
+							<dd>\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					</div>',
+		ptsqdzContent: '<div class="w-content">\
+						<dl class="w-dropdown">\
+							<dt>用款时间：</dt>\
+							<dd>\
+								<div class="input-text input-date">\
+								<input type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="{{=it.date}}" />\
+							</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt>垫资金额：</dt>\
+							<dd>\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="paymentMoney" value="{{=it.paymentMoney || ""}}"><span class="unit">元</span>\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt>收款账户名称：</dt>\
+							<dd>\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveCompanyAddress" value="{{=it.receiveCompanyAddress || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt>收款账户：</dt>\
+							<dd>\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveAccount" value="{{=it.receiveAccount || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt>开户行：</dt>\
+							<dd>\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					</div>',
 		viewFee: '<div class="w-content">\
 					<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">\
 						<thead>\
