@@ -12,11 +12,9 @@
 				<div id="loanInfoTable" class=""></div>
 				
 				
-				<!--提交订单按钮-->
+				<!-- 按钮操作栏 -->
 				<div id="submitBar"></div>
-				<!-- <div class="commit-orders-box">
-					<div id="submitOrder" class="button">提交订单</div>
-				</div> -->
+				<!-- 按钮操作栏 end-->
 			</div>
 			
 
@@ -25,10 +23,10 @@
 				{{for(var z = 0, lenthz = it.cfgData.frames.length; z < lenthz; z++) { var cfg = it.cfgData.frames[z]; }}
 				{{for(var y = 0, lenthy = cfg.sections.length; y < lenthy; y++) { var sec = cfg.sections[y]; }}
 					{{ var fieldCode = sec.code; }}
-				{{ if(z == 0 && y == 0) { }}
+				{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
 				<div class="panel panel-loan no-top-border">
 				{{ } else { }}
-				<div class="panel panel-loan">
+				<div class="panel panel-loan mt15">
 				{{ } }}
 					<div class="panel-title-box">
 						<div class="panel-title">

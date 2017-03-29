@@ -41,7 +41,7 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '贷款材料选择',
+			current: $scope.result.data.loanTask.taskName,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			orderDate: $scope.result.data.loanTask.createDateStr
 		});
@@ -147,6 +147,7 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 							taskIds.push(parseInt($params.tasks[i].id));
 						}
 						var params = {
+							taskId: $params.taskId,
 							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}

@@ -93,15 +93,12 @@
 						unAuth();
 						break;
 					case -1:
-
+						$.alert('系统异常');
 						break;
 					case 6011:
 						$.alert({
 							title: '提示',
 							content: '账户已存在',
-							useBootstrap: false,
-							boxWidth: '500px',
-							theme: 'light',
 							buttons:{
 								ok: {
 									text: '确定',
@@ -117,7 +114,7 @@
 						// statements_def
 						break;
 				}
-				console.log('failed');
+				console.log('请求失败');
 			}
 		}
 	};

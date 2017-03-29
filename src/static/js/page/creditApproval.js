@@ -15,8 +15,8 @@ page.ctrl('creditApproval', [], function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '征信预审核',
-			orderDate: $scope.result.data.loanTask.createDateStr
+			current: $scope.result.data.loanTask.taskName,
+			orderDate: $scope.result.data.loanTask.loanOrder.createDateStr
 		});
 		$location.location();
 	}
@@ -226,7 +226,7 @@ page.ctrl('creditApproval', [], function($scope) {
 								success: $http.ok(function(result) {
 									console.log(result);
 									
-									// router.render('loanProcess');
+									router.render('loanProcess');
 									// toast.hide();
 								})
 							})
@@ -314,6 +314,7 @@ page.ctrl('creditApproval', [], function($scope) {
 							taskIds.push(parseInt($params.tasks[i].id));
 						}
 						var params = {
+							taskId: $params.taskId,
 							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}

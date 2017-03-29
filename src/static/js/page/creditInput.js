@@ -6,20 +6,6 @@ page.ctrl('creditInput', [], function($scope) {
 	$scope.idx = 0;
 	$scope.apiParams = [];
 	// $params.taskId = 80876;
-	/**
-	* 设置面包屑
-	*/
-	var setupLocation = function() {
-		if(!$scope.$params.path) return false;
-		var $location = $console.find('#location');
-		$location.data({
-			backspace: $scope.$params.path,
-			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '征信结果录入',
-			orderDate: $scope.result.data.loanTask.createDateStr
-		});
-		$location.location();
-	}
 
 	/**
 	* 加载征信结果录入数据
@@ -64,6 +50,40 @@ page.ctrl('creditInput', [], function($scope) {
 	}
 
 	/**
+	* 设置面包屑
+	*/
+	var setupLocation = function() {
+		if(!$scope.$params.path) return false;
+		var $location = $console.find('#location');
+		$location.data({
+			backspace: $scope.$params.path,
+			loanUser: $scope.result.data.loanTask.loanOrder.realName,
+			current: $scope.result.data.loanTask.taskName,
+			orderDate: $scope.result.data.loanTask.loanOrder.createDateStr
+		});
+		$location.location();
+	}
+
+	/**
+	* 设置退回原因
+	*/
+	var setupBackReason = function(data) {
+		var $backReason = $console.find('#backReason');
+		if(!data) {
+			$backReason.remove();
+			return false;
+		} else {
+			$backReason.data({
+				backReason: data.reason,
+				backUser: data.userName,
+				backUserPhone: data.phone,
+				backDate: tool.formatDate(data.transDate, true)
+			});
+			$backReason.backReason();
+		}
+	}
+
+	/**
 	* 设置底部按钮操作栏
 	*/
 	var setupSubmitBar = function() {
@@ -88,7 +108,7 @@ page.ctrl('creditInput', [], function($scope) {
 							text: '确定',
 							action: function () {
 								var params = {
-									orderNo: $params.orderNo
+									taskId: $params.taskId
 								}
 								var reason = $.trim(this.$content.find('#suggestion').val());
 								if(reason) params.reason = reason;
@@ -142,6 +162,7 @@ page.ctrl('creditInput', [], function($scope) {
 							taskIds.push(parseInt($params.tasks[i].id));
 						}
 						var params = {
+							taskId: $params.taskId,
 							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}
@@ -282,10 +303,11 @@ page.ctrl('creditInput', [], function($scope) {
 						}
 						var reportName = _url.substr(_url.lastIndexOf('/') + 1);
 						console.log(reportName)
+						console.log($scope.apiParams)
 						if(!that.data('value')) {
 							console.log($parent.siblings().find('.file-area'))
 							$parent.siblings().eq(0).html(tml.format(reportName));
-							$parent.find('.button').html('重新上传');
+							$parent.find('.button').html('重新上传').attr('title', '重新上传');
 							that.data('value', true);
 						} else {
 							$parent.siblings().eq(0).html(tml.format(reportName));
@@ -368,50 +390,6 @@ page.ctrl('creditInput', [], function($scope) {
 		});
 	}
 
-	/**
-	* 页面首次加载绑定立即处理事件
-	*/
-	var evt = function() {
-		// 底部提交按钮事件
-		$console.find('#submitOrder').on('click', function() {
-			var that = $(this);
-			// if( ) {
-			// 	//判断必填项是否填全
-			// } else {
-
-			// }
-			// commitData(function() {
-			// 
-				// })
-				// that.openWindow({
-				// 	title: '提交',
-				// 	content: dialogTml.wContent.suggestion,
-				// 	commit: dialogTml.wCommit.cancelSure
-				// }, function($dialog) {
-				// 	console.log($dialog)
-				// 	$dialog.find('.w-sure').on('click', function() {
-				// 		$dialog.remove();
-				// 		var _reason = $dialog.find('#suggestion').text();
-				// 		console.log(_reason)
-				// 		$.ajax({
-				// 			type: 'post',
-				// 			url: $http.api('task/complete', 'jbs'),
-				// 			data: {
-				// 				taskId: $params.taskId,
-				// 				orderNo: $params.orderNo,
-				// 				reason: _reason
-				// 			},
-				// 			dataType: 'json',
-				// 			success: $http.ok(function(result) {
-				// 				console.log(result);
-				// 			})
-				// 		})
-				// 	})
-				// })
-			// })
-			
-		})
-	}
 
 	/**
 	 * 保存征信结果录入数据

@@ -12,12 +12,12 @@
 					{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
 					<div class="w-select-area mt15 clearfix">\
 						<div class="w-select clearfix">\
-							<div id="haha" class="checkbox checkbox-radio" data-id="{{=row.id}}"></div>\
+							<div class="checkbox checkbox-radio" data-checked="false" data-id="{{=row.id}}"></div>\
 							<div class="w-select-item">退回至{{=row.jumpName}}</div>\
 						</div>\
 						{{ for(var j = 0, len2 = row.jumpReason.length; j < len2; j++) { }}\
 						<div class="w-select w-select-left clearfix">\
-							<div class="checkbox checkbox-normal" data-value="{{=row.jumpReason[j]}}"></div>\
+							<div class="checkbox checkbox-normal" data-checked="false" data-value="{{=row.jumpReason[j]}}"></div>\
 							<div class="w-select-item">{{=row.jumpReason[j]}}</div>\
 						</div>\
 						{{ } }}\

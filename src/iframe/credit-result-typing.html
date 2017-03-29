@@ -4,6 +4,10 @@
 	<div id="location"></div>
 	<!--返回列表 end-->
 
+	<!-- 退回原因 -->
+	<div id="backReason"></div>
+	<!-- 退回原因 end-->
+
 	<!-- tab切换栏 -->
 	<div class="tab-bar mt15" id="userTabs">
 		<ul class="role-bar-ul clearfix" id="creditTabs"></ul>
@@ -100,7 +104,7 @@
 							<div class="panel-value-item">
 								<div class="file-wrap">
 									<div class="button button-mini">重新上传</div>
-									<input type="file" class="pdfUpload" data-value="true" data-user-id="{{=col.userId || ''}}" data-type="creditReportFile" />
+									<input type="file" class="pdfUpload" data-value="true" data-user-id="{{=col.userId || ''}}" data-type="creditReportFile" title="重新上传" />
 								</div>	
 							</div>
 						{{ }else{ }}
@@ -108,7 +112,7 @@
 							<div class="panel-value-item">
 								<div class="file-wrap">
 									<div class="button button-mini">上传文件</div>
-									<input type="file" class="pdfUpload" data-value="false" />
+									<input type="file" class="pdfUpload" data-value="false" data-user-id="{{=col.userId || ''}}" data-type="creditReportFile" />
 								</div>
 							</div>
 							<div class="panel-value-item">
@@ -127,7 +131,7 @@
 						<!-- 全配置区块 -->
 						{{ if(ml.type == 0) { }}
 							{{ if(it.cfgData.code == 'creditApproval') { }}
-								<div class="panel-value-item">{{=col.creditReportId}}</div>
+								<div class="panel-value-item">{{=col.creditReportId || ''}}</div>
 							{{ } else { }}
 								<div class="panel-value-item">
 									<div class="input-text">
@@ -138,7 +142,7 @@
 						{{ } }}
 						{{ if(ml.type == 1) { }}
 							{{ if(it.cfgData.code == 'creditApproval') { }}
-								<div class="panel-value-item">{{=col.orgName}}</div>
+								<div class="panel-value-item">{{=col.orgName || ''}}</div>
 							{{ } }}
 						{{ } }}
 						<!-- 全配置区块 end-->

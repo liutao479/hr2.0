@@ -36,7 +36,7 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 					setupLocation();	
 				}
 				setupBackReason(result.data.loanTask.backApprovalInfo);
-				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, function(){
+				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, $scope.result, function(){
 					setupEvt();
 				}, true);
 				if(cb && typeof cb == 'function') {
@@ -54,7 +54,7 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: $scope.result.data.loanTask.sceneName,
+			current: $scope.result.data.loanTask.taskName,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 		});
@@ -81,30 +81,61 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 	}
 
 	/**
-	 * 首次加载完页面时绑定事件
+	* 设置底部按钮操作栏
+	*/
+	var setupSubmitBar = function() {
+		var $submitBar = $console.find('#submitBar');
+		$submitBar.data({
+			taskId: $params.taskId
+		});
+		$submitBar.submitBar(function($el) {
+			evt($el);
+		});
+	}
+
+	/**
+	* 底部按钮操作栏事件
+	*/
+	var evt = function($el) {
+		/**
+		 * 提交订单按钮
+		 */
+		$el.find('#taskSubmit').on('click', function() {
+			process();
+		})
+	}
+
+	/**
+	 * 跳流程
 	 */
-	var evt = function () {
-		// 增加征信人员
-		$console.find('#addCreditUser').on('click', function() {
-			$.ajax({
-				// url: 'http://127.0.0.1:8083/mock/loanMaterialUpload',
-				// type: flag,
-				type: 'post',
-				url: $http.apiMap.materialUpdate,
-				data: {
-					// 参数1：id 材料id （必填）
-					// 参数2：materialsType 材料类型 0图片1视频
-					// 参数3：sceneCode 场景编码 
-					// 参数4：userId 材料所属用户
-					// 参数5：ownerCode 材料归属类型
-					// 参数6：materialsPic 材料地址（必填）
+	function process() {
+		$.confirm({
+			title: '提交',
+			content: dialogTml.wContent.suggestion,
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel',
+					action: function() {}
 				},
-				dataType: 'json',
-				success: $http.ok(function(result) {
-					console.log(result);
-					
-				})
-			})
+				ok: {
+					text: '确定',
+					action: function () {
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
+						}
+						var params = {
+							taskId: $params.taskId,
+							taskIds: taskIds,
+							orderNo: $params.orderNo
+						}
+						var reason = $.trim(this.$content.find('#suggestion').val());
+						if(reason) params.reason = reason;
+						tasksJump(params, 'complete');
+					}
+				}
+			}
 		})
 	}
 
@@ -144,7 +175,9 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		}
 		loadOrderInfo(function() {
 			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
-			evt();
+			if(!$params.refer) {
+				setupSubmitBar();
+			}
 		});
 	});
 
