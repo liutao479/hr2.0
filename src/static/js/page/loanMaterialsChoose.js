@@ -99,68 +99,70 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 		});
 	}
 
-	var evt = function() {
-		// 底部操作按钮事件
-		$console.find('#submitOrder').on('click', function() {
-			alert(1);
-			var that = $(this);
-			// saveData(function() {
-				// 保存完数据用于提交订单
-				$.confirm({
-					title: '提交',
-					content: dialogTml.wContent.suggestion,
-					buttons: {
-						'取消': {
-				            action: function () {}
-				        },
-				        '确定': {
-				            action: function () {
-				            	// 流程跳转
-	            				var params = {
-									taskIds: [$params.taskId],
-									orderNo: $params.orderNo
-								}
-								console.log(params)
-								$.ajax({
-									type: 'post',
-									url: $http.api('tasks/complete', 'zyj'),
-									data: JSON.stringify(params),
-									dataType: 'json',
-									contentType: 'application/json;charset=utf-8',
-									success: $http.ok(function(result) {
-										console.log(result);
-										var loanTasks = result.data;
-										var taskObj = [];
-										for(var i = 0, len = loanTasks.length; i < len; i++) {
-											var obj = loanTasks[i];
-											taskObj.push({
-												key: obj.category,
-												id: obj.id,
-												name: obj.sceneName
-											})
-										}
-										// target为即将跳转任务列表的第一个任务
-										var target = loanTasks[0];
-										router.render('loanProcess/' + target.category, {
-											taskId: target.id, 
-											orderNo: target.orderNo,
-											tasks: taskObj,
-											path: 'loanProcess'
-										});
-										// router.render('loanProcess');
-										// toast.hide();
-									})
-								})
-	            				// router.render('loanProcess');
-				            }
-				        }
-				    }
-				})
-			// });
-			
+	/**
+	* 设置底部按钮操作栏
+	*/
+	var setupSubmitBar = function() {
+		var $submitBar = $console.find('#submitBar');
+		$submitBar.data({
+			taskId: $params.taskId
+		});
+		$submitBar.submitBar(function($el) {
+			evt($el);
+		});
+	}
+
+	/**
+	* 底部按钮操作栏事件
+	*/
+	var evt = function($el) {
+		/**
+		 * 审核通过按钮
+		 */
+		$el.find('#taskSubmit').on('click', function() {
+			saveData(function() {
+				process();
+			});
 		})
 	}
 
+	/**
+	 * 跳流程
+	 */
+	function process() {
+		$.confirm({
+			title: '提交',
+			content: dialogTml.wContent.suggestion,
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel',
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
+						}
+						var params = {
+							taskIds: taskIds,
+							orderNo: $params.orderNo
+						}
+						var reason = $.trim(this.$content.find('#suggestion').val());
+						if(reason) params.reason = reason;
+						console.log(params);
+						tasksJump(params, 'complete');
+					}
+				}
+			}
+		})
+	}
+
+	/**
+	 * 选择项数据保存
+	 */
 	var saveData = function(cb) {
 		// 用于提交所选择的贷款材料项
 		var _params = [];
@@ -196,7 +198,7 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 			$mainPanel: $console.find('#materialsChoosePanel')
 		}
 		loadMaterialsChoose(function() {
-			evt();
+			setupSubmitBar();
 		});
 	})
 });

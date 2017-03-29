@@ -142,52 +142,6 @@ page.ctrl('creditApproval', [], function($scope) {
 		});
 		$submitBar.submitBar(function($el) {
 			evt($el);
-			// /**
-			//  * 取消订单按钮
-			//  */
-			// $el.find('#cancelOrder').on('click', function() {
-			// 	$.alert({
-			// 		title: '取消订单',
-			// 		content: tool.alert('确定要取消该笔贷款申请吗？'),
-			// 		buttons: {
-			// 			close: {
-			// 				text: '取消',
-			// 				btnClass: 'btn-default btn-cancel'
-			// 			},
-			// 			ok: {
-			// 				text: '确定',
-			// 				action: function () {
-			// 					var params = {
-			// 						orderNo: $params.orderNo
-			// 					}
-			// 					var reason = $.trim(this.$content.find('#suggestion').val());
-			// 					if(reason) params.reason = reason;
-			// 					$.ajax({
-			// 						type: 'post',
-			// 						url: $http.api('loanOrder/cancel', 'zyj'),
-			// 						data: params,
-			// 						dataType: 'json',
-			// 						success: $http.ok(function(result) {
-			// 							console.log(result);
-			// 							if(cb && typeof cb == 'function') {
-			// 								cb();
-			// 							}
-			// 						})
-			// 					})
-			// 				}
-			// 			}
-			// 		}
-			// 	})
-			// })
-
-			// /**
-			//  * 提交按钮
-			//  */
-			// $el.find('#taskSubmit').on('click', function() {
-			// 	saveData(function() {
-			// 		process();
-			// 	});
-			// });
 		});
 	}
 
@@ -357,7 +311,7 @@ page.ctrl('creditApproval', [], function($scope) {
 					action: function () {
 						var taskIds = [];
 						for(var i = 0, len = $params.tasks.length; i < len; i++) {
-							taskIds.push(parseInt($params.tasks[0].id));
+							taskIds.push(parseInt($params.tasks[i].id));
 						}
 						var params = {
 							taskIds: taskIds,

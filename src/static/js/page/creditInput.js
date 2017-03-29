@@ -139,7 +139,7 @@ page.ctrl('creditInput', [], function($scope) {
 					action: function () {
 						var taskIds = [];
 						for(var i = 0, len = $params.tasks.length; i < len; i++) {
-							taskIds.push(parseInt($params.tasks[0].id));
+							taskIds.push(parseInt($params.tasks[i].id));
 						}
 						var params = {
 							taskIds: taskIds,

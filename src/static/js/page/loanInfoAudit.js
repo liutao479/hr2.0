@@ -34,7 +34,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 			success: $http.ok(function(result) {
 				$scope.result = result;
 				setupLocation();
-				if(result.data.FQXX.renewalInfo){
+				if(result.data.FQXX && result.data.FQXX.renewalInfo){
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result,true);
