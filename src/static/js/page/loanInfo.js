@@ -43,7 +43,6 @@ page.ctrl('loanInfo', function($scope) {
 				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result,true);
 				loanFinishedInput();
-				loanFinishedSelect();
 				loanFinishedCheckbox();
 				loanFinishedGps();
 				loanFinishedBxxb();
@@ -107,6 +106,7 @@ page.ctrl('loanInfo', function($scope) {
 			}
 		});
 	}
+<<<<<<< HEAD
 
 //页面加载完成对所有下拉框进行赋值	
 	var loanFinishedSelect = function(){
@@ -161,13 +161,6 @@ page.ctrl('loanInfo', function($scope) {
 			});
 		});
 	}
-	
-	
-	
-	/**
-	* 绑定立即处理事件
-	*/
-	var keyType;
 
 	
 //点击下拉框拉取选项
@@ -212,6 +205,7 @@ page.ctrl('loanInfo', function($scope) {
 		$("#bankName").val(keybank);
 		$("#accountName").val(keyname);
 	})
+
 //点击本地常驻类型复选框
 	$(document).on('click', '.checkbox', function() {
 		returnCheckboxVal();
@@ -246,72 +240,175 @@ page.ctrl('loanInfo', function($scope) {
 		})
 	}
 //复选框
-//$(document).on('selectstart', '.checkbox-normal', false);
    $(document).on('click', '.checkbox-normal', function() {
    	var keyData = $(this).attr("data-key");
    	var keyCode = $(this).attr("data-code");
    	var keyMark = $(this).attr("data-mark");
-   	if(keyData){
-   		$(".hklx").each(function(){
-   			$(this).removeClass('checked').attr('checked',false);
-   			$(this).html('');
-   		})
-   	}
-   	if(keyCode){
-   		$(".gzd").each(function(){
-   			$(this).removeClass('checked').attr('checked',false);
-   			$(this).html('');
-   		})
-   	}
-   	if(keyMark){
-   		$(".jzlx").each(function(){
-   			$(this).removeClass('checked').attr('checked',false);
-   			$(this).html('');
-   		})
-   	}
    	if(!$(this).attr('checked')) {
+	   	if(keyData){
+	   		$(".hklx").each(function(){
+	   			$(this).removeClass('checked').attr('checked',false);
+	   			$(this).html('');
+	   		})
+	   	}
+	   	if(keyCode){
+	   		$(".gzd").each(function(){
+	   			$(this).removeClass('checked').attr('checked',false);
+	   			$(this).html('');
+	   		})
+	   	}
+	   	if(keyMark){
+	   		$(".jzlx").each(function(){
+	   			$(this).removeClass('checked').attr('checked',false);
+	   			$(this).html('');
+	   		})
+	   	}
    		$(this).addClass('checked').attr('checked',true);
    		$(this).html('<i class="iconfont">&#xe659;</i>');
    	} else {
+	   	if(keyData){
+	   		$(".hklx").each(function(){
+	   			$(this).removeClass('checked').attr('checked',false);
+	   			$(this).html('');
+	   		})
+	   	}
+	   	if(keyCode){
+	   		$(".gzd").each(function(){
+	   			$(this).removeClass('checked').attr('checked',false);
+	   			$(this).html('');
+	   		})
+	   	}
+	   	if(keyMark){
+	   		$(".jzlx").each(function(){
+	   			$(this).removeClass('checked').attr('checked',false);
+	   			$(this).html('');
+	   		})
+	   	}
    		$(this).removeClass('checked').attr('checked',false);
    		$(this).html('');
    	}
    })
 
 //gps
-	$(document).on('click', '#isInstallGpsBox li', function() {
-		loanFinishedGps();
-	})
 	var loanFinishedGps = function(){
-		var gps = $("#gps").val();
+		var gps = $("input[name='isInstallGps']").val();
 		if(gps != 1){
-			$("#isInstallGpsBox").removeClass("gpssel");
-			$("#gps1").hide();
-			$("#gps2").hide();
+			$("input[name='gpsNumber1']").parents(".info-key-value-box").hide();
+			$("input[name='gpsNumber2']").parents(".info-key-value-box").hide();
 		}else{
-			$("#isInstallGpsBox").addClass("gpssel");
-			$("#gps1").show();
-			$("#gps2").show();
+			$("input[name='gpsNumber1']").parents(".info-key-value-box").show();
+			$("input[name='gpsNumber2']").parents(".info-key-value-box").show();
 		}
 	}
 //保险续保
-	$(document).on('click', '#renewalModeBox li', function() {
+	$(document).on('click', '.select li', function() {
 		loanFinishedBxxb();
+		loanFinishedGps();
 	})
 	var loanFinishedBxxb = function(){
-		var bxxbInput = $("#bxxbInput").val();
-//		console.log(bxxbInput);
-		if(bxxbInput != 1){
-			$(".bxxbYear").hide();
-		}else{
-			$(".bxxbYear").show();
-			$(".bxxbYear").each(function (){
-				var ipt = $(this).find('input');
-				if(ipt.val() == '555'){
-					$(this).hide()
+		var bxxbInput = $("input[name='renewalMode']").val();
+		var repayInput = $("input[name='repayPeriod']").val();
+		if(bxxbInput == 1){
+			if(!repayInput){
+				$.alert({
+					title: '提示',
+					content: '<div class="w-content"><div>请填写还款期限！</div></div>',
+					useBootstrap: false,
+					boxWidth: '500px',
+					theme: 'light',
+					type: 'purple',
+					buttons: {
+						'确定': {
+				            action: function () {
+				            }
+				        }
+				    }
+				})
+				return false;
+			}else{
+				if(bxxbLength == 1){
+					$("#year1").show();
+					$("#year1").find('input').val(1);
+					$("#year1").find('.placeholder').html("单位承保");
+				}else if(bxxbLength == 2){
+					$("#year1").show();
+					$("#year2").show();
+					$("#year1").find('input').val(1);
+					$("#year1").find('.placeholder').html("单位承保");
+					$("#year2").find('input').val(1);
+					$("#year2").find('.placeholder').html("单位承保");
+				}else if(bxxbLength == 3){
+					$("#year1").show();
+					$("#year2").show();
+					$("#year3").show();
+					$("#year1").find('input').val(1);
+					$("#year1").find('.placeholder').html("单位承保");
+					$("#year2").find('input').val(1);
+					$("#year2").find('.placeholder').html("单位承保");
+					$("#year3").find('input').val(1);
+					$("#year3").find('.placeholder').html("单位承保");
+				}else if(bxxbLength == 4){
+					$("#year1").show();
+					$("#year2").show();
+					$("#year3").show();
+					$("#year4").show();
+					$("#year1").find('input').val(1);
+					$("#year1").find('.placeholder').html("单位承保");
+					$("#year2").find('input').val(1);
+					$("#year2").find('.placeholder').html("单位承保");
+					$("#year3").find('input').val(1);
+					$("#year3").find('.placeholder').html("单位承保");
+					$("#year4").find('input').val(1);
+					$("#year4").find('.placeholder').html("单位承保");
+				}else if(bxxbLength == 5){
+					$("#year1").show();
+					$("#year2").show();
+					$("#year3").show();
+					$("#year4").show();
+					$("#year5").show();
+					$("#year1").find('input').val(1);
+					$("#year1").find('.placeholder').html("单位承保");
+					$("#year2").find('input').val(1);
+					$("#year2").find('.placeholder').html("单位承保");
+					$("#year3").find('input').val(1);
+					$("#year3").find('.placeholder').html("单位承保");
+					$("#year4").find('input').val(1);
+					$("#year4").find('.placeholder').html("单位承保");
+					$("#year5").find('input').val(1);
+					$("#year5").find('.placeholder').html("单位承保");
+				}else{
+					$("#year1").show();
+					$("#year2").show();
+					$("#year3").show();
+					$("#year4").show();
+					$("#year5").show();
+					$("#year6").show();
+					$("#year1").find('input').val(1);
+					$("#year1").find('.placeholder').html("单位承保");
+					$("#year2").find('input').val(1);
+					$("#year2").find('.placeholder').html("单位承保");
+					$("#year3").find('input').val(1);
+					$("#year3").find('.placeholder').html("单位承保");
+					$("#year4").find('input').val(1);
+					$("#year4").find('.placeholder').html("单位承保");
+					$("#year5").find('input').val(1);
+					$("#year5").find('.placeholder').html("单位承保");
+					$("#year6").find('input').val(1);
+					$("#year6").find('.placeholder').html("单位承保");
 				}
-			})
-			loanFinishedrepay();
+//				$("input[name='renewalMode']").parents('.info-key-value-box').append("<div class='zzz'>11111</div>")
+			}
+		}else{
+			$("#year1").hide();
+			$("#year2").hide();
+			$("#year3").hide();
+			$("#year4").hide();
+			$("#year5").hide();
+			$("#year6").hide();
+//			var zzz = $(".zzz");
+//			if(zzz){
+//				$(".zzz").remove();
+//			}
 		}
 	}
 	

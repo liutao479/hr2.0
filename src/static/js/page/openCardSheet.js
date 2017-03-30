@@ -361,7 +361,6 @@ page.ctrl('openCardSheet', function($scope) {
 	/***
 	* 保存按钮
 	*/
-<<<<<<< HEAD
 	$(document).on('click', '.saveBtn', function() {
 		var email = $("#email").val();
 		if(!email){
