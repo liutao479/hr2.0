@@ -52,26 +52,35 @@
 				<td class="orders-item-data">{{=tool.formatDate(row.createDate, true)}}</td>
 				<td class="orders-item-data">{{=row.orderNo}}</td>
 				<td class="orders-item-data">{{=row.realName || '未知'}}（{{=row.idCard || '未知'}}）</td>
-				<td class="orders-item-data">
-					<table class="meanwhile" id="meanwhile">
+				<td class="orders-item-data loanTasks">
+					<table class="meanwhile">
 						{{ var tasks={}; for(var j = 0, len2 = row.loanTasks.length; j < len2; j++) { var col = row.loanTasks[j]; tasks[col.category] = {taskId: col.processTaskId, name: col.sceneName}; }}
 							{{ if(j < 2){ }}
-								<tr class="loantask-item">
+								<tr>
 									<td>{{=col.taskName}}</td>
 								</tr>
 							{{ }else{ }}
-								<tr class="loantask-item" style="display: none;">
-									<td>{{=col.taskName}}</td>
-								</tr>
 								{{ if(j == len2 - 1){ }}
 									<tr>
-										<td class="arrow-trigger"><span class="arrow arrow-bottom" data-isShow="false"></span></td>
+										<td><i class="iconfont">&#xe608;</i></td>
 									</tr>
 								{{ } }}
 							{{ } }}
 							
 						{{ } }}
 					</table>
+					{{ if(len2 > 2) { }}
+					<table class="meanwhile-hover" style="display: none;">
+						{{ var tasks={}; for(var j = 0, len2 = row.loanTasks.length; j < len2; j++) { var col = row.loanTasks[j]; tasks[col.category] = {taskId: col.processTaskId, name: col.sceneName}; }}
+							<tr>
+								<td>{{=col.taskName}}</td>
+							</tr>
+						{{ } }}
+						<tr>
+							<td><i class="iconfont">&#xe606;</i></td>
+						</tr>
+					</table>
+					{{ } }}
 				</td>
 				<td class="orders-item-data"><a data-href="loanProcess/{{=row.loanTasks[0].category}}" data-idx="{{=i}}" data-id="{{=row.loanTasks[0].id}}" data-order-no="{{=row.orderNo}}" class="button button-mini button-gray">立即处理</a></td> -->
 				<!-- <td class="orders-item-data"><a data-href="loanProcess/detail" data-idx="{{=i}}" class="button button-mini button-gray">立即处理</a></td> -->
