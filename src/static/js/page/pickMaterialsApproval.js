@@ -191,7 +191,7 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 								success: $http.ok(function(result) {
 									console.log(result);
 									
-									// router.render('loanProcess');
+									router.render('loanProcess');
 									// toast.hide();
 								})
 							})

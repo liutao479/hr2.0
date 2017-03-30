@@ -103,6 +103,89 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		$el.find('#taskSubmit').on('click', function() {
 			process();
 		})
+
+		/**
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
+		/**
+		 * 退回订单按钮
+		 */
+		$el.find('#backOrder').on('click', function() {
+			$.alert({
+				title: '退回订单',
+				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
+				onContentReady: function() {
+					dialogEvt(this.$content);
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							var _reason = $.trim(this.$content.find('#suggestion').val());
+							this.$content.find('.checkbox-radio').each(function() {
+								if($(this).hasClass('checked')) {
+									$scope.jumpId = $(this).data('id');
+								}
+							})
+							if(!_reason) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请填写处理意见！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							} 
+							if(!$scope.jumpId) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请至少选择一项原因！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							}
+							var _params = {
+								taskId: $params.taskId,
+								jumpId: $scope.jumpId,
+								reason: _reason
+							}
+							console.log(_params)
+							$.ajax({
+								type: 'post',
+								url: $http.api('task/jump', 'zyj'),
+								data: _params,
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									
+									router.render('loanProcess');
+									// toast.hide();
+								})
+							})
+						}
+					}
+				}
+			})
+		})
 	}
 
 	/**
