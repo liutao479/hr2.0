@@ -166,13 +166,13 @@
 								<tr class="tr-even">
 								{{ } }}
 									<td class="td-key">{{=zxzd[2 * k].fieldName}}</td>
-									<td class="td-value"><input class="input zxzd" type="text"{{=(it.cfgData.code == 'creditApproval' ? ' disabled' : '')}} value="{{=zxzd[2 * k].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-id="{{=zxzd[2 * k].id}}" /><span class="unit">次</span></td>
+									<td class="td-value"><input class="input zxzd{{=(zxzd[2 * k].required ? 'required' : '')}}" type="text"{{=(it.cfgData.code == 'creditApproval' ? ' disabled' : '')}} value="{{=zxzd[2 * k].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k].creditKey}}" data-required="{{=zxzd[2 * k].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit || ''}}</span></td>
 									{{ if(k == len3) { }}
 										<td class="td-key"></td>
 										<td class="td-value"></td>
 									{{ }else{ }}
 										<td class="td-key">{{=zxzd[2 * k + 1].fieldName}}</td>
-										<td class="td-value"><input class="input zxzd" type="text"{{=(it.cfgData.code == 'creditApproval' ? ' disabled' : '')}} value="{{=zxzd[2 * k + 1].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-id="{{=zxzd[2 * k + 1].id}}" /><span class="unit">次</span></td>
+										<td class="td-value"><input class="input zxzd{{=(zxzd[2 * k + 1].required ? 'required' : '')}}" type="text"{{=(it.cfgData.code == 'creditApproval' ? ' disabled' : '')}} value="{{=zxzd[2 * k + 1].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k + 1].creditKey}}" data-required="{{=zxzd[2 * k + 1].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit  || ''}}</span></td>
 									{{ } }}
 								</tr>
 							{{ } }}

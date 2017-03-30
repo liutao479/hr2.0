@@ -61,13 +61,13 @@
 			{{ var len3 = row.loanUserCredit.creditMaterials.length; if(len3) { }}
 				{{ for(var k = 0; k < len3; k++) { var mr = row.loanUserCredit.creditMaterials[k]; }}
 					{{ if(mr.materialsCode == nl.materialCode) { }}
-						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.loanTask.category}}'].deletecb" data-upl-url="{{=it.uplUrl}}" data-del-url="{{=it.delUrl}}" data-credit="true" data-id="{{=mr.id}}" data-orderno="{{=it.loanTask.orderNo}}" data-code="{{=nl.materialCode}}" data-name="{{=it.types[it.currentType]}}{{=nl.name}}" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-err="{{=mr.auditResult || 0}}" data-editable="{{=(it.loanTask.category == 'creditMaterialsUpload' ? 1 : 0)}}"></div>
+						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.loanTask.category}}'].deletecb" data-upl-url="{{=it.uplUrl}}" data-del-url="{{=it.delUrl}}" data-credit="true" data-id="{{=mr.id}}" data-orderno="{{=it.loanTask.orderNo}}" data-code="{{=nl.materialCode}}" data-name="{{=it.types[it.currentType]}}{{=nl.name}}" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-err="{{=mr.auditResult || 0}}" data-editable="{{=(it.loanTask.category == 'creditMaterialsUpload' ? 1 : 0)}}" data-empty="{{=nl.empty}}"></div>
 					{{ break;} else { flag++; }}
 					{{ } }}
 				{{ } }}
 			{{ } }}
 			{{ if(flag == len3) { }}
-			<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.loanTask.category}}'].deletecb" data-upl-url="{{=it.uplUrl}}" data-del-url="{{=it.delUrl}}" data-credit="true" data-orderno="{{=it.loanTask.orderNo}}" data-code="{{=nl.materialCode}}" data-name="{{=it.types[it.currentType]}}{{=nl.name}}" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-err="0" data-editable="{{=(it.loanTask.category == 'creditMaterialsUpload' ? 1 : 0)}}"></div>
+			<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.loanTask.category}}'].deletecb" data-upl-url="{{=it.uplUrl}}" data-del-url="{{=it.delUrl}}" data-credit="true" data-orderno="{{=it.loanTask.orderNo}}" data-code="{{=nl.materialCode}}" data-name="{{=it.types[it.currentType]}}{{=nl.name}}" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-err="0" data-editable="{{=(it.loanTask.category == 'creditMaterialsUpload' ? 1 : 0)}}" data-empty="{{=nl.empty}}"></div>
 			{{ } }}
 		{{ } }}
 		</div>
