@@ -278,6 +278,7 @@ page.ctrl('loanInfo', function($scope) {
 						dataType:"json",
 						success: function(result){
 							console.log(result.msg);
+							console.log(key);
 						}
 					});
 		        }
@@ -387,6 +388,10 @@ page.ctrl('loanInfo', function($scope) {
 	* 为完善项更改去掉错误提示
 	*/
 	$(document).on('input','input', function() {
+		$(this).parents().removeClass("error-input");
+		$(this).siblings("i").remove();
+	})
+	$(document).on('click','.select', function() {
 		$(this).parents().removeClass("error-input");
 		$(this).siblings("i").remove();
 	})
@@ -812,9 +817,11 @@ page.ctrl('loanInfo', function($scope) {
 			var keyType = this.$el.data('key');
 			var data={};
 			if(keyType == 'busiSourceTypeCode'){
-				data['code']='serviceType';
+				data['code']='busiSourceType';
 			}else if(keyType == 'businessModel'){
 				data['code']='busimode';
+			}else if(keyType == 'serviceTypeCode'){
+				data['code']='serviceType';
 			}else if(keyType == 'repayPeriod'){
 				data['code']='repaymentTerm';
 			}else{	
@@ -881,7 +888,7 @@ page.ctrl('loanInfo', function($scope) {
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'id',
 						name: 'bankName'
 					};
 					cb(sourceData);

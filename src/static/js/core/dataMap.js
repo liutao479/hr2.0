@@ -319,7 +319,7 @@
 	    ]
 	},
 	g.urlApiMap = {
-		"serviceType": urlStr+"/loanConfigure/getItem",//业务类型
+		"serviceTypeCode": urlStr+"/loanConfigure/getItem",//业务类型
 		"brand": urlStr+"/demandBank/selectBank",//经办银行
 		"busiSourceTypeCode": urlStr+"/loanConfigure/getItem",//业务来源类型
 		"busiArea": urlStr+"/area/get",//三级下拉省市县
