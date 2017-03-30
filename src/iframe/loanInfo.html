@@ -570,7 +570,7 @@
 																	<input type="hidden" name="{{= detailCode }}" />
 																{{ } }}
 															</td>
-														{{ }else if(detailCode == 'serviceType' || detailCode == 'businessModel' || detailCode == 'brand' || detailCode == 'busiSourceTypeCode' || detailCode == 'busimode' || detailCode == 'repayPeriod'){ }}
+														{{ }else if(detailCode == 'serviceType' || detailCode == 'serviceTypeCode' || detailCode == 'businessModel' || detailCode == 'brand' || detailCode == 'busiSourceTypeCode' || detailCode == 'busimode' || detailCode == 'repayPeriod'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && it.data[fieldCode][detailCode]){ }}
 																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].postPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
@@ -630,7 +630,7 @@
 																	<input type="hidden" name="{{= detailCode}}" />
 																{{ } }}
 															</td>
-														{{ }else if(detailCode == 'busiAreaCode' || detailCode == 'onLicensePlace'){ }}
+														{{ }else if(detailCode == 'busiAreaCode' || detailCode == 'onLicensePlaceCode'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && it.data[fieldCode][detailCode]){ }}
 																	<div class="select select-common" data-selected="{{= it.data[fieldCode][detailCode]}}" data-tabs="省|市|区县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
@@ -664,9 +664,13 @@
 													</tr>
 												</table>
 											</div>
+											{{ if(it.data[fieldCode] && it.data[fieldCode].id){ }}
+												<input type="hidden" name="id" value="{{= it.data[fieldCode].id}}">
 											{{ } }}
+											{{ } }} 
 										{{ } }}
 									</div>
+									
 									<input type="hidden" name="orderNo" value="{{= it.data.ORDERNO}}">
 								</form>
 							</div>		
