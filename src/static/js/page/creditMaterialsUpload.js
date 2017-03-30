@@ -31,7 +31,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				$scope.result.data.cfgMaterials = eval(result.cfgData);
+				$scope.result.data.cfgMaterials = result.cfgData;
 				$scope.result.data.uplUrl = $http.api('creditMaterials/material/addOrUpdate', 'zyj');
 				$scope.result.data.delUrl = $http.api('creditMaterials/material/del', 'zyj');
 				$scope.result.data.userRalaMap = {
@@ -243,6 +243,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			 * 征信查询按钮
 			 */
 			$console.find('#creditQuery').on('click', function() {
+				console.log($('.input-text input'))
 				saveData(function() {
 					process();
 				});
@@ -517,13 +518,13 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
 				$parent.append('<span class=\"input-err\">该项不能为空！</span>');
-				return false;
+				// return false;
 			} else if(!regMap[type].test(value)) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
 				that.val('').focus();
 				$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
-				return false;
+				// return false;
 			} else {
 				$parent.removeClass('error-input');
 				$parent.find('.input-err').remove();
@@ -532,7 +533,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				var item = $scope.apiParams[i];
 				if(that.data('userId') == item.userId) {
 					item[that.data('type')] = that.val();
-					item['userRelationship'] = 0;
 				}
 			}
 			console.log($scope.apiParams);
@@ -560,6 +560,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				item.idCard = row.idCard || '';
 				item.userType = row.userType || '';
 				item.userRelationship = row.userRelationship;
+				if(i == 0) {
+					item.userRelationship = 0;
+				}
 				item.userType = row.userType;
 				$scope.apiParams.push(item);
 			}
