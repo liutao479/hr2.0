@@ -45,6 +45,7 @@ page.ctrl('loanInfo', function($scope) {
 				loanFinishedInput();
 				loanFinishedCheckbox();
 				loanFinishedGps();
+				loanFinishedBxxb();
 				setupEvt();
 //				console.log(page.$scope.loanInfo.result.cfgData);
 				if(cb && typeof cb == 'function') {
@@ -113,140 +114,176 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	var keyType;
 	var setupEvt = function($el) {
-		$console.find('.check-key').on('click', function() {
-			var keyType = $(this).data('key');
-			console.log(keyType);
-		});
-		// 提交
-		$console.find('#submitOrder').on('click', function() {
-			console.log("提交订单");
-			var that = $(this);
-			// if( ) {
-			// 	//判断必填项是否填全
-			// } else {
-
-			// }
-
-			//下面为邹海洋提交接口
-			$.confirm({
-				title: '提交',
-				content: dialogTml.wContent.suggestion,
-				useBootstrap: false,
-				boxWidth: '500px',
-				theme: 'light',
-				type: 'purple',
-				buttons: {
-					'取消': {
-			            action: function () {
-
+		$console.find('.checkbox-normal').on('click', function() {
+		   	var keyData = $(this).attr("data-key");
+		   	var keyCode = $(this).attr("data-code");
+		   	var keyMark = $(this).attr("data-mark");
+		   	if(!$(this).attr('checked')) {
+			   	if(keyData){
+			   		$(".hklx").each(function(){
+			   			$(this).removeClass('checked').attr('checked',false);
+			   			$(this).html('');
+			   		})
+			   	}
+			   	if(keyCode){
+			   		$(".gzd").each(function(){
+			   			$(this).removeClass('checked').attr('checked',false);
+			   			$(this).html('');
+			   		})
+			   	}
+			   	if(keyMark){
+			   		$(".jzlx").each(function(){
+			   			$(this).removeClass('checked').attr('checked',false);
+			   			$(this).html('');
+			   		})
+			   	}
+		   		$(this).addClass('checked').attr('checked',true);
+		   		$(this).html('<i class="iconfont">&#xe659;</i>');
+		   	} else {
+			   	if(keyData){
+			   		$(".hklx").each(function(){
+			   			$(this).removeClass('checked').attr('checked',false);
+			   			$(this).html('');
+			   		})
+			   	}
+			   	if(keyCode){
+			   		$(".gzd").each(function(){
+			   			$(this).removeClass('checked').attr('checked',false);
+			   			$(this).html('');
+			   		})
+			   	}
+			   	if(keyMark){
+			   		$(".jzlx").each(function(){
+			   			$(this).removeClass('checked').attr('checked',false);
+			   			$(this).html('');
+			   		})
+			   	}
+		   		$(this).removeClass('checked').attr('checked',false);
+		   		$(this).html('');
+		   	}
+		   	var boxChecked = $(this).parent().parent().parent().find('.checked');
+		   	var renewalStr = '';
+			for(var i=0;i<boxChecked.length;i++){
+				var rene = boxChecked[i];
+//				if(rene.hasClass('checked')){
+//			        rene.value = '';
+//				}
+				renewalStr += rene.getAttribute('data-value')+',';
+			}
+			$("input[name='residentType']").val(renewalStr);
+//		   	boxChecked.each(function(){
+//		   		if($(this).hasClass('checked')){
+//		   			var dVal = $(this).data('value');
+//				   	var data = '';
+//				   	data += dVal;
+//				   	$("input[name='residentType']").val(data);
+//		   		}
+//		   	})
+		   	
+//			function returnCheckboxVal(){
+//				$(".info-key-check-box").each(function(){
+//					var data="";
+//					$('.checked',$(this)).each(function(){
+//						data += $(this).attr("data-value")+",";
+//					});
+//					var value = data.substring(0,data.length-1);
+//					$("input",$(this)).val(value);
+//					return;
+//				})
+//			}
+	    })
+	    /***
+		* 保存按钮
+		*/
+		$console.find('.saveBtn').on('click', function() {
+			var isTure = true;
+			var btnType = $(this).data('type');
+			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
+			requireList.each(function(){
+				var value = $(this).val();
+				if(!value){
+					if(!$(this).parent().hasClass('info-value')){
+						$(this).siblings('.select').addClass("error-input");
+						$(this).after('<i class="error-input-tip sel-err">请完善该必填项</i>');
+					}else{
+						$(this).parent().addClass("error-input");
+						$(this).after('<i class="error-input-tip">请完善该必填项</i>');
+					}
+					console.log($(this).index());
+					isTure = false;
+				}
+			});
+			if(isTure){
+				var key = $(this).data('key');
+				if(key == 'saveFQXX'){
+					var renewalStr = '';
+					var inputList = $(".bxxbyearIpt");
+					for(var i=0;i<inputList.length;i++){
+						var rene = inputList[i];
+						if(rene.parentNode.parentNode.parentNode.parentNode.parentNode.style.display == 'none'){
+					        rene.value = '';
+						}
+						renewalStr += rene.value+',';
+					}
+					$("input[name='renewalMode']").val(renewalStr);
+				}
+				var data;
+		        var formList = $(this).parent().parent().siblings().find('form');
+		        console.log("form的个数为："+formList.length);
+		        if(formList.length == 1){
+			        var params = formList.serialize();
+		            params = decodeURIComponent(params,true);
+	//	            params = decodeURI(params,true);
+		            var paramArray = params.split("&");
+		            var data1 = {};
+		            for(var i=0;i<paramArray.length;i++){
+		                var valueStr = paramArray[i];
+		                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
+		            }
+		            data = data1;
+		        }else{
+		        	data = [];
+			        formList.each(function(index){
+				        var params = $(this).serialize();
+			            params = decodeURIComponent(params,true);
+			            var paramArray = params.split("&");
+			            var data1 = {};
+			            for(var i=0;i<paramArray.length;i++){
+			                var valueStr = paramArray[i];
+			                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
 			            }
-			        },
-			        '确定': {
-			            action: function () {
-	            			var _reason = $('#suggestion').val();
-	            			console.log(_reason);
-	            			if(!_reason) {
-	            				$.alert({
-	            					title: '提示',
-									content: '<div class="w-content"><div>请填写处理意见！</div></div>',
-									useBootstrap: false,
-									boxWidth: '500px',
-									theme: 'light',
-									type: 'purple',
-									buttons: {
-										'确定': {
-								            action: function () {
-								            }
-								        }
-								    }
-	            				})
-	            				return false;
-	            			} else {
-	            				$.ajax({
-									type: 'post',
-									url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
-//									url: urlStr+'/loanInfoInput/submit/80871',
-//									data: {
-//										taskId: $params.taskId,
-//										orderNo: $params.orderNo,
-//										reason: _reason
-//									},
-									dataType: 'json',
-									success: $http.ok(function(xhr) {
-										console.log(xhr);
-									})
-								})
-								// 流程跳转
-								var params = {
-									taskIds: [$params.taskId],
-									orderNo: $params.orderNo
-								}
-								console.log(params)
-								$.ajax({
-									type: 'post',
-									url: $http.api('tasks/complete', 'zyj'),
-									data: JSON.stringify(params),
-									dataType: 'json',
-									contentType: 'application/json;charset=utf-8',
-									success: $http.ok(function(result) {
-										console.log(result);
-										var loanTasks = result.data;
-										var taskObj = [];
-										for(var i = 0, len = loanTasks.length; i < len; i++) {
-											var obj = loanTasks[i];
-											taskObj.push({
-												key: obj.category,
-												id: obj.id,
-												name: obj.sceneName
-											})
-										}
-										// target为即将跳转任务列表的第一个任务
-										var target = loanTasks[0];
-										router.render('loanProcess/' + target.category, {
-											taskId: target.id, 
-											orderNo: target.orderNo,
-											tasks: taskObj,
-											path: 'loanProcess'
-										});
-										// router.render('loanProcess');
-										// toast.hide();
-									})
-								})
-//	            				$.ajax({
-//									type: 'post',
-//									url: $http.api('task/complete', 'jbs'),
-//									data: {
-//										taskId: $params.taskId,
-//										orderNo: $params.orderNo,
-//										reason: _reason
-//									},
-//									dataType: 'json',
-//									success: $http.ok(function(result) {
-//										console.log(result);
-//									})
-//								})
-	            			}
-			            }
-			        }
-			    }
-			})
+						console.log(data1);
+						data[index]=data1;
+			        })
+		        }
+		        var dataPost;
+		        if(btnType){
+		        	dataPost = JSON.stringify(data);
+					$.ajax({
+						type: 'POST',
+						url: postUrl[key],
+						data:dataPost,
+						dataType:"json",
+						contentType : 'application/json;charset=utf-8',
+						success: function(result){
+							console.log(result.msg);
+						}
+					});
+		        }else{
+		        	dataPost = data;
+					$.ajax({
+						type: 'POST',
+						url: postUrl[key],
+						data:dataPost,
+						dataType:"json",
+						success: function(result){
+							console.log(result.msg);
+						}
+					});
+		        }
+			}
 		})
 	}		
-//点击本地常驻类型复选框
-	$(document).on('click', '.checkbox', function() {
-		returnCheckboxVal();
-	})
-	function returnCheckboxVal(){
-		$(".info-key-check-box").each(function(){
-			var data="";
-			$('.checked',$(this)).each(function(){
-				data += $(this).attr("data-value")+",";
-			});
-			var value = data.substring(0,data.length-1);
-			$("input",$(this)).val(value);
-			return;
-		})
-	}
 	var loanFinishedCheckbox = function(){
 		$(".info-key-check-box").each(function(){
 			var that =$("input",$(this)),
@@ -265,57 +302,11 @@ page.ctrl('loanInfo', function($scope) {
 			})
 		})
 	}
-//复选框
-   $(document).on('click', '.checkbox-normal', function() {
-   	var keyData = $(this).attr("data-key");
-   	var keyCode = $(this).attr("data-code");
-   	var keyMark = $(this).attr("data-mark");
-   	if(!$(this).attr('checked')) {
-	   	if(keyData){
-	   		$(".hklx").each(function(){
-	   			$(this).removeClass('checked').attr('checked',false);
-	   			$(this).html('');
-	   		})
-	   	}
-	   	if(keyCode){
-	   		$(".gzd").each(function(){
-	   			$(this).removeClass('checked').attr('checked',false);
-	   			$(this).html('');
-	   		})
-	   	}
-	   	if(keyMark){
-	   		$(".jzlx").each(function(){
-	   			$(this).removeClass('checked').attr('checked',false);
-	   			$(this).html('');
-	   		})
-	   	}
-   		$(this).addClass('checked').attr('checked',true);
-   		$(this).html('<i class="iconfont">&#xe659;</i>');
-   	} else {
-	   	if(keyData){
-	   		$(".hklx").each(function(){
-	   			$(this).removeClass('checked').attr('checked',false);
-	   			$(this).html('');
-	   		})
-	   	}
-	   	if(keyCode){
-	   		$(".gzd").each(function(){
-	   			$(this).removeClass('checked').attr('checked',false);
-	   			$(this).html('');
-	   		})
-	   	}
-	   	if(keyMark){
-	   		$(".jzlx").each(function(){
-	   			$(this).removeClass('checked').attr('checked',false);
-	   			$(this).html('');
-	   		})
-	   	}
-   		$(this).removeClass('checked').attr('checked',false);
-   		$(this).html('');
-   	}
-   })
 
-//gps
+	$(document).on('click', '.select li', function() {
+		loanFinishedBxxb();
+		loanFinishedGps();
+	})
 	var loanFinishedGps = function(){
 		var gps = $("input[name='isInstallGps']").val();
 		if(gps != 1){
@@ -326,14 +317,10 @@ page.ctrl('loanInfo', function($scope) {
 			$("input[name='gpsNumber2']").parents(".info-key-value-box").show();
 		}
 	}
-//保险续保
-	$(document).on('click', '.select li', function() {
-		loanFinishedBxxb();
-		loanFinishedGps();
-	})
 	var loanFinishedBxxb = function(){
 		var bxxbInput = $("input[name='renewalMode']").val();
 		var repayInput = $("input[name='repayPeriod']").val();
+		var bxxbLength = Math.ceil(repayInput/12);
 		if(bxxbInput == 1){
 			if(!repayInput){
 				$.alert({
@@ -354,54 +341,24 @@ page.ctrl('loanInfo', function($scope) {
 			}else{
 				if(bxxbLength == 1){
 					$("#year1").show();
-					$("#year1").find('input').val(1);
-					$("#year1").find('.placeholder').html("单位承保");
 				}else if(bxxbLength == 2){
 					$("#year1").show();
 					$("#year2").show();
-					$("#year1").find('input').val(1);
-					$("#year1").find('.placeholder').html("单位承保");
-					$("#year2").find('input').val(1);
-					$("#year2").find('.placeholder').html("单位承保");
 				}else if(bxxbLength == 3){
 					$("#year1").show();
 					$("#year2").show();
 					$("#year3").show();
-					$("#year1").find('input').val(1);
-					$("#year1").find('.placeholder').html("单位承保");
-					$("#year2").find('input').val(1);
-					$("#year2").find('.placeholder').html("单位承保");
-					$("#year3").find('input').val(1);
-					$("#year3").find('.placeholder').html("单位承保");
 				}else if(bxxbLength == 4){
 					$("#year1").show();
 					$("#year2").show();
 					$("#year3").show();
 					$("#year4").show();
-					$("#year1").find('input').val(1);
-					$("#year1").find('.placeholder').html("单位承保");
-					$("#year2").find('input').val(1);
-					$("#year2").find('.placeholder').html("单位承保");
-					$("#year3").find('input').val(1);
-					$("#year3").find('.placeholder').html("单位承保");
-					$("#year4").find('input').val(1);
-					$("#year4").find('.placeholder').html("单位承保");
 				}else if(bxxbLength == 5){
 					$("#year1").show();
 					$("#year2").show();
 					$("#year3").show();
 					$("#year4").show();
 					$("#year5").show();
-					$("#year1").find('input').val(1);
-					$("#year1").find('.placeholder').html("单位承保");
-					$("#year2").find('input').val(1);
-					$("#year2").find('.placeholder').html("单位承保");
-					$("#year3").find('input').val(1);
-					$("#year3").find('.placeholder').html("单位承保");
-					$("#year4").find('input').val(1);
-					$("#year4").find('.placeholder').html("单位承保");
-					$("#year5").find('input').val(1);
-					$("#year5").find('.placeholder').html("单位承保");
 				}else{
 					$("#year1").show();
 					$("#year2").show();
@@ -409,20 +366,7 @@ page.ctrl('loanInfo', function($scope) {
 					$("#year4").show();
 					$("#year5").show();
 					$("#year6").show();
-					$("#year1").find('input').val(1);
-					$("#year1").find('.placeholder').html("单位承保");
-					$("#year2").find('input').val(1);
-					$("#year2").find('.placeholder').html("单位承保");
-					$("#year3").find('input').val(1);
-					$("#year3").find('.placeholder').html("单位承保");
-					$("#year4").find('input').val(1);
-					$("#year4").find('.placeholder').html("单位承保");
-					$("#year5").find('input').val(1);
-					$("#year5").find('.placeholder').html("单位承保");
-					$("#year6").find('input').val(1);
-					$("#year6").find('.placeholder').html("单位承保");
 				}
-//				$("input[name='renewalMode']").parents('.info-key-value-box').append("<div class='zzz'>11111</div>")
 			}
 		}else{
 			$("#year1").hide();
@@ -431,10 +375,6 @@ page.ctrl('loanInfo', function($scope) {
 			$("#year4").hide();
 			$("#year5").hide();
 			$("#year6").hide();
-//			var zzz = $(".zzz");
-//			if(zzz){
-//				$(".zzz").remove();
-//			}
 		}
 	}
 	
@@ -442,98 +382,6 @@ page.ctrl('loanInfo', function($scope) {
 	$(document).on('click', '.dateBtn', function() {
 		$('#loaningDate').datepicker();
 	})
-	
-
-//保险续保及还款期限联动
-//	$(document).on('click', '.repaymentTermBox .select-box .select-area li', function() {
-//		loanFinishedrepay();
-//	})
-	var loanFinishedrepay = function(){
-		var bxxbInput = $("#repayPeriod").val();
-		var bxxbLength = Math.ceil(bxxbInput/12);
-		var bxxbInputShow = $("#bxxbInput").val();
-		if(bxxbInputShow != 1){
-			$(".bxxbYear").hide();
-		}else{
-			$(".bxxbyearIpt").each(function(){
-				$(this).val('');
-				$(this).siblings('.placeholder').html("请选择");
-				$(this).parent().parent().hide();
-			});
-			
-			if(bxxbLength == 1){
-				$("#year1").show();
-				$("#year1").find('input').val(1);
-				$("#year1").find('.placeholder').html("单位承保");
-			}else if(bxxbLength == 2){
-				$("#year1").show();
-				$("#year2").show();
-				$("#year1").find('input').val(1);
-				$("#year1").find('.placeholder').html("单位承保");
-				$("#year2").find('input').val(1);
-				$("#year2").find('.placeholder').html("单位承保");
-			}else if(bxxbLength == 3){
-				$("#year1").show();
-				$("#year2").show();
-				$("#year3").show();
-				$("#year1").find('input').val(1);
-				$("#year1").find('.placeholder').html("单位承保");
-				$("#year2").find('input').val(1);
-				$("#year2").find('.placeholder').html("单位承保");
-				$("#year3").find('input').val(1);
-				$("#year3").find('.placeholder').html("单位承保");
-			}else if(bxxbLength == 4){
-				$("#year1").show();
-				$("#year2").show();
-				$("#year3").show();
-				$("#year4").show();
-				$("#year1").find('input').val(1);
-				$("#year1").find('.placeholder').html("单位承保");
-				$("#year2").find('input').val(1);
-				$("#year2").find('.placeholder').html("单位承保");
-				$("#year3").find('input').val(1);
-				$("#year3").find('.placeholder').html("单位承保");
-				$("#year4").find('input').val(1);
-				$("#year4").find('.placeholder').html("单位承保");
-			}else if(bxxbLength == 5){
-				$("#year1").show();
-				$("#year2").show();
-				$("#year3").show();
-				$("#year4").show();
-				$("#year5").show();
-				$("#year1").find('input').val(1);
-				$("#year1").find('.placeholder').html("单位承保");
-				$("#year2").find('input').val(1);
-				$("#year2").find('.placeholder').html("单位承保");
-				$("#year3").find('input').val(1);
-				$("#year3").find('.placeholder').html("单位承保");
-				$("#year4").find('input').val(1);
-				$("#year4").find('.placeholder').html("单位承保");
-				$("#year5").find('input').val(1);
-				$("#year5").find('.placeholder').html("单位承保");
-			}else{
-				$("#year1").show();
-				$("#year2").show();
-				$("#year3").show();
-				$("#year4").show();
-				$("#year5").show();
-				$("#year6").show();
-				$("#year1").find('input').val(1);
-				$("#year1").find('.placeholder').html("单位承保");
-				$("#year2").find('input').val(1);
-				$("#year2").find('.placeholder').html("单位承保");
-				$("#year3").find('input').val(1);
-				$("#year3").find('.placeholder').html("单位承保");
-				$("#year4").find('input').val(1);
-				$("#year4").find('.placeholder').html("单位承保");
-				$("#year5").find('input').val(1);
-				$("#year5").find('.placeholder').html("单位承保");
-				$("#year6").find('input').val(1);
-				$("#year6").find('.placeholder').html("单位承保");
-			}
-		}	
-	}
-	
 	
 	/***
 	* 为完善项更改去掉错误提示
@@ -544,93 +392,6 @@ page.ctrl('loanInfo', function($scope) {
 	})
 
 
-    /***
-	* 保存按钮
-	*/
-	$(document).on('click', '.saveBtn', function() {
-		var isTure = true;
-		var btnType = $(this).data('type');
-		var requireList = $(this).parent().parent().siblings().find("form").find(".required");
-		requireList.each(function(){
-			var value = $(this).val();
-			if(!value){
-				$(this).parent().addClass("error-input");
-				$(this).after('<i class="error-input-tip">请完善该必填项</i>');
-				console.log($(this).index());
-				isTure = false;
-//				return false;
-			}
-		});
-		if(isTure){
-			var key = $(this).data('key');
-			if(key == 'saveStageInfo'){
-				var renewalStr = '';
-				var inputList = $(".bxxbyearIpt");
-				for(var i=0;i<inputList.length;i++){
-					var rene = inputList[i];
-					if(rene.value == '555'){
-						rene.value = '';
-					}
-					renewalStr += rene.value+',';
-				}
-				$("#renewalInfo").val(renewalStr);
-			}
-			var data;
-	        var formList = $(this).parent().parent().siblings().find('form');
-	        console.log("form的个数为："+formList.length);
-	        if(formList.length == 1){
-		        var params = formList.serialize();
-	            params = decodeURIComponent(params,true);
-//	            params = decodeURI(params,true);
-	            var paramArray = params.split("&");
-	            var data1 = {};
-	            for(var i=0;i<paramArray.length;i++){
-	                var valueStr = paramArray[i];
-	                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
-	            }
-	            data = data1;
-	        }else{
-	        	data = [];
-		        formList.each(function(index){
-			        var params = $(this).serialize();
-		            params = decodeURIComponent(params,true);
-		            var paramArray = params.split("&");
-		            var data1 = {};
-		            for(var i=0;i<paramArray.length;i++){
-		                var valueStr = paramArray[i];
-		                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
-		            }
-					console.log(data1);
-					data[index]=data1;
-		        })
-	        }
-	        var dataPost;
-	        if(btnType){
-	        	dataPost = JSON.stringify(data);
-				$.ajax({
-					type: 'POST',
-					url: postUrl[key],
-					data:dataPost,
-					dataType:"json",
-					contentType : 'application/json;charset=utf-8',
-					success: function(result){
-						console.log(result.msg);
-					}
-				});
-	        }else{
-	        	dataPost = data;
-				$.ajax({
-					type: 'POST',
-					url: postUrl[key],
-					data:dataPost,
-					dataType:"json",
-					success: function(result){
-						console.log(result.msg);
-					}
-				});
-	        }
-		}
-	})
 
 	/**
 	* 设置底部按钮操作栏
@@ -673,18 +434,25 @@ page.ctrl('loanInfo', function($scope) {
 				ok: {
 					text: '确定',
 					action: function () {
-						var taskIds = [];
-						for(var i = 0, len = $params.tasks.length; i < len; i++) {
-							taskIds.push(parseInt($params.tasks[i].id));
-						}
-						var params = {
-							taskIds: taskIds,
-							orderNo: $params.orderNo
-						}
-						var reason = $.trim(this.$content.find('#suggestion').val());
-						if(reason) params.reason = reason;
-						console.log(params);
-						tasksJump(params, 'complete');
+        				$.ajax({
+							type: 'post',
+							url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
+							dataType: 'json',
+							success: $http.ok(function(xhr) {
+								var taskIds = [];
+								for(var i = 0, len = $params.tasks.length; i < len; i++) {
+									taskIds.push(parseInt($params.tasks[i].id));
+								}
+								var params = {
+									taskIds: taskIds,
+									orderNo: $params.orderNo
+								}
+								var reason = $.trim(this.$content.find('#suggestion').val());
+								if(reason) params.reason = reason;
+								console.log(params);
+								tasksJump(params, 'complete');
+							})
+						})
 					}
 				}
 			}
@@ -702,7 +470,6 @@ page.ctrl('loanInfo', function($scope) {
 			setupSubmitBar();
 			setupDropDown();
 		});
-		setupEvt();
 	});
 
 	$scope.areaPicker = function(picked) {
@@ -718,7 +485,6 @@ page.ctrl('loanInfo', function($scope) {
 		console.log(picked);
 	}
 	$scope.busiSourceNamePicker = function(picked) {
-		debugger
 		console.log(picked);
 		$scope.busiSourceNameId = picked.id;
 		$("#numIpt").val('');

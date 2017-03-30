@@ -61,8 +61,8 @@
 			// 		return 'http://192.168.1.44:8080/' + method;
 			// 		break;
 			// }
-			return 'http://192.168.1.86:8080/' + method;
-			// return 'http://192.168.0.186:9999/' + method;
+//			return 'http://192.168.1.86:8080/' + method;
+			 return 'http://192.168.0.186:9999/' + method;
 
 
 			
