@@ -20,14 +20,14 @@
 
 
 //单选框
-$(document).on('selectstart', '.radio', false);
-$(document).on('click', '.radio', function() {
-	if(!$(this).attr('checked')) {
-		$(this).addClass('checked').attr('checked',true);
-	} else {
-		$(this).removeClass('checked').attr('checked',false);
-	}
-})
+// $(document).on('selectstart', '.radio', false);
+// $(document).on('click', '.radio', function() {
+// 	if(!$(this).attr('checked')) {
+// 		$(this).addClass('checked').attr('checked',true);
+// 	} else {
+// 		$(this).removeClass('checked').attr('checked',false);
+// 	}
+// })
 
 
 //右边栏
@@ -111,3 +111,53 @@ $(document).on('hover', '#navigator .user', function() {
 			return;
 		}
 	})
+
+/**
+ * 提交订单以及跳转逻辑
+ * @param  {object} params [提交任务需传参数]
+ * @return {function}           跳转后的回调
+ */
+function tasksJump(params, type, cb) {
+	$.ajax({
+		type: 'post',
+		url: $http.api('tasks/' + type, 'zyj'),
+		data: JSON.stringify(params),
+		dataType: 'json',
+		contentType: 'application/json;charset=utf-8',
+		success: $http.ok(function(result) {
+			console.log(result);
+			var loanTasks = result.data;
+			if(loanTasks.length == 0) {
+				// toast显示
+				router.render('loanProcess');
+			} else {
+				var taskObj = [];
+				for(var i = 0, len = loanTasks.length; i < len; i++) {
+					var obj = loanTasks[i];
+					taskObj.push({
+						key: obj.category,
+						id: obj.id,
+						name: obj.sceneName
+					})
+				}
+				// debugger
+				for(var i = 0, len = loanTasks.length; i < len; i++) {
+					if(!loanTasks[i].submited) {
+						var target = loanTasks[i];
+						var selected = i;
+						break;
+					}
+				}
+				router.render('loanProcess/' + target.category, {
+					taskId: target.id, 
+					orderNo: target.orderNo,
+					selected: selected,
+					tasks: taskObj,
+					path: 'loanProcess'
+				});
+			}
+			
+		})
+	})
+	
+}

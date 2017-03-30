@@ -31,7 +31,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				$scope.result.data.cfgMaterials = eval(result.cfgData);
+				$scope.result.data.cfgMaterials = result.cfgData;
 				$scope.result.data.uplUrl = $http.api('creditMaterials/material/addOrUpdate', 'zyj');
 				$scope.result.data.delUrl = $http.api('creditMaterials/material/del', 'zyj');
 				$scope.result.data.userRalaMap = {
@@ -57,6 +57,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				setupCreditPanel(_type, $scope.result.data, function() {
 					setupEvt($scope.$el.$tbls.eq(_type));
 				});
+
+				//初始化要传参数
+				initApiParams();
 
 				if( cb && typeof cb == 'function' ) {
 					cb();
@@ -138,8 +141,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
             	}
             	updBank(function() {
             		setupCreditBank();
-					initApiParams();
-					evt();
             	});
             }
 		}
@@ -167,11 +168,30 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '征信材料上传',
+			current: $scope.result.data.loanTask.taskName,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
+			orderDate: $scope.result.data.loanTask.loanOrder.createDateStr
 		});
 		$location.location();
+	}
+
+	/**
+	* 设置退回原因
+	*/
+	var setupBackReason = function(data) {
+		var $backReason = $console.find('#backReason');
+		if(!data) {
+			$backReason.remove();
+			return false;
+		} else {
+			$backReason.data({
+				backReason: data.reason,
+				backUser: data.userName,
+				backUserPhone: data.phone,
+				backDate: tool.formatDate(data.transDate, true)
+			});
+			$backReason.backReason();
+		}
 	}
 
 	/**
@@ -189,7 +209,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			$el.find('#cancelOrder').on('click', function() {
 				$.alert({
 					title: '取消订单',
-					content: '<div class="w-content"><div class="w-text">确定要取消该笔贷款申请吗？</div></div>',
+					content: tool.alert('确定要取消该笔贷款申请吗？'),
 					buttons: {
 						close: {
 							text: '取消',
@@ -198,7 +218,21 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 						ok: {
 							text: '确定',
 							action: function () {
-								
+								var params = {
+									taskId: $params.taskId
+								}
+								var reason = $.trim(this.$content.find('#suggestion').val());
+								if(reason) params.reason = reason;
+								$.ajax({
+									type: 'post',
+									url: $http.api('loanOrder/cancel', 'zyj'),
+									data: params,
+									dataType: 'json',
+									success: $http.ok(function(result) {
+										console.log(result);
+										router.render('loanProcess');
+									})
+								})
 							}
 						}
 					}
@@ -209,28 +243,50 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			 * 征信查询按钮
 			 */
 			$console.find('#creditQuery').on('click', function() {
-				var that = $(this);
-				$.confirm({
-					title: '提示',
-					content: tool.alert('确定所有被查人的征信材料已上传无误，并提交征信查询吗？'),
-					buttons: {
-						close: {
-							text: '取消',
-							btnClass: 'btn-default btn-cancel'
-						},
-						ok: {
-							text: '确定',
-							action: function () {
-								creditQuery();
-							}
-						}
-					}
+				console.log($('.input-text input'))
+				saveData(function() {
+					process();
 				});
 			});
 		});
 	}
 
-	function creditQuery() {
+	// 跳流程
+	function process() {
+		$.confirm({
+			title: '提交订单',
+			content: dialogTml.wContent.suggestion,
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel',
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
+						}
+						var params = {
+							taskId: $params.taskId,
+							taskIds: taskIds,
+							orderNo: $params.orderNo
+						}
+						var reason = $.trim(this.$content.find('#suggestion').val());
+						if(reason) params.reason = reason;
+						tasksJump(params, 'complete');
+					}
+				}
+			}
+		})
+	}
+
+	/**
+	 * 征信人信息数据保存
+	 */
+	function saveData(cb) {
 		var _alert = '';
 		for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 			var item = $scope.apiParams[i];
@@ -255,41 +311,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				contentType: 'application/json;charset=utf-8',
 				success: $http.ok(function(result) {
 					console.log(result);
-					var params = {
-						taskIds: [$params.taskId],
-						orderNo: $params.orderNo
+					if(cb && typeof cb == 'function') {
+						cb();
 					}
-					console.log(params)
-					$.ajax({
-						type: 'post',
-						url: $http.api('tasks/complete', 'zyj'),
-						data: JSON.stringify(params),
-						dataType: 'json',
-						contentType: 'application/json;charset=utf-8',
-						success: $http.ok(function(result) {
-							console.log(result);
-							var loanTasks = result.data;
-							var taskObj = [];
-							for(var i = 0, len = loanTasks.length; i < len; i++) {
-								var obj = loanTasks[i];
-								taskObj.push({
-									key: obj.category,
-									id: obj.id,
-									name: obj.sceneName
-								})
-							}
-							// target为即将跳转任务列表的第一个任务
-							var target = loanTasks[0];
-							router.render('loanProcess/' + target.category, {
-								taskId: target.id, 
-								orderNo: target.orderNo,
-								tasks: taskObj,
-								path: 'loanProcess'
-							});
-							// router.render('loanProcess');
-							// toast.hide();
-						})
-					})
 				})
 			})
 			
@@ -306,6 +330,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					}
 				}
 			})
+			return false;
 		}
 		
 	} 
@@ -362,7 +387,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	}
 
 	/**
-	 * 首次加载页面时绑定的事件（增加共同还款人和反担保人，以及底部提交按钮）
+	 * 首次加载页面时绑定的事件（增加共同还款人和反担保人）
 	 */
 	var evt = function() {
 		/**
@@ -374,7 +399,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				type: 'post',
 				url: $http.api('creditUser/add', 'zyj'),
 				data: {
-					orderNo: $scope.orderNo,
+					orderNo: $params.orderNo,
 					userType: 1
 				},
 				dataType: 'json',
@@ -394,7 +419,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				type: 'post',
 				url: $http.api('creditUser/add', 'zyj'),
 				data: {
-					orderNo: $scope.orderNo,
+					orderNo: $params.orderNo,
 					userType: 2
 				},
 				dataType: 'json',
@@ -405,41 +430,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			}) 		
 		});
 		
-
-		
-
-		/**
-		 * 取消订单按钮
-		 */
-		$console.find('#cancelOrders').on('click', function() {
-			var that = $(this);
-			$.alert({
-				title: '取消订单',
-				content: '<div class="w-content"><div class="w-text">确定要取消该笔贷款申请吗？</div></div>',
-				buttons: {
-					close: {
-						text: '取消',
-						btnClass: 'btn-default btn-cancel'
-					},
-					ok: {
-						text: '确定',
-						action: function () {
-							
-						}
-					}
-				}
-			})
-			// that.openWindow({
-			// 	title: "取消订单",
-			// 	content: "<div>确定要取消该笔贷款申请吗？</div>",
-			// 	commit: dialogTml.wCommit.cancelSure
-			// }, function($dialog) {
-			// 	$dialog.find('.w-sure').on('click', function() {
-			// 		alert('删除该订单接口！');
-			// 		$dialog.remove();
-			// 	})
-			// })
-		});
 	}
 
 	/**
@@ -528,12 +518,13 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
 				$parent.append('<span class=\"input-err\">该项不能为空！</span>');
-				return false;
+				// return false;
 			} else if(!regMap[type].test(value)) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
+				that.val('').focus();
 				$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
-				return false;
+				// return false;
 			} else {
 				$parent.removeClass('error-input');
 				$parent.find('.input-err').remove();
@@ -542,7 +533,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				var item = $scope.apiParams[i];
 				if(that.data('userId') == item.userId) {
 					item[that.data('type')] = that.val();
-					item['userRelationship'] = 0;
 				}
 			}
 			console.log($scope.apiParams);
@@ -570,6 +560,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				item.idCard = row.idCard || '';
 				item.userType = row.userType || '';
 				item.userRelationship = row.userRelationship;
+				if(i == 0) {
+					item.userRelationship = 0;
+				}
 				item.userType = row.userType;
 				$scope.apiParams.push(item);
 			}
@@ -593,10 +586,10 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		}
 		
 		loadOrderInfo($scope.currentType, function() {
+			setupBackReason($scope.result.data.loanTask.backApprovalInfo)
 			setupCreditBank();
 			setupLocation();
 			setupSubmitBar();
-			initApiParams();
 			setupAddUsers();
 			evt();
 		});
@@ -611,7 +604,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			loadOrderInfo($scope.currentType, function() {
 				setupCreditBank();
 				setupLocation();
-				initApiParams();
 				evt();
 			});
 		}

@@ -14,7 +14,6 @@ page.ctrl('loan', function($scope) {
 		if(!params.process) {
 			delete params.process;
 		}
-		console.log(params);
 		$.ajax({
 			// 贷款办理列表的在线接口，为调试并行任务各页面，先使用假数据
 			type: 'post',
@@ -29,16 +28,13 @@ page.ctrl('loan', function($scope) {
 				setupPaging(result.page, true);
 				setupEvent();
 
-
-
 				// 测试复选框
-				$scope.$checks = $('.checkbox').checking();
+				// $scope.$checks = $('.checkbox').checking();
 
-				$scope.$checks[0].$checking.onChange(function() {
-					console.log(this)
-				});
+				// $scope.$checks[0].$checking.onChange(function() {
+				// 	console.log(this)
+				// });
 
-				
 				if(cb && typeof cb == 'function') {
 					cb();
 				}  
@@ -68,8 +64,6 @@ page.ctrl('loan', function($scope) {
 	* 绑定表格中立即处理事件
 	*/
 	var setupEvent = function() {
-		
-
 		/**
 		* 绑定立即处理事件
 		*/

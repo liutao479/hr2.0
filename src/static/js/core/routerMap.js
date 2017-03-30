@@ -196,7 +196,7 @@
 			page: 'loanApproval'
 		},
 		'loanProcess/pickMaterialsApproval': {
-			title: '贷款审核',
+			title: '提车审核',
 			page: 'pickMaterialsApproval'
 		},
 
@@ -247,10 +247,6 @@
 		'loanProcess/choiseType':{
 			title: '业务类型选择',
 			page: 'surviceType'
-		},
-		'loanProcess/carAudit':{
-			title: '提车审核',
-			page: 'carAudit'
 		},
 		'loanProcess/creditApproval': {
 			title: '征信预审核',
@@ -351,8 +347,8 @@
 		'T0055': 'phoneAudit',//电核结果
 		'T0056': 'loanInfoAudit',//贷款信息表结果
 		'T0057': 'loanInfoAudit',//贷款信息表结果
-		'T0058': 'pickMaterialsUpload',//提车材料
-		'T0058': 'pickMaterialsUpload'//提车材料
+		'T0058': 'pickMaterialsUpload',//提车材料审核
+		'T0059': 'pickMaterialsUpload'//提车材料审核
 	}
 	var todoMap = {'T0004': '',
 	'T0005': '',

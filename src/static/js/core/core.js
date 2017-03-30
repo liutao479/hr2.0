@@ -62,8 +62,12 @@
 			// 		return 'http://192.168.1.44:8080/' + method;
 			// 		break;
 			// }
-			return 'http://192.168.1.86:8080/' + method;
-			// return 'http://192.168.0.186:9999/' + method;
+			
+			// return 'http://192.168.1.86:8080/' + method;
+			return 'http://192.168.0.186:9999/' + method;
+
+
+			
 		//Todo 发布时增加prefix
 		// return 'http://192.168.0.113:8080/' + method;
 	}
@@ -85,21 +89,40 @@
 				var code = response.code;
 				switch (code) {
 					case 1001:
-						$.alert('非法的参数');
+						$.alert({
+							title: '提示',
+							content: tool.alert('非法的参数！'),
+							buttons:{
+								ok: {
+									text: '确定',
+									action: function() {
+										// location.href = 'login.html';
+										// alert(1)
+									}
+								}
+							}
+						})
 						break;
 					case 1004:
 						unAuth();
 						break;
 					case -1:
-
+						$.alert({
+							title: '提示',
+							content: tool.alert('系统异常！'),
+							buttons:{
+								ok: {
+									text: '确定',
+									action: function() {
+									}
+								}
+							}
+						})
 						break;
 					case 6011:
 						$.alert({
 							title: '提示',
-							content: '账户已存在',
-							useBootstrap: false,
-							boxWidth: '500px',
-							theme: 'light',
+							content: tool.alert('账户已存在'),
 							buttons:{
 								ok: {
 									text: '确定',
@@ -115,7 +138,7 @@
 						// statements_def
 						break;
 				}
-				console.log('failed');
+				console.log('请求失败');
 			}
 		}
 	};
@@ -173,9 +196,7 @@
 	function unAuth() {
 		$.alert({
 			title: '提示',
-			content: '你的登录授权无效或已过期',
-			useBootstrap: false,
-			boxWidth: '500px',
+			content: tool.alert('你的登录授权无效或已过期'),
 			buttons:{
 				ok: {
 					text: '确定',
@@ -262,7 +283,8 @@
 		var _seconds = Math.round(remain2 / 1000);
 		if(_date > 0) return _date + '天';	
 		if(_hours > 0) return _hours + '小时';
-		if(_seconds > 0 && _minutes < 60) return '1小时';
+		if(_minutes > 0) return _minutes + '分钟';
+		return '不足1分钟';
 		
 	}
 

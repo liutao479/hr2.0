@@ -17,9 +17,9 @@ $(function() {
 			})
 		})
 	});
-	setTimeout(function() {
-		new Todo($('#remind'));	
-	}, 1000)
+	// setTimeout(function() {
+	// 	new Todo($('#remind'));	
+	// }, 1000)
 
 	/**
 	 * 弹窗默认设置
@@ -59,4 +59,8 @@ $(function() {
 	$(document).ajaxComplete(function(event, jqxhr, settings){
 	    $.LoadingOverlay("hide");
 	});
+
+
+
+	
 });

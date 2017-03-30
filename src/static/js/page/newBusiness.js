@@ -51,7 +51,20 @@ page.ctrl('newBusiness', function($scope) {
 			},
 			success: $http.ok(function(result) {
 				console.log(result);
-				router.render('loanProcess');
+				if(!result.data.length) {
+					router.render('loanProcess');
+					return false;
+				}
+				router.render('loanProcess/creditMaterialsUpload', {
+					taskId: result.data[0].id, 
+					orderNo: result.data[0].orderNo,
+					tasks: [{
+						key: 'creditMaterialsUpload',
+						id: result.data[0].id,
+						name: '征信材料上传'
+					}],
+					path: 'loanProcess'
+				});
 			})
 		})
 	}

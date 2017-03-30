@@ -81,7 +81,7 @@
 				self.status = 0;
 			} else {
 				if(self.options.other) {
-					self.name = internalTemplates.other.format(self.options.name);
+					self.name = internalTemplates.name.format(self.options.name);
 				} else {
 					self.name = internalTemplates.name.format(self.options.name);
 				}
@@ -311,17 +311,25 @@
 			type: 'post',
 			dataType: 'json',
 			success: function(xhr) {
-				console.log(xhr)
+				console.log(xhr);
 				if(!xhr.code) {
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name, url, self.errImg, self.errMsg));
-						self.options.id = xhr.data;
+						if(self.options.credit) {
+							self.options.id = xhr.data.id;
+						} else {
+							self.options.id = xhr.data;
+						}
 						self.$el.data('img', url);
 						self.status = 1;	
 						self.listen();
 						self.uplCb(self, xhr);
 					} else {
-						self.options.id = xhr.data;
+						if(self.options.credit) {
+							self.options.id = xhr.data.id;
+						} else {
+							self.options.id = xhr.data;
+						}
 						self.$el.data('img', url);
 						self.$el.find('img').attr('src', url);
 					}
