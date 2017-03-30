@@ -47,6 +47,68 @@ page.ctrl('secondhandInput', function($scope) {
 		});
 		$location.location();
 	}
+
+	/**
+	* 设置底部按钮操作栏
+	*/
+	var setupSubmitBar = function() {
+		var $submitBar = $console.find('#submitBar');
+		$submitBar.data({
+			taskId: $params.taskId
+		});
+		$submitBar.submitBar(function($el) {
+			evt($el);
+		});
+	}
+
+	/**
+	* 底部按钮操作栏事件
+	*/
+	var evt = function($el) {
+		/**
+		 * 提交按钮按钮
+		 */
+		$el.find('#taskSubmit').on('click', function() {
+			process();
+		})
+	}
+
+	/**
+	 * 跳流程
+	 */
+	function process() {
+		$.confirm({
+			title: '提交',
+			content: dialogTml.wContent.suggestion,
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel',
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
+						}
+						var params = {
+						 	taskId: $params.taskId,
+							taskIds: taskIds,
+							orderNo: $params.orderNo
+						}
+						var reason = $.trim(this.$content.find('#suggestion').val());
+						if(reason) params.reason = reason;
+						console.log(params);
+						tasksJump(params, 'complete');
+					}
+				}
+			}
+		})
+	}
+
+
 	/**
 	* 页面加载完成对所有带“*”的input进行必填绑定
 	*/
@@ -356,6 +418,7 @@ page.ctrl('secondhandInput', function($scope) {
 			$tbl: $console.find('#secondhandInput')
 		}
 		loadLoanList(function(){
+			setupSubmitBar();
 			setupDropDown();
 		});
 	});

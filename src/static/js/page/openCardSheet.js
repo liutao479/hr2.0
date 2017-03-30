@@ -450,6 +450,7 @@ page.ctrl('openCardSheet', function($scope) {
 							taskIds.push(parseInt($params.tasks[0].id));
 						}
 						var params = {
+							taskId: $params.taskId,
 							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}

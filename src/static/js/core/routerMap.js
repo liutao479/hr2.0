@@ -229,7 +229,7 @@
 //			title: '二手车信息录入',
 //			page: 'carTwohand'
 //		},
-		'loanProcess/choiseType':{
+		'loanProcess/busiModeChoose':{
 			title: '业务类型选择',
 			page: 'surviceType'
 		},
