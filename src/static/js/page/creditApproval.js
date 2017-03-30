@@ -57,7 +57,6 @@ page.ctrl('creditApproval', [], function($scope) {
 		})
 	}
 
-
 	/**
 	 * 渲染tab栏
 	 * @param  {object} result 请求获得的数据
@@ -134,9 +133,22 @@ page.ctrl('creditApproval', [], function($scope) {
 	}
 
 	/**
-	* 页面首次加载绑定立即处理事件
+	* 设置底部按钮操作栏
 	*/
-	var evt = function() {
+	var setupSubmitBar = function() {
+		var $submitBar = $console.find('#submitBar');
+		$submitBar.data({
+			taskId: $params.taskId
+		});
+		$submitBar.submitBar(function($el) {
+			evt($el);
+		});
+	}
+
+	/**
+	* 底部按钮操作栏事件
+	*/
+	var evt = function($el) {
 		/**
 		 * 订单退回的条件选项分割
 		 */
@@ -148,7 +160,7 @@ page.ctrl('creditApproval', [], function($scope) {
 		/**
 		 * 退回订单按钮
 		 */
-		$console.find('#backOrder').on('click', function() {
+		$el.find('#backOrder').on('click', function() {
 			var that = $(this);
 			console.log($scope.result.data.loanTask.taskJumps)
 			$.alert({
@@ -225,9 +237,9 @@ page.ctrl('creditApproval', [], function($scope) {
 		});
 
 		/**
-		 * 拒绝受理（取消订单）按钮
+		 * 拒绝受理按钮
 		 */
-		$console.find('#rejectOrder').on('click', function() {
+		$el.find('#rejectOrder').on('click', function() {
 			$.confirm({
 				title: '拒绝受理',
 				content: dialogTml.wContent.suggestion,
@@ -276,69 +288,41 @@ page.ctrl('creditApproval', [], function($scope) {
 		/**
 		 * 审核通过按钮
 		 */
-		$console.find('#approvalPass').on('click', function() {
-			var that = $(this);
-			$.confirm({
-				title: '提交',
-				content: dialogTml.wContent.suggestion,
-				onContentReady: function() {
-					this.$content.find('#suggestion').val('#审核通过#');
-				},
-				buttons: {
-					'取消': {
-			            action: function () {
+		$el.find('#approvalPass').on('click', function() {
+			process();
+		})
+	}
 
-			            }
-			        },
-			        '确定': {
-			            action: function () {
-	            			var _reason = $.trim(this.$content.find('#suggestion').val());
-	            			console.log(_reason);
-            				// 流程跳转
-            				var params = {
-								taskIds: [$params.taskId],
-								orderNo: $params.orderNo
-							}
-            				if(_reason) {
-            					params.reason = _reason;
-            				}
-							console.log(params)
-							$.ajax({
-								type: 'post',
-								url: $http.api('tasks/complete', 'zyj'),
-								data: JSON.stringify(params),
-								dataType: 'json',
-								contentType: 'application/json;charset=utf-8',
-								success: $http.ok(function(result) {
-									console.log(result);
-									var loanTasks = result.data;
-									var taskObj = [];
-									for(var i = 0, len = loanTasks.length; i < len; i++) {
-										var obj = loanTasks[i];
-										taskObj.push({
-											key: obj.category,
-											id: obj.id,
-											name: obj.sceneName
-										})
-									}
-									// target为即将跳转任务列表的第一个任务
-									var target = loanTasks[0];
-									router.render('loanProcess/' + target.category, {
-										taskId: target.id, 
-										orderNo: target.orderNo,
-										tasks: taskObj,
-										path: 'loanProcess'
-									});
-									// router.render('loanProcess');
-									// toast.hide();
-								})
-							})
-			            }
-			        }
-			        
-			    }
-			})
-			
+	/**
+	 * 跳流程
+	 */
+	function process() {
+		$.confirm({
+			title: '提交订单',
+			content: dialogTml.wContent.suggestion,
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel',
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
+						}
+						var params = {
+							taskIds: taskIds,
+							orderNo: $params.orderNo
+						}
+						var reason = $.trim(this.$content.find('#suggestion').val());
+						if(reason) params.reason = reason;
+						tasksJump(params, 'approval');
+					}
+				}
+			}
 		})
 	}
 
@@ -387,22 +371,6 @@ page.ctrl('creditApproval', [], function($scope) {
 	}
 
 
-	var commitData = function(cb) {
-		$.ajax({
-			type: 'post',
-			url: $http.api('creditUser/updCreditList', 'jbs'),
-			data: JSON.stringify($scope.apiParams),
-			dataType: 'json',
-			contentType: 'application/json;charset=utf-8',
-			success: $http.ok(function(result) {
-				console.log(result);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
-			})
-		})
-	}
-
 
 	/***
 	* 加载页面模板
@@ -419,7 +387,7 @@ page.ctrl('creditApproval', [], function($scope) {
 		}
 		loadOrderInfo($scope.idx, function() {
 			setupLocation();
-			evt();
+			setupSubmitBar();
 		});
 		
 	});

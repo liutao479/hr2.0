@@ -59,4 +59,8 @@ $(function() {
 	$(document).ajaxComplete(function(event, jqxhr, settings){
 	    $.LoadingOverlay("hide");
 	});
+
+
+
+	
 });

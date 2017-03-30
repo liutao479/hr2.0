@@ -51,7 +51,7 @@
 		{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}
 			<div class="key-item-box">
 			<div class="key-item">申请查询时间：</div>
-			<div class="key-value">{{=row.submitDateStr || '假数据'}}</div>
+			<div class="key-value">{{=row.loanUserCredit.submitDateStr}}</div>
 		</div>
 		{{ } }}
 		</div>

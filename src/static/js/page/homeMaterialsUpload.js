@@ -81,57 +81,191 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 	}
 
 	/**
-	 * 页面首次加载立即处理事件
-	 */
-	var evt = function () {
+	* 设置底部按钮操作栏
+	*/
+	var setupSubmitBar = function() {
+		var $submitBar = $console.find('#submitBar');
+		$submitBar.data({
+			taskId: $params.taskId
+		});
+		$submitBar.submitBar(function($el) {
+			evt($el);
+		});
+	}
 
-		// 增加征信人员
-		$console.find('#addCreditUser').on('click', function() {
-			alert('增加征信人员')
+	/**
+	* 底部按钮操作栏事件
+	*/
+	var evt = function($el) {
+		/**
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
+
+		/**
+		 * 退回订单按钮
+		 */
+		$el.find('#backOrder').on('click', function() {
+			var that = $(this);
+			console.log($scope.result.data.loanTask.taskJumps)
+			$.alert({
+				title: '退回订单',
+				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
+				onContentReady: function() {
+					dialogEvt(this.$content);
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							var _reason = $.trim(this.$content.find('#suggestion').val());
+							this.$content.find('.checkbox-radio').each(function() {
+								if($(this).hasClass('checked')) {
+									$scope.jumpId = $(this).data('id');
+								}
+							})
+
+							if(!_reason) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请填写处理意见！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							} 
+							if(!$scope.jumpId) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请至少选择一项原因！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							}
+							var _params = {
+								taskId: $params.taskId,
+								jumpId: $scope.jumpId,
+								reason: _reason
+							}
+							console.log(_params)
+							$.ajax({
+								type: 'post',
+								url: $http.api('task/jump', 'zyj'),
+								data: _params,
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									
+									// router.render('loanProcess');
+									// toast.hide();
+								})
+							})
+						}
+					}
+				}
+			})
+		});
+
+		/**
+		 * 提交订单按钮
+		 */
+		$el.find('#taskSubmit').on('click', function() {
+			process();
+		})
+	}
+
+	/**
+	 * 跳流程
+	 */
+	function process() {
+		$.confirm({
+			title: '提交',
+			content: dialogTml.wContent.suggestion,
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel',
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
+						}
+						var params = {
+							taskIds: taskIds,
+							orderNo: $params.orderNo
+						}
+						var reason = $.trim(this.$content.find('#suggestion').val());
+						if(reason) params.reason = reason;
+						tasksJump(params, 'complete');
+					}
+				}
+			}
+		})
+	}
+
+	/**
+	 * 取消订单弹窗内事件逻辑处理
+	 */
+	var dialogEvt = function($dialog) {
+		var $reason = $dialog.find('#suggestion');
+		$scope.$checks = $dialog.find('.checkbox').checking();
+		// 复选框
+		$scope.$checks.filter('.checkbox-normal').each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				//用于监听意见有一个选中，则标题项选中
+				var flag = 0;
+				var str = '';
+				$(that).parent().parent().find('.checkbox-normal').each(function() {
+					if($(this).attr('checked')) {
+						str += $(this).data('value') + ',';
+						flag++;
+					}
+				})
+				str = '#' + str.substring(0, str.length - 1) + '#';				
+				$reason.val(str);
+				if(flag > 0) {
+					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
+				} else {
+					$reason.val('');
+					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
+				}
+				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+
+				// if()
+			});
 		})
 
-		// 提交按钮
-		$console.find('#submitOrder').on('click', function() {
-			// 流程跳转
-			var taskIds = [];
-			for(var i = 0, len = $params.tasks.length; i < len; i++) {
-				taskIds.push(parseInt($params.tasks[0].id));
-			}
-			var params = {
-				taskIds: $params.taskId,
-				orderNo: $params.orderNo
-			}
-			console.log(params)
-			$.ajax({
-				type: 'post',
-				url: $http.api('tasks/complete', 'zyj'),
-				data: JSON.stringify(params),
-				dataType: 'json',
-				contentType: 'application/json;charset=utf-8',
-				success: $http.ok(function(result) {
-					console.log(result);
-					var loanTasks = result.data;
-					var taskObj = [];
-					for(var i = 0, len = loanTasks.length; i < len; i++) {
-						var obj = loanTasks[i];
-						taskObj.push({
-							key: obj.category,
-							id: obj.id,
-							name: obj.sceneName
-						})
-					}
-					// target为即将跳转任务列表的第一个任务
-					var target = loanTasks[0];
-					router.render('loanProcess/' + target.category, {
-						taskId: target.id, 
-						orderNo: target.orderNo,
-						tasks: taskObj,
-						path: 'loanProcess'
-					});
-					// router.render('loanProcess');
-					// toast.hide();
-				})
-			})
+		// 单选框
+		$scope.$checks.filter('.checkbox-radio').each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				$reason.val('');
+				$(that).parent().parent().find('.checkbox-normal').removeClass('checked').attr('checked', false);
+				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+			});
 		})
 	}
 
@@ -171,7 +305,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 		}
 		loadOrderInfo(function() {
 			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
-			evt();
+			setupSubmitBar();
 		});
 	})
 
