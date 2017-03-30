@@ -44,6 +44,21 @@
 			name: '保证金管理',
 			route: 'marginManage'
 		},
+		inspectData: {
+			name: '贷后数据核查',
+			route: '',
+			icon: '&#xe61b;'
+		},
+		'activeInspect': {
+			parent: 'inspectData',
+			name: '发起主动抽查',
+			route: 'activeInspect'
+		},
+		'historyInspect': {
+			key: 'inspectData',
+			name: '历史核查记录',
+			route: 'historyInspect'
+		},
 		licenceManage: {
 			name: '上牌管理',
 			route: '',

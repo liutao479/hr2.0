@@ -145,7 +145,14 @@
 							{{ } }}\
 						</tbody>\
 					</table>\
-				</div>'
+				</div>',
+		btngroup:'{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
+			{{ if(col.select){ }}\
+			<div class="block-item-data selected">{{=col.text}}</div>\
+			{{ }else{ }}\
+			<div class="block-item-data">{{=col.text}}</div>\
+			{{ } }}\
+			{{ } }}'
 	}
 	g.dialogTml.wCommit = {
 		sure: '<div class="w-commit-area">\

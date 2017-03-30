@@ -1,0 +1,51 @@
+{
+    "code":0,
+    "data":[{
+        "msg":{
+            "project":"数据源核查",
+            "bank":"杭州联合银行",
+            "time":"2017-01-01",
+            "status":1
+        },
+        "info":{
+            "project":"数据源核查",
+            "licenseplate":"浙A SB110",
+            "status":1,
+            "usename":"刘伟",
+            "phone":"12131213141",
+            "address":"杭州萧山",
+            "outpctime":"2017-01-01",
+            "gradetime":"2017-01-02",
+            "checktime":"2017-01-03",
+            "insurancetime":"2017-01-01",
+            "isAccidentEscape":false,
+            "isDeck":false,
+            "isSteal":false,
+            "QualifiedNumber":"24252342334"
+        }
+    },{
+        "msg":{
+            "project":"数据源核查",
+            "bank":"杭州联合银行",
+            "time":"2017-01-01",
+            "status":1
+        },
+        "info":{
+            "project":"数据源核查",
+            "licenseplate":"浙A SB110",
+            "status":1,
+            "usename":"刘伟",
+            "phone":"12131213141",
+            "address":"杭州萧山",
+            "outpctime":"2017-01-01",
+            "gradetime":"2017-01-02",
+            "checktime":"2017-01-03",
+            "insurancetime":"2017-01-01",
+            "isAccidentEscape":false,
+            "isDeck":false,
+            "isSteal":false,
+            "QualifiedNumber":"24252342334"
+        }
+    }],
+	"msg": "success"
+}

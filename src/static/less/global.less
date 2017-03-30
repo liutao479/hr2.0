@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_kicdgl33vlxo5hfr.eot');
-  src: url('//at.alicdn.com/t/font_kicdgl33vlxo5hfr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_kicdgl33vlxo5hfr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_kicdgl33vlxo5hfr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_kicdgl33vlxo5hfr.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_ou84zovwr6d8ia4i.eot');
+  src: url('//at.alicdn.com/t/font_ou84zovwr6d8ia4i.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_ou84zovwr6d8ia4i.woff') format('woff'),
+  url('//at.alicdn.com/t/font_ou84zovwr6d8ia4i.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_ou84zovwr6d8ia4i.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -669,10 +669,12 @@ input[disabled]{
         background-color: #f3f4f9;
         line-height: 50px;
         border-bottom: 1px solid @borderColor;
+        td{
+            padding:0 20px;
+        }
         .checkbox {
             position: relative;
             top: 4px;
-            margin-left: 20px;
         }
         .iconfont-man {
             position: relative;
@@ -1020,45 +1022,6 @@ input[disabled]{
             line-height: 73px;
             .key {
                 float: left;
-            }
-        }
-        .import-result-box {
-            .import-dl {
-                margin: 57px auto;
-                width: 390px;
-                .import-icon-box {
-                    float: left;
-                    .import-icon {
-                        margin-top: 10px;
-                        width: 50px;
-                        height: 50px;
-                        line-height: 50px;
-                        text-align: center;
-                        .borderRadius(25px);
-                        background-color: @successColor;
-                        color: #FFF;
-                        .iconfont {
-                            font-size: 30px !important;
-                            font-weight: 600;
-                        }
-                    }
-                }
-                .import-msg-box {
-                    float: left;
-                    margin-left: 22px;
-                    .import-result {
-                        line-height: 32px;
-                        color: @successColor;
-                        font-size: 20px;
-                    }
-                    .import-text {
-                        line-height: 40px;
-                    }
-                    .import-preview {
-                        margin-top: 23px;
-                        
-                    }
-                }
             }
         }
 
@@ -2480,5 +2443,120 @@ input[disabled]{
     .l-value {
         display: inline-block;
         text-align: left;
+    }
+}
+
+.block-item-data {
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;
+    position: relative;
+    display: inline-block;
+    border: 1px solid #cad2e1;
+    .borderRadius(4px);
+    background-color: #FFF;
+    margin: 10px 0 0 10px;
+    padding: 0 12px;
+    height: 38px;
+    line-height: 38px;
+    color: @fontColor;
+    cursor: pointer;
+    &.selected {
+        color: @tableActiveColor;
+        border-color: @tableActiveColor;
+    }
+    .tips-content {
+        top: 44px;
+        left: -70px;
+    }
+}
+
+
+.import-dl {
+    // margin: 57px auto;
+    // width: 390px;
+    margin:32px auto;
+    width:300px;
+    .import-icon-box {
+        float: left;
+        .import-icon {
+            margin-top: 10px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            .borderRadius(25px);
+            background-color: @successColor;
+            color: #FFF;
+            .iconfont {
+                font-size: 30px !important;
+                font-weight: 600;
+            }
+        }
+    }
+    .import-msg-box {
+        float: left;
+        margin-left: 22px;
+        .import-result {
+            line-height: 32px;
+            color: @successColor;
+            font-size: 20px;
+        }
+        .import-text {
+            line-height: 40px;
+        }
+        .import-preview {
+            margin-top: 23px;
+            
+        }
+    }
+}
+
+.col-l-total{
+    padding:0 30px;
+    .col-l-two{
+        width:50%;
+        display:inline-block;
+        padding:20px 0;
+        vertical-align: top;
+        &:not(:first-child){
+            padding-left:30px;
+        }
+        ul{
+            li{
+                line-height:30px;
+                span.key{
+                    color:#999;
+                }
+            }
+            li.title{
+                margin-left:-20px;
+                line-height:normal;
+                border-left:3px solid #6b59c9;
+                padding-left: 10px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    &.btdashed{
+        border-bottom:1px dashed #d6dbdf;
+    }
+    table.netloan{
+        text-align: center;
+        margin:30px 0;
+        tr{
+            line-height:30px;
+            td{
+                padding:0 30px;
+                span{
+                    font-size:30px;
+                }
+            }
+            &.key{
+                color:#999;
+            }
+        }
     }
 }

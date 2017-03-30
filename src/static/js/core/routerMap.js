@@ -35,6 +35,21 @@
 			refer: [],
 			page: 'marginManage'
 		},
+		'activeInspect': {
+			title: '发起主动抽查',
+			refer: [],
+			page: 'activeInspect'
+		},
+		'historyInspect': {
+			title: '历史核查记录',
+			refer: [],
+			page: 'historyInspect'
+		},
+		'historyInspectDetail': {
+			title: '历史核查记录详情',
+			refer: [],
+			page: 'historyInspectDetail'
+		},
 		'licenceProcess': {
 			title: '上牌办理',
 			refer: [],

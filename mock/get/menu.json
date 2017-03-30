@@ -6,6 +6,7 @@
 		"orderModifyAudit":[],
 		"cancelOrderAudit":[],
 		"moneyManage": ["loanManage", "marginManage"],
+		"inspectData":["activeInspect","historyInspect"],
 		"licenceManage": ["licenceProcess", "licenceAudit", "licenceStatis"],
 		"mortgageManage": ["mortgageProcess", "mortgageAudit", "mortgageStatis"],
 		"expireManage": ["expireInfoInput", "expireProcess"],
