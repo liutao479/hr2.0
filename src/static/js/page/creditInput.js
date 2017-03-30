@@ -367,9 +367,9 @@ page.ctrl('creditInput', [], function($scope) {
 		// 征信字段失去焦点事件
 		$el.find('.zxzd').on('blur', function() {
 			var that = $(this),
-				value = that.val();
+				value = $.trim(that.val());
 			console.log(value)
-			if(!value) {
+			if(that.hasClass('required') && !value) {
 				that.removeClass('error-input').addClass('error-input');
 				return false;
 			} else {
@@ -379,7 +379,7 @@ page.ctrl('creditInput', [], function($scope) {
 				var item = $scope.apiParams[i];
 				if(that.data('userId') == item.userId) {
 					for(var j = 0, len2 = item.loanCreditResultList.length; j < len2; j++) {
-						if(that.data('id') == item.loanCreditResultList[j].id) {
+						if(that.data('creditKey') == item.loanCreditResultList[j].creditKey) {
 							item.loanCreditResultList[j][that.data('type')] = value;
 						}
 					}
