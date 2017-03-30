@@ -8,16 +8,16 @@ page.ctrl('loanInfo', function($scope) {
 	$scope.activeTaskIdx = $params.selected || 0;
 
 	var postUrl = {
-		"saveDDXX": urlStr+"/loanInfoInput/updLoanOrder",
-		"saveCLXX": urlStr+"/loanInfoInput/updLoanUserCar",
-		"saveFQXX": urlStr+"/loanInfoInput/updLoanUserStage",
-		"saveZJKR": urlStr+"/loanInfoInput/updLoanUser",
-		"saveGTHK": urlStr+"/loanInfoInput/updLoanUser",
-		"saveFDBR": urlStr+"/loanInfoInput/updLoanUser",
-		"saveJJLXR": urlStr+"/loanInfoInput/updLoanEmergencyConact",
-		"saveHKKXX": urlStr+"/loanInfoInput/updLoanPayCard",
-		"saveFYXX": urlStr+"/loanInfoInput/updLoanFee",
-		"saveQTXX": urlStr+"/loanInfoInput/updLoanIndividuation"
+		"saveDDXX": $http.api('loanInfoInput/updLoanOrder', 'jbs'),
+		"saveCLXX": $http.api('loanInfoInput/updLoanUserCar', 'jbs'),
+		"saveFQXX": $http.api('loanInfoInput/updLoanUserStage', 'jbs'),
+		"saveZJKR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
+		"saveGTHK": $http.api('loanInfoInput/updLoanUser', 'jbs'),
+		"saveFDBR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
+		"saveJJLXR": $http.api('loanInfoInput/updLoanEmergencyConact', 'jbs'),
+		"saveHKKXX": $http.api('loanInfoInput/updLoanPayCard', 'jbs'),
+		"saveFYXX": $http.api('loanInfoInput/updLoanFee', 'jbs'),
+		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation', 'jbs')
 	};
 
 	/**
@@ -30,9 +30,7 @@ page.ctrl('loanInfo', function($scope) {
 //			 data['taskId']=80871;
 			data['taskId']=$params.taskId;
 		$.ajax({
-//			 url: $http.api('loan.infoBak'),
-//			 url: $http.api('loanInfoInput/info','jbs'),
-			 url: urlStr+'/loanInfoInput/info',
+			url: $http.api('loanInfoInput/info','jbs'),
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -129,7 +127,8 @@ page.ctrl('loanInfo', function($scope) {
 				var data={};
 					data['carShopId'] = $("#busiSourceId").val();
 				$.ajax({
-					url: urlStr+"/demandCarShopAccount/getAccountList",
+					type: 'post',
+					url: $http.api('demandCarShopAccount/getAccountList', 'jbs'),
 					data: data,
 					dataType: 'json',
 					success: $http.ok(function(result) {
@@ -192,7 +191,8 @@ page.ctrl('loanInfo', function($scope) {
 			var data={};
 				data['carShopId'] = $("#busiSourceId").val();
 			$.ajax({
-				url:  urlStr+"/demandCarShopAccount/getAccountList",
+				type: 'post',
+				url: $http.api('demandCarShopAccount/getAccountList', 'jbs'),
 				data: data,
 				dataType: 'json',
 				success: $http.ok(function(result) {
@@ -730,7 +730,6 @@ page.ctrl('loanInfo', function($scope) {
 		console.log(picked);
 	}
 	$scope.busiSourceNamePicker = function(picked) {
-		debugger
 		console.log(picked);
 		$scope.busiSourceNameId = picked.id;
 		$("#numIpt").val('');
@@ -766,7 +765,9 @@ page.ctrl('loanInfo', function($scope) {
 	var car = {
 		brand: function(cb) {
 			$.ajax({
-				url: urlStr+'/car/carBrandList',
+				type: 'post',
+				url: $http.api('car/carBrandList', 'jbs'),
+				dataType: 'json',
 				success: function(xhr) {
 					var sourceData = {
 						items: xhr.data,
@@ -779,7 +780,9 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		series: function(brandId, cb) {
 			$.ajax({
-				url: urlStr+'/car/carSeries',
+				type: 'post',
+				url: $http.api('car/carSeries', 'jbs'),
+				dataType: 'json',
 				data: {
 					brandId: brandId
 				},
@@ -795,7 +798,9 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		specs: function(seriesId, cb) {
 			$.ajax({
-				url: urlStr+'/car/carSpecs',
+				type: 'post',
+				url: $http.api('car/carSpecs', 'jbs'),
+				dataType: 'json',
 				data: {
 					serieId: seriesId
 				},
@@ -814,7 +819,8 @@ page.ctrl('loanInfo', function($scope) {
 	var areaSel = {
 		province: function(cb) {
 			$.ajax({
-				url: urlStr+'/area/get',
+				type: 'post',
+				url: $http.api('area/get', 'jbs'),
 				dataType:'json',
 				success: function(xhr) {
 					var sourceData = {
@@ -828,7 +834,8 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		city: function(areaId, cb) {
 			$.ajax({
-				url: urlStr+'/area/get',
+				type: 'post',
+				url: $http.api('area/get', 'jbs'),
 				data: {
 					parentId: areaId
 				},
@@ -845,7 +852,8 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		country: function(areaId, cb) {
 			$.ajax({
-				url: urlStr+'/area/get',
+				type: 'post',
+				url: $http.api('area/get', 'jbs'),
 				data: {
 					parentId: areaId
 				},
@@ -924,6 +932,7 @@ page.ctrl('loanInfo', function($scope) {
 			}
 			
 			$.ajax({
+				type: 'post',
 				url: urlApiMap[keyType],
 				data:data,
 				dataType: 'json',
@@ -941,11 +950,7 @@ page.ctrl('loanInfo', function($scope) {
 			if(!$scope.busiSourceNameId) {
 				$.alert({
 					title: '提示',
-					content: '<div class="w-content"><div>请填写业务来源方名称！</div></div>',
-					useBootstrap: false,
-					boxWidth: '500px',
-					theme: 'light',
-					type: 'purple',
+					content: tool.alert('请填写业务来源方名称！'),
 					buttons: {
 						'确定': {
 				            action: function () {
@@ -956,9 +961,10 @@ page.ctrl('loanInfo', function($scope) {
 				return false;
 			}else{
 				$.ajax({
-					url: urlStr+"/demandCarShopAccount/getAccountList",
+					type: 'post',
+					url: $http.api('demandCarShopAccount/getAccountList', 'jbs'),
 					data:{
-						'carShopId':$scope.busiSourceNameId
+						'carShopId': $scope.busiSourceNameId
 					},
 					dataType: 'json',
 					success: $http.ok(function(xhr) {
@@ -976,7 +982,8 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		demandBankId: function(t, p, cb) {
 			$.ajax({
-				url: urlStr+"/demandBank/selectBank",
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'jbs'),
 //				data:{
 //					'code':'busimode'
 //				},

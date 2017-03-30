@@ -61,8 +61,8 @@
 			// 		return 'http://192.168.1.44:8080/' + method;
 			// 		break;
 			// }
-			return 'http://192.168.1.86:8080/' + method;
-			// return 'http://192.168.0.186:9999/' + method;
+			// return 'http://192.168.1.86:8080/' + method;
+			return 'http://192.168.0.186:9999/' + method;
 
 
 			
@@ -194,9 +194,7 @@
 	function unAuth() {
 		$.alert({
 			title: '提示',
-			content: '你的登录授权无效或已过期',
-			useBootstrap: false,
-			boxWidth: '500px',
+			content: tool.alert('你的登录授权无效或已过期'),
 			buttons:{
 				ok: {
 					text: '确定',
