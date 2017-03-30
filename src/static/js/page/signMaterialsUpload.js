@@ -54,9 +54,9 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: $scope.result.data.loanTask.sceneName,
+			current: $scope.result.data.loanTask.taskName,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
+			orderDate: $scope.result.data.loanTask.loanOrder.createDateStr
 		});
 		$location.location();
 	}
@@ -213,6 +213,7 @@ page.ctrl('signMaterialsUpload', function($scope) {
 							taskIds.push(parseInt($params.tasks[i].id));
 						}
 						var params = {
+							taskId: $params.taskId,
 							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}

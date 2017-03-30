@@ -89,9 +89,9 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '征信材料审核',
+			current: $scope.result.data.loanTask.taskName,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
+			orderDate: $scope.result.data.loanTask.loanOrder.createDateStr
 		});
 		$location.location();
 	}
@@ -178,7 +178,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 									success: $http.ok(function(result) {
 										console.log(result);
 										
-										// router.render('loanProcess');
+										router.render('loanProcess');
 										// toast.hide();
 									})
 								})
@@ -255,6 +255,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 							taskIds.push(parseInt($params.tasks[i].id));
 						}
 						var params = {
+							taskId: $params.taskId,
 							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}

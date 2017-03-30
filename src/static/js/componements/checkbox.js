@@ -54,14 +54,12 @@
 
 	checking.prototype.full = function() {
 		var self = this;
-		self.$el.addClass('checked').attr('checked', true);
-		// self.$el.html('<i class="iconfont">&#xe659;</i>');
+		self.$el.removeClass('checked').addClass('checked').attr('checked', true);
 	}
 
 
 	checking.prototype.empty = function() {
 		var self = this;
 		self.$el.removeClass('checked').attr('checked', false);
-		// self.$el.html();
 	}
 })(jQuery);

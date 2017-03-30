@@ -34,6 +34,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 			type: 'post',
 			dataType: 'json',
 			success: $http.ok(function(result) {
+				console.log(result)
 				$scope.result = result;
 				setupLocation();
 				if(result.data.FQXX && result.data.FQXX.renewalInfo){
@@ -62,11 +63,12 @@ page.ctrl('loanInfoAudit', function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '贷款信息录入',
+			current: $scope.result.data.loanTask.taskName,
 			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
 	}
+
 	/**
 	* 页面加载完成对所有带“*”的input进行必填绑定
 	*/
@@ -154,121 +156,9 @@ page.ctrl('loanInfoAudit', function($scope) {
 //			console.log(keyType);
 //		});
 		// 提交
-		$console.find('#submitOrder').on('click', function() {
-			console.log("提交订单");
-			var that = $(this);
-			// if( ) {
-			// 	//判断必填项是否填全
-			// } else {
-
-			// }
-			// 流程跳转
-			var params = {
-				taskIds: [$params.taskId],
-				orderNo: $params.orderNo
-			}
-			console.log(params)
-			$.ajax({
-				type: 'post',
-				url: $http.api('tasks/complete', 'zyj'),
-				data: JSON.stringify(params),
-				dataType: 'json',
-				contentType: 'application/json;charset=utf-8',
-				success: $http.ok(function(result) {
-					console.log(result);
-					var loanTasks = result.data;
-					var taskObj = [];
-					for(var i = 0, len = loanTasks.length; i < len; i++) {
-						var obj = loanTasks[i];
-						taskObj.push({
-							key: obj.category,
-							id: obj.id,
-							name: obj.sceneName
-						})
-					}
-					// target为即将跳转任务列表的第一个任务
-					var target = loanTasks[0];
-					router.render('loanProcess/' + target.category, {
-						taskId: target.id, 
-						orderNo: target.orderNo,
-						tasks: taskObj,
-						path: 'loanProcess'
-					});
-					// router.render('loanProcess');
-					// toast.hide();
-				})
-			})
-
-			//下面为周海洋提交接口
-			/*
-			$.confirm({
-				title: '提交',
-				content: dialogTml.wContent.suggestion,
-				useBootstrap: false,
-				boxWidth: '500px',
-				theme: 'light',
-				type: 'purple',
-				buttons: {
-					'取消': {
-			            action: function () {
-
-			            }
-			        },
-			        '确定': {
-			            action: function () {
-	            			var _reason = $('#suggestion').val();
-	            			console.log(_reason);
-	            			if(!_reason) {
-	            				$.alert({
-	            					title: '提示',
-									content: '<div class="w-content"><div>请填写处理意见！</div></div>',
-									useBootstrap: false,
-									boxWidth: '500px',
-									theme: 'light',
-									type: 'purple',
-									buttons: {
-										'确定': {
-								            action: function () {
-								            }
-								        }
-								    }
-	            				})
-	            				return false;
-	            			} else {
-	            				$.ajax({
-									type: 'post',
-//									url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
-									url: urlStr+'/loanInfoInput/submit/80871',
-//									data: {
-//										taskId: $params.taskId,
-//										orderNo: $params.orderNo,
-//										reason: _reason
-//									},
-									dataType: 'json',
-									success: $http.ok(function(xhr) {
-										console.log(xhr);
-									})
-								})
-	            				$.ajax({
-									type: 'post',
-									url: $http.api('task/complete', 'jbs'),
-									data: {
-										taskId: $params.taskId,
-										orderNo: $params.orderNo,
-										reason: _reason
-									},
-									dataType: 'json',
-									success: $http.ok(function(result) {
-										console.log(result);
-									})
-								})
-	            			}
-			            }
-			        }
-			    }
-			})
-			*/
-		})
+		// $console.find('#submitOrder').on('click', function() {
+			
+		// })
 	}		
 	
 //点击下拉框拉取选项

@@ -87,21 +87,40 @@
 				var code = response.code;
 				switch (code) {
 					case 1001:
-						$.alert('非法的参数');
+						$.alert({
+							title: '提示',
+							content: tool.alert('非法的参数！'),
+							buttons:{
+								ok: {
+									text: '确定',
+									action: function() {
+										// location.href = 'login.html';
+										// alert(1)
+									}
+								}
+							}
+						})
 						break;
 					case 1004:
 						unAuth();
 						break;
 					case -1:
-
+						$.alert({
+							title: '提示',
+							content: tool.alert('系统异常！'),
+							buttons:{
+								ok: {
+									text: '确定',
+									action: function() {
+									}
+								}
+							}
+						})
 						break;
 					case 6011:
 						$.alert({
 							title: '提示',
-							content: '账户已存在',
-							useBootstrap: false,
-							boxWidth: '500px',
-							theme: 'light',
+							content: tool.alert('账户已存在'),
 							buttons:{
 								ok: {
 									text: '确定',
@@ -117,7 +136,7 @@
 						// statements_def
 						break;
 				}
-				console.log('failed');
+				console.log('请求失败');
 			}
 		}
 	};
@@ -175,9 +194,7 @@
 	function unAuth() {
 		$.alert({
 			title: '提示',
-			content: '你的登录授权无效或已过期',
-			useBootstrap: false,
-			boxWidth: '500px',
+			content: tool.alert('你的登录授权无效或已过期'),
 			buttons:{
 				ok: {
 					text: '确定',

@@ -8,16 +8,16 @@ page.ctrl('loanInfo', function($scope) {
 	$scope.activeTaskIdx = $params.selected || 0;
 
 	var postUrl = {
-		"saveDDXX": urlStr+"/loanInfoInput/updLoanOrder",
-		"saveCLXX": urlStr+"/loanInfoInput/updLoanUserCar",
-		"saveFQXX": urlStr+"/loanInfoInput/updLoanUserStage",
-		"saveZJKR": urlStr+"/loanInfoInput/updLoanUser",
-		"saveGTHK": urlStr+"/loanInfoInput/updLoanUser",
-		"saveFDBR": urlStr+"/loanInfoInput/updLoanUser",
-		"saveJJLXR": urlStr+"/loanInfoInput/updLoanEmergencyConact",
-		"saveHKKXX": urlStr+"/loanInfoInput/updLoanPayCard",
-		"saveFYXX": urlStr+"/loanInfoInput/updLoanFee",
-		"saveQTXX": urlStr+"/loanInfoInput/updLoanIndividuation"
+		"saveDDXX": $http.api('loanInfoInput/updLoanOrder', 'jbs'),
+		"saveCLXX": $http.api('loanInfoInput/updLoanUserCar', 'jbs'),
+		"saveFQXX": $http.api('loanInfoInput/updLoanUserStage', 'jbs'),
+		"saveZJKR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
+		"saveGTHK": $http.api('loanInfoInput/updLoanUser', 'jbs'),
+		"saveFDBR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
+		"saveJJLXR": $http.api('loanInfoInput/updLoanEmergencyConact', 'jbs'),
+		"saveHKKXX": $http.api('loanInfoInput/updLoanPayCard', 'jbs'),
+		"saveFYXX": $http.api('loanInfoInput/updLoanFee', 'jbs'),
+		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation', 'jbs')
 	};
 
 	/**
@@ -30,13 +30,13 @@ page.ctrl('loanInfo', function($scope) {
 //			 data['taskId']=80871;
 			data['taskId']=$params.taskId;
 		$.ajax({
-//			 url: $http.api('loan.infoBak'),
-//			 url: $http.api('loanInfoInput/info','jbs'),
-			 url: urlStr+'/loanInfoInput/info',
+			url: $http.api('loanInfoInput/info','jbs'),
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
+				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
+				console.log(result)
 				setupLocation();
 				if(result.data.FQXX && result.data.FQXX.renewalInfo){
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
@@ -64,7 +64,7 @@ page.ctrl('loanInfo', function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '贷款信息录入',
+			current: $scope.result.data.loanTask.taskName,
 			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
@@ -410,8 +410,95 @@ page.ctrl('loanInfo', function($scope) {
 	* 底部按钮操作栏事件
 	*/
 	var evt = function($el) {
+
 		/**
-		 * 审核通过按钮
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
+
+		/**
+		 * 退回订单按钮
+		 */
+		$el.find('#backOrder').on('click', function() {
+			var that = $(this);
+			console.log($scope.result.data.loanTask.taskJumps)
+			$.alert({
+				title: '退回订单',
+				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
+				onContentReady: function() {
+					dialogEvt(this.$content);
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							var _reason = $.trim(this.$content.find('#suggestion').val());
+							this.$content.find('.checkbox-radio').each(function() {
+								if($(this).hasClass('checked')) {
+									$scope.jumpId = $(this).data('id');
+								}
+							})
+
+							if(!_reason) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请填写处理意见！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							} 
+							if(!$scope.jumpId) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请至少选择一项原因！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							}
+							var _params = {
+								taskId: $params.taskId,
+								jumpId: $scope.jumpId,
+								reason: _reason
+							}
+							console.log(_params)
+							$.ajax({
+								type: 'post',
+								url: $http.api('task/jump', 'zyj'),
+								data: _params,
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									
+									// router.render('loanProcess');
+									// toast.hide();
+								})
+							})
+						}
+					}
+				}
+			})
+		});
+		/**
+		 * 提交按钮按钮
 		 */
 		$el.find('#taskSubmit').on('click', function() {
 			process();
@@ -458,7 +545,55 @@ page.ctrl('loanInfo', function($scope) {
 			}
 		})
 	}
-	
+
+	/**
+	 * 取消订单弹窗内事件逻辑处理
+	 */
+	var dialogEvt = function($dialog) {
+		var $reason = $dialog.find('#suggestion');
+		$scope.$checks = $dialog.find('.checkbox').checking();
+		// 复选框
+		$scope.$checks.filter('.checkbox-normal').each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				//用于监听意见有一个选中，则标题项选中
+				var flag = 0;
+				var str = '';
+				$(that).parent().parent().find('.checkbox-normal').each(function() {
+					if($(this).attr('checked')) {
+						str += $(this).data('value') + ',';
+						flag++;
+					}
+				})
+				str = '#' + str.substring(0, str.length - 1) + '#';				
+				$reason.val(str);
+				if(flag > 0) {
+					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
+				} else {
+					$reason.val('');
+					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
+				}
+				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+
+				// if()
+			});
+		})
+
+		// 单选框
+		$scope.$checks.filter('.checkbox-radio').each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				$reason.val('');
+				$(that).parent().parent().find('.checkbox-normal').removeClass('checked').attr('checked', false);
+				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+			});
+		})
+	}
+
+
+	/**
+	 * 加载页面模板
+	 */
 	$console.load(router.template('iframe/loanInfo'), function() {
 		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
 		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
@@ -520,7 +655,9 @@ page.ctrl('loanInfo', function($scope) {
 	var car = {
 		brand: function(cb) {
 			$.ajax({
-				url: urlStr+'/car/carBrandList',
+				type: 'post',
+				url: $http.api('car/carBrandList', 'jbs'),
+				dataType: 'json',
 				success: function(xhr) {
 					var sourceData = {
 						items: xhr.data,
@@ -533,7 +670,9 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		series: function(brandId, cb) {
 			$.ajax({
-				url: urlStr+'/car/carSeries',
+				type: 'post',
+				url: $http.api('car/carSeries', 'jbs'),
+				dataType: 'json',
 				data: {
 					brandId: brandId
 				},
@@ -549,7 +688,9 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		specs: function(seriesId, cb) {
 			$.ajax({
-				url: urlStr+'/car/carSpecs',
+				type: 'post',
+				url: $http.api('car/carSpecs', 'jbs'),
+				dataType: 'json',
 				data: {
 					serieId: seriesId
 				},
@@ -568,7 +709,8 @@ page.ctrl('loanInfo', function($scope) {
 	var areaSel = {
 		province: function(cb) {
 			$.ajax({
-				url: urlStr+'/area/get',
+				type: 'post',
+				url: $http.api('area/get', 'jbs'),
 				dataType:'json',
 				success: function(xhr) {
 					var sourceData = {
@@ -582,7 +724,8 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		city: function(areaId, cb) {
 			$.ajax({
-				url: urlStr+'/area/get',
+				type: 'post',
+				url: $http.api('area/get', 'jbs'),
 				data: {
 					parentId: areaId
 				},
@@ -599,7 +742,8 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		country: function(areaId, cb) {
 			$.ajax({
-				url: urlStr+'/area/get',
+				type: 'post',
+				url: $http.api('area/get', 'jbs'),
 				data: {
 					parentId: areaId
 				},
@@ -678,6 +822,7 @@ page.ctrl('loanInfo', function($scope) {
 			}
 			
 			$.ajax({
+				type: 'post',
 				url: urlApiMap[keyType],
 				data:data,
 				dataType: 'json',
@@ -695,11 +840,7 @@ page.ctrl('loanInfo', function($scope) {
 			if(!$scope.busiSourceNameId) {
 				$.alert({
 					title: '提示',
-					content: '<div class="w-content"><div>请填写业务来源方名称！</div></div>',
-					useBootstrap: false,
-					boxWidth: '500px',
-					theme: 'light',
-					type: 'purple',
+					content: tool.alert('请填写业务来源方名称！'),
 					buttons: {
 						'确定': {
 				            action: function () {
@@ -710,9 +851,10 @@ page.ctrl('loanInfo', function($scope) {
 				return false;
 			}else{
 				$.ajax({
-					url: urlStr+"/demandCarShopAccount/getAccountList",
+					type: 'post',
+					url: $http.api('demandCarShopAccount/getAccountList', 'jbs'),
 					data:{
-						'carShopId':$scope.busiSourceNameId
+						'carShopId': $scope.busiSourceNameId
 					},
 					dataType: 'json',
 					success: $http.ok(function(xhr) {
@@ -730,7 +872,8 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		demandBankId: function(t, p, cb) {
 			$.ajax({
-				url: urlStr+"/demandBank/selectBank",
+				type: 'post',
+				url: $http.api('demandBank/selectBank', 'jbs'),
 //				data:{
 //					'code':'busimode'
 //				},

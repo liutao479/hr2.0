@@ -54,7 +54,7 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: $scope.result.cfgData.name,
+			current: $scope.result.data.loanTask.taskName,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
 			orderDate: tool.formatDate($scope.result.data.loanTask.createDate, true)
 		});

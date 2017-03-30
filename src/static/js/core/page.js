@@ -20,14 +20,14 @@
 
 
 //单选框
-$(document).on('selectstart', '.radio', false);
-$(document).on('click', '.radio', function() {
-	if(!$(this).attr('checked')) {
-		$(this).addClass('checked').attr('checked',true);
-	} else {
-		$(this).removeClass('checked').attr('checked',false);
-	}
-})
+// $(document).on('selectstart', '.radio', false);
+// $(document).on('click', '.radio', function() {
+// 	if(!$(this).attr('checked')) {
+// 		$(this).addClass('checked').attr('checked',true);
+// 	} else {
+// 		$(this).removeClass('checked').attr('checked',false);
+// 	}
+// })
 
 
 //右边栏
@@ -140,11 +140,18 @@ function tasksJump(params, type, cb) {
 						name: obj.sceneName
 					})
 				}
-				// target为即将跳转任务列表的第一个任务
-				var target = loanTasks[0];
+				// debugger
+				for(var i = 0, len = loanTasks.length; i < len; i++) {
+					if(!loanTasks[i].submited) {
+						var target = loanTasks[i];
+						var selected = i;
+						break;
+					}
+				}
 				router.render('loanProcess/' + target.category, {
 					taskId: target.id, 
 					orderNo: target.orderNo,
+					selected: selected,
 					tasks: taskObj,
 					path: 'loanProcess'
 				});

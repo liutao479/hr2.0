@@ -37,7 +37,7 @@ page.ctrl('phoneCheck', function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '电核',
+			current: $scope.result.data.loanTask.taskName,
 			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
