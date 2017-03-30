@@ -25,11 +25,11 @@
 					{{ var fieldCode = sec.code; }}
 					{{ if(fieldCode == 'GTHK' || fieldCode == 'FDBR'){ }}
 						{{ for(var i=0,lenthI = it.data[fieldCode].length;i<lenthI;i++){ }}
-							{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
-							<div class="panel panel-loan no-top-border">
-							{{ } else { }}
-							<div class="panel panel-loan mt15">
-							{{ } }}
+						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
+						<div class="panel panel-loan no-top-border">
+						{{ } else { }}
+						<div class="panel panel-loan mt15">
+						{{ } }}
 							<div class="panel-title-box">
 								<div class="panel-title">
 									<i class="iconfont">&#xe626;</i>
@@ -219,7 +219,11 @@
 						</div>
 						{{ } }}
 					{{ }else if(fieldCode == 'FQXX'){ }}
-						<div class="panel panel-loan">
+						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
+						<div class="panel panel-loan no-top-border">
+						{{ } else { }}
+						<div class="panel panel-loan mt15">
+						{{ } }}
 							<div class="panel-title-box">
 								<div class="panel-title">
 									<i class="iconfont">&#xe626;</i>
@@ -475,7 +479,11 @@
 							</div>		
 						</div>
 					{{ }else{ }}
-						<div class="panel panel-loan">
+						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
+						<div class="panel panel-loan no-top-border">
+						{{ } else { }}
+						<div class="panel panel-loan mt15">
+						{{ } }}
 							<div class="panel-title-box">
 								<div class="panel-title">
 									<i class="iconfont">&#xe626;</i>
