@@ -69,47 +69,42 @@ page.ctrl('loan', function($scope) {
 			var that = $(this);
 			var idx = that.data('idx');
 			var loanTasks = $scope.pageData[idx].loanTasks;
-			var taskObj = [];
+			var taskObj = [], flag = 0;
 			for(var i = 0, len = loanTasks.length; i < len; i++) {
 				var obj = loanTasks[i];
 				taskObj.push({
 					key: obj.category,
 					id: obj.id,
-					name: obj.sceneName
+					name: obj.sceneName,
+					submited: obj.submited
 				})
+				if(!loanTasks[i].submited) {
+					flag++;
+				}
 			}
-			router.render(that.data('href'), {
+			for(var i = 0, len = loanTasks.length; i < len; i++) {
+				if(!loanTasks[i].submited) {
+					var target = loanTasks[i];
+					var selected = i;
+					if(flag == 1) taskObj[selected].submited = true;
+					break;
+				}
+			}
+			console.log(target)
+			router.render('loanProcess/' + target.category, {
 				taskId: that.data('id'), 
 				orderNo: that.data('orderNo'),
 				tasks: taskObj,
+				selected: selected,
 				path: 'loanProcess'
 			});
 		});
 
 		/**
-		 * 消失隐藏
+		 * 任务栏消失隐藏
 		 */
 		$console.find('#loanTable .loanTasks').hover(function() {
 			$(this).find('.meanwhile-hover').toggle();
-		})
-
-		/**
-		* 任务类型点击显示/隐藏
-		*/
-		$console.find('#loanTable .arrow').on('click', function() {
-			var that = $(this);
-			var $tr = that.parent().parent().parent().find('.loantask-item');
-			if(!that.data('isShow')) {
-				$tr.show();
-				that.data('isShow', true);
-				that.removeClass('arrow-bottom').addClass('arrow-top');
-			} else {
-				$tr.hide();
-				that.data('isShow', false);
-				that.removeClass('arrow-top').addClass('arrow-bottom');
-				$tr.eq(0).show();
-				$tr.eq(1).show();
-			}
 		})
 
 	}

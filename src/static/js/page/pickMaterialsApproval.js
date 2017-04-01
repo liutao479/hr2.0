@@ -106,29 +106,13 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 		$submitBar.data({
 			taskId: $params.taskId
 		});
-		$submitBar.submitBar(function($el) {
-			evt($el);
-		});
-	}
-
-	/**
-	* 底部按钮操作栏事件
-	*/
-	var evt = function($el) {
-		/**
-		 * 订单退回的条件选项分割
-		 */
-		var taskJumps = $scope.result.data.loanTask.taskJumps;
-		for(var i = 0, len = taskJumps.length; i < len; i++) {
-			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
-		}
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
 
 		/**
-		 * 退回订单按钮
+		 * 退回订单
 		 */
-		$el.find('#backOrder').on('click', function() {
-			var that = $(this);
-			console.log($scope.result.data.loanTask.taskJumps)
+		$sub.on('backOrder', function() {
 			$.alert({
 				title: '退回订单',
 				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
@@ -149,6 +133,7 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 									$scope.jumpId = $(this).data('id');
 								}
 							})
+
 							if(!_reason) {
 								$.alert({
 									title: '提示',
@@ -190,7 +175,6 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result);
-									
 									router.render('loanProcess');
 									// toast.hide();
 								})
@@ -199,22 +183,22 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 					}
 				}
 			})
-		});
+		})
 
 		/**
-		 * 审核通过按钮
+		 * 提交
 		 */
-		$el.find('#approvalPass').on('click', function() {
+		$sub.on('approvalPass', function() {
 			process();
 		})
 	}
 
 	/**
-	 * 跳流程
+	 * 任务提交跳转
 	 */
 	function process() {
 		$.confirm({
-			title: '审核通过',
+			title: '提交订单',
 			content: dialogTml.wContent.suggestion,
 			buttons: {
 				close: {
@@ -225,18 +209,75 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 				ok: {
 					text: '确定',
 					action: function () {
-						// var taskIds = [];
-						// for(var i = 0, len = $params.tasks.length; i < len; i++) {
-						// 	taskIds.push(parseInt($params.tasks[i].id));
-						// }
+						var that = this;
+        				$.ajax({
+							type: 'post',
+							url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
+							dataType: 'json',
+							success: $http.ok(function(xhr) {
+								var taskIds = [];
+								for(var i = 0, len = $params.tasks.length; i < len; i++) {
+									taskIds.push(parseInt($params.tasks[i].id));
+								}
+								var params = {
+									taskId: $params.taskId,
+									taskIds: taskIds,
+									orderNo: $params.orderNo
+								}
+								var reason = $.trim(that.$content.find('#suggestion').val());
+								if(reason) params.reason = reason;
+								console.log(params);
+								flow.tasksJump(params, 'approval');
+							})
+						})
+						
+					}
+				}
+			}
+		})
+	}
+
+	/**
+	* 底部按钮操作栏事件
+	*/
+	var evt = function() {
+		/**
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
+	}
+
+	/**
+	 * 跳流程
+	 */
+	function process() {
+		$.confirm({
+			title: '提交',
+			content: dialogTml.wContent.suggestion,
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel',
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
+						}
 						var params = {
 							taskId: $params.taskId,
-							taskIds: [$params.taskId],
+							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}
 						var reason = $.trim(this.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
-						tasksJump(params, 'approval');
+						flow.tasksJump(params, 'complete');
 					}
 				}
 			}
@@ -271,6 +312,8 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+
+				// if()
 			});
 		})
 
@@ -294,6 +337,7 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 			$tab: $console.find('#checkTabs')
 		}
 		loadTabList(function() {
+			evt();
 			setupSubmitBar();
 		});
 	})

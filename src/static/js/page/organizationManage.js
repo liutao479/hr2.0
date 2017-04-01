@@ -226,21 +226,11 @@ page.ctrl('organizationManage', [], function($scope) {
 			});
 		});
 		
-		//  任务类型点击显示/隐藏
-		$console.find('#organizationManageTable .arrow').on('click', function() {
-			var that = $(this);
-			var $tr = that.parent().parent().parent().find('.loantask-item');
-			if(!that.data('isShow')) {
-				$tr.show();
-				that.data('isShow', true);
-				that.removeClass('arrow-bottom').addClass('arrow-top');
-			} else {
-				$tr.hide();
-				that.data('isShow', false);
-				that.removeClass('arrow-top').addClass('arrow-bottom');
-				$tr.eq(0).show();
-				$tr.eq(1).show();
-			}
+		/**
+		 * 开户行账号消失隐藏
+		 */
+		$console.find('#organizationManageTable .loanTasks').hover(function() {
+			$(this).find('.meanwhile-hover').toggle();
 		})
 
 		// 编辑合作银行按钮
@@ -298,21 +288,11 @@ page.ctrl('organizationManage', [], function($scope) {
 	* 绑定车商立即处理事件
 	*/
 	var setupCarEvt = function() {
-		//  任务类型点击显示/隐藏
-		$console.find('#organizationManageTable .arrow').on('click', function() {
-			var that = $(this);
-			var $tr = that.parent().parent().parent().find('.loantask-item');
-			if(!that.data('isShow')) {
-				$tr.show();
-				that.data('isShow', true);
-				that.removeClass('arrow-bottom').addClass('arrow-top');
-			} else {
-				$tr.hide();
-				that.data('isShow', false);
-				that.removeClass('arrow-top').addClass('arrow-bottom');
-				$tr.eq(0).show();
-				$tr.eq(1).show();
-			}
+		/**
+		 * 开户行账号消失隐藏
+		 */
+		$console.find('#organizationManageTable .loanTasks').hover(function() {
+			$(this).find('.meanwhile-hover').toggle();
 		})
 
 		// 编辑合作车商按钮

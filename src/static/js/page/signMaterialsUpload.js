@@ -88,29 +88,40 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		$submitBar.data({
 			taskId: $params.taskId
 		});
-		$submitBar.submitBar(function($el) {
-			evt($el);
-		});
-	}
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
+		$sub.on('taskSubmit', function() {
+			var canSubmit = flow.taskSubmit($params.tasks);
+			if(canSubmit) {
+				return process();
+			}
+			$.alert({
+				title: '提示',
+				content: tool.alert('你还有数据未填写!'),
+				buttons: {
+					ok: {
+						text: '确定',
+						action: function() {
+							var taskIds = [];
+							for(var i = 0, len = $params.tasks.length; i < len; i++) {
+								taskIds.push(parseInt($params.tasks[i].id));
+							}
+							var params = {
+								taskId: $params.taskId,
+								taskIds: taskIds,
+								orderNo: $params.orderNo
+							}
+							flow.tasksJump(params, 'complete');
+						}
+					}
+				}
+			})
+		})
 
-	/**
-	* 底部按钮操作栏事件
-	*/
-	var evt = function($el) {
 		/**
-		 * 订单退回的条件选项分割
-		 */
-		var taskJumps = $scope.result.data.loanTask.taskJumps;
-		for(var i = 0, len = taskJumps.length; i < len; i++) {
-			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
-		}
-
-		/**
-		 * 退回订单按钮
-		 */
-		$el.find('#backOrder').on('click', function() {
-			var that = $(this);
-			console.log($scope.result.data.loanTask.taskJumps)
+		 * 退回订单
+		 */	
+		$sub.on('backOrder', function() {
 			$.alert({
 				title: '退回订单',
 				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
@@ -174,7 +185,7 @@ page.ctrl('signMaterialsUpload', function($scope) {
 								success: $http.ok(function(result) {
 									console.log(result);
 									
-									// router.render('loanProcess');
+									router.render('loanProcess');
 									// toast.hide();
 								})
 							})
@@ -182,14 +193,21 @@ page.ctrl('signMaterialsUpload', function($scope) {
 					}
 				}
 			})
-		});
-
-		/**
-		 * 提交订单按钮
-		 */
-		$el.find('#taskSubmit').on('click', function() {
-			process();
+			
 		})
+	}
+
+	/**
+	* 底部按钮操作栏事件
+	*/
+	var evt = function() {
+		/**
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
 	}
 
 	/**
@@ -308,7 +326,10 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		}
 		loadOrderInfo(function() {
 			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
-			setupSubmitBar();
+			if(!$params.refer) {
+				evt();
+				setupSubmitBar();
+			}
 		});
 	});
 

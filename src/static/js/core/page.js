@@ -112,12 +112,25 @@ $(document).on('hover', '#navigator .user', function() {
 		}
 	})
 
+
+
+flow = {};
+
+flow.taskSubmit = function(data) {
+	for(var i = 0, len = data.length; i < len; i++) {
+		var row = data[i];
+		if(!row.submited) return false; 
+	}
+	return true;
+}
+
 /**
  * 提交订单以及跳转逻辑
- * @param  {object} params [提交任务需传参数]
- * @return {function}           跳转后的回调
+ * @param  {object}  params [提交任务需传参数]
+ * @param  {string}  type   [场景的类型'complete' 'approval']
+ * @return {function}          跳转后的回调
  */
-function tasksJump(params, type, cb) {
+flow.tasksJump = function(params, type, cb) {
 	$.ajax({
 		type: 'post',
 		url: $http.api('tasks/' + type, 'zyj'),
@@ -131,20 +144,25 @@ function tasksJump(params, type, cb) {
 				// toast显示
 				router.render('loanProcess');
 			} else {
-				var taskObj = [];
+				var taskObj = [], flag = 0;
 				for(var i = 0, len = loanTasks.length; i < len; i++) {
 					var obj = loanTasks[i];
 					taskObj.push({
 						key: obj.category,
 						id: obj.id,
-						name: obj.sceneName
+						name: obj.sceneName,
+						submited: obj.submited
 					})
+					if(!loanTasks[i].submited) {
+						flag++;
+					}
 				}
 				// debugger
-				for(var i = 0, len = loanTasks.length; i < len; i++) {
-					if(!loanTasks[i].submited) {
-						var target = loanTasks[i];
-						var selected = i;
+				for(var j = 0, len2 = loanTasks.length; j < len2; j++) {
+					if(!loanTasks[j].submited) {
+						var target = loanTasks[j];
+						var selected = j;
+						if(flag == 1) taskObj[selected].submited = true;
 						break;
 					}
 				}
