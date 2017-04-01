@@ -310,7 +310,7 @@
 		'T0013': 'loanMaterialsUpload',//贷款材料
 		'T0015': 'loanLog',//订单日志
 		'T0023': 'loanMaterialsUpload',//贷款材料
-		'T0024': '',//开卡信息表
+		'T0024': 'cardInfoApproval',//开卡信息表
 		'T0025': '',//材料验真
 		'T0026': '',//数据辅证
 		'T0027': '',//材料交叉验证
@@ -333,7 +333,9 @@
 		'T0056': 'loanInfoAudit',//贷款信息表结果
 		'T0057': 'loanInfoAudit',//贷款信息表结果
 		'T0058': 'pickMaterialsUpload',//提车材料审核
-		'T0059': 'pickMaterialsUpload'//提车材料审核
+		'T0059': 'pickMaterialsUpload',//提车材料审核
+		'T00108': 'loanMaterialsUpload',//贷款材料
+		'T00109': 'signMaterialsUpload'
 	}
 	var todoMap = {'T0004': '',
 	'T0005': '',
