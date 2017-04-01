@@ -13,7 +13,7 @@
 			</div>	
 			<script type="text/x-dot-template" id="openCardSheettmpl">
 				<form id="dataform">
-				<div class="panel panel-loan">
+				<div class="panel panel-loan mt15">
 					<div class="panel-title-box">
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
@@ -22,47 +22,185 @@
 					</div>
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>经销商名称：</span>
-								<div class="select select-common" data-selected="{{= it.dealerId}}" data-dropdown="page.$scope['cardAudit'].dealerIdPicker" data-trigger="page.$scope['cardAudit'].dropdownTrigger.dealerId"></div>
-								<input type="hidden" name="dealerId" value="{{= it.dealerId}}" />
+						<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>经销商名称：</span>
+										</td>
+										<td>
+											{{ if(it.creditCard.dealerId){ }}
+												<div class="select select-common" data-selected="{{= it.creditCard.dealerId}}" data-dropdown="page.$scope['openCardSheet'].dealerIdPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.dealerId"></div>
+												<input type="hidden" name="dealerId" value="{{= it.creditCard.dealerId}}" />
+											{{ }else{ }}
+												<div class="select select-common" data-dropdown="page.$scope['openCardSheet'].dealerIdPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.dealerId"></div>
+												<input type="hidden" name="dealerId" />
+											{{ } }}
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>上牌地：</span>
-								<span class="info-value"><input type="text" name="onLicensePlace" value="{{= it.onLicensePlace}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>上牌地：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.onLicensePlace){ }}
+													<input type="text" name="onLicensePlace" value="{{= it.creditCard.onLicensePlace}}" />
+												{{ }else{ }}
+													<input type="text" name="onLicensePlace" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>年收入：</span>
-								<span class="info-value"><input type="text" name="yearIncomeMoney" value="{{= it.yearIncomeMoney}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>年收入：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.yearIncomeMoney){ }}
+													<input type="text" name="yearIncomeMoney" value="{{= it.creditCard.yearIncomeMoney}}" />
+												{{ }else{ }}
+													<input type="text" name="yearIncomeMoney" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>贷款金额：</span>
-								<span class="info-value"><input type="text" name="loanMoney" value="{{= it.loanMoney}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>贷款金额：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.loanMoney){ }}
+													<input type="text" name="loanMoney" value="{{= it.creditCard.loanMoney}}" />
+												{{ }else{ }}
+													<input type="text" name="loanMoney" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>手续费率：</span>
-								<span class="info-value"><input type="text" name="feeRate" value="{{= it.feeRate}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>手续费率：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.feeRate){ }}
+													<input type="text" name="feeRate" value="{{= it.creditCard.feeRate}}" />
+												{{ }else{ }}
+													<input type="text" name="feeRate" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">手续费：</span>
-								<span class="info-value"><input type="text" name="feeamount" value="{{= it.feeamount}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>手续费：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.feeamount){ }}
+													<input type="text" name="feeamount" value="{{= it.creditCard.feeamount}}" />
+												{{ }else{ }}
+													<input type="text" name="feeamount" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>分期期数：</span>
-								<div class="select select-common" data-selected="{{= it.repayPeriod}}" data-dropdown="page.$scope['cardAudit'].repayPeriod" data-trigger="page.$scope['cardAudit'].dropdownTrigger.repayPeriod"></div>
-								<input type="hidden" name="repayPeriod" value="{{= it.repayPeriod}}" />
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>分期期数：</span>
+										</td>
+										<td>
+											{{ if(it.creditCard.repayPeriod){ }}
+												<div class="select select-common" data-selected="{{= it.creditCard.repayPeriod}}" data-dropdown="page.$scope['openCardSheet'].repayPeriod" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.repayPeriod"></div>
+												<input type="hidden" name="repayPeriod" value="{{= it.creditCard.repayPeriod}}" />
+											{{ }else{ }}
+												<div class="select select-common" data-dropdown="page.$scope['openCardSheet'].repayPeriod" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.repayPeriod"></div>
+												<input type="hidden" name="repayPeriod" />
+											{{ } }}
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>车辆价格：</span>
-								<span class="info-value"><input type="text" name="carPrice" value="{{= it.carPrice}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>车辆价格：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.carPrice){ }}
+													<input type="text" name="carPrice" value="{{= it.creditCard.carPrice}}" />
+												{{ }else{ }}
+													<input type="text" name="carPrice" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">调额额度：</span>
-								<span class="info-value"><input type="text" name="adjustAmount" value="{{= it.adjustAmount}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>调额额度：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.adjustAmount){ }}
+													<input type="text" name="adjustAmount" value="{{= it.creditCard.adjustAmount}}" />
+												{{ }else{ }}
+													<input type="text" name="adjustAmount" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key">贷款成数：</span>
-								<span class="info-value"><input type="text" name="loanRatio" value="{{= it.loanRatio}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>贷款成数：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.loanRatio){ }}
+													<input type="text" name="loanRatio" value="{{= it.creditCard.loanRatio}}" />
+												{{ }else{ }}
+													<input type="text" name="loanRatio" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -77,104 +215,292 @@
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>中文名：</span>
-								<span class="info-value"><input type="text" name="chnsname" value="{{= it.chnsname}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>姓名拼音：</span>
-								<span class="info-value"><input type="text" name="engname" value="{{= it.engname}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>性别：</span>
-								<span data-type="self" data-key="sex" class="info-value selecter">
-									<div></div>
-									<span class="placeholder"></span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="sex" value="{{= it.sex}}" />
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>证件类型：</span>
-								<span data-type="self" data-key="custsort" class="info-value selecter">
-									<div></div>
-									<span class="placeholder"></span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="custsort" value="{{= it.custsort}}" />
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>证件号码：</span>
-								<span class="info-value"><input type="text" name="custcode" value="{{= it.custcode}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>发证机关：</span>
-								<span class="info-value"><input type="text" name="authref" value="{{= it.authref}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>证件有效截止日期：</span>
-								<span class="info-value"><input type="text" name="statdate" value="{{= it.statdate}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>婚姻状况：</span>
-								<span data-type="self" data-key="mrtlstat" class="info-value selecter">
-									<div></div>
-									<span class="placeholder"></span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="mrtlstat" value="{{= it.mrtlstat}}" />
-								</span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>手机：</span>
-								<span class="info-value"><input type="text" name="mvblno" value="{{= it.mvblno}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>住宅：</span>
-								<span class="info-value">
-									<input type="text" id='homeAdd' class="addInput" readonly="readonly" title="{{= it.hprovince+"省"+it.hcity+"市"+it.hcounty+it.haddress}}" value="{{= it.hprovince+"省"+it.hcity+"市"+it.hcounty+it.haddress}}" />
-									<input type="hidden" name="hprovince" id="hprovince1" value="{{= it.hprovince}}" />
-									<input type="hidden" name="hcity" id="hcity1" value="{{= it.hcity}}" />
-									<input type="hidden" name="hcounty" id="hcounty1" value="{{= it.hcounty}}" />
-									<input type="hidden" name="haddress" id="haddress1" value="{{= it.haddress}}" />
-									<div class="addressDetail">
-										<span data-type="self" data-key="hprovince" class="info-value width33 selecter">
-											<div></div>
-											<span class="placeholder width100">省</span>
-											<span class="arrow arrow-bottom right8px"></span>
-											<input type="hidden" id="shprovince" />
-										</span>
-										<span data-type="self" data-key="hcity" class="info-value width33 selecter pointDisabled">
-											<div></div>
-											<span class="placeholder width100">市</span>
-											<span class="arrow arrow-bottom right8px"></span>
-											<input type="hidden" id="shcity" />
-										</span>
-										<span data-type="self" data-key="hcounty" class="info-value width33 selecter pointDisabled">
-											<div></div>
-											<span class="placeholder width100">区/县</span>
-											<span class="arrow arrow-bottom right8px"></span>
-											<input type="hidden" id="shcounty" />
-										</span>
-										<div class="addDiv pointDisabled">
-											<p>详细地址：</p>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>中文名：</span>
+										</td>
+										<td>
 											<span class="info-value">
-												<input type="text" id="shaddress" />
+												{{ if(it.creditCard.chnsname){ }}
+													<input type="text" name="chnsname" value="{{= it.creditCard.chnsname}}" />
+												{{ }else{ }}
+													<input type="text" name="chnsname" />
+												{{ } }}
 											</span>
-										</div>
-										<div id="" data-key="had" class="button addComplete">完成</div>
-									</div>
-								</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>住宅电话：</span>
-								<span class="info-value"><input type="text" name="hphoneno" value="{{= it.hphoneno}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>姓名拼音：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.engname){ }}
+													<input type="text" name="engname" value="{{= it.creditCard.engname}}" />
+												{{ }else{ }}
+													<input type="text" name="engname" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>邮政编码：</span>
-								<span class="info-value"><input type="text" name="homezip" value="{{= it.homezip}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>性别：</span>
+										</td>
+										<td>
+											{{ if(it.creditCard.sex){ }}
+												<div data-key="sex" data-selected="{{= it.creditCard.sex}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="sex"  value="{{= it.creditCard.sex}}" />
+											{{ }else{ }}
+												<div data-key="sex" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="sex" />
+											{{ } }}
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>入住日期：</span>
-								<span class="info-value"><input type="text" name="indate" value="{{= it.indate}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>证件类型：</span>
+										</td>
+										<td>
+											{{ if(it.creditCard.custsort){ }}
+												<div data-key="custsort" data-selected="{{= it.creditCard.custsort}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="custsort"  value="{{= it.creditCard.custsort}}" />
+											{{ }else{ }}
+												<div data-key="custsort" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="custsort" />
+											{{ } }}
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>证件号码：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.custcode){ }}
+													<input type="text" name="custcode" value="{{= it.creditCard.custcode}}" />
+												{{ }else{ }}
+													<input type="text" name="custcode" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>发证机关：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.authref){ }}
+													<input type="text" name="authref" value="{{= it.creditCard.authref}}" />
+												{{ }else{ }}
+													<input type="text" name="authref" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>证件有效截止日期：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.statdate){ }}
+													<input type="text" name="statdate" value="{{= it.creditCard.statdate}}" />
+												{{ }else{ }}
+													<input type="text" name="statdate" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>婚姻状况：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.mrtlstat){ }}
+													<input type="text" name="mrtlstat" value="{{= it.creditCard.mrtlstat}}" />
+												{{ }else{ }}
+													<input type="text" name="mrtlstat" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>手机：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.mvblno){ }}
+													<input type="text" name="mvblno" value="{{= it.creditCard.mvblno}}" />
+												{{ }else{ }}
+													<input type="text" name="mvblno" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>住宅(省)：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.hprovince){ }}
+													<input type="text" name="hprovince" value="{{= it.creditCard.hprovince}}" />
+												{{ }else{ }}
+													<input type="text" name="hprovince" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>住宅(市)：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.hcity){ }}
+													<input type="text" name="hcity" value="{{= it.creditCard.hcity}}" />
+												{{ }else{ }}
+													<input type="text" name="hcity" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>住宅(区/县)：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.hcounty){ }}
+													<input type="text" name="hcounty" value="{{= it.creditCard.hcounty}}" />
+												{{ }else{ }}
+													<input type="text" name="hcounty" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>住宅(详细地址)：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.haddress){ }}
+													<input type="text" name="haddress" value="{{= it.creditCard.haddress}}" />
+												{{ }else{ }}
+													<input type="text" name="haddress" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>住宅电话：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.hphoneno){ }}
+													<input type="text" name="hphoneno" value="{{= it.creditCard.hphoneno}}" />
+												{{ }else{ }}
+													<input type="text" name="hphoneno" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>邮政编码：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.homezip){ }}
+													<input type="text" name="homezip" value="{{= it.creditCard.homezip}}" />
+												{{ }else{ }}
+													<input type="text" name="homezip" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>入住日期：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.indate){ }}
+													<input type="text" name="indate" value="{{= it.creditCard.indate}}" />
+												{{ }else{ }}
+													<input type="text" name="indate" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -189,80 +515,190 @@
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位名称：</span>
-								<span class="info-value"><input type="text" title="{{= it.unitname}}" name="unitname" value="{{= it.unitname}}" /></span>
-							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位地址：</span>
-								<span class="info-value">
-									<input type="text" id='comeAdd' class="addInput" readonly="readonly" title="{{= it.cprovince+"省"+it.ccity+"市"+it.ccounty+it.caddress}}" value="{{= it.cprovince+"省"+it.ccity+"市"+it.ccounty+it.caddress}}" />
-									<input type="hidden" name="cprovince" id="cprovince1" value="{{= it.cprovince}}" />
-									<input type="hidden" name="ccity" id="ccity1" value="{{= it.ccity}}" />
-									<input type="hidden" name="ccounty" id="ccounty1" value="{{= it.ccounty}}" />
-									<input type="hidden" name="caddress" id="caddress1" value="{{= it.caddress}}" />
-									<div class="addressDetail">
-										<span data-key="cprovince" class="info-value width33 selecter">
-											<div></div>
-											<span class="placeholder width100">省</span>
-											<span class="arrow arrow-bottom right8px"></span>
-											<input type="hidden" id="scprovince" />
-										</span>
-										<span data-key="ccity" class="info-value width33 selecter pointDisabled">
-											<div></div>
-											<span class="placeholder width100">市</span>
-											<span class="arrow arrow-bottom right8px"></span>
-											<input type="hidden" id="sccity" />
-										</span>
-										<span data-key="ccounty" class="info-value width33 selecter pointDisabled">
-											<div></div>
-											<span class="placeholder width100">区/县</span>
-											<span class="arrow arrow-bottom right8px"></span>
-											<input type="hidden" id="sccounty" />
-										</span>
-										<div class="addDiv pointDisabled">
-											<p>详细地址：</p>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>单位名称：</span>
+										</td>
+										<td>
 											<span class="info-value">
-												<input type="text" id="scaddress" />
+												{{ if(it.creditCard.unitname){ }}
+													<input type="text" name="unitname" value="{{= it.creditCard.unitname}}" />
+												{{ }else{ }}
+													<input type="text" name="unitname" />
+												{{ } }}
 											</span>
-										</div>
-										<div id="" data-key = "cad" class="button addComplete">完成</div>
-									</div>
-								</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位电话：</span>
-								<span class="info-value">
-									<input type="text" id="cophone" value="{{= it.cophozono+"--"+it.cophoneno+it.cophonext}}" />
-									<input type="hidden" id="cophozono" name="cophozono" value="{{= it.cophozono}}" />
-									<input type="hidden" id="cophoneno" name="cophoneno" value="{{= it.cophoneno}}" />
-									<input type="hidden" id="cophonext" name="cophonext" value="{{= it.cophonext}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>单位地址(省)：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.cprovince){ }}
+													<input type="text" name="cprovince" value="{{= it.creditCard.cprovince}}" />
+												{{ }else{ }}
+													<input type="text" name="cprovince" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>邮政编码：</span>
-								<span class="info-value"><input type="text" name="corpzip" value="{{= it.corpzip}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>单位地址(市)：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.ccity){ }}
+													<input type="text" name="ccity" value="{{= it.creditCard.ccity}}" />
+												{{ }else{ }}
+													<input type="text" name="ccity" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>单位性质：</span>
-								<span data-type="self" data-key="modelcode" class="info-value selecter">
-									<div></div>
-									<span class="placeholder"></span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="modelcode" value="{{= it.modelcode}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>单位地址(区/县)：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.ccounty){ }}
+													<input type="text" name="ccounty" value="{{= it.creditCard.ccounty}}" />
+												{{ }else{ }}
+													<input type="text" name="ccounty" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>职业：</span>
-								<span data-type="self" data-key="occptn" class="info-value selecter">
-									<div></div>
-									<span class="placeholder"></span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="occptn" value="{{= it.occptn}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>单位地址(详细地址)：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.caddress){ }}
+													<input type="text" name="caddress" value="{{= it.creditCard.caddress}}" />
+												{{ }else{ }}
+													<input type="text" name="caddress" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>何时进入现单位工作：</span>
-								<span class="info-value"><input type="text" name="joindate" value="{{= it.joindate}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>单位电话：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.cophozono && it.creditCard.cophoneno && it.creditCard.cophonext){ }}
+													<input id="cophone" type="text" value="{{= it.creditCard.cophozono+"--"+it.creditCard.cophoneno+it.creditCard.cophonext}}" />
+													<input type="hidden" id="cophozono" name="cophozono" value="{{= it.creditCard.cophozono}}" />
+													<input type="hidden" id="cophoneno" name="cophoneno" value="{{= it.creditCard.cophoneno}}" />
+													<input type="hidden" id="cophonext" name="cophonext" value="{{= it.creditCard.cophonext}}" />
+												{{ }else{ }}
+													<input id="cophone" type="text" />
+													<input type="hidden" id="cophozono" name="cophozono" />
+													<input type="hidden" id="cophoneno" name="cophoneno" />
+													<input type="hidden" id="cophonext" name="cophonext" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>邮政编码：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.corpzip){ }}
+													<input type="text" name="corpzip" value="{{= it.creditCard.corpzip}}" />
+												{{ }else{ }}
+													<input type="text" name="corpzip" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>单位性质：</span>
+										</td>
+										<td>
+											{{ if(it.creditCard.modelcode){ }}
+												<div data-key="modelcode" data-selected="{{= it.creditCard.modelcode}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="modelcode"  value="{{= it.creditCard.modelcode}}" />
+											{{ }else{ }}
+												<div data-key="modelcode" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="modelcode" />
+											{{ } }}
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>职业：</span>
+										</td>
+										<td>
+											{{ if(it.creditCard.occptn){ }}
+												<div data-key="occptn" data-selected="{{= it.creditCard.occptn}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="occptn"  value="{{= it.creditCard.occptn}}" />
+											{{ }else{ }}
+												<div data-key="occptn" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="occptn" />
+											{{ } }}
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>何时进入现单位工作：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.joindate){ }}
+													<input type="text" name="joindate" value="{{= it.creditCard.joindate}}" />
+												{{ }else{ }}
+													<input type="text" name="joindate" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -277,46 +713,148 @@
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>亲属联系人姓名：</span>
-								<span class="info-value"><input type="text" name="reltname1" value="{{= it.reltname1}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>亲属联系人姓名：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.reltname1){ }}
+													<input type="text" name="reltname1" value="{{= it.creditCard.reltname1}}" />
+												{{ }else{ }}
+													<input type="text" name="reltname1" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>与您的关系：</span>
-								<span data-type="self" data-key="reltship1" class="info-value selecter">
-									<div></div>
-									<span class="placeholder"></span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="reltship1" value="{{= it.reltship1}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>与您的关系：</span>
+										</td>
+										<td>
+											{{ if(it.creditCard.reltship1){ }}
+												<div data-key="reltship1" data-selected="{{= it.creditCard.reltship1}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="reltship1"  value="{{= it.creditCard.reltship1}}" />
+											{{ }else{ }}
+												<div data-key="reltship1" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="reltship1" />
+											{{ } }}
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>手机：</span>
-								<span class="info-value"><input type="text" name="reltmobl1" value="{{= it.reltmobl1}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>手机：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.reltmobl1){ }}
+													<input type="text" name="reltmobl1" value="{{= it.creditCard.reltmobl1}}" />
+												{{ }else{ }}
+													<input type="text" name="reltmobl1" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>联系电话：</span>
-								<span class="info-value"><input type="text" name="relaphone1" value="{{= it.relaphone1}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>联系电话：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.relaphone1){ }}
+													<input type="text" name="relaphone1" value="{{= it.creditCard.relaphone1}}" />
+												{{ }else{ }}
+													<input type="text" name="relaphone1" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>其他联系人姓名：</span>
-								<span class="info-value"><input type="text" name="reltname2" value="{{= it.reltname2}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>其他联系人姓名：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.reltname2){ }}
+													<input type="text" name="reltname2" value="{{= it.creditCard.reltname2}}" />
+												{{ }else{ }}
+													<input type="text" name="reltname2" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>与您的关系：</span>
-								<span data-type="self" data-key="relationship" class="info-value selecter">
-									<div></div>
-									<span class="placeholder"></span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="reltship2" value="{{= it.reltship2}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>与您的关系：</span>
+										</td>
+										<td>
+											{{ if(it.creditCard.reltship2){ }}
+												<div data-key="reltship2" data-selected="{{= it.creditCard.reltship2}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="reltship2"  value="{{= it.creditCard.reltship2}}" />
+											{{ }else{ }}
+												<div data-key="reltship2" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="reltship2" />
+											{{ } }}
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>手机：</span>
-								<span class="info-value"><input type="text" name="reltmobl2" value="{{= it.reltmobl2}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>手机：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.reltmobl2){ }}
+													<input type="text" name="reltmobl2" value="{{= it.creditCard.reltmobl2}}" />
+												{{ }else{ }}
+													<input type="text" name="reltmobl2" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>联系电话：</span>
-								<span class="info-value"><input type="text" name="rtcophon2" value="{{= it.rtcophon2}}" /></span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>联系电话：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.rtcophon2){ }}
+													<input type="text" name="rtcophon2" value="{{= it.creditCard.rtcophon2}}" />
+												{{ }else{ }}
+													<input type="text" name="rtcophon2" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -331,29 +869,60 @@
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
 							<div class="info-key-value-box">
-								<span class="info-key">E-mali地址(对账服务)：</span>
-								<span class="info-value">
-									<input type="text" id="email" placeholder="选填" name="stmtemail" value="{{= it.stmtemail}}" />
-									<input type="hidden" id="emladdrf" name="emladdrf" value="{{= it.emladdrf}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">E-mali地址(对账服务)：</span>
+										</td>
+										<td>
+											<span class="info-value">
+												{{ if(it.creditCard.stmtemail){ }}
+													<input type="text" placeholder="选填" name="stmtemail" value="{{= it.creditCard.stmtemail}}" />
+												{{ }else{ }}
+													<input type="text" placeholder="选填" name="stmtemail" />
+												{{ } }}
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>卡片领取方式：</span>
-								<span data-type="self" data-key="drawmode" class="info-value selecter">
-									<div></div>
-									<span class="placeholder"></span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="drawmode" value="{{= it.drawmode}}" />
-								</span>
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>卡片领取方式：</span>
+										</td>
+										<td>
+											{{ if(it.creditCard.drawmode){ }}
+												<div data-key="drawmode" data-selected="{{= it.creditCard.drawmode}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="drawmode"  value="{{= it.creditCard.drawmode}}" />
+											{{ }else{ }}
+												<div data-key="drawmode" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="drawmode" />
+											{{ } }}
+										</td>
+									</tr>
+								</table>
 							</div>
-							<div class="info-key-value-box">
-								<span class="info-key"><i>*</i>短信余额变动提醒：</span>
-								<span data-type="self" data-key="machgf" class="info-value selecter">
-									<div></div>
-									<span class="placeholder"></span>
-									<span class="arrow arrow-bottom right8px"></span>
-									<input type="hidden" name="machgf" value="{{= it.machgf}}" />
-								</span>
+								<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key"><i>*</i>短信余额变动提醒：</span>
+										</td>
+										<td>
+											{{ if(it.creditCard.machgf){ }}
+											1{{= it.creditCard.machgf}}
+												<div data-key="machgf" data-selected="{{= it.creditCard.machgf}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="machgf" value="{{= it.creditCard.machgf}}" />
+											{{ }else{ }}
+											2{{= it.creditCard.machgf}}
+												<div data-key="machgf" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="machgf" />
+											{{ } }}
+										</td>
+									</tr>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -367,29 +936,20 @@
 					</div>
 					<div class="panel-detail-content-layout">
 						<div class="loan-imgs-bar clearfix">
-							<div class="imgs-item-group openCardPic clearfix">
-								<div class="imgs-item-upload">
-									<i class="iconfont">&#xe61f;</i><br />
-									<span class="imgs-describe">点击或拖拽上传图片</span>
-									<input type="file" id="creditCardImg" class="input-file required" >
-									<img id="preview" style="width: 100%;height: 100%;position: absolute;left: 0;top: 0;">
-									<input type="hidden" name="creditCardImgUrl" id="creditCardImgUrl" value="{{= it.creditCardImgUrl}}" />
-								</div>	
-								<span class="imgs-item-p">信用卡申请表</span>
-							</div>
+							<div class="imgs-item-group pointDisabled openCardPic uploadEvt" data-deletecb="page.$scope['openCardSheet'].deletecb" data-uploadcb="page.$scope['openCardSheet'].uploadcb" data-upl-url="" data-id="" data-orderno="{{= it.loanTask.orderNo}}" data-code="" data-name="信用卡申请表" data-scene="{{= it.loanTask.category}}" data-user="" data-img="{{= it.creditCard.creditCardImgUrl}}" data-err="0" data-editable="1"></div>
 						</div>
+						{{if(it.creditCard.creditCardImgUrl){ }}
+							<input id="imgUrl" class="required" type="hidden" name="creditCardImgUrl" value="{{= it.creditCard.creditCardImgUrl}}" />
+						{{ }else{ }}
+							<input id="imgUrl" class="required" type="hidden" name="creditCardImgUrl" />
+						{{ } }} 
 					</div>
 				</div>
-				<input type="hidden" name="id" value="{{= it.id}}" />
-				<input type="hidden" name="orderNo" value="{{= it.orderNo}}" />
+				{{if(it.creditCard.id){ }}
+					<input type="hidden" name="id" value="{{= it.creditCard.id}}" />
+				{{ } }} 
+				
+				<input type="hidden" name="orderNo" value="{{= it.loanTask.orderNo}}" />
 				</form>
-			</script>
-			<script type="text/x-dot-template" id="selectOpttmpl">
-				<ul class="selectOptBox">
-					<!--<li value="100001">请选择</li>-->
-					{{for(var a = 0, len = it.length; a < len; a++) { var op1 = it[a]; }}
-						<li data-key="{{= op1.value}}">{{= op1.name}}</li>
-					{{ } }}
-				</ul>
 			</script>
 				
