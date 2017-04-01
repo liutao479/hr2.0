@@ -32,7 +32,7 @@
 											<span class="info-key"><i>*</i>经销商名称：</span>
 										</td>
 										<td>
-											{{ if(it.creditCard.dealerId){ }}
+											{{ if(it.creditCard.dealerId || it.creditCard.dealerId == '0'){ }}
 												<div class="select select-common" data-selected="{{= it.creditCard.dealerId}}" data-dropdown="page.$scope['openCardSheet'].dealerIdPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.dealerId"></div>
 												<input type="hidden" name="dealerId" value="{{= it.creditCard.dealerId}}" />
 											{{ }else{ }}
@@ -140,7 +140,7 @@
 											<span class="info-key"><i>*</i>分期期数：</span>
 										</td>
 										<td>
-											{{ if(it.creditCard.repayPeriod){ }}
+											{{ if(it.creditCard.repayPeriod || it.creditCard.repayPeriod == '0'){ }}
 												<div class="select select-common" data-selected="{{= it.creditCard.repayPeriod}}" data-dropdown="page.$scope['openCardSheet'].repayPeriod" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.repayPeriod"></div>
 												<input type="hidden" name="repayPeriod" value="{{= it.creditCard.repayPeriod}}" />
 											{{ }else{ }}
@@ -260,7 +260,7 @@
 											<span class="info-key"><i>*</i>性别：</span>
 										</td>
 										<td>
-											{{ if(it.creditCard.sex){ }}
+											{{ if(it.creditCard.sex || it.creditCard.sex == '0'){ }}
 												<div data-key="sex" data-selected="{{= it.creditCard.sex}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="sex"  value="{{= it.creditCard.sex}}" />
 											{{ }else{ }}
@@ -278,7 +278,7 @@
 											<span class="info-key"><i>*</i>证件类型：</span>
 										</td>
 										<td>
-											{{ if(it.creditCard.custsort){ }}
+											{{ if(it.creditCard.custsort || it.creditCard.custsort == '0'){ }}
 												<div data-key="custsort" data-selected="{{= it.creditCard.custsort}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="custsort"  value="{{= it.creditCard.custsort}}" />
 											{{ }else{ }}
@@ -656,7 +656,7 @@
 											<span class="info-key"><i>*</i>单位性质：</span>
 										</td>
 										<td>
-											{{ if(it.creditCard.modelcode){ }}
+											{{ if(it.creditCard.modelcode || it.creditCard.modelcode == '0'){ }}
 												<div data-key="modelcode" data-selected="{{= it.creditCard.modelcode}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="modelcode"  value="{{= it.creditCard.modelcode}}" />
 											{{ }else{ }}
@@ -674,7 +674,7 @@
 											<span class="info-key"><i>*</i>职业：</span>
 										</td>
 										<td>
-											{{ if(it.creditCard.occptn){ }}
+											{{ if(it.creditCard.occptn || it.creditCard.occptn == '0'){ }}
 												<div data-key="occptn" data-selected="{{= it.creditCard.occptn}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="occptn"  value="{{= it.creditCard.occptn}}" />
 											{{ }else{ }}
@@ -740,7 +740,7 @@
 											<span class="info-key"><i>*</i>与您的关系：</span>
 										</td>
 										<td>
-											{{ if(it.creditCard.reltship1){ }}
+											{{ if(it.creditCard.reltship1 || it.creditCard.reltship1 == '0'){ }}
 												<div data-key="reltship1" data-selected="{{= it.creditCard.reltship1}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="reltship1"  value="{{= it.creditCard.reltship1}}" />
 											{{ }else{ }}
@@ -812,7 +812,7 @@
 											<span class="info-key"><i>*</i>与您的关系：</span>
 										</td>
 										<td>
-											{{ if(it.creditCard.reltship2){ }}
+											{{ if(it.creditCard.reltship2 || it.creditCard.reltship2 == '0'){ }}
 												<div data-key="reltship2" data-selected="{{= it.creditCard.reltship2}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="reltship2"  value="{{= it.creditCard.reltship2}}" />
 											{{ }else{ }}
@@ -879,7 +879,7 @@
 										</td>
 										<td>
 											<span class="info-value">
-												{{ if(it.creditCard.stmtemail){ }}
+												{{ if(it.creditCard.stmtemail || it.creditCard.stmtemail == '0'){ }}
 													<input type="text" placeholder="选填" name="stmtemail" value="{{= it.creditCard.stmtemail}}" />
 												{{ }else{ }}
 													<input type="text" placeholder="选填" name="stmtemail" />
@@ -896,7 +896,7 @@
 											<span class="info-key"><i>*</i>卡片领取方式：</span>
 										</td>
 										<td>
-											{{ if(it.creditCard.drawmode){ }}
+											{{ if(it.creditCard.drawmode || it.creditCard.drawmode == '0'){ }}
 												<div data-key="drawmode" data-selected="{{= it.creditCard.drawmode}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="drawmode"  value="{{= it.creditCard.drawmode}}" />
 											{{ }else{ }}
@@ -914,12 +914,10 @@
 											<span class="info-key"><i>*</i>短信余额变动提醒：</span>
 										</td>
 										<td>
-											{{ if(it.creditCard.machgf){ }}
-											1{{= it.creditCard.machgf}}
+											{{ if(it.creditCard.machgf || it.creditCard.machgf == '0'){ }}
 												<div data-key="machgf" data-selected="{{= it.creditCard.machgf}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="machgf" value="{{= it.creditCard.machgf}}" />
 											{{ }else{ }}
-											2{{= it.creditCard.machgf}}
 												<div data-key="machgf" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="machgf" />
 											{{ } }}

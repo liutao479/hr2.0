@@ -110,13 +110,6 @@ page.ctrl('openCardSheet', function($scope) {
 		})
 		// 提交
 		$console.find('.saveBtn').on('click', function() {
-			debugger
-			var email = $("#email").val();
-			if(!email){
-				$("#emladdrf").val(0);
-			}else{
-				$("#emladdrf").val(1);
-			}
 			var isTure = true;
 			var requireList = $("#dataform").find(".required");
 			requireList.each(function(){

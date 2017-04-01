@@ -601,6 +601,14 @@ page.ctrl('loanInfoAudit', function($scope) {
 			});
 		})
 	}
+	var cannotClick = function(){
+		$(".info-key-value-box").each(function(){
+			$(this).addClass("pointDisabled");
+		});
+		$(".info-key-check-box").each(function(){
+			$(this).addClass("pointDisabled");
+		});
+	}
 	
 	/**
 	 * 加载页面模板
@@ -614,6 +622,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
 			setupSubmitBar();
 			setupDropDown();
+//			cannotClick();
 		});
 	});
 	
