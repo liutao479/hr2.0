@@ -245,7 +245,7 @@ page.ctrl('loanInfo', function($scope) {
 						}
 						renewalStr += rene.value+',';
 					}
-					$("input[name='renewalMode']").val(renewalStr);
+					$("input[name='renewalInfo']").val(renewalStr);
 				}
 				var data;
 		        var formList = $(this).parent().parent().siblings().find('form');
@@ -299,6 +299,13 @@ page.ctrl('loanInfo', function($scope) {
 						success: function(result){
 							console.log(result.msg);
 							console.log(key);
+//							if(){
+//								
+//							}else if(){
+//								
+//							}else{
+//								
+//							}
 						}
 					});
 		        }

@@ -77,7 +77,7 @@
 	*/
 	dropdown.prototype.setup = function() {
 		var self = this;
-		if(!self.opts.selected) {
+		if(!self.opts.selected && self.opts.selected !='0') {
 			self.opts.selected = '';
 		}
 		if(!self.opts.placeholder) {
