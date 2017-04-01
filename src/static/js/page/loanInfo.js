@@ -533,6 +533,7 @@ page.ctrl('loanInfo', function($scope) {
 				ok: {
 					text: '确定',
 					action: function () {
+						var that = this;
         				$.ajax({
 							type: 'post',
 							url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
@@ -543,15 +544,28 @@ page.ctrl('loanInfo', function($scope) {
 									taskIds.push(parseInt($params.tasks[i].id));
 								}
 								var params = {
+									taskId: $params.taskId,
 									taskIds: taskIds,
 									orderNo: $params.orderNo
 								}
-								var reason = $.trim(this.$content.find('#suggestion').val());
+								var reason = $.trim(that.$content.find('#suggestion').val());
 								if(reason) params.reason = reason;
 								console.log(params);
 								tasksJump(params, 'complete');
 							})
 						})
+						// var taskIds = [];
+						// for(var i = 0, len = $params.tasks.length; i < len; i++) {
+						// 	taskIds.push(parseInt($params.tasks[i].id));
+						// }
+						// var params = {
+						// 	taskIds: taskIds,
+						// 	orderNo: $params.orderNo
+						// }
+						// var reason = $.trim(this.$content.find('#suggestion').val());
+						// if(reason) params.reason = reason;
+						// console.log(params);
+						// tasksJump(params, 'complete');
 					}
 				}
 			}

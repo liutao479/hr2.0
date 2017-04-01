@@ -268,7 +268,7 @@ page.ctrl('creditApproval', [], function($scope) {
 								type: 'post',
 								url: $http.api('loanOrder/terminate', 'zyj'),
 								data: {
-									orderNo: $params.orderNo,
+									taskId: $params.taskId,
 									reason: _reason
 								},
 								dataType: 'json',

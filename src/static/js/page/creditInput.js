@@ -326,7 +326,7 @@ page.ctrl('creditInput', [], function($scope) {
 			var that = $(this),
 				value = that.val(),
 				$parent = that.parent();
-			if(!value) {
+			if(that.hasClass('required') && !value) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
 				$parent.append('<span class=\"input-err\">该项不能为空！</span>');
@@ -349,7 +349,7 @@ page.ctrl('creditInput', [], function($scope) {
 			var that = $(this),
 				value = that.val();
 			console.log(value)
-			if(!value) {
+			if(that.hasClass('required') && !value) {
 				that.removeClass('error-input').addClass('error-input');
 				return false;
 			} else {
@@ -448,13 +448,13 @@ page.ctrl('creditInput', [], function($scope) {
 	$scope.deletecb = function(self) {
 		// loadOrderInfo($scope.idx);
 		self.$el.remove();
-		pictureListen();
+		pictureListen(self);
 	}
 	/**
 	 * 监听其它材料最后一个控件的名称
 	 */
-	var pictureListen = function() {
-		var $imgel = $console.find('.creditMaterials .uploadEvt');
+	var pictureListen = function(self) {
+		var $imgel = self.$el.parent().find('.uploadEvt');
 		$imgel.each(function(index) {
 			$(this).find('.imgs-item-p').html('征信报告照片' + (index + 1));
 		});
@@ -470,7 +470,7 @@ page.ctrl('creditInput', [], function($scope) {
 		// self.$el.after(self.outerHTML);
 		// self.$el.next().imgUpload();
 		self.$el.after(self.outerHTML);
-		pictureListen();
+		pictureListen(self);
 		self.$el.next().imgUpload();
 	}
 

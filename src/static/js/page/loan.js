@@ -15,9 +15,7 @@ page.ctrl('loan', function($scope) {
 			delete params.process;
 		}
 		$.ajax({
-			// 贷款办理列表的在线接口，为调试并行任务各页面，先使用假数据
 			type: 'post',
-			// url: 'http://192.168.0.144:8080/loanOrder/workbench',
 			dataType:"json",
 			url: $http.api('loanOrder/workbench', 'jbs'),
 			data: params,
@@ -88,6 +86,32 @@ page.ctrl('loan', function($scope) {
 			});
 		});
 
+		/**
+		 * 消失隐藏
+		 */
+		$console.find('#loanTable .loanTasks').hover(function() {
+			$(this).find('.meanwhile-hover').toggle();
+		})
+
+		/**
+		* 任务类型点击显示/隐藏
+		*/
+		$console.find('#loanTable .arrow').on('click', function() {
+			var that = $(this);
+			var $tr = that.parent().parent().parent().find('.loantask-item');
+			if(!that.data('isShow')) {
+				$tr.show();
+				that.data('isShow', true);
+				that.removeClass('arrow-bottom').addClass('arrow-top');
+			} else {
+				$tr.hide();
+				that.data('isShow', false);
+				that.removeClass('arrow-top').addClass('arrow-bottom');
+				$tr.eq(0).show();
+				$tr.eq(1).show();
+			}
+		})
+
 	}
 
 	/**
@@ -155,24 +179,7 @@ page.ctrl('loan', function($scope) {
 			});
 		})
 
-		/**
-		* 任务类型点击显示/隐藏
-		*/
-		$console.find('#loanTable .arrow').on('click', function() {
-			var that = $(this);
-			var $tr = that.parent().parent().parent().find('.loantask-item');
-			if(!that.data('isShow')) {
-				$tr.show();
-				that.data('isShow', true);
-				that.removeClass('arrow-bottom').addClass('arrow-top');
-			} else {
-				$tr.hide();
-				that.data('isShow', false);
-				that.removeClass('arrow-top').addClass('arrow-bottom');
-				$tr.eq(0).show();
-				$tr.eq(1).show();
-			}
-		})
+		
  	}
  	
 	/***
