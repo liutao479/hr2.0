@@ -9,9 +9,6 @@ page.ctrl('newBank', [], function($scope) {
 	$scope.result.data = {};
 	$scope.bankId = $params.bankId || '';
 	$scope.demandBankId = $params.demandBankId || '';
-	var apiMap = {
-		bankName: 'http://192.168.0.105:8080/demandBank/getListByOrganId'
-	}
 
 	/**
 	 * 请求编辑/新建银行详情的接口数据
@@ -116,25 +113,32 @@ page.ctrl('newBank', [], function($scope) {
 	var setupBankAccountEvt = function() {
 		// 增加银行账户
 		$console.find('#addCard').on('click', function() {
-			var that = $(this);
-			var $parent = that.parent().parent();
-			var _accountNumber = $parent.find('.accountNumber input').val();
-			var _accountName = $parent.find('.accountName input').val();
+			var that = $(this),
+				$parent = that.parent().parent(),
+				$inputs = $parent.find('input'),
+				params = {
+					demandBankId: parseInt($scope.demandBankId)
+				},
+				flag = 0;
 			$parent.find('.input-err').remove();
-			if(!_accountNumber) {
-				$parent.find('.accountNumber').append('<span class="input-err">开户账户不能为空！</span>');
-			} 
-			if(!_accountName) {
-				$parent.find('.accountName').append('<span class="input-err">账户户名不能为空！</span>');
-			}
-			if(_accountNumber != '' && _accountName != '') {
-				console.log(_accountNumber)
-				var _params = {
-					demandBankId: $scope.demandBankId,
-					accountNumber: _accountNumber.trim(),
-					accountName: _accountName.trim()
+			$inputs.each(function() {
+				var value = $.trim($(this).val());
+				if(!value) {
+					$(this).parent().append('<span class="input-err">该项不能为空！</span>')
+				} else if(!regMap[$(this).data('type')].test(value)) {
+					$(this).parent().find('.input-err').remove();
+					if($(this).data('type') == 'accountNumber') {
+						$(this).parent().append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
+					} else {
+						$(this).parent().append('<span class="input-err">该项不符合输入规则！</span>')
+					}
+				} else {
+					params[$(this).data('type')] = value;
+					flag++;
 				}
-				console.log(_params)
+			});
+			if(flag == 2) {
+				console.log(params)
 				$.ajax({
 					url: $http.api('demandBankAccount/save', 'cyj'),
 					type: 'post',
@@ -147,6 +151,8 @@ page.ctrl('newBank', [], function($scope) {
 						})
 					})
 				})
+			} else {
+				return false;
 			}
 		})
 
@@ -256,8 +262,9 @@ page.ctrl('newBank', [], function($scope) {
 
 		// 银行费率表增加按钮事件
 		$console.find('#addBankRate').on('click', function() {
-			var that = $(this), flag = 0;
-			var $parent = that.parent().parent();
+			var that = $(this), 
+				flag = 0,
+				$parent = that.parent().parent();
 			if($scope.isSecond == undefined) {
 				$parent.find('#isSecond').removeClass('error-input').addClass('error-input');
 				flag++;
@@ -277,39 +284,59 @@ page.ctrl('newBank', [], function($scope) {
 					}
 				});
 			} else {
-				var rate12 = $.trim($parent.find('#rate12').val());
-				var rate18 = $.trim($parent.find('#rate18').val());
-				var rate24 = $.trim($parent.find('#rate24').val());
-				var rate30 = $.trim($parent.find('#rate30').val());
-				var rate36 = $.trim($parent.find('#rate36').val());
-				var rate48 = $.trim($parent.find('#rate48').val());
-				var rate60 = $.trim($parent.find('#rate60').val());
-				var _params = {
-					demankBankId: $scope.demandBankId, //银行ID
-					isSecond: $scope.isSecond, //新车
-					provinceId: $scope.provinceId, //省份ID
-					provinceName: $scope.provinceName, //省份名称
-					interestRate12: parseInt(rate12) || 0, //12期银行基准利率
-					interestRate18: parseInt(rate18) || 0, //18期银行基准利率
-					interestRate24: parseInt(rate24) || 0, //24期银行基准利率
-					interestRate30: parseInt(rate30) || 0, //30期银行基准利率
-					interestRate36: parseInt(rate36) || 0,//36期银行基准利率
-					interestRate48: parseInt(rate48) || 0, //48期银行基准利率
-					interestRate60: parseInt(rate60) || 0 //60期银行基准利率
-				};
-				console.log(_params);
-				$.ajax({
-					url: $http.api('demandBankRate/save', 'cyj'),
-					type: 'post',
-					data: _params,
-					dataType: 'json',
-					success: $http.ok(function(result) {
-						console.log(result);
-						loadNewBank(function() {
-							loadBankRate();
-						})
-					})
-				})
+				var $rateInputs = $parent.find('.rate input'),
+					item = 0,
+					_params = {
+						demankBankId: $scope.demandBankId, //银行ID
+						isSecond: $scope.isSecond, //新车
+						provinceId: $scope.provinceId, //省份ID
+						provinceName: $scope.provinceName
+					};
+				$rateInputs.each(function() {
+					var value = $.trim($(this).val());
+					if(!value) {
+						_params[$(this).attr('class')] = 0;
+					} else if(value < 0 || value > 100) {
+						$(this).parent().removeClass('error-input').addClass('error-input');
+						item++;
+					} else {
+						_params[$(this).attr('class')] = parseFloat(value).tofixed(4);
+					}
+				});
+				if(item == 0) {
+					console.log(_params);
+					// $.ajax({
+					// 	url: $http.api('demandBankRate/save', 'cyj'),
+					// 	type: 'post',
+					// 	data: _params,
+					// 	dataType: 'json',
+					// 	success: $http.ok(function(result) {
+					// 		console.log(result);
+					// 		loadNewBank(function() {
+					// 			loadBankRate();
+					// 		})
+					// 	})
+					// })
+				} else {
+					$.alert({
+						title: '提示',
+						content: tool.alert('请完善必填项！'),
+						buttons: {
+							ok: {
+								text: '确定'
+							}
+						}
+					});
+				}
+				// var rate12 = $.trim($parent.find('#rate12').val());
+				// var rate18 = $.trim($parent.find('#rate18').val());
+				// var rate24 = $.trim($parent.find('#rate24').val());
+				// var rate30 = $.trim($parent.find('#rate30').val());
+				// var rate36 = $.trim($parent.find('#rate36').val());
+				// var rate48 = $.trim($parent.find('#rate48').val());
+				// var rate60 = $.trim($parent.find('#rate60').val());
+				
+				
 			}
 		})
 

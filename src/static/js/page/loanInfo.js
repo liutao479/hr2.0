@@ -38,6 +38,7 @@ page.ctrl('loanInfo', function($scope) {
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
 				console.log(result)
 				setupLocation();
+				setupBackReason($scope.result.data.loanTask.backApprovalInfo);
 				if(result.data.FQXX && result.data.FQXX.renewalInfo){
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				}
@@ -68,6 +69,25 @@ page.ctrl('loanInfo', function($scope) {
 			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
+	}
+
+	/**
+	* 设置退回原因
+	*/
+	var setupBackReason = function(data) {
+		var $backReason = $console.find('#backReason');
+		if(!data) {
+			$backReason.remove();
+			return false;
+		} else {
+			$backReason.data({
+				backReason: data.reason,
+				backUser: data.userName,
+				backUserPhone: data.phone,
+				backDate: tool.formatDate(data.transDate, true)
+			});
+			$backReason.backReason();
+		}
 	}
 
 	/**
@@ -396,8 +416,6 @@ page.ctrl('loanInfo', function($scope) {
 		$(this).siblings("i").remove();
 	})
 
-
-
 	/**
 	* 设置底部按钮操作栏
 	*/
@@ -406,30 +424,13 @@ page.ctrl('loanInfo', function($scope) {
 		$submitBar.data({
 			taskId: $params.taskId
 		});
-		$submitBar.submitBar(function($el) {
-			evt($el);
-		});
-	}
-
-	/**
-	* 底部按钮操作栏事件
-	*/
-	var evt = function($el) {
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
 
 		/**
-		 * 订单退回的条件选项分割
+		 * 退回订单
 		 */
-		var taskJumps = $scope.result.data.loanTask.taskJumps;
-		for(var i = 0, len = taskJumps.length; i < len; i++) {
-			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
-		}
-
-		/**
-		 * 退回订单按钮
-		 */
-		$el.find('#backOrder').on('click', function() {
-			var that = $(this);
-			console.log($scope.result.data.loanTask.taskJumps)
+		$sub.on('backOrder', function() {
 			$.alert({
 				title: '退回订单',
 				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
@@ -492,8 +493,7 @@ page.ctrl('loanInfo', function($scope) {
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result);
-									
-									// router.render('loanProcess');
+									router.render('loanProcess');
 									// toast.hide();
 								})
 							})
@@ -501,21 +501,22 @@ page.ctrl('loanInfo', function($scope) {
 					}
 				}
 			})
-		});
+		})
+
 		/**
-		 * 提交按钮按钮
+		 * 提交
 		 */
-		$el.find('#taskSubmit').on('click', function() {
+		$sub.on('taskSubmit', function() {
 			process();
 		})
 	}
 
 	/**
-	 * 跳流程
+	 * 任务提交跳转
 	 */
 	function process() {
 		$.confirm({
-			title: '提交',
+			title: '提交订单',
 			content: dialogTml.wContent.suggestion,
 			buttons: {
 				close: {
@@ -544,21 +545,10 @@ page.ctrl('loanInfo', function($scope) {
 								var reason = $.trim(that.$content.find('#suggestion').val());
 								if(reason) params.reason = reason;
 								console.log(params);
-								tasksJump(params, 'complete');
+								flow.tasksJump(params, 'complete');
 							})
 						})
-						// var taskIds = [];
-						// for(var i = 0, len = $params.tasks.length; i < len; i++) {
-						// 	taskIds.push(parseInt($params.tasks[i].id));
-						// }
-						// var params = {
-						// 	taskIds: taskIds,
-						// 	orderNo: $params.orderNo
-						// }
-						// var reason = $.trim(this.$content.find('#suggestion').val());
-						// if(reason) params.reason = reason;
-						// console.log(params);
-						// tasksJump(params, 'complete');
+						
 					}
 				}
 			}
@@ -566,7 +556,7 @@ page.ctrl('loanInfo', function($scope) {
 	}
 
 	/**
-	 * 取消订单弹窗内事件逻辑处理
+	 * 退回订单弹窗内事件逻辑处理
 	 */
 	var dialogEvt = function($dialog) {
 		var $reason = $dialog.find('#suggestion');

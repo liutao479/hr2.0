@@ -44,7 +44,7 @@
 <script type="text/x-dot-template" id="creditResultListTmpl">
 	{{ for(var i = 0, len = it.data.creditUsers[it.index].length; i < len; i++){ var col = it.data.creditUsers[it.index][i]; }}
 		{{ for(var m = 0, len2 = it.cfgData.frames[0].sections.length; m < len2; m++) { var item = it.cfgData.frames[0].sections[m]; }}
-			{{ if(it.format[item.code] == m) { var row = item; } }}
+			{{ if(it.format[item.code] == it.index) { var row = item; break; } }}
 		{{ } }}
 		<!--二级标题（姓名，身份证等等...）-->
 		{{ if(i == 0) { }}
@@ -52,17 +52,16 @@
 		{{ } else { }}
 		<div class="panel-content-title">
 		{{ } }}
-		{{ if(row.code == 'ZJR') { }}
-			<div class="key-value-box">
-				<span class="key">征信查询时间：</span>
-				<span class="value">{{=tool.formatDate(col.submitDate, true)}}</span>
-			</div>
-			<div class="button button-mini">查看征信材料</div>
-		{{ }else{ }}
 			<div class="key-value-box">
 				<div class="key">姓名：</div>
 				<div class="value">{{=col.userName}}</div>
 			</div>
+			{{ if(row.code != 'ZJR') { }}
+				<div class="key-value-box">
+					<span class="key">与借款人关系：</span>
+					<span class="value">{{=it.userRalaMap[col.userRelationship] || '（未录入）'}}</span>
+				</div>
+			{{ } }}
 			<div class="key-value-box">
 				<span class="key">身份证号：</span>
 				<span class="value">{{=col.idCard}}</span>
@@ -71,8 +70,7 @@
 				<span class="key">征信查询时间：</span>
 				<span class="value">{{=tool.formatDate(col.submitDate, true)}}</span>
 			</div>
-			<div class="button button-mini">查看征信材料</div>
-		{{ } }}
+			<div class="button button-mini view-creditMaterials">查看征信材料</div>
 		</div>
 		<!--二级标题（姓名，身份证等等...） end-->
 
@@ -112,7 +110,7 @@
 							<div class="panel-value-item">
 								<div class="file-wrap">
 									<div class="button button-mini">上传文件</div>
-									<input type="file" class="pdfUpload" data-value="false" data-user-id="{{=col.userId || ''}}" data-type="creditReportFile" />
+									<input type="file" class="pdfUpload" data-value="false" data-user-id="{{=col.userId || ''}}" data-type="creditReportFile" accept="application/pdf" />
 								</div>
 							</div>
 							<div class="panel-value-item">
@@ -152,7 +150,7 @@
 					
 					{{ if(ml.code == 'ZXBGP') { }}
 						<!-- 只配置到显示区块 -->
-						{{ for(var h = 0, len4 = col.loanCreditReportList.length; h < len4; h++) { var hl = col.loanCreditReportList[h], flag = 0; console.log(hl); }}
+						{{ for(var h = 0, len4 = col.loanCreditReportList.length; h < len4; h++) { var hl = col.loanCreditReportList[h], flag = 0; }}
 						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.materialsAduitResult}}" data-editable="{{=it.editable}}"></div>
 						{{ } }}
 						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=len4 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}"></div>
@@ -191,7 +189,10 @@
 						<div class="panel-value-item">{{=col.remark || ''}}</div>
 					{{ } }}
 					{{ if(it.cfgData.code == 'creditInput') { }}
-					<textarea name="" id="" cols="30" rows="6" class="remarks-box remark{{=(ml.empty ? ' required' : '')}}" data-user-id="{{=col.userId}}" data-type="remark">{{=col.remark || '' }}</textarea>
+					<div class="remarks-box">
+						<textarea name="" id="" cols="30" rows="6" class="remark{{=(ml.empty ? ' required' : '')}}" data-user-id="{{=col.userId}}" data-type="remark">{{=col.remark || '' }}</textarea>
+						<div class="remain">还可输入400/400字</div>
+					</div>
 					{{ } }}
 				</div>
 			</div>
@@ -202,7 +203,7 @@
 			<div class="panel-item-box">
 				<div class="panel-key-area">辅证数据：</div>
 				<div class="panel-value-area clearfix">
-					<a data-href="#" class="to-view">点击查看</a>
+					<a data-href="#" class="to-view assistData">点击查看</a>
 				</div>
 			</div>
 			<!-- 辅证数据 end-->
@@ -210,7 +211,7 @@
 			<div class="panel-item-box">
 				<div class="panel-key-area">征信报告详表：</div>
 				<div class="panel-value-area clearfix">
-					<a data-href="#" class="to-view">点击查看</a>
+					<a data-href="#" href="{{=col.creditReportFile}}" target="_blank" class="to-view">点击查看</a>
 				</div>
 			</div>
 			<!-- 征信报告详表 end-->

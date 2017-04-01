@@ -148,6 +148,18 @@
 				if(!this.files[0]) {
 					return false;
 				}
+				// if(this.files[0].name.substring(this.files[0].name.lastIndexOf('.') + 1).toLowerCase() != 'pdf') {
+				// 	$.alert({
+				// 		title: '提示',
+				// 		content: tool.alert('请选择正确的PDF格式文件上传!'),
+				// 		buttons: {
+				// 			ok: {
+				// 				text: '确定'
+				// 			}
+				// 		}
+				// 	})
+				// 	return false;
+				// }
 				self.$el.find('.imgs-error').remove();
 				self.onUpload(this.files[0]);
 			});
@@ -385,10 +397,10 @@
 		edit: '<div class="imgs-item-upload">\
 				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
 				<span class="i-tips">点击上传图片</span>\
-				<input type="file" class="input-file activeEvt" />\
+				<input type="file" class="input-file activeEvt" accept="image/gif,image/jpeg,image/jpg,image/png" />\
 			   </div>{0}',
 		modify: '<div class="imgs-item-upload">\
-				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传"/></div>\
+				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传" accept="image/gif,image/jpeg,image/jpg,image/png"/></div>\
 				<div class="imgs-delete" title="删除"><i class="iconfont">&#xe602;</i></div>\
 				<img src="{1}" class="imgs-view" />\
 				{2}{3}</div>{0}',
@@ -402,7 +414,7 @@
 		msg: '<div class="imgs-describe">{0}</div>',
 		name: '<span class="imgs-item-p">{0}</span>',
 		other: '<div class="input-text imgs-input-text">\
-					<input type="text" value="{0}" title="重新上传">\
+					<input type="text" value="{0}" title="重新上传" accept="image/gif,image/jpeg,image/jpg,image/png" />\
 				</div>'
 	}
 
