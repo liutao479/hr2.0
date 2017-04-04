@@ -1,29 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>登录</title>
+	<meta charset="utf-8">
+	<title>汽车分期系统</title>
+	<link rel="shortcut icon" href="static/css/img/public/hrfax.ico">
+	<link rel="stylesheet" type="text/css" href="static/css/main.css">
+	<link rel="stylesheet" type="text/css" href="static/css/jquery.dialog.css">
+	<style type="text/css">
+		.header {
+			height: 60px;
+			background-color: #fff;
+		}
+		.header img {
+			float: left;
+			width: 100px;
+			margin-top: 14px;
+		}
+		.header span {
+			font-size: 15px;
+			display: inline-block;
+			height: 30px;
+			line-height: 30px;
+			border-left: 1px solid #ddd;
+			margin: 16px 0 0 20px;
+			padding-left: 20px;
+		}
+		.background {
+			position: relative;
+			background: url(static/css/img/background.png) no-repeat 0 0;
+			height: 693px;
+		}
+		.inner-container {
+			width: 900px;
+			margin: 0 auto;
+		}
+		.inner-background {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin-left: -438px;
+			margin-top: -250px;
+			width: 877px;
+			height: 500px;
+			background: url(static/css/img/bg2.png) no-repeat 0 0;
+		}
+		.form-text {
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 400px;
+			height: 500px;
+			background-color: #fff;
+			opacity: .8;
+		}
+		.form-text.none-background {
+			background: none;
+			opacity: 1;
+		}
+		.form-text .form-title {
+			font-size: 18px;
+			font-weight: bold;
+			text-align: center;
+			margin: 130px 0 30px 0;
+		}
+		.form-text .input-text,
+		.form-text .button {
+			display: block;
+			width: 200px;
+			margin: 30px auto !important;
+			border-radius: 36px !important;
+			height: 36px;
+		}
+		.form-text .input-text {
+			border: 1px solid #ddd;
+		}
+		.form-text .button {
+			text-align: center;
+			cursor: pointer;
+		}
+		.copyright {
+			color: #999;
+			text-align: center;
+			margin: 40px 0 20px 0;
+		}
+		.copyright a {
+			color: #999;
+		}
+		.jconfirm .jconfirm-box {
+			padding: 0 15px 0 15px;
+		}
+	</style>
 </head>
 <body>
-	<input type="text" id="account">
-	<input type="password" id="password">
-	<a id="submit">提交</a>
+	<div class="header">
+		<div class="inner-container">
+			<img src="static/css/img/logo.png" >
+			<span>汽车分期系统</span>
+		</div>
+	</div>
+	<div class="background">
+		<div class="inner-background">
+			<div class="form-text"></div>
+			<div class="form-text none-background">
+				<div class="form-title">登录</div>
+				<input type="text" class="input-text" placeholder="请输入账号" id="account">
+				<input type="password" class="input-text" placeholder="请输入密码" id="password">
+				<a class="button btn-ok" id="submit">提交</a>	
+			</div>
+		</div>
+	</div>
+	<div class="copyright">Copyright © 2015 hrfax.cn All Rights Reserved.网站备案号：<a rel="noflow" href="http://www.miitbeian.gov.cn/" target="blank">浙ICP备15039656号-1</a></div>
 	<script type="text/javascript" src="static/js/vendor/jquery.min.js"></script>
 	<script type="text/javascript" src="static/js/vendor/third.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			// window.location.href = 'app.html';
+			jconfirm.defaults = {
+				title: '提示',
+				boxWidth: 400,
+				useBootstrap: false,
+				buttons: {
+					ok: {
+						text: '确定',
+						btnClass: 'btn-default'
+					}
+				}
+			}
+			$('#account,#password').on('keydown', function(e) {
+				if(e.which == 13) {
+					$('#submit').click();
+				}
+			})
 			$('#submit').on('click', function () {
 				var $acc = $('#account'),
 					$pwd = $('#password');
 				var acc = $.trim($acc.val()),
 					pwd = $.trim($pwd.val());
 				if(!acc || !pwd) {
-					return alert('请输入账号和密码');
-				}
-				console.log(acc)
-				console.log(pwd)
+					return $.alert({title: '警告', content: '请输入账号和密码'});
+				};
 				$.ajax({
-					url: 'http://192.168.0.104:8080/login/doLogin',
+					url: 'http://192.168.0.186:9999/login/doLogin',
 					type: 'post',
 					dataType: 'json',
 					data: {
@@ -37,13 +153,23 @@
 							var token = result.token,
 								info = result.loginInfo;
 							Cookies.set('_hr_token', result.token);
+							Cookies.set('_hr_name', info.name)
 							Cookies.set('_hr_account', info.account);
 							Cookies.set('_hr_dept', info.organization.name + info.dept.name);
 							Cookies.set('_hr_role', info.role.name);
-							Cookies.set('_hr_phone', info.phone1);
+							if(info.phone1)
+								Cookies.set('_hr_phone', info.phone1);
 							window.location.href = 'app.html';
 						} else {
-							alert('登录失败');
+							$.alert({
+								title: '错误',
+								content: '登录失败，请重试',
+								action: {
+									ok: {
+										text: '确定'
+									}
+								}
+							});
 						}
 					}
 				})

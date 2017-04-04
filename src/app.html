@@ -74,10 +74,10 @@
 					</ul>
 				</div>
 			</li>
-			<li class="user-li user">
-				<div id="" class="drop-down-box">
+			<li class="user-li user" id="userPanel">
+				<div class="drop-down-box" style="display: none;">
 					<a href="javascript:;" class="user-field-item drop-down-a">
-						<span class="drop-down-text">王二麻子</span>
+						<span class="drop-down-text">{{=it.name}}</span>
 						<i class="iconfont iconfont-arrow">&#xe621;</i>
 					</a>
 				</div>
@@ -86,24 +86,28 @@
 						<dl class="user-panel">
 							<dt class="user-panel-key">机构：</dt>
 							<dd class="user-panel-value">
-								中国工商银行广东省分行-广州测试分行-白云支行
+								{{=it.org}}
 							</dd>
 						</dl>
 						<dl class="user-panel">
 							<dt class="user-panel-key">职位：</dt>
-							<dd class="user-panel-value">客户经理</dd>
+							<dd class="user-panel-value">{{=it.role}}</dd>
 						</dl>
 						<dl class="user-panel">
 							<dt class="user-panel-key">手机：</dt>
+							{{ if(!it.phone) { }}
 							<dd class="user-panel-value">
 								未绑定
-								<a href="#" class="phone-bind">绑定</a>
+								<a class="phone-bind">绑定</a>
 							</dd>
+							{{ } else { }}
+							<dd class="user-panel-value">{{=it.phone}}<a class="phone-bind">更换</a></dd>
+							{{ } }}
 						</dl>
 					</div>
 					<div class="user-area-bottom clearfix">
-						<a href="#" class="modify-pwd">修改密码</a>
-						<a href="javascript:;" class="user-quit">退出登录</a>
+						<a class="modify-pwd">修改密码</a>
+						<a class="user-quit">退出登录</a>
 					</div>
 				</div>
 			</li>

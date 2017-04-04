@@ -296,11 +296,4 @@
 			materialsCode: 'zxsqszp',
 			name: '授权书签字照片'
 		}];
-	/**
-	* for plugin
-	*/
-	jconfirm.defaults = {
-		useBootstrap: false,
-		theme: 'material'
-	}
 })(window);

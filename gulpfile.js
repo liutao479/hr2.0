@@ -45,6 +45,7 @@ gulp.task('concat', function() {
 })
 gulp.task('concat-mini', function () {
     return gulp.src([
+            path.src.js('plugin/jquery.dialog.min.js'),
             path.src.js('plugin/cookie.js'),
             path.src.js('core/md5.js')
         ])
