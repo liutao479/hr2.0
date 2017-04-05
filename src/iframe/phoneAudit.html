@@ -51,17 +51,17 @@
 							<div class="info-key-value-box">
 								<span class="info-key">
 									客户姓名：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName}}" /></span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName || ''}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
 									身份证号：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.idCard}}" /></span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.idCard || ''}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
 									手机号：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.mobile}}" /></span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.mobile || ''}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
@@ -119,12 +119,12 @@
 									<span class="info-value info-value-long">
 									{{if(row.answer){ }}
 										<!--<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>-->
-										<div class="textArea" contenteditable="true">{{= row.remark}}</div>
+										<div class="textArea" contenteditable="true">{{= row.remark || ''}}</div>
 									{{ }else{ }}
 										<!--<textarea name="editInfo" rows="4"></textarea>-->
 										<div class="textArea" contenteditable="true"></div>
 									{{ } }}
-										<input type="hidden" name="editInfo" value="{{= row.remark}}" />
+										<input type="hidden" name="editInfo" value="{{= row.remark  || ''}}" />
 									</span>
 								</div>
 							</div>
@@ -176,7 +176,7 @@
 									<span class="info-key">备注：</span>
 									<span class="info-value info-value-long">
 									{{if(role.answer){ }}
-										<div class="textArea" contenteditable="true">{{= role.remark}}</div>
+										<div class="textArea" contenteditable="true">{{= role.remark || ''}}</div>
 										<!--<textarea name="editInfo" rows="4" value="{{= role.editInfo}}"></textarea>-->
 									{{ }else{ }}
 										<!--<textarea name="editInfo" rows="4"></textarea>-->

@@ -6,8 +6,7 @@
 				
 				<!--面板-->
 				<div id="secondhandInput" class="mt15"></div>
-				
-				
+
 				<!--提交订单按钮-->
 				<div id="submitBar"></div>
 			</div>			
@@ -40,18 +39,18 @@
 										</td>
 										{{if(fieldCode == 'carMode'){ }}
 											<td>
-												<div class="select select-common" data-selected="{{= it.data.loanCarAssess.carName}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['secondhandInput'].carPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.car"></div>
-												<input type="hidden" name="{{= fieldCode}}" value="{{= it.data.loanCarAssess[fieldCode]}}" />
+												<div class="select select-common" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['secondhandInput'].carPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.car"></div>
+												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
 											</td>
 										{{ }else if(fieldCode == 'originArea' || fieldCode == 'location'){ }}
 											<td>
-												<div class="select select-common" data-selected="{{= it.data.loanCarAssess[fieldCode]}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
-												<input type="hidden" name="{{= fieldCode}}" value="{{= it.data.loanCarAssess[fieldCode]}}" />
+												<div class="select select-common" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
+												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
 											</td>
 										{{ }else{ }}
 											<td>
 												<span class="info-value">
-													<input type="text" name="{{= seg.fieldName}}" value="{{= it.data.loanCarAssess[fieldCode]}}" />
+													<input type="text" name="{{= seg.fieldName}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
 												</span>
 											</td>
 										{{ } }}
@@ -66,11 +65,11 @@
 				{{ } }}
 				{{ } }}
 				<input type="hidden" id="carName" name="carName" />
-				<input type="hidden" name="identifyAssessDate" value="{{= it.data.loanCarAssess.identifyAssessDate}}" />
-				<input type="hidden" name="updateDate" value="{{= it.data.loanCarAssess.updateDate}}" />
-				<input type="hidden" name="updateUser" value="{{= it.data.loanCarAssess.updateUser}}" />
-				<input type="hidden" name="productionDate" value="{{= it.data.loanCarAssess.productionDate}}" />
-				<input type="hidden" name="id" value="{{= it.data.loanCarAssess.id}}" />
-				<input type="hidden" name="orderNo" value="{{= it.data.loanCarAssess.orderNo}}" />
+				<input type="hidden" name="identifyAssessDate" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.identifyAssessDate || '') : ''}}" />
+				<input type="hidden" name="updateDate" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.updateDate || '') : ''}}" />
+				<input type="hidden" name="updateUser" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.updateUser || '') : ''}}" />
+				<input type="hidden" name="productionDate" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.productionDate || '') : ''}}" />
+				<input type="hidden" name="id" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.id || '') : ''}}" />
+				<input type="hidden" name="orderNo" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.orderNo || '') : ''}}" />
 				</form>
 			</script>

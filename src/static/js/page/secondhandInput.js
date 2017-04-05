@@ -1,12 +1,7 @@
 'use strict';
 page.ctrl('secondhandInput', function($scope) {
 	var $console = render.$console,
-		$params = $scope.$params,
-		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
-		};
+		$params = $scope.$params;
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
@@ -18,15 +13,16 @@ page.ctrl('secondhandInput', function($scope) {
 			url: urlStr + '/loanCarAssess/index',
 			data: {
 				taskId: $params.taskId
+				// taskId:80880
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
+				console.log(result)
 				$scope.result = result;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupLocation();
 				loanFinishedInput();
 				loanFinishedInputReq();
-				setupEvt();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -56,29 +52,28 @@ page.ctrl('secondhandInput', function($scope) {
 		$submitBar.data({
 			taskId: $params.taskId
 		});
-		$submitBar.submitBar(function($el) {
-			evt($el);
-		});
-	}
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
 
-	/**
-	* 底部按钮操作栏事件
-	*/
-	var evt = function($el) {
 		/**
-		 * 提交按钮按钮
+		 * 提交
 		 */
-		$el.find('#taskSubmit').on('click', function() {
+		$sub.on('taskSubmit', function() {
 			process();
+			//先保存数据再提交订单
+			// saveData(function() {
+			// 	process();
+			// });
 		})
+
 	}
 
 	/**
-	 * 跳流程
+	 * 任务提交跳转
 	 */
 	function process() {
 		$.confirm({
-			title: '提交',
+			title: '提交订单',
 			content: dialogTml.wContent.suggestion,
 			buttons: {
 				close: {
@@ -89,25 +84,26 @@ page.ctrl('secondhandInput', function($scope) {
 				ok: {
 					text: '确定',
 					action: function () {
+						var that = this;
 						var taskIds = [];
 						for(var i = 0, len = $params.tasks.length; i < len; i++) {
 							taskIds.push(parseInt($params.tasks[i].id));
 						}
 						var params = {
-						 	taskId: $params.taskId,
+							taskId: $params.taskId,
 							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}
-						var reason = $.trim(this.$content.find('#suggestion').val());
+						var reason = $.trim(that.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
 						console.log(params);
-						tasksJump(params, 'complete');
+						flow.tasksJump(params, 'complete');
+						
 					}
 				}
 			}
 		})
 	}
-
 
 	/**
 	* 页面加载完成对所有带“*”的input进行必填绑定
@@ -132,117 +128,61 @@ page.ctrl('secondhandInput', function($scope) {
 			}
 		});
 	}
+
 	/**
-	* 绑定立即处理事件
+	* 保存数据
 	*/
-	var setupEvt = function($el) {
-		// 提交
-		$console.find('#submitOrder').on('click', function() {
-			console.log("提交订单");
-			var isTure = true;
-			var that = $(this);
-			var requireList = $(".required");
-			requireList.each(function(){
-				var value = $(this).val();
-				if(!value){
-					$(this).parent().addClass("error-input");
-					$(this).after('<i class="error-input-tip">请完善该必填项</i>');
-					console.log($(this).index());
-					isTure = false;
-				}
-			});
-			if(isTure){
-				$.confirm({
-					title: '提交',
-					content: dialogTml.wContent.suggestion,
-					useBootstrap: false,
-					boxWidth: '500px',
-					theme: 'light',
-					type: 'purple',
-					buttons: {
-						'取消': {
-				            action: function () {
-	
-				            }
-				        },
-				        '确定': {
-				            action: function () {
-		            			var _reason = $('#suggestion').val();
-		            			console.log(_reason);
-		            			if(!_reason) {
-		            				$.alert({
-		            					title: '提示',
-										content: '<div class="w-content"><div>请填写处理意见！</div></div>',
-										useBootstrap: false,
-										boxWidth: '500px',
-										theme: 'light',
-										type: 'purple',
-										buttons: {
-											'确定': {
-									            action: function () {
-									            }
-									        }
-									    }
-		            				})
-		            				return false;
-		            			} else {
-									var data;
-							        var formList = $(this).parents().find('form');
-							        var params = formList.serialize();
-						            params = decodeURIComponent(params,true);
-						            var paramArray = params.split("&");
-						            var data1 = {};
-						            for(var i=0;i<paramArray.length;i++){
-						                var valueStr = paramArray[i];
-						                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
-						            }
-						            data = data1;
-		            				$.ajax({
-										type: 'post',
-//										url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
-										url: urlStr+'/loanInfoInput/submit/80871',
-										data: data,
-										dataType: 'json',
-										success: $http.ok(function(xhr) {
-											console.log(xhr);
-										})
-									})
-		            				$.ajax({
-										type: 'post',
-										url: $http.api('task/complete', 'jbs'),
-										data: {
-											taskId: $params.taskId,
-											orderNo: $params.orderNo,
-											reason: _reason
-										},
-										dataType: 'json',
-										success: $http.ok(function(result) {
-											console.log(result);
-										})
-									})
-		            			}
-				            }
-				        }
-				    }
-				})				
-			}else{
-				$.alert({
-					title: '提示',
-					content: '<div class="w-content"><div>请完善必填项！</div></div>',
-					useBootstrap: false,
-					boxWidth: '500px',
-					theme: 'light',
-					type: 'purple',
-					buttons: {
-						'确定': {
-				            action: function () {
-				            }
-				        }
-				    }
-				})
-				return false;
+	var saveData = function(cb) {
+		console.log("提交订单");
+		var isTure = true;
+		var requireList = $(".required");
+		requireList.each(function(){
+			var value = $(this).val();
+			if(!value){
+				$(this).parent().addClass("error-input");
+				$(this).after('<i class="error-input-tip">请完善该必填项</i>');
+				console.log($(this).index());
+				isTure = false;
 			}
-		})
+		});
+		if(isTure){
+			var data;
+	        var formList = $(this).parents().find('form');
+	        var params = formList.serialize();
+            params = decodeURIComponent(params,true);
+            var paramArray = params.split("&");
+            var data1 = {};
+            for(var i=0;i<paramArray.length;i++){
+                var valueStr = paramArray[i];
+                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
+            }
+            data = data1;
+			$.ajax({
+				type: 'post',
+				url: $http.api('loanCarAssess/submit/' + $params.taskId, 'jbs'),
+				data: JSON.stringify(data),
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				success: $http.ok(function(xhr) {
+					console.log(xhr);
+					if(cb && typeof cb == 'function') {
+						cb();
+					}
+				})
+			})				
+		}else{
+			$.alert({
+				title: '提示',
+				content: tool.alert('请完善必填项！'),
+				buttons: {
+					'确定': {
+			            action: function () {
+			            }
+			        }
+			    }
+			})
+			return false;
+		}
 	}		
 	/***
 	* 为完善项更改去掉错误提示

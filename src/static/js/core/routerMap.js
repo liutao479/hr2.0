@@ -217,10 +217,6 @@
 			title: '开卡审核',
 			page: 'cardInfoApproval'
 		},
-		'loanProcess/cardAudit': {
-			title: '开卡审核',
-			page: 'cardAudit'
-		},
 		'loanProcess/cardInfoInput': {
 			title: '开卡信息录入',
 			page: 'openCardSheet'
@@ -349,7 +345,9 @@
 		'T0058': 'pickMaterialsUpload',//提车材料审核
 		'T0059': 'pickMaterialsUpload',//提车材料审核
 		'T00108': 'loanMaterialsUpload',//贷款材料
-		'T00109': 'signMaterialsUpload'
+		'T00109': 'signMaterialsUpload',//签约材料
+		'T00110': 'loanMaterialsUpload',//贷款材料
+		'T00111': 'homeMaterialsUpload'//上门材料
 	}
 	var todoMap = {'T0004': '',
 	'T0005': '',

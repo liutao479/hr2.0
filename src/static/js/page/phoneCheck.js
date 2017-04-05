@@ -54,33 +54,13 @@ page.ctrl('phoneCheck', function($scope) {
 		$submitBar.data({
 			taskId: $params.taskId
 		});
-		$submitBar.submitBar(function($el) {
-			evt($el);
-		});
-	}
-
-	/**
-	* 底部按钮操作栏事件
-	*/
-	var evt = function($el) {
-		/**
-		 * 提交按钮按钮
-		 */
-		$el.find('#approvalPass').on('click', function() {
-			process();
-		})
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
 
 		/**
-		 * 订单退回的条件选项分割
+		 * 退回订单
 		 */
-		var taskJumps = $scope.result.data.loanTask.taskJumps;
-		for(var i = 0, len = taskJumps.length; i < len; i++) {
-			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
-		}
-		/**
-		 * 退回订单按钮
-		 */
-		$el.find('#backOrder').on('click', function() {
+		$sub.on('backOrder', function() {
 			$.alert({
 				title: '退回订单',
 				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
@@ -101,6 +81,7 @@ page.ctrl('phoneCheck', function($scope) {
 									$scope.jumpId = $(this).data('id');
 								}
 							})
+
 							if(!_reason) {
 								$.alert({
 									title: '提示',
@@ -142,7 +123,6 @@ page.ctrl('phoneCheck', function($scope) {
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result);
-									
 									router.render('loanProcess');
 									// toast.hide();
 								})
@@ -151,7 +131,29 @@ page.ctrl('phoneCheck', function($scope) {
 					}
 				}
 			})
-		});
+		})
+
+		/**
+		 * 提交
+		 */
+		$sub.on('approvalPass', function() {
+			process();
+		})
+
+	}
+
+
+	/**
+	* 底部按钮操作栏事件
+	*/
+	var evt = function() {
+		/**
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
 	}
 
 	/**
@@ -175,20 +177,22 @@ page.ctrl('phoneCheck', function($scope) {
 							taskIds.push(parseInt($params.tasks[i].id));
 						}
 						var params = {
-						 	taskId: $params.taskId,
+							taskId: $params.taskId,
 							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}
 						var reason = $.trim(this.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
-						console.log(params);
-						tasksJump(params, 'approval');
+						flow.tasksJump(params, 'approval');
 					}
 				}
 			}
 		})
 	}
 
+	/**
+	 * 取消订单弹窗内事件逻辑处理
+	 */
 	var dialogEvt = function($dialog) {
 		var $reason = $dialog.find('#suggestion');
 		$scope.$checks = $dialog.find('.checkbox').checking();
@@ -291,6 +295,7 @@ page.ctrl('phoneCheck', function($scope) {
 			$tab: $console.find('#checkTabs')
 		}
 		loadTabList(function() {
+			evt();
 			setupSubmitBar();
 		});
 	})

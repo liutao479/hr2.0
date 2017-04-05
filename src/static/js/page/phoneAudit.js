@@ -8,22 +8,22 @@ page.ctrl('phoneAudit', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadLoanList = function(cb) {
-		var data={};
-//		data['taskId']=$params.taskId;
-		data['taskId']=80872;
-		data['frameCode']='T0046';
+		var params = {
+			taskId: $params.taskId,
+			frameCode: $params.code
+		};
 		$.ajax({
 			url: $http.api('telAdudit/info', 'jbs'),
-			data: data,
+			data: params,
 			type: 'post',
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				loanFinishedSelect();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
-				loanFinishedSelect();
 			})
 		})
 	}

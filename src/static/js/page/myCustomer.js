@@ -2,31 +2,21 @@
 page.ctrl('myCustomer', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
-		// apiParams = {
-		// 	loanOrderQuery: {
-		// 		startDate:'',       //查询结束日期
-		// 		endDate:'',         //查询结束日期
-		// 	    busiSourceId:'',    //业务来源方ID
-		// 	    carMode:'',         //车辆品牌
-		// 	    deptId:'',          //分公司ID
-		// 	    bankId:'',          //经办行ID
-		// 	    orderStatus:'',     //进度
-		// 	    orderNo:''   
-		// 	},
-		// 	page: {
-		// 		pageNum: $params.pageNum || 2
-		// 	}
-		// };
+		endDate = tool.formatDate(new Date().getTime()),
+		startDate = tool.getPreMonth(endDate),
 		apiParams = {
-			// category: 'creditMaterialsUpload',
-			pageNum: $params.pageNum || 1
+			startDate: new Date(startDate),       //查询结束日期
+			endDate: new Date(endDate),         //查询结束日期
+			pageNum: 1
 		};
+
 	/**
 	* 加载我的客户数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
 	var loadCustomerList = function(params, cb) {
+		console.log(params);
 		$.ajax({
 			url: $http.api('loanOrder/getMyCustomer', 'cyj'),
 			type: 'post',
@@ -35,7 +25,9 @@ page.ctrl('myCustomer', [], function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, function() {
+					setupEvt();
+				}, true);
 				setupPaging(result.page, true);
 				setupScroll(result.page, function() {
 					pageChangeEvt();
@@ -62,8 +54,17 @@ page.ctrl('myCustomer', [], function($scope) {
 	* 日历控件
 	*/
 	var setupDatepicker = function() {
-		$console.find('.dateBtn').datepicker();
-		$console.find('.dateBtn').val(tool.formatDate(new Date().getTime()));
+		$console.find('.dateBtn').datepicker({
+			onpicked: function() {
+				var that = $(this);
+				apiParams[that.data('type')] = new Date(that.val());
+			},
+			oncleared: function() {
+				delete apiParams[$(this).data('type')];
+			}
+		});
+		$console.find('#dateStart').val(startDate);
+		$console.find('#dateEnd').val(endDate);
 	}
 
 	/**
@@ -162,8 +163,7 @@ page.ctrl('myCustomer', [], function($scope) {
 	/**
 	 * 绑定立即处理事件
 	 */
-	var setupEvt = function() {
-
+	var evt = function() {
 		// 绑定搜索框模糊查询事件
 		$console.find('#searchInput').on('keydown', function(evt) {
 			if(evt.which == 13) {
@@ -173,41 +173,55 @@ page.ctrl('myCustomer', [], function($scope) {
 					return false;
 				}
 				apiParams.keyWord = searchText;
-				$params.keyWord = searchText;
 				apiParams.pageNum = 1;
-				$params.pageNum = 1;
 				loadCustomerList(apiParams, function() {
-					delete apiParams.keyWord;
-					delete $params.keyWord;
 					that.blur();
 				});
-				// router.updateQuery($scope.$path, $params);
 			}
 		});
+
+		// 文本框失去焦点记录文本框的值
+		$console.find('#searchInput').on('blur', function(evt) {
+			var that = $(this),
+				searchText = $.trim(that.val());
+			if(!searchText) {
+				delete apiParams.keyWord;
+				return false;
+			} else {
+				apiParams.keyWord = searchText;
+			}
+		});
+
 		//绑定搜索按钮事件
 		$console.find('#search').on('click', function() {
 			apiParams.pageNum = 1;
-			$params.pageNum = 1;
 			loadCustomerList(apiParams);
-			// router.updateQuery($scope.$path, $params);
-			
 		});
 
 		//绑定重置按钮事件
 		$console.find('#search-reset').on('click', function() {
 			// 下拉框数据以及输入框数据重置
-			// router.updateQuery($scope.$path, $params);
-			
+			$console.find('.select input').val('');
+			$console.find('#searchInput').val('');
+			$console.find('#dateStart').val(startDate);
+			$console.find('#dateEnd').val(endDate);
+			apiParams = {
+				startDate: new Date(startDate),       //查询结束日期
+				endDate: new Date(endDate),         //查询结束日期
+				pageNum: 1
+			};
 		});
+	}
 
-
-		
+	/**
+	 * 绑定立即处理事件
+	 */
+	var setupEvt = function() {		
 		// 订单列表的排序
 		$console.find('#time-sort').on('click', function() {
 			var that = $(this);
 			if(!that.data('sort')) {
 				apiParams.createTimeSort = 1;
-				$params.createTimeSort = 1;
 				loadCustomerList(apiParams, function() {
 					that.data('sort', true);
 					that.removeClass('time-sort-up').addClass('time-sort-down');
@@ -215,7 +229,6 @@ page.ctrl('myCustomer', [], function($scope) {
 
 			} else {
 				delete apiParams.createTimeSort;
-				delete $params.createTimeSort;
 				loadCustomerList(apiParams, function() {
 					that.data('sort', false);
 					that.removeClass('time-sort-down').addClass('time-sort-up');
@@ -376,7 +389,7 @@ page.ctrl('myCustomer', [], function($scope) {
 		}
 		
 		loadCustomerList(apiParams, function() {
-			setupEvt();
+			evt();
 		});
 		setupDropDown();
 		setupDatepicker();
@@ -387,16 +400,61 @@ page.ctrl('myCustomer', [], function($scope) {
 	 */
 	$scope.paging = function(_pageNum, _size, $el, cb) {
 		apiParams.pageNum = _pageNum;
-		$params.pageNum = _pageNum;
-		// router.updateQuery($scope.$path, $params);
 		loadCustomerList(apiParams);
 		cb();
+	}
+
+	/**
+	 * 下拉框点击回调
+	 */
+	//业务来源方
+	$scope.busiSourcePicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.busiSourceId;
+			return false;
+		}
+		apiParams.busiSourceId = picked.id;
+	}
+	//车辆品牌
+	$scope.carPicker = function(picked) {
+		console.log(picked)
+		// if(picked.id == '全部') {
+		// 	delete apiParams.carMode;
+		// 	return false;
+		// }
+		apiParams.carMode = picked.name;
+	}
+	//分公司ID
+	$scope.deptCompanyPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.deptId;
+			return false;
+		}
+		apiParams.deptId = picked.id;
+	}
+	//经办行ID
+	$scope.demandBankPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.bankId;
+			return false;
+		}
+		apiParams.bankId = picked.id;
+	}
+	//进度id
+	$scope.categoryPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.category;
+			return false;
+		}
+		apiParams.category = picked.id;
 	}
 
 	var car = {
 		brand: function(cb) {
 			$.ajax({
-				url: 'http://localhost:8083/mock/carBrandlist',
+				type: 'post',
+				url: $http.api('car/carBrandList', 'jbs'),
+				dataType: 'json',
 				success: function(xhr) {
 					var sourceData = {
 						items: xhr.data,
@@ -409,8 +467,12 @@ page.ctrl('myCustomer', [], function($scope) {
 		},
 		series: function(brandId, cb) {
 			$.ajax({
-				url: 'http://localhost:8083/mock/carSeries',
-				data: {brandId: brandId},
+				type: 'post',
+				url: $http.api('car/carSeries', 'jbs'),
+				dataType: 'json',
+				data: {
+					brandId: brandId
+				},
 				success: function(xhr) {
 					var sourceData = {
 						items: xhr.data,
@@ -423,7 +485,9 @@ page.ctrl('myCustomer', [], function($scope) {
 		},
 		specs: function(seriesId, cb) {
 			$.ajax({
-				url: 'http://localhost:8083/mock/carSpecs',
+				type: 'post',
+				url: $http.api('car/carSpecs', 'jbs'),
+				dataType: 'json',
 				data: {
 					serieId: seriesId
 				},
@@ -433,7 +497,6 @@ page.ctrl('myCustomer', [], function($scope) {
 						id: 'carSerieId',
 						name: 'specName'
 					};
-
 					cb(sourceData);
 				}
 			})
@@ -464,9 +527,12 @@ page.ctrl('myCustomer', [], function($scope) {
 			$.ajax({
 				type: 'post',
 				url: $http.api('carshop/list', 'zyj'),
-				// url: 'http://localhost:8083/mock/carSpecs',
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						value: '全部',
+						name: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
 						id: 'value',
@@ -480,12 +546,12 @@ page.ctrl('myCustomer', [], function($scope) {
 			$.ajax({
 				type: 'get',
 				url: $http.api('pmsDept/getPmsDeptList', 'zyj'),
-				data: {
-					parentId: 99
-				},
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
-					console.log(xhr)
+					xhr.data.unshift({
+						id: '全部',
+						name: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
 						id: 'id',
@@ -501,6 +567,10 @@ page.ctrl('myCustomer', [], function($scope) {
 				url: $http.api('demandBank/selectBank', 'zyj'),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						bankId: '全部',
+						bankName: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
 						id: 'bankId',
@@ -512,6 +582,10 @@ page.ctrl('myCustomer', [], function($scope) {
 		},
 		category: function(t, p, cb) {
 			var data = [
+				{
+					id: '全部',
+					name: '全部'
+				},
 				{
 					id: 'creditMaterialsUpload',
 					name: '征信材料上传'

@@ -24,6 +24,7 @@ page.ctrl('cardAudit', function($scope) {
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
+				console.log(result)
 				$scope.result = result;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(!$params.refer) {
@@ -196,7 +197,7 @@ page.ctrl('cardAudit', function($scope) {
 						var reason = $.trim(that.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
 						console.log(params);
-						flow.tasksJump(params, 'complete');
+						flow.tasksJump(params, 'approval');
 					}
 				}
 			}
