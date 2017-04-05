@@ -23,7 +23,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	var loadOrderInfo = function(_type, cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('creditMaterials/index'),
+			url: $http.api('creditMaterials/index', 'zjy'),
 			data: {
 				taskId: $params.taskId
 			},

@@ -13,12 +13,12 @@ page.ctrl('secondhandInput', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadLoanList = function(cb) {
-		var params = {
-			taskId:80880
-		}
 		$.ajax({
-			url: urlStr+'/loanCarAssess/index',
-			data: params,
+			type: 'post',
+			url: urlStr + '/loanCarAssess/index',
+			data: {
+				taskId: $params.taskId
+			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
@@ -42,7 +42,7 @@ page.ctrl('secondhandInput', function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '二手车信息录入',
+			current: $scope.result.data.loanTask.taskName,
 			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
