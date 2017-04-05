@@ -1,12 +1,9 @@
 'use strict';
 page.ctrl('cardAudit', function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
-		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
-		};
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
+		$source = $scope.$source = {},
+		apiParams = {};
 	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
 
@@ -25,101 +22,10 @@ page.ctrl('cardAudit', function($scope) {
 			success: $http.ok(function(result) {
 				$scope.result = result;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupLocation();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
 			})
-		})
-	}
-	/**
-	* 设置面包屑
-	*/
-	var setupLocation = function() {
-		if(!$scope.$params.path) return false;
-		var $location = $console.find('#location');
-		$location.data({
-			backspace: $scope.$params.path,
-			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '开卡信息录入',
-			orderDate: $scope.result.data.loanTask.createDateStr
-		});
-		$location.location();
-	}
-
-	/**
-	* 并行任务切换触发事件
-	* @params {int} idx 触发的tab下标
-	* @params {object} item 触发的tab对象
-	*/
-	var tabChange = function (idx, item) {
-		console.log(item);
-		router.render('loanProcess/' + item.key, {
-			tasks: $scope.tasks,
-			taskId: $scope.tasks[idx].id,
-			orderNo: $params.orderNo,
-			selected: idx,
-			path: 'loanProcess'
-		});
-	}
-
-	
-
-	/**
-	* 设置底部按钮操作栏
-	*/
-	var setupSubmitBar = function() {
-		var $submitBar = $console.find('#submitBar');
-		$submitBar.data({
-			taskId: $params.taskId
-		});
-		$submitBar.submitBar(function($el) {
-			evt($el);
-		});
-	}
-
-	/**
-	* 底部按钮操作栏事件
-	*/
-	var evt = function($el) {
-		/**
-		 * 审核通过按钮
-		 */
-		$el.find('#taskSubmit').on('click', function() {
-			process();
-		})
-	}
-
-	/**
-	 * 跳流程
-	 */
-	function process() {
-		$.confirm({
-			title: '提交',
-			content: dialogTml.wContent.suggestion,
-			buttons: {
-				close: {
-					text: '取消',
-					btnClass: 'btn-default btn-cancel',
-					action: function() {}
-				},
-				ok: {
-					text: '确定',
-					action: function () {
-						var taskIds = [];
-						for(var i = 0, len = $params.tasks.length; i < len; i++) {
-							taskIds.push(parseInt($params.tasks[0].id));
-						}
-						var params = {
-							taskIds: taskIds,
-							orderNo: $params.orderNo
-						}
-						var reason = $.trim(this.$content.find('#suggestion').val());
-						if(reason) params.reason = reason;
-						tasksJump(params, 'complete');
-					}
-				}
-			}
 		})
 	}
 	
@@ -180,6 +86,16 @@ page.ctrl('cardAudit', function($scope) {
 			})
 		}
 	}
+	/***
+	* 上传图片成功后的回调函数
+	*/
+	$scope.uploadcb = function(self) {
+		var imgStr = self.$el.find('.imgs-view').attr('src');
+		$("#imgUrl").val(imgStr);
+	}
+	$scope.deletecb = function(self) {
+		$("#imgUrl").val('');
+	}
 	var cannotClick = function(){
 		$(".info-key-value-box").each(function(){
 			$(this).addClass("pointDisabled");
@@ -195,10 +111,10 @@ page.ctrl('cardAudit', function($scope) {
 			$tbl: $console.find('#openCardSheet')
 		}
 		loadLoanList(function(){
-			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
-			setupSubmitBar();
 			setupDropDown();
 			cannotClick();
+			$console.find('.uploadEvt').imgUpload();
+
 		});
 		
 	});

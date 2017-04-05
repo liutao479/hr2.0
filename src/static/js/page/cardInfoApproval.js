@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('openCardSheet', function($scope) {
+page.ctrl('cardInfoApproval', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
@@ -217,26 +217,6 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		})
 	}
-	
-	/***
-	* 加载页面模板
-	*/
-	$console.load(router.template('iframe/open-card-sheet'), function() {
-		$scope.def.listTmpl = render.$console.find('#openCardSheettmpl').html();
-		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
-		$scope.$el = {
-			$tbl: $console.find('#openCardSheet')
-		}
-		loadLoanList(function(){
-			console.log('zhixing');
-			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
-			setupSubmitBar();
-			setupDropDown();
-		});
-	});
-
-	
-
 	$scope.bankPicker = function(picked) {
 		console.log(picked);
 	}
@@ -425,4 +405,28 @@ page.ctrl('openCardSheet', function($scope) {
 			})
 		}
 	}
+	var cannotClick = function(){
+		$(".info-key-value-box").each(function(){
+			$(this).addClass("pointDisabled");
+		});
+	}
+	/***
+	* 加载页面模板
+	*/
+	$console.load(router.template('iframe/cardAudit'), function() {
+		$scope.def.listTmpl = render.$console.find('#openCardSheettmpl').html();
+		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
+		$scope.$el = {
+			$tbl: $console.find('#openCardSheet')
+		}
+		loadLoanList(function(){
+			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
+			setupSubmitBar();
+			setupDropDown();
+			cannotClick();
+			$console.find('.uploadEvt').imgUpload();
+		});
+		
+	});
+
 });

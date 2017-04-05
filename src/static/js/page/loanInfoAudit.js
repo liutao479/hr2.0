@@ -27,7 +27,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-//			 data['taskId']=80871;
+			data['frameCode']=$params.code;
 			data['taskId']=$params.taskId;
 		$.ajax({
 			url: $http.api('loanInfoInput/info','jbs'),
@@ -165,32 +165,9 @@ page.ctrl('loanInfoAudit', function($scope) {
 		   	var renewalStr = '';
 			for(var i=0;i<boxChecked.length;i++){
 				var rene = boxChecked[i];
-//				if(rene.hasClass('checked')){
-//			        rene.value = '';
-//				}
 				renewalStr += rene.getAttribute('data-value')+',';
 			}
 			$("input[name='residentType']").val(renewalStr);
-//		   	boxChecked.each(function(){
-//		   		if($(this).hasClass('checked')){
-//		   			var dVal = $(this).data('value');
-//				   	var data = '';
-//				   	data += dVal;
-//				   	$("input[name='residentType']").val(data);
-//		   		}
-//		   	})
-		   	
-//			function returnCheckboxVal(){
-//				$(".info-key-check-box").each(function(){
-//					var data="";
-//					$('.checked',$(this)).each(function(){
-//						data += $(this).attr("data-value")+",";
-//					});
-//					var value = data.substring(0,data.length-1);
-//					$("input",$(this)).val(value);
-//					return;
-//				})
-//			}
 	    })
 	    /***
 		* 保存按钮
@@ -233,7 +210,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 		        if(formList.length == 1){
 			        var params = formList.serialize();
 		            params = decodeURIComponent(params,true);
-	//	            params = decodeURI(params,true);
 		            var paramArray = params.split("&");
 		            var data1 = {};
 		            for(var i=0;i<paramArray.length;i++){
@@ -279,13 +255,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 						success: function(result){
 							console.log(result.msg);
 							console.log(key);
-//							if(){
-//								
-//							}else if(){
-//								
-//							}else{
-//								
-//							}
 						}
 					});
 		        }
