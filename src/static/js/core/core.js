@@ -223,7 +223,7 @@
 		_.$http.authorization(u.token);
 		_.hrLocalInformation = u;
 	}
-	// localAuth();
+	localAuth();
 	//授权校验 end
 
 	/************功能辅助类 begin************/
