@@ -182,14 +182,16 @@
 			});	
 		}
 		self.$el.find('.viewEvt').on('click', function() {
-			var loadImg;
+			var loadImg, marker;
 			try {
 				loadImg = eval(self.options.getimg);
+				marker = eval(self.options.marker);
 			} catch(e) {
 				loadImg = $.noop;
+				marker = $.noop;
 			}
 			loadImg(function(imgs) {
-
+				new Preview(imgs, marker);
 			})
 		})
 	};
@@ -435,29 +437,87 @@
 	* @params {function} marker 标记后的回调
 	* 	回调参数：img object
 	*/
-	function Preview(imgs, marker) {
+	function Preview(imgs, marker, opts) {
 		var self = this;
 		self.imgs = imgs || [];
 		self.marker = marker || $.noop;
+		self.opts = $.extend({
+			minWidth: 500,
+			minHeight: 400
+		}, opts);
+		self.size = {
+			iw: 80,
+			im: 8
+		}
+		self.runtime = {};
 		self.init();
 	}
 
 	Preview.prototype.init = function() {
 		var self = this;
+		var dw = document.documentElement.clientWidth || document.documentElement.offsetWidth,
+			dh = document.documentElement.clientHeight || document.documentElement.offsetHeight;
+		self.runtime.vw = dw * 0.80;
+		self.runtime.vh = dh * 0.80;
 		self.setMask();
 		self.setViewBox();
+		self.setClose()
+		self.listen();
 	};
 
 	Preview.prototype.setMask = function() { 
-		
+		var self = this;
+		self.$mask = $('<div style="position: fixed; left:0; top:0; bottom:0; right:0; background: #000; z-index:99999990; opacity:.3;filter:alpha(opacity=30);"></div>').appendTo('body');
 	};
 
 	Preview.prototype.setViewBox = function() {
-		
+		var self = this;
+		if(self.runtime.vw < self.opts.minWidth || self.runtime.vh < self.opts.minHeight) {
+			return $.confirm('当前窗口过小，无法使用图片预览功能，请拉伸你的窗口');
+		}
+		var items = parseInt((self.runtime.vw - 160) / (self.size.iw + self.size.im));
+		var boxWidth = items * self.size.iw + (items -1) * self.size.im;
+
+		var viewbox = '<div style="background: #000; position: fixed; z-index:99999999; width: '+self.runtime.vw+'px;height:'+self.runtime.vh+'px;border-raidus:3px;left:50%;top:50%;margin-left:-'+self.runtime.vw/2+'px;margin-top:-'+self.runtime.vh/2+'px;">\
+							<div style="width:'+boxWidth+'px;margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;"><img style="width:100%;height:100%;" id="___originImage___" src="'+self.imgs[0]+'" /></div>\
+							<div style="width:'+boxWidth+'px;height:'+self.size.iw+'px;margin:0 auto; overflow: hidden;"><div id="___thumbnails___" style="width:'+items * (self.size.im + self.size.iw) + self.size.im +'px;"></div></div>\
+							<a class="prev">&lt</a>\
+							<a class="next"></a>\
+					   </div>';
+		self.$preview = $(viewbox).appendTo('body');
+		var arr = [];
+		for(var i = 0, len = self.imgs.length; i < len; i++) {
+			var ml = i * self.size.im;
+			if(ml > 0) ml = self.size.im;
+			arr.push('<img data-idx="'+i+'" style="cursor: pointer; width:'+self.size.iw+'px;height:'+self.size.iw+'px;margin-left:'+ml+'px;" src="'+self.imgs[i]+'" />');
+		}
+		self.$items = $(arr.join('')).appendTo(self.$preview.find('#___thumbnails___'));
+		self.$view = self.$preview.find('#___originImage___');
 	};
 
+	Preview.prototype.setClose = function() {
+		var self = this;
+		self.$close = $('<span style="position:absolute; right: -18px;top:-13px;display:block;text-align:center;line-height:20px;color:#fff;font-size:20px;cursor:pointer;">×</span>').appendTo(self.$preview)
+	};
+	/**
+	* 事件监听
+	*/
 	Preview.prototype.listen = function() {
-		
+		var self = this;
+		self.$close.on('click', function() {
+			self.close();
+		})
+		self.$items.on('click', function() {
+			var idx = $(this).data('idx');
+			var img = self.imgs[idx];
+			self.$view.attr('src', img);
+		})
+		self.$prev.on('click', function() {
+
+		})
+		self.$next.on('click', function() {
+			
+		})
 	};
 
 	Preview.prototype.next = function() {
@@ -485,7 +545,7 @@
 	};
 
 	Preview.prototype.close = function() {
-		self.$preview.remove();
-		self.$mask.remove();
+		this.$preview.remove();
+		this.$mask.remove();
 	};
 })(jQuery);

@@ -1,24 +1,3 @@
-
-// 待办提醒框
-// var isOpen = false; 
-// $(document).on('click', '#remind-tips', function (){
-// 	if(!isOpen) {
-// 		$('#remind').animate({
-// 			right: '155px'
-// 		},200);
-// 		$(this).find('.iconfont').html('&#xe605;');
-// 		isOpen = true;
-// 	} else {
-// 		$('#remind').animate({
-// 			right: '0'
-// 		},200);
-// 		$(this).find('.iconfont').html('&#xe697;');
-// 		isOpen = false;
-// 	}
-// });
-
-
-
 //单选框
 // $(document).on('selectstart', '.radio', false);
 // $(document).on('click', '.radio', function() {
@@ -46,22 +25,6 @@ $('.tips-area').hover(function() {
 /**
 * 顶部二维码、消息和用户展开效果
 **/
-
-//二维码
-$(document).on('hover', '#navigator .QR-Code', function() {
-	$(this).find('.QR-Code-area').toggle();
-});
-
-//消息
-$(document).on('hover', '#navigator .message', function() {
-	$(this).find('.message-area').toggle();
-});
-
-//用户名
-$(document).on('hover', '#navigator .user', function() {
-	$(this).find('.user-area').toggle();
-	// $(this).find('.user-field-item').toggleClass('user-field-item-active');
-});
 
 
 

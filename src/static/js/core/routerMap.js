@@ -304,6 +304,11 @@
 		'organizationManage/newCar': {
 			title: '新建/编辑合作车商',
 			page: 'newCar'
+		},
+
+		'test': {
+			title: '测试文件',
+			page: 'test'
 		}
 	}
 	g.subRouterMap = {
