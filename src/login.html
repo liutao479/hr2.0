@@ -78,6 +78,10 @@
 			text-align: center;
 			cursor: pointer;
 		}
+		.form-text .row {
+			width: 200px;
+			margin: 0 auto;
+		}
 		.copyright {
 			color: #999;
 			text-align: center;
@@ -105,7 +109,10 @@
 				<div class="form-title">登录</div>
 				<input type="text" class="input-text" placeholder="请输入账号" id="account">
 				<input type="password" class="input-text" placeholder="请输入密码" id="password">
-				<a class="button btn-ok" id="submit">提交</a>	
+				<a class="button btn-ok" id="submit">提交</a>
+				<div class="row">
+					<a href="get.html" class="link" style="position: relative; top: -20px;">忘记密码?</a>	
+				</div>
 			</div>
 		</div>
 	</div>
@@ -155,7 +162,7 @@
 							Cookies.set('_hr_token', result.token);
 							Cookies.set('_hr_name', info.name)
 							Cookies.set('_hr_account', info.account);
-							Cookies.set('_hr_dept', info.organization.name + info.dept.name);
+							Cookies.set('_hr_dept', info.organization.name + '-' + info.dept.name);
 							Cookies.set('_hr_role', info.role.name);
 							if(info.phone1)
 								Cookies.set('_hr_phone', info.phone1);

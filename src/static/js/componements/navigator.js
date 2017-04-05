@@ -9,8 +9,9 @@ $(function() {
 	*/
 	NavComponent.prototype.init = function() {
 		var self = this;
-		self.$panel = $('#userPanel');
-		self.template = self.$panel.html();
+		self.$panel = $('#navigator');
+		self.$user = self.$panel.find('#userPanel');
+		self.template = self.$user.html();
 		self.__signature();
 		self.__compile();
 		self.__addListener();
@@ -31,21 +32,16 @@ $(function() {
 			name: Cookies.get('_hr_name'),
 			token: Cookies.get('_hr_token')
 		}
-		if(!_info.id || !_info.account || !_info.bankCode ||!_info.token) {
+		if(!_info.token || !_info.account) {
 			return self.showModal();
 		}
-		if(!refresh)
-			self.__setAjax();
+		self.__setAjax();
 	}
 
 	NavComponent.prototype.__setAjax = function() {
 		$.ajaxSetup({
 			headers: {
 				'Authorization' : 'Bearer ' + this.info.token
-			},
-			beforeSend: function(xhr) {
-				if(self.stopAjax) { return false; }
-				return xhr;
 			}
 		});
 	}
@@ -53,38 +49,42 @@ $(function() {
 	* 构造用户信息
 	*/
 	NavComponent.prototype.__compile = function() {
-		self.$panel.html(template);
+		var self = this;
+		self.$user.html(doT.template(self.template)(self.info));
+		self.$user.find('.drop-down-box').show();
 	}
-	/**
-	* 判断是否已经登录
-	*/
-	NavComponent.prototype.isLogin = function() {
-		return _info.id && _info.account && _info.bankCode && _info.token
-	}
+	
 	/**
 	* 监听事件
 	*/
 	NavComponent.prototype.__addListener = function() {
 		var self = this;
-		self.$signature.on('mouseenter', function() {
-			$(this).find('.user-area').show();
-		}).on('mouseleave', function() {
-			$(this).find('.user-area').hide();
-		})
 
-		self.$signature.find('.drop-down-item').on('click', function() {
+		self.$panel.find('.navEvt').on('click', function() {
 			var $this = $(this),
 				key = $this.data('id');
 			var fn = NavComponent.internal[key];
 			if(fn) { fn.apply(); }
 		})
+
+		self.$panel.find('.user-li').on('mouseenter', function() {
+			var $that = $(this);
+			var item = $that.data('item');
+			$that.find('.'+item+'-area').toggle();
+		}).on('mouseleave', function() {
+			var $that = $(this);
+			var item = $that.data('item');
+			$that.find('.'+item+'-area').toggle();
+		})
 	}
 
 	NavComponent.prototype.clear = function () {
 		Cookies.remove('_hr_token');
-		Cookies.remove('_hr_id');
+		Cookies.remove('_hr_dept');
 		Cookies.remove('_hr_account');
-		Cookies.remove('_hr_bankCode');
+		Cookies.remove('_hr_role');
+		Cookies.remove('_hr_name');
+		Cookies.remove('_hr_phone');
 	}
 
 	NavComponent.prototype.showModal = function() {
@@ -130,16 +130,13 @@ $(function() {
 			return $err.html('账号或密码不能为空').show();
 		}
 		$.ajax({
-			headers: {
-				'Content-Type': 'application/json;charset=utf-8'
-			},
-			url: core.api('operator/doLogin'),
+			url: $http.api('operator/doLogin'),
 			type: 'post',
 			dataType: 'json',
-			data: JSON.stringify({
+			data: {
 				account: acc,
 				password: pwd
-			}),
+			},
 			success: function(xhr) {
 				if(xhr && !xhr.code) {
 					var result = xhr.data;
@@ -162,4 +159,21 @@ $(function() {
 			}
 		})
 	}
+
+	NavComponent.internal = {
+		bind: function() {
+
+		},
+		change: function() {
+
+		},
+		password: function() {
+
+		},
+		exit: function() {
+
+		}
+	}
+
+	window.navInstance = new NavComponent()
 })
