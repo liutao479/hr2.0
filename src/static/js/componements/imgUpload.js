@@ -53,7 +53,7 @@
 			owner: undefined,	//材料所属类型
 			img: undefined,	//图片地址
 			msg: undefined,	//退回消息
-			err: undefined,	//错误类型 0 图片错误；1 图片不清晰；2 其他
+			err: undefined,	//错误类型 0 正常 ；1 图片不清晰；2 图片错误
 			editable: undefined,
 			url: undefined,
 			deletecb: $.noop,
@@ -96,7 +96,7 @@
 				if(self.options.err != undefined) {
 					self.errImg = imgs[self.options.err];
 				}
-				if(self.options.msg != undefined) {
+				if(self.options.msg && self.options.msg != 'undefined') {
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
 				if(self.options.other) {
@@ -107,8 +107,14 @@
 				tmp = internalTemplates.modify.format(self.name, self.options.img, self.errImg, self.errMsg);
 				self.status = 1;
 			} else {
+				if(self.options.err != undefined) {
+					self.errImg = imgs[self.options.err];
+				}
+				if(self.options.msg && self.options.msg != 'undefined') {
+					self.errMsg = internalTemplates.msg.format(self.options.msg);
+				}
 				self.name = internalTemplates.name.format(self.options.name);
-				tmp = internalTemplates.view.format(self.name, self.options.img || '');
+				tmp = internalTemplates.view.format(self.name, self.options.img || '', self.errImg, self.errMsg);
 				self.status = 2;
 			}
 		}
@@ -411,7 +417,7 @@
 				{2}{3}</div>{0}',
 		view: '<div class="imgs-item-upload">\
 				<img src="{1}" class="imgs-view viewEvt" />\
-			   </div>{0}',
+			   {2}{3}</div>{0}',
 		blank: '<div class="imgs-item-upload imgs-item-upload-blank">\
 				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
 				<span class="i-tips">图片未上传</span>\
