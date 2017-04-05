@@ -193,38 +193,6 @@
 		//todo show global error
 		// console.log(arguments);
 	});
-	/*****************http end*******************/
-	function unAuth() {
-		$.alert({
-			title: '提示',
-			content: tool.alert('你的登录授权无效或已过期'),
-			buttons:{
-				ok: {
-					text: '确定',
-					action: function() {
-						// location.href = 'login.html';
-						// alert(1)
-					}
-				}
-			}
-		})
-	}
-	//授权校验 begin
-	function localAuth() {
-		var u = {};
-		u.token = Cookies.get('_hr_token');
-		u.account = Cookies.get('_hr_account');
-		u.dept = Cookies.get('_hr_dept');
-		u.role = Cookies.get('_hr_role');
-		u.phone = Cookies.get('_hr_phone');
-		if(!u.token || !u.account) {
-			return unAuth();
-		}
-		_.$http.authorization(u.token);
-		_.hrLocalInformation = u;
-	}
-	localAuth();
-	//授权校验 end
 
 	/************功能辅助类 begin************/
 	var tool = _.tool = {};
@@ -321,4 +289,40 @@
 			materialsCode: 'zxsqszp',
 			name: '授权书签字照片'
 		}];
+
+	
+	/*****************http end*******************/
+	function unAuth() {
+		$.alert({
+			title: '提示',
+			content: tool.alert('你的登录授权无效或已过期'),
+			buttons:{
+				ok: {
+					text: '确定',
+					action: function() {
+						location.href = 'login.html';
+						// alert(1)
+					}
+				}
+			}
+		})
+	}
+	//授权校验 begin
+	function localAuth() {
+		var u = {};
+		u.token = Cookies.get('_hr_token');
+		u.account = Cookies.get('_hr_account');
+		u.dept = Cookies.get('_hr_dept');
+		u.role = Cookies.get('_hr_role');
+		u.phone = Cookies.get('_hr_phone');
+		if(!u.token || !u.account) {
+			return unAuth();
+		}
+		_.$http.authorization(u.token);
+		_.hrLocalInformation = u;
+	}
+	localAuth();
+	//授权校验 end
+
+	
 })(window);
