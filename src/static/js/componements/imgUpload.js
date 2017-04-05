@@ -36,6 +36,7 @@
 	* 上传类
 	* @params {object} opts 公共配置项
 	* 		--opts: {string} url 提交地址，如果需要特定的地址，则需要传入
+	*		--viewable: default false
 	* @params {object} params 渲染参数对象
 	*/
 	var imgUpload = function($el, opts, params) {
@@ -56,7 +57,8 @@
 			editable: undefined,
 			url: undefined,
 			deletecb: $.noop,
-			uploadcb: $.noop
+			uploadcb: $.noop,
+			viewable: false
 		}
 		var self = this;
 		self.$el = $el;
@@ -182,6 +184,7 @@
 			});	
 		}
 		self.$el.find('.viewEvt').on('click', function() {
+			if(!self.options.viewable) return;
 			var loadImg, marker;
 			try {
 				loadImg = eval(self.options.getimg);
@@ -443,7 +446,8 @@
 		self.marker = marker;
 		self.opts = $.extend({
 			minWidth: 500,
-			minHeight: 400
+			minHeight: 400,
+			markable: true
 		}, opts);
 		self.size = {
 			iw: 80,
@@ -486,7 +490,7 @@
 		var boxWidth = items * self.size.iw + (items -1) * self.size.im;
 
 		var viewbox = '<div class="img-view-box" onselectstart="return false;" style="background: #000; position: fixed; z-index:99999999; width: '+self.runtime.vw+'px;height:'+self.runtime.vh+'px;border-raidus:3px;left:50%;top:50%;margin-left:-'+self.runtime.vw/2+'px;margin-top:-'+self.runtime.vh/2+'px;">\
-							<div style="width:'+boxWidth+'px; position:relative; margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;"><a class="prev big"></a><a class="next big"></a><img style="width:100%;height:100%;" id="___originImage___" src="'+self.imgs[0].url+'" /></div>\
+							<div style="width:'+boxWidth+'px; position:relative; margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;"><a class="prev big"></a><a class="next big"></a><img style="width:100%;height:100%;" id="___originImage___" src="'+self.imgs[0].materialsPic+'" /></div>\
 							<div style="width:'+boxWidth+'px; position:relative; height:'+self.size.iw+'px;margin:0 auto; overflow: hidden;"><div id="___thumbnails___" style="width:'+items * (self.size.im + self.size.iw) + self.size.im +'px;"></div></div>\
 							<a class="prev mini"></a><a class="next mini"></a>\
 					   </div>';
@@ -495,9 +499,9 @@
 		for(var i = 0, len = self.imgs.length; i < len; i++) {
 			var img = self.imgs[i],
 				ml = i * self.size.im,
-				mark = self.getMark(img.marked);
+				mark = self.getMark(img.auditResult);
 			if(ml > 0) ml = self.size.im;
-			arr.push('<div data-idx="'+i+'" style="cursor: pointer; position:relative; float:left; width:'+self.size.iw+'px;height:'+self.size.iw+'px;margin-left:'+ml+'px;"><img src="'+img.url+'" style="width:100%; height:100%;" />'+mark+'</div>');
+			arr.push('<div data-idx="'+i+'" style="cursor: pointer; position:relative; float:left; width:'+self.size.iw+'px;height:'+self.size.iw+'px;margin-left:'+ml+'px;"><img src="'+img.materialsPic+'" style="width:100%; height:100%;" />'+mark+'</div>');
 		}
 		self.$items = $(arr.join('')).appendTo(self.$preview.find('#___thumbnails___'));
 		self.$view = self.$preview.find('#___originImage___');
@@ -543,6 +547,9 @@
 		self.$toolbar.$zoomTrack = self.$toolbar.$root.find('.zoom-track');
 		self.$toolbar.$zoomThumb = self.$toolbar.$zoomTrack.find('.track-thumb');
 		self.$toolbar.$zoomScale = self.$toolbar.$root.find('.zoom-scale');
+		if(!self.opts.markable) {
+			self.$toolbar.$mark.remove();
+		}
 	}
 	/**
 	* 设置关闭
@@ -574,7 +581,7 @@
 			var idx = $(this).data('idx');
 			var img = self.imgs[idx];
 			self.runtime.idx = idx;
-			self.$view.attr('src', img.url);
+			self.$view.attr('src', img.materialsPic);
 		})
 		self.$prev.on('click', function() {
 			self.prev();
@@ -612,7 +619,7 @@
 		if(self.runtime.idx < self.imgs.length - 1) {
 			self.runtime.idx++;
 			var img = self.imgs[self.runtime.idx];
-			self.$view.attr('src', img.url);
+			self.$view.attr('src', img.materialsPic);
 		}
 	};
 
@@ -640,4 +647,8 @@
 		this.$preview.remove();
 		this.$mask.remove();
 	};
+
+	$.preview = function(imgCollections, marker, opt) {
+		new Preview(imgCollections, marker, opt);
+	}
 })(jQuery);

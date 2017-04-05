@@ -108,6 +108,10 @@
 			border: none;
 			cursor: pointer;
 		}
+		.form-text .code {
+			width: 80px;
+			border-radius: 0 3px 3px 0;
+		}
 		.form-text .code-btn {
 			display: block;
 			width: 80px;
@@ -145,7 +149,7 @@
 				<div class="row">
 					<label>图型验证码：</label>
 					<input type="text" class="input-text" id="imgCode">
-					<img class="code" id="getImageCode" src="http://192.168.0.186:9999/capcha/get" />
+					<img class="code" id="getImageCode"/>
 				</div>
 				<div class="row">
 					<label>手机验证码：</label>
@@ -206,22 +210,7 @@
 			}
 
 			function getImageCode($img) {
-				function _g() {
-					$.ajax({
-						url: method('capcha/get'),
-						data: {
-							businessKey: 'retrivePassword'
-						},
-						success: function(xhr) {
-							$img.attr('src', xhr);
-						}
-					})	
-				}
-
-				if(!token) {
-					return getToken(_g);
-				}
-				_g();
+				$img.attr('src', method('capcha/get?businessKey=retrivePassword&t='+new Date().getTime()));
 			}
 
 			function getToken(cb) {
