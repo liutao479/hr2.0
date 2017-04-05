@@ -209,6 +209,9 @@
 				function _g() {
 					$.ajax({
 						url: method('capcha/get'),
+						data: {
+							businessKey: 'retrivePassword'
+						},
 						success: function(xhr) {
 							$img.attr('src', xhr);
 						}
@@ -266,23 +269,8 @@
 				_g();
 			}
 
-			function addEventListener() {
-				$('#getImageCode').on('click', function() {
-					getImageCode($(this));
-				}).click();
-
-				$('#getPhoneCode').on('click', function() {
-					getPhoneCode();
-				})
-
-				$('#form > .input-text').on('keydown', function(e) {
-					if(e.which == 13) {
-						$('#submit').click();
-					}
-				})
-
-				$('#submit').on('click', function () {
-					var phone = $.trim($phone.val()),
+			function submit() {
+				var phone = $.trim($phone.val()),
 						pcode = $.trim($pcode.val());
 					if(!phone || !pcode) {
 						return $alert('请输入手机号和手机验证码');
@@ -322,6 +310,25 @@
 							}
 						}
 					})
+			}
+
+			function addEventListener() {
+				$('#getImageCode').on('click', function() {
+					getImageCode($(this));
+				}).click();
+
+				$('#getPhoneCode').on('click', function() {
+					getPhoneCode();
+				})
+
+				$('#form > .input-text').on('keydown', function(e) {
+					if(e.which == 13) {
+						$('#submit').click();
+					}
+				})
+
+				$('#submit').on('click', function () {
+					submit();
 				})
 			}
 
