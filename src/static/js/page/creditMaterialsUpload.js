@@ -544,7 +544,12 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		/**
 		 * 启动上传图片控件
 		 */
-		$self.find('.uploadEvt').imgUpload();
+		$self.find('.uploadEvt').imgUpload({
+			getimg: function(cb) {
+				
+				cb(imgs)
+			}
+		});
 
 		/**
 		 * 下拉框启动
