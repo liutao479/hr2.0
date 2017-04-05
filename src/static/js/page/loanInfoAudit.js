@@ -27,8 +27,10 @@ page.ctrl('loanInfoAudit', function($scope) {
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-			data['frameCode']=$params.code;
 			data['taskId']=$params.taskId;
+		if($params.refer) {
+			data.frameCode = $params.code;
+		}
 		$.ajax({
 			url: $http.api('loanInfoInput/info','jbs'),
 			data: data,

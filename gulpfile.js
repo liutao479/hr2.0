@@ -45,6 +45,7 @@ gulp.task('concat', function() {
 })
 gulp.task('concat-mini', function () {
     return gulp.src([
+            path.src.js('plugin/jquery.dialog.min.js'),
             path.src.js('plugin/cookie.js'),
             path.src.js('core/md5.js')
         ])
@@ -66,6 +67,7 @@ gulp.task('copy', function() {
             path.src.root('templates/**/*.html'),
             path.src.root('app.html'),
             path.src.root('login.html'),
+            path.src.root('get.html'),
             path.src.js('vendor/**/*'),
             path.src.js('page/**/*.js'),
             path.src.root('static/css/img/**/*'),

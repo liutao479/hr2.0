@@ -90,10 +90,9 @@ page.ctrl('loan', function($scope) {
 					break;
 				}
 			}
-			console.log(target)
 			router.render('loanProcess/' + target.category, {
-				taskId: that.data('id'), 
-				orderNo: that.data('orderNo'),
+				taskId: target.id, 
+				orderNo: target.orderNo,
 				tasks: taskObj,
 				selected: selected,
 				path: 'loanProcess'
