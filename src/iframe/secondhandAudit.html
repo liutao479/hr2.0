@@ -1,0 +1,69 @@
+	<!--二手车录入zhy-->
+			<div class="container car-twohand" id="car-twohand">
+				<!--面板-->
+				<div id="secondhandInput" class="mt15"></div>
+				
+			</div>			
+			<script type="text/x-dot-template" id="secondhandInputtmpl">
+				<form id="dataform">
+				{{for(var z = 0, lenthz = it.cfgData.frames.length; z < lenthz; z++) { var cfg = it.cfgData.frames[z]; }}
+				{{for(var y = 0, lenthy = cfg.sections.length; y < lenthy; y++) { var sec = cfg.sections[y]; if(!sec.segments || !sec.segments.length) {continue;}else{ }}
+				<div class="panel panel-loan">
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">{{= sec.name}}</span>
+						</div>
+					</div>
+					<div class="panel-detail-content-layout">
+						<div class="loan-info">
+							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x]; }}
+								{{ var fieldCode = seg.fieldName;}}
+								{{ var fieldCode1 = fieldCode+'123';}}
+							<div class="info-key-value-box">
+								<table>
+									<tr>
+										<td>
+											<span class="info-key">
+												{{ if(seg.empty == '0'){ }}
+												<i>*</i>
+												{{ } }} 
+												{{= seg.name}}:
+											</span>
+										</td>
+										{{if(fieldCode == 'carMode'){ }}
+											<td>
+												<div class="select select-common" data-selected="{{= it.data.loanCarAssess.carName}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['secondhandInput'].carPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.car"></div>
+												<input type="hidden" name="{{= fieldCode}}" value="{{= it.data.loanCarAssess[fieldCode]}}" />
+											</td>
+										{{ }else if(fieldCode == 'originArea' || fieldCode == 'location'){ }}
+											<td>
+												<div class="select select-common" data-selected="{{= it.data.loanCarAssess[fieldCode]}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
+												<input type="hidden" name="{{= fieldCode}}" value="{{= it.data.loanCarAssess[fieldCode]}}" />
+											</td>
+										{{ }else{ }}
+											<td>
+												<span class="info-value">
+													<input type="text" name="{{= seg.fieldName}}" value="{{= it.data.loanCarAssess[fieldCode]}}" />
+												</span>
+											</td>
+										{{ } }}
+									</tr>
+								</table>
+							</div>
+							{{ } }}
+						</div>
+					</div>
+				</div>
+				{{ } }}
+				{{ } }}
+				{{ } }}
+				<input type="hidden" id="carName" name="carName" />
+				<input type="hidden" name="identifyAssessDate" value="{{= it.data.loanCarAssess.identifyAssessDate}}" />
+				<input type="hidden" name="updateDate" value="{{= it.data.loanCarAssess.updateDate}}" />
+				<input type="hidden" name="updateUser" value="{{= it.data.loanCarAssess.updateUser}}" />
+				<input type="hidden" name="productionDate" value="{{= it.data.loanCarAssess.productionDate}}" />
+				<input type="hidden" name="id" value="{{= it.data.loanCarAssess.id}}" />
+				<input type="hidden" name="orderNo" value="{{= it.data.loanCarAssess.orderNo}}" />
+				</form>
+			</script>

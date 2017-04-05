@@ -48,7 +48,6 @@ page.ctrl('loanInfo', function($scope) {
 				loanFinishedGps();
 				loanFinishedBxxb();
 				setupEvt();
-//				console.log(page.$scope.loanInfo.result.cfgData);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -191,26 +190,6 @@ page.ctrl('loanInfo', function($scope) {
 				renewalStr += rene.getAttribute('data-value')+',';
 			}
 			$("input[name='residentType']").val(renewalStr);
-//		   	boxChecked.each(function(){
-//		   		if($(this).hasClass('checked')){
-//		   			var dVal = $(this).data('value');
-//				   	var data = '';
-//				   	data += dVal;
-//				   	$("input[name='residentType']").val(data);
-//		   		}
-//		   	})
-		   	
-//			function returnCheckboxVal(){
-//				$(".info-key-check-box").each(function(){
-//					var data="";
-//					$('.checked',$(this)).each(function(){
-//						data += $(this).attr("data-value")+",";
-//					});
-//					var value = data.substring(0,data.length-1);
-//					$("input",$(this)).val(value);
-//					return;
-//				})
-//			}
 	    })
 	    /***
 		* 保存按钮
@@ -253,7 +232,6 @@ page.ctrl('loanInfo', function($scope) {
 		        if(formList.length == 1){
 			        var params = formList.serialize();
 		            params = decodeURIComponent(params,true);
-	//	            params = decodeURI(params,true);
 		            var paramArray = params.split("&");
 		            var data1 = {};
 		            for(var i=0;i<paramArray.length;i++){
@@ -299,13 +277,6 @@ page.ctrl('loanInfo', function($scope) {
 						success: function(result){
 							console.log(result.msg);
 							console.log(key);
-//							if(){
-//								
-//							}else if(){
-//								
-//							}else{
-//								
-//							}
 						}
 					});
 		        }

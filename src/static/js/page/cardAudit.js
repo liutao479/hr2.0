@@ -317,6 +317,16 @@ page.ctrl('cardAudit', function($scope) {
 			})
 		}
 	}
+	/***
+	* 上传图片成功后的回调函数
+	*/
+	$scope.uploadcb = function(self) {
+		var imgStr = self.$el.find('.imgs-view').attr('src');
+		$("#imgUrl").val(imgStr);
+	}
+	$scope.deletecb = function(self) {
+		$("#imgUrl").val('');
+	}
 	var cannotClick = function(){
 		$(".info-key-value-box").each(function(){
 			$(this).addClass("pointDisabled");
@@ -338,6 +348,8 @@ page.ctrl('cardAudit', function($scope) {
 			setupSubmitBar();
 			setupDropDown();
 			cannotClick();
+			$console.find('.uploadEvt').imgUpload();
+
 		});
 		
 	});
