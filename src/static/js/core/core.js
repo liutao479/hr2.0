@@ -65,7 +65,7 @@
 			// return 'http://192.168.1.86:8080/' + method;
 			return 'http://192.168.0.186:9999/' + method;
 //			return 'http://192.168.1.124:8080/' + method;
-//			return 'http://192.168.0.22:8080/' + method;
+			// return 'http://192.168.0.22:8080/' + method;
 
 
 			
@@ -220,7 +220,7 @@
 		if(!u.token || !u.account) {
 			return unAuth();
 		}
-		// _.$http.authorization(u.token);
+		_.$http.authorization(u.token);
 		_.hrLocalInformation = u;
 	}
 	// localAuth();
