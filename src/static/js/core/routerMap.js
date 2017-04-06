@@ -50,6 +50,21 @@
 			refer: [],
 			page: 'historyInspectDetail'
 		},
+		'materialInspection': {
+			title: '材料验真',
+			refer: [],
+			page: 'materialInspection'
+		},
+		'dataAssistant': {
+			title: '数据辅证',
+			refer: [],
+			page: 'dataAssistant'
+		},
+		'riskManagement': {
+			title: '风控服务统计',
+			refer: [],
+			page: 'riskManagement'
+		},
 		'licenceProcess': {
 			title: '上牌办理',
 			refer: [],

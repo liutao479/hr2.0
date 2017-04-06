@@ -233,12 +233,143 @@
 					</table>\
 				</div>',
 		btngroup:'{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
-			{{ if(col.select){ }}\
-			<div class="block-item-data selected">{{=col.text}}</div>\
-			{{ }else{ }}\
-			<div class="block-item-data">{{=col.text}}</div>\
-			{{ } }}\
-			{{ } }}'
+				{{ if(col.select){ }}\
+					<div class="block-item-data selected">{{=col.text}}</div>\
+				{{ }else{ }}\
+					<div class="block-item-data">{{=col.text}}</div>\
+				{{ } }}\
+			{{ } }}',
+		serviceItems:'<div class="serviceItems">\
+			<ul class="clearfix">\
+				<li><div class="text-bt">银行</div>\
+					<div class="serviceContext clearfix">\
+						<p class="text-icon"><span class="bacf09054"><i class="iconfont">&#xe676;</i></span></p>\
+						<p class="text-name">购车发票核查\
+						{{ if(it.buyCar.checkStatus==1){ }}<span class="text-status text-orange">未查</span>\
+						{{ }else if(it.buyCar.checkStatus==2){ }}<span class="text-status text-orange">查询中</span>\
+						{{ }else{ }}<span class="text-status text-green">已查</span>\
+						{{ } }}\
+						</p>\
+					</div>\
+					{{ if(!it.buyCar.isComplete){ }}<div class="serviceBtn inoperable">缺少相关数据</div>\
+					{{ }else{ }}\
+					{{ if(it.buyCar.checkStatus==1){ }}<div class="serviceBtn bacStart">发起核查</div>\
+					{{ }else if(it.buyCar.checkStatus==2){ }}<div class="serviceBtn inoperable">禁用发起核查</div>\
+					{{ }else if(it.buyCar.checkStatus==3){ }}<div class="serviceBtn bacAgain">再次核查</div>\
+					{{ } }}\
+					{{ } }}\
+				<li><div class="text-bt">银行</div>\
+					<div class="serviceContext clearfix">\
+						<p class="text-icon"><span class="bac73c7df"><i class="iconfont">&#xe6bb;</i></span></p>\
+						<p class="text-name">购房发票核查\
+						{{ if(it.buyHouse.checkStatus==1){ }}<span class="text-status text-orange">未查</span>\
+						{{ }else if(it.buyHouse.checkStatus==2){ }}<span class="text-status text-orange">查询中</span>\
+						{{ }else{ }}<span class="text-status text-green">已查</span>\
+						{{ } }}\
+						</p>\
+					</div>\
+					{{ if(!it.buyHouse.isComplete){ }}<div class="serviceBtn inoperable">缺少相关数据</div>\
+					{{ }else{ }}\
+					{{ if(it.buyHouse.checkStatus==1){ }}<div class="serviceBtn bacStart">发起核查</div>\
+					{{ }else if(it.buyHouse.checkStatus==2){ }}<div class="serviceBtn inoperable">禁用发起核查</div>\
+					{{ }else if(it.buyHouse.checkStatus==3){ }}<div class="serviceBtn bacAgain">再次核查</div>\
+					{{ } }}\
+					{{ } }}\
+				</li>\
+				<li><div class="text-bt">银行</div>\
+					<div class="serviceContext clearfix">\
+						<p class="text-icon"><span class="bacAgain"><i class="iconfont">&#xe673;</i></span></p>\
+						<p class="text-name">银行流水核查\
+						{{ if(it.bank.checkStatus==1){ }}<span class="text-status text-orange">未查</span>\
+						{{ }else if(it.bank.checkStatus==2){ }}<span class="text-status text-orange">查询中</span>\
+						{{ }else{ }}<span class="text-status text-green">已查</span>\
+						{{ } }}\
+						</p>\
+					</div>\
+					{{ if(!it.bank.isComplete){ }}<div class="serviceBtn inoperable">缺少相关数据</div>\
+					{{ }else{ }}\
+					{{ if(it.bank.checkStatus==1){ }}<div class="serviceBtn bacStart">发起核查</div>\
+					{{ }else if(it.bank.checkStatus==2){ }}<div class="serviceBtn inoperable">禁用发起核查</div>\
+					{{ }else if(it.bank.checkStatus==3){ }}<div class="serviceBtn bacAgain">再次核查</div>\
+					{{ } }}\
+					{{ } }}\
+				</li>\
+				<li><div class="text-bt">银行</div>\
+					<div class="serviceContext clearfix">\
+						<p class="text-icon"><span class="bac59cfb7"><i class="iconfont">&#xe679;</i></span></p>\
+						<p class="text-name">房产证核查\
+						{{ if(it.houseCard.checkStatus==1){ }}<span class="text-status text-orange">未查</span>\
+						{{ }else if(it.houseCard.checkStatus==2){ }}<span class="text-status text-orange">查询中</span>\
+						{{ }else{ }}<span class="text-status text-green">已查</span>\
+						{{ } }}\
+						</p>\
+					</div>\
+					{{ if(!it.houseCard.isComplete){ }}<div class="serviceBtn inoperable">缺少相关数据</div>\
+					{{ }else{ }}\
+					{{ if(it.houseCard.checkStatus==1){ }}<div class="serviceBtn bacStart">发起核查</div>\
+					{{ }else if(it.houseCard.checkStatus==2){ }}<div class="serviceBtn inoperable">禁用发起核查</div>\
+					{{ }else if(it.houseCard.checkStatus==3){ }}<div class="serviceBtn bacAgain">再次核查</div>\
+					{{ } }}\
+					{{ } }}\
+				</li>\
+				<li>\
+					<div class="serviceContext clearfix">\
+						<p class="text-icon"><span class="bac82b953"><i class="iconfont">&#xe672;</i></span></p>\
+						<p class="text-name">合格证核查\
+						{{ if(it.hgCard.checkStatus==1){ }}<span class="text-status text-orange">未查</span>\
+						{{ }else if(it.hgCard.checkStatus==2){ }}<span class="text-status text-orange">查询中</span>\
+						{{ }else{ }}<span class="text-status text-green">已查</span>\
+						{{ } }}\
+						</p>\
+					</div>\
+					{{ if(!it.hgCard.isComplete){ }}<div class="serviceBtn inoperable">缺少相关数据</div>\
+					{{ }else{ }}\
+					{{ if(it.hgCard.checkStatus==1){ }}<div class="serviceBtn bacStart">发起核查</div>\
+					{{ }else if(it.hgCard.checkStatus==2){ }}<div class="serviceBtn inoperable">禁用发起核查</div>\
+					{{ }else if(it.hgCard.checkStatus==3){ }}<div class="serviceBtn bacAgain">再次核查</div>\
+					{{ } }}\
+					{{ } }}\
+				</li>\
+				<li>\
+					<div class="serviceContext clearfix">\
+						<p class="text-icon"><span class="bac84bef0"><i class="iconfont">&#xe642;</i></span></p>\
+						<p class="text-name">保单核查\
+						{{ if(it.bdHC.checkStatus==1){ }}<span class="text-status text-orange">未查</span>\
+						{{ }else if(it.bdHC.checkStatus==2){ }}<span class="text-status text-orange">查询中</span>\
+						{{ }else{ }}<span class="text-status text-green">已查</span>\
+						{{ } }}\
+						</p>\
+					</div>\
+					{{ if(!it.bdHC.isComplete){ }}<div class="serviceBtn inoperable">缺少相关数据</div>\
+					{{ }else{ }}\
+					{{ if(it.bdHC.checkStatus==1){ }}<div class="serviceBtn bacStart">发起核查</div>\
+					{{ }else if(it.bdHC.checkStatus==2){ }}<div class="serviceBtn inoperable">禁用发起核查</div>\
+					{{ }else if(it.bdHC.checkStatus==3){ }}<div class="serviceBtn bacAgain">再次核查</div>\
+					{{ } }}\
+					{{ } }}\
+				</li>\
+				<li>\
+					<div class="serviceContext clearfix">\
+						<p class="text-icon"><span class="bacf5bf5b"><i class="iconfont">&#xe6cc;</i></span></p>\
+						<p class="text-name">车辆登记核查\
+						{{ if(it.carDJ.checkStatus==1){ }}<span class="text-status text-orange">未查</span>\
+						{{ }else if(it.carDJ.checkStatus==2){ }}<span class="text-status text-orange">查询中</span>\
+						{{ }else{ }}<span class="text-status text-green">已查</span>\
+						{{ } }}\
+						</p>\
+					</div>\
+					{{ if(!it.carDJ.isComplete){ }}<div class="serviceBtn inoperable">缺少相关数据</div>\
+					{{ }else{ }}\
+					{{ if(it.carDJ.checkStatus==1){ }}<div class="serviceBtn bacStart">发起核查</div>\
+					{{ }else if(it.carDJ.checkStatus==2){ }}<div class="serviceBtn inoperable">禁用发起核查</div>\
+					{{ }else if(it.carDJ.checkStatus==3){ }}<div class="serviceBtn bacAgain">再次核查</div>\
+					{{ } }}\
+					{{ } }}\
+				</li>\
+				</li>\
+			</ul>\
+			<p class="tip">提示：带有“<span class="textfe5a58">银行</span>”标记的服务表示业务经办银行要求核查的服务项目，系统会在条件满足的情况下自动完成核查。</p>\
+		</div>'
 	}
 	g.dialogTml.wCommit = {
 		sure: '<div class="w-commit-area">\

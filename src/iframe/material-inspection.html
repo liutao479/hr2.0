@@ -1,0 +1,548 @@
+<!--材料验真-->
+<div class="container material-inspection" id="material-inspection">
+	<!--tab切换栏-->
+	<div class="tab-bar mt15">
+		<ul class="role-bar-ul clearfix" id="roleBarTab"></ul>
+	</div>
+	<!--tab切换栏 end-->
+	<div class="tab-content">
+		<div class="panel no-top-border clearfix">
+			<div class="panel-content-title no-top-border">
+				<div class="key-value-box">
+					<div class="value">已核验6项，查询中2项</div>
+				</div>
+				<div class="key-value-box">
+					<span class="key">最新核查时间：</span>
+					<span class="value">2017-03-31 09:56</span>
+				</div>
+				<div class="key-value-box">
+					<span class="key">发起人：</span>
+					<span class="value">南方初审1</span>
+				</div>
+				<div class="button button-mini" id="startCheck">发起核查</div>
+			</div>
+			<div class="detail-item-group">
+				<!--购车发票核查-->
+				<div class="detail-item-list">
+					<div class="detail-item-title">
+						<i class="iconfont">&#xe676;</i>购车发票核查
+					</div>
+					<div class="detail-item-alert alert-warning">
+						<span class="icon"><i class="iconfont">&#xe612;</i></span>
+						<span class="status">不通过</span>
+						<span class="text">
+							经向税务系统核查，发票代码[1111241241]号码[334234252]的内容与发票原件上的部分内容不一致！
+						</span>
+						<span class="message-number">new</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div class="no-img-group left-model clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">购车发票原件</p>
+							</div>
+						</div>
+						<div class="right-model">
+							<h3>税务查得信息</h3>
+							<ul class="table-key-val">
+								<li><span class="key">发票代码：</span>342342352352</li>
+								<li><span class="key">发票号码：</span>234235235</li>
+								<li><span class="key">开票日期：</span>2017-03-21</li>
+								<li><span class="key">价税合计：</span>12313.00元</li>
+								<li><span class="text-warning">购买方名称：方志山</span><span class="key">（购车发票原件数据：方大大）</span></li>
+								<li><span class="key">购买方身份证/组织证件号：</span>332312312414523435</li>
+								<li><span class="key">纳税人识别号：</span>2353354646</li>
+								<li><span class="key">开票方名称：</span>杭州捷达汽车销售服务有限公司</li>
+							</ul>
+						</div>
+					</div>
+					<div class="detail-item-alert alert-danger">
+						<span class="icon"><i class="iconfont">!</i></span>
+						<span class="status">未校验</span>
+						<span class="text">
+							提供的照片不清晰，无法查询/数据源异常，无法核查！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div class="no-img-group clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">购车发票原件</p>
+							</div>
+						</div>
+					</div>
+					<div class="detail-item-alert alert-success">
+						<span class="icon"><i class="iconfont">&#xe659;</i></span>
+						<span class="status">通过</span>
+						<span class="text">
+							经向税务系统核查，发票代码[1111241241]号码[334234252]的内容与发票原件上的部分内容一致！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div class="no-img-group left-model clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">购车发票原件</p>
+							</div>
+						</div>
+						<div class="right-model">
+							<h3>税务查得信息</h3>
+							<ul class="table-key-val">
+								<li><span class="key">发票代码：</span>342342352352</li>
+								<li><span class="key">发票号码：</span>234235235</li>
+								<li><span class="key">开票日期：</span>2017-03-21</li>
+								<li><span class="key">价税合计：</span>12313.00元</li>
+								<li><span class="key">购买方名称：</span>方志山</li>
+								<li><span class="key">购买方身份证/组织证件号：</span>332312312414523435</li>
+								<li><span class="key">纳税人识别号：</span>2353354646</li>
+								<li><span class="key">开票方名称：</span>杭州捷达汽车销售服务有限公司</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--购房发票核查-->
+				<div class="detail-item-list">
+					<div class="detail-item-title">
+						<i class="iconfont">&#xe6bb;</i>购房发票核查
+					</div>
+					<div class="detail-item-alert alert-warning">
+						<span class="icon"><i class="iconfont">&#xe612;</i></span>
+						<span class="status">不通过</span>
+						<span class="text">
+							经向税务系统核查，未找到该购房发票，发票信息有误或假票！
+						</span>
+						<span class="message-number">new</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div>
+							<table class="table-search-msg" cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="table-key">提供查询的参数</td>
+									<td class="table-val">
+										<table class="table-inner">
+											<tr>
+												<td><span class="key">发票代码：</span>2323523523</td>
+												<td><span class="key">发票号码：</span>235235234</td>
+												<td><span class="key">开票日期：</span>3463453</td>
+											</tr>
+											<tr>
+												<td><span class="key">价税合计：</span>234235235</td>
+												<td colspan="2"><span class="key">纳税人识别号：</span>356456345</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="no-img-group clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">购房发票原件</p>
+							</div>
+						</div>
+					</div>
+					<div class="detail-item-alert alert-danger">
+						<span class="icon"><i class="iconfont">!</i></span>
+						<span class="status">未校验</span>
+						<span class="text">
+							提供的照片不清晰，无法查询！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div class="no-img-group clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">购房发票原件</p>
+							</div>
+						</div>
+					</div>
+					<div class="detail-item-alert alert-success">
+						<span class="icon"><i class="iconfont">&#xe659;</i></span>
+						<span class="status">通过</span>
+						<span class="text">
+							经向税务系统核查，发票代码[1111241241]号码[334234252]的内容与发票原件上的部分内容一致！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div class="no-img-group left-model clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">购房发票原件</p>
+							</div>
+						</div>
+						<div class="right-model">
+							<h3>税务查得信息</h3>
+							<ul class="table-key-val">
+								<li><span class="key">发票代码：</span>342342352352</li>
+								<li><span class="key">发票号码：</span>234235235</li>
+								<li><span class="key">开票日期：</span>2017-03-21</li>
+								<li><span class="key">价税合计：</span>12313.00元</li>
+								<li><span class="key">购买方名称：</span>方志山</li>
+								<li><span class="key">购买方身份证/组织证件号：</span>332312312414523435</li>
+								<li><span class="key">纳税人识别号：</span>2353354646</li>
+								<li><span class="key">开票方名称：</span>杭州捷达汽车销售服务有限公司</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--银行流水核查-->
+				<div class="detail-item-list">
+					<div class="detail-item-title">
+						<i class="iconfont">&#xe673;</i>银行流水核查
+					</div>
+					<div class="detail-item-alert alert-warning">
+						<span class="icon"><i class="iconfont">&#xe612;</i></span>
+						<span class="status">不通过</span>
+						<span class="text">
+							经向银联流水核查，卡号[1224334235]的持卡人身份证信息与姓名【王晓峰】身份证号[234235235]不一致！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div>
+							<table class="table-search-msg" cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="table-key">提供查询的参数</td>
+									<td class="table-val">
+										<table class="table-inner">
+											<tr>
+												<td><span class="key">真实姓名：</span>2323523523</td>
+												<td><span class="key">身份证号：</span>235235234</td>
+												<td><span class="key">银行卡号：</span>3463453</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="no-img-group clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">流水原件1</p>
+							</div>
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">流水原件2</p>
+							</div>
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">流水原件3</p>
+							</div>
+						</div>
+					</div>
+					<div class="detail-item-alert alert-success">
+						<span class="icon"><i class="iconfont">&#xe659;</i></span>
+						<span class="status">通过</span>
+						<span class="text">
+							经向银联流水核查，卡号[1224334235]的持卡人身份证信息与姓名【王晓峰】身份证号[234235235]一致，且抽查的流水均在流水材料中命中！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div>
+							<table class="default-table">
+								<tr>
+									<td>流水时间：23141</td>
+									<td>交易类型：收入</td>
+									<td>交易金额：12412.00</td>
+									<td>结果：<span class="result">命中</span></td>
+								</tr>
+								<tr>
+									<td>流水时间：23141</td>
+									<td>交易类型：收入</td>
+									<td>交易金额：12412.00</td>
+									<td>结果：<span class="result">命中</span></td>
+								</tr>
+								<tr>
+									<td>流水时间：23141</td>
+									<td>交易类型：收入</td>
+									<td>交易金额：12412.00</td>
+									<td>结果：<span class="result">命中</span></td>
+								</tr>
+								<tr>
+									<td>流水时间：23141</td>
+									<td>交易类型：收入</td>
+									<td>交易金额：12412.00</td>
+									<td>结果：<span class="result">命中</span></td>
+								</tr>
+							</table>
+						</div>
+						<div class="no-img-group clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">流水原件1</p>
+							</div>
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">流水原件2</p>
+							</div>
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">流水原件3</p>
+							</div>
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">流水原件4</p>
+							</div>
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">流水原件5</p>
+							</div>
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">流水原件6</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--合格证核查-->
+				<div class="detail-item-list">
+					<div class="detail-item-title">
+						<i class="iconfont">&#xe672;</i>合格证核查
+					</div>
+					<div class="detail-item-alert alert-success">
+						<span class="icon"><i class="iconfont">&#xe659;</i></span>
+						<span class="status">通过</span>
+						<span class="text">
+							经向合格证管理部平台核查，已查询到该合格证的信息！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div class="no-img-group clearfix left-model">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">合格证原件</p>
+							</div>
+						</div>
+						<div class="right-model">
+							<h3>合格证管理部平台查得信息</h3>
+							<ul class="table-key-val">
+								<li><span class="key">车辆合格证编号：</span>342342352352</li>
+								<li><span class="key">车辆制造企业名称：</span>234235235</li>
+								<li><span class="key">车辆识别代号/车架号：</span>2017-03-21</li>
+								<li><span class="key">发动机号码：</span>12313.00元</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--保单核查-->
+				<div class="detail-item-list">
+					<div class="detail-item-title">
+						<i class="iconfont">&#xe642;</i>保单核查
+					</div>
+					<div class="detail-item-alert alert-warning">
+						<span class="icon"><i class="iconfont">&#xe612;</i></span>
+						<span class="status">不通过</span>
+						<span class="text">
+							根据保单内容，未在保险公司平台中查得相应的保单信息！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div>
+							<table class="table-search-msg" cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="table-key">提供查询的参数</td>
+									<td class="table-val">
+										<table class="table-inner">
+											<tr>
+												<td><span class="key">保单号：</span>2323523523</td>
+												<td><span class="key">身份证号：</span>235235234</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="no-img-group clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">保单原件</p>
+							</div>
+						</div>
+					</div>
+					<div class="detail-item-alert alert-danger">
+						<span class="icon"><i class="iconfont">!</i></span>
+						<span class="status">未校验</span>
+						<span class="text">
+							数据源异常，无法校验！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div class="no-img-group clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">保单原件</p>
+							</div>
+						</div>
+					</div>
+					<div class="detail-item-alert alert-success">
+						<span class="icon"><i class="iconfont">&#xe659;</i></span>
+						<span class="status">通过</span>
+						<span class="text">
+							经向保险公司平台核查，查得保单号【345346346】的投保内容与保单原件上的内容一致！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div class="no-img-group left-model clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">保单原件</p>
+							</div>
+						</div>
+						<div class="right-model">
+							<h3>保险平台查得信息</h3>
+							<ul class="table-key-val">
+								<li><span class="key">保单号：</span>342342352352</li>
+								<li><span class="key">被保险人：</span>234235235</li>
+								<li><span class="key">厂牌型号：</span>2017-03-21</li>
+								<li><span class="key">号牌号码：</span>12313.00元</li>
+								<li><span class="key">发动机号：</span>方志山</li>
+								<li><span class="key">车架号：</span>332312312414523435</li>
+								<li><span class="key">初次登记日期：</span>2353354646</li>
+								<li><span class="key">保险费合计：</span>杭州捷达汽车销售服务有限公司</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--车辆登记核查-->
+				<div class="detail-item-list">
+					<div class="detail-item-title">
+						<i class="iconfont">&#xe6cc;</i>车辆登记核查
+					</div>
+					<div class="detail-item-alert alert-success">
+						<span class="icon"><i class="iconfont">&#xe659;</i></span>
+						<span class="status">通过</span>
+						<span class="text">
+							车牌号与车架号信息一致！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div>
+							<table class="table-search-msg" cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="table-key">提供查询的参数</td>
+									<td class="table-val">
+										<table class="table-inner">
+											<tr>
+												<td><span class="key">车牌号：</span>2323523523</td>
+												<td><span class="key">发动机号：</span>235235234</td>
+												<td><span class="key">车架号：</span>235235234</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="no-img-group clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">车辆登记证原件</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--房产证核查-->
+				<div class="detail-item-list">
+					<div class="detail-item-title">
+						<i class="iconfont">&#xe679;</i>房产证核查
+					</div>
+					<div class="detail-item-alert alert-warning">
+						<span class="icon"><i class="iconfont">&#xe612;</i></span>
+						<span class="status">不通过</span>
+						<span class="text">
+							经向房产局系统核查，未查到该房产证相关信息！
+						</span>
+					</div>
+					<div class="detail-item-context clearfix">
+						<div>
+							<table class="table-search-msg" cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="table-key">提供查询的参数</td>
+									<td class="table-val">
+										<table class="table-inner">
+											<tr>
+												<td><span class="key">权利人：</span>2323523523</td>
+												<td><span class="key">房产坐落：</span>235235234</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="no-img-group clearfix">
+							<div class="no-img-list">
+								<div class="no-img">
+									<i class="iconfont">&#xe61f;</i>
+								</div>
+								<p class="img-explain">房产证原件</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="commit-orders-box">
+		<div class="button button-orange">退回订单</div>
+		<div class="button button-deep">审核通过</div>
+	</div>
+</div>
+<!--材料验真 end-->
+
+<script type="text/x-dot-template" id="roleBarTabTmpl">
+	{{ var len = it.length; if(len) { }}
+		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+			<li class="role-bar-li">
+				{{ if(item.isMainApplicant){ }}
+					<a href="javascript:;" class="role-item role-item-active">{{=item.userName}}(主申请人)</a>
+				{{ }else{ }}
+					<a href="javascript:;" class="role-item">{{=item.userName}}(共同还款人)</a>						
+				{{ } }}				
+			</li>
+		{{ } }}
+	{{ } }}
+</script>	
+<script type="text/x-dot-template" id="materialInspectionTmpl">
+	{{ var len = it.length; if(len) { }}
+		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+		{{ } }}
+	{{ } }}
+</script>	

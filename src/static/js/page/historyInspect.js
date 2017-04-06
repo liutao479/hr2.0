@@ -55,6 +55,13 @@ page.ctrl('historyInspect', function($scope) {
 				type: apiParams.type
 			});
 		});
+
+		// 材料验真入口，以后要删
+		$console.off("click","#tableContext>table").on("click","#tableContext>table", function() {
+			router.render("riskManagement", {
+				type: apiParams.type
+			});
+		});
  	};
  	
 	// 加载页面模板
