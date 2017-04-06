@@ -425,10 +425,17 @@ page.ctrl('loanInfoAudit', function($scope) {
 							var _reason = $.trim(this.$content.find('#suggestion').val());
 							this.$content.find('.checkbox-radio').each(function() {
 								if($(this).hasClass('checked')) {
-									$scope.jumpId = $(this).data('id');
+									var flag = 0;
+									$(this).parent().parent().find('.checkbox-normal').each(function() {
+										if($(this).hasClass('checked')) {
+											flag++;
+										}
+									})
+									if(flag > 0) {
+										$scope.jumpId = $(this).data('id');
+									}
 								}
 							})
-
 							if(!_reason) {
 								$.alert({
 									title: '提示',
@@ -471,7 +478,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 								success: $http.ok(function(result) {
 									console.log(result);
 									
-									// router.render('loanProcess');
+									router.render('loanProcess');
 									// toast.hide();
 								})
 							})
@@ -782,7 +789,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 				case "市":
 					areaSel.city(parentId, cb);
 					break;
-				case "区":
+				case "区/县":
 					areaSel.country(parentId, cb);
 					break;
 				default:

@@ -111,7 +111,7 @@ page.ctrl('creditApproval', [], function($scope) {
 		var _tabTrigger = $scope.$el.$tbls.eq(idx);
 		$scope.tabs[idx] = _tabTrigger;
 		render.compile(_tabTrigger, $scope.def.listTmpl, result, function() {
-			setupEvt(_tabTrigger);
+			setupEvt(_tabTrigger, idx);
 		}, true);
 		for(var i = 0, len = $scope.$el.$tbls.length; i < len; i++) {
 			if(i == idx) {
@@ -140,7 +140,7 @@ page.ctrl('creditApproval', [], function($scope) {
 				$scope.tabs[_type] = _tabTrigger;
 				$scope.result.index = _type;
 				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, function() {
-					setupEvt(_tabTrigger);
+					setupEvt(_tabTrigger, _type);
 				}, true);
 			}
 			$scope.$el.$tabs.removeClass('role-item-active');
@@ -154,16 +154,54 @@ page.ctrl('creditApproval', [], function($scope) {
 	/**
 	* 绑定立即处理事件
 	*/
-	var setupEvt = function($el) {
-		$el.find('.uploadEvt').imgUpload();
+	var setupEvt = function($self, _type) {
+		/**
+		 * 启动图片上传控件
+		 */
+		var imgsBars = $self.find('.creditMaterials');
+		imgsBars.each(function(index) {
+			$(this).find('.uploadEvt').imgUpload({
+				viewable: true,
+				getimg: function(cb) {
+					cb($scope.result.data.creditUsers[_type][index].loanCreditReportList)
+				},
+				marker: function (img, mark, cb) {
+					console.log(img);
+					console.log(mark);
+					$.ajax({
+						type: 'post',
+						url: $http.api('creditReport/reportUpd', true),
+						data: {
+							id: img.id,
+							aduitResult: mark,
+							aduitOpinion: '审核原因审核原因审核原因审核原因审核原因'
+						},
+						dataType: 'json',
+						success: $http.ok(function(result) {
+							console.log(result);
+							cb();
+						})
+					})
+				}
+			});
+		});
 
 		//查看征信材料
-		$el.find('.view-creditMaterials').on('click', function() {
-			alert('还未做该功能，暂时不测！谢谢！ T.T');
+		$self.find('.view-creditMaterials').on('click', function() {
+			// alert('还未做该功能，暂时不测！谢谢！ T.T');
+			var that = $(this);
+			var imgs = $scope.result.data.creditUsers[that.data('type')][that.data('idx')].creditMaterials;
+			$.preview(imgs, function(img, mark, cb) {
+				console.log(img);
+				console.log(mark);
+				cb();	
+			}, {
+				markable: false
+			});
 		});
 
 		//辅证数据
-		$el.find('.assistData').on('click', function() {
+		$self.find('.assistData').on('click', function() {
 			alert('前往辅证数据页面');
 		});
 	}
@@ -200,10 +238,17 @@ page.ctrl('creditApproval', [], function($scope) {
 							var _reason = $.trim(this.$content.find('#suggestion').val());
 							this.$content.find('.checkbox-radio').each(function() {
 								if($(this).hasClass('checked')) {
-									$scope.jumpId = $(this).data('id');
+									var flag = 0;
+									$(this).parent().parent().find('.checkbox-normal').each(function() {
+										if($(this).hasClass('checked')) {
+											flag++;
+										}
+									})
+									if(flag > 0) {
+										$scope.jumpId = $(this).data('id');
+									}
 								}
 							})
-
 							if(!_reason) {
 								$.alert({
 									title: '提示',

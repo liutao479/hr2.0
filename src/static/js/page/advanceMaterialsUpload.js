@@ -112,8 +112,37 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 	 * 多次渲染页面立即处理事件
 	 */
 	var setupEvt = function() {
-		// 图片控件
-		$scope.$el.$loanPanel.find('.uploadEvt').imgUpload();
+		/**
+		 * 启动图片上传控件
+		 */
+		var imgsBars = $scope.$el.$loanPanel.find('.panel-content-imgs');
+		imgsBars.each(function(index) {
+			var that = $(this),
+				_url = that.data('url'),
+				_type = that.data('type');
+			that.find('.uploadEvt').imgUpload({
+				viewable: true,
+				getimg: function(cb) {
+					cb($scope.result.data[_type])
+				},
+				marker: function (img, mark, cb) {
+					$.ajax({
+						type: 'post',
+						url: $http.api(_url + '/addOrUpdate', true), 
+						data: {
+							id: img.id,
+							auditResult: mark,
+							auditOpinion: '审核原因审核原因审核原因审核原因审核原因'
+						},
+						dataType: 'json',
+						success: $http.ok(function(result) {
+							console.log(result);
+							cb();
+						})
+					})
+				}
+			});
+		});
 	}
 
 	/**

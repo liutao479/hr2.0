@@ -221,10 +221,11 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 						text: '确定',
 						action: function () {
 							var params = {
-								taskId: $params.taskId
+								taskId: $params.taskId,
+								reason: '取消'
 							}
-							var reason = $.trim(this.$content.find('#suggestion').val());
-							if(reason) params.reason = reason;
+							// var reason = $.trim(this.$content.find('#suggestion').val());
+							// if(reason) params.reason = reason;
 							$.ajax({
 								type: 'post',
 								url: $http.api('loanOrder/cancel', 'zyj'),
@@ -319,7 +320,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					}
 				})
 			})
-			
 		} else {
 			$.alert({
 				title: '提示',
@@ -525,27 +525,33 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			} else if(!regMap[type].test(value)) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
-				that.val('').focus();
+				that.focus();
 				$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
+				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+					var item = $scope.apiParams[i];
+					if(that.data('userId') == item.userId) {
+						item[that.data('type')] = '';
+					}
+				}
 				// return false;
 			} else {
 				$parent.removeClass('error-input');
 				$parent.find('.input-err').remove();
-			}
-			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-				var item = $scope.apiParams[i];
-				if(that.data('userId') == item.userId) {
-					item[that.data('type')] = that.val();
+				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+					var item = $scope.apiParams[i];
+					if(that.data('userId') == item.userId) {
+						item[that.data('type')] = that.val();
+					}
 				}
 			}
-			console.log($scope.apiParams);
+			console.log($scope.apiParams)
 		})
 
 		/**
 		 * 启动上传图片控件
 		 */
 		$self.find('.uploadEvt').imgUpload({
-			viewable: true
+			viewable: false
 		});
 
 		/**
