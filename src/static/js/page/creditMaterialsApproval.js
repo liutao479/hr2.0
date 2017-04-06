@@ -135,7 +135,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 						action: function () {
 							var _reason = $.trim(this.$content.find('#suggestion').val());
 							this.$content.find('.checkbox-radio').each(function() {
-								if($(this).hasClass('checked')) {
+								if($(this).hasClass('checked') && $(this).parent().find('.checkbox-normal').hasClass('checked')) {
 									$scope.jumpId = $(this).data('id');
 								}
 							})
@@ -154,6 +154,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 								});
 								return false;
 							} 
+							console.log($scope.jumpId)
 							if(!$scope.jumpId) {
 								$.alert({
 									title: '提示',
@@ -174,17 +175,18 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 								reason: _reason
 							}
 							console.log(_params)
-							$.ajax({
-								type: 'post',
-								url: $http.api('task/jump', 'zyj'),
-								data: _params,
-								dataType: 'json',
-								success: $http.ok(function(result) {
-									console.log(result);
-									router.render('loanProcess');
-									// toast.hide();
-								})
-							})
+							// debugger
+							// $.ajax({
+							// 	type: 'post',
+							// 	url: $http.api('task/jump', 'zyj'),
+							// 	data: _params,
+							// 	dataType: 'json',
+							// 	success: $http.ok(function(result) {
+							// 		console.log(result);
+							// 		router.render('loanProcess');
+							// 		// toast.hide();
+							// 	})
+							// })
 						}
 					}
 				}
@@ -365,7 +367,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 						data: {
 							id: img.id,
 							auditResult: mark,
-							auditOpinion: '测试原因原因原因。屁原因啊啊啊啊啊啊。玩蛇？？？！！ldf'
+							auditOpinion: '原因原因原因。屁原因啊啊啊啊啊啊。？？？！！ldf'
 						},
 						dataType: 'json',
 						success: $http.ok(function(result) {
