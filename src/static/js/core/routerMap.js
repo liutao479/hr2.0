@@ -191,6 +191,10 @@
 			title: '二手车评估信息录入',
 			page: 'secondhandInput'
 		},
+		'loanProcess/secondhandAudit':{
+			title: '二手车评估信息审核',
+			page: 'secondhandAudit'
+		},
 		'loanProcess/newBusiness':{
 			title: '新建业务',
 			page: 'newBusiness'
@@ -241,7 +245,7 @@
 		},
 		'loanProcess/cardInfoApproval': {
 			title: '开卡审核',
-			page: 'cardAudit'
+			page: 'cardInfoApproval'
 		},
 		'loanProcess/cardInfoInput': {
 			title: '开卡信息录入',
@@ -259,7 +263,7 @@
 //			title: '二手车信息录入',
 //			page: 'carTwohand'
 //		},
-		'loanProcess/choiseType':{
+		'loanProcess/busiModeChoose':{
 			title: '业务类型选择',
 			page: 'surviceType'
 		},
@@ -334,13 +338,19 @@
 		'organizationManage/newCar': {
 			title: '新建/编辑合作车商',
 			page: 'newCar'
+		},
+
+		'test': {
+			title: '测试文件',
+			page: 'test'
 		}
 	}
 	g.subRouterMap = {
 		'T0013': 'loanMaterialsUpload',//贷款材料
 		'T0015': 'loanLog',//订单日志
 		'T0023': 'loanMaterialsUpload',//贷款材料
-		'T0024': '',//开卡信息表
+//		'T0024': 'cardAudit',//开卡信息表
+		'T0024': 'cardInfoApproval',//开卡信息表
 		'T0025': '',//材料验真
 		'T0026': '',//数据辅证
 		'T0027': '',//材料交叉验证
@@ -356,14 +366,18 @@
 		'T0049': 'homeMaterialsUpload',//上门材料
 		'T0050': 'loanInfoAudit',//贷款信息表结果
 		'T0051': 'creditResult',//征信结果
-		'T0052': '',//二手评估结果
+		'T0052': 'secondhandAudit',//二手评估结果
 		'T0053': 'homeMaterialsUpload',//上门材料
 		'T0054': 'signMaterialsUpload',//签约材料
 		'T0055': 'phoneAudit',//电核结果
 		'T0056': 'loanInfoAudit',//贷款信息表结果
 		'T0057': 'loanInfoAudit',//贷款信息表结果
 		'T0058': 'pickMaterialsUpload',//提车材料审核
-		'T0059': 'pickMaterialsUpload'//提车材料审核
+		'T0059': 'pickMaterialsUpload',//提车材料审核
+		'T00108': 'loanMaterialsUpload',//贷款材料
+		'T00109': 'signMaterialsUpload',//签约材料
+		'T00110': 'loanMaterialsUpload',//贷款材料
+		'T00111': 'homeMaterialsUpload'//上门材料
 	}
 	var todoMap = {'T0004': '',
 	'T0005': '',

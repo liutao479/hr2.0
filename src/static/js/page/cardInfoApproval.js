@@ -1,36 +1,41 @@
 'use strict';
-page.ctrl('pickMaterialsApproval', function($scope) {
+page.ctrl('cardInfoApproval', function($scope) {
 	var $params = $scope.$params,
-		$console = $params.refer ? $($params.refer) : render.$console;
-	// $params.taskId = 80875;
+		$console = $params.refer ? $($params.refer) : render.$console,
+		apiParams = {
+			process: $params.process || 0,
+			page: $params.page || 1,
+			pageSize: 20
+		};
+	$scope.tasks = $params.tasks || [];
+	$scope.activeTaskIdx = $params.selected || 0;
 
 	/**
-	* 加载贷款审核左侧列表项配置
-	* @params {function} cb 回调函数
+	* 加载车贷办理数据
+	* @params {object} params 请求参数
+	* @params {function} cb 回调ck函数
 	*/
-	var loadTabList = function(cb) {
-
-		var params = {
-			taskId: $params.taskId
-		};
+	var loadLoanList = function(cb) {
+		var data={};
+			data['taskId']=$params.taskId;
 		$.ajax({
 			type: 'post',
-			url: $http.api('loanApproval/info', 'jbs'),
-			data: params,
+			url: urlStr+'/icbcCreditCardForm/queryICBCCreditCardForm',
+			data: data,
 			dataType: 'json',
-			success: $http.ok(function(xhr) {
-				$scope.result = xhr;
-				setupLocation();
-				loadGuide(xhr.cfgData)
-				setupEvent();
-				leftArrow();
+			success: $http.ok(function(result) {
+				console.log(result)
+				$scope.result = result;
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				if(!$params.refer) {
+					setupLocation();
+				}
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
 			})
 		})
 	}
-
 	/**
 	* 设置面包屑
 	*/
@@ -45,58 +50,24 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 		});
 		$location.location();
 	}
-	
+
 	/**
-	* 加载左侧导航菜单
-	* @params {object} cfg 配置对象
+	* 并行任务切换触发事件
+	* @params {int} idx 触发的tab下标
+	* @params {object} item 触发的tab对象
 	*/
-	function loadGuide(cfg) {
-		render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
-		var code = cfg.frames[0].code;
-		var pageCode = subRouterMap[code];
-		var params = {
-			code: code,
+	var tabChange = function (idx, item) {
+		console.log(item);
+		router.render('loanProcess/' + item.key, {
+			tasks: $scope.tasks,
+			taskId: $scope.tasks[idx].id,
 			orderNo: $params.orderNo,
-			taskId: $params.taskId
-		}
-		router.innerRender('#innerPanel', 'loanProcess/' + pageCode, params);
-		return listenGuide();
-	}
-
-	function listenGuide() {
-		$console.find('.tabLeftEvt').on('click', function() {
-			var $that = $(this);
-			var code = $that.data('type');
-			var pageCode = subRouterMap[code];
-			if(!pageCode) return false;
-			var params = {
-				code: code,
-				orderNo: $params.orderNo,
-				taskId: $params.taskId
-			}
-			router.innerRender('#innerPanel', 'loanProcess/' + pageCode, params);
-		})
-	}
-
-	var setupEvent = function() {
-		$console.find('#checkTabs a').on('click', function() {
-			$('.panel-menu-item').each(function(){
-				$(this).removeClass('panel-menu-item-active');
-			})
-			var that = $(this);
-			var idx = that.data('idx');
-			that.addClass('panel-menu-item-active');
-			leftArrow();
+			selected: idx,
+			path: 'loanProcess'
 		});
 	}
-	var leftArrow = function(){
-		$('.panel-menu-item').each(function(){
-			$(this).find('.arrow').hide();
-			if($(this).hasClass('panel-menu-item-active')){
-				$(this).find('.arrow').show();
-			}
-		})
-	}
+
+	
 
 	/**
 	* 设置底部按钮操作栏
@@ -190,6 +161,10 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 		 */
 		$sub.on('approvalPass', function() {
 			process();
+			//先保存数据再提交订单
+			// saveData(function() {
+			// 	process();
+			// });
 		})
 	}
 
@@ -210,27 +185,19 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 					text: '确定',
 					action: function () {
 						var that = this;
-        				$.ajax({
-							type: 'post',
-							url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
-							dataType: 'json',
-							success: $http.ok(function(xhr) {
-								var taskIds = [];
-								for(var i = 0, len = $params.tasks.length; i < len; i++) {
-									taskIds.push(parseInt($params.tasks[i].id));
-								}
-								var params = {
-									taskId: $params.taskId,
-									taskIds: taskIds,
-									orderNo: $params.orderNo
-								}
-								var reason = $.trim(that.$content.find('#suggestion').val());
-								if(reason) params.reason = reason;
-								console.log(params);
-								flow.tasksJump(params, 'approval');
-							})
-						})
-						
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
+						}
+						var params = {
+							taskId: $params.taskId,
+							taskIds: taskIds,
+							orderNo: $params.orderNo
+						}
+						var reason = $.trim(that.$content.find('#suggestion').val());
+						if(reason) params.reason = reason;
+						console.log(params);
+						flow.tasksJump(params, 'approval');
 					}
 				}
 			}
@@ -238,8 +205,8 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 	}
 
 	/**
-	* 底部按钮操作栏事件
-	*/
+	 * 首次加载页面时绑定的事件（底部提交按钮）
+	 */
 	var evt = function() {
 		/**
 		 * 订单退回的条件选项分割
@@ -251,41 +218,7 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 	}
 
 	/**
-	 * 跳流程
-	 */
-	function process() {
-		$.confirm({
-			title: '提交',
-			content: dialogTml.wContent.suggestion,
-			buttons: {
-				close: {
-					text: '取消',
-					btnClass: 'btn-default btn-cancel',
-					action: function() {}
-				},
-				ok: {
-					text: '确定',
-					action: function () {
-						var taskIds = [];
-						for(var i = 0, len = $params.tasks.length; i < len; i++) {
-							taskIds.push(parseInt($params.tasks[i].id));
-						}
-						var params = {
-							taskId: $params.taskId,
-							taskIds: taskIds,
-							orderNo: $params.orderNo
-						}
-						var reason = $.trim(this.$content.find('#suggestion').val());
-						if(reason) params.reason = reason;
-						flow.tasksJump(params, 'complete');
-					}
-				}
-			}
-		})
-	}
-
-	/**
-	 * 取消订单弹窗内事件逻辑处理
+	 * 退回订单弹窗内事件逻辑处理
 	 */
 	var dialogEvt = function($dialog) {
 		var $reason = $dialog.find('#suggestion');
@@ -327,21 +260,99 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 			});
 		})
 	}
+	
 
+	
+
+	$scope.bankPicker = function(picked) {
+		console.log(picked);
+	}
+	
+	/**dropdown 测试*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+
+	$scope.dropdownTrigger = {
+		selfPicker: function(t, p, cb) {
+			var keyType = this.$el.data('key');
+			var sourceData = {
+				items: dataMap[keyType],
+				id: 'value',
+				name: 'name'
+			};
+			cb(sourceData);
+		},
+		dealerId: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/carshop/list",
+				data:{
+					'code':'busiSourceName'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		repayPeriod: function(t, p, cb) {
+			$.ajax({
+				url: urlStr+"/loanConfigure/getItem",
+				data:{
+					'code':'repaymentTerm'
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'value',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		}
+	}
+	/***
+	* 上传图片成功后的回调函数
+	*/
+	$scope.uploadcb = function(self) {
+		var imgStr = self.$el.find('.imgs-view').attr('src');
+		$("#imgUrl").val(imgStr);
+	}
+	$scope.deletecb = function(self) {
+		$("#imgUrl").val('');
+	}
+	var cannotClick = function(){
+		$(".info-key-value-box").each(function(){
+			$(this).addClass("pointDisabled");
+		});
+	}
 	/***
 	* 加载页面模板
 	*/
-	$console.load(router.template('iframe/phoneCheck'), function() {
-		$scope.def.tabTmpl = $console.find('#checkResultTabsTmpl').html();
+	$console.load(router.template('iframe/cardAudit'), function() {
+		$scope.def.listTmpl = render.$console.find('#openCardSheettmpl').html();
+		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
 		$scope.$el = {
-			$tab: $console.find('#checkTabs')
+			$tbl: $console.find('#openCardSheet')
 		}
-		loadTabList(function() {
+		loadLoanList(function(){
+			console.log('执行');
+			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
 			evt();
 			setupSubmitBar();
+			setupDropDown();
+			cannotClick();
+			$console.find('.uploadEvt').imgUpload();
+
 		});
-	})
+		
+	});
+
 });
-
-
-

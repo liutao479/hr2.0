@@ -49,7 +49,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 
 				// 编译tab项对应内容
 				setupCreditPanel(_type, $scope.result.data, function() {
-					setupEvt($scope.$el.$tbls.eq(_type));
+					setupEvt($scope.$el.$tbls.eq(_type), _type);
 				});
 
 				if( cb && typeof cb == 'function' ) {
@@ -104,138 +104,104 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		$submitBar.data({
 			taskId: $params.taskId
 		});
-		$submitBar.submitBar(function($el) {
-			/**
-			 * 订单退回的条件选项分割
-			 */
-			var taskJumps = $scope.result.data.loanTask.taskJumps;
-			for(var i = 0, len = taskJumps.length; i < len; i++) {
-				taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
-			}
-			/**
-			 * 退回订单按钮
-			 */
-			$el.find('#backOrder').on('click', function() {
-				$.alert({
-					title: '退回订单',
-					content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
-					onContentReady: function() {
-						dialogEvt(this.$content);
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
+
+		/**
+		 * 审核通过
+		 */
+		$sub.on('approvalPass', function() {
+			process();
+		})
+
+		/**
+		 * 退回订单
+		 */
+		$sub.on('backOrder', function() {
+			
+			$.alert({
+				title: '退回订单',
+				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
+				onContentReady: function() {
+					dialogEvt(this.$content);
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
 					},
-					buttons: {
-						close: {
-							text: '取消',
-							btnClass: 'btn-default btn-cancel'
-						},
-						ok: {
-							text: '确定',
-							action: function () {
-								var _reason = $.trim(this.$content.find('#suggestion').val());
-								this.$content.find('.checkbox-radio').each(function() {
-									if($(this).hasClass('checked')) {
+					ok: {
+						text: '确定',
+						action: function () {
+							var _reason = $.trim(this.$content.find('#suggestion').val());
+							this.$content.find('.checkbox-radio').each(function() {
+								if($(this).hasClass('checked')) {
+									var flag = 0;
+									$(this).parent().parent().find('.checkbox-normal').each(function() {
+										if($(this).hasClass('checked')) {
+											flag++;
+										}
+									})
+									if(flag > 0) {
 										$scope.jumpId = $(this).data('id');
 									}
-								})
-								if(!_reason) {
-									$.alert({
-										title: '提示',
-										content: tool.alert('请填写处理意见！'),
-										buttons: {
-											ok: {
-												text: '确定',
-												action: function() {
-												}
+								}
+							})
+							if(!_reason) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请填写处理意见！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
 											}
 										}
-									});
-									return false;
-								} 
-								if(!$scope.jumpId) {
-									$.alert({
-										title: '提示',
-										content: tool.alert('请至少选择一项原因！'),
-										buttons: {
-											ok: {
-												text: '确定',
-												action: function() {
-												}
+									}
+								});
+								return false;
+							} 
+							console.log($scope.jumpId)
+							if(!$scope.jumpId) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请至少选择一项原因！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
 											}
 										}
-									});
-									return false;
-								}
-								var _params = {
-									taskId: $params.taskId,
-									jumpId: $scope.jumpId,
-									reason: _reason
-								}
-								console.log(_params)
-								$.ajax({
-									type: 'post',
-									url: $http.api('task/jump', 'zyj'),
-									data: _params,
-									dataType: 'json',
-									success: $http.ok(function(result) {
-										console.log(result);
-										
-										router.render('loanProcess');
-										// toast.hide();
-									})
-								})
+									}
+								});
+								return false;
 							}
+							var _params = {
+								taskId: $params.taskId,
+								jumpId: $scope.jumpId,
+								reason: _reason
+							}
+							console.log(_params)
+							$.ajax({
+								type: 'post',
+								url: $http.api('task/jump', 'zyj'),
+								data: _params,
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									router.render('loanProcess');
+									// toast.hide();
+								})
+							})
 						}
 					}
-				})
-
-
-
-
-
-				// $.alert({
-				// 	title: '退回订单',
-				// 	content: tool.alert('确定要取消该笔贷款申请吗？'),
-				// 	buttons: {
-				// 		close: {
-				// 			text: '取消',
-				// 			btnClass: 'btn-default btn-cancel'
-				// 		},
-				// 		ok: {
-				// 			text: '确定',
-				// 			action: function () {
-				// 				var params = {
-				// 					orderNo: $params.orderNo
-				// 				}
-				// 				var reason = $.trim(this.$content.find('#suggestion').val());
-				// 				if(reason) params.reason = reason;
-				// 				$.ajax({
-				// 					type: 'post',
-				// 					url: $http.api('loanOrder/cancel', 'zyj'),
-				// 					data: params,
-				// 					dataType: 'json',
-				// 					success: $http.ok(function(result) {
-				// 						console.log(result);
-				// 						if(cb && typeof cb == 'function') {
-				// 							cb();
-				// 						}
-				// 					})
-				// 				})
-				// 			}
-				// 		}
-				// 	}
-				// })
+				}
 			})
-
-			/**
-			 * 审核通过按钮
-			 */
-			$console.find('#approvalPass').on('click', function() {
-				process();
-			});
-		});
+		})
 	}
 
 	/**
-	 * 跳流程
+	 * 任务提交跳转
 	 */
 	function process() {
 		$.confirm({
@@ -261,7 +227,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 						}
 						var reason = $.trim(this.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
-						tasksJump(params, 'approval');
+						flow.tasksJump(params, 'complete');
 					}
 				}
 			}
@@ -308,17 +274,13 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 	 * 首次加载页面时绑定的事件（底部提交按钮）
 	 */
 	var evt = function() {
-
-		
-
-		// /**
-		//  * 退回订单按钮
-		//  */
-		// $console.find('#backOrder').on('click', function() {
-		// 	var that = $(this);
-		// 	console.log($scope.result.data.loanTask.taskJumps)
-			
-		// });
+		/**
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
 	}
 
 	var dialogEvt = function($dialog) {
@@ -375,10 +337,10 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 				$scope.tabs[_type] = _tabTrigger;
 				$scope.result.data.currentType = _type;
 				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result.data, function() {
-					setupEvt(_tabTrigger);
+					setupEvt(_tabTrigger, _type);
 				}, true);
 			}
-			$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
+			$scope.$el.$tabs.removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.$el.$tbls.eq($scope.currentType).hide();
 			$scope.$el.$tbls.eq(_type).show();
@@ -386,12 +348,38 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		})
 	}
 
-	var setupEvt = function($self) {
+	var setupEvt = function($self, _type) {
 
 		/**
 		 * 启动图片控件
 		 */
-		$self.find('.uploadEvt').imgUpload();
+		var imgsBars = $self.find('.credit-imgs-bar');
+		imgsBars.each(function(index) {
+			$(this).find('.uploadEvt').imgUpload({
+				viewable: true,
+				getimg: function(cb) {
+					cb($scope.result.data.creditUsers[_type][index].loanUserCredit.creditMaterials)
+				},
+				marker: function (img, mark, cb) {
+					console.log(img);
+					console.log(mark);
+					$.ajax({
+						type: 'post',
+						url: $http.api('creditMaterials/material/mark', 'zyj'),
+						data: {
+							id: img.id,
+							auditResult: mark,
+							auditOpinion: '原因原因原因。屁原因啊啊啊啊啊啊。？？？！！ldf'
+						},
+						dataType: 'json',
+						success: $http.ok(function(result) {
+							console.log(result);
+							cb();
+						})
+					})
+				}
+			});
+		});
 	}
 
 	// 加载页面模板
@@ -410,9 +398,9 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		}
 		
 		loadOrderInfo($scope.currentType, function() {
+			evt();
 			setupSubmitBar();
 			setupLocation();
-			evt();
 		});
 	});
 

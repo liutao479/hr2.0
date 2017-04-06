@@ -65,6 +65,8 @@
 			
 			// return 'http://192.168.1.86:8080/' + method;
 			return 'http://192.168.0.186:9999/' + method;
+//			return 'http://192.168.1.124:8080/' + method;
+			// return 'http://192.168.0.22:8080/' + method;
 
 
 			
@@ -192,38 +194,6 @@
 		//todo show global error
 		// console.log(arguments);
 	});
-	/*****************http end*******************/
-	function unAuth() {
-		$.alert({
-			title: '提示',
-			content: tool.alert('你的登录授权无效或已过期'),
-			buttons:{
-				ok: {
-					text: '确定',
-					action: function() {
-						// location.href = 'login.html';
-						// alert(1)
-					}
-				}
-			}
-		})
-	}
-	//授权校验 begin
-	function localAuth() {
-		var u = {};
-		u.token = Cookies.get('_hr_token');
-		u.account = Cookies.get('_hr_account');
-		u.dept = Cookies.get('_hr_dept');
-		u.role = Cookies.get('_hr_role');
-		u.phone = Cookies.get('_hr_phone');
-		if(!u.token || !u.account) {
-			return unAuth();
-		}
-		// _.$http.authorization(u.token);
-		_.hrLocalInformation = u;
-	}
-	// localAuth();
-	//授权校验 end
 
 	/************功能辅助类 begin************/
 	var tool = _.tool = {};
@@ -261,6 +231,36 @@
 			return l + s;
 		}
 		return s;
+	}
+
+	/**
+	 * 获取上个月的函数
+	 * @param  {string} date 格式为yyyy-mm-dd
+	 */
+	tool.getPreMonth = function(date) {
+		var arr = date.split('-');  
+		var year = arr[0]; //获取当前日期的年份  
+		var month = arr[1]; //获取当前日期的月份  
+		var day = arr[2]; //获取当前日期的日  
+		var days = new Date(year, month, 0);  
+		days = days.getDate(); //获取当前日期中月的天数  
+		var year2 = year;  
+		var month2 = parseInt(month) - 1;  
+		if (month2 == 0) {  
+			year2 = parseInt(year2) - 1;  
+			month2 = 12;  
+		}  
+		var day2 = day;  
+		var days2 = new Date(year2, month2, 0);  
+		days2 = days2.getDate();  
+		if (day2 > days2) {  
+			day2 = days2;  
+		}  
+		if (month2 < 10) {  
+			month2 = '0' + month2;  
+		}  
+		var t2 = year2 + '-' + month2 + '-' + day2;  
+		return t2;  
 	}
 
 	/**
@@ -320,11 +320,40 @@
 			materialsCode: 'zxsqszp',
 			name: '授权书签字照片'
 		}];
-	/**
-	* for plugin
-	*/
-	jconfirm.defaults = {
-		useBootstrap: false,
-		theme: 'material'
+
+	
+	/*****************http end*******************/
+	function unAuth() {
+		$.alert({
+			title: '提示',
+			content: tool.alert('你的登录授权无效或已过期'),
+			buttons:{
+				ok: {
+					text: '确定',
+					action: function() {
+						location.href = 'login.html';
+						// alert(1)
+					}
+				}
+			}
+		})
 	}
+	//授权校验 begin
+	function localAuth() {
+		var u = {};
+		u.token = Cookies.get('_hr_token');
+		u.account = Cookies.get('_hr_account');
+		u.dept = Cookies.get('_hr_dept');
+		u.role = Cookies.get('_hr_role');
+		u.phone = Cookies.get('_hr_phone');
+		if(!u.token || !u.account) {
+			return unAuth();
+		}
+		_.$http.authorization(u.token);
+		_.hrLocalInformation = u;
+	}
+	localAuth();
+	//授权校验 end
+
+	
 })(window);

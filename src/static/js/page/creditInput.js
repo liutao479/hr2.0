@@ -25,6 +25,13 @@ page.ctrl('creditInput', [], function($scope) {
 				result.index = idx;
 				$scope.result = result;
 				$scope.result.editable = 1;
+				$scope.result.userRalaMap = {
+					'0': '本人',
+					'1': '配偶',
+					'2': '父母',
+					'3': '子女',
+					'-1': '其他'
+				};
 				// 编译tab栏
 				setupTab($scope.result, function() {
 					setupTabEvt();
@@ -90,58 +97,21 @@ page.ctrl('creditInput', [], function($scope) {
 		$submitBar.data({
 			taskId: $params.taskId
 		});
-		$submitBar.submitBar(function($el) {
-			/**
-			 * 取消订单按钮
-			 */
-			$el.find('#cancelOrder').on('click', function() {
-				$.alert({
-					title: '取消订单',
-					content: tool.alert('确定要取消该笔贷款申请吗？'),
-					buttons: {
-						close: {
-							text: '取消',
-							btnClass: 'btn-default btn-cancel'
-						},
-						ok: {
-							text: '确定',
-							action: function () {
-								var params = {
-									taskId: $params.taskId
-								}
-								var reason = $.trim(this.$content.find('#suggestion').val());
-								if(reason) params.reason = reason;
-								$.ajax({
-									type: 'post',
-									url: $http.api('loanOrder/cancel', 'zyj'),
-									data: params,
-									dataType: 'json',
-									success: $http.ok(function(result) {
-										console.log(result);
-										if(cb && typeof cb == 'function') {
-											cb();
-										}
-									})
-								})
-							}
-						}
-					}
-				})
-			})
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
 
-			/**
-			 * 提交按钮
-			 */
-			$el.find('#taskSubmit').on('click', function() {
-				saveData(function() {
-					process();
-				});
+		/**
+		 * 提交
+		 */
+		$sub.on('taskSubmit', function() {
+			saveData(function() {
+				process();
 			});
-		});
+		})
 	}
 
 	/**
-	 * 跳流程
+	 * 任务提交跳转
 	 */
 	function process() {
 		$.confirm({
@@ -167,7 +137,7 @@ page.ctrl('creditInput', [], function($scope) {
 						}
 						var reason = $.trim(this.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
-						tasksJump(params, 'complete');
+						flow.tasksJump(params, 'complete');
 					}
 				}
 			}
@@ -233,7 +203,7 @@ page.ctrl('creditInput', [], function($scope) {
 					setupEvt(_tabTrigger);
 				}, true);
 			}
-			$scope.$el.$tabs.eq($scope.idx).removeClass('role-item-active');
+			$scope.$el.$tabs.removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.$el.$tbls.eq($scope.idx).hide();
 			$scope.$el.$tbls.eq(_type).show();
@@ -279,6 +249,10 @@ page.ctrl('creditInput', [], function($scope) {
 	* 绑定立即处理事件
 	*/
 	var setupEvt = function($el) {
+		//查看征信材料
+		$el.find('.view-creditMaterials').on('click', function() {
+			alert('还未做该功能，暂时不测！谢谢！ T.T');
+		});
 		// 上传pdf文件
 		$el.find('.pdfUpload').on('change', function() {
 			var tml = '<div class="input-text">\
@@ -287,6 +261,19 @@ page.ctrl('creditInput', [], function($scope) {
 				that = $(this),
 				$parent = that.parent().parent(),
 				file = this.files[0];
+			if(!file) return false;
+			if(file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase() != 'pdf') {
+				$.alert({
+					title: '提示',
+					content: tool.alert('请选择正确的PDF格式文件上传!'),
+					buttons: {
+						ok: {
+							text: '确定'
+						}
+					}
+				})
+				return false;
+			}
 			$.ajax({
 				url: $http.api('oss/video/sign', 'zyj'),
 				dataType: 'json'
@@ -326,7 +313,7 @@ page.ctrl('creditInput', [], function($scope) {
 			var that = $(this),
 				value = that.val(),
 				$parent = that.parent();
-			if(!value) {
+			if(that.hasClass('required') && !value) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
 				$parent.append('<span class=\"input-err\">该项不能为空！</span>');
@@ -345,11 +332,42 @@ page.ctrl('creditInput', [], function($scope) {
 		});
 
 		// 备注失去焦点事件
-		$el.find('.remark').on('blur', function() {
+		// $el.find('.remark').on('blur', function() {
+		// 	var that = $(this),
+		// 		value = that.val();
+		// 	console.log(value)
+		// 	if(that.hasClass('required') && !value) {
+		// 		that.removeClass('error-input').addClass('error-input');
+		// 		return false;
+		// 	} else {
+		// 		that.removeClass('error-input');
+		// 	}
+		// 	for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+		// 		var item = $scope.apiParams[i];
+		// 		if(that.data('userId') == item.userId) {
+		// 			item[that.data('type')] = value;
+		// 		}
+		// 	}
+		// 	console.log($scope.apiParams);
+		// });
+
+		// $el.find('.remark').on('keyup', function() {
+			
+		// });
+
+		// 备注框实时监听事件
+		var maxLen = 400;
+		$el.find('.remark').next().text('还可输入' + (maxLen - $el.find('.remark').val().length) + '/' + maxLen + '字');
+		$el.find('.remark').on('input', function() {
 			var that = $(this),
 				value = that.val();
-			console.log(value)
-			if(!value) {
+			if(value.length > maxLen) {
+				that.val(value.substr(0, maxLen));
+				that.next().text('还可输入0/' + maxLen + '字');
+				return false;
+			}
+			that.next().text('还可输入' + (maxLen - that.val().length) + '/' + maxLen + '字');
+			if(that.hasClass('required') && !value) {
 				that.removeClass('error-input').addClass('error-input');
 				return false;
 			} else {
@@ -363,6 +381,8 @@ page.ctrl('creditInput', [], function($scope) {
 			}
 			console.log($scope.apiParams);
 		});
+
+
 
 		// 征信字段失去焦点事件
 		$el.find('.zxzd').on('blur', function() {
@@ -387,6 +407,7 @@ page.ctrl('creditInput', [], function($scope) {
 			}
 			console.log($scope.apiParams);
 		});
+
 	}
 
 
@@ -438,8 +459,8 @@ page.ctrl('creditInput', [], function($scope) {
 			initApiParams();
 			setupSubmitBar();
 			setupLocation();
+			setupBackReason($scope.result.data.loanTask.backApprovalInfo)
 		});
-		// evt();
 	});
 
 	/***
@@ -448,13 +469,13 @@ page.ctrl('creditInput', [], function($scope) {
 	$scope.deletecb = function(self) {
 		// loadOrderInfo($scope.idx);
 		self.$el.remove();
-		pictureListen();
+		pictureListen(self);
 	}
 	/**
 	 * 监听其它材料最后一个控件的名称
 	 */
-	var pictureListen = function() {
-		var $imgel = $console.find('.creditMaterials .uploadEvt');
+	var pictureListen = function(self) {
+		var $imgel = self.$el.parent().find('.uploadEvt');
 		$imgel.each(function(index) {
 			$(this).find('.imgs-item-p').html('征信报告照片' + (index + 1));
 		});
@@ -470,7 +491,7 @@ page.ctrl('creditInput', [], function($scope) {
 		// self.$el.after(self.outerHTML);
 		// self.$el.next().imgUpload();
 		self.$el.after(self.outerHTML);
-		pictureListen();
+		pictureListen(self);
 		self.$el.next().imgUpload();
 	}
 

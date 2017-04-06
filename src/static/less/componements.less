@@ -244,7 +244,7 @@
         }
         // 错误图片标记
         .imgs-error {
-            top: 38px;
+            top: 46px;
             left: 58px;
             width: 105px;
         }
@@ -259,6 +259,168 @@
     .imgs-item-p {
         line-height: 42px;
         text-align: center;
+    }
+}
+.img-view-box {
+    .errHook {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
+    .err-mask {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #fff;
+        opacity: .6;
+    }
+    .imgs-error {
+        position: absolute;
+        top: 23px;
+        left: 0;
+        width: 100%;
+    }
+    .remark-list {
+        position: absolute;
+        left: -1px;
+        top: 27px;
+        width: 120px;
+        border: 1px solid #fff;
+        border-radius: 0 0 3px 3px;
+        background-color: #000;
+        a {
+            display: block;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 8px;
+            &:hover {
+                background-color: #fff;
+                color: #000;
+            }
+        }
+    }
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        border-width: 40px;
+        margin-top: -40px;
+        &:before {
+            position: absolute;
+            content: "";
+            border-width: 40px;
+        }
+        &.mini {
+            top: auto;
+            margin-top: 0;
+            bottom: 40px;
+            border-width: 10px;
+            &:before {
+                border-width: 10px;
+            }
+            &:after {
+                position: absolute;
+                left: -9px;
+                top: -15px;
+                width: 30px;
+                height: 30px;
+                content: "";
+                border-radius: 50%;
+                border: 1px solid #fff;
+            }
+        }
+    }
+    .prev {
+        left: -110px;
+        border-style: dashed solid dashed dashed;
+        border-color: transparent #fff transparent transparent;
+        &:before {
+            left: -38px;
+            top: -40px;
+            border-style: dashed solid dashed dashed;
+            border-color: transparent #000 transparent transparent;
+        }
+        &.mini {
+            left: 30px;
+            &:before {
+                left: -8px;
+                top: -10px;
+            }
+        }
+    }
+    .next {
+        right: -110px;
+        border-style: dashed dashed dashed solid;
+        border-color: transparent transparent transparent #fff;
+        &:before {
+            left: -42px;
+            top: -40px;
+            border-style: dashed dashed dashed solid;
+            border-color: transparent transparent transparent #000;
+        }
+        &.mini {
+            right: 30px;
+            &:before {
+                left: auto;
+                right: -8px;
+                top: -10px;
+            }
+            &:after {
+                left: -21px;
+            }
+        }
+    }
+
+    .transform-bar {
+        position: absolute;
+        top: 10px;
+        right: 140px;
+        height: 30px;
+        line-height: 30px;
+        a {
+            height: 30px;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .iconfont {
+            font-size: 22px;
+            float: left;
+            margin-right: 5px;
+        }
+        .zoom-bar {
+            position: absolute;
+            right: 110px;
+            height: 30px;
+            line-height: 30px;
+            font-size: 12px;
+            .zoom-track {
+                position: absolute;
+                left: 30px;
+                top: 14px;
+                right: 90px;
+                height: 4px;
+                background-color: #fff;
+                border-radius: 2px;
+                cursor: pointer;
+                .track-thumb {
+                    position: absolute;
+                    top: -3px;
+                    background-color: #fff;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+            }
+            .zoom-scale {
+                float: right;
+            }
+        }
     }
 }
 
@@ -444,7 +606,6 @@
         left: 3px;
         line-height: normal;
         color: @msgErr;
-        width: 120px;
     }
 }
 .twoLiTab{

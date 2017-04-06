@@ -23,7 +23,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	var loadOrderInfo = function(_type, cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('creditMaterials/index', 'zyj'),
+			url: $http.api('creditMaterials/index', 'zjy'),
 			data: {
 				taskId: $params.taskId
 			},
@@ -202,56 +202,59 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		$submitBar.data({
 			taskId: $params.taskId
 		});
-		$submitBar.submitBar(function($el) {
-			/**
-			 * 取消订单按钮
-			 */
-			$el.find('#cancelOrder').on('click', function() {
-				$.alert({
-					title: '取消订单',
-					content: tool.alert('确定要取消该笔贷款申请吗？'),
-					buttons: {
-						close: {
-							text: '取消',
-							btnClass: 'btn-default btn-cancel'
-						},
-						ok: {
-							text: '确定',
-							action: function () {
-								var params = {
-									taskId: $params.taskId
-								}
-								var reason = $.trim(this.$content.find('#suggestion').val());
-								if(reason) params.reason = reason;
-								$.ajax({
-									type: 'post',
-									url: $http.api('loanOrder/cancel', 'zyj'),
-									data: params,
-									dataType: 'json',
-									success: $http.ok(function(result) {
-										console.log(result);
-										router.render('loanProcess');
-									})
-								})
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
+
+		/**
+		 * 取消订单
+		 */
+		$sub.on('cancelOrder', function() {
+			$.alert({
+				title: '取消订单',
+				content: tool.alert('确定要取消该笔贷款申请吗？'),
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							var params = {
+								taskId: $params.taskId
 							}
+							var reason = $.trim(this.$content.find('#suggestion').val());
+							if(reason) params.reason = reason;
+							$.ajax({
+								type: 'post',
+								url: $http.api('loanOrder/cancel', 'zyj'),
+								data: params,
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									router.render('loanProcess');
+								})
+							})
 						}
 					}
-				})
+				}
 			})
+		})
 
-			/**
-			 * 征信查询按钮
-			 */
-			$console.find('#creditQuery').on('click', function() {
-				console.log($('.input-text input'))
-				saveData(function() {
-					process();
-				});
+		/**
+		 * 征信查询
+		 */
+		$sub.on('creditQuery', function() {
+			saveData(function() {
+				process();
 			});
-		});
+		})
 	}
 
-	// 跳流程
+
+	/**
+	 * 任务提交跳转
+	 */
 	function process() {
 		$.confirm({
 			title: '提交订单',
@@ -276,7 +279,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 						}
 						var reason = $.trim(this.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
-						tasksJump(params, 'complete');
+						flow.tasksJump(params, 'complete');
 					}
 				}
 			}
@@ -448,7 +451,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					setupEvt(_tabTrigger);
 				}, true);
 			}
-			$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
+			$scope.$el.$tabs.removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.$el.$tbls.eq($scope.currentType).hide();
 			$scope.$el.$tbls.eq(_type).show();
@@ -541,7 +544,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		/**
 		 * 启动上传图片控件
 		 */
-		$self.find('.uploadEvt').imgUpload();
+		$self.find('.uploadEvt').imgUpload({
+			viewable: true
+		});
 
 		/**
 		 * 下拉框启动
@@ -592,6 +597,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			setupSubmitBar();
 			setupAddUsers();
 			evt();
+			
 		});
 	});
 

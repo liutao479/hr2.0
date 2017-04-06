@@ -7,7 +7,6 @@ page.ctrl('expireInfoInput', [], function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		},
-		postUrl='http://192.168.0.113:8888/';
 	/**
 	* 加载逾期信息录入数据
 	* @params {object} params 请求参数
@@ -15,8 +14,9 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	*/
 	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api('expire.process'),
+			url: $http.api('loanOverdueImport/uploadOverdue','jbs'),
 			data: params,
+			dataType: 'json',
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				// setupPaging(result.page.pages, true);
@@ -30,7 +30,7 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	* 下载模板
 	*/
 	 $(document).on('click', '#modelDownload', function() {
-	 	window.open(postUrl+'loanOverdueImport/downExcel','_self')
+	 	window.open(urlStr+'loanOverdueImport/downExcel','_self')
 	 });
 	 
 	/**
@@ -41,16 +41,9 @@ page.ctrl('expireInfoInput', [], function($scope) {
     })
 	
 	
-	
-	
-	
-	
-	
-	
-	
     function ajaxFileUpload() {
 		$.ajaxFileUpload({
-		    url: postUrl+'loanOverdueImport/uploadOverdue',
+		    url: urlStr+'loanOverdueImport/uploadOverdue',
 		    secureuri: false,
 		    fileElementId: 'fileData',
 		    dataType: 'json',

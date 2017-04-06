@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>找回密码-汽车分期系统</title>
+	<link rel="shortcut icon" href="static/css/img/public/hrfax.ico">
+	<link rel="stylesheet" type="text/css" href="static/css/main.css">
+	<link rel="stylesheet" type="text/css" href="static/css/jquery.dialog.css">
+	<style type="text/css">
+		.header {
+			height: 60px;
+			background-color: #fff;
+		}
+		.header img {
+			float: left;
+			width: 100px;
+			margin-top: 14px;
+		}
+		.header span {
+			font-size: 15px;
+			display: inline-block;
+			height: 30px;
+			line-height: 30px;
+			border-left: 1px solid #ddd;
+			margin: 16px 0 0 20px;
+			padding-left: 20px;
+		}
+		.background {
+			position: relative;
+			background: url(static/css/img/background.png) no-repeat 0 0;
+			height: 693px;
+		}
+		.inner-container {
+			width: 900px;
+			margin: 0 auto;
+		}
+		.inner-background {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin-left: -438px;
+			margin-top: -200px;
+			width: 877px;
+			height: 400px;
+			background-color: #fff;
+		}
+		.form-text {
+			width: 600px;
+			height: 500px;
+			margin: 0 auto;
+		}
+		.form-text.none-background {
+			background: none;
+			opacity: 1;
+		}
+		.form-text .form-title {
+			font-size: 18px;
+			font-weight: bold;
+			text-align: center;
+			margin: 30px 0;
+		}
+		.form-text .input-text,
+		.form-text .button {
+			display: block;
+			float: left;
+			width: 230px;
+			margin: 0 auto !important;
+			border-radius: 3px !important;
+			height: 36px;
+		}
+		.form-text .input-text {
+			border: 1px solid #ddd;
+		}
+		.form-text .button {
+			text-align: center;
+			cursor: pointer;
+		}
+		.copyright {
+			color: #999;
+			text-align: center;
+			margin: 40px 0 20px 0;
+		}
+		.copyright a {
+			color: #999;
+		}
+		.jconfirm .jconfirm-box {
+			padding: 0 15px 0 15px;
+		}
+		.form-text .row {
+			position: relative;
+			width: 450px;
+			height: 36px;
+			margin: 20px auto;
+		}
+		.form-text .row label {
+			float: left;
+			width: 110px;
+			display: block;
+			text-align: right;
+			line-height: 36px;
+			margin-right: 10px;
+		}
+		.form-text .code,
+		.form-text .code-btn {
+			position: absolute;
+			right: 100px;
+			height: 36px;
+			border: none;
+			cursor: pointer;
+		}
+		.form-text .code {
+			width: 80px;
+			border-radius: 0 3px 3px 0;
+		}
+		.form-text .code-btn {
+			display: block;
+			width: 80px;
+			padding: 0 5px;
+			line-height: 36px;
+			font-size: 12px;
+			color: #03c;
+			text-align: center;
+		}
+		.form-text .code-btn:before {
+			position: absolute;
+			left: -1px;
+			top: 8px;
+			height: 20px;
+			content: "";
+			border-left: 1px solid #ddd;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<div class="inner-container">
+			<img src="static/css/img/logo.png" >
+			<span>汽车分期系统</span>
+		</div>
+	</div>
+	<div class="background">
+		<div class="inner-background">
+			<div class="form-text none-background" id="form">
+				<div class="form-title">找回密码</div>
+				<div class="row">
+					<label>手机号码：</label>
+					<input type="text" class="input-text" id="phone">
+				</div>
+				<div class="row">
+					<label>图型验证码：</label>
+					<input type="text" class="input-text" id="imgCode">
+					<img class="code" id="getImageCode"/>
+				</div>
+				<div class="row">
+					<label>手机验证码：</label>
+					<input type="text" class="input-text" id="phoneCode" />
+					<a class="code-btn" id="getPhoneCode">获取验证码</a>
+				</div><!-- 
+				<div class="row">
+					<label>设置密码：</label>
+					<input type="password" class="input-text" />
+				</div>
+				<div class="row">
+					<label>确认密码：</label>
+					<input type="password" class="input-text" />
+				</div> -->
+				<div class="row">
+					<label>&nbsp;</label>
+					<a class="button btn-ok float-left" id="submit">提交</a>
+				</div>
+				<div class="row">
+					<label>&nbsp;</label>
+					<a href="login.html" class="link float-left">返回登录</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyright">Copyright © 2015 hrfax.cn All Rights Reserved.网站备案号：<a rel="noflow" href="http://www.miitbeian.gov.cn/" target="blank">浙ICP备15039656号-1</a></div>
+	<script type="text/javascript" src="static/js/vendor/jquery.min.js"></script>
+	<script type="text/javascript" src="static/js/vendor/third.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			var api = 'http://192.168.0.186:9999/',
+				token;
+			var $phone = $('#phone'),
+				$icode = $('#imgCode'),
+				$pcode = $('#phoneCode');
+
+			jconfirm.defaults = {
+				title: '提示',
+				boxWidth: 400,
+				useBootstrap: false,
+				buttons: {
+					ok: {
+						text: '确定',
+						btnClass: 'btn-default'
+					}
+				}
+			}
+
+			function method(m) {
+				return api + m;
+			}
+
+			function $alert(msg) {
+				$.alert({
+					title: '提示',
+					content: msg
+				})
+			}
+
+			function getImageCode($img) {
+				$img.attr('src', method('capcha/get?businessKey=retrivePassword&t='+new Date().getTime()));
+			}
+
+			function getToken(cb) {
+				$.ajax({
+					url: method('token/get'),
+					dataType: 'json',
+					success: function(xhr) {
+						if(!xhr.code) {
+							token = xhr.data;
+							$.ajaxSetup({
+								headers: { Authorization: 'Bearer ' + token }
+							})
+							cb();
+						}
+					}
+				})
+			}
+
+			function getPhoneCode() {
+				var phone = $.trim($phone.val()),
+					icode = $.trim($icode.val());
+				if(!phone || !icode) {
+					return $alert('请输入手机号码和图形验证码');
+				}
+				function _g() {
+					$.ajax({
+						url: method('sms/send'),
+						data: {
+							businessKey: 'retrivePassword',
+							mobile: phone,
+							captchaCode: icode
+						},
+						dataType: 'json',
+						success: function(xhr) {
+							if(!xhr.code) {
+
+							}
+						}
+					})
+				}
+
+				if(!token) {
+					return getToken(_g);
+				}
+				_g();
+			}
+
+			function submit() {
+				var phone = $.trim($phone.val()),
+						pcode = $.trim($pcode.val());
+					if(!phone || !pcode) {
+						return $alert('请输入手机号和手机验证码');
+					};
+					$.ajax({
+						url: method('password/retrive'),
+						type: 'post',
+						dataType: 'json',
+						data: {
+							account: acc,
+							password: md5(pwd),
+							LoginAgent: 'WEB'
+						},
+						success: function (xhr) {
+							if(xhr && !xhr.code) {
+								var result = xhr.data;
+								var token = result.token,
+									info = result.loginInfo;
+								Cookies.set('_hr_token', result.token);
+								Cookies.set('_hr_name', info.name)
+								Cookies.set('_hr_account', info.account);
+								Cookies.set('_hr_dept', info.organization.name + '-' + info.dept.name);
+								Cookies.set('_hr_role', info.role.name);
+								if(info.phone1)
+									Cookies.set('_hr_phone', info.phone1);
+								window.location.href = 'app.html';
+							} else {
+								$.alert({
+									title: '错误',
+									content: '登录失败，请重试',
+									action: {
+										ok: {
+											text: '确定'
+										}
+									}
+								});
+							}
+						}
+					})
+			}
+
+			function addEventListener() {
+				$('#getImageCode').on('click', function() {
+					getImageCode($(this));
+				}).click();
+
+				$('#getPhoneCode').on('click', function() {
+					getPhoneCode();
+				})
+
+				$('#form > .input-text').on('keydown', function(e) {
+					if(e.which == 13) {
+						$('#submit').click();
+					}
+				})
+
+				$('#submit').on('click', function () {
+					submit();
+				})
+			}
+
+
+			addEventListener();
+		})
+	</script>
+</body>
+</html>

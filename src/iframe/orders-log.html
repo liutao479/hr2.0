@@ -1,5 +1,5 @@
 	<!--订单日志-->
-			<div class="container orders-log" id="orders-log">
+			<div class="container orders-log">
 				<!-- 面包屑 -->
 				<div id="location"></div>
 				<!-- 面包屑 -->
@@ -131,7 +131,7 @@
 								{{ } }}
 								<div class="catalog-content-text blue">
 									<span class="blue">
-										<span class="weight">【{{=row.sceneName}}】</span><span>操作人：环球1号经办人（客户经理）</span>	
+										<span class="weight">【{{=row.sceneName}}】</span><span>操作人：{{=row.userName}}（客户经理）</span>	
 									</span>
 								</div>
 							</div>
@@ -163,7 +163,7 @@
 								</div>
 								<div class="catalog-content-text color-gray">
 									<span class="catalog-back">
-										<span class="weight">【{{=col.scene}}】</span><span>操作人：{{=col.userName}}（{{=col.rolaName || '角色名称'}}）</span>	
+										<span class="weight">【{{=col.sceneName}}】</span><span>操作人：{{=col.userName}}（{{=col.rolaName || '角色名称'}}）</span>	
 									</span>
 								</div>
 							</div>

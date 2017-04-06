@@ -38,6 +38,7 @@ page.ctrl('loanInfo', function($scope) {
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
 				console.log(result)
 				setupLocation();
+				setupBackReason($scope.result.data.loanTask.backApprovalInfo);
 				if(result.data.FQXX && result.data.FQXX.renewalInfo){
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				}
@@ -47,7 +48,6 @@ page.ctrl('loanInfo', function($scope) {
 				loanFinishedGps();
 				loanFinishedBxxb();
 				setupEvt();
-//				console.log(page.$scope.loanInfo.result.cfgData);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -68,6 +68,25 @@ page.ctrl('loanInfo', function($scope) {
 			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
+	}
+
+	/**
+	* 设置退回原因
+	*/
+	var setupBackReason = function(data) {
+		var $backReason = $console.find('#backReason');
+		if(!data) {
+			$backReason.remove();
+			return false;
+		} else {
+			$backReason.data({
+				backReason: data.reason,
+				backUser: data.userName,
+				backUserPhone: data.phone,
+				backDate: tool.formatDate(data.transDate, true)
+			});
+			$backReason.backReason();
+		}
 	}
 
 	/**
@@ -171,26 +190,6 @@ page.ctrl('loanInfo', function($scope) {
 				renewalStr += rene.getAttribute('data-value')+',';
 			}
 			$("input[name='residentType']").val(renewalStr);
-//		   	boxChecked.each(function(){
-//		   		if($(this).hasClass('checked')){
-//		   			var dVal = $(this).data('value');
-//				   	var data = '';
-//				   	data += dVal;
-//				   	$("input[name='residentType']").val(data);
-//		   		}
-//		   	})
-		   	
-//			function returnCheckboxVal(){
-//				$(".info-key-check-box").each(function(){
-//					var data="";
-//					$('.checked',$(this)).each(function(){
-//						data += $(this).attr("data-value")+",";
-//					});
-//					var value = data.substring(0,data.length-1);
-//					$("input",$(this)).val(value);
-//					return;
-//				})
-//			}
 	    })
 	    /***
 		* 保存按钮
@@ -225,7 +224,7 @@ page.ctrl('loanInfo', function($scope) {
 						}
 						renewalStr += rene.value+',';
 					}
-					$("input[name='renewalMode']").val(renewalStr);
+					$("input[name='renewalInfo']").val(renewalStr);
 				}
 				var data;
 		        var formList = $(this).parent().parent().siblings().find('form');
@@ -233,7 +232,6 @@ page.ctrl('loanInfo', function($scope) {
 		        if(formList.length == 1){
 			        var params = formList.serialize();
 		            params = decodeURIComponent(params,true);
-	//	            params = decodeURI(params,true);
 		            var paramArray = params.split("&");
 		            var data1 = {};
 		            for(var i=0;i<paramArray.length;i++){
@@ -278,6 +276,7 @@ page.ctrl('loanInfo', function($scope) {
 						dataType:"json",
 						success: function(result){
 							console.log(result.msg);
+							console.log(key);
 						}
 					});
 		        }
@@ -390,8 +389,10 @@ page.ctrl('loanInfo', function($scope) {
 		$(this).parents().removeClass("error-input");
 		$(this).siblings("i").remove();
 	})
-
-
+	$(document).on('click','.select', function() {
+		$(this).parents().removeClass("error-input");
+		$(this).siblings("i").remove();
+	})
 
 	/**
 	* 设置底部按钮操作栏
@@ -401,30 +402,13 @@ page.ctrl('loanInfo', function($scope) {
 		$submitBar.data({
 			taskId: $params.taskId
 		});
-		$submitBar.submitBar(function($el) {
-			evt($el);
-		});
-	}
-
-	/**
-	* 底部按钮操作栏事件
-	*/
-	var evt = function($el) {
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
 
 		/**
-		 * 订单退回的条件选项分割
+		 * 退回订单
 		 */
-		var taskJumps = $scope.result.data.loanTask.taskJumps;
-		for(var i = 0, len = taskJumps.length; i < len; i++) {
-			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
-		}
-
-		/**
-		 * 退回订单按钮
-		 */
-		$el.find('#backOrder').on('click', function() {
-			var that = $(this);
-			console.log($scope.result.data.loanTask.taskJumps)
+		$sub.on('backOrder', function() {
 			$.alert({
 				title: '退回订单',
 				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
@@ -487,8 +471,7 @@ page.ctrl('loanInfo', function($scope) {
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result);
-									
-									// router.render('loanProcess');
+									router.render('loanProcess');
 									// toast.hide();
 								})
 							})
@@ -496,21 +479,22 @@ page.ctrl('loanInfo', function($scope) {
 					}
 				}
 			})
-		});
+		})
+
 		/**
-		 * 提交按钮按钮
+		 * 提交
 		 */
-		$el.find('#taskSubmit').on('click', function() {
+		$sub.on('taskSubmit', function() {
 			process();
 		})
 	}
 
 	/**
-	 * 跳流程
+	 * 任务提交跳转
 	 */
 	function process() {
 		$.confirm({
-			title: '提交',
+			title: '提交订单',
 			content: dialogTml.wContent.suggestion,
 			buttons: {
 				close: {
@@ -521,6 +505,7 @@ page.ctrl('loanInfo', function($scope) {
 				ok: {
 					text: '确定',
 					action: function () {
+						var that = this;
         				$.ajax({
 							type: 'post',
 							url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
@@ -531,15 +516,17 @@ page.ctrl('loanInfo', function($scope) {
 									taskIds.push(parseInt($params.tasks[i].id));
 								}
 								var params = {
+									taskId: $params.taskId,
 									taskIds: taskIds,
 									orderNo: $params.orderNo
 								}
-								var reason = $.trim(this.$content.find('#suggestion').val());
+								var reason = $.trim(that.$content.find('#suggestion').val());
 								if(reason) params.reason = reason;
 								console.log(params);
-								tasksJump(params, 'complete');
+								flow.tasksJump(params, 'complete');
 							})
 						})
+						
 					}
 				}
 			}
@@ -547,7 +534,7 @@ page.ctrl('loanInfo', function($scope) {
 	}
 
 	/**
-	 * 取消订单弹窗内事件逻辑处理
+	 * 退回订单弹窗内事件逻辑处理
 	 */
 	var dialogEvt = function($dialog) {
 		var $reason = $dialog.find('#suggestion');
@@ -812,9 +799,11 @@ page.ctrl('loanInfo', function($scope) {
 			var keyType = this.$el.data('key');
 			var data={};
 			if(keyType == 'busiSourceTypeCode'){
-				data['code']='serviceType';
+				data['code']='busiSourceType';
 			}else if(keyType == 'businessModel'){
 				data['code']='busimode';
+			}else if(keyType == 'serviceTypeCode'){
+				data['code']='serviceType';
 			}else if(keyType == 'repayPeriod'){
 				data['code']='repaymentTerm';
 			}else{	
@@ -881,7 +870,7 @@ page.ctrl('loanInfo', function($scope) {
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'id',
 						name: 'bankName'
 					};
 					cb(sourceData);

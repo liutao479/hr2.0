@@ -1,24 +1,3 @@
-
-// 待办提醒框
-// var isOpen = false; 
-// $(document).on('click', '#remind-tips', function (){
-// 	if(!isOpen) {
-// 		$('#remind').animate({
-// 			right: '155px'
-// 		},200);
-// 		$(this).find('.iconfont').html('&#xe605;');
-// 		isOpen = true;
-// 	} else {
-// 		$('#remind').animate({
-// 			right: '0'
-// 		},200);
-// 		$(this).find('.iconfont').html('&#xe697;');
-// 		isOpen = false;
-// 	}
-// });
-
-
-
 //单选框
 // $(document).on('selectstart', '.radio', false);
 // $(document).on('click', '.radio', function() {
@@ -46,22 +25,6 @@ $('.tips-area').hover(function() {
 /**
 * 顶部二维码、消息和用户展开效果
 **/
-
-//二维码
-$(document).on('hover', '#navigator .QR-Code', function() {
-	$(this).find('.QR-Code-area').toggle();
-});
-
-//消息
-$(document).on('hover', '#navigator .message', function() {
-	$(this).find('.message-area').toggle();
-});
-
-//用户名
-$(document).on('hover', '#navigator .user', function() {
-	$(this).find('.user-area').toggle();
-	// $(this).find('.user-field-item').toggleClass('user-field-item-active');
-});
 
 
 
@@ -112,12 +75,25 @@ $(document).on('hover', '#navigator .user', function() {
 		}
 	})
 
+
+
+flow = {};
+
+flow.taskSubmit = function(data) {
+	for(var i = 0, len = data.length; i < len; i++) {
+		var row = data[i];
+		if(!row.submited) return false; 
+	}
+	return true;
+}
+
 /**
  * 提交订单以及跳转逻辑
- * @param  {object} params [提交任务需传参数]
- * @return {function}           跳转后的回调
+ * @param  {object}  params [提交任务需传参数]
+ * @param  {string}  type   [场景的类型'complete' 'approval']
+ * @return {function}          跳转后的回调
  */
-function tasksJump(params, type, cb) {
+flow.tasksJump = function(params, type, cb) {
 	$.ajax({
 		type: 'post',
 		url: $http.api('tasks/' + type, 'zyj'),
@@ -131,20 +107,25 @@ function tasksJump(params, type, cb) {
 				// toast显示
 				router.render('loanProcess');
 			} else {
-				var taskObj = [];
+				var taskObj = [], flag = 0;
 				for(var i = 0, len = loanTasks.length; i < len; i++) {
 					var obj = loanTasks[i];
 					taskObj.push({
 						key: obj.category,
 						id: obj.id,
-						name: obj.sceneName
+						name: obj.sceneName,
+						submited: obj.submited
 					})
+					if(!loanTasks[i].submited) {
+						flag++;
+					}
 				}
 				// debugger
-				for(var i = 0, len = loanTasks.length; i < len; i++) {
-					if(!loanTasks[i].submited) {
-						var target = loanTasks[i];
-						var selected = i;
+				for(var j = 0, len2 = loanTasks.length; j < len2; j++) {
+					if(!loanTasks[j].submited) {
+						var target = loanTasks[j];
+						var selected = j;
+						if(flag == 1) taskObj[selected].submited = true;
 						break;
 					}
 				}

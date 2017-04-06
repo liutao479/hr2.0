@@ -517,6 +517,9 @@ input[disabled]{
             width: 60px; 
         }
         .orders-item-data {
+            &.loanTasks {
+                width: 115px;
+            }
             position: relative;
             padding: 23px 8px; 
             color: @fontColor;
@@ -548,44 +551,34 @@ input[disabled]{
             .orders-item-data-blank {
                 width: 22%;
             } 
-            .orders-item-data-view {
-                .view-fee {
-                    color: @buttonBgColor;
-                }
+            .view-fee {
+                cursor: pointer !important;
+                color: @buttonBgColor;
+            }
+            .meanwhile-hover {
+                position: absolute;
+                z-index: 2;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: #FFF;
+                border: 1px solid @borderColor;
+                border-top: none;
+                .borderRadius(3px);
+                width: 100%;
+                min-height: 78px;
             }
             .meanwhile {
                 position: absolute;
-                height: 60px;
-                top: 50%;
-                margin-top: -30px;
+                z-index: 1;
+                top: 12px;
+                bottom: 12px;
+                left: 0;
+                right: 0;
                 width: 100%;
+                min-height: 54px;
                 text-align: center;
-                tr td {
-                   padding: 0;
-                   margin: 0;  
-                }
-                .arrow-trigger {
-                    position: relative;
-                    top: 2px;
-                    .arrow-bottom {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        margin-top: -4px;
-                        margin-left: -4px;
-                        cursor: pointer;
-                        border-width: 6px;
-                    }
-                    .arrow-top {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        margin-top: -10px;
-                        margin-left: -4px;
-                        cursor: pointer;
-                        border-width: 6px;
-                    }
-                }
             }
             .table-inner {
                 min-width: 275px;
@@ -873,7 +866,8 @@ input[disabled]{
     }
     //工作台左侧菜单
     &&-menu {
-        float: left;
+        position: absolute;
+        width: 144px;
         border-top: 3px solid @tableActiveColor; 
         .panel-menu-item {
            display: block;
@@ -1074,12 +1068,24 @@ input[disabled]{
                 }
                 //备注信息
                 .remarks-box {
+                    position: relative;
                     width: 100%;
                     .borderRadius(3px);
                     border: 1px solid @borderColor;
-                    resize:none;
                     padding: 7px;
-                    color: @fontColor; 
+                    color: @fontColor;
+                    .remark {
+                        width: 100%;
+                        height: 100%;
+                        resize:none;
+                        border: none; 
+                    } 
+                    .remain {
+                        position: absolute;
+                        bottom: 10px;
+                        right: 10px;
+                        color: @tiperColor;
+                    }
                 }
 
                 //图片展示（可点击）
@@ -2188,13 +2194,7 @@ input[disabled]{
         font-size: 65px;
     }
 }
-//合作机构维护
-.cooperation-maintenance {
-    .cooperation-maintenance-table  .button{
-        padding: 0 15px;
-//      margin-right: 15px;
-    }
-}
+
 
 //借款管理
 .loan-manage {
@@ -2457,6 +2457,7 @@ input[disabled]{
         text-align: left;
     }
 }
+<<<<<<< HEAD
 
 .block-item-data {
     -moz-user-select: none; /*火狐*/
@@ -2970,3 +2971,4 @@ input[disabled]{
     background-size:230px auto;
     display: none;
 }
+.jconfirm .jconfirm-box div.jconfirm-content-pane { margin: 20px 0;}

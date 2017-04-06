@@ -1,6 +1,8 @@
 'use strict';
 (function(g) {
 //	g.urlStr = "http://192.168.1.86:8080";
+//	g.urlStr = "http://192.168.1.124:8080";
+	// g.urlStr = "http://192.168.0.22:8080";
 	g.urlStr = "http://192.168.0.186:9999";
 	g.dataMap = {
 	    "sex":[
@@ -319,7 +321,7 @@
 	    ]
 	},
 	g.urlApiMap = {
-		"serviceType": urlStr+"/loanConfigure/getItem",//业务类型
+		"serviceTypeCode": urlStr+"/loanConfigure/getItem",//业务类型
 		"brand": urlStr+"/demandBank/selectBank",//经办银行
 		"busiSourceTypeCode": urlStr+"/loanConfigure/getItem",//业务来源类型
 		"busiArea": urlStr+"/area/get",//三级下拉省市县

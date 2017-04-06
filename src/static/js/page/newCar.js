@@ -160,33 +160,36 @@ page.ctrl('newCar', [], function($scope) {
 	var setupCarAccountEvt = function() {
 		// 增加银行账户
 		$console.find('#addCarAccount').on('click', function() {
-			var that = $(this);
-			var $parent = that.parent().parent();
-			var _accountBankName = $parent.find('.accountBankName input').val();
-			var _accountNumber = $parent.find('.accountNumber input').val();
-			var _accountName = $parent.find('.accountName input').val();
+			var that = $(this),
+				$parent = that.parent().parent(),
+				$inputs = $parent.find('input'),
+				params = {
+					carShopId: parseInt($scope.carShopId)
+				},
+				flag = 0;
 			$parent.find('.input-err').remove();
-			if(!_accountBankName) {
-				$parent.find('.accountBankName').append('<span class="input-err">开户行名称不能为空！</span>');
-			} 
-			if(!_accountNumber) {
-				$parent.find('.accountNumber').append('<span class="input-err">开户账户不能为空！</span>');
-			} 
-			if(!_accountName) {
-				$parent.find('.accountName').append('<span class="input-err">账户户名不能为空！</span>');
-			}
-			if(_accountBankName != '' && _accountNumber != '' && _accountName != '') {
-				var _params = {
-					carShopId: $scope.carShopId,
-					bankName: _accountBankName.trim(),
-					account: parseInt(_accountNumber.trim()),
-					accountName: _accountName.trim()
+			$inputs.each(function() {
+				var value = $.trim($(this).val());
+				if(!value) {
+					$(this).parent().append('<span class="input-err">该项不能为空！</span>')
+				} else if(!regMap[$(this).data('type')].test(value)) {
+					$(this).parent().find('.input-err').remove();
+					if($(this).data('type') == 'accountNumber') {
+						$(this).parent().append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
+					} else {
+						$(this).parent().append('<span class="input-err">该项不符合输入规则！</span>')
+					}
+				} else {
+					params[$(this).data('type')] = value;
+					flag++;
 				}
-				console.log(_params)
+			});
+			if(flag == 3) {
+				console.log(params)
 				$.ajax({
 					url: $http.api('demandCarShopAccount/save', 'cyj'),
 					type: 'post',
-					data: _params,
+					data: params,
 					dataType: 'json',
 					success: $http.ok(function(result) {
 						console.log(result);
@@ -195,6 +198,8 @@ page.ctrl('newCar', [], function($scope) {
 						})
 					})
 				})
+			} else {
+				return false;
 			}
 		})
 
@@ -305,13 +310,16 @@ page.ctrl('newCar', [], function($scope) {
 		$console.find('#addCarRate').on('click', function() {
 			var that = $(this);
 			var $parent = that.parent().parent().parent();
-			var _carRate = $parent.find('#carRate input').val();
+			var _carRate = $.trim($parent.find('#carRate input').val());
 			var _costPolicy = $parent.find('.policy-item').length + 1;
-			if(_carRate != undefined) {
+			if(!_carRate) {
+				$parent.find('#carRate input-err').remove();
+				$parent.find('#carRate').append('<span class="input-err">费率不能为空！</span>');
+			} else {
 				var _params = {
-					carShopId: $scope.carShopId,          //经销商ID
+					carShopId: parseInt($scope.carShopId),          //经销商ID
 					costPolicy: '费率' + _costPolicy,     //新车
-					costRate: _carRate      //费率
+					costRate: parseFloat(_carRate).toFixed(4)      //费率
 				}
 				console.log(_params);
 				$.ajax({
@@ -326,8 +334,6 @@ page.ctrl('newCar', [], function($scope) {
 						})
 					})
 				})
-			} else {
-				$parent.find('#carRate').append('<span class="input-err">费率不能为空！</span>');
 			}
 		})
 

@@ -107,22 +107,50 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 		$submitBar.data({
 			taskId: $params.taskId
 		});
-		$submitBar.submitBar(function($el) {
-			evt($el);
-		});
-	}
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
 
-	/**
-	* 底部按钮操作栏事件
-	*/
-	var evt = function($el) {
 		/**
-		 * 审核通过按钮
+		 * 提交
 		 */
-		$el.find('#taskSubmit').on('click', function() {
+		$sub.on('taskSubmit', function() {
 			saveData(function() {
 				process();
 			});
+		})
+	}
+
+	/**
+	 * 任务提交跳转
+	 */
+	function process() {
+		$.confirm({
+			title: '提交订单',
+			content: dialogTml.wContent.suggestion,
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel',
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
+						}
+						var params = {
+							taskId: $params.taskId,
+							taskIds: taskIds,
+							orderNo: $params.orderNo
+						}
+						var reason = $.trim(this.$content.find('#suggestion').val());
+						if(reason) params.reason = reason;
+						flow.tasksJump(params, 'complete');
+					}
+				}
+			}
 		})
 	}
 
@@ -154,7 +182,7 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 						var reason = $.trim(this.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
 						console.log(params);
-						tasksJump(params, 'complete');
+						flow.tasksJump(params, 'complete');
 					}
 				}
 			}

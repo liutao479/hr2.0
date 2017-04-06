@@ -41,6 +41,13 @@ page.ctrl('creditApproval', [], function($scope) {
 				result.index = idx;
 				$scope.result = result;
 				$scope.result.editable = 0;
+				$scope.result.userRalaMap = {
+					'0': '本人',
+					'1': '配偶',
+					'2': '父母',
+					'3': '子女',
+					'-1': '其他'
+				};
 				console.log($scope.result)
 				// 编译tab栏
 				setupTab($scope.result, function() {
@@ -55,6 +62,25 @@ page.ctrl('creditApproval', [], function($scope) {
 				}
 			})
 		})
+	}
+
+	/**
+	* 设置退回原因
+	*/
+	var setupBackReason = function(data) {
+		var $backReason = $console.find('#backReason');
+		if(!data) {
+			$backReason.remove();
+			return false;
+		} else {
+			$backReason.data({
+				backReason: data.reason,
+				backUser: data.userName,
+				backUserPhone: data.phone,
+				backDate: tool.formatDate(data.transDate, true)
+			});
+			$backReason.backReason();
+		}
 	}
 
 	/**
@@ -117,7 +143,7 @@ page.ctrl('creditApproval', [], function($scope) {
 					setupEvt(_tabTrigger);
 				}, true);
 			}
-			$scope.$el.$tabs.eq($scope.idx).removeClass('role-item-active');
+			$scope.$el.$tabs.removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.$el.$tbls.eq($scope.idx).hide();
 			$scope.$el.$tbls.eq(_type).show();
@@ -130,6 +156,16 @@ page.ctrl('creditApproval', [], function($scope) {
 	*/
 	var setupEvt = function($el) {
 		$el.find('.uploadEvt').imgUpload();
+
+		//查看征信材料
+		$el.find('.view-creditMaterials').on('click', function() {
+			alert('还未做该功能，暂时不测！谢谢！ T.T');
+		});
+
+		//辅证数据
+		$el.find('.assistData').on('click', function() {
+			alert('前往辅证数据页面');
+		});
 	}
 
 	/**
@@ -140,29 +176,13 @@ page.ctrl('creditApproval', [], function($scope) {
 		$submitBar.data({
 			taskId: $params.taskId
 		});
-		$submitBar.submitBar(function($el) {
-			evt($el);
-		});
-	}
-
-	/**
-	* 底部按钮操作栏事件
-	*/
-	var evt = function($el) {
-		/**
-		 * 订单退回的条件选项分割
-		 */
-		var taskJumps = $scope.result.data.loanTask.taskJumps;
-		for(var i = 0, len = taskJumps.length; i < len; i++) {
-			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
-		}
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
 
 		/**
-		 * 退回订单按钮
+		 * 退回订单
 		 */
-		$el.find('#backOrder').on('click', function() {
-			var that = $(this);
-			console.log($scope.result.data.loanTask.taskJumps)
+		$sub.on('backOrder', function() {
 			$.alert({
 				title: '退回订单',
 				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
@@ -225,7 +245,6 @@ page.ctrl('creditApproval', [], function($scope) {
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result);
-									
 									router.render('loanProcess');
 									// toast.hide();
 								})
@@ -234,20 +253,22 @@ page.ctrl('creditApproval', [], function($scope) {
 					}
 				}
 			})
-		});
+		})
 
 		/**
-		 * 拒绝受理按钮
+		 * 拒绝受理
 		 */
-		$el.find('#rejectOrder').on('click', function() {
-			$.confirm({
+		$sub.on('rejectOrder', function() {
+			$.alert({
 				title: '拒绝受理',
 				content: dialogTml.wContent.suggestion,
 				buttons: {
-					'取消': {
-			            action: function () {}
+					'close': {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
 			        },
-			        '确定': {
+			        'ok': {
+			        	text: '确定',
 			            action: function () {
 	            			var _reason = $.trim(this.$content.find('#suggestion').val());
             				if(!_reason) {
@@ -268,7 +289,7 @@ page.ctrl('creditApproval', [], function($scope) {
 								type: 'post',
 								url: $http.api('loanOrder/terminate', 'zyj'),
 								data: {
-									orderNo: $params.orderNo,
+									taskId: $params.taskId,
 									reason: _reason
 								},
 								dataType: 'json',
@@ -283,18 +304,31 @@ page.ctrl('creditApproval', [], function($scope) {
 			        
 			    }
 			});
-		})
+		});
 
 		/**
-		 * 审核通过按钮
+		 * 审核通过
 		 */
-		$el.find('#approvalPass').on('click', function() {
+		$sub.on('approvalPass', function() {
 			process();
 		})
 	}
 
 	/**
-	 * 跳流程
+	* 页面首次加载绑定事件
+	*/
+	var evt = function() {
+		/**
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
+	}
+
+	/**
+	 * 任务提交跳转
 	 */
 	function process() {
 		$.confirm({
@@ -320,7 +354,7 @@ page.ctrl('creditApproval', [], function($scope) {
 						}
 						var reason = $.trim(this.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
-						tasksJump(params, 'approval');
+						flow.tasksJump(params, 'complete');
 					}
 				}
 			}
@@ -372,7 +406,6 @@ page.ctrl('creditApproval', [], function($scope) {
 	}
 
 
-
 	/***
 	* 加载页面模板
 	*/
@@ -388,7 +421,9 @@ page.ctrl('creditApproval', [], function($scope) {
 		}
 		loadOrderInfo($scope.idx, function() {
 			setupLocation();
+			evt();
 			setupSubmitBar();
+			setupBackReason($scope.result.data.loanTask.backApprovalInfo)
 		});
 		
 	});
