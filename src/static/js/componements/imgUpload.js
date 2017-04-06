@@ -36,6 +36,7 @@
 	* 上传类
 	* @params {object} opts 公共配置项
 	* 		--opts: {string} url 提交地址，如果需要特定的地址，则需要传入
+	*		--viewable: default false
 	* @params {object} params 渲染参数对象
 	*/
 	var imgUpload = function($el, opts, params) {
@@ -52,11 +53,12 @@
 			owner: undefined,	//材料所属类型
 			img: undefined,	//图片地址
 			msg: undefined,	//退回消息
-			err: undefined,	//错误类型 0 图片错误；1 图片不清晰；2 其他
+			err: undefined,	//错误类型 0 正常 ；1 图片不清晰；2 图片错误
 			editable: undefined,
 			url: undefined,
 			deletecb: $.noop,
-			uploadcb: $.noop
+			uploadcb: $.noop,
+			viewable: false
 		}
 		var self = this;
 		self.$el = $el;
@@ -94,7 +96,7 @@
 				if(self.options.err != undefined) {
 					self.errImg = imgs[self.options.err];
 				}
-				if(self.options.msg != undefined) {
+				if(self.options.msg && self.options.msg != 'undefined') {
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
 				if(self.options.other) {
@@ -105,8 +107,14 @@
 				tmp = internalTemplates.modify.format(self.name, self.options.img, self.errImg, self.errMsg);
 				self.status = 1;
 			} else {
+				if(self.options.err != undefined) {
+					self.errImg = imgs[self.options.err];
+				}
+				if(self.options.msg && self.options.msg != 'undefined') {
+					self.errMsg = internalTemplates.msg.format(self.options.msg);
+				}
 				self.name = internalTemplates.name.format(self.options.name);
-				tmp = internalTemplates.view.format(self.name, self.options.img || '');
+				tmp = internalTemplates.view.format(self.name, self.options.img || '', self.errImg, self.errMsg);
 				self.status = 2;
 			}
 		}
@@ -182,13 +190,14 @@
 			});	
 		}
 		self.$el.find('.viewEvt').on('click', function() {
+			if(!self.options.viewable) return;
 			var loadImg, marker;
 			try {
 				loadImg = eval(self.options.getimg);
 				marker = eval(self.options.marker);
 			} catch(e) {
 				loadImg = $.noop;
-				marker = $.noop;
+				marker = undefined;
 			}
 			loadImg(function(imgs) {
 				new Preview(imgs, marker);
@@ -408,7 +417,7 @@
 				{2}{3}</div>{0}',
 		view: '<div class="imgs-item-upload">\
 				<img src="{1}" class="imgs-view viewEvt" />\
-			   </div>{0}',
+			   {2}{3}</div>{0}',
 		blank: '<div class="imgs-item-upload imgs-item-upload-blank">\
 				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
 				<span class="i-tips">图片未上传</span>\
@@ -437,19 +446,21 @@
 	* @params {function} marker 标记后的回调
 	* 	回调参数：img object
 	*/
-	function Preview(imgs, marker, opts) {
+	function Preview(imgCollections, marker, opts) {
 		var self = this;
-		self.imgs = imgs || [];
-		self.marker = marker || $.noop;
+		self.imgs = imgCollections || [];
+		self.marker = marker;
 		self.opts = $.extend({
 			minWidth: 500,
-			minHeight: 400
+			minHeight: 400,
+			markable: true
 		}, opts);
 		self.size = {
 			iw: 80,
 			im: 8
 		}
 		self.runtime = {};
+		self.runtime.idx = 0;
 		self.init();
 	}
 
@@ -461,67 +472,161 @@
 		self.runtime.vh = dh * 0.80;
 		self.setMask();
 		self.setViewBox();
+		self.setToolbar();
 		self.setClose()
 		self.listen();
 	};
 
+	/**
+	* 设置遮罩层
+	*/
 	Preview.prototype.setMask = function() { 
 		var self = this;
 		self.$mask = $('<div style="position: fixed; left:0; top:0; bottom:0; right:0; background: #000; z-index:99999990; opacity:.3;filter:alpha(opacity=30);"></div>').appendTo('body');
 	};
-
+	/**
+	* 设置显示框
+	*/
 	Preview.prototype.setViewBox = function() {
 		var self = this;
 		if(self.runtime.vw < self.opts.minWidth || self.runtime.vh < self.opts.minHeight) {
-			return $.confirm('当前窗口过小，无法使用图片预览功能，请拉伸你的窗口');
+			return $.alert({ title: '警告', content: '当前窗口过小，无法使用图片预览功能，请拉伸你的窗口', buttons: {ok: {text:'确定'}}});
 		}
-		var items = parseInt((self.runtime.vw - 160) / (self.size.iw + self.size.im));
+		var items = parseInt((self.runtime.vw - 120) / (self.size.iw + self.size.im));
 		var boxWidth = items * self.size.iw + (items -1) * self.size.im;
 
-		var viewbox = '<div style="background: #000; position: fixed; z-index:99999999; width: '+self.runtime.vw+'px;height:'+self.runtime.vh+'px;border-raidus:3px;left:50%;top:50%;margin-left:-'+self.runtime.vw/2+'px;margin-top:-'+self.runtime.vh/2+'px;">\
-							<div style="width:'+boxWidth+'px;margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;"><img style="width:100%;height:100%;" id="___originImage___" src="'+self.imgs[0]+'" /></div>\
-							<div style="width:'+boxWidth+'px;height:'+self.size.iw+'px;margin:0 auto; overflow: hidden;"><div id="___thumbnails___" style="width:'+items * (self.size.im + self.size.iw) + self.size.im +'px;"></div></div>\
-							<a class="prev">&lt</a>\
-							<a class="next"></a>\
+		var viewbox = '<div class="img-view-box" onselectstart="return false;" style="background: #000; position: fixed; z-index:99999999; width: '+self.runtime.vw+'px;height:'+self.runtime.vh+'px;border-raidus:3px;left:50%;top:50%;margin-left:-'+self.runtime.vw/2+'px;margin-top:-'+self.runtime.vh/2+'px;">\
+							<div style="width:'+boxWidth+'px; position:relative; margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;"><a class="prev big"></a><a class="next big"></a><img style="width:100%;height:100%;" id="___originImage___" src="'+self.imgs[0].materialsPic+'" /></div>\
+							<div style="width:'+boxWidth+'px; position:relative; height:'+self.size.iw+'px;margin:0 auto; overflow: hidden;"><div id="___thumbnails___" style="width:'+items * (self.size.im + self.size.iw) + self.size.im +'px;"></div></div>\
+							<a class="prev mini"></a><a class="next mini"></a>\
 					   </div>';
 		self.$preview = $(viewbox).appendTo('body');
 		var arr = [];
 		for(var i = 0, len = self.imgs.length; i < len; i++) {
-			var ml = i * self.size.im;
+			var img = self.imgs[i],
+				ml = i * self.size.im,
+				mark = self.getMark(img.auditResult);
 			if(ml > 0) ml = self.size.im;
-			arr.push('<img data-idx="'+i+'" style="cursor: pointer; width:'+self.size.iw+'px;height:'+self.size.iw+'px;margin-left:'+ml+'px;" src="'+self.imgs[i]+'" />');
+			arr.push('<div data-idx="'+i+'" style="cursor: pointer; position:relative; float:left; width:'+self.size.iw+'px;height:'+self.size.iw+'px;margin-left:'+ml+'px;"><img src="'+img.materialsPic+'" style="width:100%; height:100%;" />'+mark+'</div>');
 		}
 		self.$items = $(arr.join('')).appendTo(self.$preview.find('#___thumbnails___'));
 		self.$view = self.$preview.find('#___originImage___');
+		self.$prev = self.$preview.find('.prev');
+		self.$next = self.$preview.find('.next');
 	};
-
+	/**
+	* 构造工具条
+	*/
+	Preview.prototype.setToolbar = function() {
+		var self = this;
+		var toolbar = '<div style="position: absolute; left: 0; right:0; bottom:'+(self.size.iw + 20)+'px; background: #000; opacity: .7;height: 50px;"></div>\
+					   <div style="position: absolute; left:20px; right:20px; color:#fff; bottom:'+(self.size.iw+20)+'px;height:50px;">\
+					   		<span id="imgTitle" style="line-height:50px;font-weight:bold;">借款人身份证</span>\
+					   		<div class="transform-bar">\
+					   			<div class="zoom-bar" style="width:'+(self.runtime.vw - 370 > 270 ? 270 : 170)+'px;">\
+					   				<span class="zoom-title">缩放</span>\
+					   				<span class="zoom-track" style="width:'+(self.runtime.vw - 370 > 270 ? 200 : 100)+'px;"><span class="track-thumb"></span></span>\
+					   				<span class="zoom-scale">100%</span>\
+					   			</div>\
+					   			<a id="rotateImage">\
+						   			<span class="iconfont">&#xe609;</span>\
+						   			<span>旋转90°</span>\
+					   			</a>\
+					   		</div>\
+					   		<div style="position:absolute;right:0; cursor:pointer; height: 30px;top:10px; line-height:30px; width: 120px; padding: 0 8px; border:1px solid #fff; border-radius:3px;" id="markdown">\
+					   			<span id="remarkTitle">标记为...</span>\
+					   			<span style="position:absolute; right:8px; top:12px; border-width:5px; border-style:solid dashed dashed dashed;border-color:#fff transparent transparent transparent;"></span>\
+					   			<div id="markList" class="remark-list" style="display: none;">\
+					   				<a data-id="0">清除标记</a>\
+					   				<a data-id="1">图片上传错误</a>\
+					   				<a data-id="2">图片不清晰</a>\
+					   			</div>\
+					   		</div>\
+					   </div>';
+		self.$toolbar = {};
+		self.$toolbar.$root = $(toolbar).appendTo(self.$preview);
+		self.$toolbar.$title = self.$toolbar.$root.find('#imgTitle');
+		self.$toolbar.$mark = self.$toolbar.$root.find('#markdown');
+		self.$toolbar.$remarkTitle = self.$toolbar.$root.find('#remarkTitle');
+		self.$toolbar.$markList = self.$toolbar.$root.find('#markList');
+		self.$toolbar.$rotate = self.$toolbar.$root.find('#rotateImage');
+		self.$toolbar.$zoomTrack = self.$toolbar.$root.find('.zoom-track');
+		self.$toolbar.$zoomThumb = self.$toolbar.$zoomTrack.find('.track-thumb');
+		self.$toolbar.$zoomScale = self.$toolbar.$root.find('.zoom-scale');
+		if(!self.opts.markable) {
+			self.$toolbar.$mark.remove();
+		}
+	}
+	/**
+	* 设置关闭
+	*/
 	Preview.prototype.setClose = function() {
 		var self = this;
-		self.$close = $('<span style="position:absolute; right: -18px;top:-13px;display:block;text-align:center;line-height:20px;color:#fff;font-size:20px;cursor:pointer;">×</span>').appendTo(self.$preview)
+		self.$close = $('<span style="position:absolute; right: -25px;top:-3px;display:block;text-align:center;line-height:20px;color:#fff;font-size:24px;cursor:pointer;">×</span>').appendTo(self.$preview)
 	};
+	/**
+	* 获取对应的错误提示图片
+	*/
+	Preview.prototype.getMark = function(idx) {
+		var m = imgs[idx || 0];
+		if(m != "") {
+			m = "<div class='errHook'><div class='err-mask'></div>" + m + '</div>';
+		}
+		return m;
+	}
 	/**
 	* 事件监听
 	*/
 	Preview.prototype.listen = function() {
 		var self = this;
+		if(!self.$preview) return false;
 		self.$close.on('click', function() {
 			self.close();
 		})
 		self.$items.on('click', function() {
 			var idx = $(this).data('idx');
 			var img = self.imgs[idx];
-			self.$view.attr('src', img);
+			self.runtime.idx = idx;
+			self.$view.attr('src', img.materialsPic);
 		})
 		self.$prev.on('click', function() {
-
+			self.prev();
 		})
 		self.$next.on('click', function() {
+			self.next();
+		})
+		self.$toolbar.$mark.on('click', function() {
+			self.$toolbar.$markList.toggle();
+		})
+		self.$toolbar.$markList.find('a').on('click', function() {
+			var $that = $(this),
+				id = $that.data('id'),
+				img = self.imgs[self.runtime.idx];
+			if(id == img.mark) { return false; }
 			
+			function cb() {
+				img.mark = id;
+				var text = id == 0 ? '标记为...' : $that.html();
+				self.$items.eq(self.runtime.idx).find('.errHook').remove();
+				self.$items.eq(self.runtime.idx).append(self.getMark(img.mark));
+				self.$toolbar.$remarkTitle.html(text);
+				self.$toolbar.$markList.hide();
+			}
+			if(self.marker && typeof self.marker == "function") {
+				self.marker(img, id, cb);
+			} else { cb(); }
+			
+			return false;
 		})
 	};
 
 	Preview.prototype.next = function() {
-		
+		var self = this;
+		if(self.runtime.idx < self.imgs.length - 1) {
+			self.runtime.idx++;
+			var img = self.imgs[self.runtime.idx];
+			self.$view.attr('src', img.materialsPic);
+		}
 	};
 
 	Preview.prototype.prev = function() {
@@ -548,4 +653,8 @@
 		this.$preview.remove();
 		this.$mask.remove();
 	};
+
+	$.preview = function(imgCollections, marker, opt) {
+		new Preview(imgCollections, marker, opt);
+	}
 })(jQuery);

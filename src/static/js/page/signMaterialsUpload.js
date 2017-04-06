@@ -237,7 +237,7 @@ page.ctrl('signMaterialsUpload', function($scope) {
 						}
 						var reason = $.trim(this.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
-						tasksJump(params, 'complete');
+						flow.tasksJump(params, 'complete');
 					}
 				}
 			}

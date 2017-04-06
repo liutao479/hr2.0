@@ -1,12 +1,7 @@
 'use strict';
 page.ctrl('openCardSheet', function($scope) {
 	var $console = render.$console,
-		$params = $scope.$params,
-		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
-		};
+		$params = $scope.$params;
 	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
 
@@ -20,10 +15,11 @@ page.ctrl('openCardSheet', function($scope) {
 			data['taskId']=$params.taskId;
 		$.ajax({
 			type: 'post',
-			url: urlStr+'/icbcCreditCardForm/queryICBCCreditCardForm',
+			url: urlStr + '/icbcCreditCardForm/queryICBCCreditCardForm',
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
+				console.log(result);
 				$scope.result = result;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				setupLocation();
@@ -140,12 +136,11 @@ page.ctrl('openCardSheet', function($scope) {
 			console.log(data1);
 	        
 			$.ajax({
-				type: 'POST',
-				url: urlStr+'/icbcCreditCardForm/saveICBCCreditCardForm/'+$params.taskId,
-//					data:JSON.stringify(data1),
-				data:data1,
+				type: 'post',
+				url: urlStr+'/icbcCreditCardForm/saveICBCCreditCardForm/' + $params.taskId,
+				data: JSON.stringify(data1),
 				dataType:"json",
-//					contentType : 'application/json;charset=utf-8',
+				contentType : 'application/json;charset=utf-8',
 				success: function(result){
 					console.log("提交订单");
 					if(cb && typeof cb == 'function') {

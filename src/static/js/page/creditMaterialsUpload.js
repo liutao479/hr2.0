@@ -23,7 +23,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	var loadOrderInfo = function(_type, cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('creditMaterials/index'),
+			url: $http.api('creditMaterials/index', 'zjy'),
 			data: {
 				taskId: $params.taskId
 			},
@@ -451,7 +451,11 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					setupEvt(_tabTrigger);
 				}, true);
 			}
-			$scope.$el.$tabs.eq($scope.currentType).removeClass('role-item-active');
+			$scope.$el.$tabs.each(function() {
+				if($(this).data('type') == $scope.currentType) {
+					$(this).removeClass('role-item-active');
+				}
+			});
 			$this.addClass('role-item-active');
 			$scope.$el.$tbls.eq($scope.currentType).hide();
 			$scope.$el.$tbls.eq(_type).show();
@@ -544,7 +548,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		/**
 		 * 启动上传图片控件
 		 */
-		$self.find('.uploadEvt').imgUpload();
+		$self.find('.uploadEvt').imgUpload({
+			viewable: true
+		});
 
 		/**
 		 * 下拉框启动

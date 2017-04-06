@@ -4,32 +4,32 @@
 					<div class="search-item">
 						<span class="select-name">创建日期：</span>
 						<div class="input-text input-date-mini">
-							<input id="dateStart" type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="" />	
+							<input id="dateStart" type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" data-type="startDate" value="" />	
 						</div>
 						<span class="separator">-</span>
 						<div class="input-text input-date-mini">
-							<input id="dateEnd" type="text" class="dateBtn" data-min="dateStart" readonly="readonly" value="" />	
+							<input id="dateEnd" type="text" class="dateBtn" data-min="dateStart" readonly="readonly" data-type="endDate" value="" />	
 						</div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">业务来源方：</span>
-						<div class="select select-dept-source" data-dropdown="page.$scope['myCustomer'].bankPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.busiSource"></div>
+						<div class="select select-dept-source" data-placeholder="全部" data-dropdown="page.$scope['myCustomer'].busiSourcePicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.busiSource"></div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">车辆品牌：</span>
-						<div class="select select-car" data-tabs="品牌|车系|车型" id="dropDown" data-dropdown="page.$scope['myCustomer'].carPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.car"></div>
+						<div class="select select-car" data-placeholder="全部" data-tabs="品牌|车系|车型" id="dropDown" data-dropdown="page.$scope['myCustomer'].carPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.car"></div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">分公司：</span>
-						<div class="select select-common" data-dropdown="page.$scope['myCustomer'].bankPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.deptCompany"></div>
+						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['myCustomer'].deptCompanyPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.deptCompany"></div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">经办行：</span>
-						<div class="select select-common" data-dropdown="page.$scope['myCustomer'].bankPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.demandBank"></div>
+						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['myCustomer'].demandBankPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.demandBank"></div>
 					</div>
 					<div class="search-item">
 						<span class="select-name">当前进度：</span>
-						<div class="select select-common" data-dropdown="page.$scope['myCustomer'].bankPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.category"></div>
+						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['myCustomer'].categoryPicker" data-trigger="page.$scope['myCustomer'].dropdownTrigger.category"></div>
 					</div>
 					<div class="search-item">
 						<div class="input-text">
