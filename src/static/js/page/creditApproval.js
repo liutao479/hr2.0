@@ -143,11 +143,7 @@ page.ctrl('creditApproval', [], function($scope) {
 					setupEvt(_tabTrigger);
 				}, true);
 			}
-			$scope.$el.$tabs.each(function() {
-				if($(this).data('type') == $scope.currentType) {
-					$(this).removeClass('role-item-active');
-				}
-			});
+			$scope.$el.$tabs.removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.$el.$tbls.eq($scope.idx).hide();
 			$scope.$el.$tbls.eq(_type).show();

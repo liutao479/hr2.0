@@ -135,11 +135,18 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 						action: function () {
 							var _reason = $.trim(this.$content.find('#suggestion').val());
 							this.$content.find('.checkbox-radio').each(function() {
-								if($(this).hasClass('checked') && $(this).parent().find('.checkbox-normal').hasClass('checked')) {
-									$scope.jumpId = $(this).data('id');
+								if($(this).hasClass('checked')) {
+									var flag = 0;
+									$(this).parent().parent().find('.checkbox-normal').each(function() {
+										if($(this).hasClass('checked')) {
+											flag++;
+										}
+									})
+									if(flag > 0) {
+										$scope.jumpId = $(this).data('id');
+									}
 								}
 							})
-
 							if(!_reason) {
 								$.alert({
 									title: '提示',
@@ -175,18 +182,17 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 								reason: _reason
 							}
 							console.log(_params)
-							// debugger
-							// $.ajax({
-							// 	type: 'post',
-							// 	url: $http.api('task/jump', 'zyj'),
-							// 	data: _params,
-							// 	dataType: 'json',
-							// 	success: $http.ok(function(result) {
-							// 		console.log(result);
-							// 		router.render('loanProcess');
-							// 		// toast.hide();
-							// 	})
-							// })
+							$.ajax({
+								type: 'post',
+								url: $http.api('task/jump', 'zyj'),
+								data: _params,
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									router.render('loanProcess');
+									// toast.hide();
+								})
+							})
 						}
 					}
 				}
@@ -334,11 +340,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 					setupEvt(_tabTrigger, _type);
 				}, true);
 			}
-			$scope.$el.$tabs.each(function() {
-				if($(this).data('type') == $scope.currentType) {
-					$(this).removeClass('role-item-active');
-				}
-			});
+			$scope.$el.$tabs.removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.$el.$tbls.eq($scope.currentType).hide();
 			$scope.$el.$tbls.eq(_type).show();
