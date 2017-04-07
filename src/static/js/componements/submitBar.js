@@ -67,9 +67,14 @@
 		}
 		for(var i = 0, len = data.length; i < len; i++) {
 			var r = data[i];
-			var btn = buttons[r.funcId];
-			btn.funcId = r.funcId;
-			btn.text = r.funcName;
+			if(!buttons[r.funcId]) {
+				continue;
+			} else {
+				var btn = buttons[r.funcId];
+				btn.funcId = r.funcId;
+				btn.text = r.funcName;
+			}
+			
 		}
 		var tf = _.template(tpl);
 		self.$submitBar = $(tf(buttons)).appendTo(self.$el);

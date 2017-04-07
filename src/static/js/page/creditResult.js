@@ -63,8 +63,17 @@ page.ctrl('creditResult', function($scope) {
 	/**
 	* 绑定立即处理事件
 	*/
-	var setupEvt = function($el) {
-		$console.find('.uploadEvt').imgUpload();
+	var setupEvt = function() {
+		//查看征信材料
+		$console.find('.view-creditMaterials').on('click', function() {
+			var that = $(this);
+			var imgs = $scope.result.data.creditUsers[that.data('type')][that.data('idx')].creditMaterials;
+			$.preview(imgs, function(img, mark, cb) {
+				cb();	
+			}, {
+				markable: false
+			});
+		});
 	}
 
 	/**

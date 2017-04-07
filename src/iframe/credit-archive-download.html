@@ -74,19 +74,19 @@
 								<table class="table-inner">
 									<tr>
 										<td>
-											<a href="javascript:;" class="download-trigger pdf-d">
+											<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + row.userId +'&downLoadType=1', true)}}" class="download-trigger pdf-d">
 												<i class="iconfont">&#xe624;</i><br>
 												<span class="download-text">PDF下载</span>	
 											</a>
 										</td>
 										<td>
-											<a href="javascript:;" class="download-trigger word-d">
+											<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + row.userId +'&downLoadType=2', true)}}" class="download-trigger word-d">
 												<i class="iconfont">&#xe64c;</i><br>
 												<span class="download-text">WORD下载</span>
 											</a>
 										</td>
 										<td>
-											<a href="javascript:;" class="download-trigger zip-d">
+											<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + row.userId +'&downLoadType=3', true)}}" class="download-trigger zip-d">
 												<i class="iconfont">&#xe675;</i><br>
 												<span class="download-text">ZIP下载</span>
 											</a>

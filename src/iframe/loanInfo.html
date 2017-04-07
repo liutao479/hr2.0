@@ -160,10 +160,10 @@
 														{{ }else if(detailCode == 'busiAreaCode' || detailCode == 'onLicensePlace'){ }}
 															<td>
 																{{ if(row[detailCode] || row[detailCode] == '0'){ }}
-																	<div class="select select-common" data-selected="{{= row[detailCode]}}" data-tabs="省|市|区县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+																	<div class="select select-common" data-selected="{{= row[detailCode]}}" data-tabs="省|市|区/县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
 																	<input type="hidden" name="{{= detailCode}}" value="{{= row[detailCode]}}" />
 																{{ }else{ }}
-																	<div class="select select-common" data-tabs="省|市|区县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+																	<div class="select select-common" data-tabs="省|市|区/县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
 																	<input type="hidden" name="{{= detailCode}}" />
 																{{ } }}
 															</td>
@@ -430,10 +430,10 @@
 														{{ }else if(detailCode == 'busiAreaCode' || detailCode == 'onLicensePlace'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																	<div class="select select-common" data-selected="{{= it.data[fieldCode][detailCode]}}" data-tabs="省|市|区县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+																	<div class="select select-common" data-selected="{{= it.data[fieldCode][detailCode]}}" data-tabs="省|市|区/县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
 																	<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																{{ }else{ }}
-																	<div class="select select-common" data-tabs="省|市|区县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+																	<div class="select select-common" data-tabs="省|市|区/县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
 																	<input type="hidden" name="{{= detailCode}}" />
 																{{ } }}
 															</td>
@@ -745,10 +745,10 @@
 														{{ }else if(detailCode == 'busiAreaCode' || detailCode == 'onLicensePlaceCode'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																	<div class="select select-common" data-selected="{{= it.data[fieldCode][detailCode]}}" data-tabs="省|市|区县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+																	<div class="select select-common" data-selected="{{= it.data[fieldCode][detailCode]}}" data-tabs="省|市|区/县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
 																	<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																{{ }else{ }}
-																	<div class="select select-common" data-tabs="省|市|区县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+																	<div class="select select-common" data-tabs="省|市|区/县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
 																	<input type="hidden" name="{{= detailCode}}" />
 																{{ } }}
 															</td>

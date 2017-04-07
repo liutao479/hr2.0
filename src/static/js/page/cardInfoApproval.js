@@ -345,12 +345,13 @@ page.ctrl('cardInfoApproval', function($scope) {
 		loadLoanList(function(){
 			console.log('执行');
 			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
-			evt();
-			setupSubmitBar();
+			if(!$params.refer) {
+				evt();
+				setupSubmitBar();
+			}
 			setupDropDown();
 			cannotClick();
 			$console.find('.uploadEvt').imgUpload();
-
 		});
 		
 	});

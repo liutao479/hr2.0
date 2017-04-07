@@ -4,7 +4,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 		$params = $scope.$params,
 		apiParams = {
 			queryType: 2,  //贷款资料下载
-			pageNum: $params.pageNum || 1
+			pageNum: 1
 		};
 	/**
 	* 加载贷款资料数据
@@ -13,7 +13,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	*/
 	var loadArchiveDownloadList = function(params, cb) {
 		$.ajax({
-			url: $http.api('creditUser/getCreditMaterials1'),
+			url: $http.api('creditUser/getCreditMaterials', 'zyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',

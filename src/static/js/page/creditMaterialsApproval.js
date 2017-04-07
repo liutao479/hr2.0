@@ -136,10 +136,17 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 							var _reason = $.trim(this.$content.find('#suggestion').val());
 							this.$content.find('.checkbox-radio').each(function() {
 								if($(this).hasClass('checked')) {
-									$scope.jumpId = $(this).data('id');
+									var flag = 0;
+									$(this).parent().parent().find('.checkbox-normal').each(function() {
+										if($(this).hasClass('checked')) {
+											flag++;
+										}
+									})
+									if(flag > 0) {
+										$scope.jumpId = $(this).data('id');
+									}
 								}
 							})
-
 							if(!_reason) {
 								$.alert({
 									title: '提示',
@@ -154,6 +161,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 								});
 								return false;
 							} 
+							console.log($scope.jumpId)
 							if(!$scope.jumpId) {
 								$.alert({
 									title: '提示',
@@ -332,11 +340,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 					setupEvt(_tabTrigger, _type);
 				}, true);
 			}
-			$scope.$el.$tabs.each(function() {
-				if($(this).data('type') == $scope.currentType) {
-					$(this).removeClass('role-item-active');
-				}
-			});
+			$scope.$el.$tabs.removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.$el.$tbls.eq($scope.currentType).hide();
 			$scope.$el.$tbls.eq(_type).show();
@@ -365,7 +369,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 						data: {
 							id: img.id,
 							auditResult: mark,
-							auditOpinion: '测试原因原因原因。屁原因啊啊啊啊啊啊。玩蛇？？？！！ldf'
+							auditOpinion: '原因原因原因。屁原因啊啊啊啊啊啊。？？？！！ldf'
 						},
 						dataType: 'json',
 						success: $http.ok(function(result) {

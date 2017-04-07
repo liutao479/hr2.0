@@ -203,11 +203,7 @@ page.ctrl('creditInput', [], function($scope) {
 					setupEvt(_tabTrigger);
 				}, true);
 			}
-			$scope.$el.$tabs.each(function() {
-				if($(this).data('type') == $scope.currentType) {
-					$(this).removeClass('role-item-active');
-				}
-			});
+			$scope.$el.$tabs.removeClass('role-item-active');
 			$this.addClass('role-item-active');
 			$scope.$el.$tbls.eq($scope.idx).hide();
 			$scope.$el.$tbls.eq(_type).show();
@@ -254,9 +250,7 @@ page.ctrl('creditInput', [], function($scope) {
 	*/
 	var setupEvt = function($el) {
 		//查看征信材料
-		$el.find('.view-creditMaterials').on('click', function() {
-			alert('还未做该功能，暂时不测！谢谢！ T.T');
-		});
+		// $el.find('.download-creditMaterials').attr('href', $http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' +  +'&downLoadType=' + , true));
 		// 上传pdf文件
 		$el.find('.pdfUpload').on('change', function() {
 			var tml = '<div class="input-text">\
@@ -360,7 +354,7 @@ page.ctrl('creditInput', [], function($scope) {
 		// });
 
 		// 备注框实时监听事件
-		var maxLen = 400;
+		var maxLen = 1000;
 		$el.find('.remark').next().text('还可输入' + (maxLen - $el.find('.remark').val().length) + '/' + maxLen + '字');
 		$el.find('.remark').on('input', function() {
 			var that = $(this),

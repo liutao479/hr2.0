@@ -191,15 +191,19 @@ page.ctrl('loanInfo', function($scope) {
 			}
 			$("input[name='residentType']").val(renewalStr);
 	    })
+
+
 	    /***
 		* 保存按钮
 		*/
 		$console.find('.saveBtn').on('click', function() {
+			// debugger
 			var isTure = true;
 			var btnType = $(this).data('type');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 			requireList.each(function(){
 				var value = $(this).val();
+				console.log(value)
 				if(!value){
 					if(!$(this).parent().hasClass('info-value')){
 						$(this).siblings('.select').addClass("error-input");
@@ -309,9 +313,13 @@ page.ctrl('loanInfo', function($scope) {
 	var loanFinishedGps = function(){
 		var gps = $("input[name='isInstallGps']").val();
 		if(gps != 1){
+			$("input[name='gpsNumber1']").removeClass('required');
+			$("input[name='gpsNumber2']").removeClass('required');
 			$("input[name='gpsNumber1']").parents(".info-key-value-box").hide();
 			$("input[name='gpsNumber2']").parents(".info-key-value-box").hide();
 		}else{
+			$("input[name='gpsNumber1']").addClass('required');
+			$("input[name='gpsNumber2']").addClass('required');
 			$("input[name='gpsNumber1']").parents(".info-key-value-box").show();
 			$("input[name='gpsNumber2']").parents(".info-key-value-box").show();
 		}
@@ -426,10 +434,17 @@ page.ctrl('loanInfo', function($scope) {
 							var _reason = $.trim(this.$content.find('#suggestion').val());
 							this.$content.find('.checkbox-radio').each(function() {
 								if($(this).hasClass('checked')) {
-									$scope.jumpId = $(this).data('id');
+									var flag = 0;
+									$(this).parent().parent().find('.checkbox-normal').each(function() {
+										if($(this).hasClass('checked')) {
+											flag++;
+										}
+									})
+									if(flag > 0) {
+										$scope.jumpId = $(this).data('id');
+									}
 								}
 							})
-
 							if(!_reason) {
 								$.alert({
 									title: '提示',
@@ -506,11 +521,11 @@ page.ctrl('loanInfo', function($scope) {
 					text: '确定',
 					action: function () {
 						var that = this;
-        				$.ajax({
-							type: 'post',
-							url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
-							dataType: 'json',
-							success: $http.ok(function(xhr) {
+       //  				$.ajax({
+							// type: 'post',
+							// url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
+							// dataType: 'json',
+							// success: $http.ok(function(xhr) {
 								var taskIds = [];
 								for(var i = 0, len = $params.tasks.length; i < len; i++) {
 									taskIds.push(parseInt($params.tasks[i].id));
@@ -524,9 +539,8 @@ page.ctrl('loanInfo', function($scope) {
 								if(reason) params.reason = reason;
 								console.log(params);
 								flow.tasksJump(params, 'complete');
-							})
-						})
-						
+							// })
+						// })
 					}
 				}
 			}
@@ -561,8 +575,6 @@ page.ctrl('loanInfo', function($scope) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
-
-				// if()
 			});
 		})
 
@@ -779,7 +791,7 @@ page.ctrl('loanInfo', function($scope) {
 				case "市":
 					areaSel.city(parentId, cb);
 					break;
-				case "区":
+				case "区/县":
 					areaSel.country(parentId, cb);
 					break;
 				default:
