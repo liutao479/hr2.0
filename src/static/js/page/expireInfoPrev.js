@@ -1,9 +1,10 @@
 'use strict';
 page.ctrl('expireInfoPrev', [], function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
-			pageNum: $params.pageNum || 1
+			pageNum: $params.pageNum || 1,
+			process: $params.process || ''
 		};
 	/**
 	 *逾期导入查看详情 
@@ -11,13 +12,13 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var pageData={};
-	pageData['importId']=80;
-	pageData['status']=0;
 
 	var loadExpireProcessList = function(params, cb) {
+		var pageData={};
+			pageData['importId']=$params.importId;
+			pageData['status']=0;
 		$.ajax({
-			url: 'http://192.168.0.113:8888/loanOverdueImport/queryImportDetails',
+			url: urlStr + '/loanOverdueImport/queryImportDetails',
 			data: pageData,
 			type: 'post',
 			dataType: 'json',
@@ -92,11 +93,11 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 		var dataP={};
 			dataP['importId']=importId;
 		if(!$(this).attr('checked')) {
-			$(this).addClass('checked').attr('checked',true);
-			$(this).html('<i class="iconfont">&#xe659;</i>');
-        	$("#list .checkbox").each(function(){
-				$(this).addClass('checked').attr('checked',true);
-				$(this).html('<i class="iconfont">&#xe659;</i>');
+	   		$(this).addClass('checked').attr('checked',true);
+	   		$(this).html('<i class="iconfont">&#xe659;</i>');
+        	$("#list .checkbox-normal").each(function(){
+		   		$(this).addClass('checked').attr('checked',true);
+		   		$(this).html('<i class="iconfont">&#xe659;</i>');
         	})
 			dataP['isFoundTask']=1;
 			$.ajax({
@@ -111,9 +112,9 @@ page.ctrl('expireInfoPrev', [], function($scope) {
     	}else{   
 			$(this).removeClass('checked').attr('checked', false);
 			$(this).html();
-        	$("#list .checkbox").each(function(){
-				$(this).removeClass('checked').attr('checked', false);
-				$(this).html();
+        	$("#list .checkbox-normal").each(function(){
+	   			$(this).removeClass('checked').attr('checked',false);
+	   			$(this).html();
         	})
 			dataP['isFoundTask']=0;
 			$.ajax({
@@ -136,15 +137,61 @@ page.ctrl('expireInfoPrev', [], function($scope) {
         });
 		var vals = valArr.join(',');
       	console.log(vals);
-		$.ajax({
-			url: $http.api('loanOverdueImport/prepareConfirmed','wl'),
-			data: dataP,
-			type: 'post',
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				console.log(result.msg)
+      	var dataP={};
+      		dataP['importId'] = $params.importId;
+      	if(vals){
+			$.ajax({
+				url: $http.api('loanOverdueImport/prepareConfirmed','wl'),
+				data: dataP,
+				type: 'post',
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					$.confirm({
+						title: '您将要进行如下操作',
+						content: '<div class="w-content"><div>(1)更新客户逾期记录'+result.data.replaceCount+'条</div><div>(2)结清客户逾期记录'+result.data.settleCount+'条</div><div>(3)导入客户逾期记录'+result.data.importCount+'条</div></div>',
+						buttons: {
+							close: {
+								text: '取消',
+								btnClass: 'btn-default btn-cancel',
+								action: function() {}
+							},
+							ok: {
+								text: '确定',
+								action: function () {
+			        				$.ajax({
+										type: 'post',
+										url: urlStr+'/loanOverdueImport/confirmImportRecord',
+//										data:{
+//											'importId': $params.importId;
+//										},
+										dataType: 'json',
+										success: $http.ok(function(xhr) {
+											console.log('成功保存');
+										})
+									})
+								}
+							}
+						}
+					})
+				})
 			})
-		})
+      	}else{
+			$.alert({
+				title: '提示',
+				content: '<div class="w-content"><div>请勾选相应项目！</div></div>',
+				useBootstrap: false,
+				boxWidth: '500px',
+				theme: 'light',
+				type: 'purple',
+				buttons: {
+					'确定': {
+			            action: function () {
+			            }
+			        }
+			    }
+			})
+			return false;
+      	}
     });
 	$(document).on('click', '#list .checkbox', function() {
 		var detailId = $(this).data('id');
@@ -246,7 +293,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 		if($params.process) {
 			
 		}
-		loadExpireProcessList(apiParams);
+		loadExpireProcessList();
 	});
 
 	$scope.paging = function(_pageNum, _size, $el, cb) {

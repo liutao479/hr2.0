@@ -1019,45 +1019,7 @@ input[disabled]{
                 float: left;
             }
         }
-        .import-result-box {
-            .import-dl {
-                margin: 57px auto;
-                width: 390px;
-                .import-icon-box {
-                    float: left;
-                    .import-icon {
-                        margin-top: 10px;
-                        width: 50px;
-                        height: 50px;
-                        line-height: 50px;
-                        text-align: center;
-                        .borderRadius(25px);
-                        background-color: @successColor;
-                        color: #FFF;
-                        .iconfont {
-                            font-size: 30px !important;
-                            font-weight: 600;
-                        }
-                    }
-                }
-                .import-msg-box {
-                    float: left;
-                    margin-left: 22px;
-                    .import-result {
-                        line-height: 32px;
-                        color: @successColor;
-                        font-size: 20px;
-                    }
-                    .import-text {
-                        line-height: 40px;
-                    }
-                    .import-preview {
-                        margin-top: 23px;
-                        
-                    }
-                }
-            }
-        }
+
 
         // 征信结果录入以及征信结果
         .panel-item-box {
@@ -1279,7 +1241,45 @@ input[disabled]{
             }
         }
     }
-
+    .import-result-box {
+        .import-dl {
+            margin: 57px auto;
+            width: 390px;
+            .import-icon-box {
+                float: left;
+                .import-icon {
+                    margin-top: 10px;
+                    width: 50px;
+                    height: 50px;
+                    line-height: 50px;
+                    text-align: center;
+                    .borderRadius(25px);
+                    background-color: @successColor;
+                    color: #FFF;
+                    .iconfont {
+                        font-size: 30px !important;
+                        font-weight: 600;
+                    }
+                }
+            }
+            .import-msg-box {
+                float: left;
+                margin-left: 22px;
+                .import-result {
+                    line-height: 32px;
+                    color: @successColor;
+                    font-size: 20px;
+                }
+                .import-text {
+                    line-height: 40px;
+                }
+                .import-preview {
+                    margin-top: 23px;
+                    
+                }
+            }
+        }
+    }
     // 导入流程
     .import-process-box {
         background-color: #f3f4f9;
@@ -2492,3 +2492,11 @@ input[disabled]{
     }
 }
 .jconfirm .jconfirm-box div.jconfirm-content-pane { margin: 20px 0;}
+.fileName{
+    display: none;
+    line-height: 50px;
+    border: 1px solid red;
+    margin: 10px 0;
+    padding: 0 10px;
+    border-radius: 6px; 
+}

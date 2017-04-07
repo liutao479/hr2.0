@@ -77,15 +77,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">卡号：</td>
-											<td class="value">{{= item.cardNumber}}</td>
+											<td class="value">{{= item.cardNumber ? item.cardNumber : ''}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">卡余额：</td>
-											<td class="value">{{= item.cardBalance}}元</td>
+											<td class="value">{{= item.cardBalance ? item.cardBalance : ''}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">账单日：</td>
-											<td class="value">{{= item.statementDate}}</td>
+											<td class="value">{{= item.statementDate ? item.statementDate : ''}}</td>
 										</tr>
 									</table>
 								</td>
@@ -93,15 +93,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">当前逾期金额：</td>
-											<td class="value">{{= item.overdueAmount}}元</td>
+											<td class="value">{{= item.overdueAmount ? item.overdueAmount : ''}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">当前连续违约次数：</td>
-											<td class="value">{{= item.currentDefaultNum}}次</td>
+											<td class="value">{{= item.currentDefaultNum ? item.currentDefaultNum : ''}}次</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">历史累计违约次数：</td>
-											<td class="value">{{= item.cumulativeDefaultNum}}次</td>
+											<td class="value">{{= item.cumulativeDefaultNum ? item.cumulativeDefaultNum : ''}}次</td>
 										</tr>
 									</table>
 								</td>
@@ -109,7 +109,7 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">分期金额：</td>
-											<td class="value">{{= item.stageMoney}}</td>
+											<td class="value">{{= item.stageMoney ? item.stageMoney : ''}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">备注：</td>
@@ -146,15 +146,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">卡号：</td>
-											<td class="value">{{= item.cardNumber}}</td>
+											<td class="value">{{= item.cardNumber ? item.cardNumber : ''}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">卡余额：</td>
-											<td class="value">{{= item.cardBalance}}元</td>
+											<td class="value">{{= item.cardBalance ? item.cardBalance : ''}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">账单日：</td>
-											<td class="value">{{= item.statementDate}}</td>
+											<td class="value">{{= item.statementDate ? item.statementDate : ''}}</td>
 										</tr>
 									</table>
 								</td>
@@ -162,15 +162,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">当前逾期金额：</td>
-											<td class="value">{{= item.overdueAmount}}元</td>
+											<td class="value">{{= item.overdueAmount ? item.overdueAmount : ''}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">当前连续违约次数：</td>
-											<td class="value">{{= item.currentDefaultNum}}次</td>
+											<td class="value">{{= item.currentDefaultNum ? item.currentDefaultNum : ''}}次</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">历史累计违约次数：</td>
-											<td class="value">{{= item.cumulativeDefaultNum}}次</td>
+											<td class="value">{{= item.cumulativeDefaultNum ? item.cumulativeDefaultNum : ''}}次</td>
 										</tr>
 									</table>
 								</td>
@@ -178,16 +178,13 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">分期金额：</td>
-											<td class="value">{{= item.stageMoney}}</td>
+											<td class="value">{{= item.stageMoney ? item.stageMoney : ''}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">备注：</td>
-											<td class="value special-word">找到多条订单</td>
+											<td class="value special-word">未在系统中找到订单</td>
 										</tr>
 									</table>
-								</td>
-								<td class="expire-content-item expire-content-item-last">
-									<div id="submitOrders" class="button button-mini selOrderDetail" data-id = "{{= item.overdueImportId}}">选择订单</div>
 								</td>
 							</tr>
 						</tbody>
@@ -218,15 +215,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">卡号：</td>
-											<td class="value">{{= item.cardNumber}}</td>
+											<td class="value">{{= item.cardNumber ? item.cardNumber : ''}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">卡余额：</td>
-											<td class="value">{{= item.cardBalance}}元</td>
+											<td class="value">{{= item.cardBalance ? item.cardBalance : ''}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">账单日：</td>
-											<td class="value">{{= item.statementDate}}</td>
+											<td class="value">{{= item.statementDate ? item.statementDate : ''}}</td>
 										</tr>
 									</table>
 								</td>
@@ -234,15 +231,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">当前逾期金额：</td>
-											<td class="value">{{= item.overdueAmount}}元</td>
+											<td class="value">{{= item.overdueAmount ? item.overdueAmount : ''}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">当前连续违约次数：</td>
-											<td class="value">{{= item.currentDefaultNum}}次</td>
+											<td class="value">{{= item.currentDefaultNum ? item.currentDefaultNum : ''}}次</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">历史累计违约次数：</td>
-											<td class="value">{{= item.cumulativeDefaultNum}}次</td>
+											<td class="value">{{= item.cumulativeDefaultNum ? item.cumulativeDefaultNum : ''}}次</td>
 										</tr>
 									</table>
 								</td>
@@ -250,16 +247,13 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">分期金额：</td>
-											<td class="value">{{= item.stageMoney}}</td>
+											<td class="value">{{= item.stageMoney ? item.stageMoney : ''}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">备注：</td>
-											<td class="value special-word">匹配成功</td>
+											<td class="value special-word">未在系统中找到订单</td>
 										</tr>
 									</table>
-								</td>
-								<td class="expire-content-item expire-content-item-last">
-									<div class="match-status">匹配成功</div>
 								</td>
 							</tr>
 						</tbody>
@@ -289,15 +283,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">卡号：</td>
-											<td class="value">{{= item.cardNumber}}</td>
+											<td class="value">{{= item.cardNumber ? item.cardNumber : ''}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">卡余额：</td>
-											<td class="value">{{= item.cardBalance}}元</td>
+											<td class="value">{{= item.cardBalance ? item.cardBalance : ''}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">账单日：</td>
-											<td class="value">{{= item.statementDate}}</td>
+											<td class="value">{{= item.statementDate ? item.statementDate : ''}}</td>
 										</tr>
 									</table>
 								</td>
@@ -305,15 +299,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">当前逾期金额：</td>
-											<td class="value">{{= item.overdueAmount}}元</td>
+											<td class="value">{{= item.overdueAmount ? item.overdueAmount : ''}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">当前连续违约次数：</td>
-											<td class="value">{{= item.currentDefaultNum}}次</td>
+											<td class="value">{{= item.currentDefaultNum ? item.currentDefaultNum : ''}}次</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">历史累计违约次数：</td>
-											<td class="value">{{= item.cumulativeDefaultNum}}次</td>
+											<td class="value">{{= item.cumulativeDefaultNum ? item.cumulativeDefaultNum : ''}}次</td>
 										</tr>
 									</table>
 								</td>
@@ -321,16 +315,13 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">分期金额：</td>
-											<td class="value">{{= item.stageMoney}}</td>
+											<td class="value">{{= item.stageMoney ? item.stageMoney : ''}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">备注：</td>
-											<td class="value special-word">逾期将结清</td>
+											<td class="value special-word">未在系统中找到订单</td>
 										</tr>
 									</table>
-								</td>
-								<td class="expire-content-item expire-content-item-last">
-									<div class="match-status">匹配成功</div>
 								</td>
 							</tr>
 						</tbody>

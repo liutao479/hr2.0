@@ -1,10 +1,7 @@
 'use strict';
 page.ctrl('expireInfoInput', [], function($scope) {
 	var $params = $scope.$params,
-		$console = $params.refer ? $($params.refer) : render.$console,
-		$source = $scope.$source = {},
-		apiParams = {};
-	var urlStr = "http://192.168.1.92:8080";
+		$console = $params.refer ? $($params.refer) : render.$console;
 	/**
 	* 加载逾期信息录入数据
 	* @params {object} params 请求参数
@@ -26,80 +23,56 @@ page.ctrl('expireInfoInput', [], function($scope) {
 		})
 	}
 	var setupEvt = function($el) {
-		$console.find('.itemEvt').on('click', function() {
-			debugger
-			if(changePhd){
-				$(".select-text").attr('placeholder','123');
-			}
+		
+		$console.find('#single').on('click', function() {
+			router.render('expire/expireInfoSingle');
 	    })
+		$console.find('#reUpd').on('click', function() {
+			$("#content").show();
+			$("#importResultTable").empty();
+	    })
+		$console.find('#pathExp').on('click', function() {
+			debugger
+			var importId = $(this).data('type');
+			router.render('expire/expireInfoPrev', {
+				importId: importId, 
+				path: 'expire'
+			});
+	    })
+		
+		
 		//下载模板
 		$console.find('#modelDownload').on('click', function() {
 	 		window.open(urlStr+'/loanOverdueImport/downExcel','_self')
 	    })
 		//模板上传
 		$console.find('#fileData').on('change', function() {
-	 		ajaxFileUpload();
+			var file = this.files[0];
+			var fd = new FormData();
+			fd.append('fileData', file);
+			fd.append('demandBankId', $('#demandBankId').val());
+			$.ajax({
+				url: urlStr + '/loanOverdueImport/uploadOverdue',
+				type: 'post',
+				data:fd,
+				processData: false,
+				dataType: 'json',
+				contentType: false,
+				success: function() {
+					$("#content").hide();
+					render.compile($console.find('#importResultTable'), $console.find('#importResultTmpl').html(), arguments[0].data, true);
+					setupEvt();
+				},
+				error: function() {
+					$("#content").hide();
+					render.compile($console.find('#importResultTable'), $console.find('#importErrorTmpl').html(), arguments, true);
+				}
+			})
+			
 	    })
 	}	
-	/**
-	* 并行任务切换触发事件
-	* @params {int} idx 触发的tab下标
-	* @params {object} item 触发的tab对象
-	*/
-	var tabChange = function (idx, item) {
-		console.log(item);
-		router.render('loanProcess/' + item.key, {
-			tasks: $scope.tasks,
-			taskId: $scope.tasks[idx].id,
-			orderNo: $params.orderNo,
-			selected: idx,
-			path: 'loanProcess'
-		});
-	}
-	/**
-	* 下载模板
-	*/
-//	 $(document).on('click', '#modelDownload', function() {
-//	 	window.open(urlStr+'loanOverdueImport/downExcel','_self')
-//	 });
-	 
-	/**
-	* 模板上传
-	*/
-//	$(document).on('change', '#fileData', function() {
-//      ajaxFileUpload();
-//  })
-	
-    function ajaxFileUpload() {
-		$.ajaxFileUpload({
-		    url: urlStr+'/loanOverdueImport/uploadOverdue',
-		    secureuri: false,
-		    fileElementId: 'fileData',
-		    dataType: 'json',
-//		    complete: function() {
-//		    	console.log('执行了complete');
-//		    },
-		    success: function(data, status){
-//		        if (typeof(data.msg) != 'undefined') {
-//		            if (data.msg != '') {
-//		                alert(data.msg);
-//		                return;
-//		            } else {
-//		                console.log(data);
-//		            }
-//		        }else{
-//		        	console.log(data);
-//		        };
-		        console.log(data);
-		    },
-		    error: function(data, status, e){
-		        console.log(data+','+status);
-		    }
-		})	
-    }
     
 	$scope.bankPicker = function(picked) {
-		console.log(picked);
 		var demandBankId = $("#demandBankId").val();
 		if(demandBankId){
 			$("#bankCnName").text(picked.accountName + '-' + picked.name);
@@ -135,12 +108,11 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	* 加载页面模板
 	*/
 	$console.load(router.template('iframe/expire-info-input'), function() {
-		$scope.def.listTmpl = render.$console.find('#expireInputTmpl').html();
-//		$scope.def.iRTTmpl = render.$console.find('#importResultTmpl').html();
+		$scope.def = {
+			listTmpl : render.$console.find('#expireInputTmpl').html()
+		};	
 		$scope.$el = {
 			$tbl: $console.find('#expireInputPanel')
-//			,
-//			$iRTtbl: $console.find('#importResultTable')
 		}
 		loadExpireProcessList(function(){
 			setupDropDown();
