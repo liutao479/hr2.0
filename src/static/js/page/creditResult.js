@@ -2,22 +2,30 @@
 page.ctrl('creditResult', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
+	$params.orderNo = 'nfdb20170407100357095';
 	/**
 	* 加载征信预审核数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
 	var loadOrderInfo = function(cb) {
-		var params = {
-			taskId: $params.taskId
+		var data = {},
+			url = 'creditUser/getCreditInfo';
+		if($params.taskId) {
+			data.taskId = $params.taskId;
 		}
 		if($params.refer) {
-			params.frameCode = $params.code;
+			data.frameCode = $params.code;	
+		}
+		if($params.type) {
+			data.type = $params.type;
+			data.orderNo = $params.orderNo;	
+			url = 'creditUser/creditInfoByOrderNo';
 		}
 		$.ajax({
 			type: 'post',
-			url: $http.api('creditUser/getCreditInfo', 'jbs'),
-			data: params,
+			url: $http.api(url, 'jbs'),
+			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);

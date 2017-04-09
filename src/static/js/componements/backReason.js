@@ -25,13 +25,13 @@
 					<div class="back-credit">\
 						<div class="key-value-box">\
 							<span class="key">退回人员：</span>\
-							<span class="value">{{=it.backUser}}</span>\
-							<span class="value">{{=it.backUserPhone}}</span>\
-							<span class="value float-right">{{=it.backDate}}</span>\
+							<span class="value">{{=it.backUser || \"\"}}</span>\
+							<span class="value">{{=it.backUserPhone || \"\"}}</span>\
+							<span class="value float-right">{{=it.backDate || \"\"}}</span>\
 						</div>\
 						<div class="key-value-box">\
 							<span class="key">退回原因：</span>\
-							<span class="value">{{=it.backReason}}</span>\
+							<span class="value">{{=it.backReason || \"\"}}</span>\
 						</div>\
 					</div>\
 				</div>';

@@ -62,44 +62,7 @@ page.ctrl('orderModifyAudit', [], function($scope) {
 	 * 绑定立即处理事件
 	 */
 	var setupEvt = function() {
-		// 绑定搜索框模糊查询事件
-		$console.find('#searchInput').on('keydown', function() {
-			if(evt.which == 13) {
-				var that = $(this),
-					searchText = $.trim(that.val());
-				if(!searchText) {
-					return false;
-				}
-				apiParams.keyWord = searchText;
-				$params.keyWord = searchText;
-				apiParams.pageNum = 1;
-				$params.pageNum = 1;
-				console.log(apiParams)
-				loadOrderModifyList(apiParams, function() {
-					delete apiParams.keyWord;
-					delete $params.keyWord;
-					that.blur();
-				});
-				// router.updateQuery($scope.$path, $params);
-			}
-		});
 
-		//绑定搜索按钮事件
-		$console.find('#search').on('click', function() {
-			loadOrderModifyList(apiParams);
-			// router.updateQuery($scope.$path, $params);
-			
-		});
-
-		//绑定重置按钮事件
-		$console.find('#search-reset').on('click', function() {
-			// 下拉框数据以及输入框数据重置
-			// router.updateQuery($scope.$path, $params);
-			
-		});
-
-		
-		
 		// 订单列表的排序
 		$console.find('#time-sort').on('click', function() {
 			var that = $(this);

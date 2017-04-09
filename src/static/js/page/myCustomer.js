@@ -5,8 +5,8 @@ page.ctrl('myCustomer', [], function($scope) {
 		endDate = tool.formatDate(new Date().getTime()),
 		startDate = tool.getPreMonth(endDate),
 		apiParams = {
-			startDate: new Date(startDate),       //查询结束日期
-			endDate: new Date(endDate),         //查询结束日期
+			// startDate: new Date(startDate),       //查询结束日期
+			// endDate: new Date(endDate),         //查询结束日期
 			pageNum: 1
 		};
 
@@ -87,58 +87,82 @@ page.ctrl('myCustomer', [], function($scope) {
 	/**
 	* 放款预约弹窗信息取得
 	*/
-	var makeLoan = function(that) {
+	var makeLoan = function(orderNo) {
 		$.ajax({
 			type: "post",
 			url: $http.api('financePayment/get', 'cyj'),
 			data:{
-				orderNo: that.data('orderNo')
-				// orderNo: 'nfdb2015091812345678'
+				orderNo: orderNo
 			},
 			dataType:"json",
 			success: $http.ok(function(result) {
 				console.log(result);
 				console.log('获取信息ok!');
-				var _paymentId = result.paymentId;
-				that.openWindow({
+				var _paymentId = result.data.paymentId;
+				$.confirm({
 					title: '放款预约',
-					content: dialogTml.wContent.makeLoan,
-					commit: dialogTml.wCommit.cancelSure,
-					data: result.data
-				}, function($dialog) {
-					$dialog.find('.w-sure').on('click', function() {
-						var isTrue = true;
-						var _orderNo = that.data('orderNo');
-						var _loaningDate = $dialog.find('#loaningDate').val();
-						var _paymentMoney = $dialog.find('#paymentMoney').val();
-						var _receiveCompanyAddress = $dialog.find('#receiveCompanyAddress').val();
-						var _receiveAccount = $dialog.find('#receiveAccount').val();
-						var _receiveAccountBank = $dialog.find('#receiveAccountBank').val();
-						$dialog.find('.required').each(function() {
-							var value = $(this).val();
-							console.log(value)
-							if(!value){
-								$(this).parent().addClass("error-input");
-								$(this).after('<i class="error-input-tip">请完善该必填项</i>');
-								console.log($(this).index());
-								isTrue = false;
+					content: doT.template(dialogTml.wContent.makeLoan)(result.data),
+					onContentReady: function() {
+						//启动用款时间日历控件
+						this.$content.find('.dateBtn').datepicker({
+							dateFmt: 'yyyy-MM-dd HH:mm',
+							onpicked: function() {
+							},
+							oncleared: function() {
+							}
+						});
+
+					},
+					buttons: {
+						close: {
+							text: '取消',
+							btnClass: 'btn-default btn-cancel'
+						},
+						ok: {
+							text: '确定',
+							action: function() {
+								var isTrue = true,
+									_orderNo = orderNo,
+									that = this.$content;
+								
+								var _loaningDate = $.trim(that.find('#loaningDate').val());
+								var _paymentMoney = $.trim(that.find('#paymentMoney').val());
+								var _receiveCompanyAddress = $.trim(that.find('#receiveCompanyAddress').val());
+								var _receiveAccount = $.trim(that.find('#receiveAccount').val());
+								var _receiveAccountBank = $.trim(that.find('#receiveAccountBank').val());
+
+								console.log(that.find('.required'))
+								that.find('.required').each(function() {
+									var value = $.trim($(this).val()),
+										$parent = $(this).parent();
+									console.log(value)
+									if(!value){
+										$parent.removeClass("error-input").addClass("error-input");
+										$parent.append('<span class=\"input-err\">请完善该必填项！</span>');
+										console.log($(this).index());
+										isTrue = false;
+									} else {
+
+									}
+								})
+								if(isTrue) {
+									var _params = {
+										orderNo: _orderNo, //订单号
+										paymentId: _paymentId,
+										loaningDate: new Date(_loaningDate), //用款时间
+										paymentMoney: _paymentMoney, //垫资金额
+										receiveCompanyAddress: _receiveCompanyAddress, //收款账户名称
+										receiveAccount: _receiveAccount, //收款账号
+										receiveAccountBank: _receiveAccountBank //开户行
+									}
+									console.log(_params)
+									// makeloanSubmit(_params);
+								}
 								return false;
 							}
-						})
-						if(isTrue) {
-							var _params = {
-								orderNo: _orderNo, //订单号
-								paymentId: _paymentId,
-								loaningDate: new Date(_loaningDate), //用款时间
-								paymentMoney: _paymentMoney, //垫资金额
-								receiveCompanyAddress: _receiveCompanyAddress, //收款账户名称
-								receiveAccount: _receiveAccount, //收款账号
-								receiveAccountBank: _receiveAccountBank //开户行
-							}
-							makeloanSubmit(_params, $dialog);
 						}
-					})
-				})
+					}
+				});
 			})
 		})
 	}
@@ -146,7 +170,7 @@ page.ctrl('myCustomer', [], function($scope) {
 	/**
 	 * 放款预约提交
 	 */
-	var makeloanSubmit = function(params, $dialog) {
+	var makeloanSubmit = function(params) {
 		$.ajax({
 			type: "post",
 			url: $http.api('financePayment/update', 'cyj'),
@@ -154,14 +178,13 @@ page.ctrl('myCustomer', [], function($scope) {
 			dataType: "json",
 			success: $http.ok(function(result) {
 				console.log(result)
-				$dialog.remove();
 			})
 		});
 	}
 
 
 	/**
-	 * 绑定立即处理事件
+	 * 首次加载页面绑定立即处理事件
 	 */
 	var evt = function() {
 		// 绑定搜索框模糊查询事件
@@ -240,6 +263,8 @@ page.ctrl('myCustomer', [], function($scope) {
 		$console.find('#myCustomerTable .orders-detail').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
+				orderNo: that.data('orderNo'),
+				type: 'OrderDetails',
 				path: 'myCustomer'
 			});
 		});
@@ -264,99 +289,161 @@ page.ctrl('myCustomer', [], function($scope) {
 
 		// 放款预约
 		$console.find('#myCustomerTable .makeLoan').on('click', function() {
-			var that = $(this);
-			console.log(that.data('orderNo'))
-			makeLoan(that);
+			var that = $(this),
+				orderNo = that.data('orderNo');
+			makeLoan(orderNo);
 			return false;
 		});
 
 		// 申请终止订单
 		$console.find('#myCustomerTable .applyTerminate').on('click', function() {
-			var that = $(this);
-			var _orderNo = that.data('orderNo');
-			console.log(_orderNo)
-
-
-			// 查询订单申请终止条数，若大于0则弹窗提示已提交终止订单申请，否则正常弹窗申请
-			var loanOrderApplyCount = function(that) {
-				$.ajax({
-					type: "post",
-					url: $http.api('loanOrderApply/count', 'cyj'),
-					data:{
-						orderNo: _orderNo
-					},
-					dataType:"json",
-					success: $http.ok(function(result) {
-						console.log(result);
-						if(result.data > 0) {
-							that.openWindow({
-								title: '提示',
-								content: '<div>该订单已提交订单申请！</div>'
-							});
-						} else {
-							loanOrderApply(that);
-						}
-					})
-				});
-			} 
-			// 申请终止订单弹窗提交
-			var loanOrderApply = function(that) {
-
-				that.openWindow({
-					title: '申请终止订单',
-					content: dialogTml.wContent.loanOrderApply,
-					commit: dialogTml.wCommit.cancelSure
-				}, function($dialog) {
-
-					// 用于获取审核人下拉框数据源
-					$.ajax({
-						type: "post",
-						url: $http.api('pmsUser/get', 'cyj'),
-						data:{
-							orgId: 99,
-							operation: 1 //1表示申请终止订单
-						},
-						dataType:"json",
-						success: $http.ok(function(result) {
-							console.log(result)
-						})
-					});
-					$dialog.find('.w-sure').on('click', function() {
-						$dialog.remove();
-						$.ajax({
-							type: "post",
-							url: $http.api('loanOrderApply/terminate', 'cyj'),
-							data:{
-								orderNo: _orderNo,
-								applyReason: $dialog.find('#suggestion').val(),
-								approvalId: 30000    //当前登录审核用户的id
-							},
-							dataType:"json",
-							success: $http.ok(function(result) {
-								console.log(result)
-								that.openWindow({
-									title: '申请结果',
-									content: '<div>申请终止订单成功！</div>'
-								})
-							})
-						});
-						
-					})
-				})
-			}
-			loanOrderApplyCount(that);
+			var that = $(this),
+				orderNo = that.data('orderNo');
+			loanOrderApplyCount(orderNo, 1, function() {
+				applyTerminate(orderNo);
+			});
 			return false;
 		});
 
 		// 申请修改贷款信息
 		$console.find('#myCustomerTable .applyModify').on('click', function() {
-			var that = $(this);
-			router.render(that.data('href'), {
-				path: 'loanProcess'
+			var that = $(this),
+				orderNo = that.data('orderNo');
+			loanOrderApplyCount(orderNo, 0, function() {
+				applyModify(orderNo, that);
 			});
 			return false;
 		});
 
+	}
+
+	/**
+	 * 查询(申请终止订单、申请修改贷款信息)点击次数，若次数等于0则正常弹窗，否则弹窗提示（已提交申请！）
+	 * @param  {string}   orderNo 订单号
+	 * @param  {number}   type    0表示申请修改贷款信息，1表示申请终止订单
+	 */
+	function loanOrderApplyCount(orderNo, type, cb) {
+		$.ajax({
+			type: "post",
+			url: $http.api('loanOrderApply/count', 'cyj'),
+			data:{
+				orderNo: orderNo,
+				type: type
+			},
+			dataType:"json",
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(result.data > 0) {
+					$.alert({
+						title: '提示',
+						content: tool.alert(result.msg + '！'),
+						buttons: {
+							ok: {
+								text: '确定'
+							}
+						}
+					});
+				} else {
+					if(cb && typeof cb == 'function') {
+						cb();
+					}
+				}
+			})
+		});
+	}
+
+	/**
+	 * 申请终止订单弹窗提交
+	 * @param  {string} orderNo 订单号
+	 */
+	function applyTerminate(orderNo) {
+		$.confirm({
+			title: '申请终止订单',
+			content: dialogTml.wContent.loanOrderApply.format('myCustomer'),
+			onContentReady: function() {
+				this.$content.find('.select').dropdown();
+			},
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel'
+				},
+				ok: {
+					text: '确定',
+					action: function() {
+						var flag = true,
+							that = this.$content,
+							applyReason = $.trim(this.$content.find('#suggestion').val());
+						if(!applyReason) {
+							flag = false;
+							$.alert({
+								title: '提示',
+								content: tool.alert('请填写处理意见！'),
+								buttons: {
+									ok: {
+										text: '确定'
+									}
+								}
+							});
+							return false;
+						}
+						if(!$scope.approvalId) {
+							flag = false;
+							$.alert({
+								title: '提示',
+								content: tool.alert('请选择审核人！'),
+								buttons: {
+									ok: {
+										text: '确定'
+									}
+								}
+							});
+							return false;
+						}
+						if(flag) {
+							var params = {
+								orderNo: orderNo,
+								applyReason: applyReason,
+								approvalId: $scope.approvalId    //当前审核用户的id
+							}
+							console.log(params)
+							$.ajax({
+								type: "post",
+								url: $http.api('loanOrderApply/terminate', 'cyj'),
+								data: params,
+								dataType:"json",
+								success: $http.ok(function(result) {
+									console.log(result)
+									$.alert({
+										title: '申请结果',
+										content: tool.alert('申请终止订单成功！'),
+										buttons: {
+											ok: {
+												text: '确定'
+											}
+										}
+									});
+								})
+							});
+						}
+					}
+				}
+			}
+		});
+		delete $scope.approvalId;
+		return false;
+	}
+
+
+	/**
+	 * 申请修改贷款信息跳转
+	 */
+	function applyModify(orderNo, that) {
+		router.render(that.data('href'), {
+			orderNo: orderNo,
+			type: 'ApplyModify',
+			path: 'myCustomer'
+		});
 	}
 
 	// 绑定翻页栏（上下页）按钮事件
@@ -449,20 +536,26 @@ page.ctrl('myCustomer', [], function($scope) {
 		apiParams.category = picked.id;
 	}
 
+	//审核人
+	$scope.approvalUserPicker = function(picked) {
+		console.log(picked);
+		$scope.approvalId = picked.id;
+	}
+
 	var car = {
 		brand: function(cb) {
 			$.ajax({
 				type: 'post',
 				url: $http.api('car/carBrandList', 'jbs'),
 				dataType: 'json',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'brandId',
 						name: 'carBrandName'
 					}
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		series: function(brandId, cb) {
@@ -473,14 +566,14 @@ page.ctrl('myCustomer', [], function($scope) {
 				data: {
 					brandId: brandId
 				},
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'id',
 						name: 'serieName'
 					}
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		specs: function(seriesId, cb) {
@@ -491,14 +584,14 @@ page.ctrl('myCustomer', [], function($scope) {
 				data: {
 					serieId: seriesId
 				},
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'carSerieId',
 						name: 'specName'
 					};
 					cb(sourceData);
-				}
+				})
 			})
 		}
 	}
@@ -575,6 +668,25 @@ page.ctrl('myCustomer', [], function($scope) {
 						items: xhr.data,
 						id: 'bankId',
 						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		approvalUser: function(t, p, cb) {
+			// 用于获取审核人下拉框数据源
+			$.ajax({
+				type: 'post',
+				url: $http.api('pmsUser/get', 'zyj'),
+				dataType: 'json',
+				data:{
+					operation: 1 //1表示申请终止订单
+				},
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'name'
 					};
 					cb(sourceData);
 				})

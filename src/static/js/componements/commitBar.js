@@ -30,7 +30,7 @@
 						<div id="cancel" class="button button-orange">取消订单</div>\
 					{{ } }}\
 					{{if(it.submit) { }}\
-						<div id="submit" class="button button-deep">提交</div>\
+						<div id="submit" class="button button-deep">{{=it.submit}}</div>\
 					{{ } }}\
 				</div>';
 })(jQuery, doT);

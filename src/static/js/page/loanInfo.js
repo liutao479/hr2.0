@@ -27,8 +27,7 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	var loadLoanList = function(cb) {
 		var data={};
-//			 data['taskId']=80871;
-			data['taskId']=$params.taskId;
+		data['taskId']=$params.taskId;
 		$.ajax({
 			url: $http.api('loanInfoInput/info','jbs'),
 			data: data,
@@ -521,11 +520,11 @@ page.ctrl('loanInfo', function($scope) {
 					text: '确定',
 					action: function () {
 						var that = this;
-       //  				$.ajax({
-							// type: 'post',
-							// url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
-							// dataType: 'json',
-							// success: $http.ok(function(xhr) {
+        				$.ajax({
+							type: 'post',
+							url: $http.api('loanInfoInput/submit/' + $params.taskId, true),
+							dataType: 'json',
+							success: $http.ok(function(xhr) {
 								var taskIds = [];
 								for(var i = 0, len = $params.tasks.length; i < len; i++) {
 									taskIds.push(parseInt($params.tasks[i].id));
@@ -539,8 +538,8 @@ page.ctrl('loanInfo', function($scope) {
 								if(reason) params.reason = reason;
 								console.log(params);
 								flow.tasksJump(params, 'complete');
-							// })
-						// })
+							})
+						})
 					}
 				}
 			}

@@ -1,11 +1,10 @@
 'use strict';
 page.ctrl('loanInfoAudit', function($scope) {
 	var $params = $scope.$params,
-		$console = $params.refer ? $($params.refer) : render.$console,
-		$source = $scope.$source = {},
-		apiParams = {};
+		$console = $params.refer ? $($params.refer) : render.$console;
 	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
+	$params.orderNo = 'nfdb20170407100357095';
 
 	var postUrl = {
 		"saveDDXX": $http.api('loanInfoInput/updLoanOrder', 'jbs'),
@@ -26,20 +25,28 @@ page.ctrl('loanInfoAudit', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadLoanList = function(cb) {
-		var data={};
-			data['taskId']=$params.taskId;
+		var data = {},
+			url = 'loanInfoInput/info';
+		if($params.taskId) {
+			data.taskId = $params.taskId;
+		}
 		if($params.refer) {
-			data.frameCode = $params.code;
+			data.frameCode = $params.code;	
+		}
+		if($params.type) {
+			data.type = $params.type;
+			data.orderNo = $params.orderNo;	
+			url = 'loanInfoInput/loanInfoByOrderNo';
 		}
 		$.ajax({
-			url: $http.api('loanInfoInput/info','jbs'),
+			type: 'post',
+			url: $http.api(url,'jbs'),
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
 				console.log(result)
-				setupLocation();
 				if(result.data.FQXX && result.data.FQXX.renewalInfo){
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				}
@@ -54,37 +61,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 					cb();
 				}
 			})
-		});
-	}
-	
-	/**
-	* 设置面包屑
-	*/
-	var setupLocation = function() {
-		if(!$scope.$params.path) return false;
-		var $location = $console.find('#location');
-		$location.data({
-			backspace: $scope.$params.path,
-			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: $scope.result.data.loanTask.taskName,
-			orderDate: $scope.result.data.loanTask.createDateStr
-		});
-		$location.location();
-	}
-
-	/**
-	* 并行任务切换触发事件
-	* @params {int} idx 触发的tab下标
-	* @params {object} item 触发的tab对象
-	*/
-	var tabChange = function (idx, item) {
-		console.log(item);
-		router.render('loanProcess/' + item.key, {
-			tasks: $scope.tasks,
-			taskId: $scope.tasks[idx].id,
-			orderNo: $params.orderNo,
-			selected: idx,
-			path: 'loanProcess'
 		});
 	}
 
@@ -597,10 +573,8 @@ page.ctrl('loanInfoAudit', function($scope) {
 			$tbl: $console.find('#loanAudit')
 		}
 		loadLoanList(function(){
-			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
 			setupSubmitBar();
 			setupDropDown();
-//			cannotClick();
 		});
 	});
 	
