@@ -148,7 +148,9 @@ page.ctrl('loan', function($scope) {
 				}
 				apiParams.fuzzyParam = searchText;
 				apiParams.pageNum = 1;
-				loadLoanList(apiParams);
+				loadLoanList(apiParams, function() {
+					that.blur();
+				});
 			}
 		});
 		$console.find('#search .iconfont').on('click', function() {

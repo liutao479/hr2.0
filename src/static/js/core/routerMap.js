@@ -149,6 +149,10 @@
 			title: '订单详情',
 			page: 'orderDetails'
 		},
+		'orderModifyAudit/orderDetails': {
+			title: '信息修改审核',
+			page: 'orderDetails'
+		},
 		'cancelOrderAudit/orderDetails': {
 			title: '终止订单审核',
 			page: 'orderDetails'
@@ -353,6 +357,8 @@
 		'T0071': '',//材料交叉验证
 		'T0072': 'loanLog',//订单日志
 		'T0073': 'loanInfoAudit',
+		'T0074': 'loanInfoAudit',//待审核信息
+		'T0075': 'loanLog',//订单日志
 		'T0076': 'loanInfoAudit',//贷款信息表结果
 		'T0077': 'creditResult',//征信结果
 		'T0078': 'secondhandAudit',//二手评估结果

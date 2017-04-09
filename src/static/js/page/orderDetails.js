@@ -98,20 +98,21 @@ page.ctrl('orderDetails', function($scope) {
 	* 底部操作按钮区域
 	*/	
 	var loadCommitBar = function(cb) {
+		var buttons = {};
 		switch($params.type) {
 			case 'ApplyModify':
-				var buttons = {
+				buttons = {
 					submit: '提交申请'
 				};
 				break;
 			case 'ApplyModifyApproval':
-				var buttons = {
+				buttons = {
 					approvalPass: '审核通过',
 					rejectModify: '拒绝修改'
 				};
 				break;
-			case 'ApplyModify':
-				var buttons = {
+			case 'TerminationOrderApproval':
+				buttons = {
 					terminateOrder: '终止订单',
 					keepOrder: '保留订单'
 				};
@@ -120,6 +121,10 @@ page.ctrl('orderDetails', function($scope) {
 		
 		var $commitBar = $console.find('#commitPanel');
 		$commitBar.data({
+			keepOrder: buttons.keepOrder,
+			terminateOrder: buttons.terminateOrder,
+			rejectModify: buttons.rejectModify,
+			approvalPass: buttons.approvalPass,
 			back: buttons.back,
 			verify: buttons.verify,
 			cancel: buttons.cancel,
@@ -156,21 +161,104 @@ page.ctrl('orderDetails', function($scope) {
 								});
 								return false;
 							}
-							applySubmit(0, 1);
+							modifySubmit(0, 0);
 						}
 					}
 				}
 			});
 			delete $scope.approvalId;
 		})
+
+		//信息修改审核（拒绝修改）
+		$console.find('#approvalPass').on('click', function() {
+			$.confirm({
+				title: '拒绝修改',
+				content: dialogTml.wContent.suggestion,
+				onContentReady: function() {
+					this.$content.find('#suggestion').attr('placeholder', '请在此说明拒绝意见！');
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							var reason = $.trim(this.$content.find('#suggestion').val());
+							if(!reason) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('审批意见不能为空！'),
+									buttons: {
+										ok: {
+											text: '确定'
+										}
+									}
+								});
+								return false;
+							}
+							applySubmit(2, reason);
+						}
+					}
+				}
+			});
+		})
+
+		//信息修改审核（审核通过）
+		$console.find('#approvalPass').on('click', function() {
+			$.confirm({
+				title: '审核通过',
+				content: dialogTml.wContent.suggestion,
+				onContentReady: function() {
+					this.$content.find('#suggestion').val('#审核通过#');
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							var reason = $.trim(this.$content.find('#suggestion').val());
+							if(!reason) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请填写审批意见！'),
+									buttons: {
+										ok: {
+											text: '确定'
+										}
+									}
+								});
+								return false;
+							}
+							applySubmit(1, reason);
+						}
+					}
+				}
+			});
+		})
+
+		//终止订单审核（保留订单）
+		$console.find('#keepOrder').on('click', function() {
+			
+		})
+
+
+		//终止订单审核（保留订单）
+		$console.find('#terminateOrder').on('click', function() {
+			
+		})
 	}
 
 	/**
-	 * 信息修改审核底部提交ajax
+	 * 申请贷款信息修改，底部提交ajax
 	 * @param  {[type]} type           //0 贷款信息修改申请  1 终止订单申请
 	 * @param  {[type]} approvalStatus // 申请待审核 1同意申请 2拒绝申请
 	 */
-	function applySubmit(type, approvalStatus) {
+	function modifySubmit(type, approvalStatus, reason) {
 		$.ajax({
 			type: "post",
 			url: $http.api('loanOrderApply/modify', 'cyj'),
@@ -190,11 +278,33 @@ page.ctrl('orderDetails', function($scope) {
 						ok: {
 							text: '确定',
 							action: function() {
-								router.render('myCustomer')
+								router.render($params.path);
 							}
 						}
 					}
 				});
+			})
+		});
+	}
+
+	/**
+	 * 信息修改审核，底部提交ajax
+	 * @param  {[type]} approvalStatus // 0申请待审核 1同意申请 2拒绝申请
+	 */
+	function applySubmit(approvalStatus, reason) {
+		$.ajax({
+			type: "post",
+			url: $http.api('loanOrderApply/approval', 'cyj'),
+			data: {
+				orderNo: $params.orderNo,
+				approvalStatus: approvalStatus, // 申请待审核 1同意申请 2拒绝申请
+				approvalReason: reason  //审核意见
+			},
+			dataType:"json",
+			success: $http.ok(function(result) {
+				console.log(result)
+				//toast('贷款信息已更新！')
+				router.render($params.path);
 			})
 		});
 	}

@@ -5,8 +5,8 @@ page.ctrl('myCustomer', [], function($scope) {
 		endDate = tool.formatDate(new Date().getTime()),
 		startDate = tool.getPreMonth(endDate),
 		apiParams = {
-			// startDate: new Date(startDate),       //查询结束日期
-			// endDate: new Date(endDate),         //查询结束日期
+			startDate: new Date(startDate),       //查询结束日期
+			endDate: new Date(endDate),         //查询结束日期
 			pageNum: 1
 		};
 
@@ -234,12 +234,7 @@ page.ctrl('myCustomer', [], function($scope) {
 				pageNum: 1
 			};
 		});
-	}
 
-	/**
-	 * 绑定立即处理事件
-	 */
-	var setupEvt = function() {		
 		// 订单列表的排序
 		$console.find('#time-sort').on('click', function() {
 			var that = $(this);
@@ -258,6 +253,12 @@ page.ctrl('myCustomer', [], function($scope) {
 				});
 			}
 		});
+	}
+
+	/**
+	 * 绑定立即处理事件
+	 */
+	var setupEvt = function() {		
 
 		// 去往订单详情页面
 		$console.find('#myCustomerTable .orders-detail').on('click', function() {
@@ -314,7 +315,6 @@ page.ctrl('myCustomer', [], function($scope) {
 			});
 			return false;
 		});
-
 	}
 
 	/**
@@ -454,10 +454,8 @@ page.ctrl('myCustomer', [], function($scope) {
 			if(that.hasClass('disabled')) return;
 			if(that.hasClass('scroll-prev')) {
 				apiParams.pageNum = _pageNum - 1;
-				$params.pageNum = _pageNum - 1;
 			} else if(that.hasClass('scroll-next')) {
 				apiParams.pageNum = _pageNum + 1;
-				$params.pageNum = _pageNum + 1;
 			}
 			loadCustomerList(apiParams);
 		});

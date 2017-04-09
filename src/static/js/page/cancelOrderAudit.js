@@ -12,8 +12,8 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadCancelOrderList = function(params, cb) {
+		console.log(params);
 		$.ajax({
-			// url: 'http://127.0.0.1:8083/mock/orderModifyAudit',
 			type: 'post',
 			url: $http.api('loanOrderApply/get', 'cyj'),
 			data: params,
@@ -110,6 +110,25 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 				pageNum: 1
 			};
 		});
+
+		// 订单列表的排序
+		$console.find('#time-sort').on('click', function() {
+			var that = $(this);
+			if(!that.data('sort')) {
+				apiParams.createTimeSort = 1;
+				loadCancelOrderList(apiParams, function() {
+					that.data('sort', true);
+					that.removeClass('time-sort-up').addClass('time-sort-down');
+				});
+
+			} else {
+				delete apiParams.createTimeSort;
+				loadCancelOrderList(apiParams, function() {
+					that.data('sort', false);
+					that.removeClass('time-sort-down').addClass('time-sort-up');
+				});
+			}
+		});
 	}
 
 
@@ -124,16 +143,14 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 			if(that.hasClass('disabled')) return;
 			if(that.hasClass('scroll-prev')) {
 				apiParams.pageNum = _pageNum - 1;
-				$params.pageNum = _pageNum - 1;
 			} else if(that.hasClass('scroll-next')) {
 				apiParams.pageNum = _pageNum + 1;
-				$params.pageNum = _pageNum + 1;
 			}
 			loadCancelOrderList(apiParams);
 		});
 
 		// 订单当前进度的展开与隐藏
-		$console.find('.spread-tips').on('click', function() {
+		$scope.$el.$tbl.find('.spread-tips').on('click', function() {
 			var that = $(this);
 			var $status = that.parent().find('.status-value');
 			var $iconfont = that.find('.iconfont');
@@ -148,27 +165,6 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 			}
 			return false;
 		})
-		
-		// 订单列表的排序
-		$console.find('#time-sort').on('click', function() {
-			var that = $(this);
-			if(!that.data('sort')) {
-				apiParams.createTimeSort = 1;
-				$params.createTimeSort = 1;
-				loadCancelOrderList(apiParams, function() {
-					that.data('sort', true);
-					that.removeClass('time-sort-up').addClass('time-sort-down');
-				});
-
-			} else {
-				delete apiParams.createTimeSort;
-				loadCancelOrderList(apiParams, function() {
-					that.data('sort', false);
-					that.removeClass('time-sort-down').addClass('time-sort-up');
-				});
-			}
-		});
-
 
 		//立即审核按钮
 		$scope.$el.$tbl.find('.toApply').on('click', function() {
@@ -220,9 +216,23 @@ page.ctrl('cancelOrderAudit', [], function($scope) {
 		cb();
 	}
 
+	//进度id
+	$scope.categoryPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.category;
+			return false;
+		}
+		apiParams.category = picked.id;
+	}
+
+	//下拉框数据请求
 	$scope.dropdownTrigger = {
 		category: function(t, p, cb) {
 			var data = [
+				{
+					id: '全部',
+					name: '全部'
+				},
 				{
 					id: 'creditMaterialsUpload',
 					name: '征信材料上传'

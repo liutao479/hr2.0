@@ -3,7 +3,7 @@
 				<div class="select-search-bar clearfix">
 					<div class="search-item">
 						<span class="select-name">当前进度：</span>
-						<div class="select select-common" data-dropdown="page.$scope['orderModifyAudit'].bankPicker" data-trigger="page.$scope['orderModifyAudit'].dropdownTrigger.category"></div>
+						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['orderModifyAudit'].categoryPicker" data-trigger="page.$scope['orderModifyAudit'].dropdownTrigger.category"></div>
 					</div>
 					<div class="search-item">
 						<div class="input-text">
@@ -38,7 +38,7 @@
 			</script>
 
 			<script type="text/x-dot-template" id="orderModifyListTmpl">
-				{{ var len = it.length; if(len) { console.log(len); }}
+				{{ var len = it.length; if(len) { }}
 					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
 					<table width="100%" class="orders-box">
 						<thead>
@@ -67,7 +67,7 @@
 								<td class="status-name">借款人：<span class="status-value">{{=row.realName}}</span></td>
 								<td class="status-name">开卡进度：<span class="status-value">未开卡</span></td>
 								<td class="td-last" rowspan="4">
-									<a href="javascript:;" data-order-no="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray toAudit">立即审核</a><br>
+									<a href="javascript:;" data-href="orderModifyAudit/orderDetails" data-order-no="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray toAudit">立即审核</a><br>
 								</td>
 							</tr>
 							<tr>
