@@ -622,14 +622,14 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				console.log(result)
 				$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-name input').val(result.data.userName);
 				$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-idc input').val(result.data.idCard);
-				if(xhr.data.refresh) {
-					$scope.currentType = 0;
-					loadOrderInfo($scope.currentType, function() {
-						setupCreditBank();
-						setupLocation();
-						evt();
-					});
-				}
+				
+				$scope.currentType = 0;
+				loadOrderInfo($scope.currentType, function() {
+					setupCreditBank();
+					setupLocation();
+					initApiParams();
+					evt();
+				});
 			})
 		});
 	}

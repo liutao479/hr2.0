@@ -22,12 +22,12 @@
 		'orderModifyAudit': {
 			name: '信息修改审核',
 			route: 'orderModifyAudit',
-			icon: '&#xe60e;'
+			icon: '&#xe638;'
 		},
 		'cancelOrderAudit': {
 			name: '终止订单审核',
 			route: 'cancelOrderAudit',
-			icon: '&#xe60e;'
+			icon: '&#xe60c;'
 		},
 		moneyManage: {
 			name: '财务管理',

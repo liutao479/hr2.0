@@ -4,7 +4,7 @@
 	<!-- 面包屑 end-->
 	
 	<!--提交修改等等按钮-->
-	<div class="commit-orders-box commit-orders-box-area" id="buttonsPanel"></div>
+	<div id="buttonsPanel"></div>
 	<!--提交修改等等按钮   end-->
 	
 	<!--工作台左侧菜单面板-->
@@ -29,6 +29,7 @@
 </script>
 
 <script type="text/x-dot-template" id="buttonsTmpl">
+	<div class="commit-orders-box commit-orders-box-area" id="buttonsPanel">
 	{{ if(it.paymentApplyDisplay) { }}
 		<a href="javascript:;" class="commit-item" id="makeLoan">
 			<i class="iconfont">&#xe614;</i>
@@ -42,9 +43,10 @@
 		</a>
 	{{ } }}
 	{{ if(it.modifyDisplay) { }}
-		<a href="javascript:;" class="commit-item" id="applyModify">
+		<a href="javascript:;" class="commit-item" data-href="myCustomer/orderDetails" data-order-no="{{=it.orderNo}}" id="applyModify">
 			<i class="iconfont">&#xe640;</i>
 			<span>申请修改分期信息</span>
 		</a>
 	{{ } }}
+	</div>
 </script>

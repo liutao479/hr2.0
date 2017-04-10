@@ -20,7 +20,9 @@ page.ctrl('orderDetails', function($scope) {
 				$scope.result = xhr;
 				setupLocation();
 				loadGuide(xhr.cfgData);
-				render.compile($scope.$el.$buttonsPanel, $scope.def.buttonsTmpl, xhr.data.BTNSTATUS, true);
+				if($params.type == 'OrderDetails') {
+					render.compile($scope.$el.$buttonsPanel, $scope.def.buttonsTmpl, xhr.data.BTNSTATUS, true);
+				}
 				setupEvent();
 				leftArrow();
 				if(cb && typeof cb == 'function') {
@@ -56,7 +58,7 @@ page.ctrl('orderDetails', function($scope) {
 			$scope.$el.$tab.remove();
 			console.log($console.find('#innerPanel'))
 			$console.find('#innerPanel').removeClass('panel-detail');
-			$console.find('#submitBar').removeClass('ml162');
+			$console.find('#commitPanel').removeClass('ml162');
 		}
 		var code = cfg.frames[0].code;
 		var pageCode = subRouterMap[code];
@@ -335,26 +337,33 @@ page.ctrl('orderDetails', function($scope) {
 		$console.find('#applyTerminate').on('click', function() {
 			var that = $(this),
 				orderNo = that.data('orderNo');
-			console.log(orderNo)
-			loanOrderApplyCount(orderNo);
+			loanOrderApplyCount(orderNo, 1, function() {
+				applyTerminate(orderNo);
+			});
 		});
 
 		// 申请修改贷款信息
 		$console.find('#applyModify').on('click', function() {
-			var that = $(this);
-			router.render(that.data('href'), {
-				path: 'myCustomer'
+			var that = $(this),
+				orderNo = that.data('orderNo');
+			loanOrderApplyCount(orderNo, 0, function() {
+				applyModify(orderNo, that);
 			});
 		});
 	}
 
-	// 查询订单申请终止条数，若大于0则弹窗提示已提交终止订单申请，否则正常弹窗申请
-	function loanOrderApplyCount(orderNo) {
+	/**
+	 * 查询(申请终止订单、申请修改贷款信息)点击次数，若次数等于0则正常弹窗，否则弹窗提示（已提交申请！）
+	 * @param  {string}   orderNo 订单号
+	 * @param  {number}   type    0表示申请修改贷款信息，1表示申请终止订单
+	 */
+	function loanOrderApplyCount(orderNo, type, cb) {
 		$.ajax({
 			type: "post",
 			url: $http.api('loanOrderApply/count', 'cyj'),
 			data:{
-				orderNo: orderNo
+				orderNo: orderNo,
+				type: type
 			},
 			dataType:"json",
 			success: $http.ok(function(result) {
@@ -362,7 +371,7 @@ page.ctrl('orderDetails', function($scope) {
 				if(result.data > 0) {
 					$.alert({
 						title: '提示',
-						content: tool.alert('该订单已提交订单申请！'),
+						content: tool.alert(result.msg + '！'),
 						buttons: {
 							ok: {
 								text: '确定'
@@ -370,17 +379,22 @@ page.ctrl('orderDetails', function($scope) {
 						}
 					});
 				} else {
-					loanOrderApply(orderNo);
+					if(cb && typeof cb == 'function') {
+						cb();
+					}
 				}
 			})
 		});
 	}
 
-	// 申请终止订单弹窗提交
-	function loanOrderApply(orderNo) {
+	/**
+	 * 申请终止订单弹窗提交
+	 * @param  {string} orderNo 订单号
+	 */
+	function applyTerminate(orderNo) {
 		$.confirm({
 			title: '申请终止订单',
-			content: dialogTml.wContent.loanOrderApply.format($params.type),
+			content: dialogTml.wContent.loanOrderApply.format('orderDetails'),
 			onContentReady: function() {
 				this.$content.find('.select').dropdown();
 			},
@@ -452,6 +466,18 @@ page.ctrl('orderDetails', function($scope) {
 			}
 		});
 		delete $scope.approvalId;
+	}
+
+
+	/**
+	 * 申请修改贷款信息跳转
+	 */
+	function applyModify(orderNo, that) {
+		router.render(that.data('href'), {
+			orderNo: orderNo,
+			type: 'ApplyModify',
+			path: 'myCustomer'
+		});
 	}
 
 	/***
