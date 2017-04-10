@@ -69,12 +69,12 @@
 		</div>
 	</div>
 	<div id="tableContext"></div>
+	<!-- 分页插件 -->
+	<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['activeInspect'].paging" data-pages="1" data-current="1"></div>
+	<!-- 分页插件 end-->
 </div>
 <!--发起主动抽查 end-->
 
-<!-- 分页插件 -->
-<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['activeInspect'].paging" data-pages="1" data-current="1"></div>
-<!-- 分页插件 end-->
 <script type="text/x-dot-template" id="activeInspectTmpl">
 	{{ var len = it.length; if(len) { }}
 		{{for(var i = 0; i < len; i++) { var item = it[i]; }}

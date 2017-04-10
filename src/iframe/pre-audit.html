@@ -1,0 +1,148 @@
+<!--预审核-->
+<div class="container pre-audit" id="pre-audit">
+	<div class="path-back-bar">
+		<div class="path-back">
+			<i class="iconfont">&#xe626;</i>
+			<a href="javascript:;" id="backspace" class="link" data-href="riskManagement">贷款办理</a>
+			&nbsp;&gt;&nbsp;
+			<span class="current-page">征信预审核</span>
+		</div>
+		<div class="key-value-box">
+			<span class="key">借款人：</span>
+			<span class="value">张三</span>
+		</div>
+		<div class="key-value-box">
+			<span class="key">当前操作人：</span>
+			<span class="value">陈辉(客户经理)</span>
+		</div>
+		<div class="key-value-box">
+			<span class="key">订单生成时间：</span>
+			<span class="value">2017-04-01</span>
+		</div>
+	</div>
+	<!--tab切换栏-->
+	<div class="tab-bar mt15">
+		<ul class="role-bar-ul clearfix" id="roleBarTab">
+			<li class="role-bar-li">
+				<a href="javascript:;" class="role-item role-item-active">借款人</a>
+			</li>
+			<li class="role-bar-li">
+				<a href="javascript:;" class="role-item">共同还款人</a>
+			</li>
+			<li class="role-bar-li">
+				<a href="javascript:;" class="role-item">反担保人</a>
+			</li>
+		</ul>
+	</div>
+	<!--tab切换栏 end-->
+	<div class="tab-content panel no-top-border">
+		<div class="customer-item-group" id="preAuditGroup"></div>
+	</div>
+	<div class="commit-orders-box">
+		<div class="button button-orange">退回订单</div>
+		<div class="button">拒绝受理</div>
+		<div class="button button-deep">审核通过</div>
+	</div>
+</div>
+<!--预审核 end-->
+<script type="text/x-dot-template" id="preAuditTmpl">
+	{{ var len = it.length; if(len) { }}
+		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+			<div class="customer-item-list">		
+				<div class="panel-content-title no-top-border">
+					<div class="key-value-box">
+						<span class="key">姓名：</span>
+						<span class="value">北上</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">身份证号：</span>
+						<span class="value">23423425324234</span>
+					</div>
+					<div class="key-value-box">
+						<span class="key">征信查询时间：</span>
+						<span class="value">2017-03-04</span>
+					</div>
+					<div class="button button-mini button-gray" id="startCheck">查看征信材料</div>
+				</div>
+				<div class="panel-detail-content">
+					<div class="exhibition-form">
+						<div class="select-item">
+							<span class="select-key">征信查询机构：</span>
+							<span class="select-val">广东工行</span>
+						</div>
+						<div class="select-item">
+							<span class="select-key">征信报告编号：</span>
+							<span class="select-val">23425234234</span>
+						</div>
+						<div class="select-item">
+							<span class="select-key">征信报告照片：</span>
+							<span class="select-val">
+								<div class="no-img-group clearfix">
+									<div class="no-img-list">
+										<div class="no-img">
+											<i class="iconfont">&#xe61f;</i>
+										</div>
+									</div>
+									<div class="no-img-list">
+										<div class="no-img">
+											<i class="iconfont">&#xe61f;</i>
+										</div>
+									</div>
+								</div>
+							</span>
+						</div>
+						<div class="select-item">
+							<span class="select-key">征信字段：</span>
+							<span class="select-val">
+								<table class="def-table">
+									<tr>
+										<td>征信字段</td>
+										<td class="alignCenter">1次</td>
+										<td>征信字段</td>
+										<td class="alignCenter">1次</td>
+									</tr>
+									<tr>
+										<td>征信字段</td>
+										<td class="alignCenter">1次</td>
+										<td>征信字段</td>
+										<td class="alignCenter">1次</td>
+									</tr>
+								</table>
+							</span>
+						</div>
+						<div class="select-item">
+							<span class="select-key">备注信息：</span>
+							<span class="select-val">备注信息备注信息备注信息备注信息备注信息备注信息</span>
+						</div>
+						<div class="select-item">
+							<span class="select-key">辅证数据：</span>
+							<span class="select-val">
+								<div class="button button-mini gocheck">发起核查</div>
+								<span class="val-blue">查看报告结果</span>
+								<div class="selectIn-key-val">
+									<span>征信报告详表：</span>
+									<span class="val-blue">点击查看</span>
+								</div>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		{{ } }}
+	{{ } }}
+</script>	
+<!-- 核查成功之后 -->
+<script type="text/x-dot-template" id="importResultTmpl">
+	<dl class="import-dl clearfix">
+		<dt class="import-icon-box">
+			<div class="import-icon">
+				<i class="iconfont">&#xe659;</i>
+			</div>
+		</dt>
+		<dd class="import-msg-box">
+			<div class="import-result">查询成功！</div>
+			<div class="import-text">请点击“历史核查记录”中查看详情</div>
+		</dd>
+	</dl>
+</script>	
+			

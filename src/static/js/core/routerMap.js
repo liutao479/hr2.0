@@ -65,6 +65,21 @@
 			refer: [],
 			page: 'riskManagement'
 		},
+		'riskManagementDetail': {
+			title: '风控服务统计明细',
+			refer: [],
+			page: 'riskManagementDetail'
+		},
+		'preAudit': {
+			title: '预审核',
+			refer: [],
+			page: 'preAudit'
+		},
+		'preAuditDataAssistant': {
+			title: '预审核数据辅证',
+			refer: [],
+			page: 'preAuditDataAssistant'
+		},
 		'licenceProcess': {
 			title: '上牌办理',
 			refer: [],

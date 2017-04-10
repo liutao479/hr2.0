@@ -58,7 +58,7 @@ page.ctrl('historyInspect', function($scope) {
 
 		// 材料验真入口，以后要删
 		$console.off("click","#tableContext>table").on("click","#tableContext>table", function() {
-			router.render("riskManagement", {
+			router.render("preAudit", {
 				type: apiParams.type
 			});
 		});

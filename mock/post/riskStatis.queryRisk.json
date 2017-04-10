@@ -1,0 +1,36 @@
+{
+	"code": 0,
+	"msg":"success",
+	"data":{
+		"statistic":{
+			"todayCalls":"1101",
+			"historyCalls":"234",
+			"totalServiceAmt":"4353",			
+			"ableBalance":"353"			
+		}
+	},
+	"list":[
+		{
+			"serviceType":"1",
+			"userId":"234",
+			"apiKey":"4353",			
+			"apiPrimary":"353",					
+			"typeName":"材料验真",					
+			"serviceName":"购车发票核查",					
+			"serviceCallNum":"353",					
+			"serviceAmount":"764",					
+			"verifyNum":"3435"					
+		},
+		{
+			"serviceType":"2",
+			"userId":"002",
+			"apiKey":"4353",			
+			"apiPrimary":"353",					
+			"typeName":"数据辅证",					
+			"serviceName":"银行流水核查",					
+			"serviceCallNum":"353",					
+			"serviceAmount":"43",					
+			"verifyNum":"46345"					
+		}
+	]
+}

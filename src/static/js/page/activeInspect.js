@@ -37,51 +37,63 @@ page.ctrl('activeInspect', function($scope) {
 		$params.pageNum = _pageNum;
 		search(apiParams);
 		cb();
-	}
+	};
+	/*发起核查弹窗*/
+	var openDialog=function(that,_data){
+		that.openWindow({
+			title:"请选择查询类型",
+			content: dialogTml.wContent.btngroup,
+			commit: dialogTml.wCommit.cancelSure,
+			data:_data
+		},function($dialog){
+			var _arr=[];
+			$dialog.find(".block-item-data:not(.not-selected)").click(function() {
+				$(this).toggleClass("selected");	
+				_arr.push($(this).text());			
+			});
+			$dialog.find(".w-sure").click(function() {
+				$dialog.remove();
+				console.log("选择了："+_arr);
+				$.ajax({
+					type: "post",
+					url: $http.api('creditAudit/startVerify'),
+					data:{
+						apiKeys:"",
+						orderNo:"",
+						userId:""
+					},
+					dataType:"json",
+					success: $http.ok(function(result) {		
+						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
+							//$(".jconfirm .jconfirm-closeIcon").hide();
+							var context=$(".jconfirm .jconfirm-content").html();
+							if(context){
+								setTimeout(function() {
+									jc.close()
+								}, 2000);
+							};
+						});
+					})
+				});						
+			});
+		});		
+	};
 	// 页面首次载入时绑定事件
  	var evt = function() {
 		$console.off("click",".gocheck").on("click",".gocheck", function() {
 			var that=$(this);
 			var _id=that.data("id");
-			that.openWindow({
-				title:"请选择查询类型",
-				content: dialogTml.wContent.btngroup,
-				commit: dialogTml.wCommit.cancelSure,
-				data:[
-					{select:false,text:"法院执行记录"},
-					{select:false,text:"购车发票"},
-					{select:false,text:"登记证状态"},
-					{select:false,text:"网贷记录"},
-					{select:false,text:"公安信息"},
-					{select:false,text:"抵押状态"},
-				]
-			},function($dialog){
-				var _arr=[];
-				$dialog.off("click",".block-item-data:not(.selected)").on("click",".block-item-data:not(.selected)", function() {
-					$(this).addClass("selected");	
-					_arr.push($(this).text());			
-				});
-				$dialog.off("click",".w-sure").on("click",".w-sure", function() {
-					$dialog.remove();
-					console.log("选择了："+_arr);
-					$.ajax({
-						type: "post",
-						url: $http.api('dataVerification/loan'),
-						data:{},
-						dataType:"json",
-						success: $http.ok(function(result) {		
-							var jc=$.dialog($scope.def.toastTmpl,function($dialog){
-								//$(".jconfirm .jconfirm-closeIcon").hide();
-								var context=$(".jconfirm .jconfirm-content").html();
-								if(context){
-									setTimeout(function() {
-										jc.close()
-									}, 2000);
-								};
-							});
-						})
-					});						
-				});
+			$.ajax({
+				type: 'post',
+				dataType:'json',
+				url: $http.api('creditAudit/itemList'),
+				data: {userId:_id},
+				success: $http.ok(function(res) {
+					if(res&&res.data&&res.data.length>0)
+						openDialog(that,res.data);
+					else
+						openDialog(that,[]);
+				})
 			});
 		});
  	};
@@ -90,9 +102,10 @@ page.ctrl('activeInspect', function($scope) {
 	render.$console.load(router.template('iframe/active-inspect'), function() {
 		$scope.def.listTmpl = render.$console.find('#activeInspectTmpl').html();
 		$scope.def.toastTmpl = render.$console.find('#importResultTmpl').html();
+		$scope.$context=$console.find('#active-inspect')
 		$scope.$el = {
-			$tbl: $console.find('#tableContext'),
-			$paging: $console.find('#pageToolbar')
+			$tbl: $scope.$context.find('#tableContext'),
+			$paging: $scope.$context.find('#pageToolbar')
 		};
 		search(apiParams, function() {
 			evt();

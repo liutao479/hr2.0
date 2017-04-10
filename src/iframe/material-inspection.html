@@ -534,7 +534,7 @@
 				{{ if(item.isMainApplicant){ }}
 					<a href="javascript:;" class="role-item role-item-active">{{=item.userName}}(主申请人)</a>
 				{{ }else{ }}
-					<a href="javascript:;" class="role-item">{{=item.userName}}(共同还款人)</a>						
+					<a href="javascript:;" class="role-item">{{=item.userName}}(共同还款人)</a>					
 				{{ } }}				
 			</li>
 		{{ } }}
@@ -546,3 +546,18 @@
 		{{ } }}
 	{{ } }}
 </script>	
+<!-- 核查成功之后 -->
+<script type="text/x-dot-template" id="importResultTmpl">
+	<dl class="import-dl clearfix">
+		<dt class="import-icon-box">
+			<div class="import-icon">
+				<i class="iconfont">&#xe659;</i>
+			</div>
+		</dt>
+		<dd class="import-msg-box">
+			<div class="import-result">查询成功！</div>
+			<div class="import-text">请点击“历史核查记录”中查看详情</div>
+		</dd>
+	</dl>
+</script>	
+			

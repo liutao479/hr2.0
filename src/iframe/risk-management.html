@@ -1,5 +1,5 @@
 <!--风控服务统计-->
-<div class="container data-assistant" id="data-assistant">
+<div class="container risk-management" id="risk-management">
 	<!--tab切换栏-->
 	<div class="tab-bar mt15">
 		<ul class="role-bar-ul clearfix" id="roleBarTab"></ul>
@@ -14,32 +14,7 @@
 		</div>
 		<div class="detail-item-group">
 			<div class="detail-item-context">
-				<div class="valuation">
-					<div class="valuation-list valuation-risk">
-						<div class="oneLine">
-							<span>9</span>次
-						</div>
-						<p class="nameVal">今日服务调用次数</p>
-					</div>
-					<div class="valuation-list valuation-risk">
-						<div class="oneLine">
-							<span>2359</span>次
-						</div>
-						<p class="numVal">历史服务调用次数</p>
-					</div>
-					<div class="valuation-list valuation-risk">
-						<div class="oneLine">
-							<span>528.25</span>元
-						</div>
-						<p class="nameVal">总服务使用费</p>
-					</div>
-					<div class="valuation-list valuation-risk">
-						<div class="oneLine">
-							<span>1528.25</span>元
-						</div>
-						<p class="numVal">可用余额</p>
-					</div>
-				</div>
+				<div class="valuation" id="valuation-total"></div>
 			</div>
 		</div>
 	</div>
@@ -50,7 +25,7 @@
 				<span class="panel-title-name">服务使用情况统计</span>
 			</div>
 		</div>
-		<div class="select-search-bar clearfix">
+		<div class="select-search-bar no-border clearfix">
 			<div class="search-item">
 				<span class="select-name">统计日期：</span>
 				<div class="input-text input-date-mini">
@@ -77,23 +52,31 @@
 			<div class="key-value-box">
 				<span class="value">服务调用次数比例图</span>
 			</div>
+			<div class="float-right" id="serviceStatic"></div>
+		</div>
+		<div id="piechart" style="height:200px;"></div>
+		<div class="panel-content-title">
 			<div class="key-value-box">
-				<span class="key">核查订单数：</span>
-				<span class="value font-bigger">5300</span>
-				<span class="key">次</span>
-			</div>
-			<div class="key-value-box">
-				<span class="key">服务调用次数：</span>
-				<span class="value font-bigger">133500</span>
-				<span class="key">次</span>
-			</div>
-			<div class="key-value-box">
-				<span class="key">服务使用费：</span>
-				<span class="value font-bigger">6300.60</span>
-				<span class="key">元</span>
+				<span class="value" id="searchTimeTitle">2017.03.21至2017.03.22明细</span>
 			</div>
 		</div>
-		<div id="piechart" style="height:500px;"></div>
+		<div class="panel-content panel-content-layout">
+			<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">
+				<thead>
+					<tr class="orders-bar-title">
+						<td class="orders-item-data">序号</td>
+						<td class="orders-item-data">服务类别</td>
+						<td class="orders-item-data">服务名称</td>
+						<td class="orders-item-data">服务调用次数/次</td>
+						<td class="orders-item-data">服务使用费/元</td>
+						<td class="orders-item-data">历史核查次数/次</td>
+						<td class="orders-item-data">总服务使用费/元</td>
+						<td class="orders-item-data">操作</td>
+					</tr>
+				</thead>
+				<tbody id="riskManagementTable"></tbody>
+			</table>
+		</div>
 	</div>
 </div>
 <!--风控服务统计 end-->
@@ -106,5 +89,67 @@
 				<a href="javascript:;" class="role-item">{{=item.text}}</a>					
 			{{ } }}				
 		</li>
+	{{ } }}
+</script>	
+<!-- 数据总览 -->
+<script type="text/x-dot-template" id="valuationTotalTemp">
+	<div class="valuation-list valuation-risk">
+		<div class="oneLine">
+			<span>{{=it.callTimeNumber}}</span>次
+		</div>
+		<p class="nameVal">今日服务调用次数</p>
+	</div>
+	<div class="valuation-list valuation-risk">
+		<div class="oneLine">
+			<span>{{=it.allCallTimeNumber}}</span>次
+		</div>
+		<p class="numVal">历史服务调用次数</p>
+	</div>
+	<div class="valuation-list valuation-risk">
+		<div class="oneLine">
+			<span>{{=it.totalAmount}}</span>元
+		</div>
+		<p class="nameVal">总服务使用费</p>
+	</div>
+	<div class="valuation-list valuation-risk">
+		<div class="oneLine">
+			<span>{{=it.availableBalance}}</span>元
+		</div>
+		<p class="numVal">可用余额</p>
+	</div>
+</script>	
+<!-- 服务使用情况统计-总数 -->
+<script type="text/x-dot-template" id="serviceStaticTemp">
+	<div class="key-value-box">
+		<span class="key">核查订单数：</span>
+		<span class="value font-bigger">{{=it.historyCalls}}</span>
+		<span class="key">次</span>
+	</div>
+	<div class="key-value-box">
+		<span class="key">服务调用次数：</span>
+		<span class="value font-bigger">{{=it.totalServiceAmt}}</span>
+		<span class="key">次</span>
+	</div>
+	<div class="key-value-box">
+		<span class="key">服务使用费：</span>
+		<span class="value font-bigger">{{=it.ableBalance}}</span>
+		<span class="key">元</span>
+	</div>
+</script>	
+<!-- 服务使用情况列表统计 -->
+<script type="text/x-dot-template" id="riskManagementTmpl">
+	{{for(var i = 0; i < it.length; i++) { var item = it[i]; }}
+		<tr class="orders-item">
+			<td class="orders-item-data">{{=i+1}}</td>
+			<td class="orders-item-data">{{=item.typeName}}</td>
+			<td class="orders-item-data">{{=item.serviceName}}</td>
+			<td class="orders-item-data">{{=item.serviceCallNum}}</td>
+			<td class="orders-item-data">{{=item.serviceAmount}}</td>
+			<td class="orders-item-data">{{=item.verifyNum}}</td>
+			<td class="orders-item-data">{{=item.serviceAmount}}</td>
+			<td class="orders-item-data">
+				<span class="detailed" data-apiKey="{{=item.apiKey}}" data-apiPrimary="{{=item.apiPrimary}}">明细</span>
+			</td>
+		</tr>
 	{{ } }}
 </script>	

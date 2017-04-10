@@ -56,6 +56,9 @@
 .ml15 {
     margin-left: 15px !important;
 }
+.mr24{
+    margin-right:24px !important;
+}
 .mt30 {
     margin-top: 30px !important;
 }
@@ -956,6 +959,7 @@ input[disabled]{
         padding: 0 20px;
         border-top: 1px dashed @borderColor;
         border-bottom: 1px dashed @borderColor;
+        overflow:hidden;
         &.panel-title-box-special {
             border-top: none;
         }
@@ -1125,7 +1129,7 @@ input[disabled]{
         border-bottom: 1px solid @borderColor;
         .panel-title {
             position: relative;
-            padding-left: 20px;
+            padding: 0 20px;
             .iconfont {
                 position: relative;
                 top: 1px;
@@ -2457,8 +2461,6 @@ input[disabled]{
         text-align: left;
     }
 }
-<<<<<<< HEAD
-
 .block-item-data {
     -moz-user-select: none; /*火狐*/
     -webkit-user-select: none; /*webkit浏览器*/
@@ -2479,6 +2481,10 @@ input[disabled]{
     &.selected {
         color: @tableActiveColor;
         border-color: @tableActiveColor;
+    }
+    &.not-selected {
+        color: #999;
+        background-color: #f5f5f5;
     }
     .tips-content {
         top: 44px;
@@ -2962,6 +2968,25 @@ input[disabled]{
         }
     }
 }
+.oneBCTable{
+    table{
+        width:100%;
+        tr{
+            line-height: 34px;
+            td{
+                padding-left:15px;
+                .key{
+                    color:#999;
+                }
+            }
+        }
+    }
+    &.bcbtbor{
+        background-color:#f7fbfe;
+        border-bottom:1px dashed #d6dbdf;
+        padding:0 35px;
+    }
+}
 .no-data{
     height:500px;
     background-image: url(img/public/nodata.png);
@@ -2970,5 +2995,79 @@ input[disabled]{
     background-color: #fff;
     background-size:230px auto;
     display: none;
+}
+.exhibition-form{
+    padding:10px 15px 45px 45px;
+    .select-item{
+        line-height: 22px;
+        margin:15px 0;
+        .select-key{
+            width:200px;
+            text-align:right;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .select-val{
+            width:calc(~"100% - 220px");
+            display: inline-block;
+            .val-blue{
+                color:#5084fc;
+                margin-left:15px;
+                cursor: pointer;
+            }
+            .selectIn-key-val{
+                display: inline-block;
+                margin-left:50px;
+            }
+        }
+        .no-img-list{
+            width: 220px;
+            float: left;
+            .no-img{
+                height: 137px;
+                line-height:137px;
+                text-align: center;
+                color:#b7bfc5;
+                border:2px solid #d6dbdf;
+                background-color: #f1f1f2;
+                .borderRadius();
+                i.iconfont{
+                    font-size:65px;
+                }                
+            }
+            &:not(:first-child){
+                margin-left:15px;
+            }
+        }
+        table{
+            width:100%;
+            &.def-table{
+                border:1px solid #cdd9e9;
+                border-collapse: collapse;
+                tbody{
+                    tr{
+                        line-height: 40px;
+                        &:nth-child(odd){
+                            background-color:#f3f4f9;
+                        }
+                        td{
+                            &:not(:first-child){
+                                border-left:1px solid #cdd9e9;
+                            }
+                            &:not(.alignCenter){
+                                padding-left:15px;
+                            }
+                            &.alignCenter{
+                                text-align: center;
+                            }
+                        }
+                        &:not(:first-child){
+                            border-top:1px solid #cdd9e9;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 .jconfirm .jconfirm-box div.jconfirm-content-pane { margin: 20px 0;}
