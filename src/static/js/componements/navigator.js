@@ -59,7 +59,7 @@ $(function() {
 	*/
 	NavComponent.prototype.__addListener = function() {
 		var self = this;
-
+		
 		self.$panel.find('.navEvt').on('click', function() {
 			var $this = $(this),
 				key = $this.data('id');

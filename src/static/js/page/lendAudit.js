@@ -28,7 +28,7 @@ page.ctrl('lendAudit', function($scope) {
 		};
 		$.ajax({
 			type: 'post',
-			url: $http.api('loanApproval/info', 'jbs'),
+			url: $http.api('makeLoanApproval/index', 'jbs'),
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(xhr) {

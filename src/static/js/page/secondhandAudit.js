@@ -12,16 +12,23 @@ page.ctrl('secondhandAudit', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadLoanList = function(cb) {
-		var params = {
-			taskId: $params.taskId
+		var data = {},
+			url = 'loanCarAssess/index';
+		if($params.taskId) {
+			data.taskId = $params.taskId;
 		}
 		if($params.refer) {
-			params.frameCode = $params.code;
+			data.frameCode = $params.code;
+		}
+		if($params.type) {
+			data.orderNo = $params.orderNo;	
+			data.type = $params.type;
+			url = 'loanCarAssess/carInfoByOrderNo';
 		}
 		$.ajax({
 			type: 'post',
-			url: $http.api('loanCarAssess/index', true),
-			data: params,
+			url: $http.api(url, true),
+			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;

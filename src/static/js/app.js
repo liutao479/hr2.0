@@ -6,7 +6,9 @@ $(function() {
 	function setupMenu() {
 		var $menu;
 		$.ajax({
+			// type: 'post',
 			url: $http.api('menu'),
+			dataType: 'json',
 			success: $http.ok(function(result) {
 				$menu = new menu('#menu', result.data, router.render);
 				router.init(function(menuId) {

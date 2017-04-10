@@ -4,7 +4,7 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		$console = $params.refer ? $($params.refer) : render.$console;
 	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
-	// $params.taskId = 6;
+	$params.orderNo = 'nfdb20170407100357095';
 
 	/**
 	* 加载提车材料上传数据
@@ -12,30 +12,39 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadOrderInfo = function(cb) {
-		var params = {
-			taskId: $params.taskId
+		var data = {},
+			url = 'pickMaterials/index';
+		if($params.taskId) {
+			data.taskId = $params.taskId;
 		}
 		if($params.refer) {
-			params.frameCode = $params.code;
+			data.frameCode = $params.code;	
+		}
+		if($params.type) {
+			data.type = $params.type;
+			data.orderNo = $params.orderNo;	
+			url = 'materials/materialsByOrderNo';
 		}
 		$.ajax({
 			type: 'post',
-			url: $http.api('materials/index', 'zyj'),
-			data: params,
+			url: $http.api(url, 'zyj'),
+			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
+				$scope.result.orderNo = $params.orderNo;
+				$scope.result.category = 'pickMaterialsUpload';
 				if($params.refer) {
 					$scope.result.editable = 0;
 				} else {
 					$scope.result.editable = 1;
 				}
-				if($params.path) {
-					setupLocation();	
+				if(!$params.refer) {
+					setupLocation();
+					setupBackReason(result.data.loanTask.backApprovalInfo);	
 				}
-				setupBackReason(result.data.loanTask.backApprovalInfo);
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, $scope.result, function(){
 					setupEvt();
 				}, true);
@@ -314,8 +323,37 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 	 * 多次渲染页面立即处理事件
 	 */
 	var setupEvt = function() {
-		// 图片控件
-		$scope.$el.$loanPanel.find('.uploadEvt').imgUpload();
+		/**
+		 * 启动图片上传控件
+		 */
+		var imgsBars = $scope.$el.$loanPanel.find('.panel-content-imgs');
+		imgsBars.each(function(index) {
+			var that = $(this),
+				_url = that.data('url'),
+				_type = that.data('type');
+			that.find('.uploadEvt').imgUpload({
+				viewable: true,
+				getimg: function(cb) {
+					cb($scope.result.data[_type])
+				},
+				marker: function (img, mark, cb) {
+					$.ajax({
+						type: 'post',
+						url: $http.api(_url + '/addOrUpdate', true), 
+						data: {
+							id: img.id,
+							auditResult: mark,
+							auditOpinion: '审核原因审核原因审核原因审核原因审核原因'
+						},
+						dataType: 'json',
+						success: $http.ok(function(result) {
+							console.log(result);
+							cb();
+						})
+					})
+				}
+			});
+		});
 	}
 
 	/**

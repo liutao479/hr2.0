@@ -177,6 +177,7 @@
 					return false;
 				}
 				self.options.name = newVal;
+				self.name = internalTemplates.other.format(self.options.name);
 				self.$el.data('name', self.options.name);
 				if(self.options.img) {
 					console.log(self.options.img)
@@ -335,7 +336,7 @@
 			dataType: 'json',
 			success: function(xhr) {
 				console.log(xhr);
-				if(!xhr.code) {
+				if(!xhr.code) {					
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name, url, self.errImg, self.errMsg));
 						if(self.options.credit) {
@@ -425,7 +426,7 @@
 		msg: '<div class="imgs-describe">{0}</div>',
 		name: '<span class="imgs-item-p">{0}</span>',
 		other: '<div class="input-text imgs-input-text">\
-					<input type="text" value="{0}" title="重新上传" accept="image/gif,image/jpeg,image/jpg,image/png" />\
+					<input type="text" value="{0}" />\
 				</div>'
 	}
 

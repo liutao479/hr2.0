@@ -24,7 +24,7 @@
 			<script type="text/x-dot-template" id="loanUploadTmpl">
 				{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i]; }}
 					{{ if(row.code != 'QTCL') { }}
-						{{ for(var j = 0, len2 = it.data[row.code].length; j < len2; j++) { var col = it.data[row.code][j]; console.log(col); }}
+						{{ for(var j = 0, len2 = it.data[row.code].length; j < len2; j++) { var col = it.data[row.code][j]; }}
 						{{ if(i == 0 && j == 0 && it.tasks > 1) { }}
 							<div class="panel no-top-border">
 						{{ } else { }}
@@ -40,17 +40,17 @@
 							<!-- 贷款材料类别名 -->
 
 							<!-- 贷款材料对应上传材料项 -->
-							<div class="panel-content panel-content-imgs clearfix">
+							<div class="panel-content panel-content-imgs clearfix" data-type="{{=row.code}}" data-idx="{{=j}}" data-url="material">
 								{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m], flag = 0; }}
 									{{ for(var n = 0, len4 = col.materials.length; n < len4; n++) { var nl = col.materials[n]; }}
 										{{ if(ml.code == nl.materialsCode) { }}
-											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-owner="{{=(row.code == 'QYCL' ? 'QYCL' : (col.userType || ''))}}" data-user="{{=col.userId || ''}}" data-scene="{{=it.data.loanTask.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty || ''}}"></div>
+											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-owner="{{=(row.code == 'QYCL' ? 'QYCL' : (col.userType || ''))}}" data-user="{{=col.userId || ''}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || 0}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty || ''}}"></div>
 										{{ break; }}
 										{{ } else { flag++; }}
 										{{ } }}
 									{{ } }}
 									{{ if(flag == len4) { }}
-										<div class="imgs-item-group uploadEvt" data-orderno="{{=it.data.loanTask.orderNo}}" data-code="{{=ml.code}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-owner="{{=(row.code == 'QYCL' ? 'QYCL' : (col.userType || ''))}}" data-user="{{=col.userId || ''}}" data-scene="{{=it.data.loanTask.category}}" data-user="{{=col.userId}}" data-img="" data-editable="{{=it.editable}}" data-empty="{{=ml.empty || ''}}"></div>
+										<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-owner="{{=(row.code == 'QYCL' ? 'QYCL' : (col.userType || ''))}}" data-user="{{=col.userId || ''}}" data-scene="{{=it.category}}" data-user="{{=col.userId}}" data-img="" data-err="0" data-editable="{{=it.editable}}" data-empty="{{=ml.empty || ''}}"></div>
 									{{ } }}
 								{{ } }}
 							</div>
@@ -69,11 +69,11 @@
 						<!-- 其他材料类别名 -->
 
 						<!-- 其他材料对应上传材料项 -->
-						<div class="panel-content panel-content-imgs otherMaterials clearfix">
+						<div class="panel-content panel-content-imgs otherMaterials clearfix" data-type="{{=row.code}}" data-idx="0" data-url="otherMaterials">
 							{{ for(var n = 0, len4 = it.data.QTCL[0].materials.length; n < len4; n++) { var nl = it.data.QTCL[0].materials[n]; }}
-								<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.data.loanTask.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.data.loanTask.category}}'].uploadcb" data-other="true" data-orderno="{{=it.data.loanTask.orderNo}}" data-name="{{=nl.materialsName}}" data-scene="{{=it.data.loanTask.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult}}" data-editable="{{=it.editable}}"></div>
+								<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb" data-other="true" data-orderno="{{=it.orderNo}}" data-name="{{=nl.materialsName}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || ''}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}"></div>
 							{{ } }}
-							<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.data.loanTask.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.data.loanTask.category}}'].uploadcb"  data-other="true" data-orderno="{{=it.data.loanTask.orderNo}}" data-name="其他材料{{=(n + 1)}}" data-count="{{=(n + 1)}}" data-scene="{{=it.data.loanTask.category}}" data-editable="{{=it.editable}}"></div>
+							<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb"  data-other="true" data-orderno="{{=it.orderNo}}" data-name="其他材料{{=(n + 1)}}" data-count="{{=(n + 1)}}" data-scene="{{=it.category}}" data-editable="{{=it.editable}}"></div>
 						</div>
 						<!-- 其他材料对应上传材料项 -->
 					</div>

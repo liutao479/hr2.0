@@ -37,6 +37,12 @@
 						<a href="javascript:;" id="backspace" class="link" data-href="{{=it.backspace}}">返回列表</a>&nbsp;&gt;&nbsp;\
 						<span class="current-page">{{=it.current}}</span>\
 					</div>\
+					{{ if(it.pmsDept) { }}\
+					<div class="key-value-box">\
+						<span class="key">分公司：</span>\
+						<span class="value">{{=it.pmsDept}}</span>\
+					</div>\
+					{{ } }}\
 					{{ if(it.loanUser) { }}\
 					<div class="key-value-box">\
 						<span class="key">借款人：</span>\

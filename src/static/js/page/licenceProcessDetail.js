@@ -66,7 +66,7 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 	*/	
 	var loadCommitBar = function(cb) {
 		var buttons = {
-			"submit": true,
+			"submit": '提交',
 			"back": false,
 			"cancel": false,
 			"verify": false
