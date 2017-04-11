@@ -137,7 +137,17 @@
 												</tr>
 												<tr class="table-inner-tr">
 													<td class="key">备注：</td>
-													<td class="value special-word">未在系统中找到订单</td>
+													<td class="value special-word">
+														{{ if(item.status == '0'){ }}
+															未在系统中找到订单
+														{{ }else if(item.status == '1'){ }}
+															找到多条订单
+														{{ }else if(item.status == '2'){ }}
+															匹配成功
+														{{ }else{ }}
+															逾期将结清
+														{{ } }} 
+													</td>
 												</tr>
 											</table>
 										</td>
@@ -146,7 +156,7 @@
 												<table class="table-inner">
 													<tr class="table-inner-tr">
 														<td>
-															<div class="button button-mini chooseOrder">选择订单</div>
+															<div class="button button-mini chooseOrder" id="detailId" data-detail='{{= item.detailId}}'>选择订单</div>
 														</td>
 													</tr>
 												</table>
@@ -209,7 +219,7 @@
 					{{ } }}
 						<td class="orders-item-data order-item-first">
 							<input type="radio" name="detailId" value="{{=col.orderNo}}" />
-							<input type="hidden" name="orderNo" value="{{=col.idCard}}" />
+							<input type="hidden" name="orderNo" value="{{=col.orderNo}}" />
 						</td>
 						<td class="orders-item-data">{{=col.orderNo}}</td>
 						<td class="orders-item-data">{{=col.userName}}</td>

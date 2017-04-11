@@ -507,42 +507,57 @@ page.ctrl('loanInfo', function($scope) {
 	 * 任务提交跳转
 	 */
 	function process() {
-		$.confirm({
-			title: '提交订单',
-			content: dialogTml.wContent.suggestion,
-			buttons: {
-				close: {
-					text: '取消',
-					btnClass: 'btn-default btn-cancel',
-					action: function() {}
-				},
-				ok: {
-					text: '确定',
-					action: function () {
-						var that = this;
-        				$.ajax({
-							type: 'post',
-							url: $http.api('loanInfoInput/submit/' + $params.taskId, true),
-							dataType: 'json',
-							success: $http.ok(function(xhr) {
-								var taskIds = [];
-								for(var i = 0, len = $params.tasks.length; i < len; i++) {
-									taskIds.push(parseInt($params.tasks[i].id));
+		$.ajax({
+			type: 'post',
+			url: $http.api('loanInfoInput/submit/' + $params.taskId, true),
+			dataType: 'json',
+			success: $http.ok(function(xhr) {
+				if(xhr.code == '-1'){
+					$.alert({
+						title: '提示',
+						content: tool.alert(xhr.msg),
+						buttons: {
+							ok: {
+								text: '确定',
+								action: function() {
 								}
-								var params = {
-									taskId: $params.taskId,
-									taskIds: taskIds,
-									orderNo: $params.orderNo
+							}
+						}
+					});
+					return false;
+				}else{
+					$.confirm({
+						title: '提交订单',
+						content: dialogTml.wContent.suggestion,
+						buttons: {
+							close: {
+								text: '取消',
+								btnClass: 'btn-default btn-cancel',
+								action: function() {}
+							},
+							ok: {
+								text: '确定',
+								action: function () {
+									var that = this;
+									var taskIds = [];
+									for(var i = 0, len = $params.tasks.length; i < len; i++) {
+										taskIds.push(parseInt($params.tasks[i].id));
+									}
+									var params = {
+										taskId: $params.taskId,
+										taskIds: taskIds,
+										orderNo: $params.orderNo
+									}
+									var reason = $.trim(that.$content.find('#suggestion').val());
+									if(reason) params.reason = reason;
+									console.log(params);
+									flow.tasksJump(params, 'complete');
 								}
-								var reason = $.trim(that.$content.find('#suggestion').val());
-								if(reason) params.reason = reason;
-								console.log(params);
-								flow.tasksJump(params, 'complete');
-							})
-						})
-					}
+							}
+						}
+					})
 				}
-			}
+			})
 		})
 	}
 

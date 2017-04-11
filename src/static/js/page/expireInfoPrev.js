@@ -89,6 +89,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 			pageData['status']=status;
 			$.ajax({
 				url: urlStr + '/loanOverdueImport/queryImportDetails',
+//				url: $http.api('loanOverdueImport/queryImportDetails','jbs'),
 				data: pageData,
 				type: 'post',
 				dataType: 'json',
@@ -180,6 +181,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 				        				$.ajax({
 											type: 'post',
 											url: urlStr+'/loanOverdueImport/confirmImportRecord',
+//											url: $http.api('loanOverdueImport/confirmImportRecord','jbs'),
 											data: data,
 											dataType: 'json',
 											success: $http.ok(function(xhr) {
@@ -220,7 +222,8 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 				$(this).html('<i class="iconfont">&#xe659;</i>');
 				dataP['isFoundTask']=1;
 				$.ajax({
-					url: $http.api('loanOverdueImport/isCreateOverdue','wl'),
+					url: urlStr+'/loanOverdueImport/isCreateOverdue',
+//					url: $http.api('loanOverdueImport/isCreateOverdue','wl'),
 					data: dataP,
 					type: 'post',
 					dataType: 'json',
@@ -235,7 +238,8 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 				$('#all').html('');
 				dataP['isFoundTask']=0;
 				$.ajax({
-					url: $http.api('loanOverdueImport/isCreateOverdue','wl'),
+					url: urlStr+'/loanOverdueImport/isCreateOverdue',
+//					url: $http.api('loanOverdueImport/isCreateOverdue','wl'),
 					data: dataP,
 					type: 'post',
 					dataType: 'json',
@@ -254,11 +258,12 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 			var boolCheck=$('input:radio[name="detailId"]');
 			boolCheck.each(function(){
 				if($(this).is(":checked")){
-					data['detailId'] = $(this).val();
 					data['orderNo'] = $(this).siblings('input:hidden[name="orderNo"]').val();
 				}
 			})
+			data['detailId'] = $('#detailId').data('detailId');
 			$.ajax({
+				url: urlStr+'/loanOverdueImport/chooseOverdueOrder',
 				url: $http.api('loanOverdueImport/chooseOverdueOrder','wl'),
 				data: data,
 				type: 'post',
@@ -269,13 +274,14 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 			})
 		});
 		//点击查看详情
-		$console.find('.selOrderDetail').on('click', function() {
+		$console.find('.chooseOrder').on('click', function() {
 			$("#chooseOrderDetail").show();
 			var that =$("#chooseOrderTable");
 			var detailData = {};
 				detailData['detailId']=$(this).data('detail');
 			$.ajax({
-				url: $http.api('loanOverdueImport/checkOverdueOrderList','wl'),
+				url: urlStr+'/loanOverdueImport/checkOverdueOrderList',
+//				url: $http.api('loanOverdueImport/checkOverdueOrderList','wl'),
 				data: detailData,
 				type: 'post',
 				dataType: 'json',
