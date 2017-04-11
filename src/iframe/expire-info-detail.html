@@ -1,9 +1,18 @@
 	<!--逾期信息（预览）-->
 			<div class="container expire-info-prev" id="expire-info-prev">
 
+				<!-- 面包屑 返回列表 -->
+				<div class="path-back-bar clearfix">
+					<div class="path-back">
+						<i class="iconfont">&#xe626;</i>
+						<a id="expInIpt" style="cursor: pointer;">逾期信息录入</a>&nbsp;&gt;
+						<span class="current-page">历史导入记录</span>
+					</div>
+				</div>
+				<!-- 面包屑 返回列表 end-->
 				
 				<!-- 面板 -->
-				<div class="panel no-top-border panel-mb0">
+				<div class="panel panel-mb0">
 					<!-- mini-tab切换 -->
 					<div class="tab-bar-mini clearfix">
 						<ul id="currentPageTab" class="tab-bar-ul clearfix">
@@ -12,8 +21,6 @@
 							<li class="tab-bar-li"><a href="javascript:;" data-status='2' class="tab-item">匹配成功</a></li>
 							<li class="tab-bar-li"><a href="javascript:;" data-status='3' class="tab-item">逾期将结清</a></li>
 						</ul>
-						<div class="button button-mini button-orange">取消导入</div>
-						<div class="button button-mini" id="getValue">确认并更新</div>
 					</div>
 					<!-- mini-tab切换 end-->
 				</div>
@@ -37,62 +44,19 @@
 				<!--订单表格 （无匹配订单）-->
 				<div class="tab-content">
 					{{ if(it.data.length>0){ }}
-						{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == '0'){ }}
-								<div class="all-select-panel no-top-border mb15 clearfix" >
-									<div class="all-check-box">
-										<div id="all" data-id='83' class="checkbox checkbox-normal"></div>
-										<span>全选</span>
-									</div>
-									<div class="all-check-box">
-										创建新逾期客户<strong class="">{{= it.page.total}}</strong>人
-									</div>
-								</div>
-							{{ }else if(item.status == '1'){ }}
-								<div class="all-select-panel no-top-border mb15 clearfix" >
-									<div class="all-check-box">
-										手动匹配订单<strong class="">{{= it.page.total}}</strong>个
-									</div>
-								</div>
-							{{ }else if(item.status == '2'){ }}
-								<div class="all-select-panel no-top-border mb15 clearfix" >
-									<div class="all-check-box">
-										匹配成功<strong class="">{{= it.page.total}}</strong>条
-									</div>
-								</div>
-							{{ }else if(item.status == '3'){ }}
-								<div class="all-select-panel no-top-border mb15 clearfix" >
-									<div class="all-check-box">
-										逾期将结清<strong class="">{{= it.page.total}}</strong>条
-									</div>
-								</div>
-							{{ } }} 
+						{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i]; }}
 							<table class="expire-orders-table" id="list" width="100%">
 								<thead class="expire-title">
 									<tr>
-										{{ if(item.status != '1'){ }}
-											<td colspan="3">
-												{{ if(item.status == '0'){ }}
-													<div id="onlyCheck" data-id = "{{= item.detailId}}" class="checkbox checkbox-normal"></div>
-												{{ } }} 
-												<i class="iconfont iconfont-man">&#xe656;</i>
-												<span class="userName">{{= item.userName}}</span>
-												<span>{{= item.idCard}}</span>
-												<div class="key-value-box clearfix">
-													<span class="key">解析时间：</span>
-													<span class="value">{{= item.createDate}}</span>
-												</div>
-											</td>
-										{{ }else{ }}
-											<td colspan="4">
-												<i class="iconfont iconfont-man">&#xe656;</i>
-												<span class="userName">{{= item.userName}}</span>
-												<span>{{= item.idCard}}</span>
-												<div class="key-value-box clearfix">
-													<span class="key">解析时间：</span>
-													<span class="value">{{= item.createDate}}</span>
-												</div>
-											</td>
-										{{ } }} 
+										<td colspan="4">
+											<i class="iconfont iconfont-man">&#xe656;</i>
+											<span class="userName">{{= item.userName}}</span>
+											<span>{{= item.idCard}}</span>
+											<div class="key-value-box clearfix">
+												<span class="key">解析时间：</span>
+												<span class="value">{{= item.createDate}}</span>
+											</div>
+										</td>
 									</tr>
 								</thead>
 								<tbody class="expire-content">
@@ -141,17 +105,15 @@
 												</tr>
 											</table>
 										</td>
-										{{if(item.status == '1'){}}
-											<td class="expire-content-item" style="vertical-align: middle;">
-												<table class="table-inner">
-													<tr class="table-inner-tr">
-														<td>
-															<div class="button button-mini chooseOrder">选择订单</div>
-														</td>
-													</tr>
-												</table>
-											</td>
-										{{ } }} 
+										<td class="expire-content-item" style="vertical-align: middle;">
+											<table class="table-inner">
+												<tr class="table-inner-tr">
+													<td>
+														<div class="button button-mini chooseOrder">确认并更新</div>
+													</td>
+												</tr>
+											</table>
+										</td>
 									</tr>
 								</tbody>
 							</table>

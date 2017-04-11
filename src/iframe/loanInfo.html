@@ -117,7 +117,7 @@
 																{{ } }} 
 																{{= seg.name}}：</span>
 														</td>
-														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'sex' || detailCode == 'isDiscount' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship' || detailCode == 'relationship'){ }}
+														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'sex' || detailCode == 'isDiscount' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship'){ }}
 															<td>
 																{{ if(row[detailCode] || row[detailCode] == '0'){ }}
 																	<div data-key="{{= detailCode}}" data-selected="{{= row[detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
@@ -261,14 +261,13 @@
 																：</span>
 														</td>
 														<td>
-															{{ if(row.relationship || row.relationship == '0'){ }}
-																<div data-key="relationship" data-selected="{{= row.relationship}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
-																<input type="hidden" name="relationship"  value="{{= row.relationship}}" />
-															{{ }else{ }}
-																<div data-key="relationship" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
-																<input type="hidden" name="relationship" />
-															{{ } }}
-														</td>
+															<span class="info-value">
+																{{ if(row.relationship){ }}
+																	<input type="text" name="relationship" value="{{= row.relationship}}" />
+																{{ }else{ }}
+																	<input type="text" name="relationship" />
+																{{ } }}
+															</span>
 													</tr>
 												</table>
 											</div>
@@ -357,7 +356,7 @@
 																{{ } }} 
 																{{= seg.name}}：</span>
 														</td>
-														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'sex' || detailCode == 'isDiscount' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship' || detailCode == 'relationship'){ }}
+														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'sex' || detailCode == 'isDiscount' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
@@ -672,7 +671,7 @@
 																{{ } }} 
 																{{= seg.name}}：</span>
 														</td>
-														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'sex' || detailCode == 'isDiscount' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship' || detailCode == 'relationship'){ }}
+														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'sex' || detailCode == 'isDiscount' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>

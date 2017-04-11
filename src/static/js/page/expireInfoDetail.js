@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('expireInfoPrev', [], function($scope) {
+page.ctrl('expireInfoDetail', [], function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
@@ -183,7 +183,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 											data: data,
 											dataType: 'json',
 											success: $http.ok(function(xhr) {
-												router.render('expire/expireInfoDetail', {
+												router.render('expire/importHistory', {
 													importId: $scope.iptId, 
 													path: 'expire'
 												});
@@ -289,7 +289,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	$console.load(router.template('iframe/expire-info-prev'), function() {
+	$console.load(router.template('iframe/expire-info-detail'), function() {
 		$scope.def.listTmpl = render.$console.find('#expireInfoPrevTmpl').html();
 		$scope.def.orderDetailTmpl = render.$console.find('#chooseOrderTmpl').html();
 		$scope.def.scrollBarTmpl = render.$console.find('#scrollBarTmpl').html();

@@ -1,11 +1,10 @@
 'use strict';
 page.ctrl('expireProcessDetail', [], function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
+			pageNum: $params.pageNum || 1,
+			process: $params.process || ''
 		};
 	/**
 	 *逾期处理意见 
@@ -15,7 +14,8 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 	*/
 	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.expireProcess,
+			url: urlStr + '/loanOverdueOrder/overdueOrderList',
+//			url: $http.api('loanOverdueOrder/overdueOrderList','jbs'),
 			data: params,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
@@ -67,7 +67,7 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('expire-process-detail'), function() {
+	render.$console.load(router.template('iframe/expire-process-detail'), function() {
 		$scope.def.listTmpl = render.$console.find('#expireProcessDetailTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#expireProcessDetailTable'),
