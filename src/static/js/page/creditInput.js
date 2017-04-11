@@ -2,6 +2,11 @@
 page.ctrl('creditInput', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params;
+	$scope.userMap = {
+		0: '借款人',
+		1: '共同还款人',
+		2: '反担保人'
+	};
 	$scope.tabs = {};
 	$scope.idx = 0;
 	$scope.apiParams = [];
@@ -410,22 +415,136 @@ page.ctrl('creditInput', [], function($scope) {
 
 
 	/**
-	 * 保存征信结果录入数据
+	 * 检测当前字段是否必填
+	 * @param  {string} j     被检测字段的key
+	 * @param  {object} item  被检测字段
+	 * @return {boolean}      必填返回true, 非必填返回false
+	 */
+	function verify(j, item) {
+		var isEmpty = false;
+		for(var k = 0, len2 = $scope.result.cfgData.frames[0].sections[item.userType].segments.length; k < len2; k++) {
+			var list = $scope.result.cfgData.frames[0].sections[item.userType].segments[k];
+			if(j == 'loanCreditReportList') {
+				if(list.code == 'ZXBGP' && !list.empty) {
+					isEmpty = true;
+				}
+			} else if(j == 'loanCreditResultList') {
+				if(list.code == 'ZXZD' && !list.empty) {
+					isEmpty = true;
+				}
+			} else {
+				if(list.code == j && !list.empty) {
+					isEmpty = true;
+				}
+			}
+		}
+		return isEmpty;
+	}
+
+
+	/**
+	 * 保存征信结果录入数据（带校验）
 	 */
 	var saveData = function(cb) {
-		$.ajax({
-			type: 'post',
-			url: $http.api('creditUser/updCreditList/' + $params.taskId, 'jbs'),
-			data: JSON.stringify($scope.apiParams),
-			dataType: 'json',
-			contentType: 'application/json;charset=utf-8',
-			success: $http.ok(function(result) {
-				console.log(result);
-				if(cb && typeof cb == 'function') {
-					cb();
+		var _alert = '';
+		for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+			var item = $scope.apiParams[i],
+				flag = true;
+			console.log(item)
+			for(var j in item) {
+				if(j == 'creditLevel' && !item[j]) {
+					_alert = '请选择' + $scope.userMap[item.userType] + '的征信是否合格！';
+					flag = false;
+					break;
+				}
+			}
+			if(!flag) break;
+			for(var j in item) {
+				if(j == 'creditReportFile' && !item[j]) {
+					_alert = '请上传' + $scope.userMap[item.userType] + '的征信报告文件！';
+					flag = false;
+					break;
+				}
+			}
+			if(!flag) break;
+			for(var j in item) {
+				if(j == 'creditReportId') {
+					//若征信报告编号必填且为空-->
+					if(verify(j, item) && !item[j]) {
+						_alert = '请填写' + $scope.userMap[item.userType] + '的征信报告编号！';
+						flag = false;
+						break;
+					}
+				}
+			}
+			if(!flag) break;
+			for(var j in item) {
+				if(j == 'loanCreditReportList') {
+					//若征信报告照片字段必填且为空-->
+					if(verify(j, item) && item[j].length == 0) {
+						_alert = '请至少上传一张' + $scope.userMap[item.userType] + '的征信报告图片！';
+						flag = false;
+						break;
+					}
+				}
+			}
+			if(!flag) break;
+			for(var j in item) {
+				if(j == 'loanCreditResultList') {
+					//若征信字段必填且为空-->
+					var num = 0;
+					for(var m = 0, len3 = item[j].length; m < len3; m++) {
+						if(!item[j][m].creditVal) {
+							num++;
+						}
+					}
+					if(num > 0) {
+						_alert = '请完善' + $scope.userMap[item.userType] + '的征信字段！';
+						flag = false;
+						break;
+					}
+				}
+			}
+			if(!flag) break;
+			for(var j in item) {
+				if(j == 'remark' && !item[j]) {
+					_alert = '请填写' + $scope.userMap[item.userType] + '的备注信息！';
+					flag = false;
+					break;
+				}
+			}
+			if(!flag) break;
+		}
+		if(!_alert) {
+			console.log($scope.apiParams);
+			$.ajax({
+				type: 'post',
+				url: $http.api('creditUser/updCreditList/' + $params.taskId, 'jbs'),
+				data: JSON.stringify($scope.apiParams),
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				success: $http.ok(function(result) {
+					console.log(result);
+					if(cb && typeof cb == 'function') {
+						cb();
+					}
+				})
+			})
+		} else {
+			$.alert({
+				title: '提示',
+				content: tool.alert(_alert),
+				buttons: {
+					ok: {
+						text: '确定',
+						action: function () {
+							console.log($scope.apiParams);
+						}
+					}
 				}
 			})
-		})
+			return false;
+		}
 	}
 
 	/**
@@ -434,10 +553,17 @@ page.ctrl('creditInput', [], function($scope) {
 	var initApiParams = function() {
 		for(var i in $scope.result.data.creditUsers) {
 			for(var j = 0, len2 = $scope.result.data.creditUsers[i].length; j < len2; j++) {
-				var item = $scope.result.data.creditUsers[i][j];
+				var row = $scope.result.data.creditUsers[i][j],
+					item = $scope.result.data.creditUsers[i][j];
+				item.creditLevel = row.creditLevel || '';
+				item.creditReportFile = row.creditReportFile || '';
+				item.creditReportId = row.creditReportId || '';
+				item.remark = row.remark || '';
+				item.idx = j;
 				$scope.apiParams.push(item);
 			}
 		}
+		console.log($scope.apiParams)
 	}
 
 	/***
@@ -468,6 +594,23 @@ page.ctrl('creditInput', [], function($scope) {
 		// loadOrderInfo($scope.idx);
 		self.$el.remove();
 		pictureListen(self);
+		//重置带保存参数里的征信报告图片（loanCreditReportList）
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditUser/getCreditInfo', 'jbs'),
+			data: {
+				taskId: $params.taskId
+			},
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				debugger
+				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+					if($scope.apiParams[i].userType == $scope.idx) {
+						$scope.apiParams[i].loanCreditReportList = result.data.creditUsers[$scope.idx][$scope.apiParams[i].idx];
+					}
+				}
+			})
+		})
 	}
 	/**
 	 * 监听其它材料最后一个控件的名称
@@ -491,6 +634,22 @@ page.ctrl('creditInput', [], function($scope) {
 		self.$el.after(self.outerHTML);
 		pictureListen(self);
 		self.$el.next().imgUpload();
+		//重置带保存参数里的征信报告图片（loanCreditReportList）
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditUser/getCreditInfo', 'jbs'),
+			data: {
+				taskId: $params.taskId
+			},
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+					if($scope.apiParams[i].userType == $scope.idx) {
+						$scope.apiParams[i].loanCreditReportList = result.data.creditUsers[$scope.idx][$scope.apiParams[i].idx].loanCreditReportList;
+					}
+				}
+			})
+		})
 	}
 
 

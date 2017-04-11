@@ -252,11 +252,11 @@ page.ctrl('openCardSheet', function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
-			process();
+			// process();
 			//先保存数据再提交订单
-			// saveData(function() {
-			// 	process();
-			// });
+			saveData(function() {
+				process();
+			});
 		})
 	}
 
