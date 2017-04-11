@@ -4,7 +4,7 @@
 	function Todo($el) {
 		this.$el = $el;
 		this.opts = {
-			timeout: 100000,
+			timeout: 5000,
 			animation: 200
 		}
 		this.items = {};
@@ -110,13 +110,11 @@
 
 	Todo.prototype.connect = function(immediately) {
 		var self = this;
+
 		function internal(e) {
 			$.ajax({
 				url: 'http://localhost:8083/mock/todo?t='+new Date(),
-				beforeSend: function(xhr) {
-					xhr.closeLoading = true;
-					return true;
-				},
+				global: false,
 				success: function(xhr) {
 					if(!xhr.code && xhr.data) {
 						e.addItems(xhr.data);
