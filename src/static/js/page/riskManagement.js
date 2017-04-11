@@ -72,8 +72,7 @@ page.ctrl('riskManagement', function($scope) {
 			});
 		});
 		/*饼图start*/
-	    //var echarts = require('echarts');
-		//var myChart = echarts.init(document.getElementById('piechart'));
+		var myChart = echarts.init(document.getElementById('piechart'));
 		var option = {
 		    title : {
 		        text: '某站点用户访问来源',
@@ -112,7 +111,7 @@ page.ctrl('riskManagement', function($scope) {
 		        }
 		    ]
 		};
-		//myChart.setOption(option);
+		myChart.setOption(option);
 		/*饼图end*/
  	};
 	// 加载页面模板
