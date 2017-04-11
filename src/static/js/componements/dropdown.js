@@ -162,10 +162,10 @@
 						bankName: bankName
 					}
 				}
-				self.onDropdown(self.picked);
 				if(inputItem){
 					inputItem.val(id)
 				}
+				self.onDropdown(self.picked);
 				self.close(true);
 			} else {
 				self.picked[self.opts.tabs[self.actionIdx]] = {
@@ -174,10 +174,10 @@
 				}
 				//选中最后一级，也关闭
 				if(self.actionIdx == self.opts.tabs.length - 1) {
-					self.onDropdown(self.picked);
 					if(inputItem){
 						inputItem.val(id)
 					}
+					self.onDropdown(self.picked);
 					self.close(true);
 				} else {
 					self.$tabs.eq(self.actionIdx).removeClass('select-tab-item-active');

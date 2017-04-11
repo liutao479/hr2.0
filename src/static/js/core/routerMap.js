@@ -125,6 +125,21 @@
 			refer: [],
 			page: 'expireInfoInput'
 		},
+		'expire/expireInfoInput': {
+			title: '逾期信息批量导入',
+			refer: [],
+			page: 'expireInfoInput'
+		},
+		'expire/expireInfoPrev': {
+			title: '逾期信息导入详情',
+			refer: [],
+			page: 'expireInfoPrev'
+		},
+		'expire/expireInfoSingle': {
+			title: '逾期信息单笔录入',
+			refer: [],
+			page: 'expireInfoInputSingle'
+		},
 		'expireProcess': {
 			title: '逾期处理',
 			refer: [],
