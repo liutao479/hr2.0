@@ -38,15 +38,6 @@ page.ctrl('loan', function($scope) {
 				}  
 			})
 		})
-
-		$.ajax({
-			type: 'post',
-			dataType:"json",
-			url: $http.api('func/list', 'jbs'),
-			success: $http.ok(function(result) {
-				console.log(result);
-			})
-		})
 	}
 	/**
 	* 构造分页
@@ -58,6 +49,36 @@ page.ctrl('loan', function($scope) {
 			size: apiParams.pageSize
 		});
 		$('#pageToolbar').paging();
+	}
+
+	/**
+	 * 新建业务
+	 */
+	var setupNewOrder = function() {
+		var tml = '<div class="button button-deep" id="newBusiness" data-href="loanProcess/newBusiness">\
+					<i class="iconfont">&#xe615;</i>新建业务\
+				</div>';
+		$.ajax({
+			type: 'post',
+			dataType:"json",
+			url: $http.api('func/list', 'jbs'),
+			success: $http.ok(function(result) {
+				console.log(result);
+				for(var i = 0, len = result.data.length; i < len; i++) {
+					if(result.data[i].funcId == 'newOrder') {
+						$console.find('.search-bar').append(tml);
+						// 新建业务
+						$console.find('#newBusiness').on('click', function() {
+							var that = $(this);
+							router.render(that.data('href'), {
+								path: 'loanProcess'
+							});
+						})
+						break;
+					}
+				}
+			})
+		})
 	}
 
 	/**
@@ -174,17 +195,7 @@ page.ctrl('loan', function($scope) {
 			loadLoanList(apiParams, function() {
 				delete apiParams.fuzzyParam;
 			});
-		});
-
-		// 新建业务
-		$console.find('#newBusiness').on('click', function() {
-			var that = $(this);
-			router.render(that.data('href'), {
-				path: 'loanProcess'
-			});
-		})
-
-		
+		});		
  	}
  	
 	/***
@@ -206,6 +217,7 @@ page.ctrl('loan', function($scope) {
 		});
 		setupDatepicker();
 		setupDropDown();
+		setupNewOrder();
 	});
 
 	$scope.paging = function(_page, _size, $el, cb) {
