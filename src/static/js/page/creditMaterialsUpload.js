@@ -293,18 +293,26 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	function saveData(cb) {
 		var _alert = '';
 		for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-			var item = $scope.apiParams[i];
+			var item = $scope.apiParams[i],
+				flag = true;
 			for(var j in item) {
 				if(j == 'idCard' && !item[j]) {
 					_alert += '请填写' + $scope.userMap[item.userType] + '的身份证号！<br/>';
+					flag = false;
+					break;
 				}
 				if(j == 'userName' && !item[j]) {
 					_alert += '请填写' + $scope.userMap[item.userType] + '的姓名！<br/>';
+					flag = false;
+					break;
 				}
 				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType != 0) {
 					_alert += '请选择' + $scope.userMap[item.userType] + '与借款人的关系！<br/>';
+					flag = false;
+					break;
 				}
 			}
+			if(!flag) break;
 		}
 		if(!_alert) {
 			$.ajax({
