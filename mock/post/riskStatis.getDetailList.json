@@ -1,0 +1,47 @@
+{
+	"code": 0,
+	"msg":"success",
+	"data":{
+		"headerInfo":{
+			"startDate":"2017-01-01",
+			"endDate":"2017-01-31",
+			"bankCode":"4353",			
+			"deptId":"353",	
+			"totalCallNum":"453",	
+			"totalServiceAmt":"22343",	
+			"serviceName":"购车发票核查",	
+			"orderNum":"754"	
+		}
+	},
+	"list":[
+		{
+			"orderNo":"or001",
+			"createTime":"2016-12-23",
+			"borrower":"张三",			
+			"manageBank":"中国银行",					
+			"isBankVery":"0",					
+			"serviceFee":"23235",					
+			"verifyNum":"353",					
+			"latestVerifyTime":"2016-12-30",					
+			"submitBy":"admin"					
+		},
+		{
+			"orderNo":"or002",
+			"createTime":"2016-12-24",
+			"borrower":"张三丰",			
+			"manageBank":"杭州银行",					
+			"isBankVery":"1",					
+			"serviceFee":"453",					
+			"verifyNum":"23546",			
+			"latestVerifyTime":"2016-12-30",					
+			"submitBy":"admin"					
+		}
+	],
+    "page":{
+        "pageNum":1,
+        "pageSize":2,
+        "pages":3,
+        "startRow":0,
+        "total":5
+    }
+}

@@ -1,0 +1,125 @@
+<!--历史核查记录-->
+<div class="container history-inspect" id="history-inspect">
+	<div class="select-search-bar clearfix">
+		<div class="search-item">
+			<span class="select-name">查询时间：</span>
+			<div class="input-text input-date-mini">
+				<input id="dateStart" type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="" />	
+			</div>
+			<span class="separator">-</span>
+			<div class="input-text input-date-mini">
+				<input id="dateEnd" type="text" class="dateBtn" data-min="dateStart" readonly="readonly" value="" />	
+			</div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">查询方式：</span>
+			<div class="select select-common" data-dropdown="page.$scope['historyInspect'].TypePicker" data-trigger="page.$scope['historyInspect'].dropdownTrigger.TypeSel"></div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">查询状态：</span>
+			<div class="select select-common" data-dropdown="page.$scope['historyInspect'].statusPicker" data-trigger="page.$scope['historyInspect'].dropdownTrigger.statusSel"></div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">经办银行：</span>
+			<div class="select select-common" data-dropdown="page.$scope['historyInspect'].bankPicker" data-trigger="page.$scope['historyInspect'].dropdownTrigger.demandBank"></div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">进件车商：</span>
+			<div class="select select-common" data-dropdown="page.$scope['historyInspect'].dealerPicker" data-trigger="page.$scope['historyInspect'].dropdownTrigger.dealerSel"></div>
+		</div>
+		<div class="search-item">
+			<div class="input-text">
+				<input type="text" autocomplete="off" id="searchInput" placeholder="订单号\借款人姓名\身份证号" />
+			</div>
+		</div>
+		<div class="search-item">
+			<a href="javascript:;" id="search-reset">重置</a>
+			<div id="search" class="button button-mini button-deep">搜索</div>
+		</div>		
+	</div>	
+	<!--tab切换栏-->
+	<div class="tab-bar mt15">
+		<ul class="role-bar-ul clearfix">
+			<li class="role-bar-li" data-type="3"><a href="javascript:;" class="role-item role-item-active">法院记录</a></li>
+			<li class="role-bar-li" data-type="5"><a href="javascript:;" class="role-item">购车发票信息</a></li>
+			<li class="role-bar-li" data-type="1"><a href="javascript:;" class="role-item">登记证状态</a></li>
+			<li class="role-bar-li" data-type="6"><a href="javascript:;" class="role-item">网贷记录</a></li>
+			<li class="role-bar-li" data-type="4"><a href="javascript:;" class="role-item">公安信息</a></li>
+			<li class="role-bar-li" data-type="2"><a href="javascript:;" class="role-item">抵押记录</a></li>
+		</ul>
+	</div>
+	<!--tab切换栏 end-->
+	<div id="tableContext"></div>
+</div>
+<!--历史核查记录 end-->
+
+<!-- 分页插件 -->
+<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['historyInspect'].paging" data-pages="1" data-current="1"></div>
+<!-- 分页插件 end-->
+<script type="text/x-dot-template" id="historyInspectTmpl">
+	{{ var len = it.length; if(len) { }}
+		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+			<table class="expire-orders-table" width="100%">
+				<thead class="expire-title">
+					<tr>
+						<td colspan="3">
+							<span class="userName">{{= item.userName}}</span>
+							<span>{{= item.orderId}}</span>
+							<div class="key-value-box clearfix">
+								<span class="key">查询时间：</span>
+								<span class="value">{{= item.createDate}}</span>
+							</div>
+						</td>
+					</tr>
+				</thead>
+				<tbody class="expire-content">
+					<tr class="expire-content-tr">
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">经办银行：</td>
+									<td class="value">{{= item.bankName}}</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">进件车商：</td>
+									<td class="value">{{= item.carDealer}}</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">放贷日期：</td>
+									<td class="value">{{= item.giveMoneyTime}}</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">分期金额：</td>
+									<td class="value">{{= item.stageMoney}}</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">结果返回时间：</td>
+									<td class="value">{{= item.backTime}}</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item expire-content-item-last">
+							{{if(item.status==1){}}
+							<a class="button button-mini button-gray godetail" data-href="historyInspectDetail">查看详情</a>
+							{{}else{}}
+							结果还未返回
+							{{}}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		{{ } }}
+	{{ } else { }}
+		<div class="layout">
+			<div class="blank-box">
+				<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+				<p>暂无待办任务！</p>
+			</div>
+		</div>
+	{{ } }}
+</script>
+				

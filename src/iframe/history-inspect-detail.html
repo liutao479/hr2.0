@@ -1,0 +1,304 @@
+<!--历史核查记录详情-->
+<div class="container history-inspect-detail" id="history-inspect-detail">
+	<div class="path-back-bar">
+		<div class="path-back">
+			<i class="iconfont">&#xe626;</i>
+			<a href="#historyInspect">历史核查记录</a>&nbsp;&gt;
+			<span class="current-page"></span>
+		</div>
+	</div>
+	<div id="tableContext"></div>
+</div>
+<!--历史核查记录详情 end-->
+
+<!--登记证状态-->
+<script type="text/x-dot-template" id="Registration">
+	<div class="panel mt15 clearfix">
+		<div class="panel-title-box">
+			<div class="panel-title">
+				<i class="iconfont">&#xe6cc;</i>
+				<span class="panel-title-name">登记证状态</span>
+			</div>
+		</div>
+		<div class="panel-content clearfix">
+			<div class="message-area">
+				<div class="message-panel">
+					{{ var len = it.length; if(len) { }}
+						{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+							<div class="message-item mt15">
+								<div class="button button-mini button-deep">记录{{=i+1}}</div>
+								<div>牌照号：{{=item.licenseplate}}</div>
+								<div>发动机号：{{=item.engineNumber}}</div>
+								<div>查询状态：
+									{{if(item.status==1){}}
+										正常
+									{{}else{}}
+										异常
+									{{}}}
+								</div>
+							</div>
+						{{ } }}
+					{{ } else { }}
+						<div class="layout">
+							<div class="blank-box">
+								<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="暂无登记证状态！" title="暂无登记证状态！">
+								<p>暂无登记证状态！</p>
+							</div>
+						</div>
+					{{ } }}
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<!--抵押记录-->
+<script type="text/x-dot-template" id="MortgageRecord">
+	<div class="panel mt15 clearfix">
+		<div class="panel-title-box">
+			<div class="panel-title">
+				<i class="iconfont">&#xe642;</i>
+				<span class="panel-title-name">抵押记录</span>
+			</div>
+		</div>
+		<div class="panel-content clearfix">
+			<div class="col-l-total">
+				<div class="col-l-two">
+					<ul>
+						<li><span class="key">项目：</span>{{=it.msg.project}}</li>
+						<li><span class="key">抵押登记日期：</span>{{=it.msg.time}}</li>
+					</ul>
+				</div>
+				<div class="col-l-two">
+					<ul>
+						<li><span class="key">抵押权人：</span>{{=it.msg.bank}}</li>
+						<li>
+							<span class="key">抵押标记：</span>
+							{{if(it.msg.status==1){}}
+								已抵押
+							{{}else{}}
+								未抵押
+							{{ }}}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel mt15 clearfix">
+		<div class="panel-title-box">
+			<div class="panel-title">
+				<i class="iconfont">&#xe665;</i>
+				<span class="panel-title-name">车辆信息</span>
+			</div>
+		</div>
+		<div class="panel-content clearfix">
+			<div class="col-l-total">
+				<div class="col-l-two">
+					<ul>
+						<li><span class="key">项目：</span>{{=it.info.project}}</li>
+						<li><span class="key">车牌号码：</span>{{=it.info.licenseplate}}</li>
+						<li>
+							<span class="key">抵押标记：</span>
+							{{if(it.info.status==1){}}
+								已抵押
+							{{}else{}}
+								未抵押
+							{{ }}}
+						</li>
+						<li><span class="key">机动车所有人：</span>{{=it.info.usename}}</li>
+						<li><span class="key">联系电话：</span>{{=it.info.phone}}</li>
+						<li><span class="key">登记住所：</span>{{=it.info.address}}</li>
+						<li><span class="key">出厂日期：</span>{{=it.info.outpctime}}</li>
+					</ul>
+				</div>
+				<div class="col-l-two">
+					<ul>
+						<li><span class="key">初次登记日期：</span>{{=it.info.gradetime}}</li>
+						<li><span class="key">初次登记日期：</span>{{=it.info.gradetime}}</li>
+						<li><span class="key">检验有效期止：</span>{{=it.info.checktime}}</li>
+						<li><span class="key">保险终止日期：</span>{{=it.info.insurancetime}}</li>
+						<li>
+							<span class="key">是否事故逃逸：</span>
+							{{if(it.info.isAccidentEscape){}}
+								是
+							{{}else{}}
+								否
+							{{ }}}
+						</li>
+						<li>
+							<span class="key">是否套牌车：</span>
+							{{if(it.info.isDeck){}}
+								是
+							{{}else{}}
+								否
+							{{ }}}
+						</li>
+						<li>
+							<span class="key">是否盗抢车：</span>
+							{{if(it.info.isSteal){}}
+								是
+							{{}else{}}
+								否
+							{{ }}}
+						</li>
+						<li><span class="key">合格标志编号：</span>{{=it.info.QualifiedNumber}}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>	
+</script>
+
+<!--法院记录-->
+<script type="text/x-dot-template" id="CourtRecord">
+	<div class="panel mt15 clearfix">
+		<div class="panel-title-box">
+			<div class="panel-title">
+				<i class="iconfont">&#xe6a5;</i>
+				<span class="panel-title-name">法院记录</span>
+			</div>
+		</div>
+		<div class="panel-content clearfix">
+			{{ var len = it.length; if(len) { }}
+				{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+					<div class="col-l-total mt30"><div class="button button-mini button-deep">记录{{=i+1}}</div></div>	
+					{{if(len>1&&i<len-1){}}
+						<div class="col-l-total btdashed">
+					{{}else{}}
+						<div class="col-l-total">
+					{{}}}	
+						<div class="col-l-two">
+							<ul>
+								<li><span class="key">被执行人姓名：</span>{{=item.info.project}}</li>
+								<li><span class="key">性别：</span>{{=item.info.licenseplate}}</li>
+								<li><span class="key">身份证号码：</span>{{=item.info.licenseplate}}</li>
+								<li><span class="key">执行法院：</span>{{=item.info.usename}}</li>
+								<li><span class="key">省份：</span>{{=item.info.phone}}</li>
+								<li><span class="key">执行依据文号：</span>{{=item.info.address}}</li>
+								<li><span class="key">立案时间：</span>{{=item.info.outpctime}}</li>
+								<li><span class="key">案号：</span>{{=item.info.outpctime}}</li>
+							</ul>
+						</div>
+						<div class="col-l-two">
+							<ul>
+								<li><span class="key">执行标的：</span>{{=item.info.gradetime}}</li>
+								<li><span class="key">执行状态：</span>{{=item.info.gradetime}}</li>
+								<li><span class="key">做出执行依据单位：</span>{{=item.info.checktime}}</li>
+								<li><span class="key">做出生效法律文书确定义务：</span>{{=item.info.insurancetime}}</li>
+								<li><span class="key">被执行人的履行性质：</span>{{=item.info.insurancetime}}</li>
+								<li><span class="key">失信被执行人行为具体情形：</span>{{=item.info.QualifiedNumber}}</li>
+							</ul>
+						</div>
+					</div>
+				{{}}}
+			{{}}}
+		</div>
+	</div>		
+</script>
+
+<!--公安信息-->
+<script type="text/x-dot-template" id="PoliceInformation">	
+	<div class="panel mt15 clearfix">
+		<div class="panel-title-box">
+			<div class="panel-title">
+				<i class="iconfont">&#xe661;</i>
+				<span class="panel-title-name">公安信息</span>
+			</div>
+		</div>
+		<div class="panel-content clearfix">
+			<div class="col-l-total">
+				<div class="col-l-two">
+					<ul>
+						<li class="title"><b>张三</b>353547574647657</li>
+						<li><span class="key">命中前科：</span>2017/01/01</li>
+						<li><span class="key">命中前科、吸毒：</span>2017/01/01</li>
+						<li><span class="key">命中吸毒：</span>2017/01/01</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>	
+</script>
+
+
+<!--购车发票信息-->
+<script type="text/x-dot-template" id="InvoiceInformation">
+	<div class="panel mt15 clearfix">
+		<div class="panel-title-box">
+			<div class="panel-title">
+				<i class="iconfont">&#xe676;</i>
+				<span class="panel-title-name">购车发票信息</span>
+			</div>
+		</div>
+		<div class="panel-content clearfix">
+			{{ var len = it.length; if(len) { }}
+				{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+					<div class="col-l-total mt30"><div class="button button-mini button-deep">记录{{=i+1}}</div></div>	
+					{{if(len>1&&i<len-1){}}
+						<div class="col-l-total btdashed">
+					{{}else{}}
+						<div class="col-l-total">
+					{{}}}	
+						<div class="col-l-two">
+							<ul>
+								<li><span class="key">发票种类：</span>{{=item.info.project}}</li>
+								<li><span class="key">日期：</span>{{=item.info.licenseplate}}</li>
+								<li><span class="key">发票代码：</span>{{=item.info.usename}}</li>
+								<li><span class="key">发票号码：</span>{{=item.info.phone}}</li>
+								<li><span class="key">发票金额：</span>{{=item.info.address}}</li>
+							</ul>
+						</div>
+						<div class="col-l-two">
+							<ul>
+								<li><span class="key">开票人名称：</span>{{=item.info.gradetime}}</li>
+								<li><span class="key">购货方名称：</span>{{=item.info.gradetime}}</li>
+								<li><span class="key">购货方税号：</span>{{=item.info.checktime}}</li>
+								<li><span class="key">发票状态：</span>{{=item.info.insurancetime}}</li>
+							</ul>
+						</div>
+					</div>
+				{{}}}
+			{{}}}
+		</div>
+	</div>	
+</script>
+
+<!--网贷记录-->
+<script type="text/x-dot-template" id="NetLoanRecord">
+	<div class="panel mt15 clearfix">
+		<div class="panel-title-box">
+			<div class="panel-title">
+				<i class="iconfont">&#xe666;</i>
+				<span class="panel-title-name">网贷记录</span>
+			</div>
+		</div>
+		<div class="panel-content clearfix">
+			{{ var len = it.length; if(len) { }}
+				{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+					<div class="col-l-total mt30"><div class="button button-mini button-deep">记录{{=i+1}}</div></div>	
+					{{if(len>1&&i<len-1){}}
+						<div class="col-l-total btdashed">
+					{{}else{}}
+						<div class="col-l-total">
+					{{}}}	
+						<table class="netloan">
+							<tr>
+								<td><span>2</span>次</td>
+								<td><span>4</span>次</td>
+								<td><span>6</span>次</td>
+								<td><span>10</span>次</td>
+							</tr>
+							<tr class="key">
+								<td>1个月内</td>
+								<td>3个月内</td>
+								<td>6个月内</td>
+								<td>12个月内</td>
+							</tr>
+						</table>
+					</div>
+				{{}}}
+			{{}}}
+		</div>
+	</div>		
+</script>

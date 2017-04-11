@@ -82,9 +82,9 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 	var loadCommitBar = function(cb) {
 		var buttons = {
 			"submit": false,
-			"back": true,
+			"back": '退回订单',
 			"cancel": false,
-			"verify": true
+			"verify": '审核通过'
 		};
 		var $commitBar = $console.find('#commitPanel');
 		$commitBar.data({

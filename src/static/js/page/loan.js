@@ -38,6 +38,15 @@ page.ctrl('loan', function($scope) {
 				}  
 			})
 		})
+
+		$.ajax({
+			type: 'post',
+			dataType:"json",
+			url: $http.api('func/list', 'jbs'),
+			success: $http.ok(function(result) {
+				console.log(result);
+			})
+		})
 	}
 	/**
 	* 构造分页
@@ -148,7 +157,9 @@ page.ctrl('loan', function($scope) {
 				}
 				apiParams.fuzzyParam = searchText;
 				apiParams.pageNum = 1;
-				loadLoanList(apiParams);
+				loadLoanList(apiParams, function() {
+					that.blur();
+				});
 			}
 		});
 		$console.find('#search .iconfont').on('click', function() {

@@ -164,7 +164,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	* 设置面包屑
 	*/
 	var setupLocation = function() {
-		if(!$scope.$params.path) return false;
+		if(!$params.path) return false;
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
@@ -293,18 +293,26 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	function saveData(cb) {
 		var _alert = '';
 		for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-			var item = $scope.apiParams[i];
+			var item = $scope.apiParams[i],
+				flag = true;
 			for(var j in item) {
 				if(j == 'idCard' && !item[j]) {
 					_alert += '请填写' + $scope.userMap[item.userType] + '的身份证号！<br/>';
+					flag = false;
+					break;
 				}
 				if(j == 'userName' && !item[j]) {
 					_alert += '请填写' + $scope.userMap[item.userType] + '的姓名！<br/>';
+					flag = false;
+					break;
 				}
 				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType != 0) {
 					_alert += '请选择' + $scope.userMap[item.userType] + '与借款人的关系！<br/>';
+					flag = false;
+					break;
 				}
 			}
+			if(!flag) break;
 		}
 		if(!_alert) {
 			$.ajax({
@@ -610,7 +618,30 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	/**
 	 * 上传图片数据回调
 	 */
-	$scope.uploadcb = $scope.deletecb = function(self, xhr) {
+	$scope.uploadcb = function(self, xhr) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('materials/ocr', true),
+			data: {
+				materialsId: xhr.data.id
+			},
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result)
+				$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-name input').val(result.data.userName);
+				$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-idc input').val(result.data.idCard);
+				
+				$scope.currentType = 0;
+				loadOrderInfo($scope.currentType, function() {
+					setupCreditBank();
+					setupLocation();
+					initApiParams();
+					evt();
+				});
+			})
+		});
+	}
+	$scope.deletecb = function(self, xhr) {
 		if(xhr.data.refresh) {
 			$scope.currentType = 0;
 			loadOrderInfo($scope.currentType, function() {
@@ -619,7 +650,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				evt();
 			});
 		}
-		
 	}
 
 	/**

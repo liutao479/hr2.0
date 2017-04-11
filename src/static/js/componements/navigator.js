@@ -59,7 +59,7 @@ $(function() {
 	*/
 	NavComponent.prototype.__addListener = function() {
 		var self = this;
-
+		
 		self.$panel.find('.navEvt').on('click', function() {
 			var $this = $(this),
 				key = $this.data('id');
@@ -129,13 +129,15 @@ $(function() {
 		if(!acc || !pwd) {
 			return $err.html('账号或密码不能为空').show();
 		}
+		debugger
 		$.ajax({
-			url: $http.api('operator/doLogin'),
+			url: $http.api('login/doLogin', true),
 			type: 'post',
 			dataType: 'json',
 			data: {
 				account: acc,
-				password: pwd
+				password: md5(pwd),
+				LoginAgent: 'WEB'
 			},
 			success: function(xhr) {
 				if(xhr && !xhr.code) {
@@ -171,9 +173,21 @@ $(function() {
 
 		},
 		exit: function() {
-
+			$.ajax({
+				url: $http.api('logout', true),
+				type: 'post',
+				dataType: 'json',
+				data: {
+					token: navInstance.info.token
+				},
+				success: $http.ok(function(xhr) {
+					console.log(xhr)
+					navInstance.clear();
+					window.location.href = 'login.html';
+				})
+			})
 		}
 	}
 
-	window.navInstance = new NavComponent()
+	window.navInstance = new NavComponent();
 })

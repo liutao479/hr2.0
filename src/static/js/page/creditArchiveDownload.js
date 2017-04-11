@@ -103,7 +103,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 		});
 
 		// 初始化复选框
-		$console.find('.checkbox').checking(function($self) {
+		$console.find('.all-check-box .checkbox').checking(function($self) {
 			
 		});
 
@@ -131,7 +131,6 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 			$tbl: $console.find('#creditArchiveDownloadTable'),
 			$paging: $console.find('#pageToolbar')
 		}
-		setupDropDown();
 		loadCreaditList(apiParams, function() {
 			evt();
 		});
@@ -147,7 +146,8 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	}
 
 	$scope.bankPicker = function(picked) {
-		console.log(picked)
+		console.log(picked);
+		apiParams.id = picked.id;
 	}
 
 	/**
@@ -162,7 +162,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'id',
 						name: 'bankName'
 					};
 					cb(sourceData);

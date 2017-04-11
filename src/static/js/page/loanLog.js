@@ -2,6 +2,8 @@
 page.ctrl('loanLog', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
+	$params.orderNo = 'nfdb20170407100357095';
+	
 	/**
 	* 加载订单日志数据
 	* @params {object} params 请求参数
@@ -36,7 +38,9 @@ page.ctrl('loanLog', function($scope) {
 		
 	}
 
-
+	/**
+	 * 加载页面模板
+	 */
 	$console.load(router.template('iframe/orders-log'), function() {
 		$scope.def = {
 			modifyTmpl: $console.find('#modifyTmpl').html(),

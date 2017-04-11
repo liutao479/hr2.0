@@ -16,10 +16,21 @@
 		// 	$el.remove();
 		// 	return;
 		// }
-		this.$commitBar = $(_.template(tpl)(data)).insertAfter($el);
-		$el.remove();
+		this.$commitBar = $(_.template(tpl)(data)).appendTo($el);
 	}
 	var tpl = '<div class="commit-orders-box">\
+					{{if(it.rejectModify) { }}\
+						<div id="rejectModify" class="button button-orange">拒绝修改</div>\
+					{{ } }}\
+					{{if(it.approvalPass) { }}\
+						<div id="approvalPass" class="button button-deep">审核通过</div>\
+					{{ } }}\
+					{{if(it.keepOrder) { }}\
+						<div id="keepOrder" class="button button-orange">保留订单</div>\
+					{{ } }}\
+					{{if(it.terminateOrder) { }}\
+						<div id="terminateOrder" class="button button-deep">终止订单</div>\
+					{{ } }}\
 					{{if(it.back) { }}\
 						<div id="back" class="button button-orange">退回订单</div>\
 					{{ } }}\
@@ -30,7 +41,7 @@
 						<div id="cancel" class="button button-orange">取消订单</div>\
 					{{ } }}\
 					{{if(it.submit) { }}\
-						<div id="submit" class="button button-deep">提交</div>\
+						<div id="submit" class="button button-deep">{{=it.submit}}</div>\
 					{{ } }}\
 				</div>';
 })(jQuery, doT);

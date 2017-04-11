@@ -84,7 +84,11 @@
 
 
 	var dialogTml = '<div class="dialog">\
-						<div class="window">\
+                        {{ if(it.width){ }}\
+                            <div class="window" style=width:{{=it.width}}>\
+                        {{ }else{ }}\
+                            <div class="window">\
+                        {{ } }}\
 							<div class="w-title">\
 								<div class="w-title-content">{{=it.title}}</div>\
 								<div class="w-x w-close"><i class="iconfont">&#xe65a;</i></div>\

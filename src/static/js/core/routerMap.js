@@ -35,6 +35,51 @@
 			refer: [],
 			page: 'marginManage'
 		},
+		'activeInspect': {
+			title: '发起主动抽查',
+			refer: [],
+			page: 'activeInspect'
+		},
+		'historyInspect': {
+			title: '历史核查记录',
+			refer: [],
+			page: 'historyInspect'
+		},
+		'historyInspectDetail': {
+			title: '历史核查记录详情',
+			refer: [],
+			page: 'historyInspectDetail'
+		},
+		'materialInspection': {
+			title: '材料验真',
+			refer: [],
+			page: 'materialInspection'
+		},
+		'dataAssistant': {
+			title: '数据辅证',
+			refer: [],
+			page: 'dataAssistant'
+		},
+		'riskManagement': {
+			title: '风控服务统计',
+			refer: [],
+			page: 'riskManagement'
+		},
+		'riskManagementDetail': {
+			title: '风控服务统计明细',
+			refer: [],
+			page: 'riskManagementDetail'
+		},
+		'preAudit': {
+			title: '预审核',
+			refer: [],
+			page: 'preAudit'
+		},
+		'preAuditDataAssistant': {
+			title: '预审核数据辅证',
+			refer: [],
+			page: 'preAuditDataAssistant'
+		},
 		'licenceProcess': {
 			title: '上牌办理',
 			refer: [],
@@ -170,13 +215,17 @@
 			title: '贷款材料选择',
 			page: 'loanMaterialsChoose'
 		},
-		'myCustomer/ordersDetail': {
+		'myCustomer/orderDetails': {
 			title: '订单详情',
-			page: 'ordersDetail'
+			page: 'orderDetails'
 		},
-		'loanProcess/loanInfo': {
-			title: '信息表修改',
-			page: 'loanInfo'
+		'orderModifyAudit/orderDetails': {
+			title: '信息修改审核',
+			page: 'orderDetails'
+		},
+		'cancelOrderAudit/orderDetails': {
+			title: '终止订单审核',
+			page: 'orderDetails'
 		},
 		'loanProcess/loanInfoInput': {
 			title: '贷款信息表录入',
@@ -225,10 +274,6 @@
 		'loanProcess/loanInfoAudit': {
 			title: '贷款信息表审核',
 			page: 'loanInfoAudit'
-		},
-		'loanProcess/applyModify': {
-			title: '申请修改贷款信息',
-			page: 'applyModify'
 		},
 		'loanProcess/loanLog': {
 			title: '订单日志',
@@ -369,6 +414,34 @@
 		'T0057': 'loanInfoAudit',//贷款信息表结果
 		'T0058': 'pickMaterialsUpload',//提车材料审核
 		'T0059': 'pickMaterialsUpload',//提车材料审核
+		'T0061': 'loanInfoAudit',
+		'T0062': 'loanInfoAudit',
+		'T0063': 'creditResult',//征信结果
+		'T0064': 'secondhandAudit',//二手评估结果
+		'T0065': 'loanMaterialsUpload',//贷款材料
+		'T0066': 'homeMaterialsUpload',//上门材料
+		'T0067': 'signMaterialsUpload',//签约材料
+		'T0068': 'pickMaterialsUpload',//提车材料审核
+		'T0069': '',//材料验真
+		'T0070': '',//数据辅证
+		'T0071': '',//材料交叉验证
+		'T0072': 'loanLog',//订单日志
+		'T0073': 'loanInfoAudit',
+		'T0074': 'loanInfoAudit',//待审核信息
+		'T0075': 'loanLog',//订单日志
+		'T0076': 'loanInfoAudit',//贷款信息表结果
+		'T0077': 'creditResult',//征信结果
+		'T0078': 'secondhandAudit',//二手评估结果
+		'T0079': 'loanMaterialsUpload',//贷款材料
+		'T0080': 'homeMaterialsUpload',//上门材料
+		'T0081': 'signMaterialsUpload',//签约材料
+		'T0082': 'pickMaterialsUpload',//提车材料审核
+		'T0083': '',//材料验真
+		'T0084': '',//数据辅证
+		'T0085': '',//材料交叉验证
+		'T0086': 'loanLog',//订单日志
+
+
 		'T00108': 'loanMaterialsUpload',//贷款材料
 		'T00109': 'signMaterialsUpload',//签约材料
 		'T00110': 'loanMaterialsUpload',//贷款材料

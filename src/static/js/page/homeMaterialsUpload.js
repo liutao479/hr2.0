@@ -4,7 +4,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 		$console = $params.refer ? $($params.refer) : render.$console;
 	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
-	// $params.taskId = 2;
+	$params.orderNo = 'nfdb20170407100357095';
 
 	/**
 	* 加载上门材料上传数据
@@ -12,30 +12,39 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadOrderInfo = function(cb) {
-		var params = {
-			taskId: $params.taskId
+		var data = {},
+			url = 'materials/index';
+		if($params.taskId) {
+			data.taskId = $params.taskId;
 		}
 		if($params.refer) {
-			params.frameCode = $params.code;
+			data.frameCode = $params.code;	
+		}
+		if($params.type) {
+			data.type = $params.type;
+			data.orderNo = $params.orderNo;	
+			url = 'materials/materialsByOrderNo';
 		}
 		$.ajax({
 			type: 'post',
-			url: $http.api('materials/index', 'zyj'),
-			data: params,
+			url: $http.api(url, 'zyj'),
+			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
+				$scope.result.orderNo = $params.orderNo;
+				$scope.result.category = 'homeMaterialsUpload';
 				if($params.refer) {
 					$scope.result.editable = 0;
 				} else {
 					$scope.result.editable = 1;
 				}
-				if($params.path) {
-					setupLocation();	
+				if(!$params.refer) {
+					setupLocation();
+					setupBackReason(result.data.loanTask.backApprovalInfo);	
 				}
-				setupBackReason(result.data.loanTask.backApprovalInfo);
 				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, function() {
 					setupEvt();
 				}, true);

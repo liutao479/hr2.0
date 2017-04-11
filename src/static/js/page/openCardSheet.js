@@ -31,6 +31,7 @@ page.ctrl('openCardSheet', function($scope) {
 			})
 		})
 	}
+	
 	/***
 	* 上传图片成功后的回调函数
 	*/
@@ -40,7 +41,9 @@ page.ctrl('openCardSheet', function($scope) {
 	}
 	$scope.deletecb = function(self) {
 		$("#imgUrl").val('');
-	}	/**
+	}	
+
+	/**
 	* 设置面包屑
 	*/
 	var setupLocation = function() {
@@ -249,11 +252,11 @@ page.ctrl('openCardSheet', function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
-			process();
+			// process();
 			//先保存数据再提交订单
-			// saveData(function() {
-			// 	process();
-			// });
+			saveData(function() {
+				process();
+			});
 		})
 	}
 

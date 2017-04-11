@@ -1,0 +1,52 @@
+<div class="container">
+	<!-- 面包屑 -->
+	<div id="location"></div>
+	<!-- 面包屑 end-->
+	
+	<!--提交修改等等按钮-->
+	<div id="buttonsPanel"></div>
+	<!--提交修改等等按钮   end-->
+	
+	<!--工作台左侧菜单面板-->
+	<div class="panel panel-menu mt15" id="checkTabs"></div>
+	<!--工作台左侧菜单面板 end-->
+	
+	<!-- 面板 -->
+	<div id="innerPanel" class="panel-detail mt15"></div>
+	<!-- 面板 end-->
+
+	<!--提交订单按钮-->
+	<div id="commitPanel" class="ml162"></div>
+</div>
+
+<script type="text/x-dot-template" id="checkResultTabsTmpl">
+	{{ for(var i = 0, len = it.frames.length; i < len; i++) { var row = it.frames[i];  }}
+		<a href="javascript:;" data-idx="{{= i}}" class="panel-menu-item{{= (i == 0 ? ' panel-menu-item-active':'')}} tabLeftEvt" data-type="{{=row.code}}">
+			{{=row.name}}
+			<span class='arrow arrow-right'></span>
+		</a>
+	{{ } }}
+</script>
+
+<script type="text/x-dot-template" id="buttonsTmpl">
+	<div class="commit-orders-box commit-orders-box-area" id="buttonsPanel">
+	{{ if(it.paymentApplyDisplay) { }}
+		<a href="javascript:;" class="commit-item" id="makeLoan">
+			<i class="iconfont">&#xe614;</i>
+			<span>放款预约</span>
+		</a>
+	{{ } }}
+	{{ if(it.terminateDisplay) { }}
+		<a href="javascript:;" class="commit-item" data-order-no="{{=it.orderNo}}" id="applyTerminate">
+			<i class="iconfont">&#xe6fd;</i>
+			<span>申请终止订单</span>
+		</a>
+	{{ } }}
+	{{ if(it.modifyDisplay) { }}
+		<a href="javascript:;" class="commit-item" data-href="myCustomer/orderDetails" data-order-no="{{=it.orderNo}}" id="applyModify">
+			<i class="iconfont">&#xe640;</i>
+			<span>申请修改分期信息</span>
+		</a>
+	{{ } }}
+	</div>
+</script>

@@ -26,7 +26,6 @@ if(typeof WdatePicker == 'undefined'){
 		}, opts);
 		
 		return this.each(function(){
-			
 			var target = $(this), div, input, icon;
 			var io = target.data();
 			var internalOpts = $.extend({}, opts);

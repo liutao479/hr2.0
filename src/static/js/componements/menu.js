@@ -22,12 +22,12 @@
 		'orderModifyAudit': {
 			name: '信息修改审核',
 			route: 'orderModifyAudit',
-			icon: '&#xe60e;'
+			icon: '&#xe638;'
 		},
 		'cancelOrderAudit': {
 			name: '终止订单审核',
 			route: 'cancelOrderAudit',
-			icon: '&#xe60e;'
+			icon: '&#xe60c;'
 		},
 		moneyManage: {
 			name: '财务管理',
@@ -43,6 +43,21 @@
 			parent: 'moneyManage',
 			name: '保证金管理',
 			route: 'marginManage'
+		},
+		inspectData: {
+			name: '贷后数据核查',
+			route: '',
+			icon: '&#xe61b;'
+		},
+		'activeInspect': {
+			parent: 'inspectData',
+			name: '发起主动抽查',
+			route: 'activeInspect'
+		},
+		'historyInspect': {
+			key: 'inspectData',
+			name: '历史核查记录',
+			route: 'historyInspect'
 		},
 		licenceManage: {
 			name: '上牌管理',
