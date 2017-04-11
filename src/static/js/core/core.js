@@ -40,36 +40,11 @@
 			//return 'http://192.168.1.92:8083/mock/' + method;
 			return 'http://127.0.0.1:8083/mock/' + method;
 		else
-			// switch (name) {
-			// 	// 周宜俭ip
-			// 	case 'zyj':
-			// 		return 'http://192.168.0.22:8080/' + method;
-			// 		break;
-			// 	// 蔡延军ip
-			// 	case 'cyj':
-			// 		return 'http://192.168.1.116:8080/' + method;
-			// 		break;
-			// 	// 季本松ip
-			// 	case 'jbs':
-			// 		return 'http://192.168.1.124:8080/' + method;
-			// 		break;
-			// 	// 王亮ip 
-			// 	case 'wl':
-			// 		return 'http://192.168.1.113:8888/' + method;
-			// 		break;
-			// 	// 李艳波ip 
-			// 	case 'lyb':
-			// 		return 'http://192.168.1.44:8080/' + method;
-			// 		break;
-			// }
-			
 			// return 'http://192.168.1.86:8089/' + method;
-			// return 'http://192.168.0.186:9999/' + method;
+			return 'http://192.168.0.186:9999/' + method;
 			// return 'http://192.168.1.55:8080/' + method;
 			// return 'http://192.168.1.124:8080/' + method;
-			return 'http://192.168.0.22:8080/' + method;
-
-
+			// return 'http://192.168.0.22:8080/' + method;
 			
 		//Todo 发布时增加prefix
 		// return 'http://192.168.0.113:8080/' + method;
@@ -149,51 +124,6 @@
 		}
 	};
 	
-
-	var gUrl='http://192.168.1.90:8083/';
-	_.$http.apiMap = {
-		menu: gUrl+'mock/menu',
-		loanList: gUrl+'mock/loan.list',
-		myCustomer: 'http://192.168.0.114:8080/loanOrder/getMyCustomer',
-		orderModifyAudit: gUrl+'mock/orderModifyAudit',
-		cancelOrderAudit: gUrl+'mock/cancelOrderAudit',
-		loanManage: gUrl+'mock/loan.manage',
-		marginManage: gUrl+'mock/marginManage',
-		moneyBussinessAuditPrint: gUrl+'mock/moneyBussinessAuditPrint',
-		mortgageProcess: gUrl+'mock/mortgage.process',
-		mortgageAudit: gUrl+'mock/mortgage.audit',
-		mortgageStatis: 'http://192.168.0.114:8080/loanPledge/getLoanPledgeList',
-		operationsAnalysis: gUrl+'mock/operationsAnalysis',
-		licenceProcess: gUrl+'mock/licence.process',
-		licenceAudit: gUrl+'mock/licence.audit',
-		licenceStatis: 'http://192.168.0.114:8080/loanRegistration/getLoanRegistrationList',
-		expireProcess: gUrl+'mock/expire.process',
-		creditArchiveDownload: 'http://192.168.0.114:8080/creditUser/getCreditMaterials',
-		loadArchiveDownload: 'http://192.168.0.114:8080/creditUser/getCreditMaterials',
-		moneyBusinessAuditPrint: 'http://192.168.0.114:8080/loanUserStage/getFinancialData',
-		auditPrint: 'http://192.168.0.114:8080/loanUserStage/getFinancialData',
-		organizationManage: gUrl+'mock/organizationManage',
-		creditInput: gUrl+'mock/creditInput',
-//		loanInfo: 'http://192.168.0.135:8080/loanInfoInput/info',
-		loanInfo: gUrl+'mock/loan.infoBak',
-//		loanInfo: gUrl+'mock/loan.infoBakChange',
-		loanAudit: gUrl+'mock/loan.info',
-		cardAudit: gUrl+'mock/openCardSheet',
-		openCardSheet: gUrl+'mock/openCardSheet',
-		lendAudit: gUrl+'mock/loan.info',
-		phoneAudit: gUrl+'mock/phoneAudit',
-		carTwohand: gUrl+'mock/car.towhand',
-		carAudit: gUrl+'mock/loan.infoBak',
-		mortgageTable: 'http://192.168.0.184:8080/loanPledge/getLoanPledgeList',
-		licenceTable: 'http://192.168.0.184:8080/loanRegistration/getLoanRegistrationList',
-		organizationManageBank: 'http://192.168.0.184:8080/demandBank/getDemandBankList',
-		organizationManageCar: 'http://192.168.0.184:8080/demandCarShop/getDemandCarShop',
-		creditMaterialsUpload: 'http://192.168.0.189:8080/creditMaterials/index',
-		loanMaterialsUpload: 'http://192.168.0.189:8080/loanMaterials/index',
-		addCreditUser: 'http://192.168.0.189:8080/creditUser/add',
-		delCreditUser: 'http://192.168.0.189:8080/creditUser/del'
-
-	};
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error
 		// console.log(arguments);
