@@ -110,12 +110,12 @@
 
 	Todo.prototype.connect = function(immediately) {
 		var self = this;
+
 		function internal(e) {
 			$.ajax({
 				url: 'http://localhost:8083/mock/todo?t='+new Date(),
-				beforeSend: function(xhr) {
-					xhr.closeLoading = true;
-					return true;
+				data: {
+					stopAjaxLoading: true
 				},
 				success: function(xhr) {
 					if(!xhr.code && xhr.data) {
