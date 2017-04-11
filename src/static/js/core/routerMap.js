@@ -153,7 +153,12 @@
 		'expireProcess': {
 			title: '逾期处理',
 			refer: [],
-			page: 'expireProcess'
+			page: 'expireProcessInputList'
+		},
+		'expireProcess/expireProcessDetail': {
+			title: '逾期处理详情',
+			refer: [],
+			page: 'expireProcessDetail'
 		},
 		'creditArchiveDownload': {
 			title: '征信资料下载',
