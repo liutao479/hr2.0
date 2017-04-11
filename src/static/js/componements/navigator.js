@@ -171,7 +171,7 @@ $(function() {
 
 		},
 		exit: function() {
-
+			navInstance.clear();
 		}
 	}
 
