@@ -123,7 +123,18 @@
 						})
 						break;
 					default:
-						// statements_def
+						$.alert({
+							title: '提示',
+							content: tool.alert(response.msg),
+							buttons:{
+								ok: {
+									text: '确定',
+									action: function() {
+										router.render('loanProcess');
+									}
+								}
+							}
+						})
 						break;
 				}
 				console.log('请求失败');

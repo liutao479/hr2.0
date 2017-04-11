@@ -9,6 +9,7 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	*/
 	var loadExpireProcessList = function(cb) {
 		$.ajax({
+			type: 'post',
 			url: urlStr + '/loanOverdueImport/queryParsingDate',
 //			url: $http.api('loanOverdueImport/queryParsingDate','jbs'),
 			dataType: 'json',

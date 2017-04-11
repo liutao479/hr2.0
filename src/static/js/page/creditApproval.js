@@ -201,6 +201,29 @@ page.ctrl('creditApproval', [], function($scope) {
 			});
 		});
 
+
+		//查看征信材料
+		$self.find('.setJkrEvt').on('click', function() {
+			// alert('还未做该功能，暂时不测！谢谢！ T.T');
+			var that = $(this);
+			$.ajax({
+				type: 'post',
+				url: $http.api('creditUser/switchUser', 'jbs'),
+				dataType: 'json',
+				data: {
+					orderNo: $params.orderNo,
+					userId: that.data('userId')
+				},
+				success: $http.ok(function() {
+					$scope.idx = 0;
+					$scope.tabs = {};
+					loadOrderInfo($scope.idx, function() {
+						evt();
+					});
+				})
+			})
+		});
+
 		//辅证数据
 		$self.find('.assistData').on('click', function() {
 			alert('前往辅证数据页面');

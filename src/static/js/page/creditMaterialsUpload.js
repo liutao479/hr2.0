@@ -132,7 +132,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
             	if(!$demandBank || !$areaSource) {
             		$.alert({
             			title: '提示',
-            			content: '<div class="w-content"><div class="w-text">请选择经办银行和业务发生地！</div></div>',
+            			content: tool.alert('请选择经办银行和业务发生地！'),
 						ok: {
 							text: '确定'
 						}
@@ -548,7 +548,10 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 					var item = $scope.apiParams[i];
 					if(that.data('userId') == item.userId) {
-						item[that.data('type')] = that.val();
+						if(type == 'idCard' && value.substring(value.length - 1) == 'x') {
+							value = value.replace(/x/, 'X');
+						}
+						item[that.data('type')] = value;
 					}
 				}
 			}
@@ -631,16 +634,36 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					console.log(result)
 					$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-name input').val(result.data.userName);
 					$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-idc input').val(result.data.idCard);
+					for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+						if($scope.apiParams[i].userId == self.options.userId) {
+							$scope.apiParams[i].userName = result.data.userName;
+							$scope.apiParams[i].idCard = result.data.idCard;
+						}
+					}
 				})
 			});
 		}
-		$scope.currentType = 0;
-		loadOrderInfo($scope.currentType, function() {
-			setupCreditBank();
-			setupLocation();
-			initApiParams();
-			evt();
-		});
+		if(xhr.data.refresh) {
+			$scope.currentType = 0;
+			loadOrderInfo($scope.currentType, function() {
+				setupCreditBank();
+				initApiParams();
+			});
+		}
+		// $.ajax({
+		// 	type: 'post',
+		// 	url: $http.api('creditMaterials/index', 'zjy'),
+		// 	data: {
+		// 		taskId: $params.taskId
+		// 	},
+		// 	global: false,
+		// 	dataType: 'json',
+		// 	success: $http.ok(function(result) {
+		// 		//初始化要传参数
+		// 		initApiParams();
+		// 	})
+		// })
+		
 	}
 
 	/**
