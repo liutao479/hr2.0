@@ -21,10 +21,18 @@ page.ctrl('licenceStatisDetail', [], function($scope) {
 				result.data.loanTask = {
 					editable: 0
 				}
+				result.data.cfgMaterials = [
+					{
+						zcdjz: '注册登记证'
+					},
+					{
+						djzysjbh: '登记证右上角编号'
+					}
+				];
 				$scope.result = result;
 				setupLocation(result.data.orderInfo);
 				// console.log(result.data.backApprovalInfo)
-				setupBackReason(result.data.backApprovalInfo);
+				// setupBackReason(result.data.backApprovalInfo);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();

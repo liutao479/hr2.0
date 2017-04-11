@@ -4,7 +4,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 		$params = $scope.$params,
 		apiParams = {
 			queryType: 1,  //征信资料下载
-			pageNum: $params.pageNum || 1
+			pageNum: 1
 		};
 	/**
 	* 加载征信资料数据
@@ -13,7 +13,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	*/
 	var loadCreaditList = function(params, cb) {
 		$.ajax({
-			url: $http.api('creditUser/getCreditMaterials'),
+			url: $http.api('creditUser/getCreditMaterials', 'zjy'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -51,6 +51,12 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	 */
 	var setupEvt = function() {
 
+	}
+
+	/**
+	 * 绑定立即处理事件
+	 */
+	var evt = function() {
 		// 绑定搜索框模糊查询事件
 		$console.find('#searchInput').on('keydown', function(evt) {
 			if(evt.which == 13) {
@@ -60,17 +66,49 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 					return false;
 				}
 				apiParams.keyWord = searchText;
-				$params.keyWord = searchText;
 				apiParams.pageNum = 1;
-				$params.pageNum = 1;
 				loadCreaditList(apiParams, function() {
-					delete apiParams.keyWord;
-					delete $params.keyWord;
 					that.blur();
 				});
-				// router.updateQuery($scope.$path, $params);
 			}
 		});
+
+		// 文本框失去焦点记录文本框的值
+		$console.find('#searchInput').on('blur', function(evt) {
+			var that = $(this),
+				searchText = $.trim(that.val());
+			if(!searchText) {
+				delete apiParams.keyWord;
+				return false;
+			} else {
+				apiParams.keyWord = searchText;
+			}
+		});
+
+		//绑定搜索按钮事件
+		$console.find('#search').on('click', function() {
+			apiParams.pageNum = 1;
+			loadCreaditList(apiParams);
+		});
+
+		//绑定重置按钮事件
+		$console.find('#search-reset').on('click', function() {
+			// 下拉框数据以及输入框数据重置
+			$console.find('.select input').val('');
+			$console.find('#searchInput').val('');
+			apiParams = {
+				queryType: 1,  //征信资料下载
+		    	pageNum: 1
+			};
+		});
+
+		// 初始化复选框
+		$console.find('.all-check-box .checkbox').checking(function($self) {
+			
+		});
+
+		//启动下拉框插件
+		setupDropDown();
 
 		// 绑定全选按钮
 		$console.find('#allCheck').on('click', function() {
@@ -81,38 +119,6 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 			} else {
 				// 去做全选取消操作
 			}
-		});
-
-		// 绑定pdf下载按钮
-		$console.find('.pdf-d').on('click', function() {
-			var that = $(this);
-			// http://192.168.0.172:8080/materialsDownLoad/downLoadCreditMaterials?userIds=100001&downLoadType=2
-		});
-
-		// 绑定word下载按钮
-		$console.find('.word-d').on('click', function() {
-			var that = $(this);
-		});
-
-		// 绑定zip下载按钮
-		$console.find('.zip-d').on('click', function() {
-			var that = $(this);
-		});
-
-		//绑定搜索按钮事件
-		$console.find('#search').on('click', function() {
-			apiParams.pageNum = 1;
-			$params.pageNum = 1;
-			loadCreaditList(apiParams);
-			// router.updateQuery($scope.$path, $params);
-			
-		});
-
-		//绑定重置按钮事件
-		$console.find('#search-reset').on('click', function() {
-			// 下拉框数据以及输入框数据重置
-			// router.updateQuery($scope.$path, $params);
-			
 		});
 	}
 
@@ -125,9 +131,8 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 			$tbl: $console.find('#creditArchiveDownloadTable'),
 			$paging: $console.find('#pageToolbar')
 		}
-		setupDropDown();
 		loadCreaditList(apiParams, function() {
-			setupEvt();
+			evt();
 		});
 	});
 
@@ -136,10 +141,13 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	 */
 	$scope.paging = function(_pageNum, _size, $el, cb) {
 		apiParams.pageNum = _pageNum;
-		$params.pageNum = _pageNum;
-		// router.updateQuery($scope.$path, $params);
 		loadCreaditList(apiParams);
 		cb();
+	}
+
+	$scope.bankPicker = function(picked) {
+		console.log(picked);
+		apiParams.id = picked.id;
 	}
 
 	/**
@@ -154,7 +162,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'id',
 						name: 'bankName'
 					};
 					cb(sourceData);

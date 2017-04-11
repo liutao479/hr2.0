@@ -9,9 +9,7 @@
 				<!--tab切换栏(合作银行及车商)   end-->
 				
 				<!--面板  -->
-				<div class="panel panel-nomargintop no-top-border" id="tablePanel">
-					
-				</div>
+				<div class="panel no-top-border" id="tablePanel"></div>
 				<!--面板  end-->
 				
 			</div>
@@ -40,16 +38,19 @@
 				<div class="select-search-bar select-search-bar-noborder clearfix">
 					<div class="search-item">
 						<span class="select-name">银行名称：</span>
-						<input type="text" class="input-text" id="searchBankName" />
+						<div class="input-text" id="searchBankName">
+							<input type="text"/>
+							<i class="iconfont">&#xe604;</i>
+						</div>
+						
 					</div>
 				</div>
-				<table width="100%" class="orders-table orders-table-noborder cooperation-maintenance-table">
+				<table width="100%" class="orders-table orders-table-noborder">
 					<thead>
 						<tr class="orders-bar-title">
 							<td class="orders-item-data">银行名称</td>
-							<td class="orders-item-data">开户账号-户名</td>
+							<td class="orders-item-data w400">开户账号-户名</td>
 							<td class="orders-item-data">费率表</td>
-							<td class="orders-item-data orders-item-data-blank"></td>
 							<td class="orders-item-data">操作</td>
 						</tr>
 					</thead>
@@ -64,32 +65,45 @@
 								<tr class="orders-item tr-odd">
 								{{ } }}
 									<td class="orders-item-data">{{=row.bankName}}</td>
-									<td class="orders-item-data">
-										<table class="meanwhile" id="meanwhile">
-										{{for(var j = 0, len2 = row.demandBankAccountList.length; j < len2; j++) { var col = row.demandBankAccountList[j]; }}
-											{{ if(j < 2){ }}
-												<tr class="loantask-item">
-													<td>{{=col.accountNumber}}-{{=col.accountName}}</td>
-												</tr>
-											{{ }else{ }}
-												<tr class="loantask-item" style="display: none;">
-													<td>{{=col.accountNumber}}-{{=col.accountName}}</td>
-												</tr>
-												{{ if(j == len2 - 1){ }}
+									<td class="orders-item-data loanTasks">
+										<table class="meanwhile">
+											{{for(var j = 0, len2 = row.demandBankAccountList.length; j < len2; j++) { var col = row.demandBankAccountList[j]; }}
+												{{ if(j < 2){ }}
 													<tr>
-														<td class="arrow-trigger"><span class="arrow arrow-bottom" data-isShow="false"></span></td>
+														<td>{{=col.accountNumber}}-{{=col.accountName}}</td>
 													</tr>
+												{{ }else{ }}
+													{{ if(j == len2 - 1){ }}
+														<tr>
+															<td><i class="iconfont">&#xe608;</i></td>
+														</tr>
+													{{ } }}
 												{{ } }}
+												
 											{{ } }}
-										{{ } }}
 										</table>
+										{{ if(len2 > 2) { }}
+										<table class="meanwhile-hover" style="display: none;">
+											{{for(var j = 0, len2 = row.demandBankAccountList.length; j < len2; j++) { var col = row.demandBankAccountList[j]; }}
+												<tr>
+													<td>{{=col.accountNumber}}-{{=col.accountName}}</td>
+												</tr>
+											{{ } }}
+											<tr>
+												<td><i class="iconfont">&#xe606;</i></td>
+											</tr>
+										</table>
+										{{ } }}
 									</td>
-									<td class="orders-item-data orders-item-data-view">
-										<a href="javascript:;" class="view-fee">查看</a>
+									<td class="orders-item-data">
+										{{ if(row.demandBankRateList.length == 0) { }}
+											暂无
+										{{ } else { }}
+											<a href="javascript:;" class="view-fee color-blue" data-idx="{{=i}}">查看</a>
+										{{ } }}
 									</td>
-									<td class="orders-item-data orders-item-data-blank"></td>
 									<td class="orders-item-data orders-item-data-operate">
-										<a class="button button-gray button-mini toNewBank" data-bank-id="{{=row.bankId}}" data-demand-bank-id="{{=row.id}}" data-href="organizationManage/newBank">
+										<a class="button button-gray button-mini toNewBank" data-bank-id="{{=row.id}}" data-demand-bank-id="{{=row.id}}" data-href="organizationManage/newBank">
 											<i class="iconfont">&#xe640;</i>
 											编辑
 										</a>
@@ -102,7 +116,7 @@
 							{{ } }}
 						{{ } else { }}
 						<tr class="tr-noborder">
-							<td colspan="5" class="orders-blank">
+							<td colspan="4" class="orders-blank">
 								<div class="blank-box">
 									<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
 									<p>暂无待办任务！</p>
@@ -135,7 +149,7 @@
 							<td class="orders-item-data">车商类型</td>
 							<td class="orders-item-data">车商名称</td>
 							<td class="orders-item-data">汽车品牌</td>
-							<td class="orders-item-data">开户账号-户名</td>
+							<td class="orders-item-data w400">开户账号-户名</td>
 							<td class="orders-item-data">所需费用</td>
 							<td class="orders-item-data">操作</td>
 						</tr>
@@ -151,27 +165,37 @@
 								<tr class="orders-item tr-odd">
 								{{ } }}
 									<td class="orders-item-data">{{=(row.shopType == 0 ? '4S' : '二级经销商')}}</td>
-									<td class="orders-item-data">{{=row.shopName}}</td>
-									<td class="orders-item-data">{{=row.operateBrand}}</td>
-									<td class="orders-item-data">
-										<table class="meanwhile" id="meanwhile">
-										{{for(var j = 0, len2 = row.demandCarShopAccountList.length; j < len2; j++) { var col = row.demandCarShopAccountList[j]; }}
-											{{ if(j < 2){ }}
-												<tr class="loantask-item">
+									<td class="orders-item-data">{{=row.shopName || ''}}</td>
+									<td class="orders-item-data">{{=row.operateBrand || ''}}</td>
+									<td class="orders-item-data loanTasks">
+										<table class="meanwhile">
+											{{for(var j = 0, len2 = row.demandCarShopAccountList.length; j < len2; j++) { var col = row.demandCarShopAccountList[j]; }}
+												{{ if(j < 2){ }}
+													<tr>
+														<td>{{=col.account}}-{{=col.accountName}}</td>
+													</tr>
+												{{ }else{ }}
+													{{ if(j == len2 - 1){ }}
+														<tr>
+															<td><i class="iconfont">&#xe608;</i></td>
+														</tr>
+													{{ } }}
+												{{ } }}
+												
+											{{ } }}
+										</table>
+										{{ if(len2 > 2) { }}
+										<table class="meanwhile-hover" style="display: none;">
+											{{for(var j = 0, len2 = row.demandCarShopAccountList.length; j < len2; j++) { var col = row.demandCarShopAccountList[j]; }}
+												<tr>
 													<td>{{=col.account}}-{{=col.accountName}}</td>
 												</tr>
-											{{ }else{ }}
-												<tr class="loantask-item" style="display: none;">
-													<td>{{=col}}</td>
-												</tr>
-												{{ if(j == len2 - 1){ }}
-													<tr>
-														<td class="arrow-trigger"><span class="arrow arrow-bottom" data-ishow="false"></span></td>
-													</tr>
-												{{ } }}
 											{{ } }}
-										{{ } }}
+											<tr>
+												<td><i class="iconfont">&#xe606;</i></td>
+											</tr>
 										</table>
+										{{ } }}
 									</td>
 									<td class="orders-item-data">
 										{{for(var j = 0, len2 = row.demandCarShopPolicyList.length; j < len2; j++) { var col = row.demandCarShopPolicyList[j]; }}
@@ -183,7 +207,7 @@
 										{{ } }}
 									</td>
 									<td class="orders-item-data orders-item-data-operate">
-										<a class="button button-gray button-mini toNewCar" data-shop-id="{{=row.shopId}}" data-car-shop-id="{{=row.id}}" data-href="organizationManage/newCar">
+										<a class="button button-gray button-mini toNewCar" data-id="{{=row.id}}" data-car-shop-id="{{=row.id}}" data-href="organizationManage/newCar">
 											<i class="iconfont">&#xe640;</i>
 											编辑
 										</a>

@@ -6,6 +6,7 @@
 * data-tabs {string} 层级对象，多个以|分割。 品牌|车系|车型
 * data-trigger {function} 多级的数据请求函数，选中上级后触发请求子级数据
 * data-search {function} 搜索触发时的请求函数，不传则表示不支持搜索
+* data-forceload {boolean} 值为true时，每次打开下拉框均会再次请求下拉源数据
 * data-selected {object key} 当前选中项
 */
 'use strict';
@@ -76,7 +77,7 @@
 	*/
 	dropdown.prototype.setup = function() {
 		var self = this;
-		if(!self.opts.selected) {
+		if(!self.opts.selected && self.opts.selected !='0') {
 			self.opts.selected = '';
 		}
 		if(!self.opts.placeholder) {
@@ -142,18 +143,29 @@
 			var $that = $(this);
 			var inputItem = $(this).parents(".select").siblings("input");
 			var id = $that.data('id'),
+				accountName = $that.data('accountname'),
+				bankName = $that.data('bankname'),
 				name = $that.text();
 			self.text.push(name);
 			//只有一级，选中即表示结束
 			if(self.opts.tabs.length <= 1) {
-				self.picked = {
-					id: id,
-					name: name
+				if(!accountName || !bankName){
+					self.picked = {
+						id: id,
+						name: name
+					}
+				}else{
+					self.picked = {
+						id: id,
+						name: name,
+						accountName: accountName,
+						bankName: bankName
+					}
 				}
-				self.onDropdown(self.picked);
 				if(inputItem){
 					inputItem.val(id)
 				}
+				self.onDropdown(self.picked);
 				self.close(true);
 			} else {
 				self.picked[self.opts.tabs[self.actionIdx]] = {
@@ -162,10 +174,10 @@
 				}
 				//选中最后一级，也关闭
 				if(self.actionIdx == self.opts.tabs.length - 1) {
-					self.onDropdown(self.picked);
 					if(inputItem){
 						inputItem.val(id)
 					}
+					self.onDropdown(self.picked);
 					self.close(true);
 				} else {
 					self.$tabs.eq(self.actionIdx).removeClass('select-tab-item-active');
@@ -185,6 +197,7 @@
 		self.text = [];
 		self.actionIdx = 0;
 		self.$el.find('.select-box').show();
+		self.$el.find('.select-area').scrollTop(0);
 		self.$el.find('#arrow').removeClass('arrow-bottom').addClass('arrow-top');
 		if(!!self.opts.tabs.length) {
 			self.$tabPanel.find('.select-tab-item-active').removeClass('select-tab-item-active');
@@ -237,8 +250,11 @@
 									<li class="select-tab-item{{=(i==0?\" select-tab-item-active\":\"\")}}">{{= row }}</li>\
 								{{ } }}\
 							</ul>';
-	internal.template.single = '{{ for(var i = 0, len = it.items.length; i < len; i++) { var row = it.items[i]; }}\
+	internal.template.single = '{{ for(var i = 0, len = it.items.length; i < len; i++) { var row = it.items[i];if(row[it.bankName] && row[it.accountName]){ }}\
+									<li class="select-item itemEvt" data-id="{{=row[it.id]}}" data-bankName="{{=row[it.bankName]}}" data-accountName="{{=row[it.accountName]}}">{{=row[it.name]}}</li>\
+								{{ }else{ }}\
 									<li class="select-item itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</li>\
+								{{ } }}\
 								{{ } }}';
 	internal.template.brandContent = '<dl class="word-area">\
 										<dt>A</dt>\

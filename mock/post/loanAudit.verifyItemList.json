@@ -1,0 +1,48 @@
+{
+	"code": 0,
+	"msg":"success",
+	"data":[
+		{
+			"functionName": "购车发票核查",
+			"apiKey": "buycar",
+			"apiPrimary": "b",
+			"checkStatus": "3"
+		},
+		{
+			"functionName": "购房发票核查",
+			"apiKey": "buyhourse",
+			"apiPrimary": "b",
+			"checkStatus": "0"
+		},
+		{
+			"functionName": "银行流水核查",
+			"apiKey": "bankwater",
+			"apiPrimary": "b",
+			"checkStatus": "1"
+		},
+		{
+			"functionName": "房产证核查",
+			"apiKey": "hoursecard",
+			"apiPrimary": "b",
+			"checkStatus": "3"
+		},
+		{
+			"functionName": "合格证核查",
+			"apiKey": "bankwater",
+			"apiPrimary": "b",
+			"checkStatus": "0"
+		},
+		{
+			"functionName": "保单核查",
+			"apiKey": "bankwater",
+			"apiPrimary": "b",
+			"checkStatus": "2"
+		},
+		{
+			"functionName": "车辆登记核查",
+			"apiKey": "bankwater",
+			"apiPrimary": "b",
+			"checkStatus": "3"
+		}
+	]
+}

@@ -1,26 +1,27 @@
 "use strict";
 page.ctrl('loanMaterialsChoose', function($scope) {
-	var $console = render.$console;
-
+	var $params = $scope.$params,
+		$console = render.$console;
+	// $params.orderNo = 'nfdb2016102421082285';
+	// $params.taskId = 80871;
 	
 	/**
 	* 加载贷款材料选择数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadMaterialsChoose = function(_type, cb) {
+	var loadMaterialsChoose = function(cb) {
 		$.ajax({
 			type: 'post',
 			url: $http.api('materialsChoose/index', 'jbs'),
 			data: {
-				// taskId: $scope.$params.taskId
-				taskId: 80871
+				taskId: $params.taskId
+				// taskId: 80871
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				$scope.orderNo = result.data.ORDERNO;
 				setupLocation();
 				render.compile($scope.$el.$mainPanel, $scope.def.mainTmpl, result.data.LOANMATERIALS, function() {
 					setupEvt();	
@@ -40,9 +41,9 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: '贷款材料选择',
-			loanUser: $scope.result.data.LOANORDER.realName,
-			orderDate: tool.formatDate($scope.result.data.LOANORDER.createDate, true)
+			current: $scope.result.data.loanTask.taskName,
+			loanUser: $scope.result.data.loanTask.loanOrder.realName,
+			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
 	}
@@ -96,41 +97,125 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 				$items.removeClass('selected').addClass('selected');
 			}
 		});
+	}
 
-		// 底部操作按钮事件
-		$console.find('#submitOrders').on('click', function() {
-			var that = $(this);
-			that.openWindow({
-				title: "提交",
-				content: dialogTml.wContent.suggestion,
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				$dialog.find('.w-sure').on('click', function() {
-					// 用于提交所选择的贷款材料项
-					var _params = [];
-					$console.find('.selected').each(function() {
-						var $this = $(this);
-						var _item = {
-							orderNo: $scope.orderNo, //订单号
-							materialsCode : $this.data('materialscode'), //材料CODE
-							materialsOwnerCode : $this.data('materialsownercode') //材料归属CODE
+	/**
+	* 设置底部按钮操作栏
+	*/
+	var setupSubmitBar = function() {
+		var $submitBar = $console.find('#submitBar');
+		$submitBar.data({
+			taskId: $params.taskId
+		});
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;
+
+		/**
+		 * 提交
+		 */
+		$sub.on('taskSubmit', function() {
+			saveData(function() {
+				process();
+			});
+		})
+	}
+
+	/**
+	 * 任务提交跳转
+	 */
+	function process() {
+		$.confirm({
+			title: '提交订单',
+			content: dialogTml.wContent.suggestion,
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel',
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
 						}
-						_params.push(_item);
-					});
-					console.log(_params);
-					$.ajax({
-						type: 'post',
-						url: $http.api('materialsChoose/submit', 'jbs'),
-						data: JSON.stringify(_params),
-						dataType: 'json',
-						contentType: 'application/json;charset=utf-8',
-						success: $http.ok(function(result) {
-							console.log(result);
-							$dialog.remove();
-							router.render('loanProcess');
-						})
-					})
-				})
+						var params = {
+							taskId: $params.taskId,
+							taskIds: taskIds,
+							orderNo: $params.orderNo
+						}
+						var reason = $.trim(this.$content.find('#suggestion').val());
+						if(reason) params.reason = reason;
+						flow.tasksJump(params, 'complete');
+					}
+				}
+			}
+		})
+	}
+
+	/**
+	 * 跳流程
+	 */
+	function process() {
+		$.confirm({
+			title: '提交',
+			content: dialogTml.wContent.suggestion,
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel',
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
+						}
+						var params = {
+							taskId: $params.taskId,
+							taskIds: taskIds,
+							orderNo: $params.orderNo
+						}
+						var reason = $.trim(this.$content.find('#suggestion').val());
+						if(reason) params.reason = reason;
+						console.log(params);
+						flow.tasksJump(params, 'complete');
+					}
+				}
+			}
+		})
+	}
+
+	/**
+	 * 选择项数据保存
+	 */
+	var saveData = function(cb) {
+		// 用于提交所选择的贷款材料项
+		var _params = [];
+		$console.find('.selected').each(function() {
+			var $this = $(this);
+			var _item = {
+				orderNo: $params.orderNo, //订单号
+				materialsCode : $this.data('materialscode'), //材料CODE
+				materialsOwnerCode : $this.data('materialsownercode') //材料归属CODE
+			}
+			_params.push(_item);
+		});
+		console.log(_params);
+		$.ajax({
+			type: 'post',
+			url: $http.api('materialsChoose/submit/' + $params.taskId, 'jbs'),
+			data: JSON.stringify(_params),
+			dataType: 'json',
+			contentType: 'application/json;charset=utf-8',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
 			})
 		})
 	}
@@ -141,6 +226,8 @@ page.ctrl('loanMaterialsChoose', function($scope) {
 		$scope.$el = {
 			$mainPanel: $console.find('#materialsChoosePanel')
 		}
-		loadMaterialsChoose();
+		loadMaterialsChoose(function() {
+			setupSubmitBar();
+		});
 	})
 });

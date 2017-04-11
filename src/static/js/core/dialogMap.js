@@ -7,21 +7,45 @@
 	*/
 	g.dialogTml = {};
 	g.dialogTml.wContent = {
+		back: '<div class="w-content">\
+					<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
+					<div class="w-select-area mt15 clearfix">\
+						<div class="w-select clearfix">\
+							<div class="checkbox checkbox-radio" data-checked="false" data-id="{{=row.id}}"></div>\
+							<div class="w-select-item">退回至{{=row.jumpName}}</div>\
+						</div>\
+						{{ for(var j = 0, len2 = row.jumpReason.length; j < len2; j++) { }}\
+						<div class="w-select w-select-left clearfix">\
+							<div class="checkbox checkbox-normal" data-checked="false" data-value="{{=row.jumpReason[j]}}"></div>\
+							<div class="w-select-item">{{=row.jumpReason[j]}}</div>\
+						</div>\
+						{{ } }}\
+					</div>\
+					{{ } }}\
+				</div>',
 		handelSuggestion: '<div class="w-content"><div class="w-text">请填写处理意见！</div></div>',
 		complete: '<div class="w-content"><div class="w-text">请完善必填项！</div></div>',
 		suggestion: '<div class="w-content">\
 						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					</div>',
-		loanOrderApply: '<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
-						<dl class="w-dropdown">\
-							<dt>请选择审核人：</dt>\
-							<dd>\
-								<span class="select select-bank">\
-									<input class="placeholder" placeholder="请选择" />\
-									<span class="arrow arrow-bottom"></span>\
-								</span>\
-							</dd>\
-						</dl>',
+		loanOrderApply: '<div class="w-content">\
+							<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+							<dl class="w-dropdown">\
+								<dt class="dt">请选择审核人：</dt>\
+								<dd class="dd">\
+									<div class="select select-bank" id="approvalUser" data-selected="" data-dropdown="page.$scope[\'{0}\'].approvalUserPicker" data-trigger="page.$scope[\'{0}\'].dropdownTrigger.approvalUser"></div>\
+								</dd>\
+							</dl>\
+						</div>',
+		applyModify: '<div class="w-content">\
+							<dl class="w-dropdown">\
+								<dt class="dt">请选择审核人：</dt>\
+								<dd class="dd">\
+									<div class="select select-bank" id="approvalUser" data-selected="" data-dropdown="page.$scope[\'{0}\'].approvalUserPicker" data-trigger="page.$scope[\'{0}\'].dropdownTrigger.approvalUser"></div>\
+								</dd>\
+							</dl>\
+						</div>',
 		creditQuery: '<div class="w-content">\
 						<dl class="w-dropdown">\
 							<dt class="dt">经办银行：</dt>\
@@ -49,46 +73,197 @@
 								</div>\
 							</div>\
 						</div>',
-		makeLoan: '<dl class="w-dropdown">\
-						<dt>用款时间：</dt>\
-						<dd>\
-							<div class="input-text input-date">\
-							<input type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="{{=it.date}}" />\
-						</div>\
-						</dd>\
-					</dl>\
-					<dl class="w-dropdown">\
-						<dt>垫资金额：</dt>\
-						<dd>\
-							<div class="input-text input-text-mini">\
-								<input type="text required" id="paymentMoney" value="{{=it.paymentMoney || ""}}"><span class="unit">元</span>\
+		makeLoan: '<div class="w-content">\
+						<dl class="w-dropdown">\
+							<dt class="dt">用款时间：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-date">\
+									<input id="loaningDate" type="text" class="dateBtn" readonly="readonly" value="{{=it.loaningDateStr || \"\"}}" />\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">垫资金额：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="paymentMoney" value="{{=it.paymentMoney || \"\"}}"><span class="unit">元</span>\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">收款账户名称：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveCompanyAddress" value="{{=it.receiveCompanyAddress || \"\"}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">收款账户：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveAccount" value="{{=it.receiveAccount || \"\"}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">开户行：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || \"\"}}">\
+								</div>\
+							</dd>\
+						</dl>\
+					</div>',
+		zxdzContent: '<div class="w-content">\
+						<dl class="w-dropdown">\
+							<dt class="dt">用款时间：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-date">\
+								<input type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="{{=it.date}}" />\
 							</div>\
-						</dd>\
-					</dl>\
-					<dl class="w-dropdown">\
-						<dt>收款账户名称：</dt>\
-						<dd>\
-							<div class="input-text input-text-mini">\
-								<input type="text required" id="receiveCompanyAddress" value="{{=it.receiveCompanyAddress || ""}}">\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">垫资金额：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="paymentMoney" value="{{=it.paymentMoney || ""}}"><span class="unit">元</span>\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">收款账户名称：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveCompanyAddress" value="{{=it.receiveCompanyAddress || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">收款账户：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveAccount" value="{{=it.receiveAccount || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">开户行：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					</div>',
+		ptsqdzContent: '<div class="w-content">\
+						<dl class="w-dropdown">\
+							<dt class="dt">用款时间：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-date">\
+								<input type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="{{=it.date}}" />\
 							</div>\
-						</dd>\
-					</dl>\
-					<dl class="w-dropdown">\
-						<dt>收款账户：</dt>\
-						<dd>\
-							<div class="input-text input-text-mini">\
-								<input type="text required" id="receiveAccount" value="{{=it.receiveAccount || ""}}">\
-							</div>\
-						</dd>\
-					</dl>\
-					<dl class="w-dropdown">\
-						<dt>开户行：</dt>\
-						<dd>\
-							<div class="input-text input-text-mini">\
-								<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || ""}}">\
-							</div>\
-						</dd>\
-					</dl>'
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">垫资金额：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="paymentMoney" value="{{=it.paymentMoney || ""}}"><span class="unit">元</span>\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">收款账户名称：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveCompanyAddress" value="{{=it.receiveCompanyAddress || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">收款账户：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveAccount" value="{{=it.receiveAccount || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">开户行：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || ""}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					</div>',
+		viewFee: '<div class="w-content">\
+					<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">\
+						<thead>\
+							<tr class="orders-bar-title">\
+								<td class="orders-item-data">序号</td>\
+									<td class="orders-item-data">新手车/二手车</td>\
+									<td class="orders-item-data">省份</td>\
+									<td class="orders-item-data">12期利率</td>\
+									<td class="orders-item-data">18期利率</td>\
+									<td class="orders-item-data">24期利率</td>\
+									<td class="orders-item-data">30期利率</td>\
+									<td class="orders-item-data">36期利率</td>\
+									<td class="orders-item-data">48期利率</td>\
+									<td class="orders-item-data">60期利率</td>\
+							</tr>\
+						</thead>\
+						<tbody class="tbody">\
+							{{for(var j = 0, len2 = it.length; j < len2; j++) { var col = it[j]; }}\
+								{{ if(j % 2 !== 0) { }}\
+								<tr class="orders-item tr-even">\
+								{{ } else if(j % 2 == 0 && j == 0) { }}\
+								<tr class="orders-item tr-odd tr-noborder">\
+								{{ } else { }}\
+								<tr class="orders-item tr-odd">\
+								{{ } }}\
+									<td class="orders-item-data">{{=(j + 1)}}</td>\
+									<td class="orders-item-data">{{=(col.isSecond == 0 ? \"新车\" : \"二手车\")}}</td>\
+									<td class="orders-item-data">{{=col.provinceName}}</td>\
+									<td class="orders-item-data">{{=col.interestRate12}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate18}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate24}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate30}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate36}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate48}}%</td>\
+									<td class="orders-item-data">{{=col.interestRate60}}%</td>\
+								</tr>\
+							{{ } }}\
+						</tbody>\
+					</table>\
+				</div>',
+		btngroup:'{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
+				{{ if(col.checkStatus==0){ }}\
+					<div class="block-item-data" data-index="{{=i}}">{{=col.funcName}}</div>\
+				{{ }else{ }}\
+					<div class="block-item-data not-selected">{{=col.funcName}}</div>\
+				{{ } }}\
+			{{ } }}',
+		serviceItems:'<div class="serviceItems">\
+			<ul class="clearfix">\
+				{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
+				<li><div class="text-bt">银行</div>\
+					<div class="serviceContext clearfix">\
+						<p class="text-icon"><span class="bacf09054"><i class="iconfont">&#xe676;</i></span></p>\
+						<p class="text-name">{{=col.functionName}}\
+						{{ if(col.checkStatus==0){ }}<span class="text-status text-orange">未查</span></p></div><div class="serviceBtn bacStart nextDialog">发起核查</div>\
+						{{ }else if(col.checkStatus==1){ }}<span class="text-status text-orange">未查</span></p></div><div class="serviceBtn inoperable">缺少相关数据</div>\
+						{{ }else if(col.checkStatus==2){ }}<span class="text-status text-orange">查询中</span></p></div><div class="serviceBtn inoperable">发起核查</div>\
+						{{ }else if(col.checkStatus==3){ }}<span class="text-status text-green">已查</span></p></div><div class="serviceBtn bacAgain nextDialog">再次核查</div>\
+						{{ } }}</li>\
+				{{ } }}\
+			</ul>\
+			<p class="tip">提示：带有“<span class="textfe5a58">银行</span>”标记的服务表示业务经办银行要求核查的服务项目，系统会在条件满足的情况下自动完成核查。</p>\
+		</div>'
 	}
 	g.dialogTml.wCommit = {
 		sure: '<div class="w-commit-area">\

@@ -25,7 +25,7 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 				$scope.result = result;
 				$scope.orderNo = result.data.orderInfo.orderNo;//订单号
 				setupLocation(result.data.orderInfo);
-				setupBackReason(result.data.backApprovalInfo);
+				// setupBackReason(result.data.loanOrder);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -97,9 +97,9 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 	var loadCommitBar = function(cb) {
 		var buttons = {
 			"submit": false,
-			"back": true,
+			"back": '退回订单',
 			"cancel": false,
-			"verify": true
+			"verify": '审核通过'
 		};
 		var $commitBar = $console.find('#commitPanel');
 		$commitBar.data({

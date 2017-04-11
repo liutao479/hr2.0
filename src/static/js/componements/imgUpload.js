@@ -53,7 +53,7 @@
 			owner: undefined,	//材料所属类型
 			img: undefined,	//图片地址
 			msg: undefined,	//退回消息
-			err: undefined,	//错误类型 0 图片错误；1 图片不清晰；2 其他
+			err: undefined,	//错误类型 0 正常 ；1 图片不清晰；2 图片错误
 			editable: undefined,
 			url: undefined,
 			deletecb: $.noop,
@@ -83,7 +83,7 @@
 				self.status = 0;
 			} else {
 				if(self.options.other) {
-					self.name = internalTemplates.other.format(self.options.name);
+					self.name = internalTemplates.name.format(self.options.name);
 				} else {
 					self.name = internalTemplates.name.format(self.options.name);
 				}
@@ -96,7 +96,7 @@
 				if(self.options.err != undefined) {
 					self.errImg = imgs[self.options.err];
 				}
-				if(self.options.msg != undefined) {
+				if(self.options.msg && self.options.msg != 'undefined') {
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
 				if(self.options.other) {
@@ -107,8 +107,14 @@
 				tmp = internalTemplates.modify.format(self.name, self.options.img, self.errImg, self.errMsg);
 				self.status = 1;
 			} else {
+				if(self.options.err != undefined) {
+					self.errImg = imgs[self.options.err];
+				}
+				if(self.options.msg && self.options.msg != 'undefined') {
+					self.errMsg = internalTemplates.msg.format(self.options.msg);
+				}
 				self.name = internalTemplates.name.format(self.options.name);
-				tmp = internalTemplates.view.format(self.name, self.options.img || '');
+				tmp = internalTemplates.view.format(self.name, self.options.img || '', self.errImg, self.errMsg);
 				self.status = 2;
 			}
 		}
@@ -150,6 +156,18 @@
 				if(!this.files[0]) {
 					return false;
 				}
+				// if(this.files[0].name.substring(this.files[0].name.lastIndexOf('.') + 1).toLowerCase() != 'pdf') {
+				// 	$.alert({
+				// 		title: '提示',
+				// 		content: tool.alert('请选择正确的PDF格式文件上传!'),
+				// 		buttons: {
+				// 			ok: {
+				// 				text: '确定'
+				// 			}
+				// 		}
+				// 	})
+				// 	return false;
+				// }
 				self.$el.find('.imgs-error').remove();
 				self.onUpload(this.files[0]);
 			});
@@ -159,6 +177,7 @@
 					return false;
 				}
 				self.options.name = newVal;
+				self.name = internalTemplates.other.format(self.options.name);
 				self.$el.data('name', self.options.name);
 				if(self.options.img) {
 					console.log(self.options.img)
@@ -316,17 +335,25 @@
 			type: 'post',
 			dataType: 'json',
 			success: function(xhr) {
-				console.log(xhr)
-				if(!xhr.code) {
+				console.log(xhr);
+				if(!xhr.code) {					
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name, url, self.errImg, self.errMsg));
-						self.options.id = xhr.data;
+						if(self.options.credit) {
+							self.options.id = xhr.data.id;
+						} else {
+							self.options.id = xhr.data;
+						}
 						self.$el.data('img', url);
 						self.status = 1;	
 						self.listen();
 						self.uplCb(self, xhr);
 					} else {
-						self.options.id = xhr.data;
+						if(self.options.credit) {
+							self.options.id = xhr.data.id;
+						} else {
+							self.options.id = xhr.data;
+						}
 						self.$el.data('img', url);
 						self.$el.find('img').attr('src', url);
 					}
@@ -382,16 +409,16 @@
 		edit: '<div class="imgs-item-upload">\
 				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
 				<span class="i-tips">点击上传图片</span>\
-				<input type="file" class="input-file activeEvt" />\
+				<input type="file" class="input-file activeEvt" accept="image/gif,image/jpeg,image/jpg,image/png" />\
 			   </div>{0}',
 		modify: '<div class="imgs-item-upload">\
-				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传"/></div>\
+				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传" accept="image/gif,image/jpeg,image/jpg,image/png"/></div>\
 				<div class="imgs-delete" title="删除"><i class="iconfont">&#xe602;</i></div>\
 				<img src="{1}" class="imgs-view" />\
 				{2}{3}</div>{0}',
 		view: '<div class="imgs-item-upload">\
 				<img src="{1}" class="imgs-view viewEvt" />\
-			   </div>{0}',
+			   {2}{3}</div>{0}',
 		blank: '<div class="imgs-item-upload imgs-item-upload-blank">\
 				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
 				<span class="i-tips">图片未上传</span>\
@@ -399,14 +426,13 @@
 		msg: '<div class="imgs-describe">{0}</div>',
 		name: '<span class="imgs-item-p">{0}</span>',
 		other: '<div class="input-text imgs-input-text">\
-					<input type="text" value="{0}" title="重新上传">\
+					<input type="text" value="{0}" />\
 				</div>'
 	}
 
 	var api = {
-		img: 'http://192.168.0.186:9999/oss/img/sign',
-		video: 'http://192.168.0.186:9999/oss/video/sign',
-		// upload: 'http://127.0.0.1:8083/mock/addOrUpdate',
+		img: $http.api('oss/img/sign', 'cyj'),
+		video: $http.api('oss/video/sign', 'cyj'),
 		upload: $http.api('material/addOrUpdate', 'cyj'),
 		del: $http.api('material/del', 'cyj'),
 		creditUpload: $http.api('creditReport/reportUpd', 'jbs'),

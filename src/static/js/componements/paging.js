@@ -49,6 +49,7 @@
 			max: self.opt.pages,
 			current: self.opt.current
 		}
+		$('body').prop('scrollTop','0');
 		self.$el.html(self.render(pageMap));
 		self.addEvent();
 	};

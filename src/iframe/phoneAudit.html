@@ -1,41 +1,11 @@
 	<!--电审zhy-->
 			<div class="container electric-check" id="electric-check">
-				<!--返回列表-->
-				<!--<div id="location"></div>-->
-				
-				<!--工作台左侧菜单面板-->
-				<!--<div class="panel panel-menu mt15" id="checkTabs"></div>-->
-				<!--工作台左侧菜单面板 end-->
-				
-				<!-- tab栏对应项 -->
-				<!--<div class="creditResultPanel" id="checkResultPanel">
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="0"></div>
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="1" style="display: none;"></div>
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="2" style="display: none;"></div>
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="3" style="display: none;"></div>
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="4" style="display: none;"></div>
-					<div class="panel no-top-border clearfix tabTrigger" data-trigger="5" style="display: none;"></div>
-				</div>-->
-				<!-- tab栏对应项 end-->
 				
 				
 				<!--面板-->
 				<div id="eleCheck" class="mt15"></div>
 				
-				<!--提交订单按钮-->
-				<!--<div class="commit-orders-box mt15" style="margin-left: 162px;">
-					<div id="" class="button saveBtn">提交订单</div>
-				</div>-->
 			</div>
-			
-			<!--<script type="text/x-dot-template" id="checkResultTabsTmpl">
-				{{ for(var i = 0, len = it.frames.length; i < len; i++) { var row = it.frames[i];  }}
-					<a href="javascript:;" data-idx="{{= i}}" class="panel-menu-item{{= (i == 0 ? ' panel-menu-item-active':'')}} tabLeftEvt" data-type="{{=row.code}}">
-						{{=row.name}}
-						<span class='arrow arrow-right'></span>
-					</a>
-				{{ } }}
-			</script>-->
 			
 			
 			<script type="text/x-dot-template" id="eleChecktmpl">
@@ -51,17 +21,17 @@
 							<div class="info-key-value-box">
 								<span class="info-key">
 									客户姓名：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName}}" /></span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName || ''}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
 									身份证号：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.idCard}}" /></span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.idCard || ''}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
 									手机号：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.mobile}}" /></span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.mobile || ''}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
@@ -119,12 +89,12 @@
 									<span class="info-value info-value-long">
 									{{if(row.answer){ }}
 										<!--<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>-->
-										<div class="textArea" contenteditable="true">{{= row.remark}}</div>
+										<div class="textArea" contenteditable="true">{{= row.remark || ''}}</div>
 									{{ }else{ }}
 										<!--<textarea name="editInfo" rows="4"></textarea>-->
 										<div class="textArea" contenteditable="true"></div>
 									{{ } }}
-										<input type="hidden" name="editInfo" value="{{= row.remark}}" />
+										<input type="hidden" name="editInfo" value="{{= row.remark  || ''}}" />
 									</span>
 								</div>
 							</div>
@@ -176,7 +146,7 @@
 									<span class="info-key">备注：</span>
 									<span class="info-value info-value-long">
 									{{if(role.answer){ }}
-										<div class="textArea" contenteditable="true">{{= role.remark}}</div>
+										<div class="textArea" contenteditable="true">{{= role.remark || ''}}</div>
 										<!--<textarea name="editInfo" rows="4" value="{{= role.editInfo}}"></textarea>-->
 									{{ }else{ }}
 										<!--<textarea name="editInfo" rows="4"></textarea>-->

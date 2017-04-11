@@ -100,12 +100,6 @@ page.ctrl('mortgageStatis', [], function($scope) {
 			};
 			
 		});
-
-	
-		// 导出超期记录
-		$console.find('#importItems').on('click', function() {
-			alert('导出超期记录');
-		})
 	}
 
 	/**
@@ -120,6 +114,9 @@ page.ctrl('mortgageStatis', [], function($scope) {
 				path: 'mortgageStatis'
 			});
 		});
+
+		// 导出超期记录
+		$console.find('#importItems').attr('href', $http.api('loanPledge/downLoadOverDueData', 'cyj'));
 	}
 
 	/***
@@ -181,9 +178,6 @@ page.ctrl('mortgageStatis', [], function($scope) {
 			$.ajax({
 				type: 'get',
 				url: $http.api('pmsDept/getPmsDeptList', 'cyj'),
-				data: {
-					parentId: 99
-				},
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					xhr.data.unshift({

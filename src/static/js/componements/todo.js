@@ -4,7 +4,7 @@
 	function Todo($el) {
 		this.$el = $el;
 		this.opts = {
-			timeout: 10000,
+			timeout: 5000,
 			animation: 200
 		}
 		this.items = {};
@@ -114,9 +114,7 @@
 		function internal(e) {
 			$.ajax({
 				url: 'http://localhost:8083/mock/todo?t='+new Date(),
-				data: {
-					stopAjaxLoading: true
-				},
+				global: false,
 				success: function(xhr) {
 					if(!xhr.code && xhr.data) {
 						e.addItems(xhr.data);

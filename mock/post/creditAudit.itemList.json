@@ -1,0 +1,24 @@
+{
+	"code": 0,
+	"msg":"success",
+	"data":[
+		{
+			"funcName": "实名认证查询",
+			"apiKey": "submitInsurancePolicy",
+			"apiPrimary": "b",
+			"checkStatus": "0"
+		},
+		{
+			"funcName": "公安记录查询",
+			"apiKey": "queryCarInvoiceResult",
+			"apiPrimary": "b",
+			"checkStatus": "0"
+		},
+		{
+			"funcName": "网贷记录查询",
+			"apiKey": "wdSearch",
+			"apiPrimary": "b",
+			"checkStatus": "3"
+		}
+	]
+}

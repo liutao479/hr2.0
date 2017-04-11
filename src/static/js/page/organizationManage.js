@@ -30,6 +30,7 @@ page.ctrl('organizationManage', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+				$scope.result = result;
 				render.compile($scope.$el.$tbl, $scope.def.bankListTmpl, result.data.resultlist, true);
 				setupPaging(result.page, true);
 				setupBankEvt();
@@ -185,7 +186,7 @@ page.ctrl('organizationManage', [], function($scope) {
 	*/
 	var setupBankEvt = function() {
 		// 模糊搜索
-		$console.find('#searchBankName').on('keydown', function(evt) {
+		$console.find('#searchBankName input').on('keydown', function(evt) {
 			if(evt.which == 13) {
 				var that = $(this),
 					searchText = $.trim(that.val());
@@ -198,26 +199,38 @@ page.ctrl('organizationManage', [], function($scope) {
 				}
 				loadBankList(apiParams, function() {
 					delete apiParams.bankName;
-					that.blur();
 				});
 			}
 		});
-		
-		//  任务类型点击显示/隐藏
-		$console.find('#organizationManageTable .arrow').on('click', function() {
-			var that = $(this);
-			var $tr = that.parent().parent().parent().find('.loantask-item');
-			if(!that.data('isShow')) {
-				$tr.show();
-				that.data('isShow', true);
-				that.removeClass('arrow-bottom').addClass('arrow-top');
+
+		// 文本框失去焦点记录文本框的值
+		$console.find('#searchBankName input').on('blur', function(evt) {
+			var that = $(this),
+				searchText = $.trim(that.val());
+			if(!searchText) {
+				delete apiParams.bankName;
+				return false;
 			} else {
-				$tr.hide();
-				that.data('isShow', false);
-				that.removeClass('arrow-top').addClass('arrow-bottom');
-				$tr.eq(0).show();
-				$tr.eq(1).show();
+				apiParams.bankName = searchText;
 			}
+		});
+
+		$console.find('#searchBankName .iconfont').on('click', function() {
+			apiParams.pageNum = 1;
+			if(!apiParams.bankName) {
+				$console.find('#searchBankName input').focus();
+				return false;
+			}
+			loadBankList(apiParams, function() {
+				delete apiParams.bankName;
+			});
+		});
+		
+		/**
+		 * 开户行账号消失隐藏
+		 */
+		$console.find('#organizationManageTable .loanTasks').hover(function() {
+			$(this).find('.meanwhile-hover').toggle();
 		})
 
 		// 编辑合作银行按钮
@@ -262,17 +275,12 @@ page.ctrl('organizationManage', [], function($scope) {
 		// 查看费率
 		$console.find('#organizationManageTable .view-fee').on('click', function() {
 			var that = $(this);
-
-			that.openWindow({
-				title: '查看费率',
-				content: '<div>确定删除所选合作银行吗？</div>',
-				commit: dialogTml.wCommit.cancelSure
-			}, function($dialog) {
-				// 窗口确定按钮
-				$dialog.find('.w-sure').on('click', function() {
-					$dialog.remove();
-				})
-			})
+			var idx = that.data('idx');
+			$.dialog({
+				title: '银行费率表',
+				boxWidth: '800px',
+				content: doT.template(dialogTml.wContent.viewFee)($scope.result.data.resultlist[idx].demandBankRateList)
+			});
 		})
 	}
 
@@ -280,28 +288,18 @@ page.ctrl('organizationManage', [], function($scope) {
 	* 绑定车商立即处理事件
 	*/
 	var setupCarEvt = function() {
-		//  任务类型点击显示/隐藏
-		$console.find('#organizationManageTable .arrow').on('click', function() {
-			var that = $(this);
-			var $tr = that.parent().parent().parent().find('.loantask-item');
-			if(!that.data('isShow')) {
-				$tr.show();
-				that.data('isShow', true);
-				that.removeClass('arrow-bottom').addClass('arrow-top');
-			} else {
-				$tr.hide();
-				that.data('isShow', false);
-				that.removeClass('arrow-top').addClass('arrow-bottom');
-				$tr.eq(0).show();
-				$tr.eq(1).show();
-			}
+		/**
+		 * 开户行账号消失隐藏
+		 */
+		$console.find('#organizationManageTable .loanTasks').hover(function() {
+			$(this).find('.meanwhile-hover').toggle();
 		})
 
 		// 编辑合作车商按钮
 		$console.find('#organizationManageTable .toNewCar').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
-				shopId: parseInt(that.data('shopId')),
+				id: parseInt(that.data('id')),
 				carShopId: parseInt(that.data('carShopId')),
 				path: 'organizationManage'
 			});

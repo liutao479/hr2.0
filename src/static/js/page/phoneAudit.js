@@ -2,29 +2,28 @@
 page.ctrl('phoneAudit', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	var urlStr = "http://192.168.1.108:8080";
 	/**
 	* 加载电话审核数据
 	* @params {object} params 请求参数 
 	* @params {function} cb 回调函数
 	*/
 	var loadLoanList = function(cb) {
-		var data={};
-//		data['taskId']=$params.taskId;
-		data['taskId']=80872;
-		data['frameCode']='T0046';
+		var params = {
+			taskId: $params.taskId,
+			frameCode: $params.code
+		};
 		$.ajax({
 			url: $http.api('telAdudit/info', 'jbs'),
-			data: data,
+			data: params,
 			type: 'post',
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				loanFinishedSelect();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
-				loanFinishedSelect();
 			})
 		})
 	}

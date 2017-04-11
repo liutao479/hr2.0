@@ -2,8 +2,7 @@
 page.ctrl('lendAudit', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	 var urlStr = "http://192.168.1.108:8080";
-	$params.taskId = 80874;
+//	$params.taskId = 80874;
 	/**
 	* 设置面包屑
 	*/
@@ -13,7 +12,7 @@ page.ctrl('lendAudit', function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '放款审核',
+			current: $scope.result.data.loanTask.taskName,
 			orderDate: $scope.result.data.loanTask.createDateStr
 		});
 		$location.location();
@@ -29,7 +28,7 @@ page.ctrl('lendAudit', function($scope) {
 		};
 		$.ajax({
 			type: 'post',
-			url: $http.api('loanApproval/info', 'jbs'),
+			url: $http.api('makeLoanApproval/index', 'jbs'),
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(xhr) {
@@ -38,6 +37,9 @@ page.ctrl('lendAudit', function($scope) {
 				loadGuide(xhr.cfgData)
 				setupEvent();
 				leftArrow();
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
 			})
 		})
 	}
@@ -85,12 +87,161 @@ page.ctrl('lendAudit', function($scope) {
 			that.addClass('panel-menu-item-active');
 			leftArrow();
 		});
+		$console.find('#submitOrder').on('click', function() {
+			$.confirm({
+				title: '提交',
+				content: dialogTml.wContent.suggestion,
+				useBootstrap: false,
+				boxWidth: '500px',
+				theme: 'light',
+				type: 'purple',
+				buttons: {
+					'取消': {
+			            action: function () {
+
+			            }
+			        },
+			        '确定': {
+			            action: function () {
+	            			var _reason = $('#suggestion').val();
+	            			console.log(_reason);
+	            			if(!_reason) {
+	            				$.alert({
+	            					title: '提示',
+									content: '<div class="w-content"><div>请填写处理意见！</div></div>',
+									useBootstrap: false,
+									boxWidth: '500px',
+									theme: 'light',
+									type: 'purple',
+									buttons: {
+										'确定': {
+								            action: function () {
+								            }
+								        }
+								    }
+	            				})
+	            				return false;
+	            			} else {
+	            				$.ajax({
+									type: 'post',
+									url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
+//									url: urlStr+'/loanInfoInput/submit/80871',
+//									data: {
+//										taskId: $params.taskId,
+//										orderNo: $params.orderNo,
+//										reason: _reason
+//									},
+									dataType: 'json',
+									success: $http.ok(function(xhr) {
+										console.log(xhr);
+									})
+								})
+	            				$.ajax({
+									type: 'post',
+									url: $http.api('task/complete', 'jbs'),
+									data: {
+										taskId: $params.taskId,
+										orderNo: $params.orderNo,
+										reason: _reason
+										},
+									dataType: 'json',
+									success: $http.ok(function(result) {
+										console.log(result);
+									})
+								})
+	            			}
+			            }
+			        }
+			    }
+			})
+		});
 	}
 	var leftArrow = function(){
 		$('.panel-menu-item').each(function(){
 			$(this).find('.arrow').hide();
 			if($(this).hasClass('panel-menu-item-active')){
 				$(this).find('.arrow').show();
+			}
+		})
+	}
+
+	/**
+	* 设置底部按钮操作栏
+	*/
+	var setupSubmitBar = function() {
+		var $submitBar = $console.find('#submitBar');
+		$submitBar.data({
+			taskId: $params.taskId
+		});
+		$submitBar.submitBar(function($el) {
+			evt($el);
+		});
+	}
+
+	/**
+	* 设置底部按钮操作栏
+	*/
+	var setupSubmitBar = function() {
+		var $submitBar = $console.find('#submitBar');
+		$submitBar.data({
+			taskId: $params.taskId
+		});
+		$submitBar.submitBar();
+		var $sub = $submitBar[0].$submitBar;		
+
+		/**
+		 * 申请平台垫资按钮
+		 */
+		$sub.on('#applyAdvance', function() {
+			
+		})
+
+		/**
+		 * 自行垫资按钮
+		 */
+		$sub.on('#selfAdvance', function() {
+			
+		})
+
+		/**
+		 * 审核通过
+		 */
+		$sub.on('approvalPass', function() {
+			process();
+		})
+
+	}
+
+	/**
+	 * 任务提交跳转
+	 */
+	function process() {
+		$.confirm({
+			title: '提交订单',
+			content: dialogTml.wContent.suggestion,
+			buttons: {
+				close: {
+					text: '取消',
+					btnClass: 'btn-default btn-cancel',
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var taskIds = [];
+						for(var i = 0, len = $params.tasks.length; i < len; i++) {
+							taskIds.push(parseInt($params.tasks[i].id));
+						}
+						var params = {
+							taskId: $params.taskId,
+							taskIds: taskIds,
+							orderNo: $params.orderNo
+						}
+						var reason = $.trim(this.$content.find('#suggestion').val());
+						if(reason) params.reason = reason;
+						flow.tasksJump(params, 'complete');
+					}
+				}
 			}
 		})
 	}
@@ -103,7 +254,9 @@ page.ctrl('lendAudit', function($scope) {
 		$scope.$el = {
 			$tab: $console.find('#checkTabs')
 		}
-		loadTabList();
+		loadTabList(function() {
+			setupSubmitBar();
+		});
 	})
 });
 

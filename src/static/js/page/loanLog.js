@@ -2,18 +2,17 @@
 page.ctrl('loanLog', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	// $params.orderNo = 'nfdb2016102421082285';
+	$params.orderNo = 'nfdb20170407100357095';
 	
 	/**
 	* 加载订单日志数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadloanLog = function(_type, cb) {
+	var loadloanLog = function(cb) {
 		$.ajax({
 			type: 'post',
-			// url: $http.api('loanLog/getLoanLog', 'jbs'),
-			url: 'http://192.168.1.108:8080/loanLog/getLoanLog',
+			url: $http.api('loanLog/getLoanLog', 'jbs'),
 			data: {
 				orderNo: $params.orderNo
 			},
@@ -21,9 +20,6 @@ page.ctrl('loanLog', function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				if($params.path) {
-					setupLocation();	
-				}
 				render.compile($scope.$el.$modifyPanel, $scope.def.modifyTmpl, $scope.result.data.loanEditLog, true);
 				render.compile($scope.$el.$telApproval, $scope.def.telApprovalTmpl, $scope.result.data.telPhoneApprovalLog, true);
 				render.compile($scope.$el.$loanLogPanel, $scope.def.logTmpl, $scope.result.data, true);
@@ -35,21 +31,6 @@ page.ctrl('loanLog', function($scope) {
 	}
 
 	/**
-	* 设置面包屑
-	*/
-	var setupLocation = function() {
-		if(!$scope.$params.path) return false;
-		var $location = $console.find('#location');
-		$location.data({
-			backspace: $scope.$params.path,
-			current: '订单日志',
-			loanUser: '未知',
-			orderDate: '2017-12-12 09:56'
-		});
-		$location.location();
-	}
-
-	/**
 	 * 设置立即处理事件
 	 */
 	var setupEvt = function() {
@@ -57,7 +38,9 @@ page.ctrl('loanLog', function($scope) {
 		
 	}
 
-
+	/**
+	 * 加载页面模板
+	 */
 	$console.load(router.template('iframe/orders-log'), function() {
 		$scope.def = {
 			modifyTmpl: $console.find('#modifyTmpl').html(),

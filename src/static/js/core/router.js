@@ -103,6 +103,7 @@
 	*/
 	router.render = function(key, params, opts) {
 		render.$console.html('');
+		$('body').prop('scrollTop','0');
 		router.closeRefresh = true;
 		if(!opts || !opts.bStatic) {
 			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + Base64.btoa($.param(params)) : '');

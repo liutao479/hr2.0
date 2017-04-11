@@ -32,7 +32,8 @@ body[class*=jconfirm-no-scroll-] {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	z-index: 99999999;
+	// z-index: 99999999;
+	z-index: 99999;
 	font-family: inherit;
 	overflow: hidden
 }
@@ -376,7 +377,7 @@ body[class*=jconfirm-no-scroll-] {
 
 .jconfirm .jconfirm-box .jconfirm-buttons {
 	padding-bottom: 11px;
-	padding-right: 20px;
+	// padding-right: 20px;
 }
 
 .jconfirm .jconfirm-box .jconfirm-buttons>button {

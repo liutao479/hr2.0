@@ -21,12 +21,20 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 				result.data.loanTask = {
 					category: 'registrationApproval',
 					editable: 0
-				}
+				};
+				result.data.cfgMaterials = [
+					{
+						zcdjz: '注册登记证'
+					},
+					{
+						djzysjbh: '登记证右上角编号'
+					}
+				];
 				$scope.result = result;
 				$scope.orderNo = result.data.orderInfo.orderNo;//订单号
 				setupLocation(result.data.orderInfo);
 				// console.log(result.data.backApprovalInfo)
-				setupBackReason(result.data.backApprovalInfo);
+				// setupBackReason(result.data.orderInfo.loanOrderApproval);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -74,9 +82,9 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 	var loadCommitBar = function(cb) {
 		var buttons = {
 			"submit": false,
-			"back": true,
+			"back": '退回订单',
 			"cancel": false,
-			"verify": true
+			"verify": '审核通过'
 		};
 		var $commitBar = $console.find('#commitPanel');
 		$commitBar.data({
@@ -118,8 +126,8 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 		} else {
 			$backReason.data({
 				backReason: data.reason,
-				backUser: data.roleName,
-				backUserPhone: data.phone,
+				backUser: data.userName,
+				backUserPhone: '后台未返回',
 				backDate: tool.formatDate(data.transDate, true)
 			});
 			$backReason.backReason();

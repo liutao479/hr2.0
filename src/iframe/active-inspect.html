@@ -1,0 +1,175 @@
+<!--发起主动抽查-->
+<div class="container active-inspect" id="active-inspect">
+	<div class="select-search-bar clearfix">
+		<div class="search-item">
+			<span class="select-name">经办银行：</span>
+			<div class="select select-common" data-dropdown="page.$scope['activeInspect'].bankPicker" data-trigger="page.$scope['activeInspect'].dropdownTrigger.demandBank"></div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">业务区域：</span>
+			<div class="select select-mini" data-dropdown="page.$scope['activeInspect'].areaPicker" data-tabs="省|市|区" data-trigger="page.$scope['activeInspect'].dropdownTrigger.areaSel"></div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">放款日期：</span>
+			<div class="input-text input-date-mini">
+				<input id="dateStart" type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="" />	
+			</div>
+			<span class="separator">-</span>
+			<div class="input-text input-date-mini">
+				<input id="dateEnd" type="text" class="dateBtn" data-min="dateStart" readonly="readonly" value="" />	
+			</div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">逾期状态：</span>
+			<div class="select select-common" data-dropdown="page.$scope['activeInspect'].statusPicker" data-trigger="page.$scope['activeInspect'].dropdownTrigger.statusSel"></div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">进件车商：</span>
+			<div class="select select-common" data-dropdown="page.$scope['activeInspect'].dealerPicker" data-trigger="page.$scope['activeInspect'].dropdownTrigger.dealerSel"></div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">车辆类型：</span>
+			<div class="select select-common" data-dropdown="page.$scope['activeInspect'].carTypePicker" data-trigger="page.$scope['activeInspect'].dropdownTrigger.carTypeSel"></div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">分期金额：</span>
+			<div class="input-text input-text-small">
+				<input type="text" id="minMoney" />	
+			</div>
+			<span class="separator">-</span>
+			<div class="input-text input-text-small">
+				<input type="text" id="maxMoney" />	
+			</div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">抵押状态：</span>
+			<div class="select select-common" data-dropdown="page.$scope['activeInspect'].mortgagePicker" data-trigger="page.$scope['activeInspect'].dropdownTrigger.mortgageSel"></div>
+		</div>
+		<div class="search-item">
+			<span class="select-name">有无主动核查记录：</span>
+			<div class="select select-common" data-dropdown="page.$scope['activeInspect'].recordPicker" data-trigger="page.$scope['activeInspect'].dropdownTrigger.recordSel"></div>
+		</div>
+		<div class="search-item">
+			<div class="input-text">
+				<input type="text" autocomplete="off" id="searchInput" placeholder="订单号\借款人姓名\身份证号" />
+			</div>
+		</div>
+		<div class="search-item">
+			<a href="javascript:;" id="search-reset">重置</a>
+			<div id="search" class="button button-mini button-deep">搜索</div>
+		</div>		
+	</div>	
+	<div class="search-bar clearfix mt15">
+		<div class="all-check-box">
+			<div id="all" data-id='83' class="checkbox checkbox-normal"></div>
+			<span>全选</span>
+		</div>
+		<div class="button button-deep gocheck">
+			发起核查
+		</div>
+	</div>
+	<div id="tableContext"></div>
+	<!-- 分页插件 -->
+	<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['activeInspect'].paging" data-pages="1" data-current="1"></div>
+	<!-- 分页插件 end-->
+</div>
+<!--发起主动抽查 end-->
+
+<script type="text/x-dot-template" id="activeInspectTmpl">
+	{{ var len = it.length; if(len) { }}
+		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+			<table class="expire-orders-table" width="100%">
+				<thead class="expire-title">
+					<tr>
+						<td colspan="4">
+							<div id="onlyCheck" data-id = "{{= item.id}}" class="checkbox checkbox-normal"></div>
+							<i class="iconfont iconfont-man">&#xe656;</i>
+							<span class="userName">{{= item.userName}}</span>
+							<span>{{= item.orderId}}</span>
+							<!--<div class="key-value-box clearfix">
+								<span class="key">解析时间：</span>
+								<span class="value">{{= item.createDate}}</span>
+							</div>-->
+						</td>
+					</tr>
+				</thead>
+				<tbody class="expire-content">
+					<tr class="expire-content-tr">
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">抵押权人：</td>
+									<td class="value">{{= item.bankName}}</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">登记机关：</td>
+									<td class="value">{{= item.office}}</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">抵押日期：</td>
+									<td class="value">{{= item.time}}</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">担保机构：</td>
+									<td class="value">{{= item.mechanism}}</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">经办网点：</td>
+									<td class="value">{{= item.dot}}</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">放款金额：</td>
+									<td class="value">{{= item.totalMoney}}</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">放款日期：</td>
+									<td class="value">{{= item.giveMoneyTime}}</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">分期金额：</td>
+									<td class="value">{{= item.stageMoney}}</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">发动机号：</td>
+									<td class="value">{{= item.engineNum}}</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item expire-content-item-last">
+							<a class="button button-mini button-gray gocheck" data-id = "{{= item.id}}">发起核查</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		{{ } }}
+	{{ } else { }}
+		<div class="layout">
+			<div class="blank-box">
+				<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+				<p>暂无待办任务！</p>
+			</div>
+		</div>
+	{{ } }}
+</script>
+<script type="text/x-dot-template" id="importResultTmpl">
+	<dl class="import-dl clearfix">
+		<dt class="import-icon-box">
+			<div class="import-icon">
+				<i class="iconfont">&#xe659;</i>
+			</div>
+		</dt>
+		<dd class="import-msg-box">
+			<div class="import-result">查询成功！</div>
+			<div class="import-text">请点击“历史核查记录”中查看详情</div>
+		</dd>
+	</dl>
+</script>	
+				

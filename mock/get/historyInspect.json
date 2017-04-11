@@ -1,0 +1,39 @@
+{
+    "code":0,
+    "data":[
+        {
+            "id":"001",
+            "userName":"谢庆健",
+            "orderId":"23562346243545",
+        	"bankName":"杭州联合银行",
+            "carDealer":"车商A",
+            "time":"2017-03-21",
+            "stageMoney":"100万",
+            "backTime":"2017-01-03",
+            "giveMoneyTime":"2017-03-10",
+            "status":0,
+            "createDate":"2017-03-01"
+        },
+        {
+            "id":"001",
+            "userName":"谢庆健",
+            "orderId":"23562346243545",
+        	"bankName":"杭州联合银行",
+            "carDealer":"车商A",
+            "time":"2017-03-21",
+            "stageMoney":"100万",
+            "backTime":"2017-01-03",
+            "giveMoneyTime":"2017-03-10",
+            "status":1,
+            "createDate":"2017-03-01"
+        }
+    ],
+	"msg": "success",
+    "page":{
+        "pageNum":1,
+        "pageSize":2,
+        "pages":3,
+        "startRow":0,
+        "total":5
+    }
+}
