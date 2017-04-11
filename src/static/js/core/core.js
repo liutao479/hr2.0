@@ -100,17 +100,24 @@
 							}
 						})
 						break;
+					case 6001:
+						$.alert({
+							title: '提示',
+							content: tool.alert(response.msg),
+							buttons:{
+								ok: {
+									text: '确定'
+								}
+							}
+						})
+						break;
 					case 6011:
 						$.alert({
 							title: '提示',
 							content: tool.alert('账户已存在'),
 							buttons:{
 								ok: {
-									text: '确定',
-									action: function() {
-										// location.href = 'login.html';
-										// alert(1)
-									}
+									text: '确定'
 								}
 							}
 						})

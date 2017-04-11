@@ -619,28 +619,33 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 上传图片数据回调
 	 */
 	$scope.uploadcb = function(self, xhr) {
-		$.ajax({
-			type: 'post',
-			url: $http.api('materials/ocr', true),
-			data: {
-				materialsId: xhr.data.id
-			},
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				console.log(result)
-				$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-name input').val(result.data.userName);
-				$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-idc input').val(result.data.idCard);
-				
-				$scope.currentType = 0;
-				loadOrderInfo($scope.currentType, function() {
-					setupCreditBank();
-					setupLocation();
-					initApiParams();
-					evt();
-				});
-			})
+		if(self.options.code == 'sfzzm') {
+			$.ajax({
+				type: 'post',
+				url: $http.api('materials/ocr', true),
+				data: {
+					materialsId: xhr.data.id
+				},
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result)
+					$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-name input').val(result.data.userName);
+					$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-idc input').val(result.data.idCard);
+				})
+			});
+		}
+		$scope.currentType = 0;
+		loadOrderInfo($scope.currentType, function() {
+			setupCreditBank();
+			setupLocation();
+			initApiParams();
+			evt();
 		});
 	}
+
+	/**
+	 * 删除图片回调
+	 */
 	$scope.deletecb = function(self, xhr) {
 		if(xhr.data.refresh) {
 			$scope.currentType = 0;
@@ -688,6 +693,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				type: 'post',
 				url: $http.api('area/get', 'zyj'),
 				dataType: 'json',
+				global: false,
 				success: function(xhr) {
 					var sourceData = {
 						items: xhr.data,
@@ -703,6 +709,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				type: 'post',
 				url: $http.api('area/get', 'zyj'),
 				dataType: 'json',
+				global: false,
 				data: {parentId: parentId},
 				success: function(xhr) {
 					console.log(xhr);
@@ -720,6 +727,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				type: 'post',
 				url: $http.api('area/get', 'zyj'),
 				dataType: 'json',
+				global: false,
 				data: {parentId: parentId},
 				success: function(xhr) {
 					console.log(xhr);
@@ -759,6 +767,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				type: 'post',
 				url: $http.api('demandBank/selectBank', 'zyj'),
 				dataType: 'json',
+				global: false,
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,

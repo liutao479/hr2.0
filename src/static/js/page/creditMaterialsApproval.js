@@ -363,14 +363,18 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 				marker: function (img, mark, cb) {
 					console.log(img);
 					console.log(mark);
+					var params = {
+						id: img.id,
+						auditResult: mark
+					}
+					if(mark == 0) {
+						params.auditOpinion = '';
+					}
 					$.ajax({
 						type: 'post',
 						url: $http.api('creditMaterials/material/mark', 'zyj'),
-						data: {
-							id: img.id,
-							auditResult: mark,
-							auditOpinion: '原因原因原因。屁原因啊啊啊啊啊啊。？？？！！ldf'
-						},
+						global: false,
+						data: params,
 						dataType: 'json',
 						success: $http.ok(function(result) {
 							console.log(result);

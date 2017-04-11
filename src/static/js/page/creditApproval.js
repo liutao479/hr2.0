@@ -166,16 +166,17 @@ page.ctrl('creditApproval', [], function($scope) {
 					cb($scope.result.data.creditUsers[_type][index].loanCreditReportList)
 				},
 				marker: function (img, mark, cb) {
-					console.log(img);
-					console.log(mark);
+					var params = {
+						id: img.id,
+						aduitResult: mark
+					}
+					if(mark == 0) {
+						params.aduitOpinion = '';
+					}
 					$.ajax({
 						type: 'post',
 						url: $http.api('creditReport/reportUpd', true),
-						data: {
-							id: img.id,
-							aduitResult: mark,
-							aduitOpinion: '审核原因审核原因审核原因审核原因审核原因'
-						},
+						data: params,
 						dataType: 'json',
 						success: $http.ok(function(result) {
 							console.log(result);

@@ -155,9 +155,9 @@
 					{{ if(ml.code == 'ZXBGP') { }}
 						<!-- 只配置到显示区块 -->
 						{{ for(var h = 0, len4 = col.loanCreditReportList.length; h < len4; h++) { var hl = col.loanCreditReportList[h], flag = 0; }}
-						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.aduitResult || 0}}" data-msg="{{=hl.aduitOpinion}}" data-editable="{{=it.editable}}"></div>
+						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.aduitResult || 0}}" data-msg="{{=hl.aduitOpinion}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 						{{ } }}
-						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=len4 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}"></div>
+						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=len4 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}" data-empty="1"></div>
 					{{ } if(ml.code == 'ZXZD') { }}
 						<table border="1" class="field-table{{=(!ml.empty ? ' required' : '')}}">
 							{{ var zxzd = col.loanCreditResultList; }}

@@ -238,6 +238,7 @@ page.ctrl('creditInput', [], function($scope) {
 			processData: false,
 			dataType: 'xml',
 			contentType: false,
+			global: false,
 			success: function(response) {
 				var _url = res.host + '/' + fd.get('key');
 				// var _name = fd.get('key');
@@ -618,7 +619,7 @@ page.ctrl('creditInput', [], function($scope) {
 	var pictureListen = function(self) {
 		var $imgel = self.$el.parent().find('.uploadEvt');
 		$imgel.each(function(index) {
-			$(this).find('.imgs-item-p').html('征信报告照片' + (index + 1));
+			$(this).find('.imgs-item-p').html('<i class="is-empty">*</i>征信报告照片' + (index + 1));
 		});
 		$imgel.last().data('name', '征信报告照片' + $imgel.length);
 	}
