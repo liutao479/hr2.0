@@ -938,9 +938,6 @@
 					<div class="panel-detail-content-layout">
 						<div class="loan-imgs-bar clearfix">
 							<div class="imgs-item-group openCardPic uploadEvt" data-deletecb="page.$scope['openCardSheet'].deletecb" data-uploadcb="page.$scope['openCardSheet'].uploadcb" data-upl-url="" data-id="" data-orderno="{{= it.loanTask.orderNo}}" data-code="" data-name="信用卡申请表" data-scene="{{= it.loanTask.category}}" data-user="" data-img="{{= it.creditCard.creditCardImgUrl}}" data-err="0" data-editable="1"></div>
-							<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-editable="{{=it.editable}}"></div>
-							<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || 0}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}"></div>
-							<div class="imgs-item-group openCardPic uploadEvt" data-deletecb="page.$scope['openCardSheet'].deletecb" data-uploadcb="page.$scope['openCardSheet'].uploadcb" data-upl-url="" data-id="" data-orderno="{{= it.loanTask.orderNo}}" data-code="" data-name="信用卡申请表" data-scene="{{= it.loanTask.category}}" data-user="" data-img="{{= it.creditCard.creditCardImgUrl}}" data-err="0" data-editable="1"></div>
 						</div>
 						{{if(it.creditCard.creditCardImgUrl){ }}
 							<input id="imgUrl" class="required" type="text" name="creditCardImgUrl" value="{{= it.creditCard.creditCardImgUrl}}" />
