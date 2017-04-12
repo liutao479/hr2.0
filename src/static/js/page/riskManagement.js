@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('riskManagement', function($scope) {
+page.ctrl('riskManagement',['vendor/echarts.min'], function($scope) {
 	var $console = render.$console,
 		selValObj={},
 		savedQuery={},/*全局保存查询的条件*/
@@ -83,7 +83,7 @@ page.ctrl('riskManagement', function($scope) {
 		$.ajax({
 			type: 'post',
 			dataType:"json",
-			url: $http.api('riskStatis/overAll'),
+			url: $http.api('riskStatis/overAll','cyj'),
 			data: {},
 			success: $http.ok(function(res) {
 				render.compile($scope.$el.$valuationTotal, $scope.def.valuationTotalTemp, res.data, true);

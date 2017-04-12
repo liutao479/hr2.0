@@ -2,17 +2,70 @@
 page.ctrl('activeInspect', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
+		endDate = tool.formatDate(new Date().getTime()),
+		startDate = tool.getPreMonth(endDate),
+		pageBcData={},/*保存点击分页时的查询参数*/
 		apiParams = {
 			pageNum: $params.pageNum || 1,
+			minSelectDate:new Date(startDate),
+			maxSelectDate:new Date(endDate),
+			status:null,/*状态*/
+			orgId:null,/*担保机构*/
+			keyWord:null,
+			bankName:null,/*经办网点*/
+			isSecond:null,/*车辆类型*/
+			stageMinMoney:null,
+			stageMaxMoney:null,
+			overDueStatus:null,/*逾期状态*/
+			methodWay:null/*主动核查标记*/
 		};
+	/*查询前去除空查询字段*/
+	var delNull=function(obj){
+		for(var i in obj){
+			if(obj[i]==null||(obj[i]==""&&obj[i]!==0)||obj[i]==undefined)
+				delete obj[i];
+		};
+		return obj;
+	};
+	/*重置查询表单*/
+	var resetForm=function(){
+		$scope.$el.$dateStart.val(startDate);
+		$scope.$el.$dateEnd.val(endDate);
+		$scope.$context.find('.select input').val('');
+		$scope.$el.$searchInput.val('');
+		apiParams = {
+			pageNum: $params.pageNum || 1,
+			minSelectDate:new Date(startDate),
+			maxSelectDate:new Date(endDate),
+			status:null,/*状态*/
+			orgId:null,/*担保机构*/
+			keyWord:null,
+			bankName:null,/*经办网点*/
+			isSecond:null,/*车辆类型*/
+			stageMinMoney:null,
+			stageMaxMoney:null,
+			overDueStatus:null,/*逾期状态*/
+			methodWay:null/*主动核查标记*/
+		};
+	};
+	/*获取表单数据*/
+	var getFormMsg=function(){
+		apiParams.pageNum=1;
+		apiParams.minSelectDate=new Date($scope.$el.$dateStart.val());
+		apiParams.maxSelectDate=new Date($scope.$el.$dateEnd.val());
+		apiParams.taskId=pageBcData.taskId;
+		apiParams.keyWord=$.trim($scope.$el.$searchInput.val());
+		return apiParams;
+	};
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
 			type: 'get',
 			dataType:"json",
-			url: $http.api('activeInspect'),
+			url: $http.api('bankLoanAfter/getList',true),
 			data: param,
 			success: $http.ok(function(result) {
+				pageBcData=param;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				// 构造分页
 				setupPaging(result.page, true);
@@ -105,23 +158,29 @@ page.ctrl('activeInspect', function($scope) {
 		$scope.$context=$console.find('#active-inspect')
 		$scope.$el = {
 			$tbl: $scope.$context.find('#tableContext'),
-			$paging: $scope.$context.find('#pageToolbar')
+			$paging: $scope.$context.find('#pageToolbar'),
+			$resetBtn: $scope.$context.find('#search-reset'),
+			$searchBtn: $scope.$context.find('#search'),
+			$dateStart: $scope.$context.find('#dateStart'),
+			$dateEnd: $scope.$context.find('#dateEnd'),
+			$searchInput: $scope.$context.find('#searchInput')
 		};
-		search(apiParams, function() {
+		search(delNull(apiParams), function() {
 			evt();
 		});
 		// 启用下拉功能
 		$console.find('.select').dropdown();
 		// 日期控件
 		$console.find('.dateBtn').datepicker();
-		$console.find('.dateBtn').val(tool.formatDate(new Date().getTime()));
+		$scope.$el.$dateStart.val(startDate);
+		$scope.$el.$dateEnd.val(endDate);
 	});
 
 	// 省市区数据源
 	var areaSel = {
 		province: function(cb) {
 			$.ajax({
-				url: urlStr+'/area/get',
+				url: $http.api('area/get', 'zyj'),
 				dataType:'json',
 				success: function(xhr) {
 					var sourceData = {
@@ -135,7 +194,7 @@ page.ctrl('activeInspect', function($scope) {
 		},
 		city: function(areaId, cb) {
 			$.ajax({
-				url: urlStr+'/area/get',
+				url: $http.api('area/get', 'zyj'),
 				data: {
 					parentId: areaId
 				},
@@ -152,7 +211,7 @@ page.ctrl('activeInspect', function($scope) {
 		},
 		country: function(areaId, cb) {
 			$.ajax({
-				url: urlStr+'/area/get',
+				url: $http.api('area/get', 'zyj'),
 				data: {
 					parentId: areaId
 				},
@@ -205,20 +264,16 @@ page.ctrl('activeInspect', function($scope) {
 			}
 		},
 		statusSel: function(t, p, cb) {
-			$.ajax({
-				type: 'post',
-				url: $http.api('demandBank/selectBank', 'zyj'),
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'bankId',
-						name: 'bankName'
-					};
-					cb(sourceData);
-				})
-			})
-		},
+			var sourceData = {
+				items: [
+					{value:0,text:"未结清"},
+					{value:1,text:"已结清"}
+				],
+				id: 'value',
+				name: 'text'
+			};
+			cb(sourceData);
+		},/*逾期状态*/
 		dealerSel: function(t, p, cb) {
 			$.ajax({
 				type: 'post',
@@ -233,69 +288,61 @@ page.ctrl('activeInspect', function($scope) {
 					cb(sourceData);
 				})
 			})
-		},
+		},/*进件车商*/
 		carTypeSel: function(t, p, cb) {
-			$.ajax({
-				type: 'post',
-				url: $http.api('demandBank/selectBank', 'zyj'),
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'bankId',
-						name: 'bankName'
-					};
-					cb(sourceData);
-				})
-			})
-		},
+			var sourceData = {
+				items: [
+					{value:0,text:"新车"},
+					{value:1,text:"二手车"}
+				],
+				id: 'value',
+				name: 'text'
+			};
+			cb(sourceData);
+		},/*车辆类型*/
 		mortgageSel: function(t, p, cb) {
-			$.ajax({
-				type: 'post',
-				url: $http.api('demandBank/selectBank', 'zyj'),
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'bankId',
-						name: 'bankName'
-					};
-					cb(sourceData);
-				})
-			})
-		},
+			var sourceData = {
+				items: [
+					{value:1,text:"未办理"},
+					{value:2text:"已办理"}
+				],
+				id: 'value',
+				name: 'text'
+			};
+			cb(sourceData);
+		},/*抵押状态*/
 		recordSel: function(t, p, cb) {
 			cb({
 				items:[
-					{id:"1",name:"是"},
-					{id:"0",name:"否"}
+					{value:"0",text:"手动"}，
+					{value:"1",text:"系统"}
 				],
-				id: 'id',
-				name:'name'
+				id: 'value',
+				name:'text'
 			});
-		}
+		}/*主动核查标记*/
 	};
 	// 下拉回调
 	$scope.bankPicker=function(val){
-		console.log(val)
+		apiParams.bankName=val.name;
 	};
 	$scope.areaPicker=function(val){
 		console.log(val)
 	};
 	$scope.statusPicker=function(val){
-		console.log(val)
+		apiParams.overDueStatus=val.id;
 	};
 	$scope.dealerPicker=function(val){
-		console.log(val)
+		apiParams.orgId=val.id;
 	};
 	$scope.carTypePicker=function(val){
-		console.log(val)
+		apiParams.isSecond=val.id;
 	};
 	$scope.mortgagePicker=function(val){
-		console.log(val)
+		apiParams.status=val.id;
 	};
 	$scope.recordPicker=function(val){
-		console.log(val)
+		apiParams.methodWay=val.id;
 	};
 });
 

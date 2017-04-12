@@ -21,6 +21,58 @@ page.ctrl('dataAssistant', function($scope) {
 		});
 	};
 	/*发起核查*/
+	var openUserDialog=function(that,_data,key){
+		/*var userData=[
+			{checkStatus:0,funcName:"王可可"},
+			{checkStatus:1,funcName:"李冰冰"},
+			{checkStatus:2,funcName:"弘毅"},
+		];*/
+		that.openWindow({
+			title:"———— 服务项目 ————",
+			width:"70%",
+			content: dialogTml.wContent.userBtnGroup,	
+			commit: dialogTml.wCommit.cancelSure,			
+			data:_data
+		},function($dia){
+			var _arr=[];
+			$dia.find(".block-item-data:not(.not-selected)").click(function() {
+				$(this).toggleClass("selected");	
+				var _index=$(this).data("index");
+				var _thisVal=userData[_index].funcName;
+				if($(this).hasClass("selected"))
+					_arr.push(_thisVal);	
+				else
+					_arr.splice(_thisVal,1);
+			});
+			$dia.find(".w-sure").click(function() {
+				$dia.remove();
+
+				debugger
+				/*if(_arr.length==0)
+					return false;
+				$.ajax({
+					type: 'post',
+					dataType:"json",
+					url: $http.api('creditAudit/startVerify'),
+					data: {
+						apiKeys:key,
+						orderNo:apiParams.orderNo,
+						userIds:_arr.join("_")
+					},
+					success: $http.ok(function(res) {
+						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
+							var context=$(".jconfirm .jconfirm-content").html();
+							if(context){
+								setTimeout(function() {
+									jc.close();
+								},1500);
+							};
+						});
+					})
+				});*/
+			});
+		});	
+	};
 	var openDialog=function(that,_data){
 		var _loalList=[
 			{text:"实名",isBank:true,class:"bac6b78fa",icon:"&#xe677;"},
@@ -58,53 +110,21 @@ page.ctrl('dataAssistant', function($scope) {
 		},function($dialog){
 			$dialog.find(".nextDialog").click(function() {
 				$dialog.remove();
-				var userData=[
-					{checkStatus:0,funcName:"王可可"},
-					{checkStatus:1,funcName:"李冰冰"},
-					{checkStatus:2,funcName:"弘毅"},
-				];
-				that.openWindow({
-					title:"———— 服务项目 ————",
-					width:"70%",
-					content: dialogTml.wContent.btngroup,	
-					commit: dialogTml.wCommit.cancelSure,			
-					data:userData
-				},function($dia){
-					var _arr=[];
-					$dia.find(".block-item-data:not(.not-selected)").click(function() {
-						$(this).toggleClass("selected");	
-						var _index=$(this).data("index");
-						var _thisVal=userData[_index].funcName;
-						if($(this).hasClass("selected"))
-							_arr.push(_thisVal);	
+				var key=_data[$(this).data('index')].apikey;
+				$.ajax({
+					type: 'post',
+					dataType:'json',
+					url: $http.api('loanAudit/userList','cyj'),
+					data: {
+						orderNo:'nfdb2016102820480790'
+						//orderNo:apiParams.orderNo
+					},
+					success: $http.ok(function(res) {
+						if(res&&res.data&&res.data.length>0)
+							openUserDialog(that,res.data,key);
 						else
-							_arr.splice(_thisVal,1);
-					});
-					$dia.find(".w-sure").click(function() {
-						$dia.remove();
-						if(_arr.length==0)
-							return false;
-						$.ajax({
-							type: 'post',
-							dataType:"json",
-							url: $http.api('creditAudit/startVerify'),
-							data: {
-								apiKeys:"",
-								orderNo:apiParams.orderNo,
-								userIds:_arr.join("_")
-							},
-							success: $http.ok(function(res) {
-								var jc=$.dialog($scope.def.toastTmpl,function($dialog){
-									var context=$(".jconfirm .jconfirm-content").html();
-									if(context){
-										setTimeout(function() {
-											jc.close();
-										},1500);
-									};
-								});
-							})
-						});
-					});
+							openUserDialog(that,[],key);
+					})
 				});	
 			});
 		});		

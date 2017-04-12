@@ -3,7 +3,7 @@
 	<div class="path-back-bar">
 		<div class="path-back">
 			<i class="iconfont">&#xe626;</i>
-			<a href="#historyInspect">历史核查记录</a>&nbsp;&gt;
+			<a href="javascript:;" id="backspace">历史核查记录</a>&nbsp;&gt;
 			<span class="current-page"></span>
 		</div>
 	</div>
@@ -39,12 +39,7 @@
 							</div>
 						{{ } }}
 					{{ } else { }}
-						<div class="layout">
-							<div class="blank-box">
-								<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="暂无登记证状态！" title="暂无登记证状态！">
-								<p>暂无登记证状态！</p>
-							</div>
-						</div>
+						<div class="no-data"></div>
 					{{ } }}
 				</div>
 			</div>
@@ -170,29 +165,31 @@
 					{{}}}	
 						<div class="col-l-two">
 							<ul>
-								<li><span class="key">被执行人姓名：</span>{{=item.info.project}}</li>
-								<li><span class="key">性别：</span>{{=item.info.licenseplate}}</li>
-								<li><span class="key">身份证号码：</span>{{=item.info.licenseplate}}</li>
-								<li><span class="key">执行法院：</span>{{=item.info.usename}}</li>
-								<li><span class="key">省份：</span>{{=item.info.phone}}</li>
-								<li><span class="key">执行依据文号：</span>{{=item.info.address}}</li>
-								<li><span class="key">立案时间：</span>{{=item.info.outpctime}}</li>
-								<li><span class="key">案号：</span>{{=item.info.outpctime}}</li>
+								<li><span class="key">被执行人姓名：</span>{{=item.project}}</li>
+								<li><span class="key">性别：</span>{{=item.licenseplate}}</li>
+								<li><span class="key">身份证号码：</span>{{=item.licenseplate}}</li>
+								<li><span class="key">执行法院：</span>{{=item.courtname}}</li>
+								<li><span class="key">省份：</span>{{=item.phone}}</li>
+								<li><span class="key">执行依据文号：</span>{{=item.address}}</li>
+								<li><span class="key">立案时间：</span>{{=tool.formatDate(item.courttime)}}</li>
+								<li><span class="key">案号：</span>{{=item.outpctime}}</li>
 							</ul>
 						</div>
 						<div class="col-l-two">
 							<ul>
-								<li><span class="key">执行标的：</span>{{=item.info.gradetime}}</li>
-								<li><span class="key">执行状态：</span>{{=item.info.gradetime}}</li>
-								<li><span class="key">做出执行依据单位：</span>{{=item.info.checktime}}</li>
-								<li><span class="key">做出生效法律文书确定义务：</span>{{=item.info.insurancetime}}</li>
-								<li><span class="key">被执行人的履行性质：</span>{{=item.info.insurancetime}}</li>
-								<li><span class="key">失信被执行人行为具体情形：</span>{{=item.info.QualifiedNumber}}</li>
+								<li><span class="key">执行标的：</span>{{=item.gradetime}}</li>
+								<li><span class="key">执行状态：</span>{{=item.courtstatus}}</li>
+								<li><span class="key">做出执行依据单位：</span>{{=item.checktime}}</li>
+								<li><span class="key">做出生效法律文书确定义务：</span>{{=item.insurancetime}}</li>
+								<li><span class="key">被执行人的履行性质：</span>{{=item.insurancetime}}</li>
+								<li><span class="key">失信被执行人行为具体情形：</span>{{=item.QualifiedNumber}}</li>
 							</ul>
 						</div>
 					</div>
 				{{}}}
-			{{}}}
+			{{ }else{ }}
+				<div class="no-data"></div>
+			{{ } }}
 		</div>
 	</div>		
 </script>
@@ -259,6 +256,8 @@
 						</div>
 					</div>
 				{{}}}
+			{{ }else{ }}
+				<div class="no-data"></div>
 			{{}}}
 		</div>
 	</div>	
@@ -298,6 +297,8 @@
 						</table>
 					</div>
 				{{}}}
+			{{ }else{ }}
+				<div class="no-data"></div>
 			{{}}}
 		</div>
 	</div>		
