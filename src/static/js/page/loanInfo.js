@@ -251,8 +251,18 @@ page.ctrl('loanInfo', function($scope) {
 						$(this).parent().addClass("error-input");
 						$(this).after('<i class="error-input-tip">请完善该必填项</i>');
 					}
-					console.log($(this).index());
 					isTure = false;
+					$.alert({
+						title: '提示',
+						content: tool.alert('请完善相关必填项！'),
+						buttons: {
+							ok: {
+								text: '确定',
+								action: function() {
+								}
+							}
+						}
+					});
 				}
 			});
 			if(isTure){
@@ -564,7 +574,7 @@ page.ctrl('loanInfo', function($scope) {
 							}
 						}
 					});
-					return false;
+					return ;
 				}else{
 					$.confirm({
 						title: '提交订单',
@@ -597,7 +607,21 @@ page.ctrl('loanInfo', function($scope) {
 						}
 					})
 				}
-			})
+			}),
+			error:function(){
+				$.alert({
+					title: '提示',
+					content: tool.alert(xhr.msg),
+					buttons: {
+						ok: {
+							text: '确定',
+							action: function() {
+							}
+						}
+					}
+				});
+				return ;
+			}
 		})
 	}
 
