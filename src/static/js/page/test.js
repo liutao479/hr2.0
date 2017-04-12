@@ -10,10 +10,10 @@ page.ctrl('test', function($scope) {
 						auditResult: 0	//未标记
 					},
 					{ 
-						materialsPic: "https://pic4.zhimg.com/v2-18c784d9ee357afe27f8d44cfc457bfb_200x112.jpg",
+						materialsPic: "https://www.google.co.jp/logos/doodles/2017/misuzu-kanekos-114th-birthday-6343326507728896-l.png",
 						id: 1,
 						userId: 3,
-						name: "借款人身份证",
+						name: "dsdf",
 						materialsCode: 'sfzzm',
 						auditResult: 1	//错误
 					},
@@ -21,12 +21,12 @@ page.ctrl('test', function($scope) {
 						materialsPic: "http://localhost:8080/hr2.0/src/static/css/img/test_upload.png",
 						id: 1,
 						userId: 3,
-						name: "借款人身份证",
+						name: "sdfsdf",
 						materialsCode: 'sfzzm',
 						auditResult: 2	//不清晰
 					},
 					{ 
-						materialsPic: "https://pic4.zhimg.com/v2-18c784d9ee357afe27f8d44cfc457bfb_200x112.jpg",
+						materialsPic: "https://www.google.co.jp/logos/doodles/2017/misuzu-kanekos-114th-birthday-6343326507728896-l.png",
 						id: 1,
 						userId: 3,
 						name: "借款人身份证",
@@ -42,7 +42,7 @@ page.ctrl('test', function($scope) {
 						auditResult: 0
 					},
 					{ 
-						materialsPic: "https://pic4.zhimg.com/v2-18c784d9ee357afe27f8d44cfc457bfb_200x112.jpg",
+						materialsPic: "https://www.google.co.jp/logos/doodles/2017/misuzu-kanekos-114th-birthday-6343326507728896-l.png",
 						id: 1,
 						userId: 3,
 						name: "借款人身份证",
@@ -50,23 +50,7 @@ page.ctrl('test', function($scope) {
 						auditResult: 0
 					},
 					{ 
-						materialsPic: "https://pic4.zhimg.com/v2-18c784d9ee357afe27f8d44cfc457bfb_200x112.jpg",
-						id: 1,
-						userId: 3,
-						name: "借款人身份证",
-						materialsCode: 'sfzzm',
-						auditResult: 0
-					},
-					{ 
-						materialsPic: "http://localhost:8080/hr2.0/src/static/css/img/test_upload.png",
-						id: 1,
-						userId: 3,
-						name: "借款人身份证",
-						materialsCode: 'sfzzm',
-						auditResult: 0
-					},
-					{ 
-						materialsPic: "https://pic4.zhimg.com/v2-18c784d9ee357afe27f8d44cfc457bfb_200x112.jpg",
+						materialsPic: "https://www.google.co.jp/logos/doodles/2017/misuzu-kanekos-114th-birthday-6343326507728896-l.png",
 						id: 1,
 						userId: 3,
 						name: "借款人身份证",
@@ -82,15 +66,7 @@ page.ctrl('test', function($scope) {
 						auditResult: 0
 					},
 					{ 
-						materialsPic: "https://pic4.zhimg.com/v2-18c784d9ee357afe27f8d44cfc457bfb_200x112.jpg",
-						id: 1,
-						userId: 3,
-						name: "借款人身份证",
-						materialsCode: 'sfzzm',
-						auditResult: 0
-					},
-					{ 
-						materialsPic: "https://pic4.zhimg.com/v2-18c784d9ee357afe27f8d44cfc457bfb_200x112.jpg",
+						materialsPic: "https://www.google.co.jp/logos/doodles/2017/misuzu-kanekos-114th-birthday-6343326507728896-l.png",
 						id: 1,
 						userId: 3,
 						name: "借款人身份证",
@@ -106,7 +82,15 @@ page.ctrl('test', function($scope) {
 						auditResult: 0
 					},
 					{ 
-						materialsPic: "https://pic4.zhimg.com/v2-18c784d9ee357afe27f8d44cfc457bfb_200x112.jpg",
+						materialsPic: "https://www.google.co.jp/logos/doodles/2017/misuzu-kanekos-114th-birthday-6343326507728896-l.png",
+						id: 1,
+						userId: 3,
+						name: "借款人身份证",
+						materialsCode: 'sfzzm',
+						auditResult: 0
+					},
+					{ 
+						materialsPic: "https://www.google.co.jp/logos/doodles/2017/misuzu-kanekos-114th-birthday-6343326507728896-l.png",
 						id: 1,
 						userId: 3,
 						name: "借款人身份证",
@@ -122,7 +106,23 @@ page.ctrl('test', function($scope) {
 						auditResult: 0
 					},
 					{ 
-						materialsPic: "https://pic4.zhimg.com/v2-18c784d9ee357afe27f8d44cfc457bfb_200x112.jpg",
+						materialsPic: "https://www.google.co.jp/logos/doodles/2017/misuzu-kanekos-114th-birthday-6343326507728896-l.png",
+						id: 1,
+						userId: 3,
+						name: "借款人身份证",
+						materialsCode: 'sfzzm',
+						auditResult: 0
+					},
+					{ 
+						materialsPic: "http://localhost:8080/hr2.0/src/static/css/img/test_upload.png",
+						id: 1,
+						userId: 3,
+						name: "借款人身份证",
+						materialsCode: 'sfzzm',
+						auditResult: 0
+					},
+					{ 
+						materialsPic: "https://www.google.co.jp/logos/doodles/2017/misuzu-kanekos-114th-birthday-6343326507728896-l.png",
 						id: 1,
 						userId: 3,
 						name: "借款人身份证",

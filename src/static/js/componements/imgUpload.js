@@ -461,6 +461,7 @@
 			im: 8
 		}
 		self.runtime = {};
+		self.tool = {};
 		self.runtime.idx = 0;
 		self.runtime.leftItems = 0;
 		self.init();
@@ -498,7 +499,8 @@
 		var boxWidth = items * self.size.iw + (items -1) * self.size.im;
 
 		var viewbox = '<div class="img-view-box" onselectstart="return false;" style="background: #000; position: fixed; z-index:99999999; width: '+self.runtime.vw+'px;height:'+self.runtime.vh+'px;border-raidus:3px;left:50%;top:50%;margin-left:-'+self.runtime.vw/2+'px;margin-top:-'+self.runtime.vh/2+'px;">\
-							<div style="width:'+boxWidth+'px; position:relative; margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;"><a class="prev big"></a><a class="next big"></a><img style="width:100%;height:100%;" id="___originImage___" src="'+self.imgs[0].materialsPic+'" /></div>\
+							<div style="width:'+boxWidth+'px; position:relative; margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;overflow:hidden;" id="__move__trigger"><img ondragstart="return false" style="position: absolute; left:50%;top:50%; display:block; cursor:move; margin: 0 auto;" id="___originImage___" src="'+self.imgs[0].materialsPic+'" /></div>\
+							<a class="prev big"></a><a class="next big"></a>\
 							<div style="width:'+boxWidth+'px; position:relative; height:'+self.size.iw+'px;margin:0 auto; overflow: hidden;"><div id="___thumbnails___" style="width:'+items * (self.size.im + self.size.iw) + self.size.im +'px;position:absolute;left:0;top:0;"></div></div>\
 							<a class="prev mini"></a><a class="next mini"></a>\
 					   </div>';
@@ -514,8 +516,10 @@
 		}
 		self.$items = $(arr.join('')).appendTo(self.$itemBody);
 		self.$view = self.$preview.find('#___originImage___');
+		self.$viewbox = self.$preview.find('#__move__trigger');
 		self.$prev = self.$preview.find('.prev');
 		self.$next = self.$preview.find('.next');
+		self.setImage(self.imgs[0]);
 		self.$items.eq(0).addClass('active');
 	};
 	/**
@@ -529,7 +533,7 @@
 					   		<div class="transform-bar">\
 					   			<div class="zoom-bar" style="width:'+(self.runtime.vw - 370 > 270 ? 270 : 170)+'px;">\
 					   				<span class="zoom-title">缩放</span>\
-					   				<span class="zoom-track" style="width:'+(self.runtime.vw - 370 > 270 ? 200 : 100)+'px;"><span class="track-thumb"></span></span>\
+					   				<span class="zoom-track" style="width:'+(self.runtime.vw - 370 > 270 ? 200 : 100)+'px;"><span class="track-bar"></span><span class="track-thumb"></span></span>\
 					   				<span class="zoom-scale">100%</span>\
 					   			</div>\
 					   			<a id="rotateImage">\
@@ -557,6 +561,8 @@
 		self.$toolbar.$zoomTrack = self.$toolbar.$root.find('.zoom-track');
 		self.$toolbar.$zoomThumb = self.$toolbar.$zoomTrack.find('.track-thumb');
 		self.$toolbar.$zoomScale = self.$toolbar.$root.find('.zoom-scale');
+		self.tool.zeroPoint = self.$toolbar.$zoomTrack.offset();
+		self.tool.trackWidth = (self.runtime.vw - 370 > 270 ? 200 : 100);
 		if(!self.opts.markable) {
 			self.$toolbar.$mark.remove();
 		}
@@ -587,6 +593,56 @@
 		self.$close.on('click', function() {
 			self.close();
 		})
+		/**图片拖拽*/
+		self.$view.on('mousedown', function() {
+			self.tool.canDrag = true;
+		})
+		self.$viewbox.on('mousedown', function(evt) {
+			if(!self.tool.canDrag) return;
+			self.startPos = {
+				x: evt.pageX,
+				y: evt.pageY
+			}
+
+			var diff = {x: 0, y: 0};
+
+			if(self.endPos) {
+				diff = {
+					x: self.endPos.x - self.originPos.x,
+					y: self.endPos.y - self.originPos.y
+				}
+			}
+
+			self.originPos = {
+				x: self.startPos.x - diff.x,
+				y: self.startPos.y - diff.y
+			}
+		})
+		self.$viewbox.on('mouseup', function(evt) {
+			if(!self.tool.canDrag) return;
+			self.tool.canDrag = false;
+			self.endPos = {
+				x: evt.pageX,
+				y: evt.pageY
+			}
+		})
+		self.$viewbox.on('mouseleave', function(evt) {
+			if(!self.tool.canDrag) return;
+			self.tool.canDrag = false;
+			self.endPos = {x: evt.pageX, y: evt.pageY};
+		})
+		self.$viewbox.on('mousemove', function(evt) {
+			if(!self.tool.canDrag) return;
+			self.move(evt);
+		})
+		//方向控制
+		self.$prev.on('click', function() {
+			self.prev();
+		})
+		self.$next.on('click', function() {
+			self.next();
+		})
+		//操作组建
 		self.$items.on('click', function() {
 			var idx = $(this).data('idx');
 			if(idx == self.runtime.idx) return;
@@ -594,14 +650,9 @@
 			self.$items.eq(self.runtime.idx).removeClass('active');
 			self.runtime.idx = idx;
 			self.$items.eq(self.runtime.idx).addClass('active');
-			self.$view.attr('src', img.materialsPic);
+			self.setImage(img);
 		})
-		self.$prev.on('click', function() {
-			self.prev();
-		})
-		self.$next.on('click', function() {
-			self.next();
-		})
+		//标记
 		self.$toolbar.$mark.on('click', function() {
 			self.$toolbar.$markList.toggle();
 		})
@@ -609,13 +660,13 @@
 			var $that = $(this),
 				id = $that.data('id'),
 				img = self.imgs[self.runtime.idx];
-			if(id == img.mark) { return false; }
+			if(id == img.auditResult) { self.$toolbar.$markList.hide(); return false; }
 			
 			function cb() {
-				img.mark = id;
+				img.auditResult = id;
 				var text = id == 0 ? '标记为...' : $that.html();
 				self.$items.eq(self.runtime.idx).find('.errHook').remove();
-				self.$items.eq(self.runtime.idx).append(self.getMark(img.mark));
+				self.$items.eq(self.runtime.idx).append(self.getMark(img.auditResult));
 				self.$toolbar.$remarkTitle.html(text);
 				self.$toolbar.$markList.hide();
 			}
@@ -625,7 +676,100 @@
 			
 			return false;
 		})
+		self.$toolbar.$zoomTrack.on('mousemove', function(evt) {
+			if(!self.tool.canZoom) return false;
+			var xAxis = evt.pageX - self.tool.zeroPoint.left;
+			if(xAxis >= self.tool.trackWidth) return self.tool.canZoom = false;
+			var mod = 1 + xAxis / self.tool.trackWidth;
+			var rate = mod.toFixed(2);
+			if(xAxis > self.tool.trackWidth - 10) { 
+				xAxis = self.tool.trackWidth - 10;
+				rate = "2.00";
+				mod = 2;
+			}
+			self.$toolbar.$zoomThumb.css({left: xAxis+'px'});
+			self.$toolbar.$zoomScale.html(parseInt(mod * 100) + '%')
+			console.log(rate)
+			self.zoom(rate);
+		})
+		self.$toolbar.$zoomTrack.on('mouseleave mouseup', function(evt) {
+			self.tool.canZoom = false;
+		})
+		self.$toolbar.$zoomThumb.on('mousedown', function(evt) {
+			self.tool.canZoom = true;
+		})
+		self.$toolbar.$rotate.on('click', function() {
+			self.tool.rotate = (self.tool.rotate || 0) + 90;
+			if(self.tool.rotate == 360) self.tool.rotate = 0;
+			self.transition('rotate({0}deg)'.format(self.tool.rotate), 'rotate');
+		})
 	};
+
+	/**
+	* 设置当前查看图片
+	*/
+	Preview.prototype.setImage = function(image) {
+		var self = this;
+		var img = new Image();
+		img.src = image.materialsPic;
+		img.onload = function() {
+			self.reset();
+			var size = { w: img.width, h: img.height };
+			self.$view.css({
+				marginLeft: -img.width/2 + 'px',
+				marginTop: -img.height/2 + 'px'
+			})
+			self.$view.attr('src', image.materialsPic);
+			img = null;
+			self.setMark(image.auditResult);
+			self.setTitle(image.name);
+		}
+	}
+
+	Preview.prototype.setTitle = function(t) {
+		this.$toolbar.$title.html(t);
+	}
+
+	Preview.prototype.setMark = function(mark) {
+		if(mark == undefined) mark = 0;
+		var text = ['标记为...', '图片上传错误', '图片不清晰'][mark];
+		this.$toolbar.$remarkTitle.html(text);
+	}
+
+	Preview.prototype.transition = function(transformer, type) {
+		var self = this;
+		if(!self.tool.transform) {
+			self.tool.transform = transformer;
+			self.$view.css({transform: transformer});
+			return;
+		}
+		switch (type) {
+			case 'move':
+				self.tool.transform = self.tool.transform.replace(/(translate\((-?)\d+px,(-?)\d+px\))/g, '');
+				break;
+			case 'zoom':
+				self.tool.transform = self.tool.transform.replace(/(scale\(\d+(.\d+?)\))/g, '');
+				break;
+			case "rotate":
+				self.tool.transform = self.tool.transform.replace(/(rotate\(\d+deg\))/g, '');
+				break;
+			default: break;
+		}
+		self.tool.transform = self.tool.transform.replace(/\s+/g, '') + ' ' + transformer;
+		self.$view.css({
+			transform: self.tool.transform
+		})
+	}
+
+	Preview.prototype.reset = function() {
+		this.tool.transform = '';
+		this.$view.css({transform: this.tool.transform});
+		this.$toolbar.$zoomThumb.css({left: 0});
+		this.$toolbar.$zoomScale.html('100%');
+		this.originPos = null;
+		this.endPos = null;
+		this.tool.rotate = 0;
+	}
 
 	Preview.prototype.next = function() {
 		var self = this;
@@ -636,7 +780,7 @@
 			self.runtime.idx++;
 			self.$items.eq(self.runtime.idx).addClass('active');
 			var img = self.imgs[self.runtime.idx];
-			self.$view.attr('src', img.materialsPic);
+			self.setImage(img);
 		}
 		
 		if(self.runtime.items + self.runtime.leftItems < self.$items.length &&
@@ -660,7 +804,7 @@
 			self.runtime.idx--;
 			self.$items.eq(self.runtime.idx).addClass('active');
 			var img = self.imgs[self.runtime.idx];
-			self.$view.attr('src', img.materialsPic);	
+			self.setImage(img);
 		}
 		
 		if(self.runtime.leftItems > 0 &&
@@ -676,8 +820,17 @@
 		}
 	};
 
-	Preview.prototype.zoom = function() {
-		
+	Preview.prototype.move = function(evt) {
+		var self = this;
+		var pos = {
+			x: evt.pageX - self.originPos.x,
+			y: evt.pageY - self.originPos.y
+		}
+		self.transition('translate({0}px,{1}px)'.format(pos.x, pos.y), 'move');
+	}
+
+	Preview.prototype.zoom = function(rate) {
+		this.transition('scale({0})'.format(rate), 'zoom');
 	};
 
 	Preview.prototype.rotate = function() {

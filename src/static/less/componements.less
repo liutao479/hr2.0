@@ -314,7 +314,7 @@
         position: absolute;
         top: 50%;
         border-width: 40px;
-        margin-top: -40px;
+        margin-top: -90px;
         &:before {
             position: absolute;
             content: "";
@@ -341,7 +341,7 @@
         }
     }
     .prev {
-        left: -110px;
+        left: -20px;
         border-style: dashed solid dashed dashed;
         border-color: transparent #fff transparent transparent;
         &:before {
@@ -359,7 +359,7 @@
         }
     }
     .next {
-        right: -110px;
+        right: -20px;
         border-style: dashed dashed dashed solid;
         border-color: transparent transparent transparent #fff;
         &:before {
@@ -407,15 +407,21 @@
             .zoom-track {
                 position: absolute;
                 left: 30px;
-                top: 14px;
+                top: 0px;
                 right: 90px;
-                height: 4px;
-                background-color: #fff;
-                border-radius: 2px;
+                height: 30px;
                 cursor: pointer;
+                .track-bar {
+                    display: block;
+                    height: 4px;
+                    background-color: #fff;
+                    background-color: #fff;
+                    border-radius: 2px;
+                    margin: 13px 0;
+                }
                 .track-thumb {
                     position: absolute;
-                    top: -3px;
+                    top: 10px;
                     background-color: #fff;
                     width: 10px;
                     height: 10px;
