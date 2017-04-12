@@ -25,6 +25,7 @@ page.ctrl('openCardSheet', function($scope) {
 				setupLocation();
 				loanFinishedInput();
 				setupEvt();
+				setupDatepicker();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -36,13 +37,14 @@ page.ctrl('openCardSheet', function($scope) {
 	* 上传图片成功后的回调函数
 	*/
 	$scope.uploadcb = function(self) {
-		var imgStr = self.$el.find('.imgs-view').attr('src');
+		var imgStr = $console.find('.imgs-view').attr('src');
 		$("#imgUrl").val(imgStr);
 	}
+	
 	$scope.deletecb = function(self) {
 		$("#imgUrl").val('');
-	}	
-
+	}
+	
 	/**
 	* 设置面包屑
 	*/
@@ -73,6 +75,13 @@ page.ctrl('openCardSheet', function($scope) {
 			path: 'loanProcess'
 		});
 	}
+	/**
+	* 日历控件
+	*/
+	var setupDatepicker = function() {
+		$console.find('.dateBtn').datepicker({});
+		$console.find('#dateStart').val();
+	}
 
 
 	/**
@@ -97,6 +106,10 @@ page.ctrl('openCardSheet', function($scope) {
 		});
 	}
 	var setupEvt = function($el) {
+		
+		$console.find('.statdate').on('click', function(){
+			
+		});
 		$console.find('.uploadEvt').imgUpload();
 		$console.find('#cophone').on('change', function() {
 			var cophone = $(this).val();

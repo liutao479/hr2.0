@@ -122,6 +122,17 @@
 							}
 						})
 						break;
+					case -2:
+						$.alert({
+							title: '提示',
+							content: tool.alert(response.data.msg),
+							buttons:{
+								ok: {
+									text: '确定'
+								}
+							}
+						})
+						break;	
 					default:
 						$.alert({
 							title: '提示',
