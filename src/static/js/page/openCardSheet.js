@@ -107,8 +107,12 @@ page.ctrl('openCardSheet', function($scope) {
 	}
 	var setupEvt = function($el) {
 		
-		$console.find('.statdate').on('click', function(){
-			
+		$console.find('#longTime').on('click', function(){
+			if($("input[type='checkbox']").is(':checked')){
+				$("#dateStart").val("9999-99-99").addClass('pointDisabled');
+			}else{
+				$("#dateStart").val("").removeClass('pointDisabled');
+			}
 		});
 		$console.find('.uploadEvt').imgUpload();
 		$console.find('#cophone').on('change', function() {
