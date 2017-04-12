@@ -245,13 +245,13 @@ page.ctrl('orderDetails', function($scope) {
 
 		//终止订单审核（保留订单）
 		$console.find('#keepOrder').on('click', function() {
-			
+			alert('后台没有接口！')
 		})
 
 
 		//终止订单审核（保留订单）
 		$console.find('#terminateOrder').on('click', function() {
-			
+			alert('后台没有接口！')
 		})
 	}
 

@@ -143,7 +143,7 @@
 							{{ } else { }}
 								<div class="panel-value-item">
 									<div class="input-text">
-										<input type="text" value="{{=col.creditReportId || ''}}" data-user-id="{{=col.userId}}" data-type="creditReportId" class="creditReportId{{=(!ml.empty ? ' required' : '')}}" />	
+										<input type="text" value="{{=col.creditReportId || ''}}" placeholder="请输入30位以内的征信报告编号" data-user-id="{{=col.userId}}" data-type="creditReportId" class="creditReportId{{=(!ml.empty ? ' required' : '')}}" />	
 									</div>
 								</div>
 							{{ } }}

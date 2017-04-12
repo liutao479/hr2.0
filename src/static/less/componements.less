@@ -101,7 +101,7 @@
 .imgs-item-group {
     position: relative;
     display: inline-block;
-    float: left;
+    // float: left;
     width: 220px;
     text-align: center;
     margin-right: 30px;
@@ -445,6 +445,10 @@
     .borderRadius(4px);
     background-color: #FFF;
     cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
     &:hover {
         border-color: @mainColor;
     }
@@ -481,10 +485,6 @@
     &&-normal {
         width: 18px;
         height: 18px;
-        -webkit-user-select: none;
-           -moz-user-select: none;
-            -ms-user-select: none;
-                user-select: none;
         &.checked {
             color: #FFF;
             background-color: @mainColor;
@@ -1129,14 +1129,8 @@
             float: left;
             margin-right: 10px;
         }
-        .i-download {
-            float: left;
-            color: @mainColor;
-            font-size: 18px;
-            margin-right: 6px;
-        }
         .w-select-item {
-            margin-left: 27px;
+            display: inline-block;
             line-height: 20px;
         }
     }
@@ -1148,6 +1142,23 @@
         .w-download-title {
             line-height: 40px;
             color: @tiperColor;
+        }
+        .w-download {
+            width: 100%;
+            .w-radio {
+                float: left;
+                width: 33.3%;
+                text-align: center;
+                .checkbox {
+                    margin-right: 8px;
+                    position: relative;
+                    top: 4px;
+                }
+                .i-download {
+                    color: @mainColor;
+                    font-size: 18px;
+                }
+            }
         }
     }
     // 选择框

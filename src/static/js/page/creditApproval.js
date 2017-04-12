@@ -204,7 +204,6 @@ page.ctrl('creditApproval', [], function($scope) {
 
 		//查看征信材料
 		$self.find('.setJkrEvt').on('click', function() {
-			// alert('还未做该功能，暂时不测！谢谢！ T.T');
 			var that = $(this);
 			$.ajax({
 				type: 'post',

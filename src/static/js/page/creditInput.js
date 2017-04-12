@@ -338,6 +338,28 @@ page.ctrl('creditInput', [], function($scope) {
 			console.log($scope.apiParams);
 		});
 
+		function noNumbers(e) {
+			var keynum, keychar, numcheck;
+
+			if(window.event) // IE
+			  {
+			  keynum = e.keyCode;
+			  }
+			else if(e.which) // Netscape/Firefox/Opera
+			  {
+			  keynum = e.which;
+			  }
+			keychar = String.fromCharCode(keynum);
+			numcheck = /^[0-9]*$/;
+			numTotalCheck = /^\d{30,}$/;
+			return numcheck.test(keychar);
+		}
+
+		//征信报告编号
+		$el.find('.creditReportId').on('keypress', function(event) {
+			return noNumbers(event);
+		})
+
 		// 备注失去焦点事件
 		// $el.find('.remark').on('blur', function() {
 		// 	var that = $(this),
