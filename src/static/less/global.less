@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_qnguags5ybq33di.eot');
-  src: url('//at.alicdn.com/t/font_qnguags5ybq33di.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_qnguags5ybq33di.woff') format('woff'),
-  url('//at.alicdn.com/t/font_qnguags5ybq33di.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_qnguags5ybq33di.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_qa53d2pi5bokzkt9.eot');
+  src: url('//at.alicdn.com/t/font_qa53d2pi5bokzkt9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_qa53d2pi5bokzkt9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_qa53d2pi5bokzkt9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_qa53d2pi5bokzkt9.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -37,6 +37,9 @@
 }
 .pr150 {
     padding-right: 150px !important;
+}
+.pr260 {
+    padding-right: 260px !important;
 }
 .pb50 {
     padding-bottom: 50px !important;
@@ -632,6 +635,14 @@ input[disabled]{
         }
     }
 }
+.checkbox {
+    i{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+}
 
 // 特殊类表格（逾期信息历史导入详情）
 .expire-orders-table {
@@ -677,6 +688,13 @@ input[disabled]{
         .checkbox {
             position: relative;
             top: 4px;
+            margin-left: 20px;
+            i{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
         }
         .iconfont-man {
             position: relative;
@@ -962,7 +980,7 @@ input[disabled]{
     .panel-content-title {
         position: relative;
         text-align: left;
-        padding: 0 20px;
+        padding: 10px 20px;
         border-top: 1px dashed @borderColor;
         border-bottom: 1px dashed @borderColor;
         overflow:hidden;
@@ -974,7 +992,7 @@ input[disabled]{
         }
         .key-value-box {
             margin-right: 24px;
-            line-height: 52px;
+            line-height: 38px;
             .value {
                 .input-text {
                     top: 10px;
@@ -996,10 +1014,14 @@ input[disabled]{
             height: 50px;
             line-height: 50px;
         }
-        .button {
+        .right-Evt {
             position: absolute;
-            top: 10px;
-            right: 20px;
+            top: 50%;
+            margin-top: -16px;
+            right: 10px;
+            .button {
+                margin-right: 10px;
+            }
         }
         
     }
@@ -2140,6 +2162,13 @@ input[disabled]{
                 text-align: right;
             }
         }
+    }
+}
+.loanInfoForm{
+    width: 50%;
+    float: left;
+    .info-key-value-box{
+        width: 100%;
     }
 }
 //车商管理 zhy

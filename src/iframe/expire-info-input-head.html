@@ -1,0 +1,29 @@
+	<!--逾期信息录入-->
+			<div class="container expire-info-input" id="expire-info-input">
+				
+				<div id="expireInputPanel" class="tab-bar tab-bar-special"></div>	
+				
+				<!-- 面板 -->
+				<div id="innerPanel"></div>
+				<!-- 面板 end-->
+			</div>
+
+			<script type="text/x-dot-template" id="expireInputTmpl">
+				<div>
+					<ul class="role-bar-ul clearfix">
+						<li class="role-bar-li"><a class="role-item tabEvt role-item-active" data-type="0">批量导入</a></li>
+						<li class="role-bar-li"><a id="single" class="role-item tabEvt" data-type="1">单笔录入</a></li>
+					</ul>
+					<span class="import-time">上次成功导入时间</span>
+					{{if(!it){ }}
+						<span class="import-time">未导入</span>
+					{{ }else{ }}
+						<span class="import-time">{{= it}}</span>
+						<a href="javascript:;" class="commit-item">
+							<i class="iconfont">&#xe640;</i>
+							<span id="importHistory">查看历史导入记录</span>
+						</a>
+					{{ } }}	
+				</div>
+			</script>
+				

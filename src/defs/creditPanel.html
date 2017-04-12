@@ -1,5 +1,5 @@
 <script type="text/dot-x-template" id="creditUploadListTmpl">
-	<!--借款人信息填写栏-->
+	<!-- 借款人信息填写栏 -->
 	{{ for(var i = 0, len = it.creditUsers[it.currentType].length; i < len; i++){ var row = it.creditUsers[it.currentType][i]; }}
 		{{ if(i == 0){ }}
 			<div class="credit-datas-bar credit-datas-bar-special clearfix">
@@ -56,7 +56,7 @@
 		{{ } }}
 		</div>
 		<!--借款人照片嵌入栏-->
-		<div class="credit-imgs-bar clearfix">
+		<div class="credit-imgs-bar">
 		{{ for(var j = 0, len2 = it.cfgMaterials.length; j < len2; j++) { var nl = it.cfgMaterials[j], flag = 0; }}
 			{{ var len3 = row.loanUserCredit.creditMaterials.length; if(len3) { }}
 				{{ for(var k = 0; k < len3; k++) { var mr = row.loanUserCredit.creditMaterials[k]; }}

@@ -1,29 +1,6 @@
 	<!--逾期信息录入-->
 			<div class="container expire-info-input" id="expire-info-input">
 				
-				<div id="expireInputPanel">
-					
-				</div>	
-				
-			</div>
-
-			<script type="text/x-dot-template" id="expireInputTmpl">
-				<div class="tab-bar tab-bar-special">
-					<ul class="role-bar-ul clearfix">
-						<li class="role-bar-li"><a class="role-item role-item-active" data-type="0">批量导入</a></li>
-						<li class="role-bar-li"><a id="single" class="role-item tabEvt" data-type="1">单笔录入</a></li>
-					</ul>
-					<span class="import-time">上次成功导入时间</span>
-					{{if(!it){ }}
-						<span class="import-time">未导入</span>
-					{{ }else{ }}
-						<span class="import-time">{{= it}}</span>
-						<a href="javascript:;" class="commit-item">
-							<i class="iconfont">&#xe640;</i>
-							<span>查看历史导入记录</span>
-						</a>
-					{{ } }}	
-				</div>
 				<div class="panel no-top-border">
 					<div class="import-process-box clearfix">
 						<div class="process-box">
@@ -68,7 +45,9 @@
 					</div>
 					<div class="import-result-box" id="importResultTable"></div>
 				</div>	
-			</script>
+				
+			</div>
+
 			<script type="text/x-dot-template" id="importResultTmpl">
 				<dl class="import-dl clearfix">
 					<dt class="import-icon-box">

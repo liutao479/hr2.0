@@ -1,11 +1,10 @@
 'use strict';
 page.ctrl('expireProcessDetail', [], function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
+			pageNum: $params.pageNum || 1,
+			process: $params.process || ''
 		};
 	/**
 	 *逾期处理意见 
@@ -15,11 +14,15 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 	*/
 	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.apiMap.expireProcess,
+			url: urlStr + '/loanOverdueOrder/overdueOrderList',
+//			url: $http.api('loanOverdueOrder/overdueOrderList','jbs'),
 			data: params,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
+				setupEvent();
+				if(result.page && result.page.pages){
+					setupPaging(result.page.pages, true);
+				}
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -40,34 +43,50 @@ page.ctrl('expireProcessDetail', [], function($scope) {
  	/**
 	* 绑定搜索事件
 	**/
-	$(document).on('keydown', '#search', function(evt) {
-		if(evt.which == 13) {
-			alert("查询");
-			var that = $(this),
-				searchText = $.trim(that.val());
-			if(!searchText) {
-				return false;
-			}
-			apiParams.search = searchText;
-			$params.search = searchText;
-			apiParams.page = 1;
-			$params.page = 1;
-			loadExpireProcessList(apiParams);
-			// router.updateQuery($scope.$path, $params);
-		}
-	});
-	/**
-	* 绑定立即处理事件
-	*/
-	$(document).on('click', '#expireProcessTable .button', function() {
-		var that = $(this);
-		router.render(that.data('href'), {orderNo: that.data('id')});
-	});
+	var setupEvent = function($el) {
+		//详情页面确定取消按钮
+		$console.find('#expManage').on('click', function() {
+			router.render('expireProcess'});
+		});
+		//详情页面跳转
+		$console.find('#sendExp').on('click', function() {
+			$.confirm({
+				title: '选择提交对象',
+				content: dialogTml.wContent.suggestion,
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel',
+						action: function() {}
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							var that = this;
+							var taskIds = [];
+							for(var i = 0, len = $params.tasks.length; i < len; i++) {
+								taskIds.push(parseInt($params.tasks[i].id));
+							}
+							var params = {
+								taskId: $params.taskId,
+								taskIds: taskIds,
+								orderNo: $params.orderNo
+							}
+							var reason = $.trim(that.$content.find('#suggestion').val());
+							if(reason) params.reason = reason;
+							console.log(params);
+							flow.tasksJump(params, 'complete');
+						}
+					}
+				}
+			})
+		});
+	}
 
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('expire-process-detail'), function() {
+	$console.load(router.template('iframe/expire-process-detail'), function() {
 		$scope.def.listTmpl = render.$console.find('#expireProcessDetailTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#expireProcessDetailTable'),

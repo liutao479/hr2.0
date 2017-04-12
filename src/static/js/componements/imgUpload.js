@@ -72,20 +72,21 @@
 			tmp;
 		self.errImg = '';
 		self.errMsg = '';
+		self.empty = !self.options.empty ? '<i class="is-empty">*</i>' : '';
 		if(!self.options.img || self.options.img == 'undefined') {
 			if(self.options.editable) {
 				if(self.options.other) {
-					self.name = internalTemplates.other.format(self.options.name);
+					self.name = internalTemplates.other.format(self.options.name, self.empty);
 				} else {
-					self.name = internalTemplates.name.format(self.options.name);
+					self.name = internalTemplates.name.format(self.options.name, self.empty);
 				}
 				tmp = internalTemplates.edit.format(self.name);
 				self.status = 0;
 			} else {
 				if(self.options.other) {
-					self.name = internalTemplates.name.format(self.options.name);
+					self.name = internalTemplates.name.format(self.options.name, self.empty);
 				} else {
-					self.name = internalTemplates.name.format(self.options.name);
+					self.name = internalTemplates.name.format(self.options.name, self.empty);
 				}
 				tmp = internalTemplates.blank.format(self.name);
 				self.status = 2;
@@ -100,9 +101,9 @@
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
 				if(self.options.other) {
-					self.name = internalTemplates.other.format(self.options.name);
+					self.name = internalTemplates.other.format(self.options.name, self.empty);
 				} else {
-					self.name = internalTemplates.name.format(self.options.name);
+					self.name = internalTemplates.name.format(self.options.name, self.empty);
 				}
 				tmp = internalTemplates.modify.format(self.name, self.options.img, self.errImg, self.errMsg);
 				self.status = 1;
@@ -113,7 +114,7 @@
 				if(self.options.msg && self.options.msg != 'undefined') {
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
-				self.name = internalTemplates.name.format(self.options.name);
+				self.name = internalTemplates.name.format(self.options.name, self.empty);
 				tmp = internalTemplates.view.format(self.name, self.options.img || '', self.errImg, self.errMsg);
 				self.status = 2;
 			}
@@ -212,6 +213,7 @@
 	*/
 	imgUpload.prototype.onUpload = function(file) {
 		var self = this;
+		self.$el.find('.imgs-item-upload').LoadingOverlay("show");
 		imgUpload.getLicense(self.options.type, function(res) {
 			if(!res) {
 				throw "can not get the license";
@@ -256,13 +258,16 @@
 			_url = self.options.delUrl;
 		}
 		console.log(params)
+		self.$el.find('.imgs-item-upload').LoadingOverlay("show");
 		$.ajax({
 			url: _url,
 			type: 'post',
 			data: params,
+			global: false,
 			dataType: 'json',
 			success: function(xhr) {
 				console.log(xhr)
+				self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 				if(!xhr.code) {
 					self.delCb(self, xhr);
 					self.$el.html(internalTemplates.edit.format(self.name));
@@ -333,9 +338,11 @@
 			url: _url,
 			data: params,
 			type: 'post',
+			global: false,
 			dataType: 'json',
 			success: function(xhr) {
 				console.log(xhr);
+				self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 				if(!xhr.code) {					
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name, url, self.errImg, self.errMsg));
@@ -367,8 +374,9 @@
 	* @params {int} type 选项
 	* @params {function} cb 回调函数
 	*/
-	imgUpload.getLicense = function (type, cb) {
+	imgUpload.getLicense = function (type, cb) {		
 		$.ajax({
+			global: false,
 			url: type == 1 ? api.video : api.img,
 			dataType: 'json'
 		}).done(function(response) {
@@ -391,6 +399,7 @@
 			processData: false,
 			dataType: 'xml',
 			contentType: false,
+			global: false,
 			success: function(response) {
 				var _url = host + '/' + fd.get('key');
 				self.options.img = _url;
@@ -424,7 +433,7 @@
 				<span class="i-tips">图片未上传</span>\
 			   </div>{0}',
 		msg: '<div class="imgs-describe">{0}</div>',
-		name: '<span class="imgs-item-p">{0}</span>',
+		name: '<span class="imgs-item-p">{1}{0}</span>',
 		other: '<div class="input-text imgs-input-text">\
 					<input type="text" value="{0}" />\
 				</div>'

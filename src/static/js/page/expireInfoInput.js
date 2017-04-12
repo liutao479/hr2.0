@@ -7,40 +7,25 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadExpireProcessList = function(cb) {
-		$.ajax({
-			url: urlStr + '/loanOverdueImport/queryParsingDate',
-//			url: $http.api('loanOverdueImport/queryParsingDate','jbs'),
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				$("#updFileBox").hide();
-				setupEvt();
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
-			})
-		})
-	}
 	var setupEvt = function($el) {
-		
-		$console.find('#single').on('click', function() {
-			router.render('expire/expireInfoSingle');
-	    })
+		$("#updFileBox").hide();
 		$console.find('#reUpd').on('click', function() {
 			$("#content").show();
 			$("#importResultTable").empty();
 	    })
-		$console.find('#pathExp').on('click', function() {
-			debugger
-			var importId = $(this).data('type');
-			router.render('expire/expireInfoPrev', {
-				importId: importId, 
-				path: 'expire'
-			});
-	    })
-		
-		
+//		$console.find('#pathExp').on('click', function() {
+//			debugger
+//			var importId = $(this).data('type');
+//			router.render('expire/expireInfoPrev', {
+//				importId: importId, 
+//				path: 'expire'
+//			});
+////			var params = {
+////				importId: importId
+////			};
+////			router.innerRender('#innerPanel', 'expire/expireInfoPrev', params);
+//	    })
+			
 		//下载模板
 		$console.find('#modelDownload').on('click', function() {
 	 		window.open(urlStr+'/loanOverdueImport/downExcel','_self')
@@ -108,15 +93,8 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	* 加载页面模板
 	*/
 	$console.load(router.template('iframe/expire-info-input'), function() {
-		$scope.def = {
-			listTmpl : render.$console.find('#expireInputTmpl').html()
-		};	
-		$scope.$el = {
-			$tbl: $console.find('#expireInputPanel')
-		}
-		loadExpireProcessList(function(){
-			setupDropDown();
-		});
+		setupDropDown();
+		setupEvt();
 	});
 });
 

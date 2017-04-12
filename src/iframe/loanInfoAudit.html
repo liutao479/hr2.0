@@ -25,9 +25,11 @@
 											{{= i+1}}
 										{{ } }}
 									</span>
-									<div class="button button-mini saveBtn" data-key="save{{= sec.code}}">
-										保存
-									</div>
+									{{ if(sec.btnList && sec.length != 0) { }}
+										{{ for(var o = 0, len8 = sec.btnList.length; o < len8; o++) { }}
+										<div class="button button-mini saveBtn" data-key="save{{= sec.code}}">{{=sec.btnList[o].name}}</div>
+										{{ } }}
+									{{ } }}
 								</div>
 							</div>
 							<div class="panel-detail-content-layout">
@@ -39,7 +41,7 @@
 										{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x]; }}
 											{{var detailCode = seg.code;}}
 											{{ if(detailCode == 'residentType'){ }}
-												<div class="info-key-check-box">
+												<div class="info-key-check-box" data-edit='{{= seg.isEditor}}'>
 													<span class="info-key">
 														{{ if(seg.empty == '0'){ }}
 														<i>*</i>
@@ -90,7 +92,7 @@
 													</span>
 												</div>
 											{{ }else{ }}
-											<div class="info-key-value-box">
+											<div class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 												<table>
 													<tr>
 														<td>
@@ -182,9 +184,11 @@
 								<div class="panel-title">
 									<i class="iconfont">&#xe626;</i>
 									<span class="panel-title-name">{{= sec.name}}</span>
-									<div class="button button-mini saveBtn" data-type="postStr" data-key="save{{= sec.code}}">
-										保存
-									</div>
+									{{ if(sec.btnList && sec.length != 0) { }}
+										{{ for(var o = 0, len8 = sec.btnList.length; o < len8; o++) { }}
+										<div class="button button-mini saveBtn" data-type="postStr" data-key="save{{= sec.code}}">{{=sec.btnList[o].name}}</div>
+										{{ } }}
+									{{ } }}
 								</div>
 							</div>
 							<div class="panel-detail-content-layout">
@@ -192,12 +196,12 @@
 								{{ for(var i=0,lenthI = it.data[fieldCode].length;i<lenthI;i++){ var row = it.data[fieldCode][i]; }}
 									<div>
 										<form>
-											<div class="info-key-value-box">
+											<div class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 												<table>
 													<tr>
 														<td>
 															<span class="info-key">
-																<i>*</i>
+																<i data-num='name{{= i+1}}'>*</i>
 																姓名
 																：</span>
 														</td>
@@ -213,12 +217,12 @@
 													</tr>
 												</table>
 											</div>
-											<div class="info-key-value-box">
+											<div class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 												<table>
 													<tr>
 														<td>
 															<span class="info-key">
-																<i>*</i>
+																<i data-num='phone{{= i+1}}'>*</i>
 																电话
 																：</span>
 														</td>
@@ -234,24 +238,24 @@
 													</tr>
 												</table>
 											</div>
-											<div class="info-key-value-box">
+											<div class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 												<table>
 													<tr>
 														<td>
 															<span class="info-key">
-																<i>*</i>
+																<i data-num='relationship{{= i+1}}'>*</i>
 																关系
 																：</span>
 														</td>
 														<td>
-															{{ if(row.relationship || row.relationship == '0'){ }}
-																<div data-key="relationship" data-selected="{{= row.relationship}}" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-																<input type="hidden" name="relationship"  value="{{= row.relationship}}" />
-															{{ }else{ }}
-																<div data-key="relationship" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-																<input type="hidden" name="relationship" />
-															{{ } }}
-														</td>
+															<span class="info-value">
+																{{ if(row.relationship){ }}
+																	<input type="text" name="relationship" value="{{= row.relationship}}" />
+																{{ }else{ }}
+																	<input type="text" name="relationship" />
+																{{ } }}
+															</span>
+														</td>	
 													</tr>
 												</table>
 											</div>
@@ -259,6 +263,116 @@
 										</form>
 									</div>		
 								{{ } }}
+								</div>
+							</div>		
+						</div>
+					{{ }else if(fieldCode == 'FYXX'){ }}
+						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
+						<div class="panel panel-loan no-top-border">
+						{{ } else { }}
+						<div class="panel panel-loan mt15">
+						{{ } }}
+							<div class="panel-title-box">
+								<div class="panel-title">
+									<i class="iconfont">&#xe626;</i>
+									<span class="panel-title-name">{{= sec.name}}</span>
+									{{ if(sec.btnList && sec.length != 0) { }}
+										{{ for(var o = 0, len8 = sec.btnList.length; o < len8; o++) { }}
+										<div class="button button-mini saveBtn" data-type="postStr" data-key="save{{= sec.code}}">{{=sec.btnList[o].name}}</div>
+										{{ } }}
+									{{ } }}
+								</div>
+							</div>
+							<div class="panel-detail-content-layout">
+								<div class="loan-info">
+									{{ for(var i=0,lenthI = it.data[fieldCode].length;i<lenthI;i++){ var row = it.data[fieldCode][i]; }}
+										<form class="loanInfoForm">
+											<div class="info-key-value-box">
+												<table>
+													<tr>
+														<td>
+															<span class="info-key">
+																{{ if(row.required == '1'){ }}
+																	<i>*</i>
+																{{ } }}	
+																{{= row.fieldName}}
+																：</span>
+														</td>
+														<td>
+															<span class="info-value">
+																{{ if(row.value){ }}
+																	<input type="text" name="value" value="{{= row.value}}" />
+																{{ }else{ }}
+																	<input type="text" name="value" />
+																{{ } }}
+															</span>
+														</td>
+													</tr>
+												</table>
+											</div>
+											<input type="hidden" name="fieldCode" value="{{= row.fieldCode}}">
+											<input type="hidden" name="fieldId" value="{{= row.fieldId}}">
+											<input type="hidden" name="fieldName" value="{{= row.fieldName}}">
+											<input type="hidden" name="loanFeeId" value="{{= row.loanFeeId}}">
+											<input type="hidden" name="orderNo" value="{{= it.data.ORDERNO}}">
+										</form>
+									{{ } }}
+									<div style="clear: both;"></div>
+								</div>
+							</div>		
+						</div>
+					{{ }else if(fieldCode == 'QTXX'){ }}
+						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
+						<div class="panel panel-loan no-top-border">
+						{{ } else { }}
+						<div class="panel panel-loan mt15">
+						{{ } }}
+							<div class="panel-title-box">
+								<div class="panel-title">
+									<i class="iconfont">&#xe626;</i>
+									<span class="panel-title-name">{{= sec.name}}</span>
+									{{ if(sec.btnList && sec.length != 0) { }}
+										{{ for(var o = 0, len8 = sec.btnList.length; o < len8; o++) { }}
+										<div class="button button-mini saveBtn" data-type="postStr" data-key="save{{= sec.code}}">{{=sec.btnList[o].name}}</div>
+										{{ } }}
+									{{ } }}
+								</div>
+							</div>
+							<div class="panel-detail-content-layout">
+								<div class="loan-info">
+									{{ for(var i=0,lenthI = it.data[fieldCode][0].cIndividuationFieldList.length;i<lenthI;i++){ var row = it.data[fieldCode][0].cIndividuationFieldList[i]; }}
+										<form class="loanInfoForm">
+											<div class="info-key-value-box">
+												<table>
+													<tr>
+														<td>
+															<span class="info-key">
+																{{ if(row.required == '1'){ }}
+																	<i>*</i>
+																{{ } }}	
+																{{= row.name}}
+																：</span>
+														</td>
+														<td>
+															<span class="info-value">
+																{{ if(row.value){ }}
+																	<input type="text" name="value" value="{{= row.value}}" />
+																{{ }else{ }}
+																	<input type="text" name="value" />
+																{{ } }}
+															</span>
+														</td>
+													</tr>
+												</table>
+											</div>
+											<input type="hidden" name="code" value="{{= row.code}}">
+											<input type="hidden" name="dataColumn" value="{{= row.dataColumn}}">
+											<input type="hidden" name="individuationId" value="{{= row.individuationId}}">
+											<input type="hidden" name="name" value="{{= row.name}}">
+											<input type="hidden" name="orderNo" value="{{= it.data.ORDERNO}}">
+										</form>
+									{{ } }}
+									<div style="clear: both;"></div>
 								</div>
 							</div>		
 						</div>
@@ -272,9 +386,11 @@
 								<div class="panel-title">
 									<i class="iconfont">&#xe626;</i>
 									<span class="panel-title-name">{{= sec.name}}</span>
-									<div class="button button-mini saveBtn" data-key="save{{= sec.code}}">
-										保存
-									</div>
+									{{ if(sec.btnList && sec.length != 0) { }}
+										{{ for(var o = 0, len8 = sec.btnList.length; o < len8; o++) { }}
+										<div class="button button-mini saveBtn" data-key="save{{= sec.code}}">{{=sec.btnList[o].name}}</div>
+										{{ } }}
+									{{ } }}
 								</div>
 							</div>
 							<div class="panel-detail-content-layout">
@@ -282,7 +398,7 @@
 									<div class="loan-info">
 										{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x]; }}
 											{{var detailCode = seg.code;}}
-											<div class="info-key-value-box">
+											<div class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 												<table>
 													<tr>
 														<td>
@@ -320,9 +436,11 @@
 								<div class="panel-title">
 									<i class="iconfont">&#xe626;</i>
 									<span class="panel-title-name">{{= sec.name}}</span>
-									<div class="button button-mini saveBtn" data-key="save{{= sec.code}}">
-										保存
-									</div>
+									{{ if(sec.btnList && sec.length != 0) { }}
+										{{ for(var o = 0, len8 = sec.btnList.length; o < len8; o++) { }}
+										<div class="button button-mini saveBtn" data-key="save{{= sec.code}}">{{=sec.btnList[o].name}}</div>
+										{{ } }}
+									{{ } }}
 								</div>
 							</div>
 							<div class="panel-detail-content-layout">
@@ -330,7 +448,7 @@
 									<div class="loan-info">
 										{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x]; }}
 											{{var detailCode = seg.code;}}
-											<div class="info-key-value-box">
+											<div class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 												<table>
 													<tr>
 														<td>
@@ -445,7 +563,7 @@
 												</table>
 											</div>
 										{{ } }}
-										<div id="year1" class="info-key-value-box">
+										<div id="year1" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 											<table>
 												<tr>
 													<td>
@@ -465,7 +583,7 @@
 												</tr>
 											</table>
 										</div>
-										<div id="year2" class="info-key-value-box">
+										<div id="year2" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 											<table>
 												<tr>
 													<td>
@@ -485,7 +603,7 @@
 												</tr>
 											</table>
 										</div>
-										<div id="year3" class="info-key-value-box">
+										<div id="year3" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 											<table>
 												<tr>
 													<td>
@@ -505,7 +623,7 @@
 												</tr>
 											</table>
 										</div>
-										<div id="year4" class="info-key-value-box">
+										<div id="year4" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 											<table>
 												<tr>
 													<td>
@@ -525,7 +643,7 @@
 												</tr>
 											</table>
 										</div>
-										<div id="year5" class="info-key-value-box">
+										<div id="year5" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 											<table>
 												<tr>
 													<td>
@@ -545,7 +663,7 @@
 												</tr>
 											</table>
 										</div>
-										<div id="year6" class="info-key-value-box">
+										<div id="year6" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 											<table>
 												<tr>
 													<td>
@@ -583,9 +701,11 @@
 								<div class="panel-title">
 									<i class="iconfont">&#xe626;</i>
 									<span class="panel-title-name">{{= sec.name}}</span>
-									<div class="button button-mini saveBtn" data-key="save{{= sec.code}}">
-										保存
-									</div>
+									{{ if(sec.btnList && sec.length != 0) { }}
+										{{ for(var o = 0, len8 = sec.btnList.length; o < len8; o++) { }}
+										<div class="button button-mini saveBtn" data-key="save{{= sec.code}}">{{=sec.btnList[o].name}}</div>
+										{{ } }}
+									{{ } }}
 								</div>
 							</div>
 							<div class="panel-detail-content-layout">
@@ -594,7 +714,7 @@
 										{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x]; }}
 											{{var detailCode = seg.code;}}
 											{{ if(detailCode == 'residentType'){ }}
-												<div class="info-key-check-box">
+												<div class="info-key-check-box" data-edit='{{= seg.isEditor}}'>
 													<span class="info-key">
 														{{ if(seg.empty == '0'){ }}
 														<i>*</i>
@@ -645,7 +765,7 @@
 													</span>
 												</div>
 											{{ }else{ }}
-											<div class="info-key-value-box">
+											<div class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 												<table>
 													<tr>
 														<td>

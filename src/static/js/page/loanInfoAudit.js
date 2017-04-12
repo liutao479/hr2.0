@@ -92,6 +92,47 @@ page.ctrl('loanInfoAudit', function($scope) {
 	*/
 	var keyType;
 	var setupEvt = function($el) {
+		$('i').each(function(){
+			var dataNum = $(this).data('num');
+			var that = $(this);
+			if(dataNum){
+				var jjlxr = '';
+				console.log(dataNum);
+				var cfgNum = $scope.result.cfgData.frames[0].sections;
+				console.log(cfgNum);
+				for(var i=0;i<cfgNum.length;i++){
+					var cfgItem = cfgNum[i];
+					if(cfgItem.code == 'JJLXR'){
+						for(var j=0;j<cfgItem.segments.length;j++){
+							var itemCode = cfgItem.segments[j];
+							jjlxr = itemCode.code;
+							console.log(jjlxr);
+							if(dataNum == jjlxr){
+								if(itemCode.empty != '0'){
+									that.remove();
+								}
+							}
+						}
+					}
+				}
+			}
+		})
+		$('.info-key-check-box').each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		})
+		$('.info-key-value-box').each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		})
 		$console.find('.checkbox-normal').on('click', function() {
 		   	var keyData = $(this).attr("data-key");
 		   	var keyCode = $(this).attr("data-code");
@@ -225,9 +266,10 @@ page.ctrl('loanInfoAudit', function($scope) {
 					});
 		        }else{
 		        	dataPost = data;
+
 					$.ajax({
 						type: 'POST',
-						url: postUrl[key],
+						url: postUrl[key] + ($params.type == 'ApplyModify' ? '?flg=1' : ''),
 						data:dataPost,
 						dataType:"json",
 						success: function(result){

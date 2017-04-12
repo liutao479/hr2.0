@@ -43,14 +43,14 @@
 
 <script type="text/x-dot-template" id="creditResultListTmpl">
 	{{ for(var i = 0, len = it.data.creditUsers[it.index].length; i < len; i++){ var col = it.data.creditUsers[it.index][i]; }}
-		{{ for(var m = 0, len2 = it.cfgData.frames[0].sections.length; m < len2; m++) { var item = it.cfgData.frames[0].sections[m]; }}
-			{{ if(it.format[item.code] == it.index) { var row = item; break; } }}
+		{{ for(var m = 0, len2 = it.cfgData.frames[0].sections.length; m < len2; m++) { var item = it.cfgData.frames[0].sections[m]; console.log(item); }}
+			{{ if(it.format[item.code] == it.index) { var row = item; console.log(row); break; } }}
 		{{ } }}
 		<!--二级标题（姓名，身份证等等...）-->
 		{{ if(i == 0) { }}
-		<div class="panel-content-title no-top-border">
+		<div class="panel-content-title no-top-border{{=(row.code == 'GTHKR' ? ' pr260' : '')}}">
 		{{ } else { }}
-		<div class="panel-content-title">
+		<div class="panel-content-title{{=(row.code == 'GTHKR' ? ' pr260' : '')}}">
 		{{ } }}
 			<div class="key-value-box">
 				<div class="key">姓名：</div>
@@ -70,11 +70,17 @@
 				<span class="key">征信查询时间：</span>
 				<span class="value">{{=tool.formatDate(col.submitDate, true)}}</span>
 			</div>
-			{{ if(it.cfgData.code == 'creditInput') { }}
-				<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + col.userId +'&downLoadType=3', true)}}" target="_blank" class="button button-mini download-creditMaterials" data-type="{{=it.index}}" data-idx="{{=i}}">下载征信材料</a>
-			{{ } else { }}
-				<div class="button button-mini view-creditMaterials" data-type="{{=it.index}}" data-idx="{{=i}}">查看征信材料</div>
-			{{ } }}
+			<div class="right-Evt">
+				{{ if(it.cfgData.code == 'creditInput') { }}
+
+					<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + col.userId +'&downLoadType=3', true)}}" target="_blank" class="button button-mini download-creditMaterials" data-type="{{=it.index}}" data-idx="{{=i}}">下载征信材料</a>
+				{{ } else { }}
+					{{ if(row.code == 'GTHKR') { }}
+					<div class="button button-mini button-gray setJkrEvt" data-user-id="{{=col.userId}}"><i class="iconfont">&#xe66d;</i>设为主借款人</div>
+					{{ } }}
+					<div class="button button-mini button-gray view-creditMaterials" data-type="{{=it.index}}" data-idx="{{=i}}">查看征信材料</div>
+				{{ } }}
+			</div>
 		</div>
 		<!--二级标题（姓名，身份证等等...） end-->
 
@@ -106,7 +112,7 @@
 							<div class="panel-value-item">
 								<div class="file-wrap">
 									<div class="button button-mini">重新上传</div>
-									<input type="file" class="pdfUpload required" data-value="true" data-user-id="{{=col.userId || ''}}" data-type="creditReportFile" title="重新上传" />
+									<input type="file" class="pdfUpload required" data-value="true" data-user-id="{{=col.userId || ''}}" data-type="creditReportFile" accept="application/pdf" title="重新上传" />
 								</div>	
 							</div>
 						{{ }else{ }}
@@ -137,7 +143,7 @@
 							{{ } else { }}
 								<div class="panel-value-item">
 									<div class="input-text">
-										<input type="text" value="{{=col.creditReportId || ''}}" data-user-id="{{=col.userId}}" data-type="creditReportId" class="creditReportId{{=(!ml.empty ? ' required' : '')}}" />	
+										<input type="text" maxlength="30" value="{{=col.creditReportId || ''}}" placeholder="请输入30位以内的征信报告编号" data-user-id="{{=col.userId}}" data-type="creditReportId" class="creditReportId{{=(!ml.empty ? ' required' : '')}}" />	
 									</div>
 								</div>
 							{{ } }}
@@ -155,9 +161,9 @@
 					{{ if(ml.code == 'ZXBGP') { }}
 						<!-- 只配置到显示区块 -->
 						{{ for(var h = 0, len4 = col.loanCreditReportList.length; h < len4; h++) { var hl = col.loanCreditReportList[h], flag = 0; }}
-						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.aduitResult || 0}}" data-msg="{{=hl.aduitOpinion}}" data-editable="{{=it.editable}}"></div>
+						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.aduitResult || 0}}" data-msg="{{=hl.aduitOpinion}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 						{{ } }}
-						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=len4 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}"></div>
+						<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=len4 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}" data-empty="1"></div>
 					{{ } if(ml.code == 'ZXZD') { }}
 						<table border="1" class="field-table{{=(!ml.empty ? ' required' : '')}}">
 							{{ var zxzd = col.loanCreditResultList; }}
