@@ -197,12 +197,13 @@
 			try {
 				loadImg = eval(self.options.getimg);
 				marker = eval(self.options.marker);
+				onclose = eval(self.options.onclose);
 			} catch(e) {
 				loadImg = $.noop;
 				marker = undefined;
 			}
 			loadImg(function(imgs) {
-				new Preview(imgs, marker);
+				new Preview(imgs, marker, onclose);
 			})
 		})
 	};
@@ -456,15 +457,24 @@
 	* @params {function} marker 标记后的回调
 	* 	回调参数：img object
 	*/
-	function Preview(imgCollections, marker, opts) {
+	function Preview(imgCollections, marker, onclose, opts) {
 		var self = this;
 		self.imgs = imgCollections || [];
 		self.marker = marker;
+		if(typeof onclose != 'function') { 
+			opts = onclose;
+			onclose = $.noop;
+		}
 		self.opts = $.extend({
 			minWidth: 500,
 			minHeight: 400,
-			markable: true
+			markable: true,
+			idx: 0
 		}, opts);
+		if(!onclose) {
+			onclose = $.noop;
+		}
+		self.onclose = onclose;
 		self.size = {
 			iw: 80,
 			im: 8
@@ -482,6 +492,9 @@
 			dh = document.documentElement.clientHeight || document.documentElement.offsetHeight;
 		self.runtime.vw = dw * 0.80;
 		self.runtime.vh = dh * 0.80;
+		if(self.runtime.vw < self.opts.minWidth || self.runtime.vh < self.opts.minHeight) {
+			return $.alert({ title: '警告', content: '当前窗口过小，无法使用图片预览功能，请拉伸你的窗口', buttons: {ok: {text:'确定'}}});
+		}
 		self.setMask();
 		self.setViewBox();
 		self.setToolbar();
@@ -501,9 +514,6 @@
 	*/
 	Preview.prototype.setViewBox = function() {
 		var self = this;
-		if(self.runtime.vw < self.opts.minWidth || self.runtime.vh < self.opts.minHeight) {
-			return $.alert({ title: '警告', content: '当前窗口过小，无法使用图片预览功能，请拉伸你的窗口', buttons: {ok: {text:'确定'}}});
-		}
 		var items = self.runtime.items = parseInt((self.runtime.vw - 120) / (self.size.iw + self.size.im));
 		var boxWidth = items * self.size.iw + (items -1) * self.size.im;
 
@@ -528,8 +538,8 @@
 		self.$viewbox = self.$preview.find('#__move__trigger');
 		self.$prev = self.$preview.find('.prev');
 		self.$next = self.$preview.find('.next');
-		self.setImage(self.imgs[0]);
-		self.$items.eq(0).addClass('active');
+		self.setImage(self.imgs[self.opts.idx]);
+		self.$items.eq(self.imgs[self.opts.idx]).addClass('active');
 	};
 	/**
 	* 构造工具条
@@ -538,7 +548,7 @@
 		var self = this;
 		var toolbar = '<div style="position: absolute; left: 0; right:0; bottom:'+(self.size.iw + 20)+'px; background: #000; opacity: .7;height: 50px;"></div>\
 					   <div style="position: absolute; left:20px; right:20px; color:#fff; bottom:'+(self.size.iw+20)+'px;height:50px;">\
-					   		<span id="imgTitle" style="line-height:50px;font-weight:bold;">借款人身份证</span>\
+					   		<span id="imgTitle" style="line-height:50px;font-weight:bold;"></span>\
 					   		<div class="transform-bar">\
 					   			<div class="zoom-bar" style="width:'+(self.runtime.vw - 370 > 270 ? 270 : 170)+'px;">\
 					   				<span class="zoom-title">缩放</span>\
@@ -731,7 +741,7 @@
 			self.$view.attr('src', image.materialsPic);
 			img = null;
 			self.setMark(image.auditResult);
-			self.setTitle(image.name);
+			self.setTitle(image.materialsName);
 		}
 	}
 
@@ -842,21 +852,10 @@
 		this.transition('scale({0})'.format(rate), 'zoom');
 	};
 
-	Preview.prototype.rotate = function() {
-		
-	};
-
-	Preview.prototype.marked = function() {
-		
-	};
-
-	Preview.prototype.drag = function() {
-		
-	};
-
 	Preview.prototype.close = function() {
 		this.$preview.remove();
 		this.$mask.remove();
+		this.onclose(this.imgs);
 	};
 
 	$.preview = function(imgCollections, marker, opt) {
