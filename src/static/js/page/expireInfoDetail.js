@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('importHistory', [], function($scope) {
+page.ctrl('expireInfoDetail', [], function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
@@ -12,20 +12,26 @@ page.ctrl('importHistory', [], function($scope) {
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
+	var pageData={};
+		pageData['importId']=$params.importId;
+		pageData['status']=0;
+	$scope.iptId = $params.importId;
 
 	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: urlStr + '/loanOverdueImport/importReordList',
-//			url: $http.api('loanOverdueImport/importReordList','wl'),
+			url: urlStr + '/loanOverdueImport/queryImportDetails',
+//			url: $http.api('loanOverdueImport/queryImportDetails','jbs'),
+			data: pageData,
 			type: 'post',
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
-				setupEvt();
 				setupPaging(result.page, true);
 				setupScroll(result.page, function() {
 					pageChangeEvt();
 				});
+				tabChangeEvt();
+				$("#chooseOrderDetail").hide();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -70,35 +76,74 @@ page.ctrl('importHistory', [], function($scope) {
 		});
 	}
  	/**
-	* 绑定立即处理事件
+	* 页面启动
 	**/
-	var setupEvt = function() {
+	var tabChangeEvt = function() {
 		$console.find('#expInIpt').on('click', function() {
 			router.render('expireInfoInput');
+		});
+		$console.find('#expInIptHis').on('click', function() {
+			router.render('expire/importHistory');
+		});
+		//当页tab切换
+		$console.find('#currentPageTab a').on('click', function() {
+			$('#currentPageTab a').each(function (){
+				$(this).removeClass('tab-item-active');
+			})
+			$(this).addClass('tab-item-active');
+			var status = $(this).data('status');
+			pageData['status']=status;
+			$.ajax({
+				url: urlStr + '/loanOverdueImport/queryImportDetails',
+				data: pageData,
+				type: 'post',
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
+					setupPaging(result.page, true);
+					setupScroll(result.page, function() {
+						pageChangeEvt();
+					});
+					$("#chooseOrderDetail").hide();
+				})
+			})
+		});
+		//点击查看详情
+		$console.find('.selOrderDetail').on('click', function() {
+			$("#chooseOrderDetail").show();
+			var that =$("#chooseOrderTable");
+			var detailData = {};
+				detailData['detailId']=$(this).data('detail');
+			$.ajax({
+				url: $http.api('loanOverdueImport/checkOverdueOrderList','wl'),
+				data: detailData,
+				type: 'post',
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					render.compile(that, $scope.def.orderDetailTmpl, xhr.data, true);
+				})
+			})
 		});
 	}
 
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('iframe/import-history'), function() {
-		$scope.def.listTmpl = render.$console.find('#importHistoryTmpl').html();
+	$console.load(router.template('iframe/expire-info-detail'), function() {
+		$scope.def.listTmpl = render.$console.find('#expireInfoPrevTmpl').html();
+		$scope.def.orderDetailTmpl = render.$console.find('#chooseOrderTmpl').html();
 		$scope.def.scrollBarTmpl = render.$console.find('#scrollBarTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#importHistoryTable'),
+			$tbl: $console.find('#expireInfoPrevTable'),
 			$paging: $console.find('#pageToolbar'),
 			$scrollBar: $console.find('#scrollBar')
 		}
-		if($params.process) {
-			
-		}
-		loadExpireProcessList(apiParams);
+		loadExpireProcessList();
 	});
 
 	$scope.paging = function(_pageNum, _size, $el, cb) {
 		apiParams.pageNum = _pageNum;
 		$params.pageNum = _pageNum;
-		// router.updateQuery($scope.$path, $params);
 		loadExpireProcessList(apiParams);
 		cb();
 	}

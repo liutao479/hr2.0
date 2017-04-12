@@ -4,7 +4,7 @@
 				<div class="path-back-bar clearfix">
 					<div class="path-back">
 						<i class="iconfont">&#xe626;</i>
-						<a href="#">逾期信息录入</a>&nbsp;&gt;
+						<a id="expInIpt" style="cursor: pointer;">逾期信息录入</a>&nbsp;&gt;
 						<span class="current-page">历史导入记录</span>
 					</div>
 				</div>
@@ -68,11 +68,11 @@
 				{{ var len = it.length; if(len) { }}
 					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
 						{{ if(i % 2 !== 0) { }}
-						<tr class="orders-item tr-even">
+							<tr class="orders-item tr-even">
 						{{ } else if(i % 2 == 0 && i == 0) { }}
-						<tr class="orders-item tr-odd tr-noborder">
+							<tr class="orders-item tr-odd tr-noborder">
 						{{ } else { }}
-						<tr class="orders-item tr-odd">
+							<tr class="orders-item tr-odd">
 						{{ } }}
 							<td class="orders-item-data">{{=row.createDate}}</td>
 							<td class="orders-item-data">{{=row.bankName}}</td>
@@ -85,13 +85,13 @@
 						</tr>
 					{{ } }}
 				{{ } else { }}
-				<tr class="tr-noborder" id="noResult">
-					<td colspan="6" class="orders-blank">
-						<div class="blank-box">
-							<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
-							<p>暂无逾期记录！</p>
-						</div>
-					</td>
-				</tr>	
+					<tr class="tr-noborder" id="noResult">
+						<td colspan="6" class="orders-blank">
+							<div class="blank-box">
+								<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+								<p>暂无逾期记录！</p>
+							</div>
+						</td>
+					</tr>	
 				{{ } }}
 			</script>

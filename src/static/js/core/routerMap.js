@@ -123,12 +123,17 @@
 		'expireInfoInput': {
 			title: '逾期信息录入',
 			refer: [],
-			page: 'expireInfoInput'
+			page: 'expireInfoInputHead'
 		},
 		'expire/expireInfoInput': {
 			title: '逾期信息批量导入',
 			refer: [],
 			page: 'expireInfoInput'
+		},
+		'expire/importHistory': {
+			title: '逾期信息历史记录',
+			refer: [],
+			page: 'importHistory'
 		},
 		'expire/expireInfoPrev': {
 			title: '逾期信息导入详情',
@@ -140,10 +145,20 @@
 			refer: [],
 			page: 'expireInfoInputSingle'
 		},
+		'expire/expireInfoDetail': {
+			title: '批量导入详情',
+			refer: [],
+			page: 'expireInfoDetail'
+		},
 		'expireProcess': {
 			title: '逾期处理',
 			refer: [],
-			page: 'expireProcess'
+			page: 'expireProcessInputList'
+		},
+		'expireProcess/expireProcessDetail': {
+			title: '逾期处理详情',
+			refer: [],
+			page: 'expireProcessDetail'
 		},
 		'creditArchiveDownload': {
 			title: '征信资料下载',

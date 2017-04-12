@@ -635,6 +635,14 @@ input[disabled]{
         }
     }
 }
+.checkbox {
+    i{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+}
 
 // 特殊类表格（逾期信息历史导入详情）
 .expire-orders-table {
@@ -680,6 +688,13 @@ input[disabled]{
         .checkbox {
             position: relative;
             top: 4px;
+            margin-left: 20px;
+            i{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
         }
         .iconfont-man {
             position: relative;
@@ -2147,6 +2162,13 @@ input[disabled]{
                 text-align: right;
             }
         }
+    }
+}
+.loanInfoForm{
+    width: 50%;
+    float: left;
+    .info-key-value-box{
+        width: 100%;
     }
 }
 //车商管理 zhy
