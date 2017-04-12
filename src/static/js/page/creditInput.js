@@ -351,7 +351,6 @@ page.ctrl('creditInput', [], function($scope) {
 			  }
 			keychar = String.fromCharCode(keynum);
 			numcheck = /^[0-9]*$/;
-			numTotalCheck = /^\d{30,}$/;
 			return numcheck.test(keychar);
 		}
 
