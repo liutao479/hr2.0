@@ -4,7 +4,8 @@
 //	g.urlStr = "http://192.168.1.124:8080";
 	// g.urlStr = "http://192.168.0.22:8080";
 	// g.urlStr = "http://192.168.1.55:8080";
-	g.urlStr = "http://127.0.0.1:8080";
+//	g.urlStr = "http://127.0.0.1:8080";
+	g.urlStr = "http://192.168.0.186:9999";
 	g.dataMap = {
 	    "sex":[
 	        {
