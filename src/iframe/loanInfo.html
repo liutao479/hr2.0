@@ -293,9 +293,11 @@
 								<div class="panel-title">
 									<i class="iconfont">&#xe626;</i>
 									<span class="panel-title-name">{{= sec.name}}</span>
-									<div class="button button-mini saveBtn" data-type="postStr" data-key="save{{= sec.code}}">
-										保存
-									</div>
+									{{ if(sec.btnList && sec.length != 0) { }}
+										{{ for(var o = 0, len8 = sec.btnList.length; o < len8; o++) { }}
+										<div class="button button-mini saveBtn" data-type="postStr" data-key="save{{= sec.code}}">{{=sec.btnList[o].name}}</div>
+										{{ } }}
+									{{ } }}
 								</div>
 							</div>
 							<div class="panel-detail-content-layout">
@@ -346,9 +348,11 @@
 								<div class="panel-title">
 									<i class="iconfont">&#xe626;</i>
 									<span class="panel-title-name">{{= sec.name}}</span>
-									<div class="button button-mini saveBtn" data-type="postStr" data-key="save{{= sec.code}}">
-										保存
-									</div>
+									{{ if(sec.btnList && sec.length != 0) { }}
+										{{ for(var o = 0, len8 = sec.btnList.length; o < len8; o++) { }}
+										<div class="button button-mini saveBtn" data-type="postStr" data-key="save{{= sec.code}}">{{=sec.btnList[o].name}}</div>
+										{{ } }}
+									{{ } }}
 								</div>
 							</div>
 							<div class="panel-detail-content-layout">
