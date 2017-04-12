@@ -1,31 +1,31 @@
 	<!--逾期信息录入-->
 			<div class="container expire-info-input" id="expire-info-input">
 				
-				<!--tab切换栏-->
-				<div class="tab-bar tab-bar-special">
-					<ul class="role-bar-ul clearfix">
-						<li class="role-bar-li"><a href="#" class="role-item role-item-active">批量导入</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">单笔录入</a></li>
-					</ul>
-					<span class="import-time">上次成功导入时间</span>
-					<span class="import-time">2016/12/21 10:04</span>
-					<a href="javascript:;" class="commit-item">
-						<i class="iconfont">&#xe640;</i>
-						<span>查看历史导入记录</span>
-					</a>
-				</div>
-				<!--tab切换栏 end-->
-				
-				<!--面板-->
-				<div class="panel no-top-border" id="expireInputPanel">
-
-				</div>
-				<!--面板 end-->
+				<div id="expireInputPanel">
+					
+				</div>	
 				
 			</div>
 
 			<script type="text/x-dot-template" id="expireInputTmpl">
-				<div class="import-process-box clearfix">
+				<div class="tab-bar tab-bar-special">
+					<ul class="role-bar-ul clearfix">
+						<li class="role-bar-li"><a class="role-item role-item-active" data-type="0">批量导入</a></li>
+						<li class="role-bar-li"><a id="single" class="role-item tabEvt" data-type="1">单笔录入</a></li>
+					</ul>
+					<span class="import-time">上次成功导入时间</span>
+					{{if(!it){ }}
+						<span class="import-time">未导入</span>
+					{{ }else{ }}
+						<span class="import-time">{{= it}}</span>
+						<a href="javascript:;" class="commit-item">
+							<i class="iconfont">&#xe640;</i>
+							<span>查看历史导入记录</span>
+						</a>
+					{{ } }}	
+				</div>
+				<div class="panel no-top-border">
+					<div class="import-process-box clearfix">
 						<div class="process-box">
 							<div class="process-item process-item-odd">
 								<div class="iconfont-box"><i class="iconfont">&#xe60a;</i></div>
@@ -48,38 +48,27 @@
 							<div class="button button-mini" id="modelDownload">下载模板</div>
 						</div>
 					</div>
-					<div class="panel-detail-content panel-import-doc">
+					<div class="panel-detail-content panel-import-doc" id="content">
 						<div class="panel-item-box" style="display: block;">
 							<div class="panel-key-area">请选择逾期业务所在经办银行：</div>
 							<div class="panel-value-area">
-								<div class="select select-bank">
-									<input class="placeholder" value="中国农业银行-浙江分行-杭州-城站支行" />
-									<span class="arrow arrow-bottom"></span>
-								</div>
+								<div data-key="demandBankId" class="select select-common" data-dropdown="page.$scope['expireInfoInput'].bankPicker" data-trigger="page.$scope['expireInfoInput'].dropdownTrigger.demandBankId"></div>
+								<input type="hidden" id="demandBankId" name="demandBankId" />
 							</div>
 						</div>
-						<div class="panel-item-box" style="display: block;">
-							<div class="panel-key-area">批量导入<span class="special-word">中国农业银行浙江省分行杭州城战支行</span>逾期记录：</div>
+						<div class="panel-item-box" id="updFileBox">
+							<div class="panel-key-area">批量导入<span id="bankCnName" class="special-word">中国农业银行浙江省分行杭州城战支行</span>逾期记录：</div>
 							<div class="panel-value-area">
-								<div class="imgs-item-group">
-									<div class="imgs-item-upload">
-										<div class="iconfont-upload">
-											<i class="iconfont">&#xe61f;</i>
-										</div>
-										<span class="i-tips">点击或拖拽上传图片</span>
-										<input type="file" id="" class="input-file" />
-									</div>
-								</div>
 								<div class="import-doc">
 									<div class="button positionRela"><input name="fileData" class="btnInfoFile" type="file" id="fileData" />导入文档</div>
+									<div id="fileName" class="fileName"></div>
 								</div>
 							</div>
 						</div>
-						<div class="import-result-box" id="importResultTable">
-						</div>
-					</div>	
+					</div>
+					<div class="import-result-box" id="importResultTable"></div>
+				</div>	
 			</script>
-			
 			<script type="text/x-dot-template" id="importResultTmpl">
 				<dl class="import-dl clearfix">
 					<dt class="import-icon-box">
@@ -91,9 +80,26 @@
 						<div class="import-result">解析成功！</div>
 						<div class="import-text">匹配成功<span class="special-word">{{= it.successCount}}</span>条，匹配失败<span class="special-word">{{= it.errorCount}}</span>条，逾期将结清<span class="special-word">{{= it.settleCount}}</span>条。</div>
 						<div class="import-preview">
-							<div class="button button-mini button-empty" data-type = "{{= it.importId}}">去预览</div>
+							<div class="button button-mini button-empty" data-type = "{{= it.importId}}" id="pathExp">去预览</div>
 						</div>
 					</dd>
 				</dl>
 			</script>	
+			<script type="text/x-dot-template" id="importErrorTmpl">
+				<dl class="import-dl clearfix">
+					<dt class="import-icon-box">
+						<div class="import-icon">
+							<i class="iconfont">&#xe659;</i>
+						</div>
+					</dt>
+					<dd class="import-msg-box">
+						<div class="import-result">上传失败！</div>
+						<div class="import-text">文件上传失败，请重新上传。</div>
+						<div class="import-preview">
+							<div class="button button-mini button-empty" id="reUpd">重新上传</div>
+						</div>
+					</dd>
+				</dl>
+			</script>	
+			
 				

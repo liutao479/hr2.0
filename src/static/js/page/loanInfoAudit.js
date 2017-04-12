@@ -225,9 +225,10 @@ page.ctrl('loanInfoAudit', function($scope) {
 					});
 		        }else{
 		        	dataPost = data;
+
 					$.ajax({
 						type: 'POST',
-						url: postUrl[key],
+						url: postUrl[key] + ($params.type == 'ApplyModify' ? '?flg=1' : ''),
 						data:dataPost,
 						dataType:"json",
 						success: function(result){

@@ -72,20 +72,21 @@
 			tmp;
 		self.errImg = '';
 		self.errMsg = '';
+		self.empty = !self.options.empty ? '<i class="is-empty">*</i>' : '';
 		if(!self.options.img || self.options.img == 'undefined') {
 			if(self.options.editable) {
 				if(self.options.other) {
-					self.name = internalTemplates.other.format(self.options.name);
+					self.name = internalTemplates.other.format(self.options.name, self.empty);
 				} else {
-					self.name = internalTemplates.name.format(self.options.name);
+					self.name = internalTemplates.name.format(self.options.name, self.empty);
 				}
 				tmp = internalTemplates.edit.format(self.name);
 				self.status = 0;
 			} else {
 				if(self.options.other) {
-					self.name = internalTemplates.name.format(self.options.name);
+					self.name = internalTemplates.name.format(self.options.name, self.empty);
 				} else {
-					self.name = internalTemplates.name.format(self.options.name);
+					self.name = internalTemplates.name.format(self.options.name, self.empty);
 				}
 				tmp = internalTemplates.blank.format(self.name);
 				self.status = 2;
@@ -100,9 +101,9 @@
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
 				if(self.options.other) {
-					self.name = internalTemplates.other.format(self.options.name);
+					self.name = internalTemplates.other.format(self.options.name, self.empty);
 				} else {
-					self.name = internalTemplates.name.format(self.options.name);
+					self.name = internalTemplates.name.format(self.options.name, self.empty);
 				}
 				tmp = internalTemplates.modify.format(self.name, self.options.img, self.errImg, self.errMsg);
 				self.status = 1;
@@ -113,7 +114,7 @@
 				if(self.options.msg && self.options.msg != 'undefined') {
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
-				self.name = internalTemplates.name.format(self.options.name);
+				self.name = internalTemplates.name.format(self.options.name, self.empty);
 				tmp = internalTemplates.view.format(self.name, self.options.img || '', self.errImg, self.errMsg);
 				self.status = 2;
 			}
@@ -212,6 +213,7 @@
 	*/
 	imgUpload.prototype.onUpload = function(file) {
 		var self = this;
+		self.$el.find('.imgs-item-upload').LoadingOverlay("show");
 		imgUpload.getLicense(self.options.type, function(res) {
 			if(!res) {
 				throw "can not get the license";
@@ -256,13 +258,16 @@
 			_url = self.options.delUrl;
 		}
 		console.log(params)
+		self.$el.find('.imgs-item-upload').LoadingOverlay("show");
 		$.ajax({
 			url: _url,
 			type: 'post',
 			data: params,
+			global: false,
 			dataType: 'json',
 			success: function(xhr) {
 				console.log(xhr)
+				self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 				if(!xhr.code) {
 					self.delCb(self, xhr);
 					self.$el.html(internalTemplates.edit.format(self.name));
@@ -333,9 +338,11 @@
 			url: _url,
 			data: params,
 			type: 'post',
+			global: false,
 			dataType: 'json',
 			success: function(xhr) {
 				console.log(xhr);
+				self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 				if(!xhr.code) {					
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name, url, self.errImg, self.errMsg));
@@ -367,8 +374,9 @@
 	* @params {int} type 选项
 	* @params {function} cb 回调函数
 	*/
-	imgUpload.getLicense = function (type, cb) {
+	imgUpload.getLicense = function (type, cb) {		
 		$.ajax({
+			global: false,
 			url: type == 1 ? api.video : api.img,
 			dataType: 'json'
 		}).done(function(response) {
@@ -391,6 +399,7 @@
 			processData: false,
 			dataType: 'xml',
 			contentType: false,
+			global: false,
 			success: function(response) {
 				var _url = host + '/' + fd.get('key');
 				self.options.img = _url;
@@ -424,7 +433,7 @@
 				<span class="i-tips">图片未上传</span>\
 			   </div>{0}',
 		msg: '<div class="imgs-describe">{0}</div>',
-		name: '<span class="imgs-item-p">{0}</span>',
+		name: '<span class="imgs-item-p">{1}{0}</span>',
 		other: '<div class="input-text imgs-input-text">\
 					<input type="text" value="{0}" />\
 				</div>'
@@ -462,6 +471,7 @@
 		}
 		self.runtime = {};
 		self.runtime.idx = 0;
+		self.runtime.leftItems = 0;
 		self.init();
 	}
 
@@ -493,27 +503,29 @@
 		if(self.runtime.vw < self.opts.minWidth || self.runtime.vh < self.opts.minHeight) {
 			return $.alert({ title: '警告', content: '当前窗口过小，无法使用图片预览功能，请拉伸你的窗口', buttons: {ok: {text:'确定'}}});
 		}
-		var items = parseInt((self.runtime.vw - 120) / (self.size.iw + self.size.im));
+		var items = self.runtime.items = parseInt((self.runtime.vw - 120) / (self.size.iw + self.size.im));
 		var boxWidth = items * self.size.iw + (items -1) * self.size.im;
 
 		var viewbox = '<div class="img-view-box" onselectstart="return false;" style="background: #000; position: fixed; z-index:99999999; width: '+self.runtime.vw+'px;height:'+self.runtime.vh+'px;border-raidus:3px;left:50%;top:50%;margin-left:-'+self.runtime.vw/2+'px;margin-top:-'+self.runtime.vh/2+'px;">\
 							<div style="width:'+boxWidth+'px; position:relative; margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;"><a class="prev big"></a><a class="next big"></a><img style="width:100%;height:100%;" id="___originImage___" src="'+self.imgs[0].materialsPic+'" /></div>\
-							<div style="width:'+boxWidth+'px; position:relative; height:'+self.size.iw+'px;margin:0 auto; overflow: hidden;"><div id="___thumbnails___" style="width:'+items * (self.size.im + self.size.iw) + self.size.im +'px;"></div></div>\
+							<div style="width:'+boxWidth+'px; position:relative; height:'+self.size.iw+'px;margin:0 auto; overflow: hidden;"><div id="___thumbnails___" style="width:'+items * (self.size.im + self.size.iw) + self.size.im +'px;position:absolute;left:0;top:0;"></div></div>\
 							<a class="prev mini"></a><a class="next mini"></a>\
 					   </div>';
 		self.$preview = $(viewbox).appendTo('body');
+		self.$itemBody = self.$preview.find('#___thumbnails___');
 		var arr = [];
 		for(var i = 0, len = self.imgs.length; i < len; i++) {
 			var img = self.imgs[i],
 				ml = i * self.size.im,
 				mark = self.getMark(img.auditResult);
 			if(ml > 0) ml = self.size.im;
-			arr.push('<div data-idx="'+i+'" style="cursor: pointer; position:relative; float:left; width:'+self.size.iw+'px;height:'+self.size.iw+'px;margin-left:'+ml+'px;"><img src="'+img.materialsPic+'" style="width:100%; height:100%;" />'+mark+'</div>');
+			arr.push('<div data-idx="'+i+'" class="thumb-view" style="cursor: pointer; position:relative; float:left; width:'+self.size.iw+'px;height:'+self.size.iw+'px;margin-left:'+ml+'px;"><img src="'+img.materialsPic+'" style="width:100%; height:100%;" />'+mark+'</div>');
 		}
-		self.$items = $(arr.join('')).appendTo(self.$preview.find('#___thumbnails___'));
+		self.$items = $(arr.join('')).appendTo(self.$itemBody);
 		self.$view = self.$preview.find('#___originImage___');
 		self.$prev = self.$preview.find('.prev');
 		self.$next = self.$preview.find('.next');
+		self.$items.eq(0).addClass('active');
 	};
 	/**
 	* 构造工具条
@@ -586,8 +598,11 @@
 		})
 		self.$items.on('click', function() {
 			var idx = $(this).data('idx');
+			if(idx == self.runtime.idx) return;
 			var img = self.imgs[idx];
+			self.$items.eq(self.runtime.idx).removeClass('active');
 			self.runtime.idx = idx;
+			self.$items.eq(self.runtime.idx).addClass('active');
 			self.$view.attr('src', img.materialsPic);
 		})
 		self.$prev.on('click', function() {
@@ -623,15 +638,51 @@
 
 	Preview.prototype.next = function() {
 		var self = this;
-		if(self.runtime.idx < self.imgs.length - 1) {
+		if(self.runtime.idx >= self.imgs.length - 1 || self.moving) { return false; }
+
+		function _move() {
+			self.$items.eq(self.runtime.idx).removeClass('active');
 			self.runtime.idx++;
+			self.$items.eq(self.runtime.idx).addClass('active');
 			var img = self.imgs[self.runtime.idx];
 			self.$view.attr('src', img.materialsPic);
 		}
+		
+		if(self.runtime.items + self.runtime.leftItems < self.$items.length &&
+			self.runtime.idx + 1 - self.runtime.items == self.runtime.leftItems) {
+			self.moving = true;
+			self.$itemBody.animate({left: '-=' + (self.size.iw + self.size.im) + 'px'}, 200, function() {
+				self.runtime.leftItems++;
+				self.moving = false;
+				_move();
+			});
+		} else { _move(); }
 	};
 
 	Preview.prototype.prev = function() {
+		var self = this;
+		if(self.runtime.idx <= 0 || self.moving) {
+			return false;
+		}
+		function _move() {
+			self.$items.eq(self.runtime.idx).removeClass('active');
+			self.runtime.idx--;
+			self.$items.eq(self.runtime.idx).addClass('active');
+			var img = self.imgs[self.runtime.idx];
+			self.$view.attr('src', img.materialsPic);	
+		}
 		
+		if(self.runtime.leftItems > 0 &&
+			self.runtime.idx == self.runtime.leftItems) {
+			self.moving = true;
+			self.$itemBody.animate({left: '+=' + (self.size.iw + self.size.im) + 'px'}, 200, function() {
+				self.runtime.leftItems--;
+				self.moving = false;
+				_move();
+			});
+		} else {
+			_move();
+		}
 	};
 
 	Preview.prototype.zoom = function() {

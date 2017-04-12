@@ -77,6 +77,17 @@ gulp.task('copy', function() {
         ])
         .pipe($.copy('dist', {prefix: 1}))
 })
+
+
+gulp.task('copyhtml2bank', function() {
+    return gulp.src([
+            path.src.root('iframe/**/*.html'),
+            path.src.root('defs/**/*.html'),
+            path.src.root('static/js/**/*.js'),
+            path.src.root('static/less/**/*.less')
+
+    ]).pipe($.copy(__dirname.replace('hr2.0', '') + 'hr2.0_bank/'));
+})
 gulp.watch(path.src.root('**/*'), ['default']);
 
 gulp.task('default', function(cb) {
@@ -87,6 +98,7 @@ gulp.task('default', function(cb) {
         'less',
         'concat',
         'concat-mini',
+        'copyhtml2bank',
         cb);
 });
 gulp.task('release', function(cb) {

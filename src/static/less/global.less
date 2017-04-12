@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_qnguags5ybq33di.eot');
-  src: url('//at.alicdn.com/t/font_qnguags5ybq33di.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_qnguags5ybq33di.woff') format('woff'),
-  url('//at.alicdn.com/t/font_qnguags5ybq33di.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_qnguags5ybq33di.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_qa53d2pi5bokzkt9.eot');
+  src: url('//at.alicdn.com/t/font_qa53d2pi5bokzkt9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_qa53d2pi5bokzkt9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_qa53d2pi5bokzkt9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_qa53d2pi5bokzkt9.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -37,6 +37,9 @@
 }
 .pr150 {
     padding-right: 150px !important;
+}
+.pr260 {
+    padding-right: 260px !important;
 }
 .pb50 {
     padding-bottom: 50px !important;
@@ -962,7 +965,7 @@ input[disabled]{
     .panel-content-title {
         position: relative;
         text-align: left;
-        padding: 0 20px;
+        padding: 10px 20px;
         border-top: 1px dashed @borderColor;
         border-bottom: 1px dashed @borderColor;
         overflow:hidden;
@@ -974,7 +977,7 @@ input[disabled]{
         }
         .key-value-box {
             margin-right: 24px;
-            line-height: 52px;
+            line-height: 38px;
             .value {
                 .input-text {
                     top: 10px;
@@ -996,10 +999,14 @@ input[disabled]{
             height: 50px;
             line-height: 50px;
         }
-        .button {
+        .right-Evt {
             position: absolute;
-            top: 10px;
-            right: 20px;
+            top: 50%;
+            margin-top: -16px;
+            right: 10px;
+            .button {
+                margin-right: 10px;
+            }
         }
         
     }
@@ -1255,7 +1262,45 @@ input[disabled]{
             }
         }
     }
-
+    .import-result-box {
+        .import-dl {
+            margin: 57px auto;
+            width: 390px;
+            .import-icon-box {
+                float: left;
+                .import-icon {
+                    margin-top: 10px;
+                    width: 50px;
+                    height: 50px;
+                    line-height: 50px;
+                    text-align: center;
+                    .borderRadius(25px);
+                    background-color: @successColor;
+                    color: #FFF;
+                    .iconfont {
+                        font-size: 30px !important;
+                        font-weight: 600;
+                    }
+                }
+            }
+            .import-msg-box {
+                float: left;
+                margin-left: 22px;
+                .import-result {
+                    line-height: 32px;
+                    color: @successColor;
+                    font-size: 20px;
+                }
+                .import-text {
+                    line-height: 40px;
+                }
+                .import-preview {
+                    margin-top: 23px;
+                    
+                }
+            }
+        }
+    }
     // 导入流程
     .import-process-box {
         background-color: #f3f4f9;
@@ -3083,3 +3128,11 @@ input[disabled]{
     }
 }
 .jconfirm .jconfirm-box div.jconfirm-content-pane { margin: 20px 0;}
+.fileName{
+    display: none;
+    line-height: 50px;
+    border: 1px solid red;
+    margin: 10px 0;
+    padding: 0 10px;
+    border-radius: 6px; 
+}

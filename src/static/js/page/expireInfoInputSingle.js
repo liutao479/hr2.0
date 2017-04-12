@@ -1,27 +1,22 @@
 'use strict';
 page.ctrl('expireInfoInputSingle', [], function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
-		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
-		};
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console;
+	var urlStr = "http://127.0.0.1:8080";
 	/**
 	 *逾期处理意见 
 	* 加载逾期管理数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
-	var loadExpireProcessList = function(params, cb) {
-		var data = {};
-			data['detailId'] = 123;
+	var loadExpireProcessList = function(cb) {
 		$.ajax({
-			url: $http.api('loanOverdueImport/checkOverdueOrderList','wl'),
-			data: params,
+			url: urlStr + '/loanOverdueImport/queryParsingDate',
+//			url: $http.api('loanOverdueImport/queryParsingDate'),
+			dataType: 'json',
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
+				setupEvt();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -29,65 +24,44 @@ page.ctrl('expireInfoInputSingle', [], function($scope) {
 		})
 	}
 	/**
-	* 构造分页
+	* 执行
 	*/
-	var setupPaging = function(count, isPage) {
-		$scope.$el.$paging.data({
-			current: parseInt(apiParams.page),
-			pages: isPage ? count : (tool.pages(count || 0, apiParams.pageSize)),
-			size: apiParams.pageSize
-		});
-		$('#pageToolbar').paging();
+	var setupEvt = function($el) {
+		//顶部tab切换
+		$console.find('#extInput').on('click', function() {
+			router.render('expire/expireInfoInput');
+	    })
+		//绑定搜索事件
+		$console.find('#search').on('click', function() {
+			var searchKey = $("#searchInp").val();
+			var data={};
+				data['keyWord'] = searchKey;
+			if(searchKey){
+				$.ajax({
+					url: urlStr + '/loanOverdueImport/checkOverdueOrderList',
+//					url: $http.api('loanOverdueImport/checkOverdueOrderList'),
+					data: data,
+					dataType: 'json',
+					type: 'post',
+					success: $http.ok(function(result) {
+						render.compile($console.find('#expireInfoInputSingleTable'), $console.find('#expireInfoInputSingleTmpl').html(), result.data, true);
+					})
+				})
+			}
+	    })
 	}
- 	/**
-	* 绑定搜索事件
-	**/
-	$(document).on('keydown', '#search', function() {
-		var searchKey = $("#searchInp").val();
-//		var data = {};
-//			data['detailId'] = 123;
-		$.ajax({
-			url: $http.api('loanOverdueImport/checkOverdueOrderList','wl'),
-			data: searchKey,
-			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
-			})
-		})
-	});
-	/**
-	* 绑定立即处理事件
-	*/
-	$(document).on('click', '#expireProcessTable .button', function() {
-		var that = $(this);
-		router.render(that.data('href'), {orderNo: that.data('id')});
-	});
 
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('iframe/expire-info-input-single'), function() {
-		$scope.def.listTmpl = render.$console.find('#expireInfoInputSingleTmpl').html();
+	$console.load(router.template('iframe/expire-info-input-single'), function() {
+		$scope.def.listTmpl = render.$console.find('#expSingleTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#expireInfoInputSingleTable'),
-			$paging: $console.find('#pageToolbar')
+			$tbl: $console.find('#expSingle'),
 		}
-		if($params.process) {
-			
-		}
-//		loadExpireProcessList(apiParams);
+		loadExpireProcessList();
 	});
 
-	$scope.paging = function(_page, _size, $el, cb) {
-		apiParams.page = _page;
-		$params.page = _page;
-		// router.updateQuery($scope.$path, $params);
-		loadExpireProcessList(apiParams);
-		cb();
-	}
 });
 
 
