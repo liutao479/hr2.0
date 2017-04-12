@@ -53,7 +53,7 @@
 		</div>
 		<div class="panel-item">
 			<div class="key-value-box">
-				<span class="key">业务发生地：</span><span class="value">{{=it.area.wholeName || '未选择'}}</span>
+				<span class="key">业务发生地：</span><span class="value">{{=(it.area ? it.area.wholeName : '') || '未选择'}}</span>
 			</div>
 		</div>
 	</div>

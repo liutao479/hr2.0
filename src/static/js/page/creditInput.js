@@ -238,6 +238,7 @@ page.ctrl('creditInput', [], function($scope) {
 			processData: false,
 			dataType: 'xml',
 			contentType: false,
+			global: false,
 			success: function(response) {
 				var _url = res.host + '/' + fd.get('key');
 				// var _name = fd.get('key');
@@ -277,12 +278,15 @@ page.ctrl('creditInput', [], function($scope) {
 				})
 				return false;
 			}
+			that.LoadingOverlay("show");
 			$.ajax({
+				global: false,
 				url: $http.api('oss/video/sign', 'zyj'),
 				dataType: 'json'
 			}).done(function(response) {
 				if(!response.code) {
 					pdfCb(response.data, file, function(_url) {
+						that.LoadingOverlay("hide");
 						// 上传完成pdf后将地址信息保存在待提交数组apiParams中
 						for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 							var item = $scope.apiParams[i];
@@ -592,8 +596,9 @@ page.ctrl('creditInput', [], function($scope) {
 	*/
 	$scope.deletecb = function(self) {
 		// loadOrderInfo($scope.idx);
+		var $parent = self.$el.parent();
 		self.$el.remove();
-		pictureListen(self);
+		pictureListen($parent);
 		//重置带保存参数里的征信报告图片（loanCreditReportList）
 		$.ajax({
 			type: 'post',
@@ -601,9 +606,9 @@ page.ctrl('creditInput', [], function($scope) {
 			data: {
 				taskId: $params.taskId
 			},
+			global: false,
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				debugger
 				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 					if($scope.apiParams[i].userType == $scope.idx) {
 						$scope.apiParams[i].loanCreditReportList = result.data.creditUsers[$scope.idx][$scope.apiParams[i].idx];
@@ -615,12 +620,13 @@ page.ctrl('creditInput', [], function($scope) {
 	/**
 	 * 监听其它材料最后一个控件的名称
 	 */
-	var pictureListen = function(self) {
-		var $imgel = self.$el.parent().find('.uploadEvt');
+	var pictureListen = function($parent) {
+		var $imgel = $parent.find('.uploadEvt');
 		$imgel.each(function(index) {
-			$(this).find('.imgs-item-p').html('征信报告照片' + (index + 1));
+			$(this).find('.imgs-item-p').html('<i class="is-empty">*</i>征信报告照片' + (index + 1));
 		});
 		$imgel.last().data('name', '征信报告照片' + $imgel.length);
+		$imgel.last().find('.imgs-item-p').html('征信报告照片' + $imgel.length);
 	}
 
 	/***
@@ -631,8 +637,9 @@ page.ctrl('creditInput', [], function($scope) {
 		// self.$el.find('.imgs-item-p').html('征信报告' + self.$el.data('count'));
 		// self.$el.after(self.outerHTML);
 		// self.$el.next().imgUpload();
+		var $parent = self.$el.parent();
 		self.$el.after(self.outerHTML);
-		pictureListen(self);
+		pictureListen($parent);
 		self.$el.next().imgUpload();
 		//重置带保存参数里的征信报告图片（loanCreditReportList）
 		$.ajax({
@@ -642,9 +649,10 @@ page.ctrl('creditInput', [], function($scope) {
 				taskId: $params.taskId
 			},
 			dataType: 'json',
+			global: false,
 			success: $http.ok(function(result) {
 				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-					if($scope.apiParams[i].userType == $scope.idx) {
+					if($scope.apiParams[i].creditId == self.options.creditid) {
 						$scope.apiParams[i].loanCreditReportList = result.data.creditUsers[$scope.idx][$scope.apiParams[i].idx].loanCreditReportList;
 					}
 				}
