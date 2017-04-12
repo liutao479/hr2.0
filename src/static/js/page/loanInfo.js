@@ -35,18 +35,17 @@ page.ctrl('loanInfo', function($scope) {
 			success: $http.ok(function(result) {
 				$scope.result = result;
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
-				console.log(result)
 				setupLocation();
 				setupBackReason($scope.result.data.loanTask.backApprovalInfo);
 				if(result.data.FQXX && result.data.FQXX.renewalInfo){
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result,true);
-				loanFinishedInput();
 				loanFinishedCheckbox();
 				loanFinishedGps();
 				loanFinishedBxxb();
 				setupEvt();
+				loanFinishedInput();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -132,6 +131,47 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	var keyType;
 	var setupEvt = function($el) {
+		$('i').each(function(){
+			var dataNum = $(this).data('num');
+			var that = $(this);
+			if(dataNum){
+				var jjlxr = '';
+				console.log(dataNum);
+				var cfgNum = $scope.result.cfgData.frames[0].sections;
+				console.log(cfgNum);
+				for(var i=0;i<cfgNum.length;i++){
+					var cfgItem = cfgNum[i];
+					if(cfgItem.code == 'JJLXR'){
+						for(var j=0;j<cfgItem.segments.length;j++){
+							var itemCode = cfgItem.segments[j];
+							jjlxr = itemCode.code;
+							console.log(jjlxr);
+							if(dataNum == jjlxr){
+								if(itemCode.empty != '0'){
+									that.remove();
+								}
+							}
+						}
+					}
+				}
+			}
+		})
+		$('.info-key-check-box').each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		})
+		$('.info-key-value-box').each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		})
 		$console.find('.checkbox-normal').on('click', function() {
 		   	var keyData = $(this).attr("data-key");
 		   	var keyCode = $(this).attr("data-code");
