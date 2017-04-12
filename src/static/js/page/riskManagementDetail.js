@@ -9,20 +9,29 @@ page.ctrl('riskManagementDetail', function($scope) {
 			deptId: $params.deptId,
 			bankCode: $params.bankCode,
 			apiKey: $params.apiKey,
-			apiPrimary: $params.apiPrimary,
+			apiPrimary: $params.apiPrimary
+			/*strStartDate: '2017-01-01',
+			strEndDate: '2017-08-01',
+			deptId: '62',
+			bankCode: 'urcb',
+			apiKey: 'bankWater',
+			apiPrimary: $params.apiPrimary*/
 		};
 	// 查询列表数据
-	var search=function(param){
+	var search=function(param,callback){
 		$.ajax({
 			type: 'post',
 			dataType:"json",
-			url: $http.api('riskStatis/getDetailList'),
+			url: $http.api('riskStatis/getDetailList','cyj'),
 			data: param,
 			success: $http.ok(function(res) {
 				render.compile($scope.$el.$searchInfo, $scope.def.searchInfoTmpl, res.data.headerInfo, true);
-				render.compile($scope.$el.$table, $scope.def.tableTmpl, res.list, true);
+				render.compile($scope.$el.$table, $scope.def.tableTmpl, res.data.list, true);
 				// 构造分页
 				setupPaging(res.page, true);
+				if(callback && typeof callback == 'function') {
+					callback();
+				};
 			})
 		});
 	};
@@ -41,16 +50,26 @@ page.ctrl('riskManagementDetail', function($scope) {
 		$params.pageNum = _pageNum;
 		search(apiParams);
 		cb();
-	}
+	};
+	// 页面首次载入时绑定事件
+ 	var evt = function() {
+ 		$scope.$el.$backspace.click(function() {
+			router.render("riskManagement");
+		});
+ 	};
 	// 加载页面模板
 	render.$console.load(router.template('iframe/risk-management-detail'), function() {
 		$scope.def.searchInfoTmpl = render.$console.find('#searchInfoTmpl').html();/*查询条件*/
 		$scope.def.tableTmpl = render.$console.find('#riskManagementDetailTmpl').html();/*表格列表*/
+		$scope.$context=$console.find('#data-assistant-detail');
 		$scope.$el = {
-			$searchInfo: $console.find('#searchInfo'),/*查询条件*/
-			$table: $console.find('#riskManagementDetailTable'),/*表格列表*/
-			$paging: $console.find('#pageToolbar')/*分页*/
+			$backspace: $scope.$context.find('#backspace'),/*返回列表*/
+			$searchInfo: $scope.$context.find('#searchInfo'),/*查询条件*/
+			$table: $scope.$context.find('#riskManagementDetailTable'),/*表格列表*/
+			$paging: $scope.$context.find('#pageToolbar')/*分页*/
 		};
-		search(apiParams);
+		search(apiParams, function() {
+			evt();	
+		});
 	});
 });

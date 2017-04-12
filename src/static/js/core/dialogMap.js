@@ -251,10 +251,10 @@
 		serviceItems:'<div class="serviceItems">\
 			<ul class="clearfix">\
 				{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
-				<li><div class="text-bt">银行</div>\
+				<li>{{ if(col.isBank){ }}<div class="text-bt">银行</div>{{ } }}\
 					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bacf09054"><i class="iconfont">&#xe676;</i></span></p>\
-						<p class="text-name">{{=col.functionName}}\
+						<p class="text-icon"><span class="{{=col.class}}"><i class="iconfont">{{=col.icon}}</i></span></p>\
+						<p class="text-name">{{=col.funcName}}\
 						{{ if(col.checkStatus==0){ }}<span class="text-status text-orange">未查</span></p></div><div class="serviceBtn bacStart nextDialog">发起核查</div>\
 						{{ }else if(col.checkStatus==1){ }}<span class="text-status text-orange">未查</span></p></div><div class="serviceBtn inoperable">缺少相关数据</div>\
 						{{ }else if(col.checkStatus==2){ }}<span class="text-status text-orange">查询中</span></p></div><div class="serviceBtn inoperable">发起核查</div>\

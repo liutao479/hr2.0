@@ -54,7 +54,7 @@
 			</div>
 			<div class="float-right" id="serviceStatic"></div>
 		</div>
-		<div id="piechart" style="height:200px;"></div>
+		<div id="piechart" style="width:65%;height:320px;margin:40px auto;"></div>
 		<div class="panel-content-title">
 			<div class="key-value-box">
 				<span class="value" id="searchTimeTitle">2017.03.21至2017.03.22明细</span>
@@ -138,18 +138,24 @@
 </script>	
 <!-- 服务使用情况列表统计 -->
 <script type="text/x-dot-template" id="riskManagementTmpl">
-	{{for(var i = 0; i < it.length; i++) { var item = it[i]; }}
+	{{ if(it&&it.length>0){ }}
+		{{for(var i = 0; i < it.length; i++) { var item = it[i]; }}
+			<tr class="orders-item">
+				<td class="orders-item-data">{{=i+1}}</td>
+				<td class="orders-item-data">{{=item.typeName}}</td>
+				<td class="orders-item-data">{{=item.serviceName}}</td>
+				<td class="orders-item-data">{{=item.serviceCallNum}}</td>
+				<td class="orders-item-data">{{=item.serviceAmount}}</td>
+				<td class="orders-item-data">{{=item.verifyNum}}</td>
+				<td class="orders-item-data">{{=item.serviceAmount}}</td>
+				<td class="orders-item-data">
+					<span class="detailed view-fee" data-apiKey="{{=item.apiKey}}" data-apiPrimary="{{=item.apiPrimary}}">明细</span>
+				</td>
+			</tr>
+		{{ } }}
+	{{ }else{ }}
 		<tr class="orders-item">
-			<td class="orders-item-data">{{=i+1}}</td>
-			<td class="orders-item-data">{{=item.typeName}}</td>
-			<td class="orders-item-data">{{=item.serviceName}}</td>
-			<td class="orders-item-data">{{=item.serviceCallNum}}</td>
-			<td class="orders-item-data">{{=item.serviceAmount}}</td>
-			<td class="orders-item-data">{{=item.verifyNum}}</td>
-			<td class="orders-item-data">{{=item.serviceAmount}}</td>
-			<td class="orders-item-data">
-				<span class="detailed" data-apiKey="{{=item.apiKey}}" data-apiPrimary="{{=item.apiPrimary}}">明细</span>
-			</td>
+			<td class="orders-item-data" colspan="8">暂无数据</td>
 		</tr>
 	{{ } }}
 </script>	

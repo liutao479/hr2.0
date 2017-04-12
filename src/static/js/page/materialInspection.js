@@ -23,32 +23,30 @@ page.ctrl('materialInspection', function($scope) {
 	};
 	/*发起核查*/
 	var openDialog=function(that,_data){
-
-			/*	<li><div class="text-bt">银行</div>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bac73c7df"><i class="iconfont">&#xe6bb;</i></span></p>\
-						<p class="text-name">购房发票核查\
-				<li><div class="text-bt">银行</div>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bacAgain"><i class="iconfont">&#xe673;</i></span></p>\
-						<p class="text-name">银行流水核查\
-				<li><div class="text-bt">银行</div>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bac59cfb7"><i class="iconfont">&#xe679;</i></span></p>\
-						<p class="text-name">房产证核查\
-				<li>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bac82b953"><i class="iconfont">&#xe672;</i></span></p>\
-						<p class="text-name">合格证核查\
-				<li>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bac84bef0"><i class="iconfont">&#xe642;</i></span></p>\
-						<p class="text-name">保单核查\
-				<li>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bacf5bf5b"><i class="iconfont">&#xe6cc;</i></span></p>\
-						<p class="text-name">车辆登记核查\
-				</li>\*/
+		var _loalList=[
+			{text:"购车",isBank:true,class:"bacf09054",icon:"&#xe676;"},
+			{text:"购房",isBank:true,class:"bac73c7df",icon:"&#xe6bb;"},
+			{text:"银行",isBank:true,class:"bacAgain",icon:"&#xe673;"},
+			{text:"房产证",isBank:true,class:"bac59cfb7",icon:"&#xe679;"},
+			{text:"合格证",isBank:false,class:"bac82b953",icon:"&#xe672;"},
+			{text:"保单",isBank:false,class:"bac84bef0",icon:"&#xe642;"},
+			{text:"车辆",isBank:false,class:"bacf5bf5b",icon:"&#xe6cc;"},
+		];
+		for(var i in _data){
+			for(var j=0;j<_loalList.length;j++){
+				if(_data[i].funcName.indexOf(_loalList[j].text)!=-1){
+					_data[i].isBank=_loalList[j].isBank;
+					_data[i].class=_loalList[j].class;
+					_data[i].icon=_loalList[j].icon;
+					break;
+				};
+				if(j==_loalList.length-1){
+					_data[i].isBank=false;
+					_data[i].class="bac73c7df";
+					_data[i].icon="&#xe6bb;";					
+				};
+			};
+		};
 		that.openWindow({
 			title:"———— 服务项目 ————",
 			width:"70%",
@@ -123,10 +121,11 @@ page.ctrl('materialInspection', function($scope) {
 			$.ajax({
 				type: 'post',
 				dataType:'json',
-				url: $http.api('loanAudit/verifyItemList'),
+				url: $http.api('loanAudit/verifyItemList','cyj'),
 				data: {
-					userId:"",
-					orderNo:apiParams.orderNo
+					userId:"334232",
+					orderNo:'nfdb2016102820480790'
+					//orderNo:apiParams.orderNo
 				},
 				success: $http.ok(function(res) {
 					if(res&&res.data&&res.data.length>0)
