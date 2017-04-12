@@ -12,7 +12,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	$scope.tabs = {};
 	$scope.currentType = $scope.$params.type || 0;
 	$scope.$el = {};
-	$scope.apiParams = {};
 
 	
 	/**
@@ -47,11 +46,30 @@ page.ctrl('creditMaterialsUpload', function($scope) {
  				$scope.busiAreaCode = result.data.loanTask.loanOrder.area ? result.data.loanTask.loanOrder.area.areaId : '';
  				$scope.areaName = result.data.loanTask.loanOrder.area ? result.data.loanTask.loanOrder.area.wholeName : '';
 				$scope.result.data.currentType = _type;
+				$scope.result.data.types = ['借款人', '共同还款人', '反担保人'];
 
 				// 编译tab
 				setupTab($scope.result.data || {}, function() {
 					setupTabEvt();
 				});
+
+				// console.log($scope.apiParams)
+				// //重置$scope.apiParams
+				// for(var i in $scope.result.data.creditUsers) {
+				// 	var row = $scope.result.data.creditUsers[i];
+				// 	for(var j = 0, len = row.length; j < len; j++) {
+				// 		for(var k = 0, len2 = $scope.apiParams.length; k < len2.length; k++) {
+				// 			if(row[j].userId = $scope.apiParams[k].userId) {
+				// 				row[j].userName = row[j].userName || $scope.apiParams[k].userName;
+				// 				row[j].idCard = row[j].idCard || $scope.apiParams[k].idCard;
+				// 				row[j].userRelationship = row[j].idCard || $scope.apiParams[k].userRelationship;
+				// 			}
+				// 		}
+				// 	}
+				// }
+				// console.log($scope.result);
+				initApiParams();
+				console.log($scope.apiParams)
 
 				// 编译tab项对应内容
 				setupCreditPanel(_type, $scope.result.data, function() {
@@ -255,8 +273,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 */
 	function process() {
 		$.confirm({
-			title: '提交订单',
-			content: dialogTml.wContent.suggestion,
+			title: '征信查询',
+			content: tool.alert('确定所有被查人的征信已上传无误，并提交征信查询吗？'),
 			buttons: {
 				close: {
 					text: '取消',
@@ -275,8 +293,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}
-						var reason = $.trim(this.$content.find('#suggestion').val());
-						if(reason) params.reason = reason;
 						flow.tasksJump(params, 'complete');
 					}
 				}
@@ -355,7 +371,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * @param  {object} data tab栏操作的数据
 	 */
 	var setupTab = function(data, cb) {
-		data.types = ['借款人', '共同还款人', '反担保人'];
 		render.compile($scope.$el.$tab, $scope.def.tabTmpl, data, true);
 		$scope.$el.$tabs = $scope.$el.$tab.find('.tabEvt');
 		if( cb && typeof cb == 'function' ) {
@@ -521,7 +536,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			var that = $(this),
 			    value = that.val(),
 				type = that.data('type'),
-				$parent = that.parent();
+				$parent = that.parent(),
+				params = {};
 			if(!value) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
@@ -551,6 +567,11 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 						item[that.data('type')] = value;
 					}
 				}
+				params = {
+					userId: that.data('userId')
+				}
+				params[that.data('type')] = value;
+				updateUser(params);
 			}
 			console.log($scope.apiParams)
 		})
@@ -568,6 +589,25 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		$self.find('.select').dropdown();
 	}
 
+	/**
+	 * 征信用户更新
+	 */
+	var updateUser = function(params) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditMaterials/user/update', 'zyj'),
+			dataType: 'json',
+			data: params,
+			global: false,
+			success: $http.ok(function() {
+
+			})
+		})
+	}
+
+	/**
+	 * 初始化待传参数
+	 */
 	var initApiParams = function() {
 		$scope.apiParams = [];
 		for(var i in $scope.result.data.creditUsers) {
@@ -610,7 +650,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			setupLocation();
 			setupSubmitBar();
 			setupAddUsers();
-			initApiParams();
 			evt();
 			
 		});
@@ -620,27 +659,27 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 上传图片数据回调
 	 */
 	$scope.uploadcb = function(self, xhr) {
-		if(self.options.code == 'sfzzm') {
-			$.ajax({
-				type: 'post',
-				url: $http.api('materials/ocr', true),
-				data: {
-					materialsId: xhr.data.id
-				},
-				dataType: 'json',
-				success: $http.ok(function(result) {
-					console.log(result)
-					$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-name input').val(result.data.userName);
-					$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-idc input').val(result.data.idCard);
-					for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-						if($scope.apiParams[i].userId == self.options.userId) {
-							$scope.apiParams[i].userName = result.data.userName;
-							$scope.apiParams[i].idCard = result.data.idCard;
-						}
-					}
-				})
-			});
-		}
+		// if(self.options.code == 'sfzzm') {
+		// 	$.ajax({
+		// 		type: 'post',
+		// 		url: $http.api('materials/ocr', true),
+		// 		data: {
+		// 			materialsId: xhr.data.id
+		// 		},
+		// 		dataType: 'json',
+		// 		success: $http.ok(function(result) {
+		// 			console.log(result)
+		// 			$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-name input').val(result.data.userName);
+		// 			$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-idc input').val(result.data.idCard);
+		// 			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+		// 				if($scope.apiParams[i].userId == self.options.userId) {
+		// 					$scope.apiParams[i].userName = result.data.userName;
+		// 					$scope.apiParams[i].idCard = result.data.idCard;
+		// 				}
+		// 			}
+		// 		})
+		// 	});
+		// }
 		if(xhr.data.refresh) {
 			$scope.currentType = 0;
 			loadOrderInfo($scope.currentType, function() {
@@ -695,13 +734,17 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 
 	$scope.relationShipPicker = function(picked) {
 		console.log(picked);
-		var that = this.$el;
+		var that = this.$el,
+			params = {};
 		for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 			var item = $scope.apiParams[i];
 			if(that.data('userId') == item.userId) {
 				item[that.data('type')] = picked.id;
 			}
 		}
+		params['userId'] = that.data('userId');
+		params[that.data('type')] = picked.id;
+		updateUser(params);
 		console.log($scope.apiParams);
 	}
 
