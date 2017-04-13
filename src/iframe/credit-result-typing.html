@@ -43,8 +43,8 @@
 
 <script type="text/x-dot-template" id="creditResultListTmpl">
 	{{ for(var i = 0, len = it.data.creditUsers[it.index].length; i < len; i++){ var col = it.data.creditUsers[it.index][i]; }}
-		{{ for(var m = 0, len2 = it.cfgData.frames[0].sections.length; m < len2; m++) { var item = it.cfgData.frames[0].sections[m]; console.log(item); }}
-			{{ if(it.format[item.code] == it.index) { var row = item; console.log(row); break; } }}
+		{{ for(var m = 0, len2 = it.cfgData.frames[0].sections.length; m < len2; m++) { var item = it.cfgData.frames[0].sections[m]; }}
+			{{ if(it.format[item.code] == it.index) { var row = item; break; } }}
 		{{ } }}
 		<!--二级标题（姓名，身份证等等...）-->
 		{{ if(i == 0) { }}
@@ -56,7 +56,7 @@
 				<div class="key">姓名：</div>
 				<div class="value">{{=col.userName}}</div>
 			</div>
-			{{ if(row.code != 'ZJR') { }}
+			{{ if(row.code == 'GTHKR') { }}
 				<div class="key-value-box">
 					<span class="key">与借款人关系：</span>
 					<span class="value">{{=it.userRalaMap[col.userRelationship] || '（未录入）'}}</span>

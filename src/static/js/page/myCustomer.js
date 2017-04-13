@@ -5,8 +5,8 @@ page.ctrl('myCustomer', [], function($scope) {
 		endDate = tool.formatDate(new Date().getTime()),
 		startDate = tool.getPreMonth(endDate),
 		apiParams = {
-			startDate: new Date(startDate),       //查询结束日期
-			endDate: new Date(endDate),         //查询结束日期
+			startDate: startDate,       //查询结束日期
+			endDate: endDate,         //查询结束日期
 			pageNum: 1
 		};
 
@@ -57,7 +57,7 @@ page.ctrl('myCustomer', [], function($scope) {
 		$console.find('.dateBtn').datepicker({
 			onpicked: function() {
 				var that = $(this);
-				apiParams[that.data('type')] = new Date(that.val());
+				apiParams[that.data('type')] = that.val();
 			},
 			oncleared: function() {
 				delete apiParams[$(this).data('type')];
@@ -229,8 +229,8 @@ page.ctrl('myCustomer', [], function($scope) {
 			$console.find('#dateStart').val(startDate);
 			$console.find('#dateEnd').val(endDate);
 			apiParams = {
-				startDate: new Date(startDate),       //查询结束日期
-				endDate: new Date(endDate),         //查询结束日期
+				startDate: startDate,       //查询结束日期
+				endDate: endDate,         //查询结束日期
 				pageNum: 1
 			};
 		});

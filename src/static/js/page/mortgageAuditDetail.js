@@ -150,7 +150,35 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 	}
 
 	var setupEvt = function() {
-		$scope.$el.$tbl.find('.uploadEvt').imgUpload();
+		$scope.$el.$tbl.find('.uploadEvt').imgUpload({
+			viewable: true,
+			markable: true,
+			getimg: function(cb) {
+				cb($scope.result.data.userMaterials)
+			},
+			marker: function (img, mark, cb) {
+				console.log(img);
+				console.log(mark);
+				var params = {
+					id: img.id,
+					auditResult: mark
+				}
+				if(mark == 0) {
+					params.auditOpinion = '';
+				}
+				$.ajax({
+					type: 'post',
+					url: $http.api('material/addOrUpdate', 'zyj'),
+					global: false,
+					data: params,
+					dataType: 'json',
+					success: $http.ok(function(result) {
+						console.log(result);
+						cb();
+					})
+				})
+			}
+		});
 	}
 
 	/**

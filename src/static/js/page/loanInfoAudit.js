@@ -201,7 +201,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 			var btnType = $(this).data('type');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 			requireList.each(function(){
-				debugger
 				var value = $(this).val();
 				if(!value){
 					if(!$(this).parent().hasClass('info-value') && !$(this).parent().hasClass('info-check-box')){
@@ -664,8 +663,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 				console.log(lilist.length);
 				$("li",$(this)).each(function(){
 					var idx = $(this).data('id');
-					if(selected == idx){
-						debugger
+					if(selected == idx){						
 						$that.find('.select-text').val($(this).text());
 						$(this).click();
 						$that.find('.select-box').hide();
