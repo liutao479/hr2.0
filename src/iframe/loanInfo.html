@@ -915,10 +915,10 @@
 														{{ }else if(detailCode == 'carName'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																	<div class="select select-common" data-selected="{{= it.data[fieldCode][detailCode]}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['loanInfo'].carPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.car"></div>
+																	<div id="clxx" class="select select-common" data-selected="{{= it.data[fieldCode][detailCode]}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['loanInfo'].carPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.car"></div>
 																	<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																{{ }else{ }}
-																	<div class="select select-common" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['loanInfo'].carPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.car"></div>
+																	<div id="clxx" class="select select-common" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['loanInfo'].carPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.car"></div>
 																	<input type="hidden" name="{{= detailCode}}" />
 																{{ } }}
 															</td>
