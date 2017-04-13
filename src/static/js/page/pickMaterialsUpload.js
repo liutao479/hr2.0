@@ -4,7 +4,6 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		$console = $params.refer ? $($params.refer) : render.$console;
 	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
-	$params.orderNo = 'nfdb20170407100357095';
 
 	/**
 	* 加载提车材料上传数据

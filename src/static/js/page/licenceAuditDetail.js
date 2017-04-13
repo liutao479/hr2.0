@@ -5,6 +5,7 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 		apiParams = {
 			orderNo: $params.orderNo
 		};
+	$scope.imgs = [];
 	/**
 	* 加载上牌审核详情数据
 	* @params {object} params 请求参数
@@ -135,7 +136,34 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 	}
 
 	var setupEvt = function() {
-		$scope.$el.$tbl.find('.uploadEvt').imgUpload();
+		$scope.$el.$tbl.find('.uploadEvt').imgUpload({
+			viewable: true,
+			getimg: function(cb) {
+				cb($scope.result.data.creditUsers[_type][index].loanUserCredit.creditMaterials)
+			},
+			marker: function (img, mark, cb) {
+				console.log(img);
+				console.log(mark);
+				var params = {
+					id: img.id,
+					auditResult: mark
+				}
+				if(mark == 0) {
+					params.auditOpinion = '';
+				}
+				$.ajax({
+					type: 'post',
+					url: $http.api('creditMaterials/material/mark', 'zyj'),
+					global: false,
+					data: params,
+					dataType: 'json',
+					success: $http.ok(function(result) {
+						console.log(result);
+						cb();
+					})
+				})
+			}
+		});
 	}
 
 	/**
