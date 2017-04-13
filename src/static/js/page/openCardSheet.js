@@ -107,6 +107,7 @@ page.ctrl('openCardSheet', function($scope) {
 	}
 	var setupEvt = function($el) {
 		if($("#dateStart").val("9999-99-99")){
+			$("#dateStart").addClass('pointDisabled');
 			$("#longTime").attr("checked", true); 
 		}
 		$console.find('#longTime').on('click', function(){
