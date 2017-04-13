@@ -12,6 +12,8 @@
 		accountBankName: /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/,
 		bankName: /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/,
 		accountNumber: /^(\d{16}|\d{19})$/,
-		account: /^(\d{16}|\d{19})$/
+		account: /^(\d{16}|\d{19})$/,
+		phone: /^1[\d+]{10}$/,
+		mobile: /^1[\d+]{10}$/
 	}
 })(window);
