@@ -34,7 +34,7 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 				$scope.result = result;
 				$scope.id = result.data.orderInfo.id;
 				setupLocation(result.data.orderInfo);
-				setupBackReason(result.data.orderInfo.orderApproval);
+				setupBackReason(result.data.orderInfo.loanOrderApproval);
 
 				// 编译两个抵押证
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, $scope.result.data, true);
@@ -105,6 +105,7 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 	*/
 	var setupBackReason = function(data) {
 		var $backReason = $console.find('#backReason');
+		console.log(data)
 		if(!data) {
 			$backReason.remove();
 			return false;

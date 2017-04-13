@@ -34,8 +34,6 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 				$scope.result = result;
 				$scope.orderNo = result.data.orderInfo.orderNo;//订单号
 				setupLocation(result.data.orderInfo);
-				// console.log(result.data.backApprovalInfo)
-				// setupBackReason(result.data.orderInfo.loanOrderApproval);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -116,30 +114,12 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 		$location.location();
 	}
 
-	/**
-	* 设置退回原因
-	*/
-	var setupBackReason = function(data) {
-		var $backReason = $console.find('#backReason');
-		if(!data) {
-			$backReason.remove();
-			return false;
-		} else {
-			$backReason.data({
-				backReason: data.reason,
-				backUser: data.userName,
-				backUserPhone: '后台未返回',
-				backDate: tool.formatDate(data.transDate, true)
-			});
-			$backReason.backReason();
-		}
-	}
-
 	var setupEvt = function() {
 		$scope.$el.$tbl.find('.uploadEvt').imgUpload({
 			viewable: true,
+			markable: true,
 			getimg: function(cb) {
-				cb($scope.result.data.creditUsers[_type][index].loanUserCredit.creditMaterials)
+				cb($scope.result.data.userMaterials)
 			},
 			marker: function (img, mark, cb) {
 				console.log(img);
@@ -153,7 +133,7 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 				}
 				$.ajax({
 					type: 'post',
-					url: $http.api('creditMaterials/material/mark', 'zyj'),
+					url: $http.api('material/addOrUpdate', 'zyj'),
 					global: false,
 					data: params,
 					dataType: 'json',

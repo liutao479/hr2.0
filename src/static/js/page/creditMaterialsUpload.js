@@ -315,11 +315,16 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					break;
 				}
 				if(j == 'userName' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + item.idx + '的姓名！<br/>';
+					_alert += '请填写' + $scope.userMap[item.userType] + item.idx + '的真实姓名！<br/>';
 					flag = false;
 					break;
 				}
-				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType != 0) {
+				if(j == 'mobile' && !item[j]) {
+					_alert += '请填写' + $scope.userMap[item.userType] + item.idx + '的手机号！<br/>';
+					flag = false;
+					break;
+				}
+				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType == 0) {
 					_alert += '请选择' + $scope.userMap[item.userType] + item.idx + '与借款人的关系！<br/>';
 					flag = false;
 					break;
@@ -546,7 +551,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			} else if(!regMap[type].test(value)) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
-				that.focus();
 				$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
 				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 					var item = $scope.apiParams[i];
@@ -618,12 +622,12 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				item.userName = row.userName || '';
 				item.idCard = row.idCard || '';
 				item.userType = row.userType || '';
+				item.mobile = row.mobile || '';
 				item.userRelationship = row.userRelationship;
 				item.idx = j + 1;
 				if(i == 0) {
 					item.userRelationship = 0;
 				}
-				item.userType = row.userType;
 				$scope.apiParams.push(item);
 			}
 		}
@@ -660,27 +664,27 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 上传图片数据回调
 	 */
 	$scope.uploadcb = function(self, xhr) {
-		// if(self.options.code == 'sfzzm') {
-		// 	$.ajax({
-		// 		type: 'post',
-		// 		url: $http.api('materials/ocr', true),
-		// 		data: {
-		// 			materialsId: xhr.data.id
-		// 		},
-		// 		dataType: 'json',
-		// 		success: $http.ok(function(result) {
-		// 			console.log(result)
-		// 			$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-name input').val(result.data.userName);
-		// 			$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-idc input').val(result.data.idCard);
-		// 			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-		// 				if($scope.apiParams[i].userId == self.options.userId) {
-		// 					$scope.apiParams[i].userName = result.data.userName;
-		// 					$scope.apiParams[i].idCard = result.data.idCard;
-		// 				}
-		// 			}
-		// 		})
-		// 	});
-		// }
+		if(self.options.code == 'sfzzm') {
+			$.ajax({
+				type: 'post',
+				url: $http.api('materials/ocr', true),
+				data: {
+					materialsId: xhr.data.id
+				},
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result)
+					$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-name input').val(result.data.userName);
+					$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-idc input').val(result.data.idCard);
+					for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+						if($scope.apiParams[i].userId == self.options.userId) {
+							$scope.apiParams[i].userName = result.data.userName;
+							$scope.apiParams[i].idCard = result.data.idCard;
+						}
+					}
+				})
+			});
+		}
 		if(xhr.data.refresh) {
 			$scope.currentType = 0;
 			loadOrderInfo($scope.currentType, function() {
