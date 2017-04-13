@@ -645,6 +645,19 @@ page.ctrl('loanInfo', function($scope) {
 		})
 	}
 
+	/**
+	 * 首次加载页面时绑定的事件（底部提交按钮）
+	 */
+	var evt = function() {
+		/**
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
+	}
+
 
 	/**
 	 * 加载页面模板
@@ -659,6 +672,7 @@ page.ctrl('loanInfo', function($scope) {
 			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
 			setupSubmitBar();
 			setupDropDown();
+			evt();
 		});
 	});
 

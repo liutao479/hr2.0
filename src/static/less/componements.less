@@ -101,7 +101,7 @@
 .imgs-item-group {
     position: relative;
     display: inline-block;
-    float: left;
+    // float: left;
     width: 220px;
     text-align: center;
     margin-right: 30px;
@@ -321,7 +321,7 @@
         position: absolute;
         top: 50%;
         border-width: 40px;
-        margin-top: -40px;
+        margin-top: -90px;
         &:before {
             position: absolute;
             content: "";
@@ -348,7 +348,7 @@
         }
     }
     .prev {
-        left: -110px;
+        left: -20px;
         border-style: dashed solid dashed dashed;
         border-color: transparent #fff transparent transparent;
         &:before {
@@ -366,7 +366,7 @@
         }
     }
     .next {
-        right: -110px;
+        right: -20px;
         border-style: dashed dashed dashed solid;
         border-color: transparent transparent transparent #fff;
         &:before {
@@ -414,15 +414,21 @@
             .zoom-track {
                 position: absolute;
                 left: 30px;
-                top: 14px;
+                top: 0px;
                 right: 90px;
-                height: 4px;
-                background-color: #fff;
-                border-radius: 2px;
+                height: 30px;
                 cursor: pointer;
+                .track-bar {
+                    display: block;
+                    height: 4px;
+                    background-color: #fff;
+                    background-color: #fff;
+                    border-radius: 2px;
+                    margin: 13px 0;
+                }
                 .track-thumb {
                     position: absolute;
-                    top: -3px;
+                    top: 10px;
                     background-color: #fff;
                     width: 10px;
                     height: 10px;
@@ -445,6 +451,10 @@
     .borderRadius(4px);
     background-color: #FFF;
     cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
     &:hover {
         border-color: @mainColor;
     }
@@ -481,10 +491,6 @@
     &&-normal {
         width: 18px;
         height: 18px;
-        -webkit-user-select: none;
-           -moz-user-select: none;
-            -ms-user-select: none;
-                user-select: none;
         &.checked {
             color: #FFF;
             background-color: @mainColor;
@@ -1129,14 +1135,8 @@
             float: left;
             margin-right: 10px;
         }
-        .i-download {
-            float: left;
-            color: @mainColor;
-            font-size: 18px;
-            margin-right: 6px;
-        }
         .w-select-item {
-            margin-left: 27px;
+            display: inline-block;
             line-height: 20px;
         }
     }
@@ -1148,6 +1148,23 @@
         .w-download-title {
             line-height: 40px;
             color: @tiperColor;
+        }
+        .w-download {
+            width: 100%;
+            .w-radio {
+                float: left;
+                width: 33.3%;
+                text-align: center;
+                .checkbox {
+                    margin-right: 8px;
+                    position: relative;
+                    top: 4px;
+                }
+                .i-download {
+                    color: @mainColor;
+                    font-size: 18px;
+                }
+            }
         }
     }
     // 选择框

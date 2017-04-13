@@ -42,9 +42,10 @@
 		else
 //			return 'http://192.168.1.86:8080/' + method;
 			return 'http://192.168.0.186:9999/' + method;
-//			return 'http://192.168.1.124:8080/' + method;
-//			return 'http://192.168.0.22:8080/' + method;
-//			return 'http://127.0.0.1:8080/' + method;
+			// return 'http://192.168.1.55:8080/' + method;
+			// return 'http://192.168.1.124:8080/' + method;
+			// return 'http://192.168.1.132:8080/' + method;
+			// return 'http://192.168.0.22:8080/' + method;
 			
 		//Todo 发布时增加prefix
 		// return 'http://192.168.0.113:8080/' + method;
@@ -141,7 +142,7 @@
 								ok: {
 									text: '确定',
 									action: function() {
-										router.render('loanProcess');
+										// router.render('loanProcess');
 									}
 								}
 							}

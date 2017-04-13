@@ -58,9 +58,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					setupEvt($scope.$el.$tbls.eq(_type));
 				});
 
-				//初始化要传参数
-				initApiParams();
-
 				if( cb && typeof cb == 'function' ) {
 					cb();
 				}
@@ -613,6 +610,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			setupLocation();
 			setupSubmitBar();
 			setupAddUsers();
+			initApiParams();
 			evt();
 			
 		});

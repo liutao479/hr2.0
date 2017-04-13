@@ -174,15 +174,28 @@ page.ctrl('loan', function($scope) {
 				var that = $(this),
 					searchText = $.trim(that.val());
 				if(!searchText) {
+					delete apiParams.fuzzyParam;
+					loadLoanList(apiParams);
 					return false;
 				}
 				apiParams.fuzzyParam = searchText;
 				apiParams.pageNum = 1;
-				loadLoanList(apiParams, function() {
-					that.blur();
-				});
+				loadLoanList(apiParams);
 			}
 		});
+
+		// 文本框失去焦点记录文本框的值
+		$console.find('#search input').on('blur', function(evt) {
+			var that = $(this),
+				searchText = $.trim(that.val());
+			if(!searchText) {
+				delete apiParams.fuzzyParam;
+				return false;
+			} else {
+				apiParams.fuzzyParam = searchText;
+			}
+		});
+
 		$console.find('#search .iconfont').on('click', function() {
 			var searchText = $.trim($console.find('#search input').val());
 			if(!searchText) {

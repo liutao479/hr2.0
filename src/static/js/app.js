@@ -41,9 +41,12 @@ $(function() {
 	
 	function init() {
 		setupMenu();
-		addListener();
+		// addListener();
 		setDefault();
 	}
 
 	init();
+
+
+	//123231231231
 });
