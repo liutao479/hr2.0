@@ -371,22 +371,11 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		});
 	});
 
-	/**
-	 * 监听其它材料最后一个控件的名称
-	 */
-	var otherMaterialsListen = function() {
-		var $imgel = $console.find('.otherMaterials .uploadEvt');
-		$imgel.last().data('name', '其它材料' + $imgel.length);
-		$imgel.last().data('count', $imgel.length);
-		$imgel.last().find('.input-text input').val('其它材料' + $imgel.length);
-	}
-	
 	/***
 	* 删除图片后的回调函数
 	*/
 	$scope.deletecb = function(self) {
 		self.$el.remove();
-		otherMaterialsListen();
 	}
 
 	/***
@@ -394,8 +383,6 @@ page.ctrl('signMaterialsUpload', function($scope) {
 	*/
 	$scope.uploadcb = function(self) {
 		self.$el.after(self.outerHTML);
-		otherMaterialsListen();
 		self.$el.next().imgUpload();
-
 	}
 });

@@ -357,6 +357,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		imgsBars.each(function(index) {
 			$(this).find('.uploadEvt').imgUpload({
 				viewable: true,
+				markable: true,
 				getimg: function(cb) {
 					cb($scope.result.data.creditUsers[_type][index].loanUserCredit.creditMaterials)
 				},
