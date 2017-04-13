@@ -96,7 +96,6 @@ page.ctrl('loanInfo', function($scope) {
 	* @params {object} item 触发的tab对象
 	*/
 	var tabChange = function (idx, item) {
-		console.log(item);
 		router.render('loanProcess/' + item.key, {
 			tasks: $scope.tasks,
 			taskId: $scope.tasks[idx].id,
@@ -235,11 +234,11 @@ page.ctrl('loanInfo', function($scope) {
 		* 保存按钮
 		*/
 		$console.find('.saveBtn').on('click', function() {
+			var $btn = $(this);
 			var isTure = true;
 			var btnType = $(this).data('type');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 			requireList.each(function(){
-				debugger
 				var value = $(this).val();
 				if(!value){
 					if(!$(this).parent().hasClass('info-value') && !$(this).parent().hasClass('info-check-box')){
@@ -265,9 +264,6 @@ page.ctrl('loanInfo', function($scope) {
 						renewalStr += rene.value+',';
 					}
 					$("input[name='renewalInfo']").val(renewalStr);
-				}
-				if(key == 'saveCLXX'){
-					
 				}
 				var data;
 		        var formList = $(this).parent().parent().siblings().find('form');
@@ -305,6 +301,16 @@ page.ctrl('loanInfo', function($scope) {
 						dataType:"json",
 						contentType : 'application/json;charset=utf-8',
 						success: function(result){
+							if(result.data){
+								if(key == 'saveQTXX'){
+									var formlist = $btn.parent().parent().siblings('panel-detail-content-layout').find('form');
+									formList.each(function(){
+										var iptNode = "<input type='hidden' class='individuationId' name='individuationId'>";
+										$(this).append(iptNode);
+										$(this).find(".individuationId").val(result.data);
+									})
+								}
+							}
 							$.alert({
 								title: '提示',
 								content: tool.alert('保存成功'),
@@ -325,6 +331,32 @@ page.ctrl('loanInfo', function($scope) {
 						data:dataPost,
 						dataType:"json",
 						success: function(result){
+							if(result.data){
+								if(key == 'saveCLXX'){
+									var formlist = $btn.parent().parent().siblings('panel-detail-content-layout').find('form');
+									formList.each(function(){
+										var iptNode = "<input type='hidden' class='carId' name='carId'>";
+										$(this).append(iptNode);
+										$(this).find(".carId").val(result.data);
+									})
+								}
+								if(key == 'saveHKKXX'){
+									var formlist = $btn.parent().parent().siblings('panel-detail-content-layout').find('form');
+									formList.each(function(){
+										var iptNode = "<input type='hidden' class='id' name='id'>";
+										$(this).append(iptNode);
+										$(this).find(".id").val(result.data);
+									})
+								}
+								if(key == 'saveFQXX'){
+									var formlist = $btn.parent().parent().siblings('panel-detail-content-layout').find('form');
+									formList.each(function(){
+										var iptNode = "<input type='hidden' class='stageId' name='stageId'>";
+										$(this).append(iptNode);
+										$(this).find(".stageId").val(result.data);
+									})
+								}
+							}
 							$.alert({
 								title: '提示',
 								content: tool.alert('保存成功'),
@@ -687,11 +719,9 @@ page.ctrl('loanInfo', function($scope) {
 			if((selected && re.test(selected)) || selected=='0'){
 				$(this).find('.arrow-trigger').click();
 				var lilist = $(this).find('li');
-				console.log(lilist.length);
 				$("li",$(this)).each(function(){
 					var idx = $(this).data('id');
 					if(selected == idx){
-						debugger
 						$that.find('.select-text').val($(this).text());
 						$(this).click();
 						$that.find('.select-box').hide();
@@ -746,6 +776,8 @@ page.ctrl('loanInfo', function($scope) {
 		loanFinishedrepay();
 	}
 	$scope.carPicker = function(picked) {
+		var carname = $("#carMode").find('.select-text').val();
+		$("#carName").val(carname);
 	}
 	$scope.bankPicker = function(picked) {
 	}
@@ -964,7 +996,7 @@ page.ctrl('loanInfo', function($scope) {
 					success: $http.ok(function(xhr) {
 						var sourceData = {
 							items: xhr.data,
-							id: 'id',
+							id: 'account',
 							name: 'account',
 							accountName: 'accountName',
 							bankName: 'bankName'

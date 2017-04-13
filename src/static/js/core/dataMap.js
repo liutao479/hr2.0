@@ -164,7 +164,7 @@
 	        },
 	        {
 	            "name":"其他",
-	            "value":"4"
+	            "value":"-1"
 	        }
 	    ],
 	    "relationship":[
