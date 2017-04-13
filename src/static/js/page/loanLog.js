@@ -2,7 +2,6 @@
 page.ctrl('loanLog', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	$params.orderNo = 'nfdb20170407100357095';
 	
 	/**
 	* 加载订单日志数据

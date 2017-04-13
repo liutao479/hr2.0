@@ -203,7 +203,7 @@
 				marker = undefined;
 			}
 			loadImg(function(imgs) {
-				new Preview(imgs, marker, onclose);
+				new Preview(imgs, marker, onclose, self.options.markable);
 			})
 		})
 	};
