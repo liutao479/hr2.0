@@ -2,7 +2,6 @@
 page.ctrl('creditResult', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-	$params.orderNo = 'nfdb20170407100357095';
 	/**
 	* 加载征信预审核数据
 	* @params {object} params 请求参数
@@ -38,7 +37,7 @@ page.ctrl('creditResult', function($scope) {
 				};
 				$scope.result.editable = 0;
 				console.log($scope.result)
-
+				initApiParams();
 				// 编译征信结果
 				render.compile($scope.$el.$resultPanel, $scope.def.resultTmpl, $scope.result, function() {
 					setupEvt();
@@ -50,22 +49,6 @@ page.ctrl('creditResult', function($scope) {
 			})
 		})
 	}
-
-	/**
-	* 设置面包屑
-	*/
-	var setupLocation = function() {
-		if(!$scope.$params.path) return false;
-		var $location = $console.find('#location');
-		$location.data({
-			backspace: $scope.$params.path,
-			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: '征信结果',
-			orderDate: $scope.result.data.loanTask.createDateStr
-		});
-		$location.location();
-	}
-
 
 
 	/**
@@ -82,6 +65,19 @@ page.ctrl('creditResult', function($scope) {
 				markable: false
 			});
 		});
+		/**
+		 * 启动图片上传控件
+		 */
+		var imgsBars = $console.find('.creditMaterials');
+		imgsBars.each(function(index) {
+			$(this).find('.uploadEvt').imgUpload({
+				viewable: true,
+				markable: false,
+				getimg: function(cb) {
+					cb($scope.apiParams[index].loanCreditReportList);
+				}
+			});
+		});
 	}
 
 	/**
@@ -89,6 +85,25 @@ page.ctrl('creditResult', function($scope) {
 	*/
 	var evt = function() {
 		
+	}
+
+	/**
+	 * 初始化提交信息的参数
+	 */
+	var initApiParams = function() {
+		$scope.apiParams = [];
+		for(var i in $scope.result.data.creditUsers) {
+			for(var j = 0, len2 = $scope.result.data.creditUsers[i].length; j < len2; j++) {
+				var row = $scope.result.data.creditUsers[i][j],
+					item = $scope.result.data.creditUsers[i][j];
+				item.creditLevel = row.creditLevel || '';
+				item.creditReportFile = row.creditReportFile || '';
+				item.creditReportId = row.creditReportId || '';
+				item.remark = row.remark || '';
+				item.idx = j;
+				$scope.apiParams.push(item);
+			}
+		}
 	}
 
 
@@ -104,7 +119,9 @@ page.ctrl('creditResult', function($scope) {
 			$resultPanel: $console.find('#resultPanel')
 		}
 		console.log($console)
-		loadOrderInfo();
+		loadOrderInfo(function() {
+			
+		});
 		evt();
 	});
 

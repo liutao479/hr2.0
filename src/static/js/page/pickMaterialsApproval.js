@@ -9,7 +9,6 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadTabList = function(cb) {
-
 		var params = {
 			taskId: $params.taskId
 		};
@@ -20,6 +19,7 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(xhr) {
 				$scope.result = xhr;
+				console.log(xhr)
 				setupLocation();
 				loadGuide(xhr.cfgData)
 				setupEvent();
@@ -130,10 +130,17 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 							var _reason = $.trim(this.$content.find('#suggestion').val());
 							this.$content.find('.checkbox-radio').each(function() {
 								if($(this).hasClass('checked')) {
-									$scope.jumpId = $(this).data('id');
+									var flag = 0;
+									$(this).parent().parent().find('.checkbox-normal').each(function() {
+										if($(this).hasClass('checked')) {
+											flag++;
+										}
+									})
+									if(flag > 0) {
+										$scope.jumpId = $(this).data('id');
+									}
 								}
 							})
-
 							if(!_reason) {
 								$.alert({
 									title: '提示',
@@ -212,8 +219,14 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 						var that = this;
         				$.ajax({
 							type: 'post',
-							url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
+							url: $http.api('loanApproval/submit/' + $params.taskId),
 							dataType: 'json',
+							data: {
+								taskId: $params.taskId,
+								orderNo: $params.orderNo,
+								telUserName: $scope.result.data.loanTask.loanOrder.realName,
+								frameCode: $scope.result.cfgData.frames[0].code
+							},
 							success: $http.ok(function(xhr) {
 								var taskIds = [];
 								for(var i = 0, len = $params.tasks.length; i < len; i++) {
@@ -230,7 +243,6 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 								flow.tasksJump(params, 'approval');
 							})
 						})
-						
 					}
 				}
 			}
