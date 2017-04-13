@@ -319,7 +319,12 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					flag = false;
 					break;
 				}
-				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType != 0) {
+				if(j == 'mobile' && !item[j]) {
+					_alert += '请填写' + $scope.userMap[item.userType] + item.idx + '的手机号！<br/>';
+					flag = false;
+					break;
+				}
+				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType == 0) {
 					_alert += '请选择' + $scope.userMap[item.userType] + item.idx + '与借款人的关系！<br/>';
 					flag = false;
 					break;
