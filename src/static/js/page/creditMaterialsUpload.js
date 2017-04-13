@@ -70,7 +70,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				// }
 				// console.log($scope.result);
 				initApiParams();
-				console.log($scope.apiParams)
 
 				// 编译tab项对应内容
 				setupCreditPanel(_type, $scope.result.data, function() {
@@ -89,7 +88,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	*/
 	var setupCreditBank = function() {
 		$scope.currentType = 0;
-		console.log($scope.area)
 		if(!$scope.demandBankId) {
 			setupWindow();
 		} else {
@@ -112,7 +110,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			demandBankId: $scope.demandBankId,
 			busiAreaCode: $scope.busiAreaCode
 		}
-		console.log(params)
 	 	$.ajax({
 			type: 'post',
 			url: $http.api('creditMaterials/order/update', 'zyj'),

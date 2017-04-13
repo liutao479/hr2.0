@@ -158,18 +158,36 @@
 				if(!this.files[0]) {
 					return false;
 				}
-				// if(this.files[0].name.substring(this.files[0].name.lastIndexOf('.') + 1).toLowerCase() != 'pdf') {
-				// 	$.alert({
-				// 		title: '提示',
-				// 		content: tool.alert('请选择正确的PDF格式文件上传!'),
-				// 		buttons: {
-				// 			ok: {
-				// 				text: '确定'
-				// 			}
-				// 		}
-				// 	})
-				// 	return false;
-				// }
+				if(self.options.type == 0) {
+					var name = this.files[0].name.substring(this.files[0].name.lastIndexOf('.') + 1).toLowerCase();
+					if(name != 'gif' && name != 'jpg' && name != 'jpeg' && name != 'png' && name != 'tif') {
+						$.alert({
+							title: '提示',
+							content: tool.alert('请选择正确的图片格式的文件进行上传!'),
+							buttons: {
+								ok: {
+									text: '确定'
+								}
+							}
+						})
+						return false;
+					}
+				}
+				if(self.options.type == 1) {
+					var name = this.files[0].name.substring(this.files[0].name.lastIndexOf('.') + 1).toLowerCase();
+					if(name != 'rm' && name != 'rmvb' && name != 'wmv' && name != 'avi' && name != 'mp4' && name != '3gp' && name != 'mkv') {
+						$.alert({
+							title: '提示',
+							content: tool.alert('请选择正确的视频格式的文件进行上传!'),
+							buttons: {
+								ok: {
+									text: '确定'
+								}
+							}
+						})
+						return false;
+					}
+				}
 				self.$el.find('.imgs-error').remove();
 				self.onUpload(this.files[0]);
 			});
@@ -451,7 +469,7 @@
 		edit: '<div class="imgs-item-upload">\
 				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
 				<span class="i-tips">点击上传图片</span>\
-				<input type="file" class="input-file activeEvt" accept="image/gif,image/jpeg,image/jpg,image/png" />\
+				<input type="file" class="input-file activeEvt" accept="image/gif,image/jpeg,image/jpg,image/png,image/tif" />\
 			   </div>{0}',
 		modify: '<div class="imgs-item-upload">\
 				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传" accept="image/gif,image/jpeg,image/jpg,image/png"/></div>\
