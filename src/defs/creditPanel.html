@@ -57,6 +57,8 @@
 					{{ } }}
 				</div>
 			</div>
+		{{ } }}
+		{{ if(row.userType != 0) { }}
 			{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
 				<a href="javascript:;" class="delete-credit-item" data-id="{{=row.userId}}"><i class="iconfont">&#xe602;</i></a>
 			{{ } }}

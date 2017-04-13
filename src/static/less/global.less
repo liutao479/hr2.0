@@ -1864,6 +1864,7 @@ input[disabled]{
 }
 
 .credit-datas-bar {
+    position: relative;
     border-top: 1px dashed @borderColor;
     border-bottom: 1px dashed @borderColor;
     padding: 0 20px;
@@ -1874,8 +1875,10 @@ input[disabled]{
         line-height: 30px;
     }
     .delete-credit-item {
-        float: right;
-        line-height: 60px;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        margin-top: -12px;
         color: @buttonBgColor;
         .iconfont {
             font-size: 20px;
@@ -1924,7 +1927,7 @@ input[disabled]{
 //类似键值对的组合
 .key-item-box {
     display: inline-block;
-    margin-right: 25px;
+    margin-right: 17px;
     height: 70px;
     padding: 19px 0; 
     float: left;
