@@ -257,7 +257,6 @@
 								{{ } }}\
 								{{ } }}';
 	internal.template.brandContent = '<dl class="word-area">\
-										<dt>A</dt>\
 										<dd class="clearfix">\
 											{{ for(var i = 0, len=it.items.length; i < len; i++) { var row = it.items[i]; name=row[it.name]; }}\
 											<a class="car-item{{=(it.actionName == name ? \" picked\":\"\")}} itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</a>\

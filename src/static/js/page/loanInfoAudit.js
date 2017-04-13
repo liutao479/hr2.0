@@ -45,6 +45,9 @@ page.ctrl('loanInfoAudit', function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
+				if(result.data.DDXX.busiSourceId){
+					$scope.busiSourceNameId = result.data.DDXX.busiSourceId
+				};
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
 				console.log(result)
 				if(result.data.FQXX && result.data.FQXX.renewalInfo){
@@ -97,16 +100,13 @@ page.ctrl('loanInfoAudit', function($scope) {
 			var that = $(this);
 			if(dataNum){
 				var jjlxr = '';
-				console.log(dataNum);
 				var cfgNum = $scope.result.cfgData.frames[0].sections;
-				console.log(cfgNum);
 				for(var i=0;i<cfgNum.length;i++){
 					var cfgItem = cfgNum[i];
 					if(cfgItem.code == 'JJLXR'){
 						for(var j=0;j<cfgItem.segments.length;j++){
 							var itemCode = cfgItem.segments[j];
 							jjlxr = itemCode.code;
-							console.log(jjlxr);
 							if(dataNum == jjlxr){
 								if(itemCode.empty != '0'){
 									that.remove();
@@ -184,10 +184,15 @@ page.ctrl('loanInfoAudit', function($scope) {
 		   	var renewalStr = '';
 			for(var i=0;i<boxChecked.length;i++){
 				var rene = boxChecked[i];
+//				if(rene.hasClass('checked')){
+//			        rene.value = '';
+//				}
 				renewalStr += rene.getAttribute('data-value')+',';
 			}
 			$("input[name='residentType']").val(renewalStr);
 	    })
+
+
 	    /***
 		* 保存按钮
 		*/
@@ -196,16 +201,16 @@ page.ctrl('loanInfoAudit', function($scope) {
 			var btnType = $(this).data('type');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 			requireList.each(function(){
+				debugger
 				var value = $(this).val();
 				if(!value){
-					if(!$(this).parent().hasClass('info-value')){
+					if(!$(this).parent().hasClass('info-value') && !$(this).parent().hasClass('info-check-box')){
 						$(this).siblings('.select').addClass("error-input");
 						$(this).after('<i class="error-input-tip sel-err">请完善该必填项</i>');
 					}else{
 						$(this).parent().addClass("error-input");
 						$(this).after('<i class="error-input-tip">请完善该必填项</i>');
 					}
-					console.log($(this).index());
 					isTure = false;
 				}
 			});
@@ -225,7 +230,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 				}
 				var data;
 		        var formList = $(this).parent().parent().siblings().find('form');
-		        console.log("form的个数为："+formList.length);
 		        if(formList.length == 1){
 			        var params = formList.serialize();
 		            params = decodeURIComponent(params,true);
@@ -247,7 +251,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 			                var valueStr = paramArray[i];
 			                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
 			            }
-						console.log(data1);
 						data[index]=data1;
 			        })
 		        }
@@ -261,23 +264,51 @@ page.ctrl('loanInfoAudit', function($scope) {
 						dataType:"json",
 						contentType : 'application/json;charset=utf-8',
 						success: function(result){
-							console.log(result.msg);
+							$.alert({
+								title: '提示',
+								content: tool.alert('保存成功'),
+								buttons: {
+									'确定': {
+							            action: function () {
+							            }
+							        }
+							    }
+							})
 						}
 					});
 		        }else{
 		        	dataPost = data;
-
 					$.ajax({
 						type: 'POST',
-						url: postUrl[key] + ($params.type == 'ApplyModify' ? '?flg=1' : ''),
+						url: postUrl[key],
 						data:dataPost,
 						dataType:"json",
 						success: function(result){
-							console.log(result.msg);
-							console.log(key);
+							$.alert({
+								title: '提示',
+								content: tool.alert('保存成功'),
+								buttons: {
+									'确定': {
+							            action: function () {
+							            }
+							        }
+							    }
+							})
 						}
 					});
 		        }
+			}else{
+				$.alert({
+					title: '提示',
+					content: tool.alert('请完善相关必填项！'),
+					buttons: {
+						ok: {
+							text: '确定',
+							action: function() {
+							}
+						}
+					}
+				});
 			}
 		})
 	}		
@@ -307,9 +338,13 @@ page.ctrl('loanInfoAudit', function($scope) {
 	var loanFinishedGps = function(){
 		var gps = $("input[name='isInstallGps']").val();
 		if(gps != 1){
+			$("input[name='gpsNumber1']").removeClass('required');
+			$("input[name='gpsNumber2']").removeClass('required');
 			$("input[name='gpsNumber1']").parents(".info-key-value-box").hide();
 			$("input[name='gpsNumber2']").parents(".info-key-value-box").hide();
 		}else{
+			$("input[name='gpsNumber1']").addClass('required');
+			$("input[name='gpsNumber2']").addClass('required');
 			$("input[name='gpsNumber1']").parents(".info-key-value-box").show();
 			$("input[name='gpsNumber2']").parents(".info-key-value-box").show();
 		}
@@ -387,11 +422,14 @@ page.ctrl('loanInfoAudit', function($scope) {
 		$(this).parents().removeClass("error-input");
 		$(this).siblings("i").remove();
 	})
+	$(document).on('click','.loan-info .checkbox', function() {
+		$(this).parents().removeClass("error-input");
+		$(this).parent().parent().siblings("i").remove();
+	})
 	$(document).on('click','.select', function() {
 		$(this).parents().removeClass("error-input");
 		$(this).siblings("i").remove();
 	})
-
 
 
 	/**
@@ -517,40 +555,47 @@ page.ctrl('loanInfoAudit', function($scope) {
 	 * 跳流程
 	 */
 	function process() {
-		$.confirm({
-			title: '提交',
-			content: dialogTml.wContent.suggestion,
-			buttons: {
-				close: {
-					text: '取消',
-					btnClass: 'btn-default btn-cancel',
-					action: function() {}
-				},
-				ok: {
-					text: '确定',
-					action: function () {
-        				$.ajax({
-							type: 'post',
-							url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
-							dataType: 'json',
-							success: $http.ok(function(xhr) {
-								var taskIds = [];
-								for(var i = 0, len = $params.tasks.length; i < len; i++) {
-									taskIds.push(parseInt($params.tasks[i].id));
-								}
-								var params = {
-									taskIds: taskIds,
-									orderNo: $params.orderNo
-								}
-								var reason = $.trim(this.$content.find('#suggestion').val());
-								if(reason) params.reason = reason;
-								console.log(params);
-								tasksJump(params, 'complete');
-							})
-						})
+		$.ajax({
+			type: 'post',
+			url: $http.api('loanInfoInput/checkLoanInput/' + $params.taskId, true),
+			dataType: 'json',
+			success: $http.ok(function(xhr) {
+				$.confirm({
+					title: '提交',
+					content: dialogTml.wContent.suggestion,
+					buttons: {
+						close: {
+							text: '取消',
+							btnClass: 'btn-default btn-cancel',
+							action: function() {}
+						},
+						ok: {
+							text: '确定',
+							action: function () {
+		        				$.ajax({
+									type: 'post',
+									url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
+									dataType: 'json',
+									success: $http.ok(function(xhr) {
+										var taskIds = [];
+										for(var i = 0, len = $params.tasks.length; i < len; i++) {
+											taskIds.push(parseInt($params.tasks[i].id));
+										}
+										var params = {
+											taskIds: taskIds,
+											orderNo: $params.orderNo
+										}
+										var reason = $.trim(this.$content.find('#suggestion').val());
+										if(reason) params.reason = reason;
+										console.log(params);
+										tasksJump(params, 'complete');
+									})
+								})
+							}
+						}
 					}
-				}
-			}
+				})
+			})
 		})
 	}
 
@@ -605,6 +650,30 @@ page.ctrl('loanInfoAudit', function($scope) {
 			$(this).addClass("pointDisabled");
 		});
 	}
+	/**
+	* 下拉
+	*/
+	var seleLoad = function(){
+		$(".select").each(function(){
+			var $that = $(this);
+			var selected = $(this).data('selected');
+			var re = /^[0-9]+.?[0-9]*$/;
+			if((selected && re.test(selected)) || selected=='0'){
+				$(this).find('.arrow-trigger').click();
+				var lilist = $(this).find('li');
+				console.log(lilist.length);
+				$("li",$(this)).each(function(){
+					var idx = $(this).data('id');
+					if(selected == idx){
+						debugger
+						$that.find('.select-text').val($(this).text());
+						$(this).click();
+						$that.find('.select-box').hide();
+					}
+				})
+			}
+		})
+	}
 	
 	/**
 	 * 加载页面模板
@@ -617,6 +686,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 		loadLoanList(function(){
 			setupSubmitBar();
 			setupDropDown();
+			seleLoad();
 		});
 	});
 	

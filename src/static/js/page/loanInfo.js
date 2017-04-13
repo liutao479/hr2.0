@@ -266,6 +266,9 @@ page.ctrl('loanInfo', function($scope) {
 					}
 					$("input[name='renewalInfo']").val(renewalStr);
 				}
+				if(key == 'saveCLXX'){
+					
+				}
 				var data;
 		        var formList = $(this).parent().parent().siblings().find('form');
 		        if(formList.length == 1){
@@ -460,7 +463,7 @@ page.ctrl('loanInfo', function($scope) {
 		$(this).parents().removeClass("error-input");
 		$(this).siblings("i").remove();
 	})
-	$(document).on('click','.checkbox', function() {
+	$(document).on('click','.loan-info .checkbox', function() {
 		$(this).parents().removeClass("error-input");
 		$(this).parent().parent().siblings("i").remove();
 	})
@@ -688,7 +691,9 @@ page.ctrl('loanInfo', function($scope) {
 				$("li",$(this)).each(function(){
 					var idx = $(this).data('id');
 					if(selected == idx){
+						debugger
 						$that.find('.select-text').val($(this).text());
+						$(this).click();
 						$that.find('.select-box').hide();
 					}
 				})
