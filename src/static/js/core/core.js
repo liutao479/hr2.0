@@ -67,6 +67,22 @@
 				//统一的失败处理
 				var code = response.code;
 				switch (code) {
+					case 1000:
+						$.alert({
+							title: '提示',
+							content: tool.alert('合同模板不存在！'),
+							buttons:{
+								ok: {
+									text: '确定',
+									action: function() {
+										// location.href = 'login.html';
+										// alert(1)
+									}
+								}
+							}
+						})
+						return false;
+						break;
 					case 1001:
 						$.alert({
 							title: '提示',

@@ -44,13 +44,13 @@
 								{{ for(var m = 0, len3 = row.segments.length; m < len3; m++) { var ml = row.segments[m], flag = 0; }}
 									{{ for(var n = 0, len4 = col.materials.length; n < len4; n++) { var nl = col.materials[n]; }}
 										{{ if(ml.code == nl.materialsCode) { }}
-											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-owner="{{=(row.code == 'QYCL' ? 'QYCL' : (col.userType || ''))}}" data-user="{{=col.userId || ''}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || 0}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty || ''}}"></div>
+											<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-owner="{{=(row.code == 'QYCL' ? 'QYCL' : (col.userType || ''))}}" data-user="{{=col.userId || ''}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || 0}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty || ''}}"></div>
 										{{ break; }}
 										{{ } else { flag++; }}
 										{{ } }}
 									{{ } }}
 									{{ if(flag == len4) { }}
-										<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=row.name.split('材料')[0]}}{{=ml.name}}" data-owner="{{=(row.code == 'QYCL' ? 'QYCL' : (col.userType || ''))}}" data-user="{{=col.userId || ''}}" data-scene="{{=it.category}}" data-user="{{=col.userId}}" data-img="" data-err="0" data-editable="{{=it.editable}}" data-empty="{{=ml.empty || ''}}"></div>
+										<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-owner="{{=(row.code == 'QYCL' ? 'QYCL' : (col.userType || ''))}}" data-user="{{=col.userId || ''}}" data-scene="{{=it.category}}" data-user="{{=col.userId}}" data-img="" data-err="0" data-editable="{{=it.editable}}" data-empty="{{=ml.empty || ''}}"></div>
 									{{ } }}
 								{{ } }}
 							</div>

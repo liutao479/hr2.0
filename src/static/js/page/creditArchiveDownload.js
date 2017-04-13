@@ -80,7 +80,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	}
 
 	/**
-	 * 绑定立即处理事件
+	 * 首次加载页面绑定事件
 	 */
 	var evt = function() {
 		// 绑定搜索框模糊查询事件

@@ -287,7 +287,15 @@
 										</div>\
 									</div>\
 								</div>\
-							</div>'
+							</div>',
+		selectTemplate: '<div class="w-content">\
+							<dl class="w-dropdown">\
+								<dt class="dt">请选择需要套打的合同模板：</dt>\
+								<dd class="dd">\
+									<div class="select select-bank" data-placeholder="请选择" data-dropdown="page.$scope[\'loadArchiveDownload\'].templatePicker" data-trigger="page.$scope[\'loadArchiveDownload\'].dropdownTrigger.template"></div>\
+								</dd>\
+							</dl>\
+						</div>',
 	}
 	g.dialogTml.wCommit = {
 		sure: '<div class="w-commit-area">\

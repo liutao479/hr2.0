@@ -98,7 +98,7 @@ page.ctrl('myCustomer', [], function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				console.log('获取信息ok!');
-				var _paymentId = result.data.paymentId;
+				// var _paymentId = result.data.paymentId;
 				$.confirm({
 					title: '放款预约',
 					content: doT.template(dialogTml.wContent.makeLoan)(result.data),

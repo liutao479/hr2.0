@@ -12,6 +12,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	$scope.tabs = {};
 	$scope.currentType = $scope.$params.type || 0;
 	$scope.$el = {};
+	//征信查询机构弹窗确定按钮是否可点击
+	$scope.clickable = false;
 
 	
 	/**
@@ -43,7 +45,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
  				$scope.orderNo = result.data.loanTask.orderNo;
  				$scope.demandBankId = result.data.loanTask.loanOrder.demandBankId || '';
  				$scope.bankName = result.data.loanTask.loanOrder.demandBankName || '';
- 				$scope.area = result.data.loanTask.loanOrder.area;
  				$scope.busiAreaCode = result.data.loanTask.loanOrder.area ? result.data.loanTask.loanOrder.area.areaId : '';
  				$scope.areaName = result.data.loanTask.loanOrder.area ? result.data.loanTask.loanOrder.area.wholeName : '';
 				$scope.result.data.currentType = _type;
@@ -54,21 +55,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					setupTabEvt();
 				});
 
-				// console.log($scope.apiParams)
-				// //重置$scope.apiParams
-				// for(var i in $scope.result.data.creditUsers) {
-				// 	var row = $scope.result.data.creditUsers[i];
-				// 	for(var j = 0, len = row.length; j < len; j++) {
-				// 		for(var k = 0, len2 = $scope.apiParams.length; k < len2.length; k++) {
-				// 			if(row[j].userId = $scope.apiParams[k].userId) {
-				// 				row[j].userName = row[j].userName || $scope.apiParams[k].userName;
-				// 				row[j].idCard = row[j].idCard || $scope.apiParams[k].idCard;
-				// 				row[j].userRelationship = row[j].idCard || $scope.apiParams[k].userRelationship;
-				// 			}
-				// 		}
-				// 	}
-				// }
-				// console.log($scope.result);
+				//重置征信查询待传参数
 				initApiParams();
 
 				// 编译tab项对应内容
@@ -153,6 +140,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
             		});
             		return false;
             	}
+            	$scope.clickable = true;
             	updBank(function() {
             		setupCreditBank();
             	});
@@ -165,7 +153,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$('.jconfirm').find('.select').dropdown();
 		    },
 		    onClose: function () {
-		    	if(!$scope.area) {
+		    	if(!$scope.clickable) {
             		router.render('loanProcess');
             	}
 		    }
