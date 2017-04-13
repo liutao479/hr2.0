@@ -58,7 +58,8 @@
 			url: undefined,
 			deletecb: $.noop,
 			uploadcb: $.noop,
-			viewable: false
+			viewable: false,
+			markable: false
 		}
 		var self = this;
 		self.$el = $el;
@@ -203,7 +204,9 @@
 				marker = undefined;
 			}
 			loadImg(function(imgs) {
-				new Preview(imgs, marker, onclose, self.options.markable);
+				new Preview(imgs, marker, self.options.onclose || $.noop, {
+					markable: self.options.markable
+				});
 			})
 		})
 	};
@@ -493,12 +496,14 @@
 			opts = onclose;
 			onclose = $.noop;
 		}
+		
 		self.opts = $.extend({
 			minWidth: 500,
 			minHeight: 400,
-			markable: true,
+			markable: false,
 			idx: 0
 		}, opts);
+		console.log(self.opts)
 		if(!onclose) {
 			onclose = $.noop;
 		}
