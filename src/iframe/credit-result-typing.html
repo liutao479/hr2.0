@@ -130,6 +130,15 @@
 					</div>
 				</div>
 				<!-- 征信报告文件 end-->
+			{{ } else { }}
+				<!-- 征信是否合格 -->
+				<div class="panel-item-box mt15">
+					<div class="panel-key-area">征信是否合格：</div>
+					<div class="panel-value-area clearfix">
+						<div class="panel-value-item">{{=(col.creditLevel == 1 ? '正常' : (col.creditLevel == 2 ? '关注' : (col.creditLevel == 3 ? '禁入' : '')))}}</div>
+					</div>
+				</div>
+				<!-- 征信是否合格 end-->
 			{{ } }}
 			{{ for(var j = 0, len2 = row.segments.length; j < len2; j++) { var ml = row.segments[j]; }}
 				<div class="panel-item-box mt15">

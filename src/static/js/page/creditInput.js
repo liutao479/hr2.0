@@ -350,7 +350,7 @@ page.ctrl('creditInput', [], function($scope) {
 			  keynum = e.which;
 			  }
 			keychar = String.fromCharCode(keynum);
-			numcheck = /^[0-9]*$/;
+			numcheck = /^[0-9|a-z|A_Z]*$/;
 			return numcheck.test(keychar);
 		}
 

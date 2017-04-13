@@ -310,17 +310,17 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				flag = true;
 			for(var j in item) {
 				if(j == 'idCard' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + '的身份证号！<br/>';
+					_alert += '请填写' + $scope.userMap[item.userType] + item.idx + '的身份证号！<br/>';
 					flag = false;
 					break;
 				}
 				if(j == 'userName' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + '的姓名！<br/>';
+					_alert += '请填写' + $scope.userMap[item.userType] + item.idx + '的姓名！<br/>';
 					flag = false;
 					break;
 				}
 				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType != 0) {
-					_alert += '请选择' + $scope.userMap[item.userType] + '与借款人的关系！<br/>';
+					_alert += '请选择' + $scope.userMap[item.userType] + item.idx + '与借款人的关系！<br/>';
 					flag = false;
 					break;
 				}
@@ -619,6 +619,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				item.idCard = row.idCard || '';
 				item.userType = row.userType || '';
 				item.userRelationship = row.userRelationship;
+				item.idx = j + 1;
 				if(i == 0) {
 					item.userRelationship = 0;
 				}
