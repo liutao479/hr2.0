@@ -43,6 +43,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
  				$scope.orderNo = result.data.loanTask.orderNo;
  				$scope.demandBankId = result.data.loanTask.loanOrder.demandBankId || '';
  				$scope.bankName = result.data.loanTask.loanOrder.demandBankName || '';
+ 				$scope.area = result.data.loanTask.loanOrder.area;
  				$scope.busiAreaCode = result.data.loanTask.loanOrder.area ? result.data.loanTask.loanOrder.area.areaId : '';
  				$scope.areaName = result.data.loanTask.loanOrder.area ? result.data.loanTask.loanOrder.area.wholeName : '';
 				$scope.result.data.currentType = _type;
@@ -88,6 +89,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	*/
 	var setupCreditBank = function() {
 		$scope.currentType = 0;
+		console.log($scope.area)
 		if(!$scope.demandBankId) {
 			setupWindow();
 		} else {
@@ -166,7 +168,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$('.jconfirm').find('.select').dropdown();
 		    },
 		    onClose: function () {
-		    	if(!$scope.demandBankId) {
+		    	if(!$scope.area) {
             		router.render('loanProcess');
             	}
 		    }
@@ -621,7 +623,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				item.userId = row.userId;
 				item.userName = row.userName || '';
 				item.idCard = row.idCard || '';
-				item.userType = row.userType || '';
+				item.userType = row.userType;
 				item.mobile = row.mobile || '';
 				item.userRelationship = row.userRelationship;
 				item.idx = j + 1;
@@ -664,6 +666,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 上传图片数据回调
 	 */
 	$scope.uploadcb = function(self, xhr) {
+		console.log(self)
 		if(self.options.code == 'sfzzm') {
 			$.ajax({
 				type: 'post',
@@ -674,8 +677,15 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				dataType: 'json',
 				success: $http.ok(function(result) {
 					console.log(result)
-					$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-name input').val(result.data.userName);
-					$scope.$el.$tbls.eq(0).find('.credit-datas-bar .input-idc input').val(result.data.idCard);
+					var $name =  $scope.$el.$tbls.eq($scope.currentType).find('.credit-datas-bar .input-name');
+					var $idc =  $scope.$el.$tbls.eq($scope.currentType).find('.credit-datas-bar .input-idc');
+					$name.find('input').val(result.data.userName);
+					$idc.find('input').val(result.data.idCard);
+					$name.removeClass('error-input');
+					$name.find('.input-err').remove();
+					$idc.removeClass('error-input');
+					$idc.find('.input-err').remove();
+
 					for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 						if($scope.apiParams[i].userId == self.options.userId) {
 							$scope.apiParams[i].userName = result.data.userName;
