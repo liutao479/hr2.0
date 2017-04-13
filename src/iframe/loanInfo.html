@@ -102,9 +102,9 @@
 															<span class="check-value">企业成立1年</span>
 														</div>
 														{{ if(row[detailCode]){ }}
-															<input type="hidden" name="residentType" value="{{= row[detailCode]}}" />
+															<input type="hidden" class="required" name="residentType" value="{{= row[detailCode]}}" />
 														{{ }else{ }}
-															<input type="hidden" name="residentType" />
+															<input type="hidden" class="required" name="residentType" />
 														{{ } }}
 													</span>
 												</div>
@@ -485,10 +485,20 @@
 																	<input type="hidden" name="{{= detailCode }}" />
 																{{ } }}
 															</td>
-														{{ }else if(detailCode == 'serviceType' || detailCode == 'businessModel' || detailCode == 'brand' || detailCode == 'busiSourceTypeCode' || detailCode == 'busimode' || detailCode == 'repayPeriod'){ }}
+														{{ }else if(detailCode == 'serviceType' || detailCode == 'brand' || detailCode == 'busiSourceTypeCode' || detailCode == 'busimode' || detailCode == 'repayPeriod'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].postPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
+																	<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
+																{{ }else{ }}
+																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].postPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
+																	<input type="hidden" name="{{= detailCode}}" />
+																{{ } }}
+															</td>
+														{{ }else if(detailCode == 'businessModel'){ }}
+															<td>
+																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
+																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode].busiModeName}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].postPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
 																	<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																{{ }else{ }}
 																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].postPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
@@ -802,7 +812,7 @@
 																	<input type="hidden" name="{{= detailCode }}" />
 																{{ } }}
 															</td>
-														{{ }else if(detailCode == 'serviceType' || detailCode == 'serviceTypeCode' || detailCode == 'businessModel' || detailCode == 'brand' || detailCode == 'busiSourceTypeCode' || detailCode == 'busimode' || detailCode == 'repayPeriod'){ }}
+														{{ }else if(detailCode == 'serviceType'  || detailCode == 'businessModel' || detailCode == 'brand' || detailCode == 'busimode' || detailCode == 'repayPeriod'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].postPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
@@ -812,10 +822,30 @@
 																	<input type="hidden" name="{{= detailCode}}" />
 																{{ } }}
 															</td>
+														{{ }else if( detailCode == 'busiSourceTypeCode' ){ }}
+															<td>
+																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
+																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode].busiSourceTypeName}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].postPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
+																	<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
+																{{ }else{ }}
+																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].postPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
+																	<input type="hidden" name="{{= detailCode}}" />
+																{{ } }}
+															</td>
+														{{ }else if(detailCode == 'serviceTypeCode'){ }}
+															<td>
+																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
+																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode].serviceTypeName}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].postPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
+																	<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
+																{{ }else{ }}
+																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].postPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
+																	<input type="hidden" name="{{= detailCode}}" />
+																{{ } }}
+															</td>
 														{{ }else if(detailCode == 'busiSourceId'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].busiSourceNamePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
+																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode].busiSourceName}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].busiSourceNamePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
 																	<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																{{ }else{ }}
 																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].busiSourceNamePicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.postPicker"></div>
@@ -855,20 +885,30 @@
 														{{ }else if(detailCode == 'demandBankId'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].demandBankId" data-trigger="page.$scope['loanInfo'].dropdownTrigger.demandBankId"></div>
+																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode].demandBankName}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].demandBankId" data-trigger="page.$scope['loanInfo'].dropdownTrigger.demandBankId"></div>
 																	<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																{{ }else{ }}
 																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].demandBankId" data-trigger="page.$scope['loanInfo'].dropdownTrigger.demandBankId"></div>
 																	<input type="hidden" name="{{= detailCode}}" />
 																{{ } }}
 															</td>
-														{{ }else if(detailCode == 'busiAreaCode' || detailCode == 'onLicensePlaceCode'){ }}
+														{{ }else if(detailCode == 'onLicensePlaceCode'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																	<div class="select select-common" data-selected="{{= it.data[fieldCode][detailCode]}}" data-tabs="省|市|区/县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+																	<div class="select select-common" data-selected="{{= it.data[fieldCode].onLicensePlaceName}}" data-tabs="省|市|区/县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
 																	<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																{{ }else{ }}
 																	<div class="select select-common" data-tabs="省|市|区/县" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+																	<input type="hidden" name="{{= detailCode}}" />
+																{{ } }}
+															</td>
+														{{ }else if(detailCode == 'busiAreaCode'){ }}
+															<td>
+																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
+																	<div class="select select-common" data-selected="{{= it.data[fieldCode].busiAreaName}}" data-tabs="省|市" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
+																	<input type="hidden" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
+																{{ }else{ }}
+																	<div class="select select-common" data-tabs="省|市" data-dropdown="page.$scope['loanInfo'].areaSel" data-trigger="page.$scope['loanInfo'].dropdownTrigger.areaSel"></div>
 																	<input type="hidden" name="{{= detailCode}}" />
 																{{ } }}
 															</td>

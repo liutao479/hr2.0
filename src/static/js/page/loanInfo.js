@@ -34,6 +34,9 @@ page.ctrl('loanInfo', function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
+				if(result.data.DDXX.busiSourceId){
+					$scope.busiSourceNameId = result.data.DDXX.busiSourceId
+				};
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
 				setupLocation();
 				setupBackReason($scope.result.data.loanTask.backApprovalInfo);
@@ -125,7 +128,6 @@ page.ctrl('loanInfo', function($scope) {
 		});
 	}
 	
-	
 	/**
 	* 绑定立即处理事件
 	*/
@@ -136,16 +138,13 @@ page.ctrl('loanInfo', function($scope) {
 			var that = $(this);
 			if(dataNum){
 				var jjlxr = '';
-				console.log(dataNum);
 				var cfgNum = $scope.result.cfgData.frames[0].sections;
-				console.log(cfgNum);
 				for(var i=0;i<cfgNum.length;i++){
 					var cfgItem = cfgNum[i];
 					if(cfgItem.code == 'JJLXR'){
 						for(var j=0;j<cfgItem.segments.length;j++){
 							var itemCode = cfgItem.segments[j];
 							jjlxr = itemCode.code;
-							console.log(jjlxr);
 							if(dataNum == jjlxr){
 								if(itemCode.empty != '0'){
 									that.remove();
@@ -236,15 +235,14 @@ page.ctrl('loanInfo', function($scope) {
 		* 保存按钮
 		*/
 		$console.find('.saveBtn').on('click', function() {
-			// debugger
 			var isTure = true;
 			var btnType = $(this).data('type');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 			requireList.each(function(){
+				debugger
 				var value = $(this).val();
-				console.log(value)
 				if(!value){
-					if(!$(this).parent().hasClass('info-value')){
+					if(!$(this).parent().hasClass('info-value') && !$(this).parent().hasClass('info-check-box')){
 						$(this).siblings('.select').addClass("error-input");
 						$(this).after('<i class="error-input-tip sel-err">请完善该必填项</i>');
 					}else{
@@ -252,17 +250,6 @@ page.ctrl('loanInfo', function($scope) {
 						$(this).after('<i class="error-input-tip">请完善该必填项</i>');
 					}
 					isTure = false;
-					$.alert({
-						title: '提示',
-						content: tool.alert('请完善相关必填项！'),
-						buttons: {
-							ok: {
-								text: '确定',
-								action: function() {
-								}
-							}
-						}
-					});
 				}
 			});
 			if(isTure){
@@ -281,7 +268,6 @@ page.ctrl('loanInfo', function($scope) {
 				}
 				var data;
 		        var formList = $(this).parent().parent().siblings().find('form');
-		        console.log("form的个数为："+formList.length);
 		        if(formList.length == 1){
 			        var params = formList.serialize();
 		            params = decodeURIComponent(params,true);
@@ -303,7 +289,6 @@ page.ctrl('loanInfo', function($scope) {
 			                var valueStr = paramArray[i];
 			                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
 			            }
-						console.log(data1);
 						data[index]=data1;
 			        })
 		        }
@@ -317,7 +302,16 @@ page.ctrl('loanInfo', function($scope) {
 						dataType:"json",
 						contentType : 'application/json;charset=utf-8',
 						success: function(result){
-							console.log(result.msg);
+							$.alert({
+								title: '提示',
+								content: tool.alert('保存成功'),
+								buttons: {
+									'确定': {
+							            action: function () {
+							            }
+							        }
+							    }
+							})
 						}
 					});
 		        }else{
@@ -328,11 +322,31 @@ page.ctrl('loanInfo', function($scope) {
 						data:dataPost,
 						dataType:"json",
 						success: function(result){
-							console.log(result.msg);
-							console.log(key);
+							$.alert({
+								title: '提示',
+								content: tool.alert('保存成功'),
+								buttons: {
+									'确定': {
+							            action: function () {
+							            }
+							        }
+							    }
+							})
 						}
 					});
 		        }
+			}else{
+				$.alert({
+					title: '提示',
+					content: tool.alert('请完善相关必填项！'),
+					buttons: {
+						ok: {
+							text: '确定',
+							action: function() {
+							}
+						}
+					}
+				});
 			}
 		})
 	}		
@@ -446,6 +460,10 @@ page.ctrl('loanInfo', function($scope) {
 		$(this).parents().removeClass("error-input");
 		$(this).siblings("i").remove();
 	})
+	$(document).on('click','.checkbox', function() {
+		$(this).parents().removeClass("error-input");
+		$(this).parent().parent().siblings("i").remove();
+	})
 	$(document).on('click','.select', function() {
 		$(this).parents().removeClass("error-input");
 		$(this).siblings("i").remove();
@@ -527,14 +545,12 @@ page.ctrl('loanInfo', function($scope) {
 								jumpId: $scope.jumpId,
 								reason: _reason
 							}
-							console.log(_params)
 							$.ajax({
 								type: 'post',
 								url: $http.api('task/jump', 'zyj'),
 								data: _params,
 								dataType: 'json',
 								success: $http.ok(function(result) {
-									console.log(result);
 									router.render('loanProcess');
 									// toast.hide();
 								})
@@ -591,7 +607,6 @@ page.ctrl('loanInfo', function($scope) {
 										}
 										var reason = $.trim(that.$content.find('#suggestion').val());
 										if(reason) params.reason = reason;
-										console.log(params);
 										flow.tasksJump(params, 'complete');
 									})
 								})
@@ -658,6 +673,28 @@ page.ctrl('loanInfo', function($scope) {
 		}
 	}
 
+	/**
+	* 下拉
+	*/
+	var seleLoad = function(){
+		$(".select").each(function(){
+			var $that = $(this);
+			var selected = $(this).data('selected');
+			var re = /^[0-9]+.?[0-9]*$/;
+			if((selected && re.test(selected)) || selected=='0'){
+				$(this).find('.arrow-trigger').click();
+				var lilist = $(this).find('li');
+				console.log(lilist.length);
+				$("li",$(this)).each(function(){
+					var idx = $(this).data('id');
+					if(selected == idx){
+						$that.find('.select-text').val($(this).text());
+						$that.find('.select-box').hide();
+					}
+				})
+			}
+		})
+	}
 
 	/**
 	 * 加载页面模板
@@ -673,23 +710,19 @@ page.ctrl('loanInfo', function($scope) {
 			setupSubmitBar();
 			setupDropDown();
 			evt();
+			seleLoad();
 		});
 	});
 
 	$scope.areaPicker = function(picked) {
-		console.log(picked);
 	}
 	$scope.serviceTypePicker = function(picked) {
-		console.log(picked);
 	}
 	$scope.brandPicker = function(picked) {
-		console.log(picked);
 	}
 	$scope.busiSourceTypePicker = function(picked) {
-		console.log(picked);
 	}
 	$scope.busiSourceNamePicker = function(picked) {
-		console.log(picked);
 		$scope.busiSourceNameId = picked.id;
 		$("#numIpt").val('');
 		var numSeled = $("#numSel").data('selected');
@@ -698,23 +731,18 @@ page.ctrl('loanInfo', function($scope) {
 		}
 	}
 	$scope.remitAccountNumberPicker = function(picked) {
-		console.log(picked);
 		$("#bankName").val(picked.bankName)
 		$("#accountName").val(picked.accountName)
 	}
 	$scope.busimodePicker = function(picked) {
-		console.log(picked);
 	}
 	$scope.repaymentTermPicker = function(picked) {
-		console.log(picked);
 		$("#repayPeriod").val(picked.id);
 		loanFinishedrepay();
 	}
 	$scope.carPicker = function(picked) {
-		console.log(picked);
 	}
 	$scope.bankPicker = function(picked) {
-		console.log(picked);
 	}
 	
 	/**dropdown 测试*/
