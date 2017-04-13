@@ -249,6 +249,13 @@
 		} else if(self.options.other) {
 			// params.sceneCode = self.options.scene;
 			_url = api.otherDel;
+		} else if(self.options.card) {
+			self.delCb(self);
+			self.$el.html(internalTemplates.edit.format(self.name));
+			self.status = 0;
+			self.listen();			
+//			self.$el.find('#imgUrl').val('');
+			return false;
 		} else if(self.options.credit) {
 			
 		} else {
@@ -404,7 +411,28 @@
 			success: function(response) {
 				var _url = host + '/' + fd.get('key');
 				self.options.img = _url;
-				self.saveImage(_url);
+				if(self.options.card){
+					self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
+					if(self.status != 1) {
+						self.$el.html(internalTemplates.modify.format(self.name,self.url));
+//						self.$el.data('img', url);
+						self.status = 1;	
+						self.listen();
+						self.$el.find('img').attr('src',_url);
+						self.uplCb(self, response);
+					} else {
+						if(self.options.credit) {
+							self.options.id = response.data.id;
+						} else {
+							self.options.id = response.data;
+						}
+						self.$el.find('img').attr('src',_url);
+					}
+					return false;
+				}else{
+					self.saveImage(_url);
+				}
+				
 			}
 		})
 	}

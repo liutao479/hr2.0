@@ -25,6 +25,7 @@ page.ctrl('openCardSheet', function($scope) {
 				setupLocation();
 				loanFinishedInput();
 				setupEvt();
+				setupDatepicker();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -36,13 +37,14 @@ page.ctrl('openCardSheet', function($scope) {
 	* 上传图片成功后的回调函数
 	*/
 	$scope.uploadcb = function(self) {
-		var imgStr = self.$el.find('.imgs-view').attr('src');
+		var imgStr = $console.find('.imgs-view').attr('src');
 		$("#imgUrl").val(imgStr);
 	}
+	
 	$scope.deletecb = function(self) {
 		$("#imgUrl").val('');
-	}	
-
+	}
+	
 	/**
 	* 设置面包屑
 	*/
@@ -73,6 +75,13 @@ page.ctrl('openCardSheet', function($scope) {
 			path: 'loanProcess'
 		});
 	}
+	/**
+	* 日历控件
+	*/
+	var setupDatepicker = function() {
+		$console.find('.dateBtn').datepicker({});
+		$console.find('#dateStart').val();
+	}
 
 
 	/**
@@ -97,13 +106,22 @@ page.ctrl('openCardSheet', function($scope) {
 		});
 	}
 	var setupEvt = function($el) {
+		if($("#dateStart").val("9999-99-99")){
+			$("#longTime").attr(“checked”, true); 
+		}
+		$console.find('#longTime').on('click', function(){
+			if($("input[type='checkbox']").is(':checked')){
+				$("#dateStart").val("9999-99-99").addClass('pointDisabled');
+			}else{
+				$("#dateStart").val("").removeClass('pointDisabled');
+			}
+		});
 		$console.find('.uploadEvt').imgUpload();
 		$console.find('#cophone').on('change', function() {
 			var cophone = $(this).val();
 			var cophone1 = cophone.substring(0,4),
 				cophone2 = cophone.substring(cophone.length-8,cophone.length-4),
 				cophone3 = cophone.substring(cophone.length-4,cophone.length);
-			console.log('第一段：'+cophone1+'，第二段'+cophone2+'，第三段'+cophone3);
 			$("#cophozono").val(cophone1);
 			$("#cophoneno").val(cophone2);
 			$("#cophonext").val(cophone3);
