@@ -107,7 +107,7 @@ page.ctrl('openCardSheet', function($scope) {
 	}
 	var setupEvt = function($el) {
 		if($("#dateStart").val("9999-99-99")){
-			$("#longTime").attr(“checked”, true); 
+			$("#longTime").attr("checked", true); 
 		}
 		$console.find('#longTime').on('click', function(){
 			if($("input[type='checkbox']").is(':checked')){
