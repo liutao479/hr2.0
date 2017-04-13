@@ -106,7 +106,9 @@ page.ctrl('openCardSheet', function($scope) {
 		});
 	}
 	var setupEvt = function($el) {
-		
+		if($("#dateStart").val("9999-99-99")){
+			$("#longTime").attr(“checked”, true); 
+		}
 		$console.find('#longTime').on('click', function(){
 			if($("input[type='checkbox']").is(':checked')){
 				$("#dateStart").val("9999-99-99").addClass('pointDisabled');
@@ -120,7 +122,6 @@ page.ctrl('openCardSheet', function($scope) {
 			var cophone1 = cophone.substring(0,4),
 				cophone2 = cophone.substring(cophone.length-8,cophone.length-4),
 				cophone3 = cophone.substring(cophone.length-4,cophone.length);
-			console.log('第一段：'+cophone1+'，第二段'+cophone2+'，第三段'+cophone3);
 			$("#cophozono").val(cophone1);
 			$("#cophoneno").val(cophone2);
 			$("#cophonext").val(cophone3);
