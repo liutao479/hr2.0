@@ -5,12 +5,15 @@ page.ctrl('activeInspect', function($scope) {
 		endDate = tool.formatDate(new Date().getTime()),
 		startDate = tool.getPreMonth(endDate),
 		pageBcData={},/*保存点击分页时的查询参数*/
+		checkedIds=[],
 		apiParams = {
 			pageNum: $params.pageNum || 1,
 			minSelectDate:new Date(startDate),
 			maxSelectDate:new Date(endDate),
+			provinceId:null,
+			cityId:null,
+			areaId:null,
 			status:null,/*状态*/
-			orgId:null,/*担保机构*/
 			keyWord:null,
 			bankName:null,/*经办网点*/
 			isSecond:null,/*车辆类型*/
@@ -33,12 +36,16 @@ page.ctrl('activeInspect', function($scope) {
 		$scope.$el.$dateEnd.val(endDate);
 		$scope.$context.find('.select input').val('');
 		$scope.$el.$searchInput.val('');
+		$scope.$el.$minMoney.val('');
+		$scope.$el.$maxMoney.val('');
 		apiParams = {
 			pageNum: $params.pageNum || 1,
 			minSelectDate:new Date(startDate),
 			maxSelectDate:new Date(endDate),
+			provinceId:null,
+			cityId:null,
+			areaId:null,
 			status:null,/*状态*/
-			orgId:null,/*担保机构*/
 			keyWord:null,
 			bankName:null,/*经办网点*/
 			isSecond:null,/*车辆类型*/
@@ -53,20 +60,23 @@ page.ctrl('activeInspect', function($scope) {
 		apiParams.pageNum=1;
 		apiParams.minSelectDate=new Date($scope.$el.$dateStart.val());
 		apiParams.maxSelectDate=new Date($scope.$el.$dateEnd.val());
-		apiParams.taskId=pageBcData.taskId;
 		apiParams.keyWord=$.trim($scope.$el.$searchInput.val());
+		apiParams.stageMinMoney=$.trim($scope.$el.$minMoney.val());
+		apiParams.stageMaxMoney=$.trim($scope.$el.$maxMoney.val());
 		return apiParams;
 	};
 	// 查询列表数据
 	var search=function(param,callback){
+		$scope.$el.$checkall.removeClass("checked");
+		checkedIds=[];
 		$.ajax({
-			type: 'get',
+			type: 'post',
 			dataType:"json",
 			url: $http.api('bankLoanAfter/getList',true),
 			data: param,
 			success: $http.ok(function(result) {
 				pageBcData=param;
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
 				// 构造分页
 				setupPaging(result.page, true);
 				if(callback && typeof callback == 'function') {
@@ -78,7 +88,7 @@ page.ctrl('activeInspect', function($scope) {
 	// 构造分页
 	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
-			current: parseInt(apiParams.pageNum),
+			current: parseInt(pageBcData.pageNum),
 			pages: isPage ? _page.pages : (tool.pages(_page.pages || 0, _page.pageSize)),
 			size: _page.pageSize
 		});
@@ -86,85 +96,157 @@ page.ctrl('activeInspect', function($scope) {
 	};
 	// 分页回调
 	$scope.paging = function(_pageNum, _size, $el, cb) {
-		apiParams.pageNum = _pageNum;
+		pageBcData.pageNum = _pageNum;
 		$params.pageNum = _pageNum;
-		search(apiParams);
+		search(pageBcData);
 		cb();
 	};
 	/*发起核查弹窗*/
-	var openDialog=function(that,_data){
-		that.openWindow({
-			title:"请选择查询类型",
-			content: dialogTml.wContent.btngroup,
-			commit: dialogTml.wCommit.cancelSure,
-			data:_data
-		},function($dialog){
-			var _arr=[];
-			$dialog.find(".block-item-data:not(.not-selected)").click(function() {
-				$(this).toggleClass("selected");	
-				_arr.push($(this).text());			
-			});
-			$dialog.find(".w-sure").click(function() {
-				$dialog.remove();
-				console.log("选择了："+_arr);
-				$.ajax({
-					type: "post",
-					url: $http.api('creditAudit/startVerify'),
-					data:{
-						apiKeys:"",
-						orderNo:"",
-						userId:""
-					},
-					dataType:"json",
-					success: $http.ok(function(result) {		
-						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
-							//$(".jconfirm .jconfirm-closeIcon").hide();
-							var context=$(".jconfirm .jconfirm-content").html();
-							if(context){
-								setTimeout(function() {
-									jc.close()
-								}, 2000);
-							};
-						});
-					})
-				});						
-			});
-		});		
+	var openDialog=function(that,_orderNOs){		
+		$.ajax({
+			type: 'post',
+			dataType:'json',
+			url: $http.api('bankTask/getAll',true),
+			data: {},
+			success: $http.ok(function(res) {
+				var _data=res.data;
+				for(var i in _data){
+					_data.checkStatus=0;
+					_data.funcName=_data.taskName;
+				};
+				that.openWindow({
+					title:"请选择查询类型",
+					content: dialogTml.wContent.btngroup,
+					commit: dialogTml.wCommit.cancelSure,
+					data:_data
+				},function($dialog){
+					var _arr=[];
+					$dialog.find(".block-item-data:not(.not-selected)").click(function() {
+						$(this).toggleClass("selected");	
+						var _val=_data[$(this).data('index')].id;
+						if($(this).hasClass("selected"))
+							_arr.push(_val);	
+						else		
+							_arr.splice(_arr.indexOf(_val),1);
+					});
+					$dialog.find(".w-sure").click(function() {
+						$dialog.remove();
+						var _taskIds=_arr.join(',');
+						if(_orderNOs&&_taskIds){
+							$.ajax({
+								type: "post",
+								url: $http.api('bankLoanAfter/submitBank',true),
+								data:{
+									orderNOs:_orderNOs,
+									taskIds:_taskIds
+								},
+								dataType:"json",
+								success: $http.ok(function(result) {		
+									var jc=$.dialog($scope.def.toastTmpl,function($dialog){
+										//$(".jconfirm .jconfirm-closeIcon").hide();
+										var context=$(".jconfirm .jconfirm-content").html();
+										if(context){
+											setTimeout(function() {
+												jc.close();
+												resetForm();
+												var _searchMsg=getFormMsg();
+												search(delNull(_searchMsg));
+											}, 1500);
+										};
+									});
+								})
+							});			
+						};			
+					});
+				});	
+			})
+		});	
 	};
 	// 页面首次载入时绑定事件
  	var evt = function() {
-		$console.off("click",".gocheck").on("click",".gocheck", function() {
+		// 重置表单
+		$scope.$el.$resetBtn.click(function() {
+			resetForm();
+		});
+		// 点击查询按钮
+		$scope.$el.$searchBtn.click(function() {
+			var _searchMsg=getFormMsg();
+			search(delNull(_searchMsg));
+		});
+		/*关键字文本框enter事件*/
+		$scope.$el.$searchInput.on('keydown', function(e) {
+			if(e.which == 13) {
+				var _searchMsg=getFormMsg();
+				search(delNull(_searchMsg));
+			};
+		});
+		/*全选/全不选*/
+		$scope.$el.$checkall.click(function() {
+			$(this).toggleClass('checked');
+			checkedIds=[];
+			if($(this).hasClass("checked")){
+				$scope.$el.$tbl.find(".expire-orders-table").each(function(){
+					var _id=$(this).data('id');
+					$(this).find('.checkbox-normal').addClass('checked');
+					if(_id)
+						checkedIds.push(_id);
+				});
+			}else{
+				$scope.$el.$tbl.find(".expire-orders-table").each(function(){
+					$(this).find('.checkbox-normal').removeClass('checked');
+				});
+			};
+		});
+		/*单选，不选*/
+		$scope.$el.$tbl.off("click",".checkbox").on("click",".checkbox",function() {
+			$(this).toggleClass('checked');
+			var _id=$(this).parents(".expire-orders-table").data('id');
+			if($(this).hasClass("checked")){				
+				checkedIds.push(_id);
+				if(checkedIds.length==$scope.$el.$tbl.find(".expire-orders-table").length)
+					$scope.$el.$checkall.addClass("checked");
+			}else{
+				checkedIds.splice(checkedIds.indexOf(_id),1);
+				$scope.$el.$checkall.removeClass("checked");
+			};
+		});
+		/*发起多人核查*/
+		$scope.$el.$gocheck.click(function() {
 			var that=$(this);
-			var _id=that.data("id");
-			$.ajax({
-				type: 'post',
-				dataType:'json',
-				url: $http.api('creditAudit/itemList'),
-				data: {userId:_id},
-				success: $http.ok(function(res) {
-					if(res&&res.data&&res.data.length>0)
-						openDialog(that,res.data);
-					else
-						openDialog(that,[]);
-				})
-			});
+			/*这块先问产品要不要写多个用户发起多个审核*/
+			if(checkedIds.length==0)
+				return false;
+			openDialog(that,checkedIds.join(','));
+		});
+		/*发起单人核查*/
+		$scope.$el.$tbl.off("click",".gocheck").on("click",".gocheck",function() {
+			var that=$(this);
+			var _id=that.parents(".expire-orders-table").data("id");
+			openDialog(that,_id);
 		});
  	};
  	
 	// 加载页面模板
 	render.$console.load(router.template('iframe/active-inspect'), function() {
+		/*模板*/
 		$scope.def.listTmpl = render.$console.find('#activeInspectTmpl').html();
 		$scope.def.toastTmpl = render.$console.find('#importResultTmpl').html();
+		/*节点*/
 		$scope.$context=$console.find('#active-inspect')
 		$scope.$el = {
 			$tbl: $scope.$context.find('#tableContext'),
 			$paging: $scope.$context.find('#pageToolbar'),
 			$resetBtn: $scope.$context.find('#search-reset'),
+			$checkall: $scope.$context.find('#checkall'),
+			$gocheck: $scope.$context.find('#gocheck'),
 			$searchBtn: $scope.$context.find('#search'),
 			$dateStart: $scope.$context.find('#dateStart'),
 			$dateEnd: $scope.$context.find('#dateEnd'),
+			$minMoney: $scope.$context.find('#minMoney'),
+			$maxMoney: $scope.$context.find('#maxMoney'),
 			$searchInput: $scope.$context.find('#searchInput')
 		};
+		/*默认查询列表*/
 		search(delNull(apiParams), function() {
 			evt();
 		});
@@ -274,21 +356,6 @@ page.ctrl('activeInspect', function($scope) {
 			};
 			cb(sourceData);
 		},/*逾期状态*/
-		dealerSel: function(t, p, cb) {
-			$.ajax({
-				type: 'post',
-				url: $http.api('demandBank/selectBank', 'zyj'),
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'bankId',
-						name: 'bankName'
-					};
-					cb(sourceData);
-				})
-			})
-		},/*进件车商*/
 		carTypeSel: function(t, p, cb) {
 			var sourceData = {
 				items: [
@@ -303,8 +370,8 @@ page.ctrl('activeInspect', function($scope) {
 		mortgageSel: function(t, p, cb) {
 			var sourceData = {
 				items: [
-					{value:1,text:"未办理"},
-					{value:2text:"已办理"}
+					{value:"1",text:"未办理"},
+					{value:"2",text:"已办理"}
 				],
 				id: 'value',
 				name: 'text'
@@ -312,14 +379,15 @@ page.ctrl('activeInspect', function($scope) {
 			cb(sourceData);
 		},/*抵押状态*/
 		recordSel: function(t, p, cb) {
-			cb({
-				items:[
-					{value:"0",text:"手动"}，
+			var sourceData = {
+				items: [
+					{value:"0",text:"手动"},
 					{value:"1",text:"系统"}
 				],
 				id: 'value',
-				name:'text'
-			});
+				name: 'text'
+			};
+			cb(sourceData);
 		}/*主动核查标记*/
 	};
 	// 下拉回调
@@ -327,13 +395,12 @@ page.ctrl('activeInspect', function($scope) {
 		apiParams.bankName=val.name;
 	};
 	$scope.areaPicker=function(val){
-		console.log(val)
+		apiParams.provinceId=val['省'].id;
+		apiParams.cityId=val['市'].id;
+		apiParams.areaId=val['区'].id;
 	};
 	$scope.statusPicker=function(val){
 		apiParams.overDueStatus=val.id;
-	};
-	$scope.dealerPicker=function(val){
-		apiParams.orgId=val.id;
 	};
 	$scope.carTypePicker=function(val){
 		apiParams.isSecond=val.id;
@@ -345,6 +412,3 @@ page.ctrl('activeInspect', function($scope) {
 		apiParams.methodWay=val.id;
 	};
 });
-
-
-

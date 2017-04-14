@@ -13,14 +13,12 @@ page.ctrl('historyInspectDetail', function($scope) {
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
-			type: 'get',
+			type: 'post',
 			dataType:"json",
 			url: $http.api('bankLoanAfterHistory/getDetailInfo',true),
 			data: param,
 			success: $http.ok(function(res) {
-				if(!res||!res.data||!res.data.result)
-					res.data.result=[];
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, res.data.result, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, res.data, true);
 				if(callback && typeof callback == 'function') {
 					callback();
 				};
@@ -36,6 +34,11 @@ page.ctrl('historyInspectDetail', function($scope) {
  	
 	// 加载页面模板
 	$console.load(router.template('iframe/history-inspect-detail'), function() {
+		//$params.orderNo='nfdb2016102820480790';
+		/*$params.orderNo='nfdb2016102820480799';
+		$params.Id=6;
+		$params.taskId=6;*/
+
 		if(!($params&&$params.taskId&&$params.orderNo&&$params.Id))
 			return false;
 		var _obj=model.filter(it=>it.type==$params.taskId);
@@ -51,8 +54,6 @@ page.ctrl('historyInspectDetail', function($scope) {
 		search({
 			orderNo:$params.orderNo,
 			Id:$params.Id
-			/*orderNo:'nfdb2016102820480790',
-			Id:1*/
 		}, function() {
 			evt();
 		});

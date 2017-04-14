@@ -290,7 +290,11 @@ page.ctrl('creditApproval', [], function($scope) {
 		});
 		//查看报告结果
 		$self.find('.assistData').on('click', function() {
-			alert('前往辅证数据页面');
+			router.render("preAuditDataAssistant", {	
+				orderNo:'nfdb2016102820480790',
+				userId:'334232',
+				sceneCode:'creditApproval'
+			});
 		});
 	}
 

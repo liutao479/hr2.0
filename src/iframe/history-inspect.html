@@ -24,10 +24,6 @@
 			<div class="select select-common" data-dropdown="page.$scope['historyInspect'].bankPicker" data-trigger="page.$scope['historyInspect'].dropdownTrigger.demandBank"></div>
 		</div>
 		<div class="search-item">
-			<span class="select-name">进件车商：</span>
-			<div class="select select-common" data-dropdown="page.$scope['historyInspect'].dealerPicker" data-trigger="page.$scope['historyInspect'].dropdownTrigger.dealerSel"></div>
-		</div>
-		<div class="search-item">
 			<div class="input-text">
 				<input type="text" autocomplete="off" id="searchInput" placeholder="订单号\借款人姓名\身份证号" />
 			</div>
@@ -71,7 +67,7 @@
 							<span>{{= item.orderNo}}</span>
 							<div class="key-value-box clearfix">
 								<span class="key">查询时间：</span>
-								<span class="value">{{= item.createDate}}</span>
+								<span class="value">{{= item.creatTime||'-'}}</span>
 							</div>
 						</td>
 					</tr>
@@ -85,12 +81,8 @@
 									<td class="value">{{= item.bankName}}</td>
 								</tr>
 								<tr class="table-inner-tr">
-									<td class="key">进件车商：</td>
-									<td class="value">{{= item.carDealer}}</td>
-								</tr>
-								<tr class="table-inner-tr">
 									<td class="key">放贷日期：</td>
-									<td class="value">{{= item.giveMoneyTime}}</td>
+									<td class="value">{{= item.giveMoneyTime||'-'}}</td>
 								</tr>
 							</table>
 						</td>
@@ -102,12 +94,12 @@
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">结果返回时间：</td>
-									<td class="value">{{= item.backTime}}</td>
+									<td class="value">{{= item.returnTime||'-'}}</td>
 								</tr>
 							</table>
 						</td>
 						<td class="expire-content-item expire-content-item-last">
-							{{if(item.status==1){}}
+							{{if(item.isReturn==1){}}
 								<a class="button button-mini button-gray godetail" data-orderNo="{{=item.orderNo}}" data-id="{{=item.Id}}">查看详情</a>
 							{{}else{}}
 								结果还未返回

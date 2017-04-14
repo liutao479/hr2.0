@@ -3,17 +3,20 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			pageNum: $params.pageNum || 1,
+			orderNo: $params.orderNo,
+			userId: $params.userId,
+			sceneCode: $params.sceneCode
 		};
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
-			type: 'get',
+			type: 'post',
 			dataType:"json",
-			url: $http.api('materialInspection'),
+			url: $http.api('verifyResult/resultDetail'),
 			data: param,
 			success: $http.ok(function(result) {
-				//render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.data, true);
+				render.compile($scope.$el.$titleDiv, $scope.def.titleTmpl, result.data.loanUser, true);
+				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, result.data.data, true);
 				if(callback && typeof callback == 'function') {
 					callback();
 				};
@@ -22,16 +25,23 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 	};
 	// 页面首次载入时绑定事件
  	var evt = function() {
-	/*	$console.off("click",".gocheck").on("click",".gocheck", function() {
-			
-		});*/
+		$scope.$el.$backspace.find("a").click(function() {
+			var _href=$(this).data('href');
+			if(_href){
+				router.render(_href);
+			};
+		});
  	};
  	
 	// 加载页面模板
 	render.$console.load(router.template('iframe/pre-audit-dataAssistant'), function() {
-		$scope.def.tabTmpl = render.$console.find('#preAuditDataAssistantTmpl').html();
+		$scope.def.titleTmpl = render.$console.find('#titleTmpl').html();
+		$scope.def.listTmpl = render.$console.find('#preAuditDataAssistantTmpl').html();
+		$scope.$context=$console.find('#pre-audit-dataAssistant');
 		$scope.$el = {
-			//$tab: $console.find('#roleBarTab'),
+			$titleDiv: $scope.$context.find('#titleDiv'),
+			$listDiv: $scope.$context.find('#listDiv'),
+			$backspace: $scope.$context.find('#backspace'),
 		};
 		search(apiParams, function() {
 			evt();

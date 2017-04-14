@@ -3,30 +3,102 @@ page.ctrl('dataAssistant', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			pageNum: $params.pageNum || 1,
-		};
+			//orderNo: $params.orderNo,
+			orderNo: 'nfdb2016102820480790',
+			sceneCode:'creditApproval'
+		},
+		userType=[
+			{userType:0,text:"主申请人"},
+			{userType:1,text:"共同还款人"},
+			{userType:2,text:"反担保人"}
+		],
+		operator=[
+			{type:1,text:"中国电信"},
+			{type:2,text:"中国移动"},
+			{type:3,text:"中国联通"}
+		];
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
-			type: 'get',
+			type: 'post',
 			dataType:"json",
-			url: $http.api('materialInspection'),
+			url: $http.api('verifyResult/resultDetail',true),
 			data: param,
-			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.data, true);
+			success: $http.ok(function(res) {
+				var _mobil=res.data.data[1021];
+				var _usedCar=res.data.data[1025];
+				var _platLend=res.data.data[1018];
+				if(_mobil){
+					for(var i in _mobil){
+						var _thisOperator=operator.filter(it=>it.type==_mobil[i].OPERATOR);
+						if(_thisOperator&&_thisOperator.length==1)
+							res.data.data[1021][i].operatorName=_thisOperator[0].text;
+					};
+				};
+				var _platArr=[];
+				/*var repeatPlat=function(items){
+					if(platJson&&platJson['three_month']){
+						for(var u in platJson['three_month']){
+							for(var r=0;r<_platArr.length;r++){
+								if(_platArr[r].name==u){
+									_platArr[r].three_month+=platJson['three_month'][u];
+									break;
+								};
+								if(r==_platArr.length-1)
+									_platArr.push({name:u,three_month:platJson['three_month'][u]});
+							};
+						};
+				};*/
+				if(_platLend&&_platLend.length>0){
+					for(var k in _platLend){
+						var platJson=_platLend[k].multipleJSON;
+						};
+					};
+				}else{
+					res.data.data[1018]=[];
+				};/*网贷平台借贷数据统计*/
+				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, res.data.data, true);
+				if(_usedCar)
+					setCanvas();
 				if(callback && typeof callback == 'function') {
 					callback();
 				};
 			})
 		});
 	};
+	/*查询该订单下用户列表*/
+	var searchUserList=function(param){
+		$.ajax({
+			type: 'get',
+			dataType:"json",
+			url: $http.api('loanAudit/userList',true),
+			data: param,
+			success: $http.ok(function(res) {
+				if(res&&res.data&&res.data.length>0){
+					for(var i in res.data){
+						var _minObj=userType.filter(it=>it.userType==res.data[i].userType);
+						if(_minObj&&_minObj.length==1){
+							res.data[i].userTypeName=_minObj[0].text;
+						};
+					};
+					render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.data, true);
+					//apiParams.userId=res.data[0].userId;
+					apiParams.userId='334232';
+					search(apiParams, function() {
+						evt();
+					});
+				};
+			})
+		});
+	};
 	/*发起核查*/
 	var openUserDialog=function(that,_data,key){
-		/*var userData=[
-			{checkStatus:0,funcName:"王可可"},
-			{checkStatus:1,funcName:"李冰冰"},
-			{checkStatus:2,funcName:"弘毅"},
-		];*/
+		for(var z in _data){
+			var _minObj=userType.filter(it=>it.userType==_data[z].userType);
+			if(_minObj&&_minObj.length==1){
+				_data[z].userTypeName=_minObj[0].text;
+			};
+		};
 		that.openWindow({
 			title:"———— 服务项目 ————",
 			width:"70%",
@@ -38,17 +110,15 @@ page.ctrl('dataAssistant', function($scope) {
 			$dia.find(".block-item-data:not(.not-selected)").click(function() {
 				$(this).toggleClass("selected");	
 				var _index=$(this).data("index");
-				var _thisVal=userData[_index].funcName;
+				var _thisVal=_data[_index].userId;
 				if($(this).hasClass("selected"))
 					_arr.push(_thisVal);	
 				else
-					_arr.splice(_thisVal,1);
+					_arr.splice(_arr.indexOf(_thisVal),1);
 			});
 			$dia.find(".w-sure").click(function() {
 				$dia.remove();
-
-				debugger
-				/*if(_arr.length==0)
+				if(_arr.length==0)
 					return false;
 				$.ajax({
 					type: 'post',
@@ -69,7 +139,7 @@ page.ctrl('dataAssistant', function($scope) {
 							};
 						});
 					})
-				});*/
+				});
 			});
 		});	
 	};
@@ -110,53 +180,26 @@ page.ctrl('dataAssistant', function($scope) {
 		},function($dialog){
 			$dialog.find(".nextDialog").click(function() {
 				$dialog.remove();
-				var key=_data[$(this).data('index')].apikey;
+				var _key=_data[$(this).data('index')].apikey;
 				$.ajax({
 					type: 'post',
 					dataType:'json',
-					url: $http.api('loanAudit/userList','cyj'),
+					url: $http.api('loanAudit/checkUserList','cyj'),
 					data: {
-						orderNo:'nfdb2016102820480790'
-						//orderNo:apiParams.orderNo
+						orderNo:apiParams.orderNo,
+						key:_key
 					},
 					success: $http.ok(function(res) {
 						if(res&&res.data&&res.data.length>0)
-							openUserDialog(that,res.data,key);
+							openUserDialog(that,res.data,_key);
 						else
-							openUserDialog(that,[],key);
+							openUserDialog(that,[],_key);
 					})
 				});	
 			});
 		});		
 	};
-	// 页面首次载入时绑定事件
- 	var evt = function() {
-		$scope.$el.$tab.off("click","li.role-bar-li").on("click","li.role-bar-li",function() {
-			if($(this).siblings("li").length>0){
-				$(this).siblings("li").find("a").removeClass("role-item-active");
-				$(this).find("a").addClass("role-item-active");
-				//search();
-			};
-		});
-		$scope.$el.$startCheck.click(function() {
-			var that=$(this);
-			$.ajax({
-				type: 'post',
-				dataType:'json',
-				url: $http.api('loanAudit/evidenceItemList','cyj'),
-				data: {
-					userId:"334232",
-					orderNo:'nfdb2016102820480790'
-					//orderNo:apiParams.orderNo
-				},
-				success: $http.ok(function(res) {
-					if(res&&res.data&&res.data.length>0)
-						openDialog(that,res.data);
-					else
-						openDialog(that,[]);
-				})
-			});			
-		});
+	var setCanvas=function(){
 		/*画百分比相关start*/
 		var percentage=function(x){
 			var c=document.getElementById(x.id);
@@ -227,21 +270,52 @@ page.ctrl('dataAssistant', function($scope) {
 			fill(circleCanvas[i]);
 		};
 		/*画百分比相关end*/
+	};
+	// 页面首次载入时绑定事件
+ 	var evt = function() {
+		$scope.$el.$tab.off("click","li.role-bar-li").on("click","li.role-bar-li",function() {
+			if($(this).siblings("li").length>0){
+				$(this).siblings("li").find("a").removeClass("role-item-active");
+				$(this).find("a").addClass("role-item-active");
+				var _id=$(this).data('id');
+				if(_id){
+					apiParams.userId=_id;
+					search(apiParams);
+				};
+			};
+		});
+		$scope.$el.$listDiv.off("click","#startCheck").on("click","#startCheck",function() {
+			var that=$(this);
+			$.ajax({
+				type: 'post',
+				dataType:'json',
+				url: $http.api('loanAudit/evidenceItemList','cyj'),
+				data: {
+					userId:apiParams.userId,
+					orderNo:apiParams.orderNo
+				},
+				success: $http.ok(function(res) {
+					if(res&&res.data&&res.data.length>0)
+						openDialog(that,res.data);
+					else
+						openDialog(that,[]);
+				})
+			});			
+		});
  	};
  	
 	// 加载页面模板
 	render.$console.load(router.template('iframe/data-assistant'), function() {
 		$scope.def.tabTmpl = render.$console.find('#roleBarTabTmpl').html();
+		$scope.def.listTmpl = render.$console.find('#listTmpl').html();
+		$scope.def.toastTmpl = render.$console.find('#importResultTmpl').html();
 		$scope.$context=$console.find('#data-assistant');
 		$scope.$el = {
 			$tab: $scope.$context.find('#roleBarTab'),
-			$startCheck: $scope.$context.find('#startCheck'),
+			$listDiv: $scope.$context.find('#listDiv'),
 		};
-		search(apiParams, function() {
-			evt();
+		searchUserList({
+			orderNo:apiParams.orderNo,
 		});
 	});
 });
-
-
-

@@ -3,20 +3,50 @@ page.ctrl('materialInspection', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			orderNo: $params.orderNo,
-		};
+			//orderNo: $params.orderNo,
+			orderNo: 'nfdb2016102820480790',
+			sceneCode:'creditApproval'
+		},userType=[
+			{userType:0,text:"主申请人"},
+			{userType:1,text:"共同还款人"},
+			{userType:2,text:"反担保人"}
+		];
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
-			type: 'get',
+			type: 'post',
 			dataType:"json",
-			url: $http.api('materialInspection'),
+			url: $http.api('verifyResult/resultDetail',true),
 			data: param,
-			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.data, true);
-				//render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+			success: $http.ok(function(res) {
+				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, res.data.data, true);
 				if(callback && typeof callback == 'function') {
 					callback();
+				};
+			})
+		});
+	};
+	/*查询该订单下用户列表*/
+	var searchUserList=function(param){
+		$.ajax({
+			type: 'post',
+			dataType:"json",
+			url: $http.api('loanAudit/userList',true),
+			data: param,
+			success: $http.ok(function(res) {
+				if(res&&res.data&&res.data.length>0){
+					for(var i in res.data){
+						var _minObj=userType.filter(it=>it.userType==res.data[i].userType);
+						if(_minObj&&_minObj.length==1){
+							res.data[i].userTypeName=_minObj[0].text;
+						};
+					};
+					render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.data, true);
+					//apiParams.userId=res.data[0].userId;
+					apiParams.userId='334232';
+					search(apiParams, function() {
+						evt();
+					});
 				};
 			})
 		});
@@ -112,7 +142,7 @@ page.ctrl('materialInspection', function($scope) {
 			if($(this).siblings("li").length>0){
 				$(this).siblings("li").find("a").removeClass("role-item-active");
 				$(this).find("a").addClass("role-item-active");
-				//search();
+				search();
 			};
 		});
 		/*获取核查列表*/
@@ -140,17 +170,15 @@ page.ctrl('materialInspection', function($scope) {
 	// 加载页面模板
 	render.$console.load(router.template('iframe/material-inspection'), function() {
 		$scope.def.tabTmpl = render.$console.find('#roleBarTabTmpl').html();
-		$scope.def.listTmpl = render.$console.find('#materialInspection').html();
+		$scope.def.listTmpl = render.$console.find('#materialInspectionTmpl').html();
 		$scope.def.toastTmpl = render.$console.find('#importResultTmpl').html();
 		$scope.$el = {
 			$tab: $console.find('#roleBarTab'),
+			$listDiv: $console.find('#listDiv'),
 			$startCheck: $console.find('#startCheck'),
 		};
-		search(apiParams, function() {
-			evt();
+		searchUserList({
+			orderNo:apiParams.orderNo,
 		});
 	});
 });
-
-
-

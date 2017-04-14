@@ -10,7 +10,6 @@ page.ctrl('historyInspect', function($scope) {
 			minSelectDate:new Date(startDate),
 			maxSelectDate:new Date(endDate),
 			isReturn:null,/*查询状态*/
-			orgId:null,/*担保机构*/
 			bankName:null,/*经办网点*/
 			methodWay:null,/*主动核查标记--查询方式*/
 			keyWord:null
@@ -44,7 +43,6 @@ page.ctrl('historyInspect', function($scope) {
 			minSelectDate:new Date(startDate),
 			maxSelectDate:new Date(endDate),
 			isReturn:null,/*查询状态*/
-			orgId:null,/*担保机构*/
 			bankName:null,/*经办网点*/
 			methodWay:null,/*主动核查标记--查询方式*/
 			keyWord:null
@@ -62,7 +60,7 @@ page.ctrl('historyInspect', function($scope) {
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
-			type: 'get',
+			type: 'post',
 			dataType:"json",
 			url: $http.api('bankLoanAfterHistory/getList',true),
 			data: param,
@@ -202,21 +200,6 @@ page.ctrl('historyInspect', function($scope) {
 				})
 			})
 		},
-		dealerSel: function(t, p, cb) {
-			$.ajax({
-				type: 'post',
-				url: $http.api('demandBank/selectBank', 'zyj'),
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					var sourceData = {
-						items: xhr.data,
-						id: 'bankId',
-						name: 'bankName'
-					};
-					cb(sourceData);
-				})
-			})
-		},
 	};
 	// 下拉回调
 	$scope.TypePicker=function(val){
@@ -227,9 +210,6 @@ page.ctrl('historyInspect', function($scope) {
 	};
 	$scope.bankPicker=function(val){
 		apiParams.bankName=val.name;
-	};
-	$scope.dealerPicker=function(val){
-		apiParams.orgId=val.id;
 	};
 });
 

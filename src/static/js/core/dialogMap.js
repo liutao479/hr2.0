@@ -249,7 +249,7 @@
 				{{ } }}\
 			{{ } }}',
 		userBtnGroup:'{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
-				{{ if(col.checkStatus==0){ }}\
+				{{ if(col.checkStatus!="1"){ }}\
 					<div class="block-item-data" data-index="{{=i}}">{{=col.userName}}({{=col.userTypeName}})</div>\
 				{{ }else{ }}\
 					<div class="block-item-data not-selected">{{=col.userName}}({{=col.userTypeName}})</div>\

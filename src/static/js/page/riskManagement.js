@@ -220,18 +220,9 @@ page.ctrl('riskManagement',['vendor/echarts.min'], function($scope) {
 			})*/
 		},
 		bankSel: function(t, p, cb) {
-			var sourceData = {
-				items: [
-					{bankId:"001",bankName:"中国银行"},
-					{bankId:"002",bankName:"杭州银行"}
-				],
-				id: 'bankId',
-				name: 'bankName'
-			};
-			cb(sourceData);
-			/*$.ajax({
+			$.ajax({
 				type: 'post',
-				url: $http.api('demandBank/selectBank'),
+				url: $http.api('demandBank/selectBank',true),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					var sourceData = {
@@ -241,7 +232,7 @@ page.ctrl('riskManagement',['vendor/echarts.min'], function($scope) {
 					};
 					cb(sourceData);
 				})
-			})*/
+			})
 		},
 	};
 	// 下拉回调

@@ -23,19 +23,13 @@
 		<div class="panel-content clearfix">
 			<div class="message-area">
 				<div class="message-panel">
-					{{ var len = it.length; if(len) { }}
-						{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+					{{ if(it.result&&it.result.length>0){ }}
+						{{for(var i = 0; i < it.result.length; i++) { var item = it.result[i]; }}
 							<div class="message-item mt15">
 								<div class="button button-mini button-deep">记录{{=i+1}}</div>
-								<div>牌照号：{{=item.licenseplate}}</div>
-								<div>发动机号：{{=item.engineNumber}}</div>
-								<div>查询状态：
-									{{if(item.status==1){}}
-										正常
-									{{}else{}}
-										异常
-									{{}}}
-								</div>
+								<div>牌照号：{{=item.registerplatenumber}}</div>
+								<div>发动机号：{{=item.registerenginenumber}}</div>
+								<div>查询状态：{{=item.sourcecontent}}</div>
 							</div>
 						{{ } }}
 					{{ } else { }}
@@ -57,27 +51,38 @@
 			</div>
 		</div>
 		<div class="panel-content clearfix">
-			<div class="col-l-total">
-				<div class="col-l-two">
-					<ul>
-						<li><span class="key">项目：</span>{{=it.msg.project}}</li>
-						<li><span class="key">抵押登记日期：</span>{{=it.msg.time}}</li>
-					</ul>
+			{{ if(it.result&&it.result.length>0){ }}
+				{{ for(var i in it.result){var col=it.result[i]; }}
+					<div class="col-l-total">
+						<div class="col-l-two">
+							<ul>
+								<li><span class="key">项目：</span>{{=col.mortgageDate}}</li>
+								<li><span class="key">抵押登记日期：</span>{{=col.mortgageDate}}</li>
+							</ul>
+						</div>
+						<div class="col-l-two">
+							<ul>
+								<li><span class="key">抵押权人：</span>{{=col.mortgageOwner}}</li>
+								<li>
+									<span class="key">抵押标记：</span>{{=col.mortgageTag}}
+								</li>
+							</ul>
+						</div>
+					</div>
+				{{ } }}
+			{{ }else{ }}
+				<div class="col-l-total">
+					<div class="col-l-two">
+						<ul>
+							{{ if(it.tempResult&&it.tempResult.length>0){ }}
+								{{ for(var o in it.tempResult){var tp=it.tempResult[o]; }}
+									<li><span class="key">{{=tp.platenumber}}：</span>{{=tp.mortgagemsg}}</li>
+								{{ } }}
+							{{ } }}
+						</ul>
+					</div>
 				</div>
-				<div class="col-l-two">
-					<ul>
-						<li><span class="key">抵押权人：</span>{{=it.msg.bank}}</li>
-						<li>
-							<span class="key">抵押标记：</span>
-							{{if(it.msg.status==1){}}
-								已抵押
-							{{}else{}}
-								未抵押
-							{{ }}}
-						</li>
-					</ul>
-				</div>
-			</div>
+			{{ } }}
 		</div>
 	</div>
 	<div class="panel mt15 clearfix">
@@ -88,59 +93,54 @@
 			</div>
 		</div>
 		<div class="panel-content clearfix">
-			<div class="col-l-total">
-				<div class="col-l-two">
-					<ul>
-						<li><span class="key">项目：</span>{{=it.info.project}}</li>
-						<li><span class="key">车牌号码：</span>{{=it.info.licenseplate}}</li>
-						<li>
-							<span class="key">抵押标记：</span>
-							{{if(it.info.status==1){}}
-								已抵押
-							{{}else{}}
-								未抵押
-							{{ }}}
-						</li>
-						<li><span class="key">机动车所有人：</span>{{=it.info.usename}}</li>
-						<li><span class="key">联系电话：</span>{{=it.info.phone}}</li>
-						<li><span class="key">登记住所：</span>{{=it.info.address}}</li>
-						<li><span class="key">出厂日期：</span>{{=it.info.outpctime}}</li>
-					</ul>
+			{{ if(it.basicResult&&it.basicResult.length>0){ }}
+				{{ for(var j in it.basicResult){var row=it.basicResult[j]; }}
+					<div class="col-l-total">
+						<div class="col-l-two">
+							<ul>
+								<li><span class="key">项目：</span>{{=row.mortgageTag}}</li>
+								<li><span class="key">车牌号码：</span>{{=row.mortgageTag}}</li>
+								<li>
+									<span class="key">抵押标记：</span>{{=row.mortgageTag}}
+								</li>
+								<li><span class="key">机动车所有人：</span>{{=row.mortgageOwner}}</li>
+								<li><span class="key">联系电话：</span>{{=row.phone}}</li>
+								<li><span class="key">登记住所：</span>{{=row.registerFlat}}</li>
+								<li><span class="key">出厂日期：</span>{{=row.factoryData}}</li>
+							</ul>
+						</div>
+						<div class="col-l-two">
+							<ul>
+								<li><span class="key">初次登记日期：</span>{{=row.mortgageDate}}</li>
+								<li><span class="key">检验有效期止：</span>{{=row.verifyEndDate}}</li>
+								<li><span class="key">保险终止日期：</span>{{=row.safeEndDate}}</li>
+								<li>
+									<span class="key">是否事故逃逸：</span>{{=row.isAccidentEscape}}
+								</li>
+								<li>
+									<span class="key">是否套牌车：</span>{{=row.isCoverCar}}
+								</li>
+								<li>
+									<span class="key">是否盗抢车：</span>{{=row.isRobberyCar}}
+								</li>
+								<li><span class="key">合格标志编号：</span>{{=row.qualifiedTagNo}}</li>
+							</ul>
+						</div>
+					</div>
+				{{ } }}
+			{{ }else{ }}
+				<div class="col-l-total">
+					<div class="col-l-two">
+						<ul>
+							{{ if(it.tempResult&&it.tempResult.length>0){ }}
+								{{ for(var o in it.tempResult){var tp=it.tempResult[o]; }}
+									<li><span class="key">{{=tp.platenumber}}：</span>{{=tp.mortgagemsg}}</li>
+								{{ } }}
+							{{ } }}
+						</ul>
+					</div>
 				</div>
-				<div class="col-l-two">
-					<ul>
-						<li><span class="key">初次登记日期：</span>{{=it.info.gradetime}}</li>
-						<li><span class="key">初次登记日期：</span>{{=it.info.gradetime}}</li>
-						<li><span class="key">检验有效期止：</span>{{=it.info.checktime}}</li>
-						<li><span class="key">保险终止日期：</span>{{=it.info.insurancetime}}</li>
-						<li>
-							<span class="key">是否事故逃逸：</span>
-							{{if(it.info.isAccidentEscape){}}
-								是
-							{{}else{}}
-								否
-							{{ }}}
-						</li>
-						<li>
-							<span class="key">是否套牌车：</span>
-							{{if(it.info.isDeck){}}
-								是
-							{{}else{}}
-								否
-							{{ }}}
-						</li>
-						<li>
-							<span class="key">是否盗抢车：</span>
-							{{if(it.info.isSteal){}}
-								是
-							{{}else{}}
-								否
-							{{ }}}
-						</li>
-						<li><span class="key">合格标志编号：</span>{{=it.info.QualifiedNumber}}</li>
-					</ul>
-				</div>
-			</div>
+			{{ } }}
 		</div>
 	</div>	
 </script>
@@ -155,34 +155,35 @@
 			</div>
 		</div>
 		<div class="panel-content clearfix">
-			{{ var len = it.length; if(len) { }}
-				{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+			{{ if(it.result&&it.result.length>0){var len = it.result.length; }}
+				{{for(var i = 0; i < len; i++) { var item = it.result[i]; }}
 					<div class="col-l-total mt30"><div class="button button-mini button-deep">记录{{=i+1}}</div></div>	
 					{{if(len>1&&i<len-1){}}
 						<div class="col-l-total btdashed">
 					{{}else{}}
 						<div class="col-l-total">
 					{{}}}	
+					{{ var _param={};if(it.params&&it.params.length>0){_param=it.params[0];}; }}
 						<div class="col-l-two">
 							<ul>
-								<li><span class="key">被执行人姓名：</span>{{=item.project}}</li>
-								<li><span class="key">性别：</span>{{=item.licenseplate}}</li>
-								<li><span class="key">身份证号码：</span>{{=item.licenseplate}}</li>
-								<li><span class="key">执行法院：</span>{{=item.courtname}}</li>
-								<li><span class="key">省份：</span>{{=item.phone}}</li>
-								<li><span class="key">执行依据文号：</span>{{=item.address}}</li>
+								<li><span class="key">被执行人姓名：</span>{{=_param.name||'-'}}</li>
+								<!-- <li><span class="key">性别：</span>{{=item.licenseplate||'-'}}</li> -->
+								<li><span class="key">身份证号码：</span>{{=_param.idcard||'-'}}</li>
+								<li><span class="key">执行法院：</span>{{=item.courtname||'-'}}</li>
+								<!-- <li><span class="key">省份：</span>{{=item.phone||'-'}}</li> -->
+								<li><span class="key">执行依据文号：</span>{{=item.docNo||'-'}}</li>
 								<li><span class="key">立案时间：</span>{{=tool.formatDate(item.courttime)}}</li>
-								<li><span class="key">案号：</span>{{=item.outpctime}}</li>
+								<!-- <li><span class="key">案号：</span>{{=item.outpctime||'-'}}</li> -->
 							</ul>
 						</div>
 						<div class="col-l-two">
 							<ul>
-								<li><span class="key">执行标的：</span>{{=item.gradetime}}</li>
-								<li><span class="key">执行状态：</span>{{=item.courtstatus}}</li>
-								<li><span class="key">做出执行依据单位：</span>{{=item.checktime}}</li>
-								<li><span class="key">做出生效法律文书确定义务：</span>{{=item.insurancetime}}</li>
-								<li><span class="key">被执行人的履行性质：</span>{{=item.insurancetime}}</li>
-								<li><span class="key">失信被执行人行为具体情形：</span>{{=item.QualifiedNumber}}</li>
+								<li><span class="key">执行标的：</span>{{=item.fraudType||'-'}}</li>
+								<li><span class="key">执行状态：</span>{{=item.courtStatus||'-'}}</li>
+								<!-- <li><span class="key">做出执行依据单位：</span>{{=item.checktime||'-'}}</li> -->
+								<li><span class="key">做出生效法律文书确定义务：</span>{{=item.commitment}}</li>
+								<!-- <li><span class="key">被执行人的履行性质：</span>{{=item.insurancetime||'-'}}</li>
+								<li><span class="key">失信被执行人行为具体情形：</span>{{=item.QualifiedNumber||'-'}}</li> -->
 							</ul>
 						</div>
 					</div>
@@ -207,10 +208,15 @@
 			<div class="col-l-total">
 				<div class="col-l-two">
 					<ul>
-						<li class="title"><b>张三</b>353547574647657</li>
-						<li><span class="key">命中前科：</span>2017/01/01</li>
-						<li><span class="key">命中前科、吸毒：</span>2017/01/01</li>
-						<li><span class="key">命中吸毒：</span>2017/01/01</li>
+						{{ var _param={};if(it.params&&it.params.length>0){_param=it.params[0];}; }}
+						<li class="title"><b>{{=_param.name}}</b>&nbsp;&nbsp;{{=_param.idcard}}</li>
+						{{ if(it.result&&it.result.length>0){ }}
+							{{ for(var i in it.result){var col=it.result[i]; }}
+								<li><span class="key">{{=col.criminalMsg}}：</span>{{=col.criminalTimes}}</li>
+							{{ } }}
+						{{ }else{ }}
+							<li><span class="key">暂无记录</span></li>
+						{{ } }}
 					</ul>
 				</div>
 			</div>
@@ -229,8 +235,8 @@
 			</div>
 		</div>
 		<div class="panel-content clearfix">
-			{{ var len = it.length; if(len) { }}
-				{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+			{{ if(it.result&&it.result.length>0){var len = it.result.length; }}
+				{{for(var i = 0; i < len; i++) { var item = it.result[i]; }}
 					<div class="col-l-total mt30"><div class="button button-mini button-deep">记录{{=i+1}}</div></div>	
 					{{if(len>1&&i<len-1){}}
 						<div class="col-l-total btdashed">
@@ -239,19 +245,19 @@
 					{{}}}	
 						<div class="col-l-two">
 							<ul>
-								<li><span class="key">发票种类：</span>{{=item.info.project}}</li>
-								<li><span class="key">日期：</span>{{=item.info.licenseplate}}</li>
-								<li><span class="key">发票代码：</span>{{=item.info.usename}}</li>
-								<li><span class="key">发票号码：</span>{{=item.info.phone}}</li>
-								<li><span class="key">发票金额：</span>{{=item.info.address}}</li>
+								<!-- <li><span class="key">发票种类：</span>{{=item.vehicleInvoiceIssueDate}}</li> -->
+								<li><span class="key">日期：</span>{{=tool.formatDate(item.vehicleinvoiceissuedate)}}</li>
+								<li><span class="key">发票代码：</span>{{=item.vehicleinvoicecode}}</li>
+								<li><span class="key">发票号码：</span>{{=item.vehicleinvoicenumber}}</li>
+								<li><span class="key">发票金额：</span>{{=item.vehicleinvoicetotalprice}}</li>
 							</ul>
 						</div>
 						<div class="col-l-two">
 							<ul>
-								<li><span class="key">开票人名称：</span>{{=item.info.gradetime}}</li>
-								<li><span class="key">购货方名称：</span>{{=item.info.gradetime}}</li>
-								<li><span class="key">购货方税号：</span>{{=item.info.checktime}}</li>
-								<li><span class="key">发票状态：</span>{{=item.info.insurancetime}}</li>
+								<li><span class="key">开票人名称：</span>{{=item.vehicleinvoicedealer}}</li>
+								<li><span class="key">购货方名称：</span>{{=item.vehicleinvoicebuyer}}</li>
+								<li><span class="key">购货方税号：</span>{{=item.taxpayernumber}}</li>
+								<!-- <li><span class="key">发票状态：</span>{{=item.vehicleInvoiceIssueDate}}</li> -->
 							</ul>
 						</div>
 					</div>
@@ -273,8 +279,8 @@
 			</div>
 		</div>
 		<div class="panel-content clearfix">
-			{{ var len = it.length; if(len) { }}
-				{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+			{{ if(it.result&&it.result.length>0){var len = it.result.length; }}
+				{{for(var i = 0; i < len; i++) { var item = it.result[i]; }}
 					<div class="col-l-total mt30"><div class="button button-mini button-deep">记录{{=i+1}}</div></div>	
 					{{if(len>1&&i<len-1){}}
 						<div class="col-l-total btdashed">
@@ -283,10 +289,30 @@
 					{{}}}	
 						<table class="netloan">
 							<tr>
-								<td><span>2</span>次</td>
-								<td><span>4</span>次</td>
-								<td><span>6</span>次</td>
-								<td><span>10</span>次</td>
+								<td><span>
+									{{ var total=0;if(item.oneMonth&&JSON.parse(item.oneMonth)){var dkjson=JSON.parse(item.oneMonth); }}
+									{{ for(var z in dkjson){total+=Number(dkjson[z]);} }}
+									{{ } }}
+									{{=total}}
+								</span>次</td>
+								<td><span>
+									{{ var total=0;if(item.threeMonth&&JSON.parse(item.threeMonth)){var dkjson=JSON.parse(item.threeMonth); }}
+									{{ for(var z in dkjson){total+=Number(dkjson[z]);} }}
+									{{ } }}
+									{{=total}}
+								</span>次</td>
+								<td><span>
+									{{ var total=0;if(item.sixMonth&&JSON.parse(item.sixMonth)){var dkjson=JSON.parse(item.sixMonth); }}
+									{{ for(var z in dkjson){total+=Number(dkjson[z]);} }}
+									{{ } }}
+									{{=total}}
+								</span>次</td>
+								<td><span>									
+									{{ var total=0;if(item.twelveMonth&&JSON.parse(item.twelveMonth)){var dkjson=JSON.parse(item.twelveMonth); }}
+									{{ for(var z in dkjson){total+=Number(dkjson[z]);} }}
+									{{ } }}
+									{{=total}}
+								</span>次</td>
 							</tr>
 							<tr class="key">
 								<td>1个月内</td>
