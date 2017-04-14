@@ -107,6 +107,7 @@ page.ctrl('openCardSheet', function($scope) {
 	}
 	var setupEvt = function($el) {
 		if($("#dateStart").val("9999-99-99")){
+			$("#dateStart").addClass('pointDisabled');
 			$("#longTime").attr("checked", true); 
 		}
 		$console.find('#longTime').on('click', function(){
@@ -135,8 +136,13 @@ page.ctrl('openCardSheet', function($scope) {
 			var value = $(this).val();
 			if(!value){
 				if(!$(this).parent().hasClass('info-value')){
-					$(this).siblings('.select').addClass("error-input");
-					$(this).after('<i class="error-input-tip sel-err">请完善该必填项</i>');
+					if($(this).parent().hasClass('loan-imgs-bar')){
+						$(this).siblings('.uploadEvt').find('.imgs-item-upload').addClass("error-input");
+						$(this).after('<i class="error-input-tip pic-err">请完善该必填项</i>');
+					}else{
+						$(this).siblings('.select').addClass("error-input");
+						$(this).after('<i class="error-input-tip sel-err">请完善该必填项</i>');
+					}
 				}else{
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip">请完善该必填项</i>');
@@ -159,9 +165,9 @@ page.ctrl('openCardSheet', function($scope) {
 			$.ajax({
 				type: 'post',
 				url: urlStr+'/icbcCreditCardForm/saveICBCCreditCardForm/' + $params.taskId,
-				data: JSON.stringify(data1),
+				data: data1,
 				dataType:"json",
-				contentType : 'application/json;charset=utf-8',
+//				contentType : 'application/json;charset=utf-8',
 				success: function(result){
 					console.log("提交订单");
 					if(cb && typeof cb == 'function') {
@@ -176,6 +182,14 @@ page.ctrl('openCardSheet', function($scope) {
 	$(document).on('input','input', function() {
 		$(this).parents().removeClass("error-input");
 		$(this).siblings("i").remove();
+	})
+	$(document).on('click','.select', function() {
+		$(this).removeClass("error-input");
+		$(this).siblings("i").remove();
+	})
+	$(document).on('click','.input-file', function() {
+		$(this).parent().removeClass("error-input");
+		$(this).parent().parent().siblings("i").remove();
 	})
 	
 

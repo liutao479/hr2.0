@@ -164,7 +164,7 @@
 	        },
 	        {
 	            "name":"其他",
-	            "value":"4"
+	            "value":"-1"
 	        }
 	    ],
 	    "relationship":[
@@ -339,6 +339,16 @@
 	        {
 	            "name":"其他",
 	            "value":"6"
+	        }
+	    ],
+	    "yesNo":[
+	        {
+	            "name":"是",
+	            "value":"1"
+	        },
+	        {
+	            "name":"否",
+	            "value":"0"
 	        }
 	    ]
 	},

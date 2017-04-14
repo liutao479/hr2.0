@@ -165,8 +165,8 @@
 				if(inputItem){
 					inputItem.val(id)
 				}
-				self.onDropdown(self.picked);
 				self.close(true);
+				self.onDropdown(self.picked);
 			} else {
 				self.picked[self.opts.tabs[self.actionIdx]] = {
 					id: id,
@@ -177,8 +177,8 @@
 					if(inputItem){
 						inputItem.val(id)
 					}
-					self.onDropdown(self.picked);
 					self.close(true);
+					self.onDropdown(self.picked);
 				} else {
 					self.$tabs.eq(self.actionIdx).removeClass('select-tab-item-active');
 					self.actionIdx++;

@@ -23,6 +23,7 @@ page.ctrl('secondhandInput', function($scope) {
 				setupLocation();
 				loanFinishedInput();
 				loanFinishedInputReq();
+				setupDatepicker();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -59,11 +60,11 @@ page.ctrl('secondhandInput', function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
-			process();
+//			process();
 			//先保存数据再提交订单
-			// saveData(function() {
-			// 	process();
-			// });
+			 saveData(function() {
+			 	process();
+			 });
 		})
 
 	}
@@ -130,6 +131,17 @@ page.ctrl('secondhandInput', function($scope) {
 	}
 
 	/**
+	* 日历控件
+	*/
+	var setupDatepicker = function() {
+		$console.find('.dateBtn').datepicker({
+			onpicked: function() {
+				$(this).parents().removeClass("error-input");
+				$(this).siblings("i").remove();
+			}
+		});
+	}
+	/**
 	* 保存数据
 	*/
 	var saveData = function(cb) {
@@ -139,15 +151,25 @@ page.ctrl('secondhandInput', function($scope) {
 		requireList.each(function(){
 			var value = $(this).val();
 			if(!value){
-				$(this).parent().addClass("error-input");
-				$(this).after('<i class="error-input-tip">请完善该必填项</i>');
-				console.log($(this).index());
+				if(!$(this).parent().hasClass('info-value')){
+					if($(this).parent().hasClass('input-date-mid')){
+						$(this).parent().addClass("error-input");
+						$(this).after('<i class="error-input-tip sel-err">请完善该必填项</i>');
+					}else{
+						$(this).siblings('.select').addClass("error-input");
+						$(this).after('<i class="error-input-tip sel-err">请完善该必填项</i>');
+					}
+				}else{
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip">请完善该必填项</i>');
+				}
 				isTure = false;
 			}
 		});
 		if(isTure){
+			debugger
 			var data;
-	        var formList = $(this).parents().find('form');
+	        var formList = $('#dataform');
 	        var params = formList.serialize();
             params = decodeURIComponent(params,true);
             var paramArray = params.split("&");
@@ -160,14 +182,22 @@ page.ctrl('secondhandInput', function($scope) {
 			$.ajax({
 				type: 'post',
 				url: $http.api('loanCarAssess/submit/' + $params.taskId, 'jbs'),
-				data: JSON.stringify(data),
+//				data: JSON.stringify(data),
+				data: data,
 				dataType: 'json',
-				contentType: 'application/json;charset=utf-8',
+//				contentType: 'application/json;charset=utf-8',
 				success: $http.ok(function(xhr) {
 					console.log(xhr);
-					if(cb && typeof cb == 'function') {
-						cb();
-					}
+					$.alert({
+						title: '提示',
+						content: tool.alert('信息已保存！'),
+						buttons: {
+							'确定': {
+					            action: function () {
+					            }
+					        }
+					    }
+					})
 				})
 			})				
 		}else{
@@ -184,6 +214,28 @@ page.ctrl('secondhandInput', function($scope) {
 			return false;
 		}
 	}		
+	/**
+	* 下拉
+	*/
+	var seleLoad = function(){
+		$(".select").each(function(){
+			var $that = $(this);
+			var selected = $(this).data('selected');
+			var re = /^[0-9]+.?[0-9]*$/;
+			if((selected && re.test(selected)) || selected=='0'){
+				$(this).find('.arrow-trigger').click();
+				var lilist = $(this).find('li');
+				$("li",$(this)).each(function(){
+					var idx = $(this).data('id');
+					if(selected == idx){
+						$that.find('.select-text').val($(this).text());
+						$(this).click();
+						$that.find('.select-box').hide();
+					}
+				})
+			}
+		})
+	}
 	/***
 	* 为完善项更改去掉错误提示
 	*/
@@ -191,13 +243,15 @@ page.ctrl('secondhandInput', function($scope) {
 		$(this).parents().removeClass("error-input");
 		$(this).siblings("i").remove();
 	})
+	$(document).on('click','.select', function() {
+		$(this).removeClass("error-input");
+		$(this).siblings("i").remove();
+	})
 
 	$scope.carPicker = function(picked) {
-		console.log(picked);
-//		var carName = picked.品牌.name+'-'+picked.车系.name+'-'picked.车型.name;
-		var carName = picked.品牌.name;
-//		$("#carName").val(carName);
-		console.log(carName);
+		debugger
+		var carname = $("#carMode").find('.select-text').val();
+		$("#carName").val(carname);
 	}
 	$scope.areaPicker = function(picked) {
 		console.log(picked);
@@ -346,6 +400,14 @@ page.ctrl('secondhandInput', function($scope) {
 				default:
 					break;
 			}
+		},
+		selfPicker: function(t, p, cb) {
+			var sourceData = {
+				items: dataMap.yesNo,
+				id: 'value',
+				name: 'name'
+			};
+			cb(sourceData);
 		}
 	}
 	/***
@@ -360,6 +422,7 @@ page.ctrl('secondhandInput', function($scope) {
 		loadLoanList(function(){
 			setupSubmitBar();
 			setupDropDown();
+			seleLoad();
 		});
 	});
 });
