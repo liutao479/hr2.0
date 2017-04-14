@@ -3,7 +3,7 @@
 	<div class="path-back-bar">
 		<div class="path-back">
 			<i class="iconfont">&#xe626;</i>
-			<a href="#riskManagement">返回列表</a>
+			<a href="javascript:;" id="backspace" class="link">返回列表</a>
 			&nbsp;&gt;&nbsp;
 			<span class="current-page">服务明细</span>
 		</div>
@@ -30,10 +30,10 @@
 			</table>
 		</div>
 	</div>
+	<!-- 分页插件 -->
+	<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['riskManagementDetail'].paging" data-pages="1" data-current="1"></div>
+	<!-- 分页插件 end-->
 </div>
-<!-- 分页插件 -->
-<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['riskManagementDetail'].paging" data-pages="1" data-current="1"></div>
-<!-- 分页插件 end-->
 <!--风控服务统计明细 end-->
 
 <!-- form查询条件 -->
@@ -61,24 +61,30 @@
 </script>	
 <!-- 列表 -->
 <script type="text/x-dot-template" id="riskManagementDetailTmpl">
-	{{for(var i = 0; i < it.length; i++) { var item = it[i]; }}
+	{{ if(it&&it.length>0){ }}
+		{{for(var i = 0; i < it.length; i++) { var item = it[i]; }}
+			<tr class="orders-item">
+				<td class="orders-item-data">{{=item.orderNo}}</td>
+				<td class="orders-item-data">{{=tool.formatDate(item.orderCreateDate)}}</td>
+				<td class="orders-item-data">{{=item.realName}}</td>
+				<td class="orders-item-data">{{=item.demandBankName}}</td>
+				<td class="orders-item-data">
+					{{ if(item.isBankVery=="1"){ }}是
+					{{ }else{ }}否
+					{{ } }}
+				</td>
+				<td class="orders-item-data">{{=item.serviceFee}}</td>
+				<td class="orders-item-data">{{=item.verifyNum}}</td>
+				<td class="orders-item-data">{{=tool.formatDate(item.lastestVerifyTime)}}</td>
+				<td class="orders-item-data">{{=item.submitByName}}</td>
+				<td class="orders-item-data">
+					<span class="detailed">明细</span>
+				</td>
+			</tr>
+		{{ } }}
+	{{ }else{ }}
 		<tr class="orders-item">
-			<td class="orders-item-data">{{=item.orderNo}}</td>
-			<td class="orders-item-data">{{=item.createTime}}</td>
-			<td class="orders-item-data">{{=item.borrower}}</td>
-			<td class="orders-item-data">{{=item.manageBank}}</td>
-			<td class="orders-item-data">
-				{{ if(item.isBankVery=="1"){ }}是
-				{{ }else{ }}否
-				{{ } }}
-			</td>
-			<td class="orders-item-data">{{=item.serviceFee}}</td>
-			<td class="orders-item-data">{{=item.verifyNum}}</td>
-			<td class="orders-item-data">{{=item.latestVerifyTime}}</td>
-			<td class="orders-item-data">{{=item.submitBy}}</td>
-			<td class="orders-item-data">
-				<span class="detailed">明细</span>
-			</td>
+			<td class="orders-item-data" colspan="10">暂无数据</td>
 		</tr>
 	{{ } }}
 </script>	

@@ -5,7 +5,30 @@
 		<ul class="role-bar-ul clearfix" id="roleBarTab"></ul>
 	</div>
 	<!--tab切换栏 end-->
-	<div class="tab-content">
+	<div class="tab-content" id="listDiv"></div>
+	<!-- <div class="commit-orders-box">
+		<div class="button button-orange">退回订单</div>
+		<div class="button button-deep">审核通过</div>
+	</div> -->
+</div>
+<!--数据辅证 end-->
+<!-- tab切换模板 -->
+<script type="text/x-dot-template" id="roleBarTabTmpl">
+	{{ var len = it.length; if(len) { }}
+		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+			<li class="role-bar-li" data-id="{{=item.userId}}">
+				{{ if(i==0){ }}
+					<a href="javascript:;" class="role-item role-item-active">{{=item.userName}}({{=item.userTypeName}})</a>
+				{{ }else{ }}
+					<a href="javascript:;" class="role-item">{{=item.userName}}({{=item.userTypeName}})</a>		
+				{{ } }}				
+			</li>
+		{{ } }}
+	{{ } }}
+</script>	
+<!--数据列表模板-->
+<script type="text/x-dot-template" id="listTmpl">
+	{{  var ac=function(x){for(var i in x)return true;return false;};if(ac(it)){ }}
 		<div class="panel no-top-border clearfix">			
 			<div class="panel-content-title no-top-border">
 				<div class="key-value-box">
@@ -19,538 +42,505 @@
 					<span class="key">发起人：</span>
 					<span class="value">南方初审1</span>
 				</div>
-				<div class="button button-mini" id="startCheck">发起核查</div>
+				<div class="right-Evt">
+					<div class="button button-mini" id="startCheck">发起核查</div>
+				</div>
 			</div>
 			<div class="detail-item-group">
-				<!-- 实名认证查询 -->
-				<div class="detail-item-list">
-					<div class="detail-item-title">
-						<i class="iconfont">&#xe677;</i>实名认证查询
-					</div>
-					<div class="detail-item-alert alert-warning">
-						<span class="icon"><i class="iconfont">&#xe612;</i></span>
-						<span class="status">不通过</span>
-						<span class="text"></span>
-						<span class="message-number">new</span>
-					</div>
-					<div class="detail-item-context clearfix">
-						<div class="explain">
-							<span class="key">
-								库中午此号，请到户籍所在地进行核实！/身份号码一致，姓名不一致！
-							</span>
+			{{ for(var i in it){var item=it[i]; }}
+				{{ if(i==1020){ }}
+					<!-- 实名认证查询 -->
+					<div class="detail-item-list">
+						<div class="detail-item-title">
+							<i class="iconfont">&#xe677;</i>实名认证查询
 						</div>
-					</div>
-					<div class="detail-item-alert alert-success">
-						<span class="icon"><i class="iconfont">&#xe659;</i></span>
-						<span class="status">通过</span>
-						<span class="text"></span>
-					</div>
-					<div class="detail-item-context clearfix">
-						<div class="explain">
-							<span class="key">
-								姓名和公安身份号码一致！
-							</span>
-						</div>
-					</div>
-				</div>
-				<!-- 人脸识别查询 -->
-				<div class="detail-item-list">
-					<div class="detail-item-title">
-						<i class="iconfont">&#xe67c;</i>人脸识别查询
-					</div>
-					<div class="detail-item-context clearfix">
-						<div class="explain">
-							<span class="key">
-								公安网纹照片相识度比对：75%
-							</span>
-						</div>
-						<div class="no-img-group clearfix">
-							<div class="no-img-list">
-								<div class="no-img">
-									<i class="iconfont">&#xe61f;</i>
+						{{ if(item&&item.length>0){ }}
+							{{ for(var u in item){var lastData=item[u]; }}
+							{{ if(lastData.result=="一致"){ }}
+								<div class="detail-item-alert alert-success">
+									<span class="icon"><i class="iconfont">&#xe659;</i></span>
+									<span class="status">通过</span>
+									<span class="text"></span>
 								</div>
-								<p class="img-explain">身份证原件</p>
-							</div>
-							<div class="no-img-list">
-								<div class="no-img">
-									<i class="iconfont">&#xe61f;</i>
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">
+											姓名和公安身份号码一致！
+										</span>
+									</div>
 								</div>
-								<p class="img-explain">签约照片原件</p>
-							</div>
-							<div class="no-img-list">
-								<div class="no-img">
-									<i class="iconfont">&#xe61f;</i>
+							{{ }else{ }}
+								<div class="detail-item-alert alert-warning">
+									<span class="icon"><i class="iconfont">&#xe612;</i></span>
+									<span class="status">不通过</span>
+									<span class="text"></span>
 								</div>
-								<p class="img-explain">公安网纹照片</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- 公安记录查询 -->
-				<div class="detail-item-list">
-					<div class="detail-item-title">
-						<i class="iconfont">&#xe661;</i>公安记录查询
-					</div>
-					<div class="detail-item-context clearfix">
-						<div>
-							<table class="default-table">
-								<tr>
-									<td><span class="key">命中公安信息类型：</span>必中前科</td>
-									<td><span class="key">时间：</span>2017-03-23</td>
-								</tr>
-								<tr>
-									<td><span class="key">命中公安信息类型：</span>必中前科、吸毒</td>
-									<td><span class="key">时间：</span>2017-03-23</td>
-								</tr>
-								<tr>
-									<td><span class="key">命中公安信息类型：</span>必中吸毒</td>
-									<td><span class="key">时间：</span>2017-03-23</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- 法院记录查询 -->
-				<div class="detail-item-list">
-					<div class="detail-item-title">
-						<i class="iconfont">&#xe6a5;</i>法院记录查询
-					</div>
-					<div class="detail-item-context clearfix">
-						<div>
-							<table class="default-table">
-								<thead>
-									<tr>
-										<th>风险类型</th>
-										<th>案号</th>
-										<th>立案时间</th>
-										<th>执行法院</th>
-										<th>法律文书确定的义务</th>
-										<th>履行情况</th>
-									</tr>
-								</thead>
-								<tbody class="haveHead">
-									<tr class="alignCenter">
-										<td>法院失信2</td>
-										<td>(2013)备案号234234号</td>
-										<td>2013-02-23</td>
-										<td>常熟市人民法院</td>
-										<td>清偿进款金额20万元及逾期利息</td>
-										<td>已结案</td>
-									</tr>
-									<tr class="alignCenter">
-										<td>法院失信3</td>
-										<td>(2013)备案号234234号</td>
-										<td>2013-02-23</td>
-										<td>常熟市人民法院</td>
-										<td>清偿进款金额20万元及逾期利息</td>
-										<td>已结案</td>
-									</tr>
-									<tr class="alignCenter">
-										<td>法院失信4</td>
-										<td>(2013)备案号234234号</td>
-										<td>2013-02-23</td>
-										<td>常熟市人民法院</td>
-										<td>清偿进款金额20万元及逾期利息</td>
-										<td>已结案</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- 网贷平台借贷查询 -->
-				<div class="detail-item-list">
-					<div class="detail-item-title">
-						<i class="iconfont">&#xe666;</i>网贷平台借贷查询
-					</div>
-					<div class="detail-item-context clearfix">
-						<div>
-							<table class="default-table">
-								<thead>
-									<tr>
-										<th>借贷类型/时间区间</th>
-										<th>近7天</th>
-										<th>近1个月</th>
-										<th>近3个月</th>
-										<th>近6个月</th>
-										<th>近12个月</th>
-									</tr>
-								</thead>
-								<tbody class="haveHead">
-									<tr class="alignCenter">
-										<td>大型汽车消费金融</td>
-										<td>0</td>
-										<td>1</td>
-										<td>1</td>
-										<td>1</td>
-										<td>3</td>
-									</tr>
-									<tr class="alignCenter">
-										<td>网贷P2P</td>
-										<td>1</td>
-										<td>2</td>
-										<td>2</td>
-										<td>3</td>
-										<td>4</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- 网贷逾期记录查询 -->
-				<div class="detail-item-list">
-					<div class="detail-item-title">
-						<i class="iconfont">&#xe671;</i>网贷逾期记录查询
-					</div>
-					<div class="detail-item-context clearfix">
-						<div>
-							<table class="default-table">
-								<thead>
-									<tr>
-										<th>逾期金额</th>
-										<th>逾期天数</th>
-										<th>逾期金额</th>
-										<th>逾期天数</th>
-									</tr>
-								</thead>
-								<tbody class="haveHead">
-									<tr class="alignCenter">
-										<td>2000</td>
-										<td>3</td>
-										<td>20000</td>
-										<td>6</td>
-									</tr>
-									<tr class="alignCenter">
-										<td>2000</td>
-										<td>3</td>
-										<td>20000</td>
-										<td>6</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- 学历信息查询 -->
-				<div class="detail-item-list">
-					<div class="detail-item-title">
-						<i class="iconfont">&#xe679;</i>学历信息查询
-					</div>
-					<div class="detail-item-context clearfix">
-						<div>
-							<table class="default-table">
-								<thead>
-									<tr>
-										<th>学历</th>
-										<th>毕业院校</th>
-										<th>毕业类型</th>
-										<th>毕业年份</th>
-									</tr>
-								</thead>
-								<tbody class="haveHead">
-									<tr class="alignCenter">
-										<td>本科</td>
-										<td>嘉兴成人学院</td>
-										<td>正常结业</td>
-										<td>2015</td>
-									</tr>
-									<tr class="alignCenter">
-										<td>高中</td>
-										<td>嘉兴第一中学</td>
-										<td>正常结业</td>
-										<td>2011</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- 手机在网时长查询 -->
-				<div class="detail-item-list">
-					<div class="detail-item-title">
-						<i class="iconfont">&#xe66e;</i>手机在网时长查询
-					</div>
-					<div class="detail-item-context clearfix">
-						<div>
-							<table class="default-table">
-								<tbody class="haveHead">
-									<tr>
-										<td><span class="key">手机号：</span>12323453324</td>
-										<td><span class="key">运营商：</span>中国电信</td>
-										<td><span class="key">归属地：</span>安徽省合肥市</td>
-										<td><span class="key">在网市场：</span>1-3个月</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- 二手车评估 -->
-				<div class="detail-item-list">
-					<div class="detail-item-title">
-						<i class="iconfont">&#xe64f;</i>二手车评估
-					</div>
-					<div class="detail-item-context clearfix">
-						<div class="valuation">
-							<div class="valuation-list valuation-w">
-								<div class="bacimg jzg">
-									<p><span>9.64</span>万</p>
-									<p>(正常情况)</p>
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">{{=lastData.result}}</span>
+									</div>
 								</div>
-								<p class="nameVal">精真估估值</p>
-							</div>
-							<div class="valuation-list valuation-w">
-								<div class="bacimg car300">
-									<p class="maxPrice"><span>11.64</span>万</p>
-									<p>(正常情况)</p>
-								</div>
-								<p class="nameVal">车三百估值</p>
-							</div>
-							<div class="valuation-list valuation-w">
-								<div class="bacimg carjd">
-									<p><span>10.64</span>万</p>
-									<p>(正常情况)</p>
-								</div>
-								<p class="nameVal">车鉴定估值</p>
-							</div>
+							{{ } }}
+							{{ } }}
+						{{ } }}
+					</div>
+				{{ }else if(i==1024){ }}
+					<!-- 人脸识别查询 -->
+					<div class="detail-item-list">
+						<div class="detail-item-title">
+							<i class="iconfont">&#xe67c;</i>人脸识别查询
 						</div>
-						<div class="perent">
-							<div class="perent-title">市场平均成交价</div>
-							<div class="perent-canvas">
-								<canvas id="smCanvas"></canvas>
-								<p>小于10.93万</p>
-							</div>
-							<div class="perent-canvas">
-								<canvas id="mdCanvas"></canvas>
-								<p>10.93-12.08万</p>
-							</div>
-							<div class="perent-canvas">
-								<canvas id="lgCanvas"></canvas>
-								<p>大于12.08万</p>
-							</div>
+						<div class="detail-item-context clearfix">
+							{{ if(item&&item.length>0){ }}
+								{{ for(var h=0;h<item.length;h++){var lastData=item[h]; }}
+								<div class="explain">
+									<span class="key">
+										公安网纹照片相识度比对：{{=lastData.resultScore}}
+									</span>
+								</div>
+								<div class="no-img-group clearfix">
+									<div class="no-img-list">
+										<div class="no-img">
+											{{ if(lastData.sfzphoto){ }}
+												<img src="{{=lastData.sfzphoto}}" />
+											{{ }else{ }}
+												<i class="iconfont">&#xe61f;</i>
+											{{ } }}
+										</div>
+										<p class="img-explain">身份证原件</p>
+									</div>
+									<div class="no-img-list">
+										<div class="no-img">
+											{{ if(lastData.qhzphoto){ }}
+												<img src="{{=lastData.qhzphoto}}" />
+											{{ }else{ }}
+												<i class="iconfont">&#xe61f;</i>
+											{{ } }}
+										</div>
+										<p class="img-explain">签约照片原件</p>
+									</div>
+									<div class="no-img-list">
+										<div class="no-img">
+											{{ if(lastData.gridPhoto){ }}
+												<img src="{{=lastData.gridPhoto}}" />
+											{{ }else{ }}
+												<i class="iconfont">&#xe61f;</i>
+											{{ } }}
+										</div>
+										<p class="img-explain">公安网纹照片</p>
+									</div>
+								</div>
+								{{ } }}
+							{{ } }}
 						</div>
-						<div class="detail-item-msg">
-							<div class="msg-title">评估参考基础信息</div>
-							<div class="msg-context">
-								<div class="msg-table-list">
-									<table class="msg-table">
+					</div>
+				{{ }else if(i==1019){ }}
+					<!-- 公安记录查询 -->
+					<div class="detail-item-list">
+						<div class="detail-item-title">
+							<i class="iconfont">&#xe661;</i>公安记录查询
+						</div>
+						<div class="detail-item-context clearfix">
+							<div>
+								<table class="default-table">
+									{{ for(j=0;j<item.length;j++){ }}
 										<tr>
-											<td>车型：2008款 奥迪A4 1.8T舒适型</td>
-											<td>上牌年份：2017-03-23T12:59:23</td>
-											<td>上牌地：杭州</td>
+											<td><span class="key">命中公安信息类型：</span>{{=item[j].criminal_msg}}</td>
+											<td><span class="key">时间：</span>{{=item[j].criminal_times}}</td>
 										</tr>
+									{{ } }}
+								</table>
+							</div>
+						</div>
+					</div>
+				{{ }else if(i==1015){ }}
+					<!-- 法院记录查询 -->
+					<div class="detail-item-list">
+						<div class="detail-item-title">
+							<i class="iconfont">&#xe6a5;</i>法院记录查询
+						</div>
+						<div class="detail-item-context clearfix">
+							<div>
+								{{ for(var t=0;t<item.length;t++){var col=item[t].courtExecutionArray; }}
+								<table class="default-table">
+									<thead>
 										<tr>
-											<td>里程数：5（万公里）</td>
-											<td>车辆保养记录：详见保养记录附录</td>
-											<td>车辆配置信息：详见车辆配置信息</td>
+											<th>风险类型</th>
+											<th>案号</th>
+											<th>立案时间</th>
+											<th>执行法院</th>
+											<th>法律文书确定的义务</th>
+											<th>履行情况</th>
 										</tr>
-									</table>
+									</thead>
+									<tbody class="haveHead">
+										{{ for(var j=0;j<col.length;j++){ }}
+											<tr class="alignCenter">
+												<td>{{=col[j].fraudType}}</td>
+												<td>{{=col[j].docNo}}</td>
+												<td>{{=col[j].courtTime}}</td>
+												<td>{{=col[j].courtName}}</td>
+												<td>{{=col[j].commitment}}</td>
+												<td>{{=col[j].executionStatus}}</td>
+											</tr>
+										{{ } }}
+									</tbody>
+								</table>
+								{{ } }}
+							</div>
+						</div>
+					</div>
+				{{ }else if(i==1018){ }}
+					<!-- 网贷平台借贷查询 -->
+					<div class="detail-item-list">
+						<div class="detail-item-title">
+							<i class="iconfont">&#xe666;</i>网贷平台借贷查询
+						</div>
+						<div class="detail-item-context clearfix">
+							<div>
+								<table class="default-table">
+									<thead>
+										<tr>
+											<th>借贷类型/时间区间</th>
+											<th>近7天</th>
+											<th>近1个月</th>
+											<th>近3个月</th>
+											<th>近6个月</th>
+											<th>近12个月</th>
+										</tr>
+									</thead>
+									<tbody class="haveHead">
+										<tr class="alignCenter">
+											<td>大型汽车消费金融</td>
+											<td>0</td>
+											<td>1</td>
+											<td>1</td>
+											<td>1</td>
+											<td>3</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				{{ }else if(i==1016){var _list=item[0].overdueArray; }}
+					<!-- 网贷逾期记录查询 -->
+					<div class="detail-item-list">
+						<div class="detail-item-title">
+							<i class="iconfont">&#xe671;</i>网贷逾期记录查询
+						</div>
+						<div class="detail-item-context clearfix">
+							<div>
+								<table class="default-table">
+									<thead>
+										<tr>
+											<th>逾期金额</th>
+											<th>逾期天数</th>
+										</tr>
+									</thead>
+									<tbody class="haveHead">
+										{{ for(var j=0;j<_list.length;j++){ }}
+											<tr class="alignCenter">
+												<td>{{=_list[j].overdueAmount}}</td>
+												<td>{{=_list[j].overdueDay}}</td>
+											</tr>
+										{{ } }}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				{{ }else if(i==1021){ }}
+					<!-- 手机在网时长查询 -->
+					<div class="detail-item-list">
+						<div class="detail-item-title">
+							<i class="iconfont">&#xe66e;</i>手机在网时长查询
+						</div>
+						<div class="detail-item-context clearfix">
+							<div>
+								<table class="default-table">
+									<tbody class="haveHead">
+										{{ for(var j=0;j<item.length;j++){ }}
+											<tr>
+												<td><span class="key">手机号：</span>{{=item[j].mobile}}</td>
+												<td><span class="key">运营商：</span>{{=item[j].operatorName}}</td>
+												<td><span class="key">归属地：</span>{{=item[j].AREA_INFO}}</td>
+												<td><span class="key">在网时长：</span>{{=item[j].TIME_LENGTH}}</td>
+											</tr>								
+										{{ } }}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				<!-- {{ }else if(i==1025){ }}
+					二手车评估
+					<div class="detail-item-list">
+						<div class="detail-item-title">
+							<i class="iconfont">&#xe64f;</i>二手车评估
+						</div>
+						<div class="detail-item-context clearfix">
+							<div class="valuation">
+								<div class="valuation-list valuation-w">
+									<div class="bacimg jzg">
+										<p><span>9.64</span>万</p>
+										<p>(正常情况)</p>
+									</div>
+									<p class="nameVal">精真估估值</p>
+								</div>
+								<div class="valuation-list valuation-w">
+									<div class="bacimg car300">
+										<p class="maxPrice"><span>11.64</span>万</p>
+										<p>(正常情况)</p>
+									</div>
+									<p class="nameVal">车三百估值</p>
+								</div>
+								<div class="valuation-list valuation-w">
+									<div class="bacimg carjd">
+										<p><span>10.64</span>万</p>
+										<p>(正常情况)</p>
+									</div>
+									<p class="nameVal">车鉴定估值</p>
 								</div>
 							</div>
-						</div>
-						<div class="detail-item-msg">
-							<div class="msg-title">车辆配置信息</div>
-							<div class="msg-context">
-								<div class="msg-table-list">
-									<h5>基本参数</h5>
-									<table class="msg-table">
-										<tr>
-											<td>级别：中型车</td>
-											<td>最高车速(km/h)：250</td>
-											<td>厂商：奥迪汽车</td>
-										</tr>
-										<tr>
-											<td>市郊工况油耗：6550</td>
-											<td>车身结构：2门4座三厢车</td>
-											<td>长*宽*高(mm)：4626*1854*1372</td>
-										</tr>
-										<tr>
-											<td>实测100-0km/h制动(m)：2</td>
-											<td>官方0-100km/h加速(s)：2</td>
-											<td>整车质保：5年</td>
-										</tr>
-									</table>
+							<div class="perent">
+								<div class="perent-title">市场平均成交价</div>
+								<div class="perent-canvas">
+									<canvas id="smCanvas"></canvas>
+									<p>小于10.93万</p>
+								</div>
+								<div class="perent-canvas">
+									<canvas id="mdCanvas"></canvas>
+									<p>10.93-12.08万</p>
+								</div>
+								<div class="perent-canvas">
+									<canvas id="lgCanvas"></canvas>
+									<p>大于12.08万</p>
 								</div>
 							</div>
-						</div>
-						<div class="detail-item-msg">
-							<div class="msg-title">保养记录</div>
-							<div class="msg-context">
-								<div class="msg-table-list msg-borderbt-solid">
-									<h5>基本信息</h5>
-									<table class="msg-table">
-										<tr>
-											<td>车架号：234235234</td>
-											<td>车型：奔驰GLK</td>
-											<td>年款：2016款</td>
-											<td>品牌：奔驰</td>
-										</tr>
-										<tr>
-											<td>排量：2.0T</td>
-											<td colspan="2">变速器：A/MT</td>
-										</tr>
-									</table>
+							<div class="detail-item-msg">
+								<div class="msg-title">评估参考基础信息</div>
+								<div class="msg-context">
+									<div class="msg-table-list">
+										<table class="msg-table">
+											<tr>
+												<td>车型：2008款 奥迪A4 1.8T舒适型</td>
+												<td>上牌年份：2017-03-23T12:59:23</td>
+												<td>上牌地：杭州</td>
+											</tr>
+											<tr>
+												<td>里程数：5（万公里）</td>
+												<td>车辆保养记录：详见保养记录附录</td>
+												<td>车辆配置信息：详见车辆配置信息</td>
+											</tr>
+										</table>
+									</div>
 								</div>
-								<div class="msg-table-list">
-									<h5>保养信息</h5>
-									<table class="msg-table">
-										<tr>
-											<td>保养日期：2014-02-03</td>
-											<td>保养类型：无</td>
-											<td>公里数：9905公里</td>
-											<td>材料：机油；机滤</td>
-										</tr>
-										<tr>
-											<td colspan="4">保养内容：自定义工时；空调系统清洗与消毒及车内杀菌除臭</td>
-										</tr>
-									</table>
-									<hr />
-									<table class="msg-table">
-										<tr>
-											<td>保养日期：2014-02-03</td>
-											<td>保养类型：无</td>
-											<td>公里数：9905公里</td>
-											<td>材料：机油；机滤</td>
-										</tr>
-										<tr>
-											<td colspan="4">保养内容：自定义工时；空调系统清洗与消毒及车内杀菌除臭</td>
-										</tr>
-									</table>
+							</div>
+							<div class="detail-item-msg">
+								<div class="msg-title">车辆配置信息</div>
+								<div class="msg-context">
+									<div class="msg-table-list">
+										<h5>基本参数</h5>
+										<table class="msg-table">
+											<tr>
+												<td>级别：中型车</td>
+												<td>最高车速(km/h)：250</td>
+												<td>厂商：奥迪汽车</td>
+											</tr>
+											<tr>
+												<td>市郊工况油耗：6550</td>
+												<td>车身结构：2门4座三厢车</td>
+												<td>长*宽*高(mm)：4626*1854*1372</td>
+											</tr>
+											<tr>
+												<td>实测100-0km/h制动(m)：2</td>
+												<td>官方0-100km/h加速(s)：2</td>
+												<td>整车质保：5年</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="detail-item-msg">
+								<div class="msg-title">保养记录</div>
+								<div class="msg-context">
+									<div class="msg-table-list msg-borderbt-solid">
+										<h5>基本信息</h5>
+										<table class="msg-table">
+											<tr>
+												<td>车架号：234235234</td>
+												<td>车型：奔驰GLK</td>
+												<td>年款：2016款</td>
+												<td>品牌：奔驰</td>
+											</tr>
+											<tr>
+												<td>排量：2.0T</td>
+												<td colspan="2">变速器：A/MT</td>
+											</tr>
+										</table>
+									</div>
+									<div class="msg-table-list">
+										<h5>保养信息</h5>
+										<table class="msg-table">
+											<tr>
+												<td>保养日期：2014-02-03</td>
+												<td>保养类型：无</td>
+												<td>公里数：9905公里</td>
+												<td>材料：机油；机滤</td>
+											</tr>
+											<tr>
+												<td colspan="4">保养内容：自定义工时；空调系统清洗与消毒及车内杀菌除臭</td>
+											</tr>
+										</table>
+										<hr />
+										<table class="msg-table">
+											<tr>
+												<td>保养日期：2014-02-03</td>
+												<td>保养类型：无</td>
+												<td>公里数：9905公里</td>
+												<td>材料：机油；机滤</td>
+											</tr>
+											<tr>
+												<td colspan="4">保养内容：自定义工时；空调系统清洗与消毒及车内杀菌除臭</td>
+											</tr>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<!-- 车辆登记抵押查询 -->
-				<div class="detail-item-list">
-					<div class="detail-item-title">
-						<i class="iconfont">&#xe642;</i>车辆登记抵押查询
-					</div>
-					<div class="detail-item-alert alert-success">
-						<span class="icon"><i class="iconfont">&#xe659;</i></span>
-						<span class="status">已查询</span>
-						<span class="text"></span>
-					</div>
-					<div class="detail-item-context clearfix">
-						<div class="detail-item-msg">
-							<table class="default-table">
-								<tbody class="haveHead">
-									<tr>
-										<td><span class="key">查询结果：</span>存在车辆登记证抵押记录</td>
-										<td><span class="key">车牌号：</span>浙ASB250</td>
-										<td><span class="key">车架号：</span>5345342525</td>
-									</tr>
-								</tbody>
-							</table>
-							<div class="msg-context">
-								<div class="msg-table-list msg-borderbt-dashed">
-									<h5>抵押记录1</h5>
-									<table class="msg-table">
+					</div> -->
+				<!-- {{ }else if(i==1013){ }}
+					车辆登记抵押查询
+					<div class="detail-item-list">
+						<div class="detail-item-title">
+							<i class="iconfont">&#xe642;</i>车辆登记抵押查询
+						</div>
+						<div class="detail-item-alert alert-success">
+							<span class="icon"><i class="iconfont">&#xe659;</i></span>
+							<span class="status">已查询</span>
+							<span class="text"></span>
+						</div>
+						<div class="detail-item-context clearfix">
+							<div class="detail-item-msg">
+								<table class="default-table">
+									<tbody class="haveHead">
 										<tr>
-											<td>抵押登记日期：2016-04-03</td>
-											<td>抵押权人：张某某</td>
-											<td>解除日期：2017-03-04</td>
-											<td>抵押标记：无</td>
+											<td><span class="key">查询结果：</span>存在车辆登记证抵押记录</td>
+											<td><span class="key">车牌号：</span>浙ASB250</td>
+											<td><span class="key">车架号：</span>5345342525</td>
 										</tr>
-									</table>
-								</div>
-								<div class="msg-table-list">
-									<h5>抵押记录2</h5>
-									<table class="msg-table">
-										<tr>
-											<td>抵押登记日期：2016-04-03</td>
-											<td>抵押权人：张某某</td>
-											<td>解除日期：2017-03-04</td>
-											<td>抵押标记：无</td>
-										</tr>
-									</table>
+									</tbody>
+								</table>
+								<div class="msg-context">
+									<div class="msg-table-list msg-borderbt-dashed">
+										<h5>抵押记录1</h5>
+										<table class="msg-table">
+											<tr>
+												<td>抵押登记日期：2016-04-03</td>
+												<td>抵押权人：张某某</td>
+												<td>解除日期：2017-03-04</td>
+												<td>抵押标记：无</td>
+											</tr>
+										</table>
+									</div>
+									<div class="msg-table-list">
+										<h5>抵押记录2</h5>
+										<table class="msg-table">
+											<tr>
+												<td>抵押登记日期：2016-04-03</td>
+												<td>抵押权人：张某某</td>
+												<td>解除日期：2017-03-04</td>
+												<td>抵押标记：无</td>
+											</tr>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<!-- 车辆保养记录查询 -->
-				<div class="detail-item-list">
-					<div class="detail-item-title">
-						<i class="iconfont">&#xe674;</i>车辆保养记录查询
-					</div>
-					<div class="detail-item-alert alert-success">
-						<span class="icon"><i class="iconfont">&#xe659;</i></span>
-						<span class="status">已查询</span>
-						<span class="text"></span>
-					</div>
-					<div class="detail-item-context clearfix">
-						<div class="detail-item-msg">
-							<div class="explain">
-								<span class="key">查询结果：</span>存在保养记录
-							</div>
-							<div class="msg-context">
-								<div class="msg-table-list msg-borderbt-solid">
-									<h5>基本信息</h5>
-									<table class="msg-table">
-										<tr>
-											<td>车架号：234235234</td>
-											<td>车型：奔驰GLK</td>
-											<td>年款：2016款</td>
-											<td>品牌：奔驰</td>
-										</tr>
-										<tr>
-											<td>排量：2.0T</td>
-											<td colspan="2">变速器：A/MT</td>
-										</tr>
-									</table>
+					</div> -->
+				{{ }else if(i==1014){ }}
+					<!-- 车辆保养记录查询 -->
+					<div class="detail-item-list">
+						<div class="detail-item-title">
+							<i class="iconfont">&#xe674;</i>车辆保养记录查询
+						</div>
+						<div class="detail-item-alert alert-success">
+							<span class="icon"><i class="iconfont">&#xe659;</i></span>
+							<span class="status">已查询</span>
+							<span class="text"></span>
+						</div>
+						<div class="detail-item-context clearfix">
+							<div class="detail-item-msg">
+								<div class="explain">
+									<span class="key">查询结果：</span>
+									{{ if(item&&item.length>0){ }}
+										存在保养记录
+									{{ }else{ }}
+										没有保养记录
+									{{ } }}
 								</div>
-								<div class="msg-table-list">
-									<h5>保养信息</h5>
-									<table class="msg-table">
-										<tr>
-											<td>保养日期：2014-02-03</td>
-											<td>保养类型：无</td>
-											<td>公里数：9905公里</td>
-											<td>材料：机油；机滤</td>
-										</tr>
-										<tr>
-											<td colspan="4">保养内容：自定义工时；空调系统清洗与消毒及车内杀菌除臭</td>
-										</tr>
-									</table>
-									<hr />
-									<table class="msg-table">
-										<tr>
-											<td>保养日期：2014-02-03</td>
-											<td>保养类型：无</td>
-											<td>公里数：9905公里</td>
-											<td>材料：机油；机滤</td>
-										</tr>
-										<tr>
-											<td colspan="4">保养内容：自定义工时；空调系统清洗与消毒及车内杀菌除臭</td>
-										</tr>
-									</table>
+								{{ for(var z=0;z<item.length;z++){var col=item[z].dataJson; }}
+								<div class="msg-context">
+									<div class="msg-table-list msg-borderbt-solid">
+										<h5>基本信息</h5>
+										{{var basic=col.basic;}}
+										<table class="msg-table">
+											<tr>
+												<td>车架号：{{=basic.vin}}</td>
+												<td>车型：{{=basic.model}}</td>
+												<td>年款：{{=basic.year}}款</td>
+												<td>品牌：{{=basic.brand}}</td>
+											</tr>
+											<tr>
+												<td>排量：{{=basic.displacement}}T</td>
+												<td colspan="2">变速器：{{=basic.gearbox}}A/MT</td>
+											</tr>
+										</table>
+									</div>
+									<div class="msg-table-list">
+										<h5>保养信息</h5>
+										{{ for(var j=0;j<col.reportJson.length;j++){var repo=col.reportJson[j]; }}
+											{{ if(j>=1){ }}
+												<hr />
+											{{ } }}		
+											<table class="msg-table">
+												<tr>
+													<td>保养日期：{{=repo.repairDate}}</td>
+													<td>保养类型：{{=repo.type}}</td>
+													<td>公里数：{{=repo.mileage}}公里</td>
+													<td>材料：{{=repo.material}}</td>
+												</tr>
+												<tr>
+													<td colspan="4">保养内容：{{=repo.content}}</td>
+												</tr>
+											</table>										
+										{{ } }}
+									</div>
 								</div>
+								{{ } }}
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+				{{ } }}
+			{{ } }}
 		</div>
+	</div>
+	{{ }else{ }}
 		<div class="no-data"></div>
-	</div>
-	<div class="commit-orders-box">
-		<div class="button button-orange">退回订单</div>
-		<div class="button button-deep">审核通过</div>
-	</div>
-</div>
-<!--数据辅证 end-->
-<script type="text/x-dot-template" id="roleBarTabTmpl">
-	{{ var len = it.length; if(len) { }}
-		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
-			<li class="role-bar-li">
-				{{ if(item.isMainApplicant){ }}
-					<a href="javascript:;" class="role-item role-item-active">{{=item.userName}}(主申请人)</a>
-				{{ }else{ }}
-					<a href="javascript:;" class="role-item">{{=item.userName}}(共同还款人)</a>						
-				{{ } }}				
-			</li>
-		{{ } }}
 	{{ } }}
 </script>	
+<script type="text/x-dot-template" id="importResultTmpl">
+	<dl class="import-dl clearfix">
+		<dt class="import-icon-box">
+			<div class="import-icon">
+				<i class="iconfont">&#xe659;</i>
+			</div>
+		</dt>
+		<dd class="import-msg-box">
+			<div class="import-result">查询成功！</div>
+			<div class="import-text">请点击“历史核查记录”中查看详情</div>
+		</dd>
+	</dl>
+</script>	
+			

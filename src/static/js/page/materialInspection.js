@@ -3,52 +3,80 @@ page.ctrl('materialInspection', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			orderNo: $params.orderNo,
-		};
+			//orderNo: $params.orderNo,
+			orderNo: 'nfdb2016102820480790',
+			sceneCode:'creditApproval'
+		},userType=[
+			{userType:0,text:"主申请人"},
+			{userType:1,text:"共同还款人"},
+			{userType:2,text:"反担保人"}
+		];
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
-			type: 'get',
+			type: 'post',
 			dataType:"json",
-			url: $http.api('materialInspection'),
+			url: $http.api('verifyResult/resultDetail',true),
 			data: param,
-			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.data, true);
-				//render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+			success: $http.ok(function(res) {
+				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, res.data.data, true);
 				if(callback && typeof callback == 'function') {
 					callback();
 				};
 			})
 		});
 	};
+	/*查询该订单下用户列表*/
+	var searchUserList=function(param){
+		$.ajax({
+			type: 'post',
+			dataType:"json",
+			url: $http.api('loanAudit/userList',true),
+			data: param,
+			success: $http.ok(function(res) {
+				if(res&&res.data&&res.data.length>0){
+					for(var i in res.data){
+						var _minObj=userType.filter(it=>it.userType==res.data[i].userType);
+						if(_minObj&&_minObj.length==1){
+							res.data[i].userTypeName=_minObj[0].text;
+						};
+					};
+					render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.data, true);
+					//apiParams.userId=res.data[0].userId;
+					apiParams.userId='334232';
+					search(apiParams, function() {
+						evt();
+					});
+				};
+			})
+		});
+	};
 	/*发起核查*/
 	var openDialog=function(that,_data){
-
-			/*	<li><div class="text-bt">银行</div>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bac73c7df"><i class="iconfont">&#xe6bb;</i></span></p>\
-						<p class="text-name">购房发票核查\
-				<li><div class="text-bt">银行</div>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bacAgain"><i class="iconfont">&#xe673;</i></span></p>\
-						<p class="text-name">银行流水核查\
-				<li><div class="text-bt">银行</div>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bac59cfb7"><i class="iconfont">&#xe679;</i></span></p>\
-						<p class="text-name">房产证核查\
-				<li>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bac82b953"><i class="iconfont">&#xe672;</i></span></p>\
-						<p class="text-name">合格证核查\
-				<li>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bac84bef0"><i class="iconfont">&#xe642;</i></span></p>\
-						<p class="text-name">保单核查\
-				<li>\
-					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bacf5bf5b"><i class="iconfont">&#xe6cc;</i></span></p>\
-						<p class="text-name">车辆登记核查\
-				</li>\*/
+		var _loalList=[
+			{text:"购车",isBank:true,class:"bacf09054",icon:"&#xe676;"},
+			{text:"购房",isBank:true,class:"bac73c7df",icon:"&#xe6bb;"},
+			{text:"银行",isBank:true,class:"bacAgain",icon:"&#xe673;"},
+			{text:"房产证",isBank:true,class:"bac59cfb7",icon:"&#xe679;"},
+			{text:"合格证",isBank:false,class:"bac82b953",icon:"&#xe672;"},
+			{text:"保单",isBank:false,class:"bac84bef0",icon:"&#xe642;"},
+			{text:"车辆",isBank:false,class:"bacf5bf5b",icon:"&#xe6cc;"},
+		];
+		for(var i in _data){
+			for(var j=0;j<_loalList.length;j++){
+				if(_data[i].funcName.indexOf(_loalList[j].text)!=-1){
+					_data[i].isBank=_loalList[j].isBank;
+					_data[i].class=_loalList[j].class;
+					_data[i].icon=_loalList[j].icon;
+					break;
+				};
+				if(j==_loalList.length-1){
+					_data[i].isBank=false;
+					_data[i].class="bac73c7df";
+					_data[i].icon="&#xe6bb;";					
+				};
+			};
+		};
 		that.openWindow({
 			title:"———— 服务项目 ————",
 			width:"70%",
@@ -114,7 +142,7 @@ page.ctrl('materialInspection', function($scope) {
 			if($(this).siblings("li").length>0){
 				$(this).siblings("li").find("a").removeClass("role-item-active");
 				$(this).find("a").addClass("role-item-active");
-				//search();
+				search();
 			};
 		});
 		/*获取核查列表*/
@@ -123,10 +151,11 @@ page.ctrl('materialInspection', function($scope) {
 			$.ajax({
 				type: 'post',
 				dataType:'json',
-				url: $http.api('loanAudit/verifyItemList'),
+				url: $http.api('loanAudit/verifyItemList','cyj'),
 				data: {
-					userId:"",
-					orderNo:apiParams.orderNo
+					userId:"334232",
+					orderNo:'nfdb2016102820480790'
+					//orderNo:apiParams.orderNo
 				},
 				success: $http.ok(function(res) {
 					if(res&&res.data&&res.data.length>0)
@@ -141,17 +170,15 @@ page.ctrl('materialInspection', function($scope) {
 	// 加载页面模板
 	render.$console.load(router.template('iframe/material-inspection'), function() {
 		$scope.def.tabTmpl = render.$console.find('#roleBarTabTmpl').html();
-		$scope.def.listTmpl = render.$console.find('#materialInspection').html();
+		$scope.def.listTmpl = render.$console.find('#materialInspectionTmpl').html();
 		$scope.def.toastTmpl = render.$console.find('#importResultTmpl').html();
 		$scope.$el = {
 			$tab: $console.find('#roleBarTab'),
+			$listDiv: $console.find('#listDiv'),
 			$startCheck: $console.find('#startCheck'),
 		};
-		search(apiParams, function() {
-			evt();
+		searchUserList({
+			orderNo:apiParams.orderNo,
 		});
 	});
 });
-
-
-
