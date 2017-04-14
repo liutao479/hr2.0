@@ -218,6 +218,9 @@ page.ctrl('secondhandInput', function($scope) {
 	* 下拉
 	*/
 	var seleLoad = function(){
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
 		$(".select").each(function(){
 			var $that = $(this);
 			var selected = $(this).data('selected');

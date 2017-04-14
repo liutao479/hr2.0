@@ -146,10 +146,10 @@
 	        }
 	    ],
 	    "userRelationship":[
-	        {
-	            "name":"本人",
-	            "value":"0"
-	        },
+//	        {
+//	            "name":"本人",
+//	            "value":"0"
+//	        },
 	        {
 	            "name":"配偶",
 	            "value":"1"

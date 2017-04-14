@@ -45,17 +45,17 @@
 											</td>
 										{{ }else if(fieldCode == 'taxIsPay'){ }}
 											<td>
-												<div class="select select-common" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-dropdown="page.$scope['secondhandInput'].selfPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.selfPicker"></div>
+												<div class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-dropdown="page.$scope['secondhandInput'].selfPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
 											</td>
 										{{ }else if(fieldCode == 'carMode'){ }}
 											<td>
-												<div id="carMode" class="select select-common" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['secondhandInput'].carPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.car"></div>
+												<div id="carMode" readonly="readonly" class="select select-common" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['secondhandInput'].carPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.car"></div>
 												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
 											</td>
 										{{ }else if(fieldCode == 'originArea' || fieldCode == 'location'){ }}
 											<td>
-												<div class="select select-common" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
+												<div class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
 												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
 											</td>
 										{{ }else{ }}
