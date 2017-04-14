@@ -51,6 +51,11 @@ page.ctrl('phoneAudit', function($scope) {
 	}
 
 	var setupEvt = function($el) {
+		$console.find('.textArea').on('blur', function() {
+			var tContext = $(this).text();
+			console.log(tContext);
+			$(this).siblings('input').val(tContext)
+		})
 	    /***
 		* 保存按钮
 		*/
