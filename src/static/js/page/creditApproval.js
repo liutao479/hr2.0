@@ -151,6 +151,53 @@ page.ctrl('creditApproval', [], function($scope) {
 		})
 	}
 
+	/*发起核查*/
+	var openDialog=function(that,_data){
+		that.openWindow({
+			title:"核查项目选择",
+			content: dialogTml.wContent.btngroup,
+			commit: dialogTml.wCommit.cancelSure,
+			data:_data
+		},function($dialog){
+			var _arr=[];
+			$dialog.find(".block-item-data:not(.not-selected)").click(function() {
+				$(this).toggleClass("selected");	
+				var _index=$(this).data("index");
+				var _thisVal=_data[_index].key;
+				if($(this).hasClass("selected"))
+					_arr.push(_thisVal);	
+				else
+					_arr.splice(_thisVal,1);
+			});
+			$dialog.find(".w-sure").click(function() {
+				$dialog.remove();
+				if(_arr.length==0)
+					return false;
+				$.ajax({
+					type: "post",
+					url: $http.api('creditAudit/startVerify','cyj'),
+					data:{
+						//keys:_arr.join(','),
+						//orderNo:$params.orderNo,
+						keys:'doPolice,bankWater',
+						orderNo:'nfdb2016102820480799',
+						userId:"334232"
+					},
+					dataType:"json",
+					success: $http.ok(function(res) {
+						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
+							var context=$(".jconfirm .jconfirm-content").html();
+							if(context){
+								setTimeout(function() {
+									jc.close();
+								},1500);
+							};
+						});
+					})
+				});						
+			});
+		});		
+	};
 	/**
 	* 绑定立即处理事件
 	*/
@@ -223,10 +270,31 @@ page.ctrl('creditApproval', [], function($scope) {
 				})
 			})
 		});
-
-		//辅证数据
+		//发起核查
+		$self.off('click','.gocheck').on('click','.gocheck', function() {
+			var that=$(this);
+			$.ajax({
+				type: 'post',
+				dataType:'json',
+				url: $http.api('creditAudit/itemList','cyj'),
+				data: {
+					userId:"10"
+				},
+				success: $http.ok(function(res) {
+					if(res&&res.data&&res.data.length>0)
+						openDialog(that,res.data);
+					else
+						openDialog(that,[]);
+				})
+			});
+		});
+		//查看报告结果
 		$self.find('.assistData').on('click', function() {
-			alert('前往辅证数据页面');
+			router.render("preAuditDataAssistant", {	
+				orderNo:'nfdb2016102820480790',
+				userId:'334232',
+				sceneCode:'creditApproval'
+			});
 		});
 	}
 
@@ -481,7 +549,8 @@ page.ctrl('creditApproval', [], function($scope) {
 	render.$console.load(router.template('iframe/credit-result-typing'), function() {
 		$scope.def = {
 			tabTmpl: $console.find('#creditResultTabsTmpl').html(),
-			listTmpl: $console.find('#creditResultListTmpl').html()
+			listTmpl: $console.find('#creditResultListTmpl').html(),
+			toastTmpl:render.$console.find('#importResultTmpl').html()
 		}
 		$scope.$el = {
 			$tbls: $console.find('#creditResultPanel > .tabTrigger'),

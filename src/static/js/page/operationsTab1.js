@@ -1,6 +1,7 @@
 'use strict';
-page.ctrl('riskManagement',['vendor/echarts.min'], function($scope) {
-	var $console = render.$console,
+page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
 		selValObj={},
 		savedQuery={},/*全局保存查询的条件*/
 		tabList=[
@@ -11,6 +12,8 @@ page.ctrl('riskManagement',['vendor/echarts.min'], function($scope) {
 			{text:"逾期情况统计"},
 			{text:"报表下载"},
 		];
+
+
 	/*echarts图表绘制*/
 	var setEcharts=function(_name,_list){
 		/*饼图start*/
@@ -40,7 +43,7 @@ page.ctrl('riskManagement',['vendor/echarts.min'], function($scope) {
 		        {
 		            name: '访问来源',
 		            type: 'pie',//指定类型为饼图
-		            center: ['65%', '50%'],
+		            center: ['70%', '55%'],
 		            data:_list,
 		            itemStyle: {
 		                emphasis: {//鼠标经过时样式
@@ -157,11 +160,11 @@ page.ctrl('riskManagement',['vendor/echarts.min'], function($scope) {
 		});
  	};
 	// 加载页面模板
-	render.$console.load(router.template('iframe/risk-management'), function() {
-		$scope.def.tabTmpl = render.$console.find('#roleBarTabTmpl').html();//tab模板
-		$scope.def.valuationTotalTemp = render.$console.find('#valuationTotalTemp').html();//数据总览模板
-		$scope.def.serviceStaticTemp = render.$console.find('#serviceStaticTemp').html();//数据总览模板
-		$scope.def.tableTmpl = render.$console.find('#riskManagementTmpl').html();//表格模板
+	$console.load(router.template('iframe/operationsTab1'), function() {
+		$scope.def.tabTmpl = $console.find('#roleBarTabTmpl').html();//tab模板
+		$scope.def.valuationTotalTemp = $console.find('#valuationTotalTemp').html();//数据总览模板
+		$scope.def.serviceStaticTemp = $console.find('#serviceStaticTemp').html();//数据总览模板
+		$scope.def.tableTmpl = $console.find('#riskManagementTmpl').html();//表格模板
 		$scope.$context=$console.find("#risk-management");
 		$scope.$el = {
 			$tab: $scope.$context.find('#roleBarTab'),

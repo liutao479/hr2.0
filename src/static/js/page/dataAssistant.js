@@ -3,35 +3,203 @@ page.ctrl('dataAssistant', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			pageNum: $params.pageNum || 1,
-		};
+			//orderNo: $params.orderNo,
+			orderNo: 'nfdb2016102820480790',
+			sceneCode:'creditApproval'
+		},
+		userType=[
+			{userType:0,text:"主申请人"},
+			{userType:1,text:"共同还款人"},
+			{userType:2,text:"反担保人"}
+		],
+		operator=[
+			{type:1,text:"中国电信"},
+			{type:2,text:"中国移动"},
+			{type:3,text:"中国联通"}
+		];
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
-			type: 'get',
+			type: 'post',
 			dataType:"json",
-			url: $http.api('materialInspection'),
+			url: $http.api('verifyResult/resultDetail',true),
 			data: param,
-			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tab, $scope.def.tabTmpl, result.data, true);
+			success: $http.ok(function(res) {
+				var _mobil=res.data.data[1021];
+				var _usedCar=res.data.data[1025];
+				var _platLend=res.data.data[1018];
+				if(_mobil){
+					for(var i in _mobil){
+						var _thisOperator=operator.filter(it=>it.type==_mobil[i].OPERATOR);
+						if(_thisOperator&&_thisOperator.length==1)
+							res.data.data[1021][i].operatorName=_thisOperator[0].text;
+					};
+				};
+				var _platArr=[];
+				/*var repeatPlat=function(items){
+					if(platJson&&platJson['three_month']){
+						for(var u in platJson['three_month']){
+							for(var r=0;r<_platArr.length;r++){
+								if(_platArr[r].name==u){
+									_platArr[r].three_month+=platJson['three_month'][u];
+									break;
+								};
+								if(r==_platArr.length-1)
+									_platArr.push({name:u,three_month:platJson['three_month'][u]});
+							};
+						};
+				};*/
+				if(_platLend&&_platLend.length>0){
+					for(var k in _platLend){
+						var platJson=_platLend[k].multipleJSON;
+						};
+					};
+				}else{
+					res.data.data[1018]=[];
+				};/*网贷平台借贷数据统计*/
+				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, res.data.data, true);
+				if(_usedCar)
+					setCanvas();
 				if(callback && typeof callback == 'function') {
 					callback();
 				};
 			})
 		});
 	};
-	// 页面首次载入时绑定事件
- 	var evt = function() {
-		$scope.$el.$tab.off("click","li.role-bar-li").on("click","li.role-bar-li",function() {
-			if($(this).siblings("li").length>0){
-				$(this).siblings("li").find("a").removeClass("role-item-active");
-				$(this).find("a").addClass("role-item-active");
-				//search();
+	/*查询该订单下用户列表*/
+	var searchUserList=function(param){
+		$.ajax({
+			type: 'get',
+			dataType:"json",
+			url: $http.api('loanAudit/userList',true),
+			data: param,
+			success: $http.ok(function(res) {
+				if(res&&res.data&&res.data.length>0){
+					for(var i in res.data){
+						var _minObj=userType.filter(it=>it.userType==res.data[i].userType);
+						if(_minObj&&_minObj.length==1){
+							res.data[i].userTypeName=_minObj[0].text;
+						};
+					};
+					render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.data, true);
+					//apiParams.userId=res.data[0].userId;
+					apiParams.userId='334232';
+					search(apiParams, function() {
+						evt();
+					});
+				};
+			})
+		});
+	};
+	/*发起核查*/
+	var openUserDialog=function(that,_data,key){
+		for(var z in _data){
+			var _minObj=userType.filter(it=>it.userType==_data[z].userType);
+			if(_minObj&&_minObj.length==1){
+				_data[z].userTypeName=_minObj[0].text;
 			};
-		});
-		$console.off("click",".gocheck").on("click",".gocheck", function() {
-			
-		});
+		};
+		that.openWindow({
+			title:"———— 服务项目 ————",
+			width:"70%",
+			content: dialogTml.wContent.userBtnGroup,	
+			commit: dialogTml.wCommit.cancelSure,			
+			data:_data
+		},function($dia){
+			var _arr=[];
+			$dia.find(".block-item-data:not(.not-selected)").click(function() {
+				$(this).toggleClass("selected");	
+				var _index=$(this).data("index");
+				var _thisVal=_data[_index].userId;
+				if($(this).hasClass("selected"))
+					_arr.push(_thisVal);	
+				else
+					_arr.splice(_arr.indexOf(_thisVal),1);
+			});
+			$dia.find(".w-sure").click(function() {
+				$dia.remove();
+				if(_arr.length==0)
+					return false;
+				$.ajax({
+					type: 'post',
+					dataType:"json",
+					url: $http.api('creditAudit/startVerify'),
+					data: {
+						apiKeys:key,
+						orderNo:apiParams.orderNo,
+						userIds:_arr.join("_")
+					},
+					success: $http.ok(function(res) {
+						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
+							var context=$(".jconfirm .jconfirm-content").html();
+							if(context){
+								setTimeout(function() {
+									jc.close();
+								},1500);
+							};
+						});
+					})
+				});
+			});
+		});	
+	};
+	var openDialog=function(that,_data){
+		var _loalList=[
+			{text:"实名",isBank:true,class:"bac6b78fa",icon:"&#xe677;"},
+			{text:"人脸",isBank:true,class:"bacc8a5df",icon:"&#xe67c;"},
+			{text:"公安",isBank:true,class:"bac6b78fa",icon:"&#xe661;"},
+			{text:"法院",isBank:false,class:"bacc8a5df",icon:"&#xe6a5;"},
+			{text:"网贷平台",isBank:false,class:"bacf09054",icon:"&#xe666;"},
+			{text:"网贷逾期",isBank:false,class:"bac73c7df",icon:"&#xe671;"},
+			{text:"学历",isBank:false,class:"bac59cfb7",icon:"&#xe679;"},
+			{text:"手机在网",isBank:false,class:"bacAgain",icon:"&#xe66e;"},
+			{text:"二手车",isBank:false,class:"bac73c7df",icon:"&#xe64f;"},
+			{text:"车辆登记",isBank:false,class:"bac82b953",icon:"&#xe642;"},
+			{text:"车辆保养",isBank:false,class:"bacf5bf5b",icon:"&#xe674;"},
+		];
+		for(var i in _data){
+			for(var j=0;j<_loalList.length;j++){
+				if(_data[i].funcName.indexOf(_loalList[j].text)!=-1){
+					_data[i].isBank=_loalList[j].isBank;
+					_data[i].class=_loalList[j].class;
+					_data[i].icon=_loalList[j].icon;
+					break;
+				};
+				if(j==_loalList.length-1){
+					_data[i].isBank=false;
+					_data[i].class="bac6b78fa";
+					_data[i].icon="&#xe666;";					
+				};
+			};
+		};
+		that.openWindow({
+			title:"———— 服务项目 ————",
+			width:"70%",
+			content: dialogTml.wContent.serviceItems,				
+			data:_data//0：未核查，1:未查询，缺少相关数据,2: 查询中,3：已核查
+		},function($dialog){
+			$dialog.find(".nextDialog").click(function() {
+				$dialog.remove();
+				var _key=_data[$(this).data('index')].apikey;
+				$.ajax({
+					type: 'post',
+					dataType:'json',
+					url: $http.api('loanAudit/checkUserList','cyj'),
+					data: {
+						orderNo:apiParams.orderNo,
+						key:_key
+					},
+					success: $http.ok(function(res) {
+						if(res&&res.data&&res.data.length>0)
+							openUserDialog(that,res.data,_key);
+						else
+							openUserDialog(that,[],_key);
+					})
+				});	
+			});
+		});		
+	};
+	var setCanvas=function(){
 		/*画百分比相关start*/
 		var percentage=function(x){
 			var c=document.getElementById(x.id);
@@ -102,19 +270,52 @@ page.ctrl('dataAssistant', function($scope) {
 			fill(circleCanvas[i]);
 		};
 		/*画百分比相关end*/
+	};
+	// 页面首次载入时绑定事件
+ 	var evt = function() {
+		$scope.$el.$tab.off("click","li.role-bar-li").on("click","li.role-bar-li",function() {
+			if($(this).siblings("li").length>0){
+				$(this).siblings("li").find("a").removeClass("role-item-active");
+				$(this).find("a").addClass("role-item-active");
+				var _id=$(this).data('id');
+				if(_id){
+					apiParams.userId=_id;
+					search(apiParams);
+				};
+			};
+		});
+		$scope.$el.$listDiv.off("click","#startCheck").on("click","#startCheck",function() {
+			var that=$(this);
+			$.ajax({
+				type: 'post',
+				dataType:'json',
+				url: $http.api('loanAudit/evidenceItemList','cyj'),
+				data: {
+					userId:apiParams.userId,
+					orderNo:apiParams.orderNo
+				},
+				success: $http.ok(function(res) {
+					if(res&&res.data&&res.data.length>0)
+						openDialog(that,res.data);
+					else
+						openDialog(that,[]);
+				})
+			});			
+		});
  	};
  	
 	// 加载页面模板
 	render.$console.load(router.template('iframe/data-assistant'), function() {
 		$scope.def.tabTmpl = render.$console.find('#roleBarTabTmpl').html();
+		$scope.def.listTmpl = render.$console.find('#listTmpl').html();
+		$scope.def.toastTmpl = render.$console.find('#importResultTmpl').html();
+		$scope.$context=$console.find('#data-assistant');
 		$scope.$el = {
-			$tab: $console.find('#roleBarTab'),
+			$tab: $scope.$context.find('#roleBarTab'),
+			$listDiv: $scope.$context.find('#listDiv'),
 		};
-		search(apiParams, function() {
-			evt();
+		searchUserList({
+			orderNo:apiParams.orderNo,
 		});
 	});
 });
-
-
-

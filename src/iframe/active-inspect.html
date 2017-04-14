@@ -24,10 +24,6 @@
 			<div class="select select-common" data-dropdown="page.$scope['activeInspect'].statusPicker" data-trigger="page.$scope['activeInspect'].dropdownTrigger.statusSel"></div>
 		</div>
 		<div class="search-item">
-			<span class="select-name">进件车商：</span>
-			<div class="select select-common" data-dropdown="page.$scope['activeInspect'].dealerPicker" data-trigger="page.$scope['activeInspect'].dropdownTrigger.dealerSel"></div>
-		</div>
-		<div class="search-item">
 			<span class="select-name">车辆类型：</span>
 			<div class="select select-common" data-dropdown="page.$scope['activeInspect'].carTypePicker" data-trigger="page.$scope['activeInspect'].dropdownTrigger.carTypeSel"></div>
 		</div>
@@ -61,10 +57,10 @@
 	</div>	
 	<div class="search-bar clearfix mt15">
 		<div class="all-check-box">
-			<div id="all" data-id='83' class="checkbox checkbox-normal"></div>
+			<div id="checkall" class="checkbox checkbox-normal"></div>
 			<span>全选</span>
 		</div>
-		<div class="button button-deep gocheck">
+		<div class="button button-deep" id="gocheck">
 			发起核查
 		</div>
 	</div>
@@ -78,18 +74,18 @@
 <script type="text/x-dot-template" id="activeInspectTmpl">
 	{{ var len = it.length; if(len) { }}
 		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
-			<table class="expire-orders-table" width="100%">
+			<table class="expire-orders-table" width="100%" data-id="{{=item.orderNo}}">
 				<thead class="expire-title">
 					<tr>
 						<td colspan="4">
-							<div id="onlyCheck" data-id = "{{= item.id}}" class="checkbox checkbox-normal"></div>
+							<div class="checkbox checkbox-normal"></div>
 							<i class="iconfont iconfont-man">&#xe656;</i>
-							<span class="userName">{{= item.userName}}</span>
-							<span>{{= item.orderId}}</span>
-							<!--<div class="key-value-box clearfix">
+							<span class="userName">{{= item.realName}}</span>
+							<span>{{= item.orderNo}}</span>
+							<div class="key-value-box clearfix">
 								<span class="key">解析时间：</span>
-								<span class="value">{{= item.createDate}}</span>
-							</div>-->
+								<span class="value">{{=tool.formatDate(item.recordEntryTime)}}</span>
+							</div>
 						</td>
 					</tr>
 				</thead>
@@ -99,15 +95,15 @@
 							<table class="table-inner">
 								<tr class="table-inner-tr">
 									<td class="key">抵押权人：</td>
-									<td class="value">{{= item.bankName}}</td>
+									<td class="value">{{= item.pledgee}}</td>
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">登记机关：</td>
-									<td class="value">{{= item.office}}</td>
+									<td class="value">{{= item.pledgeDept}}</td>
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">抵押日期：</td>
-									<td class="value">{{= item.time}}</td>
+									<td class="value">{{= tool.formatDate(item.pledgeDate)}}</td>
 								</tr>
 							</table>
 						</td>
@@ -119,7 +115,7 @@
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">经办网点：</td>
-									<td class="value">{{= item.dot}}</td>
+									<td class="value">{{= item.bankName}}</td>
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">放款金额：</td>
@@ -127,7 +123,7 @@
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">放款日期：</td>
-									<td class="value">{{= item.giveMoneyTime}}</td>
+									<td class="value">-</td>
 								</tr>
 							</table>
 						</td>
@@ -139,7 +135,7 @@
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">发动机号：</td>
-									<td class="value">{{= item.engineNum}}</td>
+									<td class="value">{{= item.engineNo}}</td>
 								</tr>
 							</table>
 						</td>

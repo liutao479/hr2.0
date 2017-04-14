@@ -2,7 +2,7 @@
 page.ctrl('lendAudit', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
-//	$params.taskId = 80874;
+
 	/**
 	* 设置面包屑
 	*/
@@ -17,6 +17,7 @@ page.ctrl('lendAudit', function($scope) {
 		});
 		$location.location();
 	}
+	
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数 

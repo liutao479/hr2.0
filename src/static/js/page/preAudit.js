@@ -32,7 +32,7 @@ page.ctrl('preAudit', function($scope) {
 			$dialog.find(".block-item-data:not(.not-selected)").click(function() {
 				$(this).toggleClass("selected");	
 				var _index=$(this).data("index");
-				var _thisVal=_data[_index].apiKey;
+				var _thisVal=_data[_index].key;
 				if($(this).hasClass("selected"))
 					_arr.push(_thisVal);	
 				else
@@ -44,14 +44,16 @@ page.ctrl('preAudit', function($scope) {
 					return false;
 				$.ajax({
 					type: "post",
-					url: $http.api('creditAudit/startVerify'),
+					url: $http.api('creditAudit/startVerify','cyj'),
 					data:{
-						apiKeys:_arr.join('_'),
-						orderNo:apiParams.orderNo,
-						userId:""
+						//keys:_arr.join(','),
+						//orderNo:apiParams.orderNo,
+						keys:'doPolice,bankWater',
+						orderNo:'nfdb2016102820480799',
+						userId:"334232"
 					},
 					dataType:"json",
-					success: $http.ok(function(res) {	
+					success: $http.ok(function(res) {
 						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
 							var context=$(".jconfirm .jconfirm-content").html();
 							if(context){
@@ -73,9 +75,9 @@ page.ctrl('preAudit', function($scope) {
 			$.ajax({
 				type: 'post',
 				dataType:'json',
-				url: $http.api('creditAudit/itemList'),
+				url: $http.api('creditAudit/itemList','cyj'),
 				data: {
-					userId:""
+					userId:"10"
 				},
 				success: $http.ok(function(res) {
 					if(res&&res.data&&res.data.length>0)

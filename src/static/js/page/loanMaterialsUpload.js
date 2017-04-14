@@ -342,18 +342,6 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	* @params {object} item 触发的tab对象
 	*/
 	var tabChange = function (idx, item) {
-		// var taskIds = [];
-		// for(var i = 0, len = $params.tasks.length; i < len; i++) {
-		// 	taskIds.push(parseInt($params.tasks[i].id));
-		// }
-		// var params = {
-		// 	taskId: $params.taskId,
-		// 	taskIds: taskIds,
-		// 	orderNo: $params.orderNo
-		// }
-		// var reason = $.trim(this.$content.find('#suggestion').val());
-		// if(reason) params.reason = reason;
-		// tasksJump(params, 'complete');
 		router.render('loanProcess/' + item.key, {
 			tasks: $scope.tasks,
 			taskId: $scope.tasks[idx].id,

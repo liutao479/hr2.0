@@ -22,7 +22,7 @@
 				<!-- 全选删除框 -->
 				<div class="all-select-panel all-select-panel-nobottomborder clearfix">
 					<div class="all-check-box">
-						<div class="checkbox checkbox-normal" id="allCheck"></div>
+						<div class="checkbox checkbox-normal" data-checked="false" id="allCheck"></div>
 						<span>全选</span>
 					</div>
 					<div class="all-check-box">
@@ -66,7 +66,7 @@
 						<tr class="orders-item">
 						{{ } }}
 							<td class="orders-item-data order-item-first">
-								<div class="checkbox checkbox-normal"></div>
+								<div class="checkbox checkbox-normal" data-checked="false"></div>
 							</td>
 							<td class="orders-item-data">{{=row.orderNo}}</td>
 							<td class="orders-item-data">{{=row.userName}}（{{=row.idCard}}）</td>
@@ -75,7 +75,7 @@
 							<td class="orders-item-data">征信查询</td>
 							
 							<td class="orders-item-data">
-								<a class="button button-mini button-gray contractPrint">合同套打</a>
+								<a class="button button-mini button-gray contractPrint" data-order-no="{{=row.orderNo}}">合同套打</a>
 								<a class="button button-mini button-gray ml15">下载</a>
 							</td>
 						</tr>

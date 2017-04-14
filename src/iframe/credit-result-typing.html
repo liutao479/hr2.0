@@ -222,7 +222,8 @@
 			<div class="panel-item-box">
 				<div class="panel-key-area">辅证数据：</div>
 				<div class="panel-value-area clearfix">
-					<a data-href="#" class="to-view assistData">点击查看</a>
+					<div class="button button-mini gocheck mr24">发起核查</div>
+					<a data-href="#" class="to-view assistData">查看报告结果</a>
 				</div>
 			</div>
 			<!-- 辅证数据 end-->
@@ -241,3 +242,17 @@
 
 	{{ } }}
 </script>
+<!-- 核查成功之后 -->
+<script type="text/x-dot-template" id="importResultTmpl">
+	<dl class="import-dl clearfix">
+		<dt class="import-icon-box">
+			<div class="import-icon">
+				<i class="iconfont">&#xe659;</i>
+			</div>
+		</dt>
+		<dd class="import-msg-box">
+			<div class="import-result">您已成功查询该项服务！</div>
+			<div class="import-text">请点击“查看报告结果”查看</div>
+		</dd>
+	</dl>
+</script>	

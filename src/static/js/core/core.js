@@ -42,6 +42,7 @@
 		else
 			// return 'http://192.168.1.86:8089/' + method;
 			return 'http://192.168.0.186:9999/' + method;
+			// return 'http://192.168.1.194:8686/' + method;//cyj
 			// return 'http://192.168.1.55:8080/' + method;
 			// return 'http://192.168.1.124:8080/' + method;
 			// return 'http://192.168.1.132:8080/' + method;
@@ -67,6 +68,22 @@
 				//统一的失败处理
 				var code = response.code;
 				switch (code) {
+					case 1000:
+						$.alert({
+							title: '提示',
+							content: tool.alert('合同模板不存在！'),
+							buttons:{
+								ok: {
+									text: '确定',
+									action: function() {
+										// location.href = 'login.html';
+										// alert(1)
+									}
+								}
+							}
+						})
+						return false;
+						break;
 					case 1001:
 						$.alert({
 							title: '提示',
