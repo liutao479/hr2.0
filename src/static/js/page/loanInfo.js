@@ -628,7 +628,7 @@ page.ctrl('loanInfo', function($scope) {
 								var that = this;
 		        				$.ajax({
 									type: 'post',
-									url: urlStr+'/loanInfoInput/submit/'+$params.taskId,
+									url: urlStr+'/loanInfoInput/submit/' + $params.taskId,
 									dataType: 'json',
 									success: $http.ok(function(xhr) {
 										var taskIds = [];
