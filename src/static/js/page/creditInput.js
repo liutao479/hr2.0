@@ -27,8 +27,19 @@ page.ctrl('creditInput', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				result.index = idx;
 				$scope.result = result;
+				var creditUsers = $scope.result.data.creditUsers, userType;
+				for(var i in creditUsers) {
+					userType = i;
+					break;
+				}
+				if(userType != 0) {
+					$scope.result.index = userType;
+					$scope.idx = userType;
+				} else {
+					$scope.result.index = idx;
+					$scope.idx = idx;
+				}
 				$scope.result.editable = 1;
 				$scope.result.userRalaMap = {
 					'0': '本人',
@@ -385,7 +396,7 @@ page.ctrl('creditInput', [], function($scope) {
 
 		// 备注框实时监听事件
 		var maxLen = 1000;
-		$el.find('.remark').next().text('还可输入' + (maxLen - $el.find('.remark').val().length) + '/' + maxLen + '字');
+		// $el.find('.remark').next().text('还可输入' + (maxLen - $el.find('.remark').val().length) + '/' + maxLen + '字');
 		$el.find('.remark').on('input', function() {
 			var that = $(this),
 				value = that.val();
@@ -604,19 +615,20 @@ page.ctrl('creditInput', [], function($scope) {
 			$tab: $console.find('#creditTabs'),
 			$paging: $console.find('#pageToolbar')
 		}
+
 		loadOrderInfo($scope.idx, function() {
 			initApiParams();
 			setupSubmitBar();
 			setupLocation();
 			setupBackReason($scope.result.data.loanTask.backApprovalInfo)
 		});
+		
 	});
 
 	/***
 	* 删除图片后的回调函数
 	*/
 	$scope.deletecb = function(self) {
-		// loadOrderInfo($scope.idx);
 		var $parent = self.$el.parent();
 		self.$el.remove();
 		pictureListen($parent);

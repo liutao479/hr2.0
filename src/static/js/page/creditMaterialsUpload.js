@@ -651,7 +651,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 上传图片数据回调
 	 */
 	$scope.uploadcb = function(self, xhr) {
-		console.log(self)
+		console.log(self.$el)
 		if(self.options.code == 'sfzzm') {
 			$.ajax({
 				type: 'post',
@@ -662,10 +662,10 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				dataType: 'json',
 				success: $http.ok(function(result) {
 					console.log(result)
-					var $name =  $scope.$el.$tbls.eq($scope.currentType).find('.credit-datas-bar .input-name');
-					var $idc =  $scope.$el.$tbls.eq($scope.currentType).find('.credit-datas-bar .input-idc');
-					$name.find('input').val(result.data.userName);
-					$idc.find('input').val(result.data.idCard);
+					var $name = self.$el.parent().prev().find('.input-name');
+					var $idc = self.$el.parent().prev().find('.input-idc');
+					if(result.data.userName) $name.find('input').val(result.data.userName);
+					if(result.data.idCard) $idc.find('input').val(result.data.idCard);
 					$name.removeClass('error-input');
 					$name.find('.input-err').remove();
 					$idc.removeClass('error-input');
