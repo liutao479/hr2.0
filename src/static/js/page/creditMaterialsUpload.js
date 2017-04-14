@@ -653,12 +653,14 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	$scope.uploadcb = function(self, xhr) {
 		console.log(self.$el)
 		if(self.options.code == 'sfzzm') {
+			self.$el.find('.imgs-item-upload').LoadingOverlay("show");
 			$.ajax({
 				type: 'post',
 				url: $http.api('materials/ocr', true),
 				data: {
 					materialsId: xhr.data.id
 				},
+				global: false,
 				dataType: 'json',
 				success: $http.ok(function(result) {
 					console.log(result)
@@ -677,7 +679,10 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 							$scope.apiParams[i].idCard = result.data.idCard;
 						}
 					}
-				})
+				}),
+				complete: function() {
+					self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
+				}
 			});
 		}
 		if(xhr.data.refresh) {

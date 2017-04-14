@@ -96,7 +96,14 @@
         margin-right: 7px;
     }
 }
-
+//必填标志
+.is-empty {
+    margin-right: 3px;
+    font-size: 18px;
+    position: relative;
+    top: 5px;
+    color: @msgErr;
+}
 //图片查看及上传组件
 .imgs-item-group {
     position: relative;
@@ -114,13 +121,6 @@
         height: 137px;
         border: 2px solid @borderColor;
         .borderRadius(3px);
-    }
-    .is-empty {
-        margin-right: 3px;
-        font-size: 16px;
-        position: relative;
-        top: 3px;
-        color: @failColor;
     }
     //图片上传样式
     .imgs-item-upload {

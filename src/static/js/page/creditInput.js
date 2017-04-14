@@ -28,18 +28,26 @@ page.ctrl('creditInput', [], function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
-				var creditUsers = $scope.result.data.creditUsers, userType;
-				for(var i in creditUsers) {
-					userType = i;
-					break;
+				$scope.result.index = idx;
+				$scope.idx = idx;
+				
+				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
+				if($scope.firstLoad) {
+					var creditUsers = $scope.result.data.creditUsers, userType;
+					for(var i in creditUsers) {
+						userType = i;
+						break;
+					}
+					if(userType != 0) {
+						console.log(userType);
+						$scope.result.index = userType;
+						$scope.idx = userType;
+					} else {
+						$scope.result.index = idx;
+						$scope.idx = idx;
+					}
 				}
-				if(userType != 0) {
-					$scope.result.index = userType;
-					$scope.idx = userType;
-				} else {
-					$scope.result.index = idx;
-					$scope.idx = idx;
-				}
+				
 				$scope.result.editable = 1;
 				$scope.result.userRalaMap = {
 					'0': '本人',
@@ -616,11 +624,13 @@ page.ctrl('creditInput', [], function($scope) {
 			$paging: $console.find('#pageToolbar')
 		}
 
+		$scope.firstLoad = true;
 		loadOrderInfo($scope.idx, function() {
 			initApiParams();
 			setupSubmitBar();
 			setupLocation();
 			setupBackReason($scope.result.data.loanTask.backApprovalInfo)
+			$scope.firstLoad = false;
 		});
 		
 	});
