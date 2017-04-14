@@ -6,29 +6,21 @@
 					<div class="select-search-bar no-border bottom-border clearfix">
 						<div class="search-item">
 							<span class="select-name">统计日期：</span>
-							<span class="select select-common">
-								<span class="placeholder">2016-12-19</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
+							<div class="input-text input-date-mini">
+								<input id="dateStart" type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" data-type="startDate" value="" />	
+							</div>
 							<span class="separator">-</span>
-							<span class="select select-common">
-								<span class="placeholder">2016-12-19</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
+							<div class="input-text input-date-mini">
+								<input id="dateEnd" type="text" class="dateBtn" data-min="dateStart" readonly="readonly" data-type="endDate" value="" />	
+							</div>
 						</div>
 						<div class="search-item">
 							<span class="select-name">当前进度：</span>
-							<span class="select select-common">
-								<span class="placeholder">全部</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
+							<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['operationsTab2'].categoryPicker" data-trigger="page.$scope['operationsTab2'].dropdownTrigger.category"></div>
 						</div>
 						<div class="search-item">
 							<span class="select-name">分公司：</span>
-							<span class="select select-common">
-								<span class="placeholder">全部</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
+							<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['operationsTab2'].companyPicker" data-trigger="page.$scope['operationsTab2'].dropdownTrigger.company"></div>
 						</div>
 						<div class="search-item">
 							<div class="button button-mini">确定</div>

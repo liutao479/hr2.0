@@ -1,5 +1,5 @@
 'use strict';
-page.ctrl('operationsTab2', [], function($scope) {
+page.ctrl('operationsTab2', ['vendor/echarts.min'], function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
@@ -39,8 +39,8 @@ page.ctrl('operationsTab2', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	$console.load(router.template('iframe/operations-tab2'), function() {
-		$scope.def =
+	$console.load(router.template('iframe/operationsTab2'), function() {
+		$scope.def = {
 			listTmpl : $console.find('#operateAnatmpl').html()
 		}
 		$scope.$el = {

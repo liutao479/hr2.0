@@ -297,17 +297,17 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				flag = true;
 			for(var j in item) {
 				if(j == 'idCard' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + item.idx + '的身份证号！<br/>';
+					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.idx : '') + '的身份证号！<br/>';
 					flag = false;
 					break;
 				}
 				if(j == 'userName' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + item.idx + '的真实姓名！<br/>';
+					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.idx : '') + '的真实姓名！<br/>';
 					flag = false;
 					break;
 				}
 				if(j == 'mobile' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + item.idx + '的手机号！<br/>';
+					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.idx : '') + '的手机号！<br/>';
 					flag = false;
 					break;
 				}
@@ -672,7 +672,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					$idc.find('.input-err').remove();
 
 					for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-						if($scope.apiParams[i].userId == self.options.userId) {
+						if($scope.apiParams[i].userId == self.options.user) {
 							$scope.apiParams[i].userName = result.data.userName;
 							$scope.apiParams[i].idCard = result.data.idCard;
 						}

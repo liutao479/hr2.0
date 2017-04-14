@@ -110,26 +110,31 @@ page.ctrl('operationsAnalysis', [], function($scope) {
 			{
 				idx: 0,
 				href: 'operations/operationsTab1',
-				name: '业务量日统计'
+				name: '风控服务统计'
 			},
 			{
 				idx: 1,
 				href: 'operations/operationsTab2',
-				name: '业务量区间统计'
+				name: '业务量日统计'
 			},
 			{
 				idx: 2,
 				href: 'operations/operationsTab3',
-				name: '放款调度统计'
+				name: '业务量区间统计'
 			},
 			{
 				idx: 3,
 				href: 'operations/operationsTab4',
-				name: '逾期情况统计'
+				name: '放款调度统计'
 			},
 			{
 				idx: 4,
 				href: 'operations/operationsTab5',
+				name: '逾期情况统计'
+			},
+			{
+				idx: 5,
+				href: 'operations/operationsTab6',
 				name: '统计报表'
 			}
 		];
