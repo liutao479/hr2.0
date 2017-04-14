@@ -934,7 +934,11 @@
 											{{ if(it.data[fieldCode] && it.data[fieldCode].carId){ }}
 												<input type="hidden" name="carId" value="{{= it.data[fieldCode].carId}}">
 											{{ } }}
-											<input type="hidden" id="carName" name="carName" value="{{= it.data[fieldCode].carName}}">
+											{{ if(it.data[fieldCode] && it.data[fieldCode].carName){ }}
+												<input type="hidden" id="carName" name="carName" value="{{= it.data[fieldCode].carName}}">
+											{{ }else{ }}
+												<input type="hidden" id="carName" name="carName">
+											{{ } }}
 									</div>
 									<input type="hidden" name="orderNo" value="{{= it.data.ORDERNO}}">
 								</form>

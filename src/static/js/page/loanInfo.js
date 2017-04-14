@@ -749,6 +749,8 @@ page.ctrl('loanInfo', function($scope) {
 		});
 	});
 
+	$scope.selfPicker = function(picked) {
+	}
 	$scope.areaPicker = function(picked) {
 	}
 	$scope.serviceTypePicker = function(picked) {
