@@ -697,7 +697,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 			if((selected && re.test(selected)) || selected=='0'){
 				$(this).find('.arrow-trigger').click();
 				var lilist = $(this).find('li');
-				console.log(lilist.length);
 				$("li",$(this)).each(function(){
 					var idx = $(this).data('id');
 					if(selected == idx){
