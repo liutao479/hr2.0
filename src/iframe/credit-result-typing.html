@@ -42,6 +42,7 @@
 
 
 <script type="text/x-dot-template" id="creditResultListTmpl">
+{{ if(it.data.creditUsers[it.index]) { }}
 	{{ for(var i = 0, len = it.data.creditUsers[it.index].length; i < len; i++){ var col = it.data.creditUsers[it.index][i]; }}
 		{{ for(var m = 0, len2 = it.cfgData.frames[0].sections.length; m < len2; m++) { var item = it.cfgData.frames[0].sections[m]; }}
 			{{ if(it.format[item.code] == it.index) { var row = item; break; } }}
@@ -241,6 +242,7 @@
 		<!-- 征信录入 end-->
 
 	{{ } }}
+{{ } }}
 </script>
 <!-- 核查成功之后 -->
 <script type="text/x-dot-template" id="importResultTmpl">
