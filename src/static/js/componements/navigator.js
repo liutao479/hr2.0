@@ -89,6 +89,7 @@ $(function() {
 
 	NavComponent.prototype.showModal = function() {
 		var self = this;
+		if(window.authorizationTiper) return false;
 		var $diag = $.alert({
 			title: '提示',
 			boxWidth: 378,
@@ -129,7 +130,6 @@ $(function() {
 		if(!acc || !pwd) {
 			return $err.html('账号或密码不能为空').show();
 		}
-		debugger
 		$.ajax({
 			url: $http.api('login/doLogin', true),
 			type: 'post',
@@ -162,15 +162,98 @@ $(function() {
 		})
 	}
 
+	function setPhone() {
+
+	}
+
+	function updatePhone() {
+
+	}
+
+	function updatePassword($dialog, cb) {
+		var self = $dialog;
+		var $old = self.find('.old'),
+			$new = self.find('.new'),
+			$rnew = self.find('.renew'),
+			$ctn = self.find('.dialog-input-form'),
+			$err = self.find('.color-red');
+		var ov = $.trim($old.val()),
+			nv = $.trim($new.val()),
+			rv = $.trim($rnew.val());
+		function etip(msg) {
+			$err.html(msg);
+		}
+		if(!ov || !nv || !rv) {
+			etip('密码不能为空');
+			return false;
+		}
+		if(ov == nv) {
+			etip('新密码不能与旧密码相同');
+			return false;
+		}
+		if(nv != rv) {
+			etip('两次新密码输入不一致');
+			return false;
+		}
+		$.ajax({
+			url: $http.api('password/change'),
+			data: {
+				password: md5(ov),
+				newPassword: md5(nv)
+			},
+			dataType: 'json',
+			success: function(xhr) {
+				if(!xhr.code) {
+					return cb(true);
+				} else {
+					etip('修改密码失败，请重试');
+					return false;
+				}
+			},
+			error: function() {
+				etip('网络异常，请稍后重试');
+				return false;
+			}
+		})
+		return false;
+	}
+
 	NavComponent.internal = {
 		bind: function() {
 
 		},
 		change: function() {
+			$.confirm({
+				title: '修改手机号码',
+				content:'url:./defs/phone.html',
+				buttons: {
 
+				}
+			})
 		},
 		password: function() {
+			$.confirm({
+				title: '修改密码',
+				content: 'url:./defs/password.html',
+				buttons: {
+					ok: {
+						text: '确定',
+						action: function() {
+							var self = this;
+							return updatePassword(this.$content, function(status) {
+								if(status)
+								self.close();
+							});
+						}
+					},
+					cancel: {
+						text: '取消',
+						action: function() {
 
+						}
+					}
+				}
+			})
 		},
 		exit: function() {
 			$.ajax({

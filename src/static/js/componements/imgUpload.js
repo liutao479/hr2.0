@@ -202,7 +202,9 @@
 				marker = undefined;
 			}
 			loadImg(function(imgs) {
-				new Preview(imgs, marker);
+				new Preview(imgs, marker, self.options.onclose || $.noop, {
+					markable: self.options.markable || true
+				});
 			})
 		})
 	};
@@ -463,7 +465,8 @@
 		self.opts = $.extend({
 			minWidth: 500,
 			minHeight: 400,
-			markable: true
+			markable: true,
+			idx: 0
 		}, opts);
 		self.size = {
 			iw: 80,
@@ -471,7 +474,7 @@
 		}
 		self.runtime = {};
 		self.tool = {};
-		self.runtime.idx = 0;
+		self.runtime.idx = self.opts.idx;
 		self.runtime.leftItems = 0;
 		self.init();
 	}
@@ -528,8 +531,8 @@
 		self.$viewbox = self.$preview.find('#__move__trigger');
 		self.$prev = self.$preview.find('.prev');
 		self.$next = self.$preview.find('.next');
-		self.setImage(self.imgs[0]);
-		self.$items.eq(0).addClass('active');
+		self.setImage(self.imgs[self.runtime.idx]);
+		self.$items.eq(self.runtime.idx).addClass('active');
 	};
 	/**
 	* 构造工具条

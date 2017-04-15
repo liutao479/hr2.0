@@ -39,39 +39,7 @@
 					<span class="message-number">533</span>
 				</a>
 				<div class="message-area">
-					<ul class="message-panel">
-						<li class="message-item clearfix">
-							<div class="message-item-data">
-								<a href="javascript:;">短融材料调整通知</a>
-							</div>
-							<span class="message-time">2016-10-11</span>
-						</li>
-						<li class="message-item clearfix">
-							<div class="message-item-data">
-								<a href="javascript:;">短融材料调整通知</a>
-							</div>
-							<span class="message-time">2016-10-11</span>
-						</li>
-						<li class="message-item clearfix">
-							<div class="message-item-data">
-								<a href="javascript:;">短融材料调整通知短融材料调整通知短融材料调整通知短融材料调整通知</a>
-							</div>
-							<span class="message-time">2016-10-11</span>
-						</li>
-						<li class="message-item clearfix">
-							<div class="message-item-data">
-								<a href="javascript:;">短融材料调整通知</a>
-							</div>
-							<span class="message-time">2016-10-11</span>
-						</li>
-						<li class="message-item clearfix">
-							<div class="message-item-data">
-								<a href="javascript:;">短融材料调整通知</a>
-							</div>
-							<span class="message-time">2016-10-11</span>
-						</li>
-						<li class="message-item clearfix"><a href="javascript:;" class="message-more">更多&gt;&gt;</a></li>
-					</ul>
+					<ul class="message-panel" id="messagePanel"></ul>
 				</div>
 			</li>
 			<li class="user-li user" data-item="user" id="userPanel">
@@ -101,13 +69,13 @@
 								<a class="phone-bind navEvt" data-id="bind">绑定</a>
 							</dd>
 							{{ } else { }}
-							<dd class="user-panel-value">{{=it.phone}}<a href="javascript:;" class="phone-bind navEvt" data-id="change">更换</a></dd>
+							<dd class="user-panel-value">{{=it.phone}}<a class="phone-bind navEvt" data-id="change">更换</a></dd>
 							{{ } }}
 						</dl>
 					</div>
 					<div class="user-area-bottom clearfix">
-						<a href="javascript:;" class="modify-pwd navEvt" data-id="password">修改密码</a>
-						<a href="javascript:;" class="user-quit navEvt" data-id="exit">退出登录</a>
+						<a class="modify-pwd navEvt" data-id="password">修改密码</a>
+						<a class="user-quit navEvt" data-id="exit">退出登录</a>
 					</div>
 				</div>
 			</li>
