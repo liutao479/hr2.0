@@ -3,8 +3,8 @@ page.ctrl('dataAssistant', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			//orderNo: $params.orderNo,
-			orderNo: 'nfdb2016102820480790',
+			orderNo: $params.orderNo,
+			//orderNo: 'nfdb2016102820480790',
 			sceneCode:'creditApproval'
 		},
 		userType=[
@@ -25,41 +25,72 @@ page.ctrl('dataAssistant', function($scope) {
 			url: $http.api('verifyResult/resultDetail',true),
 			data: param,
 			success: $http.ok(function(res) {
-				var _mobil=res.data.data[1021];
-				var _usedCar=res.data.data[1025];
-				var _platLend=res.data.data[1018];
+				var _mout=res.data.data;
+				var _mobil=_mout.body[1021];
+				var _usedCar=_mout.body[1025];
+				var _platLend=_mout.body[1018];
+				/*在网列表的运营商数据处理*/
 				if(_mobil){
 					for(var i in _mobil){
 						var _thisOperator=operator.filter(it=>it.type==_mobil[i].OPERATOR);
 						if(_thisOperator&&_thisOperator.length==1)
-							res.data.data[1021][i].operatorName=_thisOperator[0].text;
+							_mout.body[1021][i].operatorName=_thisOperator[0].text;
 					};
 				};
+				/*网贷平台借贷数据统计start*/
 				var _platArr=[];
-				/*var repeatPlat=function(items){
-					if(platJson&&platJson['three_month']){
-						for(var u in platJson['three_month']){
+				var repeatPlat=function(platJson,attr){
+					for(var u in platJson[attr]){/*循环某个月下面的借贷对象*/
+						if(_platArr.length==0){
+							_platArr.push({name:u,seven_day:0,one_month:0,three_month:0,six_month:0,twelve_month:0});
+							_platArr[_platArr.length-1][attr]=Number(platJson[attr][u]);			
+						}else{
 							for(var r=0;r<_platArr.length;r++){
 								if(_platArr[r].name==u){
-									_platArr[r].three_month+=platJson['three_month'][u];
+									_platArr[r][attr]+=Number(platJson[attr][u]);
 									break;
 								};
-								if(r==_platArr.length-1)
-									_platArr.push({name:u,three_month:platJson['three_month'][u]});
+								if(r==_platArr.length-1){
+									_platArr.push({name:u,seven_day:0,one_month:0,three_month:0,six_month:0,twelve_month:0});
+									_platArr[_platArr.length-1][attr]=Number(platJson[attr][u]);
+									break;
+								};
 							};
 						};
-				};*/
+					};
+				};
 				if(_platLend&&_platLend.length>0){
 					for(var k in _platLend){
 						var platJson=_platLend[k].multipleJSON;
-						};
+						if(platJson&&platJson['seven_day'])
+							repeatPlat(platJson,'seven_day');
+						if(platJson&&platJson['one_month'])
+							repeatPlat(platJson,'one_month');
+						if(platJson&&platJson['three_month'])
+							repeatPlat(platJson,'three_month');
+						if(platJson&&platJson['six_month'])
+							repeatPlat(platJson,'six_month');
+						if(platJson&&platJson['twelve_month'])
+							repeatPlat(platJson,'twelve_month');
 					};
+					_mout.body[1018]=_platArr;
 				}else{
-					res.data.data[1018]=[];
-				};/*网贷平台借贷数据统计*/
-				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, res.data.data, true);
+					_mout.body[1018]=[];
+				};
+				/*整理title中发起人，最新发起时间等信息*/
+				if(_mout.verifyRecord&&_mout.verifyRecord.submitByName)
+					_mout.body.submitByName=_mout.verifyRecord.submitByName;
+				if(_mout.verifyRecord&&_mout.verifyRecord.updateTime)
+					_mout.body.updateTime=_mout.verifyRecord.updateTime;
+				if(_mout.itemNum)
+					_mout.body.itemNum=_mout.itemNum;
+				/*网贷平台借贷数据统计end*/
+				/*模板绑定数据*/
+				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout.body, true);
+				/*如果有二手车模块则使用画布画百分比*/
 				if(_usedCar)
 					setCanvas();
+				/*回调*/
 				if(callback && typeof callback == 'function') {
 					callback();
 				};
@@ -82,8 +113,8 @@ page.ctrl('dataAssistant', function($scope) {
 						};
 					};
 					render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.data, true);
-					//apiParams.userId=res.data[0].userId;
-					apiParams.userId='334232';
+					apiParams.userId=res.data[0].userId;
+					//apiParams.userId='334232';
 					search(apiParams, function() {
 						evt();
 					});
@@ -123,9 +154,9 @@ page.ctrl('dataAssistant', function($scope) {
 				$.ajax({
 					type: 'post',
 					dataType:"json",
-					url: $http.api('creditAudit/startVerify'),
+					url: $http.api('loanAudit/verifyCheck',true),
 					data: {
-						apiKeys:key,
+						key:key,
 						orderNo:apiParams.orderNo,
 						userIds:_arr.join("_")
 					},
@@ -135,6 +166,7 @@ page.ctrl('dataAssistant', function($scope) {
 							if(context){
 								setTimeout(function() {
 									jc.close();
+									search(apiParams);
 								},1500);
 							};
 						});
@@ -180,7 +212,7 @@ page.ctrl('dataAssistant', function($scope) {
 		},function($dialog){
 			$dialog.find(".nextDialog").click(function() {
 				$dialog.remove();
-				var _key=_data[$(this).data('index')].apikey;
+				var _key=_data[$(this).data('index')].key;
 				$.ajax({
 					type: 'post',
 					dataType:'json',
@@ -266,8 +298,14 @@ page.ctrl('dataAssistant', function($scope) {
 				setTimeout(_fill(it),10);
 			};
 		};
-		for(var i=0;i<circleCanvas.length;i++){
-			fill(circleCanvas[i]);
+		var canlen=$scope.$el.$listDiv.find("canvas").length;
+		for(var i=0;i<canlen;i++){
+			var _thisId=$($scope.$el.$listDiv.find("canvas")[i]).attr('id');
+			var _rate=$($scope.$el.$listDiv.find("canvas")[i]).data('rate');
+			var _mod=i%3;
+			circleCanvas[_mod].id=_thisId;
+			circleCanvas[_mod].endPerent=_rate;
+			fill(circleCanvas[_mod]);
 		};
 		/*画百分比相关end*/
 	};
@@ -314,8 +352,9 @@ page.ctrl('dataAssistant', function($scope) {
 			$tab: $scope.$context.find('#roleBarTab'),
 			$listDiv: $scope.$context.find('#listDiv'),
 		};
-		searchUserList({
-			orderNo:apiParams.orderNo,
-		});
+		if(apiParams.orderNo)
+			searchUserList({
+				orderNo:apiParams.orderNo,
+			});
 	});
 });

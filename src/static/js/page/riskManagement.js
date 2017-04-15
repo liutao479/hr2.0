@@ -78,7 +78,7 @@ page.ctrl('riskManagement',['vendor/echarts.min'], function($scope) {
 		};
 		setEcharts(nameArr,dataList);
 	};
-	// 查询列表数据
+	// 查询数据总览
 	var searchTotal=function(){
 		$.ajax({
 			type: 'post',

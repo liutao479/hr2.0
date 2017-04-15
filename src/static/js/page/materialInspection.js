@@ -3,8 +3,8 @@ page.ctrl('materialInspection', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			//orderNo: $params.orderNo,
-			orderNo: 'nfdb2016102820480790',
+			orderNo: $params.orderNo,
+			//orderNo: 'nfdb2016102820480790',
 			sceneCode:'creditApproval'
 		},userType=[
 			{userType:0,text:"主申请人"},
@@ -19,7 +19,15 @@ page.ctrl('materialInspection', function($scope) {
 			url: $http.api('verifyResult/resultDetail',true),
 			data: param,
 			success: $http.ok(function(res) {
-				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, res.data.data, true);
+				var _mout=res.data.data;
+				/*整理title中发起人，最新发起时间等信息*/
+				if(_mout.verifyRecord&&_mout.verifyRecord.submitByName)
+					_mout.body.submitByName=_mout.verifyRecord.submitByName;
+				if(_mout.verifyRecord&&_mout.verifyRecord.updateTime)
+					_mout.body.updateTime=_mout.verifyRecord.updateTime;
+				if(_mout.itemNum)
+					_mout.body.itemNum=_mout.itemNum;
+				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout.body, true);
 				if(callback && typeof callback == 'function') {
 					callback();
 				};
@@ -42,14 +50,66 @@ page.ctrl('materialInspection', function($scope) {
 						};
 					};
 					render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.data, true);
-					//apiParams.userId=res.data[0].userId;
-					apiParams.userId='334232';
+					apiParams.userId=res.data[0].userId;
+					//apiParams.userId='334232';
 					search(apiParams, function() {
 						evt();
 					});
 				};
 			})
 		});
+	};
+	var openUserDialog=function(that,_data,key){		
+		for(var z in _data){
+			var _minObj=userType.filter(it=>it.userType==_data[z].userType);
+			if(_minObj&&_minObj.length==1){
+				_data[z].userTypeName=_minObj[0].text;
+			};
+		};
+		that.openWindow({
+			title:"———— 服务项目 ————",
+			width:"70%",
+			content: dialogTml.wContent.userBtnGroup,	
+			commit: dialogTml.wCommit.cancelSure,			
+			data:_data
+		},function($dia){
+			var _arr=[];
+			$dia.find(".block-item-data:not(.not-selected)").click(function() {
+				$(this).toggleClass("selected");	
+				var _index=$(this).data("index");
+				var _thisVal=_data[_index].userId;
+				if($(this).hasClass("selected"))
+					_arr.push(_thisVal);	
+				else
+					_arr.splice(_arr.indexOf(_thisVal),1);
+			});
+			$dia.find(".w-sure").click(function() {
+				$dia.remove();
+				if(_arr.length==0)
+					return false;
+				$.ajax({
+					type: 'post',
+					dataType:"json",
+					url: $http.api('creditAudit/startVerify',true),
+					data: {
+						key:key,
+						orderNo:apiParams.orderNo,
+						userIds:_arr.join("_")
+					},
+					success: $http.ok(function(res) {
+						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
+							var context=$(".jconfirm .jconfirm-content").html();
+							if(context){
+								setTimeout(function() {
+									jc.close();
+									search(apiParams);
+								},1500);
+							};
+						});
+					})
+				});
+			});
+		});	
 	};
 	/*发起核查*/
 	var openDialog=function(that,_data){
@@ -85,53 +145,21 @@ page.ctrl('materialInspection', function($scope) {
 		},function($dialog){
 			$dialog.find(".nextDialog").click(function() {
 				$dialog.remove();
-				var userData=[
-					{checkStatus:0,funcName:"王可可"},
-					{checkStatus:1,funcName:"李冰冰"},
-					{checkStatus:2,funcName:"弘毅"},
-				];
-				that.openWindow({
-					title:"———— 服务项目 ————",
-					width:"70%",
-					content: dialogTml.wContent.btngroup,	
-					commit: dialogTml.wCommit.cancelSure,			
-					data:userData
-				},function($dia){
-					var _arr=[];
-					$dia.find(".block-item-data:not(.not-selected)").click(function() {
-						$(this).toggleClass("selected");	
-						var _index=$(this).data("index");
-						var _thisVal=userData[_index].funcName;
-						if($(this).hasClass("selected"))
-							_arr.push(_thisVal);	
+				var _key=_data[$(this).data('index')].key;
+				$.ajax({
+					type: 'post',
+					dataType:'json',
+					url: $http.api('loanAudit/checkUserList','cyj'),
+					data: {
+						orderNo:apiParams.orderNo,
+						key:_key
+					},
+					success: $http.ok(function(res) {
+						if(res&&res.data&&res.data.length>0)
+							openUserDialog(that,res.data,_key);
 						else
-							_arr.splice(_thisVal,1);
-					});
-					$dia.find(".w-sure").click(function() {
-						$dia.remove();
-						if(_arr.length==0)
-							return false;
-						$.ajax({
-							type: 'post',
-							dataType:"json",
-							url: $http.api('creditAudit/startVerify'),
-							data: {
-								apiKeys:"",
-								orderNo:apiParams.orderNo,
-								userIds:_arr.join("_")
-							},
-							success: $http.ok(function(res) {
-								var jc=$.dialog($scope.def.toastTmpl,function($dialog){
-									var context=$(".jconfirm .jconfirm-content").html();
-									if(context){
-										setTimeout(function() {
-											jc.close();
-										},1500);
-									};
-								});
-							})
-						});
-					});
+							openUserDialog(that,[],_key);
+					})
 				});	
 			});
 		});		
@@ -153,9 +181,8 @@ page.ctrl('materialInspection', function($scope) {
 				dataType:'json',
 				url: $http.api('loanAudit/verifyItemList','cyj'),
 				data: {
-					userId:"334232",
-					orderNo:'nfdb2016102820480790'
-					//orderNo:apiParams.orderNo
+					userId:apiParams.userId,
+					orderNo:apiParams.orderNo
 				},
 				success: $http.ok(function(res) {
 					if(res&&res.data&&res.data.length>0)
