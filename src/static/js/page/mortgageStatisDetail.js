@@ -92,7 +92,13 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 	* 登记证材料事件
 	*/
 	var setupEvt = function() {
-		$scope.$el.$tbl.find('.uploadEvt').imgUpload();
+		$scope.$el.$tbl.find('.uploadEvt').imgUpload({
+			viewable: true,
+			markable: false,
+			getimg: function(cb) {
+				cb($scope.result.data.userMaterials)
+			}
+		});
 	}
 
 	/***

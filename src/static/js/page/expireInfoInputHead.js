@@ -9,10 +9,12 @@ page.ctrl('expireInfoInputHead', [], function($scope) {
 	*/
 	var loadExpireProcessList = function(cb) {
 		$.ajax({
+			type: 'post',
 			url: urlStr + '/loanOverdueImport/queryParsingDate',
 //			url: $http.api('loanOverdueImport/queryParsingDate','jbs'),
 			dataType: 'json',
 			success: $http.ok(function(result) {
+				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				listenGuide();
 				setupEvt();
@@ -50,7 +52,6 @@ page.ctrl('expireInfoInputHead', [], function($scope) {
 	}	
     
 		$(document).on('click', '#pathExp',function() {
-			debugger
 			var importId = $(this).data('type');
 //			router.render('expire/expireInfoPrev', {
 //				importId: importId, 

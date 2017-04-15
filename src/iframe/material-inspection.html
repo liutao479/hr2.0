@@ -5,10 +5,32 @@
 		<ul class="role-bar-ul clearfix" id="roleBarTab"></ul>
 	</div>
 	<!--tab切换栏 end-->
-	<div class="tab-content">
+	<div class="tab-content" id="listDiv"></div>
+	<!-- <div class="commit-orders-box">
+		<div class="button button-orange">退回订单</div>
+		<div class="button button-deep">审核通过</div>
+	</div> -->
+</div>
+<!--材料验真 end-->
+
+<script type="text/x-dot-template" id="roleBarTabTmpl">
+	{{ var len = it.length; if(len) { }}
+		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
+			<li class="role-bar-li">
+				{{ if(item.isMainApplicant){ }}
+					<a href="javascript:;" class="role-item role-item-active">{{=item.userName}}(主申请人)</a>
+				{{ }else{ }}
+					<a href="javascript:;" class="role-item">{{=item.userName}}(共同还款人)</a>					
+				{{ } }}				
+			</li>
+		{{ } }}
+	{{ } }}
+</script>	
+<script type="text/x-dot-template" id="materialInspectionTmpl">
+	{{  var ac=function(x){for(var i in x)return true;return false;};if(ac(it)){ }}
 		<div class="panel no-top-border clearfix">
 			<div class="panel-content-title no-top-border">
-				<div class="key-value-box">
+				<!-- <div class="key-value-box">
 					<div class="value">已核验6项，查询中2项</div>
 				</div>
 				<div class="key-value-box">
@@ -18,94 +40,70 @@
 				<div class="key-value-box">
 					<span class="key">发起人：</span>
 					<span class="value">南方初审1</span>
-				</div>
+				</div> -->
 				<div class="button button-mini" id="startCheck">发起核查</div>
 			</div>
 			<div class="detail-item-group">
+			{{ for(var i in it){var item=it[i]; }}
+				{{ if(i==1000){ }}
 				<!--购车发票核查-->
 				<div class="detail-item-list">
 					<div class="detail-item-title">
 						<i class="iconfont">&#xe676;</i>购车发票核查
 					</div>
-					<div class="detail-item-alert alert-warning">
-						<span class="icon"><i class="iconfont">&#xe612;</i></span>
-						<span class="status">不通过</span>
-						<span class="text">
-							经向税务系统核查，发票代码[1111241241]号码[334234252]的内容与发票原件上的部分内容不一致！
-						</span>
-						<span class="message-number">new</span>
-					</div>
-					<div class="detail-item-context clearfix">
-						<div class="no-img-group left-model clearfix">
-							<div class="no-img-list">
-								<div class="no-img">
-									<i class="iconfont">&#xe61f;</i>
+					{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
+					{{var sourCode=item[j].validationResult.sourceCode;}}
+						{{ if(sourCode==-4||sourCode==-5){ }}
+						<div class="detail-item-alert alert-danger">
+							<span class="icon"><i class="iconfont">!</i></span>
+							<span class="status">未校验</span>
+							<span class="text">{{=col.validationResult.sourceContent}}</span>
+						</div>
+						{{ }else if(sourCode==1){ }}
+						<div class="detail-item-alert alert-success">
+							<span class="icon"><i class="iconfont">&#xe659;</i></span>
+							<span class="status">通过</span>
+							<span class="text">{{=col.validationResult.sourceContent}}</span>
+						</div>
+						{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
+						<div class="detail-item-alert alert-warning">
+							<span class="icon"><i class="iconfont">&#xe612;</i></span>
+							<span class="status">不通过</span>
+							<span class="text">{{=col.validationResult.sourceContent}}</span>
+							<!-- <span class="message-number">new</span> -->
+						</div>
+						{{ } }}
+						<div class="detail-item-context clearfix">
+							<div class="no-img-group left-model clearfix">
+								<div class="no-img-list">
+									<div class="no-img">
+										{{ if(col.basicInfo.picPath){ }}
+											<img src="{{=col.basicInfo.picPath}}" />
+										{{ }else{ }}
+											<i class="iconfont">&#xe61f;</i>
+										{{ } }}
+									</div>
+									<p class="img-explain">购车发票原件</p>
 								</div>
-								<p class="img-explain">购车发票原件</p>
+							</div>
+							<div class="right-model">
+								<h3>税务查得信息</h3>
+								<ul class="table-key-val">
+									<li><span class="key">发票代码：</span>{{=col.basicInfo.vehicleInvoiceCode}}</li>
+									<li><span class="key">发票号码：</span>{{=col.basicInfo.vehicleInvoiceNumber}}</li>
+									<li><span class="key">开票日期：</span>{{=col.basicInfo.vehicleInvoiceIssueDate}}</li>
+									<li><span class="key">价税合计：</span>{{=col.basicInfo.vehicleInvoiceTotalPrice}}元</li>
+									<li><span class="key">购买方名称：</span>{{=col.basicInfo.vehicleInvoiceBuyer}}</li>
+									<!-- <li><span class="text-warning">购买方名称：方志山</span><span class="key">（购车发票原件数据：方大大）</span></li> -->
+									<li><span class="key">购买方身份证/组织证件号：</span>{{=col.basicInfo.vehicleInvoiceBuyerId}}</li>
+									<li><span class="key">纳税人识别号：</span>{{=col.basicInfo.taxpayerNumber}}</li>
+									<li><span class="key">开票方名称：</span>{{=col.basicInfo.drawerName}}</li>
+								</ul>
 							</div>
 						</div>
-						<div class="right-model">
-							<h3>税务查得信息</h3>
-							<ul class="table-key-val">
-								<li><span class="key">发票代码：</span>342342352352</li>
-								<li><span class="key">发票号码：</span>234235235</li>
-								<li><span class="key">开票日期：</span>2017-03-21</li>
-								<li><span class="key">价税合计：</span>12313.00元</li>
-								<li><span class="text-warning">购买方名称：方志山</span><span class="key">（购车发票原件数据：方大大）</span></li>
-								<li><span class="key">购买方身份证/组织证件号：</span>332312312414523435</li>
-								<li><span class="key">纳税人识别号：</span>2353354646</li>
-								<li><span class="key">开票方名称：</span>杭州捷达汽车销售服务有限公司</li>
-							</ul>
-						</div>
-					</div>
-					<div class="detail-item-alert alert-danger">
-						<span class="icon"><i class="iconfont">!</i></span>
-						<span class="status">未校验</span>
-						<span class="text">
-							提供的照片不清晰，无法查询/数据源异常，无法核查！
-						</span>
-					</div>
-					<div class="detail-item-context clearfix">
-						<div class="no-img-group clearfix">
-							<div class="no-img-list">
-								<div class="no-img">
-									<i class="iconfont">&#xe61f;</i>
-								</div>
-								<p class="img-explain">购车发票原件</p>
-							</div>
-						</div>
-					</div>
-					<div class="detail-item-alert alert-success">
-						<span class="icon"><i class="iconfont">&#xe659;</i></span>
-						<span class="status">通过</span>
-						<span class="text">
-							经向税务系统核查，发票代码[1111241241]号码[334234252]的内容与发票原件上的部分内容一致！
-						</span>
-					</div>
-					<div class="detail-item-context clearfix">
-						<div class="no-img-group left-model clearfix">
-							<div class="no-img-list">
-								<div class="no-img">
-									<i class="iconfont">&#xe61f;</i>
-								</div>
-								<p class="img-explain">购车发票原件</p>
-							</div>
-						</div>
-						<div class="right-model">
-							<h3>税务查得信息</h3>
-							<ul class="table-key-val">
-								<li><span class="key">发票代码：</span>342342352352</li>
-								<li><span class="key">发票号码：</span>234235235</li>
-								<li><span class="key">开票日期：</span>2017-03-21</li>
-								<li><span class="key">价税合计：</span>12313.00元</li>
-								<li><span class="key">购买方名称：</span>方志山</li>
-								<li><span class="key">购买方身份证/组织证件号：</span>332312312414523435</li>
-								<li><span class="key">纳税人识别号：</span>2353354646</li>
-								<li><span class="key">开票方名称：</span>杭州捷达汽车销售服务有限公司</li>
-							</ul>
-						</div>
-					</div>
+					{{ } }}
 				</div>
+				{{ }else if(i==1001){ }}
 				<!--购房发票核查-->
 				<div class="detail-item-list">
 					<div class="detail-item-title">
@@ -197,6 +195,7 @@
 						</div>
 					</div>
 				</div>
+				{{ }else if(i==1007){ }}
 				<!--银行流水核查-->
 				<div class="detail-item-list">
 					<div class="detail-item-title">
@@ -323,6 +322,7 @@
 						</div>
 					</div>
 				</div>
+				{{ }else if(i==1009){ }}
 				<!--合格证核查-->
 				<div class="detail-item-list">
 					<div class="detail-item-title">
@@ -355,6 +355,7 @@
 						</div>
 					</div>
 				</div>
+				{{ }else if(i==1002){ }}
 				<!--保单核查-->
 				<div class="detail-item-list">
 					<div class="detail-item-title">
@@ -440,6 +441,7 @@
 						</div>
 					</div>
 				</div>
+				{{ }else if(i==1012){ }}
 				<!--车辆登记核查-->
 				<div class="detail-item-list">
 					<div class="detail-item-title">
@@ -479,6 +481,7 @@
 						</div>
 					</div>
 				</div>
+				{{ }else if(i==1003){ }}
 				<!--房产证核查-->
 				<div class="detail-item-list">
 					<div class="detail-item-title">
@@ -517,33 +520,12 @@
 						</div>
 					</div>
 				</div>
+				{{ } }}
+			{{ } }}
 			</div>
 		</div>
-	</div>
-	<div class="commit-orders-box">
-		<div class="button button-orange">退回订单</div>
-		<div class="button button-deep">审核通过</div>
-	</div>
-</div>
-<!--材料验真 end-->
-
-<script type="text/x-dot-template" id="roleBarTabTmpl">
-	{{ var len = it.length; if(len) { }}
-		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
-			<li class="role-bar-li">
-				{{ if(item.isMainApplicant){ }}
-					<a href="javascript:;" class="role-item role-item-active">{{=item.userName}}(主申请人)</a>
-				{{ }else{ }}
-					<a href="javascript:;" class="role-item">{{=item.userName}}(共同还款人)</a>					
-				{{ } }}				
-			</li>
-		{{ } }}
-	{{ } }}
-</script>	
-<script type="text/x-dot-template" id="materialInspectionTmpl">
-	{{ var len = it.length; if(len) { }}
-		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
-		{{ } }}
+	{{ }else{ }}
+		<div class="no-data"></div>
 	{{ } }}
 </script>	
 <!-- 核查成功之后 -->

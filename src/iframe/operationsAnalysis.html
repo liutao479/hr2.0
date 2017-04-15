@@ -1,0 +1,19 @@
+<!-- 运营分析 -->
+<div class="container">
+	<!-- tab切换栏 -->
+	<div class="tab-bar mt15">
+		<ul class="role-bar-ul clearfix" id="tabBar"></ul>
+	</div>
+	<!-- tab切换栏 end-->
+	
+	<!-- 内部面板 -->
+	<div id="innerPanel"></div>
+	<!-- 内部面板 end-->
+</div>
+
+<script type="text/x-dot-template" id="tabTmpl">
+	{{ for(var i = 0, len = it.length; i < len; i++) { }}
+		<li class="role-bar-li"><a href="javascript:;" class="role-item{{=(i == 0 ? ' role-item-active' : '')}} tabEvt" data-href="{{=it[i].href}}" data-type="{{=i}}">{{=it[i].name}}</a></li>
+	{{ } }}
+</script>
+				

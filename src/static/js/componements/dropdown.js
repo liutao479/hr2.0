@@ -83,7 +83,7 @@
 		if(!self.opts.placeholder) {
 			self.opts.placeholder = false;
 		}
-		self.$el.append(_.template(internal.template.fields)({readonly: !self.search, selected: self.opts.selected, placeholder: self.opts.placeholder}));
+		self.$el.append(_.template(internal.template.fields)({readonly: !self.search, selected: self.opts.selected, placeholder: self.opts.placeholder, disabled: self.opts.disabled}));
 		self.$dropdown = $('<div class="select-box"></div>').appendTo(self.$el);
 		self.$text = self.$el.find('.select-text');
 		if(self.opts.tabs.length > 1) {
@@ -165,8 +165,8 @@
 				if(inputItem){
 					inputItem.val(id)
 				}
-				self.onDropdown(self.picked);
 				self.close(true);
+				self.onDropdown(self.picked);
 			} else {
 				self.picked[self.opts.tabs[self.actionIdx]] = {
 					id: id,
@@ -177,8 +177,8 @@
 					if(inputItem){
 						inputItem.val(id)
 					}
-					self.onDropdown(self.picked);
 					self.close(true);
+					self.onDropdown(self.picked);
 				} else {
 					self.$tabs.eq(self.actionIdx).removeClass('select-tab-item-active');
 					self.actionIdx++;
@@ -238,9 +238,9 @@
 	internal.template = {};
 	internal.template.fields = '<div class="select-field{{=(it.readonly ? \" readonly\": \"\")}}">\
 									{{ if(it.placeholder) { }}\
-									<input type="text" placeholder="{{=(it.readonly ? \"全部\" : \"可输入过滤条件\")}}" class="select-text" value="{{=it.selected}}" />\
+									<input type="text" {{=it.disabled || \"\"}} placeholder="{{=(it.readonly ? \"全部\" : \"可输入过滤条件\")}}" class="select-text" value="{{=it.selected}}" />\
 									{{ } else { }}\
-									<input type="text" placeholder="{{=(it.readonly ? \"请选择\" : \"可输入过滤条件\")}}" class="select-text" value="{{=it.selected}}" />\
+									<input type="text" {{=it.disabled || \"\"}} placeholder="{{=(it.readonly ? \"请选择\" : \"可输入过滤条件\")}}" class="select-text" value="{{=it.selected}}" />\
 									{{ } }}\
 									<span class="arrow arrow-bottom" id="arrow"></span>\
 									<a class="arrow-trigger"></a>\
@@ -257,7 +257,6 @@
 								{{ } }}\
 								{{ } }}';
 	internal.template.brandContent = '<dl class="word-area">\
-										<dt>A</dt>\
 										<dd class="clearfix">\
 											{{ for(var i = 0, len=it.items.length; i < len; i++) { var row = it.items[i]; name=row[it.name]; }}\
 											<a class="car-item{{=(it.actionName == name ? \" picked\":\"\")}} itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</a>\

@@ -75,10 +75,10 @@
 							<td class="td-key">抵押登记日期{{=i+1}}</td>
 							<td class="td-value">
 								{{ if(it.disabled) { }}
-									<input class="input-x" data-type="pledgeDateString" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.pledgeDate ? tool.formatDate(row.pledgeDate) : '')}}">
+									<input class="input-x" data-type="pledgeDate" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgeDateStr || ''}}">
 								{{ } else { }}
 								<div class="input-text input-date-mini">
-									<input id="srart{{=i}}" data-type="pledgeDateString" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.pledgeDate ? tool.formatDate(row.pledgeDate) : '')}}" />	
+									<input id="srart{{=i}}" data-type="pledgeDate" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgeDateStr || ''}}" />	
 								</div>
 								{{ } }}
 							</td>
@@ -87,10 +87,10 @@
 							<td class="td-key">解除抵押日期{{=i+1}}</td>
 							<td class="td-value">
 								{{ if(it.disabled) { }}
-									<input class="input-x" data-type="unPledgeDateString" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.unPledgeDate ? tool.formatDate(row.unPledgeDate) : '')}}">
+									<input class="input-x" data-type="unPledgeDate" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.unPledgeDateStr || ''}}">
 								{{ } else { }}
 								<div class="input-text input-date-mini">
-									<input id="end{{=i}}" data-type="unPledgeDateString" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=(row.unPledgeDate ? tool.formatDate(row.unPledgeDate) : '')}}" />	
+									<input id="end{{=i}}" data-type="unPledgeDate" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.unPledgeDateStr || ''}}" />	
 								</div>
 								{{ } }}
 							</td>
@@ -132,10 +132,10 @@
 							<td class="td-key">抵押登记日期{{=len + 1}}</td>
 							<td class="td-value">
 								{{ if(it.disabled) { }}
-									<input class="input-x" data-type="pledgeDateString" type="text" value="">
+									<input class="input-x" data-type="pledgeDate" type="text" value="">
 								{{ } else { }}
 								<div class="input-text input-date-mini">
-									<input id="srart{{=i}}" data-type="pledgeDateString" type="text" class="dateBtn{{=(len == 0 ? ' required' : '')}}" readonly="readonly" value="" />	
+									<input id="srart{{=i}}" data-type="pledgeDate" type="text" class="dateBtn{{=(len == 0 ? ' required' : '')}}" readonly="readonly" value="" />	
 								</div>
 								{{ } }}
 							</td>
@@ -144,10 +144,10 @@
 							<td class="td-key">解除抵押日期{{=len + 1}}</td>
 							<td class="td-value">
 								{{ if(it.disabled) { }}
-									<input class="input-x" data-type="unPledgeDateString" type="text" value="">
+									<input class="input-x" data-type="unPledgeDate" type="text" value="">
 								{{ } else { }}
 								<div class="input-text input-date-mini">
-									<input id="end{{=i}}" data-type="unPledgeDateString" type="text" class="dateBtn{{=(len == 0 ? ' required' : '')}}" readonly="readonly" value="" />	
+									<input id="end{{=i}}" data-type="unPledgeDate" type="text" class="dateBtn{{=(len == 0 ? ' required' : '')}}" readonly="readonly" value="" />	
 								</div>
 								{{ } }}
 							</td>

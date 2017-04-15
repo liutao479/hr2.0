@@ -20,6 +20,7 @@ page.ctrl('loanApproval', function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(xhr) {
 				$scope.result = xhr;
+				console.log(xhr)
 				setupLocation();
 				setupBackReason($scope.result.data.loanTask.backApprovalInfo);
 				loadGuide(xhr.cfgData)
@@ -163,10 +164,17 @@ page.ctrl('loanApproval', function($scope) {
 							var _reason = $.trim(this.$content.find('#suggestion').val());
 							this.$content.find('.checkbox-radio').each(function() {
 								if($(this).hasClass('checked')) {
-									$scope.jumpId = $(this).data('id');
+									var flag = 0;
+									$(this).parent().parent().find('.checkbox-normal').each(function() {
+										if($(this).hasClass('checked')) {
+											flag++;
+										}
+									})
+									if(flag > 0) {
+										$scope.jumpId = $(this).data('id');
+									}
 								}
 							})
-
 							if(!_reason) {
 								$.alert({
 									title: '提示',
@@ -321,18 +329,33 @@ page.ctrl('loanApproval', function($scope) {
 				ok: {
 					text: '确定',
 					action: function () {
-						var taskIds = [];
-						for(var i = 0, len = $params.tasks.length; i < len; i++) {
-							taskIds.push(parseInt($params.tasks[i].id));
-						}
-						var params = {
-							taskId: $params.taskId,
-							taskIds: taskIds,
-							orderNo: $params.orderNo
-						}
-						var reason = $.trim(this.$content.find('#suggestion').val());
-						if(reason) params.reason = reason;
-						flow.tasksJump(params, 'complete');
+						var that = this;
+        				$.ajax({
+							type: 'post',
+							url: $http.api('loanApproval/submit/' + $params.taskId, true),
+							dataType: 'json',
+							data: {
+								taskId: $params.taskId,
+								orderNo: $params.orderNo,
+								telUserName: $scope.result.data.loanTask.loanOrder.realName,
+								frameCode: $scope.result.cfgData.frames[0].code
+							},
+							success: $http.ok(function(xhr) {
+								var taskIds = [];
+								for(var i = 0, len = $params.tasks.length; i < len; i++) {
+									taskIds.push(parseInt($params.tasks[i].id));
+								}
+								var params = {
+									taskId: $params.taskId,
+									taskIds: taskIds,
+									orderNo: $params.orderNo
+								}
+								var reason = $.trim(that.$content.find('#suggestion').val());
+								if(reason) params.reason = reason;
+								console.log(params);
+								flow.tasksJump(params, 'approval');
+							})
+						})
 					}
 				}
 			}
@@ -393,8 +416,8 @@ page.ctrl('loanApproval', function($scope) {
 			$tab: $console.find('#checkTabs')
 		}
 		loadTabList(function() {
-			setupSubmitBar();
 			evt();
+			setupSubmitBar();
 		});
 	})
 });

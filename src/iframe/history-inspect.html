@@ -24,10 +24,6 @@
 			<div class="select select-common" data-dropdown="page.$scope['historyInspect'].bankPicker" data-trigger="page.$scope['historyInspect'].dropdownTrigger.demandBank"></div>
 		</div>
 		<div class="search-item">
-			<span class="select-name">进件车商：</span>
-			<div class="select select-common" data-dropdown="page.$scope['historyInspect'].dealerPicker" data-trigger="page.$scope['historyInspect'].dropdownTrigger.dealerSel"></div>
-		</div>
-		<div class="search-item">
 			<div class="input-text">
 				<input type="text" autocomplete="off" id="searchInput" placeholder="订单号\借款人姓名\身份证号" />
 			</div>
@@ -39,23 +35,27 @@
 	</div>	
 	<!--tab切换栏-->
 	<div class="tab-bar mt15">
-		<ul class="role-bar-ul clearfix">
-			<li class="role-bar-li" data-type="3"><a href="javascript:;" class="role-item role-item-active">法院记录</a></li>
-			<li class="role-bar-li" data-type="5"><a href="javascript:;" class="role-item">购车发票信息</a></li>
-			<li class="role-bar-li" data-type="1"><a href="javascript:;" class="role-item">登记证状态</a></li>
-			<li class="role-bar-li" data-type="6"><a href="javascript:;" class="role-item">网贷记录</a></li>
-			<li class="role-bar-li" data-type="4"><a href="javascript:;" class="role-item">公安信息</a></li>
-			<li class="role-bar-li" data-type="2"><a href="javascript:;" class="role-item">抵押记录</a></li>
-		</ul>
+		<ul class="role-bar-ul clearfix" id="tabDiv"></ul>
 	</div>
 	<!--tab切换栏 end-->
 	<div id="tableContext"></div>
+	<!-- 分页插件 -->
+	<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['historyInspect'].paging" data-pages="1" data-current="1"></div>
+	<!-- 分页插件 end-->
 </div>
 <!--历史核查记录 end-->
 
-<!-- 分页插件 -->
-<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['historyInspect'].paging" data-pages="1" data-current="1"></div>
-<!-- 分页插件 end-->
+<script type="text/x-dot-template" id="tabTmpl">
+	{{for(var i = 0; i < it.length; i++) { var item = it[i]; }}
+		<li class="role-bar-li" data-type="{{=item.type}}">
+			{{ if(i==0){ }}
+				<a href="javascript:;" class="role-item role-item-active">{{=item.text}}</a>
+			{{ }else{ }}
+				<a href="javascript:;" class="role-item">{{=item.text}}</a>
+			{{ } }}		
+		</li>
+	{{ } }}
+</script>
 <script type="text/x-dot-template" id="historyInspectTmpl">
 	{{ var len = it.length; if(len) { }}
 		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
@@ -63,11 +63,11 @@
 				<thead class="expire-title">
 					<tr>
 						<td colspan="3">
-							<span class="userName">{{= item.userName}}</span>
-							<span>{{= item.orderId}}</span>
+							<span class="userName">{{= item.realName}}</span>
+							<span>{{= item.orderNo}}</span>
 							<div class="key-value-box clearfix">
 								<span class="key">查询时间：</span>
-								<span class="value">{{= item.createDate}}</span>
+								<span class="value">{{= item.creatTime||'-'}}</span>
 							</div>
 						</td>
 					</tr>
@@ -81,12 +81,8 @@
 									<td class="value">{{= item.bankName}}</td>
 								</tr>
 								<tr class="table-inner-tr">
-									<td class="key">进件车商：</td>
-									<td class="value">{{= item.carDealer}}</td>
-								</tr>
-								<tr class="table-inner-tr">
 									<td class="key">放贷日期：</td>
-									<td class="value">{{= item.giveMoneyTime}}</td>
+									<td class="value">{{= item.giveMoneyTime||'-'}}</td>
 								</tr>
 							</table>
 						</td>
@@ -98,15 +94,15 @@
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">结果返回时间：</td>
-									<td class="value">{{= item.backTime}}</td>
+									<td class="value">{{= item.returnTime||'-'}}</td>
 								</tr>
 							</table>
 						</td>
 						<td class="expire-content-item expire-content-item-last">
-							{{if(item.status==1){}}
-							<a class="button button-mini button-gray godetail" data-href="historyInspectDetail">查看详情</a>
+							{{if(item.isReturn==1){}}
+								<a class="button button-mini button-gray godetail" data-orderNo="{{=item.orderNo}}" data-id="{{=item.Id}}">查看详情</a>
 							{{}else{}}
-							结果还未返回
+								结果还未返回
 							{{}}}
 						</td>
 					</tr>

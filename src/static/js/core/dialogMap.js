@@ -248,17 +248,24 @@
 					<div class="block-item-data not-selected">{{=col.funcName}}</div>\
 				{{ } }}\
 			{{ } }}',
+		userBtnGroup:'{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
+				{{ if(col.checkStatus!="1"){ }}\
+					<div class="block-item-data" data-index="{{=i}}">{{=col.userName}}({{=col.userTypeName}})</div>\
+				{{ }else{ }}\
+					<div class="block-item-data not-selected">{{=col.userName}}({{=col.userTypeName}})</div>\
+				{{ } }}\
+			{{ } }}',
 		serviceItems:'<div class="serviceItems">\
 			<ul class="clearfix">\
 				{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
-				<li><div class="text-bt">银行</div>\
+				<li>{{ if(col.isBank){ }}<div class="text-bt">银行</div>{{ } }}\
 					<div class="serviceContext clearfix">\
-						<p class="text-icon"><span class="bacf09054"><i class="iconfont">&#xe676;</i></span></p>\
-						<p class="text-name">{{=col.functionName}}\
-						{{ if(col.checkStatus==0){ }}<span class="text-status text-orange">未查</span></p></div><div class="serviceBtn bacStart nextDialog">发起核查</div>\
-						{{ }else if(col.checkStatus==1){ }}<span class="text-status text-orange">未查</span></p></div><div class="serviceBtn inoperable">缺少相关数据</div>\
+						<p class="text-icon"><span class="{{=col.class}}"><i class="iconfont">{{=col.icon}}</i></span></p>\
+						<p class="text-name">{{=col.funcName}}\
+						{{ if(col.checkStatus==0){ }}<span class="text-status text-orange">未查</span></p></div><div class="serviceBtn bacStart nextDialog" data-index="{{=i}}">发起核查</div>\
+						{{ }else if(col.checkStatus==1||!col.checkStatus){ }}<span class="text-status text-orange">未查</span></p></div><div class="serviceBtn inoperable">缺少相关数据</div>\
 						{{ }else if(col.checkStatus==2){ }}<span class="text-status text-orange">查询中</span></p></div><div class="serviceBtn inoperable">发起核查</div>\
-						{{ }else if(col.checkStatus==3){ }}<span class="text-status text-green">已查</span></p></div><div class="serviceBtn bacAgain nextDialog">再次核查</div>\
+						{{ }else if(col.checkStatus==3){ }}<span class="text-status text-green">已查</span></p></div><div class="serviceBtn bacAgain nextDialog" data-index="{{=i}}">再次核查</div>\
 						{{ } }}</li>\
 				{{ } }}\
 			</ul>\
@@ -287,7 +294,15 @@
 										</div>\
 									</div>\
 								</div>\
-							</div>'
+							</div>',
+		selectTemplate: '<div class="w-content">\
+							<dl class="w-dropdown">\
+								<dt class="dt">请选择需要套打的合同模板：</dt>\
+								<dd class="dd">\
+									<div class="select select-bank" data-placeholder="请选择" data-dropdown="page.$scope[\'loadArchiveDownload\'].templatePicker" data-trigger="page.$scope[\'loadArchiveDownload\'].dropdownTrigger.template"></div>\
+								</dd>\
+							</dl>\
+						</div>',
 	}
 	g.dialogTml.wCommit = {
 		sure: '<div class="w-commit-area">\

@@ -1,0 +1,41 @@
+	<!--运营分析 tab1 业务量日统计-->
+			<div class="container operations-analysis" id="operations-analysis">
+				<!--面板-->
+				<div class="panel no-top-border">
+					<!--银行汇款日期选择-->
+					<div class="select-search-bar no-border bottom-border clearfix">
+						<div class="search-item">
+							<span class="select-name">统计日期：</span>
+							<div class="input-text input-date-mini">
+								<input id="dateStart" type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" data-type="startDate" value="" />	
+							</div>
+							<span class="separator">-</span>
+							<div class="input-text input-date-mini">
+								<input id="dateEnd" type="text" class="dateBtn" data-min="dateStart" readonly="readonly" data-type="endDate" value="" />	
+							</div>
+						</div>
+						<div class="search-item">
+							<span class="select-name">当前进度：</span>
+							<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['operationsTab2'].categoryPicker" data-trigger="page.$scope['operationsTab2'].dropdownTrigger.category"></div>
+						</div>
+						<div class="search-item">
+							<span class="select-name">分公司：</span>
+							<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['operationsTab2'].companyPicker" data-trigger="page.$scope['operationsTab2'].dropdownTrigger.company"></div>
+						</div>
+						<div class="search-item">
+							<div class="button button-mini">确定</div>
+						</div>
+					</div>
+					<!--银行汇款日期选择  end-->
+					
+					<!--二级详细内容罗列-->
+					<div class="panel-detail-content">
+						表格
+					</div>
+					<!--二级详细内容罗列  end-->
+
+				</div>
+				<!--面板  end-->
+				
+			</div>
+			<!-- 业务量日统计 end-->

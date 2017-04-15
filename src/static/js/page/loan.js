@@ -169,10 +169,10 @@ page.ctrl('loan', function($scope) {
 		/**
 		* 绑定搜索事件
 		**/
-		$console.find('#search input').on('keydown', function(evt) {
+		$console.find('#searchInput').on('keydown', function(evt) {
+			var that = $(this);
 			if(evt.which == 13) {
-				var that = $(this),
-					searchText = $.trim(that.val());
+				var	searchText = $.trim(that.val());
 				if(!searchText) {
 					delete apiParams.fuzzyParam;
 					loadLoanList(apiParams);
@@ -183,9 +183,20 @@ page.ctrl('loan', function($scope) {
 				loadLoanList(apiParams);
 			}
 		});
+		$console.find('#searchInput').on('keyup', function(evt) {
+			var that = $(this);
+			if(evt.which == 8) {
+				var	searchText = $.trim(that.val());
+				if(!searchText) {
+					delete apiParams.fuzzyParam;
+					loadLoanList(apiParams);
+				}
+			}
+		});
+
 
 		// 文本框失去焦点记录文本框的值
-		$console.find('#search input').on('blur', function(evt) {
+		$console.find('#searchInput').on('blur', function(evt) {
 			var that = $(this),
 				searchText = $.trim(that.val());
 			if(!searchText) {
@@ -199,7 +210,7 @@ page.ctrl('loan', function($scope) {
 		$console.find('#search .iconfont').on('click', function() {
 			var searchText = $.trim($console.find('#search input').val());
 			if(!searchText) {
-				$console.find('#search input').focus();
+				$console.find('#searchInput').focus();
 				loadLoanList(apiParams);
 				return false;
 			}
