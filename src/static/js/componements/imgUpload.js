@@ -533,7 +533,7 @@
 		}
 		self.runtime = {};
 		self.tool = {};
-		self.runtime.idx = 0;
+		self.runtime.idx = self.opts.idx;
 		self.runtime.leftItems = 0;
 		self.init();
 	}
@@ -590,8 +590,8 @@
 		self.$viewbox = self.$preview.find('#__move__trigger');
 		self.$prev = self.$preview.find('.prev');
 		self.$next = self.$preview.find('.next');
-		self.setImage(self.imgs[self.opts.idx]);
-		self.$items.eq(self.imgs[self.opts.idx]).addClass('active');
+		self.setImage(self.imgs[self.runtime.idx]);
+		self.$items.eq(self.runtime.idx).addClass('active');
 	};
 	/**
 	* 构造工具条

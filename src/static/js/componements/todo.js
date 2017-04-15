@@ -25,6 +25,7 @@
 		self.$icon = self.$trigger.find('.iconfont');
 		self.$number = self.$el.find('.message-number');
 		self.$items = self.$el.find('.remind-box');
+		self.$msg = $('#messagePanel');
 		self.listen();
 		self.connect(true);
 	};
@@ -66,7 +67,7 @@
 		self.opened = false;
 	};
 
-	Todo.prototype.addItems = function(data) {
+	Todo.prototype.addItems = function(data, ) {
 		var self = this;
 		var total = data.taskSize,
 			list = data.taskCategorys,
@@ -108,16 +109,34 @@
 		}
 	};
 
+	Todo.prototype.addMessage = function(data) {
+		var self = this;
+		var arr = [];
+		for(var i = 0; i < data.length; i++) {
+			var row = data[i];
+			var date = new Date(row.createDate);
+			arr.push(template.msg.format(row.id, row.content, [date.getFullYear(), date.getMonth() + 1, date.getDate()]));
+		}
+		self.$msg.html(arr.join(''));
+		self.$msg.append('<li class="message-item clearfix"><a href="#message" class="message-more">更多&gt;&gt;</a></li>')
+	}
+
 	Todo.prototype.connect = function(immediately) {
 		var self = this;
 
 		function internal(e) {
 			$.ajax({
-				url: 'http://localhost:8083/mock/todo?t='+new Date(),
+				url: $http.api('busiMsg/get', true),
 				global: false,
+				data: {
+					pageNum: 1,
+					pageSize: 5
+				},
+				dataType: 'json',
 				success: function(xhr) {
 					if(!xhr.code && xhr.data) {
-						e.addItems(xhr.data);
+						e.addItems(xhr.data.taskCategorys);
+						e.addMessage(xhr.data.busiMsgs);
 					}
 				}
 			})
@@ -125,7 +144,10 @@
 		if (immediately) {
 			internal(self);
 		} else {
+			if(self.connectCounter) return;
+			self.connectCounter = true;
 			setTimeout(function() {
+				self.connectCounter = false;
 				internal(self);
 			}, self.opts.timeout);
 		}
@@ -140,7 +162,13 @@
 				<div class="remind-content">\
 					<ul class="remind-box"></ul>\
 				</div>',
-		item: '<li class="remind-item remindEvt" data-code="{2}">{0}<span class="message-number">{1}</span></li>'
+		item: '<li class="remind-item remindEvt" data-code="{2}">{0}<span class="message-number">{1}</span></li>',
+		msg: '<li class="message-item clearfix">\
+					<div class="message-item-data">\
+						<a href="#message?id={0}">{1}</a>\
+					</div>\
+					<span class="message-time">{2}</span>\
+				</li>'
 	};
 
 	_.Todo = Todo

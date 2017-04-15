@@ -90,11 +90,7 @@
 							content: tool.alert('非法的参数！'),
 							buttons:{
 								ok: {
-									text: '确定',
-									action: function() {
-										// location.href = 'login.html';
-										// alert(1)
-									}
+									text: '确定'
 								}
 							}
 						})
@@ -323,15 +319,19 @@
 	
 	/*****************http end*******************/
 	function unAuth() {
+		if(_.authorizationTiper) return false;
+		_.authorizationTiper = true;
 		$.alert({
 			title: '提示',
+			useBootstrap: false,
+			boxWidth: 300,
 			content: tool.alert('你的登录授权无效或已过期'),
 			buttons:{
 				ok: {
 					text: '确定',
 					action: function() {
+						_.authorizationTiper = false;
 						location.href = 'login.html';
-						// alert(1)
 					}
 				}
 			}
