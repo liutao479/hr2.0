@@ -67,10 +67,10 @@
 		self.opened = false;
 	};
 
-	Todo.prototype.addItems = function(data, ) {
+	Todo.prototype.addItems = function(data, size) {
 		var self = this;
-		var total = data.taskSize,
-			list = data.taskCategorys,
+		var total = size,
+			list = data,
 			tmpl = {};
 		self.$number.html(total);
 		self.total = total;
