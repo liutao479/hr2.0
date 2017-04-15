@@ -286,7 +286,7 @@
 		if(self.options.delUrl) {
 			_url = self.options.delUrl;
 		}
-		console.log(params)
+		console.log(params);
 		$.ajax({
 			url: _url,
 			type: 'post',
@@ -298,7 +298,8 @@
 					self.delCb(self, xhr);
 					self.$el.html(internalTemplates.edit.format(self.name));
 					self.status = 0;
-					self.listen();			
+					self.listen();
+					console.log(self.options)			
 				}
 			}
 		});
@@ -341,6 +342,9 @@
 			params.materialsPic = url;
 			_url = api.otherUpload;
 		} else {
+			if(self.options.id) {
+				params.id = self.options.id;
+			}
 			if(self.options.orderno) {
 				params.orderNo = self.options.orderno;
 			}
