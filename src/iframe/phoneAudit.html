@@ -144,7 +144,7 @@
 										</div>
 										<span class="placeholder">请选择</span>
 										<span class="arrow arrow-bottom right8px"></span>
-										<input type="hidden" name="qvalue" class="required" value="{{= row.remark}}" />
+										<input type="hidden" name="qvalue" class="required" value="{{= role.remark}}" />
 									</span>
 								</div>
 								<div class="question-box-cont">
@@ -157,12 +157,12 @@
 										<!--<textarea name="editInfo" rows="4"></textarea>-->
 										<div class="textArea" contenteditable="true"></div>
 									{{ } }}	
-										<input type="hidden" name="remark" value="{{= row.remark}}" />
+										<input type="hidden" name="remark" value="{{= role.remark}}" />
 									</span>
 								</div>
 							</div>
-							{{ if(row.id){ }}
-								<input type="hidden" name="qid" value="{{= row.id}}"  />
+							{{ if(role.id){ }}
+								<input type="hidden" name="qid" value="{{= role.id}}"  />
 							{{ } }} 	
 							<input type="hidden" name="orderNo" value="{{= it.data.KHXX.orderNo}}"  />
 							</form>
