@@ -359,6 +359,12 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 							cb();
 						})
 					})
+				},
+				onclose: function(imgs) {
+					$imgs.each(function(idx) {
+						$(this).find('.imgs-error').remove();
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
+					});
 				}
 			});
 

@@ -129,7 +129,8 @@
 						</div>
 					{{ } }}
 					{{ if(row.code == 'QTCL') { }}
-						<div class="panel mt15">
+						{{ if(it.editable || (!it.editable && it.data.otherMaterials.length > 0)) { }}
+						<div class="panel mt15 panel-other">
 							<!-- {{=it.cfgData.name}}标题 -->
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -150,6 +151,7 @@
 							</div>
 							<!-- {{=it.cfgData.name}}对应上传材料项 -->
 						</div>
+						{{ } }}
 					{{ } }}
 				{{ } }}
 			</script>
