@@ -7,32 +7,20 @@
 					<div class="select-search-bar no-border bottom-border clearfix">
 						<div class="search-item">
 							<span class="select-name">统计日期：</span>
-							<span class="select select-common">
-								<span class="placeholder">2016-12-19</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
+							<div class="input-text input-date-mini">
+								<input id="dateStart" type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" data-type="startDate" value="" />	
+							</div>
 							<span class="separator">-</span>
-							<span class="select select-common">
-								<span class="placeholder">2016-12-19</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
+							<div class="input-text input-date-mini">
+								<input id="dateEnd" type="text" class="dateBtn" data-min="dateStart" readonly="readonly" data-type="endDate" value="" />	
+							</div>
 						</div>
 						<div class="search-item">
-							<span class="select-name">当前进度：</span>
-							<span class="select select-common">
-								<span class="placeholder">全部</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
+						<span class="select-name">分公司：</span>
+						<div class="select select-common" data-placeholder="全部" data-dropdown="page.$scope['operationsTab3'].deptCompanyPicker" data-trigger="page.$scope['operationsTab3'].dropdownTrigger.deptCompany"></div>
 						</div>
 						<div class="search-item">
-							<span class="select-name">分公司：</span>
-							<span class="select select-common">
-								<span class="placeholder">全部</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
-						</div>
-						<div class="search-item">
-							<div class="button button-mini">确定</div>
+							<div class="button button-mini" id="search">确定</div>
 						</div>
 					</div>
 					<!--银行汇款日期选择  end-->
@@ -40,20 +28,22 @@
 					<!--二级详细内容罗列-->
 					<div class="panel-detail-content panel-task-count">
 						<div class="select-search-bar no-border clearfix">
-							<div class="search-item">
-								<div class="radio"></div>订单量
+							<div class="tab-bar mt15">
+								<ul class="role-bar-ul clearfix" id="changeTab">
+									<li class="role-bar-li">
+										<a href="javascript:;" class="role-item tabEvt role-item-active">订单量</a>
+									</li>
+									<li class="role-bar-li">
+										<a href="javascript:;" class="role-item tabEvt">贷款金额</a>
+									</li>
+								</ul>
 							</div>
 							<div class="search-item">
-								<div class="radio checked" checked="checked"></div>贷款金额
-							</div>
-							<div class="search-item">
-								<span class="select-name">选择统计难度：</span>
-								<span class="select select-common">
-									<span class="placeholder">按当前进度</span>
-									<span class="arrow arrow-bottom"></span>
-								</span>
-							</div>
+								<span class="select-name">选择统计维度：</span>
+								<div class="select select-dept-source" data-placeholder="全部" data-dropdown="page.$scope['operationsTab3'].wdPicker" data-trigger="page.$scope['operationsTab3'].dropdownTrigger.wd"></div>
+							</div>							
 						</div>
+						<div id="piechart" style="width:65%;height:320px;margin:40px auto;"></div>
 					</div>
 					<!--二级详细内容罗列  end-->
 
