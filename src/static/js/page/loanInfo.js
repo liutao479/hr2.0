@@ -272,8 +272,10 @@ page.ctrl('loanInfo', function($scope) {
 		        var formList = $(this).parent().parent().siblings().find('form');
 		        if(formList.length == 1){
 			        var params = formList.serialize();
-		            params = decodeURIComponent(params,true);
-		            var paramArray = params.split("&");
+			        var b = params.replace(/\+/g," ");
+					b =  decodeURIComponent(b);
+//		            params = decodeURIComponent(params,true);
+		            var paramArray = b.split("&");
 		            var data1 = {};
 		            for(var i=0;i<paramArray.length;i++){
 		                var valueStr = paramArray[i];
@@ -284,8 +286,10 @@ page.ctrl('loanInfo', function($scope) {
 		        	data = [];
 			        formList.each(function(index){
 				        var params = $(this).serialize();
-			            params = decodeURIComponent(params,true);
-			            var paramArray = params.split("&");
+				        var b = params.replace(/\+/g," ");
+						b =  decodeURIComponent(b);
+//			            params = decodeURIComponent(params,true);
+			            var paramArray = b.split("&");
 			            var data1 = {};
 			            for(var i=0;i<paramArray.length;i++){
 			                var valueStr = paramArray[i];
