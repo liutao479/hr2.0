@@ -252,12 +252,14 @@ page.ctrl('secondhandInput', function($scope) {
 	})
 
 	$scope.carPicker = function(picked) {
-		debugger
 		var carname = $("#carMode").find('.select-text').val();
 		$("#carName").val(carname);
 	}
 	$scope.areaPicker = function(picked) {
-		console.log(picked);
+		var locationName = $("#location").find('.select-text').val();
+		$("#locationName").val(locationName);
+		var originAreaName = $("#originArea").find('.select-text').val();
+		$("#originAreaName").val(originAreaName);
 	}
 	/**dropdown 测试*/
 	function setupDropDown() {
