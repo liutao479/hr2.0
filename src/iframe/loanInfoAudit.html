@@ -479,14 +479,24 @@
 																{{ } }} 
 																{{= seg.name}}：</span>
 														</td>
-														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'sex' || detailCode == 'isDiscount' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship'){ }}
+														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'sex' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
 																	<input type="hidden" name="{{= detailCode}}"  value="{{= it.data[fieldCode][detailCode]}}" />
 																{{ }else{ }}
-																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
 																	<input type="hidden" name="{{= detailCode }}" />
+																{{ } }}
+															</td>
+														{{ }else if( detailCode == 'isDiscount' ){ }}
+															<td>
+																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
+																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
+																	<input id="isDiscount" type="hidden" name="{{= detailCode}}"  value="{{= it.data[fieldCode][detailCode]}}" />
+																{{ }else{ }}
+																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
+																	<input id="isDiscount" type="hidden" name="{{= detailCode }}" />
 																{{ } }}
 															</td>
 														{{ }else if(detailCode == 'serviceType' || detailCode == 'brand' || detailCode == 'busiSourceTypeCode' || detailCode == 'busimode' || detailCode == 'repayPeriod'){ }}
@@ -578,6 +588,26 @@
 																	<div class="select select-common" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['loanInfoAudit'].carPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.car"></div>
 																	<input type="hidden" name="{{= detailCode}}" />
 																{{ } }}
+															</td>
+														{{ }else if(detailCode == 'discountRate'){ }}
+															<td id="discountRate">
+																<span class="info-value">
+																	{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
+																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
+																	{{ }else{ }}
+																		<input type="text" name="{{= detailCode}}" />
+																	{{ } }}
+																</span>
+															</td>
+														{{ }else if(detailCode == 'discountMoney'){ }}
+															<td id="discountMoney">
+																<span class="info-value">
+																	{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
+																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
+																	{{ }else{ }}
+																		<input type="text" name="{{= detailCode}}" />
+																	{{ } }}
+																</span>
 															</td>
 														{{ }else{ }}
 															<td>

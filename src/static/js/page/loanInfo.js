@@ -755,11 +755,17 @@ page.ctrl('loanInfo', function($scope) {
 	$scope.selfPicker = function(picked) {
 		var isDiscount = $("#isDiscount").val();
 		console.log(isDiscount);
-//		if(isDiscount != '1'){
-//			
-//		}else{
-//			
-//		}
+		if(isDiscount != '1'){
+			$("#discountRate").siblings().find('i').hide();
+			$("#discountRate").find('input').removeClass('required');
+			$("#discountMoney").siblings().find('i').hide();
+			$("#discountMoney").find('input').removeClass('required');
+		}else{
+			$("#discountRate").siblings().find('i').show();
+			$("#discountRate").find('input').addClass('required');
+			$("#discountMoney").siblings().find('i').show();
+			$("#discountMoney").find('input').addClass('required');
+		}
 	}
 	$scope.areaPicker = function(picked) {
 	}
