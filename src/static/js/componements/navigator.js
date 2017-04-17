@@ -236,6 +236,13 @@ $(function() {
 				title: '修改密码',
 				content: 'url:./defs/password.html',
 				buttons: {
+					cancel: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel',
+						action: function() {
+
+						}
+					},
 					ok: {
 						text: '确定',
 						action: function() {
@@ -244,12 +251,6 @@ $(function() {
 								if(status)
 								self.close();
 							});
-						}
-					},
-					cancel: {
-						text: '取消',
-						action: function() {
-
 						}
 					}
 				}

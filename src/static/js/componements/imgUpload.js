@@ -207,6 +207,7 @@
 		}
 		if(self.status == 1) {
 			self.$el.find('.imgs-delete').on('click', function() {
+				self.$el.find('.imgs-item-upload').LoadingOverlay("show");
 				self.onDelete();
 			});	
 		}
@@ -291,15 +292,30 @@
 			url: _url,
 			type: 'post',
 			data: params,
+			global: false,
 			dataType: 'json',
 			success: function(xhr) {
 				console.log(xhr)
+				self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 				if(!xhr.code) {
 					self.delCb(self, xhr);
 					self.$el.html(internalTemplates.edit.format(self.name));
 					delete self.options.id;
 					self.status = 0;
 					self.listen();		
+				}
+				if(xhr.code == 7001) {
+					$.alert({
+						title: '提示',
+						content: tool.alert(xhr.msg),
+						buttons:{
+							ok: {
+								text: '确定',
+								action: function() {
+								}
+							}
+						}
+					})
 				}
 			}
 		});
@@ -398,6 +414,19 @@
 						self.uplCb(self, xhr);
 					}
 					
+				}
+				if(xhr.code == 7001) {
+					$.alert({
+						title: '提示',
+						content: tool.alert(xhr.msg),
+						buttons:{
+							ok: {
+								text: '确定',
+								action: function() {
+								}
+							}
+						}
+					})
 				}
 			}
 		})
