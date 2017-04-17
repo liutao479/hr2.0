@@ -222,11 +222,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 						text: '确定',
 						action: function () {
 							var params = {
-								taskId: $params.taskId,
-								reason: '取消'
+								taskId: $params.taskId
 							}
-							// var reason = $.trim(this.$content.find('#suggestion').val());
-							// if(reason) params.reason = reason;
 							$.ajax({
 								type: 'post',
 								url: $http.api('loanOrder/cancel', 'zyj'),
