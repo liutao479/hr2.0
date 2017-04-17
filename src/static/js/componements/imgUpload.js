@@ -286,22 +286,20 @@
 		if(self.options.delUrl) {
 			_url = self.options.delUrl;
 		}
-		console.log(params)
-		self.$el.find('.imgs-item-upload').LoadingOverlay("show");
+		console.log(params);
 		$.ajax({
 			url: _url,
 			type: 'post',
 			data: params,
-			global: false,
 			dataType: 'json',
 			success: function(xhr) {
 				console.log(xhr)
-				self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 				if(!xhr.code) {
 					self.delCb(self, xhr);
 					self.$el.html(internalTemplates.edit.format(self.name));
 					self.status = 0;
-					self.listen();			
+					self.listen();
+					console.log(self.options)			
 				}
 			}
 		});
@@ -344,6 +342,9 @@
 			params.materialsPic = url;
 			_url = api.otherUpload;
 		} else {
+			if(self.options.id) {
+				params.id = self.options.id;
+			}
 			if(self.options.orderno) {
 				params.orderNo = self.options.orderno;
 			}
@@ -522,7 +523,6 @@
 			markable: false,
 			idx: 0
 		}, opts);
-		console.log(self.opts)
 		if(!onclose) {
 			onclose = $.noop;
 		}
@@ -533,7 +533,7 @@
 		}
 		self.runtime = {};
 		self.tool = {};
-		self.runtime.idx = 0;
+		self.runtime.idx = self.opts.idx;
 		self.runtime.leftItems = 0;
 		self.init();
 	}
@@ -581,7 +581,7 @@
 		for(var i = 0, len = self.imgs.length; i < len; i++) {
 			var img = self.imgs[i],
 				ml = i * self.size.im,
-				mark = self.getMark(img.auditResult);
+				mark = self.getMark(img.auditResult || img.aduitResult);
 			if(ml > 0) ml = self.size.im;
 			arr.push('<div data-idx="'+i+'" class="thumb-view" style="cursor: pointer; position:relative; float:left; width:'+self.size.iw+'px;height:'+self.size.iw+'px;margin-left:'+ml+'px;"><img src="'+img.materialsPic+'" style="width:100%; height:100%;" />'+mark+'</div>');
 		}
@@ -590,8 +590,8 @@
 		self.$viewbox = self.$preview.find('#__move__trigger');
 		self.$prev = self.$preview.find('.prev');
 		self.$next = self.$preview.find('.next');
-		self.setImage(self.imgs[self.opts.idx]);
-		self.$items.eq(self.imgs[self.opts.idx]).addClass('active');
+		self.setImage(self.imgs[self.runtime.idx]);
+		self.$items.eq(self.runtime.idx).addClass('active');
 	};
 	/**
 	* 构造工具条
@@ -649,6 +649,7 @@
 	* 获取对应的错误提示图片
 	*/
 	Preview.prototype.getMark = function(idx) {
+		console.log(idx)
 		var m = imgs[idx || 0];
 		if(m != "") {
 			m = "<div class='errHook'><div class='err-mask'></div>" + m + '</div>';

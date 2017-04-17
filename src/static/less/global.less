@@ -62,6 +62,9 @@
 .mr24{
     margin-right:24px !important;
 }
+.mr10{
+    margin-right:10px !important;
+}
 .ml162 {
     margin-left: 162px !important;
 }
@@ -562,14 +565,11 @@ input[disabled]{
                     margin-right: 15px;
                 }
             }
-            &.orders-item-data-blank {
-                width: 20%;
-            }
             &.orders-item-data-blank-mini {
                 width: 10%;
             }
-            .orders-item-data-blank {
-                width: 22%;
+            &.orders-item-data-blank {
+                width: 15%;
             } 
             .view-fee {
                 cursor: pointer !important;
@@ -3181,4 +3181,23 @@ input[disabled]{
     margin: 10px 0;
     padding: 0 10px;
     border-radius: 6px; 
+}
+.dialog-input-form {
+    margin: 0 20px;
+    .input-row {
+        position: relative;
+        margin-bottom: 20px;
+        label {
+            display: inline-block;
+            width: 110px;
+            text-align: right;
+            line-height: 32px;
+        }
+        .input-text {
+            position: absolute;
+            left: 120px;
+            width: 240px;
+        }
+    }
+    
 }

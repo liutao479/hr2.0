@@ -38,8 +38,26 @@ page.ctrl('creditApproval', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				result.index = idx;
 				$scope.result = result;
+				$scope.result.index = idx;
+				$scope.idx = idx;
+				
+				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
+				if($scope.firstLoad) {
+					var creditUsers = $scope.result.data.creditUsers, userType;
+					for(var i in creditUsers) {
+						userType = i;
+						break;
+					}
+					if(userType != 0) {
+						console.log(userType);
+						$scope.result.index = userType;
+						$scope.idx = userType;
+					} else {
+						$scope.result.index = idx;
+						$scope.idx = idx;
+					}
+				}
 				$scope.result.editable = 0;
 				$scope.result.userRalaMap = {
 					'0': '本人',
@@ -48,7 +66,6 @@ page.ctrl('creditApproval', [], function($scope) {
 					'3': '子女',
 					'-1': '其他'
 				};
-				console.log($scope.result)
 				// 编译tab栏
 				setupTab($scope.result, function() {
 					setupTabEvt();
@@ -211,7 +228,7 @@ page.ctrl('creditApproval', [], function($scope) {
 				viewable: true,
 				markable: true,
 				getimg: function(cb) {
-					cb($scope.result.data.creditUsers[_type][index].loanCreditReportList)
+					cb($scope.result.data.creditUsers[_type][index].loanCreditReportList);
 				},
 				marker: function (img, mark, cb) {
 					var params = {
@@ -557,11 +574,13 @@ page.ctrl('creditApproval', [], function($scope) {
 			$tab: $console.find('#creditTabs'),
 			$paging: $console.find('#pageToolbar')
 		}
+		$scope.firstLoad = true;
 		loadOrderInfo($scope.idx, function() {
 			setupLocation();
 			evt();
 			setupSubmitBar();
-			setupBackReason($scope.result.data.loanTask.backApprovalInfo)
+			setupBackReason($scope.result.data.loanTask.backApprovalInfo);
+			$scope.firstLoad = false;
 		});
 		
 	});

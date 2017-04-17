@@ -1,7 +1,7 @@
 //顶部导航栏
 .navigator {
   position: fixed;
-  z-index: 1000;
+  z-index: 99998;
   left: 0;
   right: 0;
   top: 0;
@@ -52,6 +52,9 @@
           &.user {
               width: 102px;
               height: 60px;
+              .navEvt {
+                cursor: pointer;
+              }
               .drop-down-box {
                   margin: 15px auto; 
                   .iconfont-arrow {
@@ -149,5 +152,6 @@
               color: #FFF;
           }
       }
+
   }
 }

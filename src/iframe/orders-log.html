@@ -131,7 +131,7 @@
 								{{ } }}
 								<div class="catalog-content-text blue">
 									<span class="blue">
-										<span class="weight">【{{=row.taskName}}】</span><span>操作人：{{=row.userName}}（客户经理）</span>	
+										<span class="weight">【{{=row.taskName || '' || ''}}】</span><span>操作人：{{=row.userName}}（客户经理）</span>	
 									</span>
 								</div>
 							</div>
@@ -163,7 +163,7 @@
 								</div>
 								<div class="catalog-content-text color-gray">
 									<span class="catalog-back">
-										<span class="weight">【{{=col.taskName}}】</span><span>操作人：{{=col.userName}}（{{=col.rolaName || '角色名称'}}）</span>	
+										<span class="weight">【{{=col.taskName || ''}}】</span><span>操作人：{{=col.userName}}（{{=col.rolaName || '角色名称'}}）</span>	
 									</span>
 								</div>
 							</div>

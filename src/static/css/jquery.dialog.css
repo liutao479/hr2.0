@@ -382,8 +382,8 @@ body[class*=jconfirm-no-scroll-] {
 
 .jconfirm .jconfirm-box .jconfirm-buttons>button {
 	margin-bottom: 4px;
-	margin-left: 2px;
-	margin-right: 2px
+	margin-left: 10px;
+	margin-right: 10px
 }
 
 .jconfirm .jconfirm-box .jconfirm-buttons button {
@@ -843,7 +843,9 @@ body[class*=jconfirm-no-scroll-] {
 .jconfirm.jconfirm-supervan .jconfirm-box .jconfirm-buttons {
 	text-align: center
 }
-
+.jconfirm-box {
+	overflow: hidden;
+}
 .jconfirm.jconfirm-supervan .jconfirm-box .jconfirm-buttons button {
 	font-size: 16px;
 	border-radius: 2px;
