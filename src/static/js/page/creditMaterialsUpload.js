@@ -12,8 +12,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	$scope.tabs = {};
 	$scope.currentType = $scope.$params.type || 0;
 	$scope.$el = {};
-	//征信查询机构弹窗确定按钮是否可点击
-	$scope.clickable = false;
+	
 
 	
 	/**
@@ -590,8 +589,13 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			dataType: 'json',
 			data: params,
 			global: false,
-			success: $http.ok(function() {
-
+			success: $http.ok(function(xhr) {
+				if(xhr.data.refresh) {
+					loadOrderInfo($scope.currentType, function() {
+						setupCreditBank();
+						initApiParams();
+					});
+				}
 			})
 		})
 	}
@@ -635,7 +639,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			$creditPanel: $console.find('#creditUploadPanel'),
 			$modifyBankPanel: $console.find('#modifyBankPanel')
 		}
-		
+		//征信查询机构弹窗确定按钮是否可点击
+		$scope.clickable = false;
 		loadOrderInfo($scope.currentType, function() {
 			setupBackReason($scope.result.data.loanTask.backApprovalInfo)
 			setupCreditBank();
@@ -686,9 +691,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			});
 		}
 		if(xhr.data.refresh) {
-			$scope.currentType = 0;
 			loadOrderInfo($scope.currentType, function() {
-				setupCreditBank();
 				initApiParams();
 			});
 		}
@@ -705,7 +708,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		// 		initApiParams();
 		// 	})
 		// })
-		
 	}
 
 	/**
@@ -713,7 +715,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 */
 	$scope.deletecb = function(self, xhr) {
 		if(xhr.data.refresh) {
-			$scope.currentType = 0;
 			loadOrderInfo($scope.currentType, function() {
 				setupCreditBank();
 				setupLocation();

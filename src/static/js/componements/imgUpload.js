@@ -188,7 +188,7 @@
 						return false;
 					}
 				}
-				self.$el.find('.imgs-error').remove();
+				// self.$el.find('.imgs-error').remove();
 				self.onUpload(this.files[0]);
 			});
 			self.$el.find('.imgs-input-text input').on('blur', function() {
@@ -297,9 +297,9 @@
 				if(!xhr.code) {
 					self.delCb(self, xhr);
 					self.$el.html(internalTemplates.edit.format(self.name));
+					delete self.options.id;
 					self.status = 0;
-					self.listen();
-					console.log(self.options)			
+					self.listen();		
 				}
 			}
 		});
@@ -382,7 +382,8 @@
 							self.options.id = xhr.data;
 						}
 						self.$el.data('img', url);
-						self.status = 1;	
+						self.$el.find('.imgs-error').remove();
+						self.status = 0;	
 						self.listen();
 						self.uplCb(self, xhr);
 					} else {
@@ -392,6 +393,7 @@
 							self.options.id = xhr.data;
 						}
 						self.$el.data('img', url);
+						self.$el.find('.imgs-error').remove();
 						self.$el.find('img').attr('src', url);
 						self.uplCb(self, xhr);
 					}

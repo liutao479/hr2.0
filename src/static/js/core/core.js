@@ -68,6 +68,28 @@
 				//统一的失败处理
 				var code = response.code;
 				switch (code) {
+					case 2101:
+						$.alert({
+							title: '提示',
+							content: tool.alert(response.msg),
+							buttons:{
+								ok: {
+									text: '确定'
+								}
+							}
+						})
+						break;
+					case 2102:
+						$.alert({
+							title: '提示',
+							content: tool.alert(response.msg),
+							buttons:{
+								ok: {
+									text: '确定'
+								}
+							}
+						})
+						break;
 					case 1000:
 						$.alert({
 							title: '提示',

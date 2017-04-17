@@ -115,8 +115,9 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 									fileId: $scope.fileId
 								},
 								dataType: 'json',
-								success: $http.ok(function() {
-									window.open($http.api('contractPrint/printContractFile?fileId=' + $scope.fileId + '&orderNo=' + orderNo, true), '_self');
+								success: $http.ok(function(result) {
+									console.log(result)
+									// window.open($http.api('contractPrint/printContractFile?fileId=' + $scope.fileId + '&orderNo=' + orderNo, true), '_self');
 								})
 							});
 						}

@@ -691,82 +691,23 @@ page.ctrl('myCustomer', [], function($scope) {
 			})
 		},
 		category: function(t, p, cb) {
-			var data = [
-				{
-					id: '全部',
-					name: '全部'
-				},
-				{
-					id: 'creditMaterialsUpload',
-					name: '征信材料上传'
-				},
-				{
-					id: 'creditInput',
-					name: '征信结果录入'
-				},
-				{
-					id: 'creditApproval',
-					name: '征信预审核'
-				},
-				{
-					id: 'cardInfoInput',
-					name: '贷款信息录入'
-				},
-				{
-					id: 'usedCarInfoInput',
-					name: '二手车信息录入'
-				},
-				{
-					id: 'loanMaterialsChoose',
-					name: '贷款材料选择'
-				},
-				{
-					id: 'busiModeChoose',
-					name: '业务模式选择'
-				},
-				{
-					id: 'homeMaterialsUpload',
-					name: '上门材料上传'
-				},
-				{
-					id: 'signMaterialsUpload',
-					name: '签约材料上传'
-				},
-				{
-					id: 'loanMaterialsUpload',
-					name: '贷款材料上传'
-				},
-				{
-					id: 'advanceMaterialsUpload',
-					name: '垫资材料上传'
-				},
-				{
-					id: 'loanTelApproval',
-					name: '电审'
-				},
-				{
-					id: 'loanApproval',
-					name: '贷款审核'
-				},
-				{
-					id: 'makeLoanApproval',
-					name: '放款审核'
-				},
-				{
-					id: 'pickMaterialsUpload',
-					name: '提车材料上传'
-				},
-				{
-					id: 'pickMaterialsApproval',
-					name: '提车审核'
-				},
-			];
-			var sourceData = {
-				items: data,
-				id: 'id',
-				name: 'name'
-			};
-			cb(sourceData);
+			$.ajax({
+				type: 'post',
+				url: $http.api('product/taskNameCode', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						taskCode: '全部',
+						taskName: '全部'
+					});
+					var sourceData = {
+						items: xhr.data,
+						id: 'taskCode',
+						name: 'taskName'
+					};
+					cb(sourceData);
+				})
+			})
 		}
 	}
 });
