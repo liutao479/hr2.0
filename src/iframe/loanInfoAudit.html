@@ -48,41 +48,55 @@
 														{{ } }} 
 														{{= seg.name}}：</span>
 													<span class="info-check-box">
-														<div class="info-check">
-															<span class="check-key"><div data-key="hklx" data-value = "553" class="checkbox checkbox-normal hklx"></div></span>
-															<span class="check-value">本地户口</span>
+														<div class="float-left cheDiv">
+															<div class="info-check">
+																<span class="check-key"><div data-key="hklx" data-value = "553" class="checkbox checkbox-normal hklx"></div></span>
+																<span class="check-value">本地户口</span>
+															</div>
+															<div class="info-check">
+																<span class="check-key"><div data-key="hklx" data-value = "554" class="checkbox checkbox-normal hklx"></div></span>
+																<span class="check-value">非本地户口</span>
+															</div>
 														</div>
-														<div class="info-check">
-															<span class="check-key"><div data-code="gzd" data-value = "563" class="checkbox checkbox-normal gzd"></div></span>
-															<span class="check-value">本地工作</span>
+														<div class="float-left cheDiv">
+															<div class="info-check">
+																<span class="check-key"><div data-code="gzd" data-value = "563" class="checkbox checkbox-normal gzd"></div></span>
+																<span class="check-value">本地工作</span>
+															</div>
+															<div class="info-check">
+																<span class="check-key"><div data-code="gzd" data-value = "564" class="checkbox checkbox-normal gzd"></div></span>
+																<span class="check-value">异地工作</span>
+															</div>
 														</div>
-														<div class="info-check">
-															<span class="check-key"><div data-mark="jzlx" data-value = "573" class="checkbox checkbox-normal jzlx"></div></span>
-															<span class="check-value">本地居住</span>
+														<div class="float-left cheDiv">
+															<div class="info-check">
+																<span class="check-key"><div data-mark="jzlx" data-value = "573" class="checkbox checkbox-normal jzlx"></div></span>
+																<span class="check-value">本地居住</span>
+															</div>
+															<div class="info-check">
+																<span class="check-key"><div data-mark="jzlx" data-value = "603" class="checkbox checkbox-normal jzlx"></div></span>
+																<span class="check-value">异地居住</span>
+															</div>
 														</div>
-														<div class="info-check">
-															<span class="check-key"><div data-key="hklx" data-value = "554" class="checkbox checkbox-normal hklx"></div></span>
-															<span class="check-value">非本地户口</span>
+														<div class="float-left cheDiv">
+															<div class="info-check">
+																<span class="check-key"><div data-value = "593" class="checkbox checkbox-normal"></div></span>
+																<span class="check-value">1年本地房产</span>
+															</div>
+															<div class="info-check">
+																<span class="check-key"><div data-value = "574" class="checkbox checkbox-normal"></div></span>
+																<span class="check-value">1年社保或工资流水</span>
+															</div>
 														</div>
-														<div class="info-check">
-															<span class="check-key"><div data-code="gzd" data-value = "564" class="checkbox checkbox-normal gzd"></div></span>
-															<span class="check-value">异地工作</span>
-														</div>
-														<div class="info-check">
-															<span class="check-key"><div data-mark="jzlx" data-value = "603" class="checkbox checkbox-normal jzlx"></div></span>
-															<span class="check-value">异地居住</span>
-														</div>
-														<div class="info-check">
-															<span class="check-key"><div data-value = "593" class="checkbox checkbox-normal"></div></span>
-															<span class="check-value">1年本地房产</span>
-														</div>
-														<div class="info-check">
-															<span class="check-key"><div data-value = "574" class="checkbox checkbox-normal"></div></span>
-															<span class="check-value">1年社保或工资流水</span>
-														</div>
-														<div class="info-check">
-															<span class="check-key"><div data-value = "583" class="checkbox checkbox-normal"></div></span>
-															<span class="check-value">企业成立1年</span>
+														<div class="float-left cheDiv">
+															<div class="info-check">
+																<span class="check-key"><div data-value = "583" class="checkbox checkbox-normal"></div></span>
+																<span class="check-value">企业成立1年</span>
+															</div>
+															<div class="info-check">
+																<span class="check-key"><div data-value = "588" class="checkbox checkbox-normal"></div></span>
+																<span class="check-value">其他</span>
+															</div>
 														</div>
 														{{ if(row[detailCode]){ }}
 															<input type="hidden" class="required" name="residentType" value="{{= row[detailCode]}}" />

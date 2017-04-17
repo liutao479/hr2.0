@@ -127,12 +127,16 @@
 	    ],
 	    "houseStatus":[
 	        {
-	            "name":"有商品房",
+	            "name":"无",
 	            "value":"0"
 	        },
 	        {
-	            "name":"有自建房",
+	            "name":"有商品房",
 	            "value":"1"
+	        },
+	        {
+	            "name":"有自建房",
+	            "value":"2"
 	        }
 	    ],
 	    "isEnterprise":[
