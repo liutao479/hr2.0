@@ -281,9 +281,10 @@ page.ctrl('creditApproval', [], function($scope) {
 					})
 				},
 				onclose: function(imgs) {
+					console.log(imgs)
 					$imgs.each(function(idx) {
 						$(this).find('.imgs-error').remove();
-						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].aduitResult]);
 					});
 				}
 			});

@@ -97,6 +97,23 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 	}
 
 	/**
+	 * 图片必传校验
+	 */
+	var checkData = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditApproval/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if( cb && typeof cb == 'function' ) {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
 	* 设置底部按钮操作栏
 	*/
 	var setupSubmitBar = function() {
@@ -111,7 +128,9 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 		})
 
 		/**
@@ -387,6 +406,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 					})
 				},
 				onclose: function(imgs) {
+					console.log(imgs)
 					$imgs.each(function(idx) {
 						$(this).find('.imgs-error').remove();
 						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);

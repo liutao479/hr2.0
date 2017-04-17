@@ -661,7 +661,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			setupSubmitBar();
 			setupAddUsers();
 			evt();
-			
+			if($scope.demandBankId) {
+				$scope.clickable = true;
+			}
 		});
 	});
 

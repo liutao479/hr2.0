@@ -174,7 +174,7 @@
 							<div class="imgs-item-group uploadEvt imgs" data-idx="{{=h}}" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.aduitResult || 0}}" data-msg="{{=hl.aduitOpinion}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 						{{ } }}
 						{{ if(it.cfgData.code == 'creditInput') { }}
-							<div class="imgs-item-group uploadEvt noimgs" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=len4 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}" data-empty="1"></div>
+							<div class="imgs-item-group uploadEvt noimgs" data-idx="{{=h}}" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=len4 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}" data-empty="1"></div>
 						{{ } }}
 					{{ } if(ml.code == 'ZXZD') { }}
 						<table border="1" class="field-table{{=(!ml.empty ? ' required' : '')}}">
