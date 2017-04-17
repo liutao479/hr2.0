@@ -38,13 +38,13 @@
 								{{ var len3 = it.userMaterials.length; if(len3) { }}
 									{{ for(var k = 0; k < len3; k++) { var mr = it.userMaterials[k]; }}
 										{{ if(mr.materialsCode == m) { }}
-											<div class="imgs-item-group uploadEvt" data-idx="{{=k}}" data-orderno="{{=it.orderInfo.orderNo}}" data-code="{{=m}}" data-name="{{=nl[m]}}" data-scene="{{=it.loanTask.category}}" data-img="{{=mr.materialsPic}}" data-id="{{=mr.id}}" data-err="{{=mr.auditResult || 0}}" data-editable="{{=it.loanTask.editable}}"></div>
+											<div class="imgs-item-group uploadEvt imgs" data-idx="{{=k}}" data-orderno="{{=it.orderInfo.orderNo}}" data-code="{{=m}}" data-name="{{=nl[m]}}" data-scene="{{=it.loanTask.category}}" data-img="{{=mr.materialsPic}}" data-id="{{=mr.id}}" data-err="{{=mr.auditResult || 0}}" data-editable="{{=it.loanTask.editable}}"></div>
 										{{ break;} else { flag++; }}
 										{{ } }}
 									{{ } }}
 								{{ } }}
 								{{ if(flag == len3) { }}
-								<div class="imgs-item-group uploadEvt" data-orderno="{{=it.orderInfo.orderNo}}" data-code="{{=m}}" data-name="{{=nl[m]}}" data-scene="{{=it.loanTask.category}}" data-err="0" data-editable="{{=it.loanTask.editable}}"></div>
+								<div class="imgs-item-group uploadEvt noimgs" data-orderno="{{=it.orderInfo.orderNo}}" data-code="{{=m}}" data-name="{{=nl[m]}}" data-scene="{{=it.loanTask.category}}" data-err="0" data-editable="{{=it.loanTask.editable}}"></div>
 								{{ } }}
 							{{ } }}
 						{{ } }}

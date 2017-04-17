@@ -938,7 +938,7 @@
 	Preview.prototype.close = function() {
 		this.$preview.remove();
 		this.$mask.remove();
-		this.onclose(this.imgs);
+		this.onclose(this.imgs, this.runtime.idx);
 	};
 
 	$.preview = function(imgCollections, marker, opt) {

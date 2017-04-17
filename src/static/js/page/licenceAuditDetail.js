@@ -115,43 +115,43 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 	}
 
 	var setupEvt = function() {
-		var $imgs = $scope.$el.$tbl.find('.uploadEvt');
-		$imgs.each(function(index) {
-			var that = $(this);
-			that.imgUpload({
-				viewable: true,
-				markable: true,
-				idx: index,
-				getimg: function(cb) {
-					cb($scope.result.data.userMaterials)
-				},
-				marker: function (img, mark, cb) {
-					var params = {
-						id: img.id,
-						auditResult: mark
-					}
-					if(mark == 0) {
-						params.auditOpinion = '';
-					}
-					$.ajax({
-						type: 'post',
-						url: $http.api('material/addOrUpdate', 'zyj'),
-						global: false,
-						data: params,
-						dataType: 'json',
-						success: $http.ok(function(result) {
-							console.log(result);
-							cb();
-						})
-					})
-				},
-				onclose: function() {
-					// console.log(this);
-					// that.find('.imgs-err')
-					// that.find('.imgs-err').remove();
+		var $imgs = $scope.$el.$tbl.find('.uploadEvt.imgs'),
+			$noimgs = $scope.$el.$tbl.find('.uploadEvt.noimgs');
+		$imgs.imgUpload({
+			viewable: true,
+			markable: true,
+			getimg: function(cb) {
+				cb($scope.result.data.userMaterials)
+			},
+			marker: function (img, mark, cb) {
+				var params = {
+					id: img.id,
+					auditResult: mark
 				}
-			});
+				if(mark == 0) {
+					params.auditOpinion = '';
+				}
+				$.ajax({
+					type: 'post',
+					url: $http.api('material/addOrUpdate', 'zyj'),
+					global: false,
+					data: params,
+					dataType: 'json',
+					success: $http.ok(function(result) {
+						console.log(result);
+						cb();
+					})
+				})
+			},
+			onclose: function(imgs) {
+				$imgs.each(function(idx) {
+					$(this).find('.imgs-error').remove();
+					$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
+				});
+			}
 		});
+
+		$noimgs.imgUpload();
 	}
 
 	/**

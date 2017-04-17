@@ -255,7 +255,8 @@ page.ctrl('creditApproval', [], function($scope) {
 		 */
 		var imgsBars = $self.find('.creditMaterials');
 		imgsBars.each(function(index) {
-			$(this).find('.uploadEvt').imgUpload({
+			var $imgs = $(this).find('.uploadEvt.imgs');
+			$imgs.imgUpload({
 				viewable: true,
 				markable: true,
 				getimg: function(cb) {
@@ -278,6 +279,12 @@ page.ctrl('creditApproval', [], function($scope) {
 							cb();
 						})
 					})
+				},
+				onclose: function(imgs) {
+					$imgs.each(function(idx) {
+						$(this).find('.imgs-error').remove();
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
+					});
 				}
 			});
 		});
