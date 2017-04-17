@@ -503,11 +503,11 @@ page.ctrl('myCustomer', [], function($scope) {
 	//车辆品牌
 	$scope.carPicker = function(picked) {
 		console.log(picked)
-		// if(picked.id == '全部') {
-		// 	delete apiParams.carMode;
-		// 	return false;
-		// }
-		apiParams.carMode = picked.name;
+		if(picked.id == '全部') {
+			delete apiParams.carMode;
+			return false;
+		}
+		apiParams.carMode = picked['品牌'].name + '-' + picked['车型'].name + '-' + picked['车系'].name;
 	}
 	//分公司ID
 	$scope.deptCompanyPicker = function(picked) {
@@ -697,12 +697,12 @@ page.ctrl('myCustomer', [], function($scope) {
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					xhr.data.unshift({
-						taskCode: '全部',
+						taskNameCode: '全部',
 						taskName: '全部'
 					});
 					var sourceData = {
 						items: xhr.data,
-						id: 'taskCode',
+						id: 'taskNameCode',
 						name: 'taskName'
 					};
 					cb(sourceData);
