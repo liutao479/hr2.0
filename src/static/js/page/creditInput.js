@@ -27,8 +27,27 @@ page.ctrl('creditInput', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				result.index = idx;
 				$scope.result = result;
+				$scope.result.index = idx;
+				$scope.idx = idx;
+				
+				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
+				if($scope.firstLoad) {
+					var creditUsers = $scope.result.data.creditUsers, userType;
+					for(var i in creditUsers) {
+						userType = i;
+						break;
+					}
+					if(userType != 0) {
+						console.log(userType);
+						$scope.result.index = userType;
+						$scope.idx = userType;
+					} else {
+						$scope.result.index = idx;
+						$scope.idx = idx;
+					}
+				}
+				
 				$scope.result.editable = 1;
 				$scope.result.userRalaMap = {
 					'0': '本人',
@@ -338,6 +357,27 @@ page.ctrl('creditInput', [], function($scope) {
 			console.log($scope.apiParams);
 		});
 
+		function noNumbers(e) {
+			var keynum, keychar, numcheck;
+
+			if(window.event) // IE
+			  {
+			  keynum = e.keyCode;
+			  }
+			else if(e.which) // Netscape/Firefox/Opera
+			  {
+			  keynum = e.which;
+			  }
+			keychar = String.fromCharCode(keynum);
+			numcheck = /\w/;
+			return numcheck.test(keychar);
+		}
+
+		//征信报告编号
+		$el.find('.creditReportId').on('keypress', function(event) {
+			return noNumbers(event);
+		})
+
 		// 备注失去焦点事件
 		// $el.find('.remark').on('blur', function() {
 		// 	var that = $(this),
@@ -364,7 +404,7 @@ page.ctrl('creditInput', [], function($scope) {
 
 		// 备注框实时监听事件
 		var maxLen = 1000;
-		$el.find('.remark').next().text('还可输入' + (maxLen - $el.find('.remark').val().length) + '/' + maxLen + '字');
+		// $el.find('.remark').next().text('还可输入' + (maxLen - $el.find('.remark').val().length) + '/' + maxLen + '字');
 		$el.find('.remark').on('input', function() {
 			var that = $(this),
 				value = that.val();
@@ -583,19 +623,22 @@ page.ctrl('creditInput', [], function($scope) {
 			$tab: $console.find('#creditTabs'),
 			$paging: $console.find('#pageToolbar')
 		}
+
+		$scope.firstLoad = true;
 		loadOrderInfo($scope.idx, function() {
 			initApiParams();
 			setupSubmitBar();
 			setupLocation();
 			setupBackReason($scope.result.data.loanTask.backApprovalInfo)
+			$scope.firstLoad = false;
 		});
+		
 	});
 
 	/***
 	* 删除图片后的回调函数
 	*/
 	$scope.deletecb = function(self) {
-		// loadOrderInfo($scope.idx);
 		var $parent = self.$el.parent();
 		self.$el.remove();
 		pictureListen($parent);

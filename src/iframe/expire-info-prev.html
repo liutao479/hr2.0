@@ -1,14 +1,6 @@
 	<!--逾期信息（预览）-->
 			<div class="container expire-info-prev" id="expire-info-prev">
 
-				<!--tab切换栏-->
-				<div class="tab-bar">
-					<ul class="role-bar-ul clearfix">
-						<li class="role-bar-li"><a href="#" class="role-item role-item-active">批量导入</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">单笔录入</a></li>
-					</ul>
-				</div>
-				<!--tab切换栏 end-->
 				
 				<!-- 面板 -->
 				<div class="panel no-top-border panel-mb0">
@@ -41,293 +33,154 @@
 				
 				
 			<script type="text/x-dot-template" id="expireInfoPrevTmpl">
-				<!-- 全选栏 -->
-				<div class="all-select-panel no-top-border mb15 clearfix" >
-					<div class="all-check-box">
-						<div id="all" data-id='83' class="checkbox checkbox-normal"></div>
-						<span>全选</span>
-					</div>
-					<div class="all-check-box">
-						创建新逾期客户<strong class="">{{= it.page.total}}</strong>人
-					</div>
-				</div>
-				<!-- 全选栏 end-->
 
 				<!--订单表格 （无匹配订单）-->
 				<div class="tab-content">
-					{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == 0){ }}
-					<table class="expire-orders-table" id="list" width="100%">
-						<thead class="expire-title">
-							<tr>
-								<td colspan="3">
-									<div id="onlyCheck" data-id = "{{= item.detailId}}" class="checkbox checkbox-normal"></div>
-									<i class="iconfont iconfont-man">&#xe656;</i>
-									<span class="userName">{{= item.userName}}</span>
-									<span>{{= item.idCard}}</span>
-									<div class="key-value-box clearfix">
-										<span class="key">解析时间：</span>
-										<span class="value">{{= item.createDate}}</span>
+					{{ if(it.data.length>0){ }}
+						{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == '0'){ }}
+								<div class="all-select-panel no-top-border mb15 clearfix" >
+									<div class="all-check-box">
+										<div id="all" data-id='83' class="checkbox checkbox-normal"></div>
+										<span>全选</span>
 									</div>
-								</td>
-							</tr>
-						</thead>
-						<tbody class="expire-content">
-							<tr class="expire-content-tr">
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">卡号：</td>
-											<td class="value">{{= item.cardNumber ? item.cardNumber : ''}}</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">卡余额：</td>
-											<td class="value">{{= item.cardBalance ? item.cardBalance : ''}}元</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">账单日：</td>
-											<td class="value">{{= item.statementDate ? item.statementDate : ''}}</td>
-										</tr>
-									</table>
-								</td>
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">当前逾期金额：</td>
-											<td class="value">{{= item.overdueAmount ? item.overdueAmount : ''}}元</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">当前连续违约次数：</td>
-											<td class="value">{{= item.currentDefaultNum ? item.currentDefaultNum : ''}}次</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">历史累计违约次数：</td>
-											<td class="value">{{= item.cumulativeDefaultNum ? item.cumulativeDefaultNum : ''}}次</td>
-										</tr>
-									</table>
-								</td>
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">分期金额：</td>
-											<td class="value">{{= item.stageMoney ? item.stageMoney : ''}}</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">备注：</td>
-											<td class="value special-word">未在系统中找到订单</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					{{ } }}
-					{{ } }}
+									<div class="all-check-box">
+										创建新逾期客户<strong class="">{{= it.page.total}}</strong>人
+									</div>
+								</div>
+							{{ }else if(item.status == '1'){ }}
+								<div class="all-select-panel no-top-border mb15 clearfix" >
+									<div class="all-check-box">
+										手动匹配订单<strong class="">{{= it.page.total}}</strong>个
+									</div>
+								</div>
+							{{ }else if(item.status == '2'){ }}
+								<div class="all-select-panel no-top-border mb15 clearfix" >
+									<div class="all-check-box">
+										匹配成功<strong class="">{{= it.page.total}}</strong>条
+									</div>
+								</div>
+							{{ }else if(item.status == '3'){ }}
+								<div class="all-select-panel no-top-border mb15 clearfix" >
+									<div class="all-check-box">
+										逾期将结清<strong class="">{{= it.page.total}}</strong>条
+									</div>
+								</div>
+							{{ } }} 
+							<table class="expire-orders-table" id="list" width="100%">
+								<thead class="expire-title">
+									<tr>
+										{{ if(item.status != '1'){ }}
+											<td colspan="3">
+												{{ if(item.status == '0'){ }}
+													<div id="onlyCheck" data-id = "{{= item.detailId}}" class="checkbox checkbox-normal"></div>
+												{{ } }} 
+												<i class="iconfont iconfont-man">&#xe656;</i>
+												<span class="userName">{{= item.userName}}</span>
+												<span>{{= item.idCard}}</span>
+												<div class="key-value-box clearfix">
+													<span class="key">解析时间：</span>
+													<span class="value">{{= item.createDate}}</span>
+												</div>
+											</td>
+										{{ }else{ }}
+											<td colspan="4">
+												<i class="iconfont iconfont-man">&#xe656;</i>
+												<span class="userName">{{= item.userName}}</span>
+												<span>{{= item.idCard}}</span>
+												<div class="key-value-box clearfix">
+													<span class="key">解析时间：</span>
+													<span class="value">{{= item.createDate}}</span>
+												</div>
+											</td>
+										{{ } }} 
+									</tr>
+								</thead>
+								<tbody class="expire-content">
+									<tr class="expire-content-tr">
+										<td class="expire-content-item">
+											<table class="table-inner">
+												<tr class="table-inner-tr">
+													<td class="key">卡号：</td>
+													<td class="value">{{= item.cardNumber ? item.cardNumber : ''}}</td>
+												</tr>
+												<tr class="table-inner-tr">
+													<td class="key">卡余额：</td>
+													<td class="value">{{= item.cardBalance ? item.cardBalance : ''}}元</td>
+												</tr>
+												<tr class="table-inner-tr">
+													<td class="key">账单日：</td>
+													<td class="value">{{= item.statementDate ? item.statementDate : ''}}</td>
+												</tr>
+											</table>
+										</td>
+										<td class="expire-content-item">
+											<table class="table-inner">
+												<tr class="table-inner-tr">
+													<td class="key">当前逾期金额：</td>
+													<td class="value">{{= item.overdueAmount ? item.overdueAmount : ''}}元</td>
+												</tr>
+												<tr class="table-inner-tr">
+													<td class="key">当前连续违约次数：</td>
+													<td class="value">{{= item.currentDefaultNum ? item.currentDefaultNum : ''}}次</td>
+												</tr>
+												<tr class="table-inner-tr">
+													<td class="key">历史累计违约次数：</td>
+													<td class="value">{{= item.cumulativeDefaultNum ? item.cumulativeDefaultNum : ''}}次</td>
+												</tr>
+											</table>
+										</td>
+										<td class="expire-content-item">
+											<table class="table-inner">
+												<tr class="table-inner-tr">
+													<td class="key">分期金额：</td>
+													<td class="value">{{= item.stageMoney ? item.stageMoney : ''}}</td>
+												</tr>
+												<tr class="table-inner-tr">
+													<td class="key">备注：</td>
+													<td class="value special-word">
+														{{ if(item.status == '0'){ }}
+															未在系统中找到订单
+														{{ }else if(item.status == '1'){ }}
+															找到多条订单
+														{{ }else if(item.status == '2'){ }}
+															匹配成功
+														{{ }else{ }}
+															逾期将结清
+														{{ } }} 
+													</td>
+												</tr>
+											</table>
+										</td>
+										{{if(item.status == '1'){}}
+											<td class="expire-content-item" style="vertical-align: middle;">
+												<table class="table-inner">
+													<tr class="table-inner-tr">
+														<td>
+															<div class="button button-mini chooseOrder" id="detailId" data-detail='{{= item.detailId}}'>选择订单</div>
+														</td>
+													</tr>
+												</table>
+											</td>
+										{{ } }} 
+									</tr>
+								</tbody>
+							</table>
+						{{ } }}
+					{{ }else{ }}
+						<table class="expire-orders-table" id="list" width="100%">
+							<tbody class="expire-content">
+								<tr class="tr-noborder" id="noResult">
+									<td colspan="6" class="orders-blank">
+										<div class="blank-box">
+											<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
+											<p>暂无逾期记录！</p>
+										</div>
+									</td>
+								</tr>	
+							</tbody>	
+						</table>
+					{{ } }} 
 					<!--订单表格（无匹配订单） end-->
-	
-					<!--订单表格（匹配冲突）-->
-					{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == 1){ }}
-					<table class="expire-orders-table" width="100%">
-						<thead class="expire-title">
-							<tr>
-								<td colspan="4">
-									<i class="iconfont iconfont-man">&#xe656;</i>
-									<span class="userName">{{= item.userName}}</span>
-									<span>{{= item.idCard}}</span>
-									<div class="key-value-box clearfix">
-										<span class="key">解析时间：</span>
-										<span class="value">{{= item.createDate}}</span>
-									</div>
-								</td>
-							</tr>
-						</thead>
-						<tbody class="expire-content match-fail">
-							<tr class="expire-content-tr">
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">卡号：</td>
-											<td class="value">{{= item.cardNumber ? item.cardNumber : ''}}</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">卡余额：</td>
-											<td class="value">{{= item.cardBalance ? item.cardBalance : ''}}元</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">账单日：</td>
-											<td class="value">{{= item.statementDate ? item.statementDate : ''}}</td>
-										</tr>
-									</table>
-								</td>
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">当前逾期金额：</td>
-											<td class="value">{{= item.overdueAmount ? item.overdueAmount : ''}}元</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">当前连续违约次数：</td>
-											<td class="value">{{= item.currentDefaultNum ? item.currentDefaultNum : ''}}次</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">历史累计违约次数：</td>
-											<td class="value">{{= item.cumulativeDefaultNum ? item.cumulativeDefaultNum : ''}}次</td>
-										</tr>
-									</table>
-								</td>
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">分期金额：</td>
-											<td class="value">{{= item.stageMoney ? item.stageMoney : ''}}</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">备注：</td>
-											<td class="value special-word">未在系统中找到订单</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					{{ } }}
-					{{ } }}
-					<!--订单表格（匹配冲突）  end-->
-	
-					<!--订单表格（匹配成功）-->
-					{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == 2){ }}
-					<table class="expire-orders-table" width="100%">
-						<thead class="expire-title">
-							<tr>
-								<td colspan="4">
-									<i class="iconfont iconfont-man">&#xe656;</i>
-									<span class="userName">{{= item.userName}}</span>
-									<span>{{= item.idCard}}</span>
-									<div class="key-value-box clearfix">
-										<span class="key">解析时间：</span>
-										<span class="value">{{= item.createDate}}</span>
-									</div>							
-								</td>
-							</tr>
-						</thead>
-						<tbody class="expire-content match-success">
-							<tr class="expire-content-tr">
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">卡号：</td>
-											<td class="value">{{= item.cardNumber ? item.cardNumber : ''}}</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">卡余额：</td>
-											<td class="value">{{= item.cardBalance ? item.cardBalance : ''}}元</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">账单日：</td>
-											<td class="value">{{= item.statementDate ? item.statementDate : ''}}</td>
-										</tr>
-									</table>
-								</td>
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">当前逾期金额：</td>
-											<td class="value">{{= item.overdueAmount ? item.overdueAmount : ''}}元</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">当前连续违约次数：</td>
-											<td class="value">{{= item.currentDefaultNum ? item.currentDefaultNum : ''}}次</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">历史累计违约次数：</td>
-											<td class="value">{{= item.cumulativeDefaultNum ? item.cumulativeDefaultNum : ''}}次</td>
-										</tr>
-									</table>
-								</td>
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">分期金额：</td>
-											<td class="value">{{= item.stageMoney ? item.stageMoney : ''}}</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">备注：</td>
-											<td class="value special-word">未在系统中找到订单</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					{{ } }}
-					{{ } }}
-					<!--订单表格（匹配成功）  end-->
-	
-					<!--订单表格（逾期将结清）-->
-					{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == 3){ }}
-					<table class="expire-orders-table" width="100%">
-						<thead class="expire-title">
-							<tr>
-								<td colspan="4">
-									<span class="userName">{{= item.userName}}</span>
-									<span>{{= item.idCard}}</span>
-									<div class="key-value-box clearfix">
-										<span class="key">解析时间：</span>
-										<span class="value">{{= item.createDate}}</span>
-									</div>							
-								</td>
-							</tr>
-						</thead>
-						<tbody class="expire-content expire-end">
-							<tr class="expire-content-tr">
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">卡号：</td>
-											<td class="value">{{= item.cardNumber ? item.cardNumber : ''}}</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">卡余额：</td>
-											<td class="value">{{= item.cardBalance ? item.cardBalance : ''}}元</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">账单日：</td>
-											<td class="value">{{= item.statementDate ? item.statementDate : ''}}</td>
-										</tr>
-									</table>
-								</td>
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">当前逾期金额：</td>
-											<td class="value">{{= item.overdueAmount ? item.overdueAmount : ''}}元</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">当前连续违约次数：</td>
-											<td class="value">{{= item.currentDefaultNum ? item.currentDefaultNum : ''}}次</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">历史累计违约次数：</td>
-											<td class="value">{{= item.cumulativeDefaultNum ? item.cumulativeDefaultNum : ''}}次</td>
-										</tr>
-									</table>
-								</td>
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">分期金额：</td>
-											<td class="value">{{= item.stageMoney ? item.stageMoney : ''}}</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">备注：</td>
-											<td class="value special-word">未在系统中找到订单</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					{{ } }}
-					{{ } }}
 					<div id="chooseOrderDetail" style="position: fixed;top: 0;bottom: 0;right: 0;left: 0;background: rgba(0,0,0,0.6);">
 						<div style="padding: 20px;width: 80%;position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);background: #fff;">
 							<div></div>
@@ -366,7 +219,7 @@
 					{{ } }}
 						<td class="orders-item-data order-item-first">
 							<input type="radio" name="detailId" value="{{=col.orderNo}}" />
-							<input type="hidden" name="orderNo" value="{{=col.idCard}}" />
+							<input type="hidden" name="orderNo" value="{{=col.orderNo}}" />
 						</td>
 						<td class="orders-item-data">{{=col.orderNo}}</td>
 						<td class="orders-item-data">{{=col.userName}}</td>

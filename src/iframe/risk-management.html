@@ -74,7 +74,11 @@
 						<td class="orders-item-data">操作</td>
 					</tr>
 				</thead>
-				<tbody id="riskManagementTable"></tbody>
+				<tbody id="riskManagementTable">
+					<tr class="orders-item">
+						<td class="orders-item-data" colspan="8">暂无数据</td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 	</div>
@@ -149,7 +153,7 @@
 				<td class="orders-item-data">{{=item.verifyNum}}</td>
 				<td class="orders-item-data">{{=item.serviceAmount}}</td>
 				<td class="orders-item-data">
-					<span class="detailed view-fee" data-apiKey="{{=item.apiKey}}" data-apiPrimary="{{=item.apiPrimary}}">明细</span>
+					<span class="detailed view-fee" data-apikey="{{=item.apiKey}}" data-apiprimary="{{=item.apiPrimary}}">明细</span>
 				</td>
 			</tr>
 		{{ } }}

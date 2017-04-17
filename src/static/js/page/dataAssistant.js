@@ -5,7 +5,8 @@ page.ctrl('dataAssistant', function($scope) {
 		apiParams = {
 			orderNo: $params.orderNo,
 			//orderNo: 'nfdb2016102820480790',
-			sceneCode:'creditApproval'
+			//orderNo: "vxnfdb20170412105846795",
+			sceneCode:'loanApproval'
 		},
 		userType=[
 			{userType:0,text:"主申请人"},
@@ -25,7 +26,9 @@ page.ctrl('dataAssistant', function($scope) {
 			url: $http.api('verifyResult/resultDetail',true),
 			data: param,
 			success: $http.ok(function(res) {
-				var _mout=res.data.data;
+				var _mout={body:[]};
+				if(res.data&&res.data.data&&res.data.data.body)
+					_mout=res.data.data;
 				var _mobil=_mout.body[1021];
 				var _usedCar=_mout.body[1025];
 				var _platLend=_mout.body[1018];
@@ -74,8 +77,6 @@ page.ctrl('dataAssistant', function($scope) {
 							repeatPlat(platJson,'twelve_month');
 					};
 					_mout.body[1018]=_platArr;
-				}else{
-					_mout.body[1018]=[];
 				};
 				/*整理title中发起人，最新发起时间等信息*/
 				if(_mout.verifyRecord&&_mout.verifyRecord.submitByName)
@@ -113,6 +114,7 @@ page.ctrl('dataAssistant', function($scope) {
 						};
 					};
 					render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.data, true);
+					apiParams.serviceType='2';/*1材料验真，2数据辅证，必传*/
 					apiParams.userId=res.data[0].userId;
 					//apiParams.userId='334232';
 					search(apiParams, function() {
@@ -158,6 +160,7 @@ page.ctrl('dataAssistant', function($scope) {
 					data: {
 						key:key,
 						orderNo:apiParams.orderNo,
+						serviceType:'2',/*1材料验真，2数据辅证，必传*/
 						userIds:_arr.join("_")
 					},
 					success: $http.ok(function(res) {
@@ -166,7 +169,7 @@ page.ctrl('dataAssistant', function($scope) {
 							if(context){
 								setTimeout(function() {
 									jc.close();
-									search(apiParams);
+									//search(apiParams);
 								},1500);
 							};
 						});
@@ -311,15 +314,13 @@ page.ctrl('dataAssistant', function($scope) {
 	};
 	// 页面首次载入时绑定事件
  	var evt = function() {
-		$scope.$el.$tab.off("click","li.role-bar-li").on("click","li.role-bar-li",function() {
-			if($(this).siblings("li").length>0){
-				$(this).siblings("li").find("a").removeClass("role-item-active");
-				$(this).find("a").addClass("role-item-active");
-				var _id=$(this).data('id');
-				if(_id){
-					apiParams.userId=_id;
-					search(apiParams);
-				};
+		$scope.$el.$tab.off("click","a.role-item:not(.role-item-active)").on("click","a.role-item:not(.role-item-active)",function() {
+			$(this).parent("li").siblings("li").find("a").removeClass("role-item-active");
+			$(this).addClass("role-item-active");
+			var _id=$(this).parent('li').data('id');
+			if(_id){
+				apiParams.userId=_id;
+				search(apiParams);
 			};
 		});
 		$scope.$el.$listDiv.off("click","#startCheck").on("click","#startCheck",function() {

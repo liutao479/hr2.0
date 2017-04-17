@@ -4,6 +4,7 @@
 	// g.urlStr = "http://192.168.1.124:8080";
 	// g.urlStr = "http://192.168.0.22:8080";
 	// g.urlStr = "http://192.168.1.55:8080";
+	// g.urlStr = "http://192.168.1.132:8080";
 	g.urlStr = "http://192.168.0.186:9999";
 	g.dataMap = {
 	    "sex":[
@@ -28,31 +29,31 @@
 	    ],
 	    "licenseType":[
 	        {
-	            "name":"公牌",
+	            "name":"私牌",
 	            "value":"0"
 	        },
 	        {
-	            "name":"私牌",
+	            "name":"公牌",
 	            "value":"1"
 	        }
 	    ],
 	    "isFinanceLeaseVehicle":[
 	        {
-	            "name":"是融资租赁车",
+	            "name":"否",
 	            "value":"0"
 	        },
 	        {
-	            "name":"不是融资租赁",
+	            "name":"是",
 	            "value":"1"
 	        }
 	    ],
 	    "isOperationVehicle":[
 	        {
-	            "name":"运营车",
+	            "name":"否",
 	            "value":"0"
 	        },
 	        {
-	            "name":"非运营车",
+	            "name":"是",
 	            "value":"1"
 	        }
 	    ],
@@ -68,11 +69,11 @@
 	    ],
 	    "isDiscount":[
 	        {
-	            "name":"贴息",
+	            "name":"否",
 	            "value":"0"
 	        },
 	        {
-	            "name":"不贴息",
+	            "name":"是",
 	            "value":"1"
 	        }
 	    ],
@@ -98,22 +99,30 @@
 	    ],
 	    "isAdvanced":[
 	        {
-	            "name":"需要垫资",
+	            "name":"否",
 	            "value":"0"
 	        },
 	        {
-	            "name":"不需要垫资",
+	            "name":"是",
 	            "value":"1"
 	        }
 	    ],
 	    "maritalStatus":[
 	        {
-	            "name":"已婚",
+	            "name":"未婚",
 	            "value":"0"
 	        },
 	        {
-	            "name":"未婚",
+	            "name":"已婚",
 	            "value":"1"
+	        },
+	        {
+	            "name":"单身离婚",
+	            "value":"2"
+	        },
+	        {
+	            "name":"丧偶",
+	            "value":"3"
 	        }
 	    ],
 	    "houseStatus":[
@@ -122,28 +131,40 @@
 	            "value":"0"
 	        },
 	        {
-	            "name":"有房",
+	            "name":"有自建房",
 	            "value":"1"
 	        }
 	    ],
 	    "isEnterprise":[
 	        {
-	            "name":"是企业法人",
+	            "name":"否",
 	            "value":"0"
 	        },
 	        {
-	            "name":"不是企业法人",
+	            "name":"是",
 	            "value":"1"
 	        }
 	    ],
 	    "userRelationship":[
 	        {
-	            "name":"父母",
+	            "name":"本人",
 	            "value":"0"
 	        },
 	        {
-	            "name":"子女",
+	            "name":"配偶",
 	            "value":"1"
+	        },
+	        {
+	            "name":"父母",
+	            "value":"2"
+	        },
+	        {
+	            "name":"子女",
+	            "value":"3"
+	        },
+	        {
+	            "name":"其他",
+	            "value":"-1"
 	        }
 	    ],
 	    "relationship":[
@@ -318,6 +339,16 @@
 	        {
 	            "name":"其他",
 	            "value":"6"
+	        }
+	    ],
+	    "yesNo":[
+	        {
+	            "name":"是",
+	            "value":"1"
+	        },
+	        {
+	            "name":"否",
+	            "value":"0"
 	        }
 	    ]
 	},

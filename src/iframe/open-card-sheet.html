@@ -334,10 +334,18 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.statdate){ }}
-													<input type="text" name="statdate" value="{{= it.creditCard.statdate}}" />
+													<div class="input-text input-date-mini statdate">
+														<input name="statdate" id="dateStart" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{= it.creditCard.statdate}}" />	
+													</div>
 												{{ }else{ }}
-													<input type="text" name="statdate" />
+													<div class="input-text input-date-mini statdate">
+														<input name="statdate" id="dateStart" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="" />	
+													</div>
 												{{ } }}
+												<div class="longtime" style="position: absolute;right: 5px;top: 50%;transform: translateY(-50%);">
+													<input type="checkbox" id="longTime" style="float: left;display:block;width: 12px;" />
+													<div style="float: left;">长期</div>	
+												</div>
 											</span>
 										</td>
 									</tr>
@@ -494,14 +502,16 @@
 											<span class="info-key"><i>*</i>入住日期：</span>
 										</td>
 										<td>
-											<span class="info-value">
-												{{ if(it.creditCard.indate){ }}
-													<input type="text" name="indate" value="{{= it.creditCard.indate}}" />
-												{{ }else{ }}
-													<input type="text" name="indate" />
-												{{ } }}
-											</span>
-										</td>
+											{{ if(it.creditCard.indate){ }}
+												<div class="input-text input-date-mid borderNone">
+													<input name="indate" id="indate" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{= it.creditCard.indate}}" />	
+												</div>
+											{{ }else{ }}
+												<div class="input-text input-date-mid borderNone">
+													<input name="indate" id="indate" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="" />	
+												</div>
+											{{ } }}
+									</td>
 									</tr>
 								</table>
 							</div>
@@ -692,13 +702,15 @@
 											<span class="info-key"><i>*</i>何时进入现单位工作：</span>
 										</td>
 										<td>
-											<span class="info-value">
-												{{ if(it.creditCard.joindate){ }}
-													<input type="text" name="joindate" value="{{= it.creditCard.joindate}}" />
-												{{ }else{ }}
-													<input type="text" name="joindate" />
-												{{ } }}
-											</span>
+											{{ if(it.creditCard.joindate){ }}
+												<div class="input-text input-date-mid borderNone">
+													<input name="joindate" id="joindate" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{= it.creditCard.joindate}}" />	
+												</div>
+											{{ }else{ }}
+												<div class="input-text input-date-mid borderNone">
+													<input name="joindate" id="joindate" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="" />	
+												</div>
+											{{ } }}
 										</td>
 									</tr>
 								</table>
@@ -936,14 +948,14 @@
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
-						<div class="loan-imgs-bar clearfix">
-							<div class="imgs-item-group openCardPic uploadEvt" data-deletecb="page.$scope['openCardSheet'].deletecb" data-uploadcb="page.$scope['openCardSheet'].uploadcb" data-upl-url="" data-id="" data-orderno="{{= it.loanTask.orderNo}}" data-code="" data-name="信用卡申请表" data-scene="{{= it.loanTask.category}}" data-user="" data-img="{{= it.creditCard.creditCardImgUrl}}" data-err="0" data-editable="1"></div>
+						<div class="loan-imgs-bar clearfix positionRela">
+							<div class="imgs-item-group openCardPic uploadEvt" data-deletecb="page.$scope['openCardSheet'].deletecb" data-uploadcb="page.$scope['openCardSheet'].uploadcb" data-card="true" data-id="" data-orderno="{{= it.loanTask.orderNo}}" data-code="cardUpd" data-name="信用卡申请表" data-scene="homeMaterialsUpload" data-img="{{= it.creditCard.creditCardImgUrl ? it.creditCard.creditCardImgUrl :''}}" data-err="0" data-editable="1"></div>
+							{{if(it.creditCard.creditCardImgUrl){ }}
+								<input id="imgUrl" class="required" type="hidden" name="creditCardImgUrl" value="{{= it.creditCard.creditCardImgUrl}}" />
+							{{ }else{ }}
+								<input id="imgUrl" class="required" type="hidden" name="creditCardImgUrl" />
+							{{ } }} 
 						</div>
-						{{if(it.creditCard.creditCardImgUrl){ }}
-							<input id="imgUrl" class="required" type="hidden" name="creditCardImgUrl" value="{{= it.creditCard.creditCardImgUrl}}" />
-						{{ }else{ }}
-							<input id="imgUrl" class="required" type="hidden" name="creditCardImgUrl" />
-						{{ } }} 
 					</div>
 				</div>
 				{{if(it.creditCard.id){ }}

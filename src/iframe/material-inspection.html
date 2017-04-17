@@ -16,20 +16,21 @@
 <script type="text/x-dot-template" id="roleBarTabTmpl">
 	{{ var len = it.length; if(len) { }}
 		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
-			<li class="role-bar-li">
-				{{ if(item.isMainApplicant){ }}
-					<a href="javascript:;" class="role-item role-item-active">{{=item.userName}}(主申请人)</a>
+			<li class="role-bar-li" data-id="{{=item.userId}}">
+				{{ if(i==0){ }}
+					<a href="javascript:;" class="role-item role-item-active">{{=item.userName}}({{=item.userTypeName}})</a>
 				{{ }else{ }}
-					<a href="javascript:;" class="role-item">{{=item.userName}}(共同还款人)</a>					
+					<a href="javascript:;" class="role-item">{{=item.userName}}({{=item.userTypeName}})</a>		
 				{{ } }}				
 			</li>
 		{{ } }}
 	{{ } }}
 </script>	
 <script type="text/x-dot-template" id="materialInspectionTmpl">
-	{{  var ac=function(x){for(var i in x)return true;return false;};if(ac(it)){ }}
+	{{  var ac=function(x){for(var i in x)return true;return false;}; }}
 		<div class="panel no-top-border clearfix">
 			<div class="panel-content-title no-top-border">
+				{{ if(it.itemNum&&it.updateTime){ }}
 				<div class="key-value-box">
 					<div class="value">已核验{{=it.itemNum}}项</div>
 				</div>
@@ -37,6 +38,7 @@
 					<span class="key">最新核查时间：</span>
 					<span class="value">{{=tool.formatDate(it.updateTime)}}</span>
 				</div>
+				{{ } }}
 				<div class="key-value-box">
 					<span class="key">发起人：</span>
 					<span class="value">{{=it.submitByName||'系统'}}</span>
@@ -45,8 +47,9 @@
 					<div class="button button-mini" id="startCheck">发起核查</div>
 				</div>
 			</div>
+			{{ if(ac(it.body)){ }}
 			<div class="detail-item-group">
-			{{ for(var i in it){var item=it[i]; }}
+			{{ for(var i in it.body){var item=it.body[i]; }}
 				{{ if(i==1000){ }}
 				<!--购车发票核查-->
 				<div class="detail-item-list">
@@ -55,66 +58,74 @@
 					</div>
 					{{ if(item.length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
-							{{var sourCode=col.validationResult.sourceCode;}}
-							{{ if(sourCode==-4||sourCode==-5){ }}
-							<div class="detail-item-alert alert-danger">
-								<span class="icon"><i class="iconfont">!</i></span>
-								<span class="status">未校验</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-							</div>
-							{{ }else if(sourCode==1){ }}
-							<div class="detail-item-alert alert-success">
-								<span class="icon"><i class="iconfont">&#xe659;</i></span>
-								<span class="status">通过</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-							</div>
-							{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
-							<div class="detail-item-alert alert-warning">
-								<span class="icon"><i class="iconfont">&#xe612;</i></span>
-								<span class="status">不通过</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-								<!-- <span class="message-number">new</span> -->
-							</div>
-							{{ } }}
-							{{var buyCar=col.basicInfo;}}
-							<div class="detail-item-context clearfix">
-								<div class="no-img-group left-model clearfix">
-									<div class="no-img-list">
-										<div class="no-img">
-											{{ if(buyCar.picPath){ }}
-												<img src="{{=buyCar.picPath}}" />
-											{{ }else{ }}
-												<i class="iconfont">&#xe61f;</i>
-											{{ } }}
+							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
+								{{var sourCode=col.validationResult.sourceCode;}}
+								{{ if(sourCode==-4||sourCode==-5){ }}
+									<div class="detail-item-alert alert-danger">
+										<span class="icon"><i class="iconfont">!</i></span>
+										<span class="status">未校验</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
+								{{ }else if(sourCode==1){ }}
+									<div class="detail-item-alert alert-success">
+										<span class="icon"><i class="iconfont">&#xe659;</i></span>
+										<span class="status">通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
+								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
+									<div class="detail-item-alert alert-warning">
+										<span class="icon"><i class="iconfont">&#xe612;</i></span>
+										<span class="status">不通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+										<!-- <span class="message-number">new</span> -->
+									</div>
+								{{ } }}
+								{{var buyCar=col.basicInfo;}}
+								<div class="detail-item-context clearfix">
+									<div class="no-img-group left-model clearfix">
+										<div class="no-img-list">
+											<div class="no-img">
+												{{ if(buyCar.picPath){ }}
+													<img src="{{=buyCar.picPath}}" />
+												{{ }else{ }}
+													<i class="iconfont">&#xe61f;</i>
+												{{ } }}
+											</div>
+											<p class="img-explain">购车发票原件</p>
 										</div>
-										<p class="img-explain">购车发票原件</p>
+									</div>
+									<div class="right-model">
+										<h3>税务查得信息</h3>
+										<ul class="table-key-val">
+											<li><span class="key">发票代码：</span>
+											{{=buyCar.vehicleInvoiceCode}}</li>
+											<li><span class="key">发票号码：</span>
+											{{=buyCar.vehicleInvoiceNumber}}</li>
+											<li><span class="key">开票日期：</span>{{=buyCar.vehicleInvoiceIssueDate}}</li>
+											<li><span class="key">价税合计：</span>{{=buyCar.vehicleInvoiceTotalPrice}}元</li>
+											<li><span class="key">购买方名称：</span>
+											{{=buyCar.vehicleInvoiceBuyer}}</li>
+											<!-- <li><span class="text-warning">购买方名称：方志山</span><span class="key">（购车发票原件数据：方大大）</span></li> -->
+											<li><span class="key">购买方身份证/组织证件号：</span>{{=buyCar.vehicleInvoiceBuyerId}}</li>
+											<li><span class="key">纳税人识别号：</span>
+											{{=buyCar.taxpayerNumber}}</li>
+											<li><span class="key">开票方名称：</span>
+											{{=buyCar.drawerName||'-'}}</li>
+										</ul>
 									</div>
 								</div>
-								<div class="right-model">
-									<h3>税务查得信息</h3>
-									<ul class="table-key-val">
-										<li><span class="key">发票代码：</span>
-										{{=buyCar.vehicleInvoiceCode}}</li>
-										<li><span class="key">发票号码：</span>
-										{{=buyCar.vehicleInvoiceNumber}}</li>
-										<li><span class="key">开票日期：</span>{{=buyCar.vehicleInvoiceIssueDate}}</li>
-										<li><span class="key">价税合计：</span>{{=buyCar.vehicleInvoiceTotalPrice}}元</li>
-										<li><span class="key">购买方名称：</span>
-										{{=buyCar.vehicleInvoiceBuyer}}</li>
-										<!-- <li><span class="text-warning">购买方名称：方志山</span><span class="key">（购车发票原件数据：方大大）</span></li> -->
-										<li><span class="key">购买方身份证/组织证件号：</span>{{=buyCar.vehicleInvoiceBuyerId}}</li>
-										<li><span class="key">纳税人识别号：</span>
-										{{=buyCar.taxpayerNumber}}</li>
-										<li><span class="key">开票方名称：</span>
-										{{=buyCar.drawerName||'-'}}</li>
-									</ul>
-								</div>
-							</div>
+							{{ }else{ }}
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">{{=col.msg||'数据处理中！'}}</span>
+									</div>
+								</div>								
+							{{ } }}
 						{{ } }}
 					{{ }else{ }}
 						<div class="detail-item-context clearfix">
 							<div class="explain">
-								<span class="key">已查询，该用户无购车发票记录！</span>
+								<span class="key">已查询，该用户无购车记录！</span>
 							</div>
 						</div>
 					{{ } }}
@@ -127,91 +138,99 @@
 					</div>
 					{{ if(item.length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
-							{{var sourCode=col.validationResult.sourceCode;}}
-							{{ if(sourCode==-4||sourCode==-5){ }}
-							<div class="detail-item-alert alert-danger">
-								<span class="icon"><i class="iconfont">!</i></span>
-								<span class="status">未校验</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-							</div>
-							{{ }else if(sourCode==1){ }}
-							<div class="detail-item-alert alert-success">
-								<span class="icon"><i class="iconfont">&#xe659;</i></span>
-								<span class="status">通过</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-							</div>
-							{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
-							<div class="detail-item-alert alert-warning">
-								<span class="icon"><i class="iconfont">&#xe612;</i></span>
-								<span class="status">不通过</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-								<!-- <span class="message-number">new</span> -->
-							</div>
-							{{ } }}
-							<div class="detail-item-context clearfix">
-								{{var hourseBasic=col.basicInfo;}}
-								{{ if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
-									<div>
-										<table class="table-search-msg" cellspacing="0" cellpadding="0">
-											<tr>
-												<td class="table-key">提供查询的参数</td>
-												<td class="table-val">
-													<table class="table-inner">
-														<tr>
-															<td>
-																<span class="key">发票代码：</span>{{=hourseBasic.invoiceCode}}
-															</td>
-															<td>
-																<span class="key">发票号码：</span>
-																{{=hourseBasic.invoiceNumber}}
-															</td>
-															<td>
-																<span class="key">开票日期：</span>
-																{{=hourseBasic.billDate}}
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<span class="key">价税合计：</span>
-																{{=hourseBasic.totalAmount}}
-															</td>
-															<td colspan="2">
-																<span class="key">纳税人识别号：</span>
-																{{=hourseBasic.payerIdentity}}
-															</td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</table>
+							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
+								{{var sourCode=col.validationResult.sourceCode;}}
+								{{ if(sourCode==-4||sourCode==-5){ }}
+									<div class="detail-item-alert alert-danger">
+										<span class="icon"><i class="iconfont">!</i></span>
+										<span class="status">未校验</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
+								{{ }else if(sourCode==1){ }}
+									<div class="detail-item-alert alert-success">
+										<span class="icon"><i class="iconfont">&#xe659;</i></span>
+										<span class="status">通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
+								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
+									<div class="detail-item-alert alert-warning">
+										<span class="icon"><i class="iconfont">&#xe612;</i></span>
+										<span class="status">不通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+										<!-- <span class="message-number">new</span> -->
 									</div>
 								{{ } }}
-								<div class="no-img-group left-model clearfix">
-									<div class="no-img-list">
-										<div class="no-img">
-											{{ if(hourseBasic.picPath){ }}
-												<img src="{{=hourseBasic.picPath}}" />
-											{{ }else{ }}
-												<i class="iconfont">&#xe61f;</i>
-											{{ } }}
+								<div class="detail-item-context clearfix">
+									{{var hourseBasic=col.basicInfo;}}
+									{{ if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
+										<div>
+											<table class="table-search-msg" cellspacing="0" cellpadding="0">
+												<tr>
+													<td class="table-key">提供查询的参数</td>
+													<td class="table-val">
+														<table class="table-inner">
+															<tr>
+																<td>
+																	<span class="key">发票代码：</span>{{=hourseBasic.invoiceCode}}
+																</td>
+																<td>
+																	<span class="key">发票号码：</span>
+																	{{=hourseBasic.invoiceNumber}}
+																</td>
+																<td>
+																	<span class="key">开票日期：</span>
+																	{{=hourseBasic.billDate}}
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<span class="key">价税合计：</span>
+																	{{=hourseBasic.totalAmount}}
+																</td>
+																<td colspan="2">
+																	<span class="key">纳税人识别号：</span>
+																	{{=hourseBasic.payerIdentity}}
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
 										</div>
-										<p class="img-explain">购房发票原件</p>
+									{{ } }}
+									<div class="no-img-group left-model clearfix">
+										<div class="no-img-list">
+											<div class="no-img">
+												{{ if(hourseBasic.picPath){ }}
+													<img src="{{=hourseBasic.picPath}}" />
+												{{ }else{ }}
+													<i class="iconfont">&#xe61f;</i>
+												{{ } }}
+											</div>
+											<p class="img-explain">购房发票原件</p>
+										</div>
 									</div>
-								</div>
-								<div class="right-model">
-									<h3>税务查得信息</h3>
-									<ul class="table-key-val">
-										<li><span class="key">发票代码：</span>{{=hourseBasic.invoiceCode}}</li>
-										<li><span class="key">发票号码：</span>{{=hourseBasic.invoiceNumber}}</li>
-										<li><span class="key">开票日期：</span>{{=hourseBasic.billDate}}</li>
-										<li><span class="key">价税合计：</span>{{=hourseBasic.totalAmount}}元</li>
-										<li><span class="key">购买方名称：</span>{{=hourseBasic.payerName}}</li>
-										<li><span class="key">购买方身份证/组织证件号：</span>{{=hourseBasic.payerIdentity}}</li>
-										<li><span class="key">纳税人识别号：</span>{{=hourseBasic.payerIdentity}}</li>
-										<li><span class="key">开票方名称：</span>{{=hourseBasic.receiverName}}</li>
-									</ul>
-								</div>
-							</div>						
+									<div class="right-model">
+										<h3>税务查得信息</h3>
+										<ul class="table-key-val">
+											<li><span class="key">发票代码：</span>{{=hourseBasic.invoiceCode}}</li>
+											<li><span class="key">发票号码：</span>{{=hourseBasic.invoiceNumber}}</li>
+											<li><span class="key">开票日期：</span>{{=hourseBasic.billDate}}</li>
+											<li><span class="key">价税合计：</span>{{=hourseBasic.totalAmount}}元</li>
+											<li><span class="key">购买方名称：</span>{{=hourseBasic.payerName}}</li>
+											<li><span class="key">购买方身份证/组织证件号：</span>{{=hourseBasic.payerIdentity}}</li>
+											<li><span class="key">纳税人识别号：</span>{{=hourseBasic.payerIdentity}}</li>
+											<li><span class="key">开票方名称：</span>{{=hourseBasic.receiverName}}</li>
+										</ul>
+									</div>
+								</div>		
+							{{ }else{ }}
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">{{=col.msg||'数据处理中！'}}</span>
+									</div>
+								</div>								
+							{{ } }}				
 						{{ } }}
 					{{ }else{ }}
 						<div class="detail-item-context clearfix">
@@ -229,86 +248,110 @@
 					</div>
 					{{ if(item.length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
-							{{var sourCode=col.validationResult.sourceCode;}}
-							{{ if(sourCode==-4||sourCode==-5){ }}
-							<div class="detail-item-alert alert-danger">
-								<span class="icon"><i class="iconfont">!</i></span>
-								<span class="status">未校验</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-							</div>
-							{{ }else if(sourCode==1){ }}
-							<div class="detail-item-alert alert-success">
-								<span class="icon"><i class="iconfont">&#xe659;</i></span>
-								<span class="status">通过</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-							</div>
-							{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
-							<div class="detail-item-alert alert-warning">
-								<span class="icon"><i class="iconfont">&#xe612;</i></span>
-								<span class="status">不通过</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-								<!-- <span class="message-number">new</span> -->
-							</div>
-							{{ } }}
-							<div class="detail-item-context clearfix">
-								<div>
-									<table class="table-search-msg" cellspacing="0" cellpadding="0">
-										<tr>
-											<td class="table-key">提供查询的参数</td>
-											<td class="table-val">
-												<table class="table-inner">
-													<tr>
-														<td><span class="key">真实姓名：</span>{{=col.name}}</td>
-														<td><span class="key">身份证号：</span>{{=col.idCard}}</td>
-														<td><span class="key">银行卡号：</span>{{=col.bankCard}}</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-									</table>
-								</div>
-								{{ if(col.details&&col.details.itemArray&&col.details.itemArray.length>0){ }}
-									<div>
-										<table class="default-table">
-											{{var _water=col.details.itemArray;}}
-											{{ for(var g in _water){ }}
-												<tr>
-													<td>流水时间：{{=_water[g].trans_date}}</td>
-													<td>交易类型：{{=_water[g].trans_type}}</td>
-													<td>交易金额：{{=_water[g].trans_amount}}</td>
-													<td>结果：<span class="result">
-													{{ if(_water[g].trans_date==1){ }}
-													命中
-													{{ }else{ }}
-													未命中
-													{{ } }}
-													</span></td>
-												</tr>
-											{{ } }}
-										</table>
+							{{ if(col.details&&col.details.queryResult){ }}
+								{{var sourCode=col.details.queryResult;}}
+								{{ if(sourCode==1){ }}
+									<div class="detail-item-alert alert-success">
+										<span class="icon"><i class="iconfont">&#xe659;</i></span>
+										<span class="status">通过</span>
+										<span class="text">{{=col.details.verifyContent}}</span>
+									</div>
+								{{ }else{ }}
+									<div class="detail-item-alert alert-warning">
+										<span class="icon"><i class="iconfont">&#xe612;</i></span>
+										<span class="status">不通过</span>
+										<span class="text">{{=col.details.verifyContent}}</span>
+										<!-- <span class="message-number">new</span> -->
 									</div>
 								{{ } }}
-							<!-- 	<div class="no-img-group clearfix">
-								<div class="no-img-list">
-									<div class="no-img">
-										<i class="iconfont">&#xe61f;</i>
+								<div class="detail-item-context clearfix">
+									{{ if(sourCode==1){ }}
+										{{ if(col.details&&col.details.itemArray&&col.details.itemArray.length>0){ }}
+											<div>
+												<table class="default-table">
+													{{var _water=col.details.itemArray;}}
+													{{ for(var g in _water){ }}
+														<tr>
+															<td>流水时间：{{=_water[g].trans_date}}</td>
+															<td>交易类型：{{=_water[g].trans_type}}</td>
+															<td>交易金额：{{=_water[g].trans_amount}}</td>
+															<td>结果：<span class="result">
+															{{ if(_water[g].exception_tag==1){ }}
+															命中
+															{{ }else{ }}
+															未命中
+															{{ } }}
+															</span></td>
+														</tr>
+													{{ } }}
+												</table>
+											</div>
+										{{ } }}
+									{{ }else{ }}
+										<div>
+											<table class="table-search-msg" cellspacing="0" cellpadding="0">
+												<tr>
+													<td class="table-key">提供查询的参数</td>
+													<td class="table-val">
+														<table class="table-inner">
+															<tr>
+																<td><span class="key">真实姓名：</span>{{=col.name}}</td>
+																<td><span class="key">身份证号：</span>{{=col.idCard}}</td>
+																<td><span class="key">银行卡号：</span>{{=col.bankCard}}</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</div>
+									{{ } }}
+									<div class="no-img-group clearfix">
+										{{ if(col.details&&col.details.bankPic1){ }}
+											<div class="no-img-list">
+												<div class="no-img">
+													<img src="{{=col.details.bankPic1}}" />
+												</div>
+												<p class="img-explain">流水原件1</p>
+											</div>
+										{{ } }}
+										{{ if(col.details&&col.details.bankPic2){ }}
+											<div class="no-img-list">
+												<div class="no-img">
+													<img src="{{=col.details.bankPic2}}" />
+												</div>
+												<p class="img-explain">流水原件2</p>
+											</div>
+										{{ } }}
+										{{ if(col.details&&col.details.bankPic3){ }}
+											<div class="no-img-list">
+												<div class="no-img">
+													<img src="{{=col.details.bankPic3}}" />
+												</div>
+												<p class="img-explain">流水原件3</p>
+											</div>
+										{{ } }}
+										{{ if(col.details&&col.details.bankPic4){ }}
+											<div class="no-img-list">
+												<div class="no-img">
+													<img src="{{=col.details.bankPic4}}" />
+												</div>
+												<p class="img-explain">流水原件4</p>
+											</div>
+										{{ } }}
 									</div>
-									<p class="img-explain">流水原件1</p>
 								</div>
-								<div class="no-img-list">
-									<div class="no-img">
-										<i class="iconfont">&#xe61f;</i>
+							{{ }else{ }}
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">
+											{{ if(col.details&&col.details.verifyContent){ }}
+											{{=col.details.verifyContent}}
+											{{ }else{ }}数据处理中！
+											{{ } }}
+										</span>
 									</div>
-									<p class="img-explain">流水原件2</p>
-								</div>
-								<div class="no-img-list">
-									<div class="no-img">
-										<i class="iconfont">&#xe61f;</i>
-									</div>
-									<p class="img-explain">流水原件3</p>
-								</div>
-							</div> -->
-							</div>
+								</div>								
+							{{ } }}
 						{{ } }}
 					{{ }else{ }}
 						<div class="detail-item-context clearfix">
@@ -326,51 +369,59 @@
 					</div>
 					{{ if(item.length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
-							{{var sourCode=col.validationResult.sourceCode;}}
-							{{ if(sourCode==-4||sourCode==-5){ }}
-							<div class="detail-item-alert alert-danger">
-								<span class="icon"><i class="iconfont">!</i></span>
-								<span class="status">未校验</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-							</div>
-							{{ }else if(sourCode==1){ }}
-							<div class="detail-item-alert alert-success">
-								<span class="icon"><i class="iconfont">&#xe659;</i></span>
-								<span class="status">通过</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-							</div>
-							{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
-							<div class="detail-item-alert alert-warning">
-								<span class="icon"><i class="iconfont">&#xe612;</i></span>
-								<span class="status">不通过</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-								<!-- <span class="message-number">new</span> -->
-							</div>
-							{{ } }}
-							{{var certificate=col.basicInfo;}}
-							<div class="detail-item-context clearfix">
-								<div class="no-img-group clearfix left-model">
-									<div class="no-img-list">
-										<div class="no-img">
-											{{ if(certificate.picPath){ }}
-												<img src="{{=certificate.picPath}}" />
-											{{ }else{ }}
-												<i class="iconfont">&#xe61f;</i>
-											{{ } }}
+							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
+								{{var sourCode=col.validationResult.sourceCode;}}
+								{{ if(sourCode==-4||sourCode==-5){ }}
+									<div class="detail-item-alert alert-danger">
+										<span class="icon"><i class="iconfont">!</i></span>
+										<span class="status">未校验</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
+								{{ }else if(sourCode==1){ }}
+									<div class="detail-item-alert alert-success">
+										<span class="icon"><i class="iconfont">&#xe659;</i></span>
+										<span class="status">通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
+								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
+									<div class="detail-item-alert alert-warning">
+										<span class="icon"><i class="iconfont">&#xe612;</i></span>
+										<span class="status">不通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+										<!-- <span class="message-number">new</span> -->
+									</div>
+								{{ } }}
+								{{var certificate=col.basicInfo;}}
+								<div class="detail-item-context clearfix">
+									<div class="no-img-group clearfix left-model">
+										<div class="no-img-list">
+											<div class="no-img">
+												{{ if(certificate.picPath){ }}
+													<img src="{{=certificate.picPath}}" />
+												{{ }else{ }}
+													<i class="iconfont">&#xe61f;</i>
+												{{ } }}
+											</div>
+											<p class="img-explain">合格证原件</p>
 										</div>
-										<p class="img-explain">合格证原件</p>
+									</div>
+									<div class="right-model">
+										<h3>合格证管理部平台查得信息</h3>
+										<ul class="table-key-val">
+											<li><span class="key">车辆合格证编号：</span>{{=certificate.certifitionNum}}</li>
+											<li><span class="key">车辆制造企业名称：</span>{{=certificate.carManufacturer}}</li>
+											<li><span class="key">车辆识别代号/车架号：</span>{{=certificate.carVin}}</li>
+											<li><span class="key">发动机号码：</span>{{=certificate.engineNum}}元</li>
+										</ul>
 									</div>
 								</div>
-								<div class="right-model">
-									<h3>合格证管理部平台查得信息</h3>
-									<ul class="table-key-val">
-										<li><span class="key">车辆合格证编号：</span>{{=certificate.certifitionNum}}</li>
-										<li><span class="key">车辆制造企业名称：</span>{{=certificate.carManufacturer}}</li>
-										<li><span class="key">车辆识别代号/车架号：</span>{{=certificate.carVin}}</li>
-										<li><span class="key">发动机号码：</span>{{=certificate.engineNum}}元</li>
-									</ul>
-								</div>
-							</div>
+							{{ }else{ }}
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">{{=col.msg||'数据处理中！'}}</span>
+									</div>
+								</div>								
+							{{ } }}
 						{{ } }}
 					{{ }else{ }}
 						<div class="detail-item-context clearfix">
@@ -391,24 +442,24 @@
 							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
 								{{var sourCode=col.validationResult.sourceCode;}}
 								{{ if(sourCode==-4||sourCode==-5){ }}
-								<div class="detail-item-alert alert-danger">
-									<span class="icon"><i class="iconfont">!</i></span>
-									<span class="status">未校验</span>
-									<span class="text">{{=col.validationResult.sourceContent}}</span>
-								</div>
+									<div class="detail-item-alert alert-danger">
+										<span class="icon"><i class="iconfont">!</i></span>
+										<span class="status">未校验</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
 								{{ }else if(sourCode==1){ }}
-								<div class="detail-item-alert alert-success">
-									<span class="icon"><i class="iconfont">&#xe659;</i></span>
-									<span class="status">通过</span>
-									<span class="text">{{=col.validationResult.sourceContent}}</span>
-								</div>
+									<div class="detail-item-alert alert-success">
+										<span class="icon"><i class="iconfont">&#xe659;</i></span>
+										<span class="status">通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
 								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
-								<div class="detail-item-alert alert-warning">
-									<span class="icon"><i class="iconfont">&#xe612;</i></span>
-									<span class="status">不通过</span>
-									<span class="text">{{=col.validationResult.sourceContent}}</span>
-									<!-- <span class="message-number">new</span> -->
-								</div>
+									<div class="detail-item-alert alert-warning">
+										<span class="icon"><i class="iconfont">&#xe612;</i></span>
+										<span class="status">不通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+										<!-- <span class="message-number">new</span> -->
+									</div>
 								{{ } }}
 								{{ if(col.basicInfo&&col.basicInfo.insurancePolicyBaseInfo){ }}
 									{{var bdNumber=col.basicInfo.insurancePolicyBaseInfo;}}
@@ -466,7 +517,7 @@
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">已查询，数据处理中！</span>
+										<span class="key">{{=col.msg||'数据处理中！'}}</span>
 									</div>
 								</div>
 							{{ } }}
@@ -487,61 +538,69 @@
 					</div>
 					{{ if(item.length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
-							{{var sourCode=col.validationResult.sourceCode;}}
-							{{ if(sourCode==-4||sourCode==-5){ }}
-							<div class="detail-item-alert alert-danger">
-								<span class="icon"><i class="iconfont">!</i></span>
-								<span class="status">未校验</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-							</div>
-							{{ }else if(sourCode==1){ }}
-							<div class="detail-item-alert alert-success">
-								<span class="icon"><i class="iconfont">&#xe659;</i></span>
-								<span class="status">通过</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-							</div>
-							{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
-							<div class="detail-item-alert alert-warning">
-								<span class="icon"><i class="iconfont">&#xe612;</i></span>
-								<span class="status">不通过</span>
-								<span class="text">{{=col.validationResult.sourceContent}}</span>
-								<!-- <span class="message-number">new</span> -->
-							</div>
-							{{ } }}
-							{{var carReg=col.basicInfo;}}
-							<div class="detail-item-context clearfix">
-								<div>
-									<table class="table-search-msg" cellspacing="0" cellpadding="0">
-										<tr>
-											<td class="table-key">提供查询的参数</td>
-											<td class="table-val">
-												<table class="table-inner">
-													<tr>
-														<td><span class="key">车牌号：</span>
-														{{=carReg.registerPlateNumber}}</td>
-														<td><span class="key">发动机号：</span>
-														{{=carReg.registerEngineNumber}}</td>
-														<td><span class="key">车架号：</span>
-														{{=carReg.registerVin}}</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-									</table>
-								</div>
-								<div class="no-img-group clearfix">
-									<div class="no-img-list">
-										<div class="no-img">
-											{{ if(carReg.picPath){ }}
-												<img src="{{=carReg.picPath}}" />
-											{{ }else{ }}
-												<i class="iconfont">&#xe61f;</i>
-											{{ } }}
+							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
+								{{var sourCode=col.validationResult.sourceCode;}}
+								{{ if(sourCode==-4||sourCode==-5){ }}
+									<div class="detail-item-alert alert-danger">
+										<span class="icon"><i class="iconfont">!</i></span>
+										<span class="status">未校验</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
+								{{ }else if(sourCode==1){ }}
+									<div class="detail-item-alert alert-success">
+										<span class="icon"><i class="iconfont">&#xe659;</i></span>
+										<span class="status">通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
+								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
+									<div class="detail-item-alert alert-warning">
+										<span class="icon"><i class="iconfont">&#xe612;</i></span>
+										<span class="status">不通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+										<!-- <span class="message-number">new</span> -->
+									</div>
+								{{ } }}
+								{{var carReg=col.basicInfo;}}
+								<div class="detail-item-context clearfix">
+									<div>
+										<table class="table-search-msg" cellspacing="0" cellpadding="0">
+											<tr>
+												<td class="table-key">提供查询的参数</td>
+												<td class="table-val">
+													<table class="table-inner">
+														<tr>
+															<td><span class="key">车牌号：</span>
+															{{=carReg.registerPlateNumber}}</td>
+															<td><span class="key">发动机号：</span>
+															{{=carReg.registerEngineNumber}}</td>
+															<td><span class="key">车架号：</span>
+															{{=carReg.registerVin}}</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div class="no-img-group clearfix">
+										<div class="no-img-list">
+											<div class="no-img">
+												{{ if(carReg.picPath){ }}
+													<img src="{{=carReg.picPath}}" />
+												{{ }else{ }}
+													<i class="iconfont">&#xe61f;</i>
+												{{ } }}
+											</div>
+											<p class="img-explain">车辆登记证原件</p>
 										</div>
-										<p class="img-explain">车辆登记证原件</p>
 									</div>
 								</div>
-							</div>
+							{{ }else{ }}
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">{{=col.msg||'数据处理中！'}}</span>
+									</div>
+								</div>								
+							{{ } }}
 						{{ } }}
 					{{ }else{ }}
 						<div class="detail-item-context clearfix">
@@ -562,28 +621,28 @@
 							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
 								{{var sourCode=col.validationResult.sourceCode;}}
 								{{ if(sourCode==-4||sourCode==-5){ }}
-								<div class="detail-item-alert alert-danger">
-									<span class="icon"><i class="iconfont">!</i></span>
-									<span class="status">未校验</span>
-									<span class="text">{{=col.validationResult.sourceContent}}</span>
-								</div>
+									<div class="detail-item-alert alert-danger">
+										<span class="icon"><i class="iconfont">!</i></span>
+										<span class="status">未校验</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
 								{{ }else if(sourCode==1){ }}
-								<div class="detail-item-alert alert-success">
-									<span class="icon"><i class="iconfont">&#xe659;</i></span>
-									<span class="status">通过</span>
-									<span class="text">{{=col.validationResult.sourceContent}}</span>
-								</div>
+									<div class="detail-item-alert alert-success">
+										<span class="icon"><i class="iconfont">&#xe659;</i></span>
+										<span class="status">通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
 								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
-								<div class="detail-item-alert alert-warning">
-									<span class="icon"><i class="iconfont">&#xe612;</i></span>
-									<span class="status">不通过</span>
-									<span class="text">{{=col.validationResult.sourceContent}}</span>
-								</div>
-								{{ } }}
+									<div class="detail-item-alert alert-warning">
+										<span class="icon"><i class="iconfont">&#xe612;</i></span>
+										<span class="status">不通过</span>
+										<span class="text">{{=col.validationResult.sourceContent}}</span>
+									</div>
+									{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">已查询，该用户无房产记录！</span>
+										<span class="key">{{=col.msg||'数据处理中！'}}</span>
 									</div>
 								</div>
 							{{ } }}
@@ -623,7 +682,7 @@
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">已查询，该用户无房产记录！</span>
+										<span class="key">{{=col.msg||'数据处理中！'}}</span>
 									</div>
 								</div>
 							{{ } }}
@@ -639,9 +698,9 @@
 				{{ } }}
 			{{ } }}
 			</div>
+			{{ }else{ }}
+			<div class="no-data"></div>
 		</div>
-	{{ }else{ }}
-		<div class="no-data"></div>
 	{{ } }}
 </script>	
 <!-- 核查成功之后 -->

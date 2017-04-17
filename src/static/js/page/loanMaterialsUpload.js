@@ -4,7 +4,6 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		$console = $params.refer ? $($params.refer) : render.$console;
 	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
-	$params.orderNo = 'nfdb20170407100357095';
 
 	/**
 	* 加载贷款材料上传数据
@@ -343,18 +342,6 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	* @params {object} item 触发的tab对象
 	*/
 	var tabChange = function (idx, item) {
-		// var taskIds = [];
-		// for(var i = 0, len = $params.tasks.length; i < len; i++) {
-		// 	taskIds.push(parseInt($params.tasks[i].id));
-		// }
-		// var params = {
-		// 	taskId: $params.taskId,
-		// 	taskIds: taskIds,
-		// 	orderNo: $params.orderNo
-		// }
-		// var reason = $.trim(this.$content.find('#suggestion').val());
-		// if(reason) params.reason = reason;
-		// tasksJump(params, 'complete');
 		router.render('loanProcess/' + item.key, {
 			tasks: $scope.tasks,
 			taskId: $scope.tasks[idx].id,
@@ -380,22 +367,11 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		});
 	});
 
-	/**
-	 * 监听其它材料最后一个控件的名称
-	 */
-	var otherMaterialsListen = function() {
-		var $imgel = $console.find('.otherMaterials .uploadEvt');
-		$imgel.last().data('name', '其它材料' + $imgel.length);
-		$imgel.last().data('count', $imgel.length);
-		$imgel.last().find('.input-text input').val('其它材料' + $imgel.length);
-	}
-	
 	/***
 	* 删除图片后的回调函数
 	*/
 	$scope.deletecb = function(self) {
 		self.$el.remove();
-		otherMaterialsListen();
 	}
 
 	/***
@@ -403,8 +379,8 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	*/
 	$scope.uploadcb = function(self) {
 		self.$el.after(self.outerHTML);
-		otherMaterialsListen();
 		self.$el.next().imgUpload();
-
 	}
+
+	
 });

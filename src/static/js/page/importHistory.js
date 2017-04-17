@@ -1,9 +1,10 @@
 'use strict';
 page.ctrl('importHistory', [], function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
-			pageNum: $params.pageNum || 1
+			pageNum: $params.pageNum || 1,
+			process: $params.process || ''
 		};
 	/**
 	 *逾期导入查看详情 
@@ -14,11 +15,13 @@ page.ctrl('importHistory', [], function($scope) {
 
 	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api('loanOverdueImport/importReordList','wl'),
+			url: urlStr + '/loanOverdueImport/importReordList',
+//			url: $http.api('loanOverdueImport/importReordList','wl'),
 			type: 'post',
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
+				setupEvt();
 				setupPaging(result.page, true);
 				setupScroll(result.page, function() {
 					pageChangeEvt();
@@ -67,24 +70,13 @@ page.ctrl('importHistory', [], function($scope) {
 		});
 	}
  	/**
-	* 当页tab切换
-	**/
-	$(document).on('click', '#currentPageTab a', function() {
-		$('#currentPageTab a').each(function (){
-			$(this).removeClass('tab-item-active');
-		})
-		$(this).addClass('tab-item-active');
-		var status = $(this).data('status');
-		pageData['status']=status;
-		loadExpireProcessList(apiParams);
-	});
-	/**
 	* 绑定立即处理事件
-	*/
-//	$(document).on('click', '#expireProcessTable .button', function() {
-//		var that = $(this);
-//		router.render(that.data('href'), {orderNo: that.data('id')});
-//	});
+	**/
+	var setupEvt = function() {
+		$console.find('#expInIpt').on('click', function() {
+			router.render('expireInfoInput');
+		});
+	}
 
 	/***
 	* 加载页面模板

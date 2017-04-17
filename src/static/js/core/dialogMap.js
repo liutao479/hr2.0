@@ -270,7 +270,39 @@
 				{{ } }}\
 			</ul>\
 			<p class="tip">提示：带有“<span class="textfe5a58">银行</span>”标记的服务表示业务经办银行要求核查的服务项目，系统会在条件满足的情况下自动完成核查。</p>\
-		</div>'
+		</div>',
+		allCreditDownload: '<div class="w-content w-content-padding">\
+								<div class="w-download-area">\
+									<div class="w-download-title">\
+										选择下载内容\
+									</div>\
+									<div class="w-download">\
+										<div class="w-radio">\
+											<div class="checkbox checkbox-radio checked" data-checked="true" data-type="1"></div>\
+											<i class="iconfont i-download">&#xe624;</i>\
+											<span class="w-select-item">PDF下载</span>\
+										</div>\
+										<div class="w-radio">\
+											<div class="checkbox checkbox-radio" data-checked="false" data-type="2"></div>\
+											<i class="iconfont i-download">&#xe64c;</i>\
+											<span class="w-select-item">WORD下载</span>\
+										</div>\
+										<div class="w-radio">\
+											<div class="checkbox checkbox-radio" data-checked="false" data-type="3"></div>\
+											<i class="iconfont i-download">&#xe675;</i>\
+											<span class="w-select-item">ZIP下载</span>\
+										</div>\
+									</div>\
+								</div>\
+							</div>',
+		selectTemplate: '<div class="w-content">\
+							<dl class="w-dropdown">\
+								<dt class="dt">请选择需要套打的合同模板：</dt>\
+								<dd class="dd">\
+									<div class="select select-bank" data-placeholder="请选择" data-dropdown="page.$scope[\'loadArchiveDownload\'].templatePicker" data-trigger="page.$scope[\'loadArchiveDownload\'].dropdownTrigger.template"></div>\
+								</dd>\
+							</dl>\
+						</div>',
 	}
 	g.dialogTml.wCommit = {
 		sure: '<div class="w-commit-area">\

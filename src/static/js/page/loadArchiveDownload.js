@@ -6,6 +6,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 			queryType: 2,  //贷款资料下载
 			pageNum: 1
 		};
+	$scope.userIds = [];//资料待下载用户userId
 	/**
 	* 加载贷款资料数据
 	* @params {object} params 请求参数
@@ -19,7 +20,9 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, function() {
+					setupEvt();
+				}, true);
 				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -45,12 +48,77 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	function setupDropDown() {
 		$console.find('.select').dropdown();
 	}
-	
+
 	/**
 	 * 绑定立即处理事件
 	 */
 	var setupEvt = function() {
+		$scope.isAllClick = false;//批量下载是否能点击
+		$scope.$checks = $scope.$el.$tbl.find('.checkbox').checking();
 
+		$scope.$checks.each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				var flag = 0;
+				$scope.$checks.each(function() {
+					if($(this).attr('checked')) {
+						flag++;
+					} else {
+					}
+				})
+				if(flag == 0) {
+					$scope.$allCheck.removeClass('checked').attr('checked', false);
+					$scope.isAllClick = false;
+				} else if(flag == $scope.$checks.length) {
+					$scope.$allCheck.removeClass('checked').addClass('checked').attr('checked', true);
+					$scope.isAllClick = true;
+				} else {
+					$scope.isAllClick = true;
+				}
+			});
+		})
+
+
+		// 绑定合同套打按钮
+		$console.find('.contractPrint').on('click', function() {
+			var orderNo = $(this).data('orderNo');
+			$.confirm({
+				title: '选择套打模板',
+				content: doT.template(dialogTml.wContent.selectTemplate),
+				onContentReady: function() {
+					this.$content.find('.select').dropdown();
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							$.ajax({
+								url: $http.api('contractPrint/queryContractExeclList', 'lyb'),
+								type: 'post',
+								data: {
+									fileId: $scope.fileId
+								},
+								dataType: 'json',
+								success: $http.ok(function() {
+									window.open($http.api('contractPrint/printContractFile?fileId=' + $scope.fileId + '&orderNo=' + orderNo, true), '_self');
+								})
+							});
+						}
+					}
+				}
+			})
+		})
+	}
+
+
+	/**
+	 * 首次加载页面绑定事件
+	 */
+	var evt = function() {
 		// 绑定搜索框模糊查询事件
 		$console.find('#searchInput').on('keydown', function(evt) {
 			if(evt.which == 13) {
@@ -60,121 +128,103 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 					return false;
 				}
 				apiParams.keyWord = searchText;
-				$params.keyWord = searchText;
 				apiParams.pageNum = 1;
-				$params.pageNum = 1;
 				loadArchiveDownloadList(apiParams, function() {
-					delete apiParams.keyWord;
-					delete $params.keyWord;
 					that.blur();
 				});
-				// router.updateQuery($scope.$path, $params);
 			}
 		});
 
-		// 绑定全选按钮
-		$console.find('#allCheck').on('click', function() {
-			var that = $(this);
-			if(!that.hasClass('checked')) {
-				// 去做全选操作
-				// $console.find('#creditArchiveDownloadTable .checkbox')
+		// 文本框失去焦点记录文本框的值
+		$console.find('#searchInput').on('blur', function(evt) {
+			var that = $(this),
+				searchText = $.trim(that.val());
+			if(!searchText) {
+				delete apiParams.keyWord;
+				return false;
 			} else {
-				// 去做全选取消操作
+				apiParams.keyWord = searchText;
 			}
 		});
 
-
-		// 绑定pdf下载按钮
-		$console.find('.contractPrint').on('click', function() {
-			var that = $(this);
-			var template = '<div class="window">\
-				<div class="w-title">\
-					<div class="w-title-content">选择套打模板</div>\
-					<div class="w-close"><i class="iconfont">&#xe65a;</i></div>\
-				</div>\
-				<div class="w-content">\
-					<dl class="w-dropdown">\
-						<dt>请选择需要套打的合同模板：</dt>\
-						<dd>\
-							<select name="" id="muban">\
-								{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
-								<option data-id="{{=row.attachmentId}}">{{=row.fileName}}</option>\
-								{{ } }}\
-							</select>\
-						</dd>\
-					</dl>\
-					<div class="w-commit-area">\
-						<div class="button button-empty btnCancel">取消</div><div class="button btnSure">确定</div>\
-					</div>\
-				</div>\
-			</div>';
-			var $dialog = $('<div class="dialog" id="dialog"></dialog>').appendTo('body');
-			console.log($dialog);
-			$.ajax({
-				url: $http.api('contractPrint/queryContractExeclList', 'lyb'),
-				type: 'post',
-				data: {
-					deptOrgId: 62
-				},
-				dataType: 'json',
-				success: function(result) {
-					console.log(result);
-					$(doT.template(template)(result.data)).appendTo($dialog);
-					$dialog.find('#muban').data('selectid', result.data[0].attachmentId);
-					$dialog.find('#muban').on('change', function() {
-						var _selectid = $(this).find('option:selected').data('id');
-						console.log(_selectid)
-						$(this).data('selectid', _selectid);
-					})
-					$dialog.find('.w-close').on('click', function() {
-						$dialog.remove();
-					})
-					$dialog.find('.btnSure').on('click', function() {
-						console.log(typeof $dialog.find('#muban').data('selectid'))
-						$.ajax({
-							url: $http.api('contractPrint/verifyTemplateIsExist', 'lyb'),
-							type: 'post',
-							data: {
-								fileId: $dialog.find('#muban').data('selectid')
-							},
-							dataType: 'json',
-							success: function(xhr) {
-								console.log(xhr);
-								if(!xhr) {
-									$.ajax({
-										url: $http.api('contractPrint/printContractFile', 'lyb'),
-										type: 'post',
-										data: {
-											fileId: 301,
-											orderNo: 'nfb110'
-										},
-										dataType: 'json',
-										success: function(xhr) {
-											console.log(xhr);
-										}
-									})
-								}
-							}
-						})
-					})
-				}
-			})
-		});
-
-
-		
 		//绑定搜索按钮事件
 		$console.find('#search').on('click', function() {
+			apiParams.pageNum = 1;
 			loadArchiveDownloadList(apiParams);
-			// router.updateQuery($scope.$path, $params);
-			
 		});
 
 		//绑定重置按钮事件
 		$console.find('#search-reset').on('click', function() {
 			// 下拉框数据以及输入框数据重置
-			// router.updateQuery($scope.$path, $params);
-			
+			$console.find('.select input').val('');
+			$console.find('#searchInput').val('');
+			apiParams = {
+				queryType: 2,  //征信资料下载
+		    	pageNum: 1
+			};
+		});
+
+		// 初始化复选框
+		$scope.$allCheck = $console.find('.all-check-box .checkbox').checking();
+		$scope.$allCheck[0].$checking.onChange(function() {
+			if(!$scope.$allCheck.attr('checked')) {
+				$scope.$el.$tbl.find('.checkbox').removeClass('checked').attr('checked', false);
+				$scope.isAllClick = false;
+			} else {
+				$scope.$el.$tbl.find('.checkbox').removeClass('checked').addClass('checked').attr('checked', true);
+				$scope.isAllClick = true;
+			}
+		});
+
+		// 批量下载按钮
+		$console.find('#allDownload').on('click', function() {
+
+			var that = $(this);
+			if(!$scope.isAllClick) {
+				//toast('请选择批量下载的订单！')
+				return false;
+			}
+			alert('批量下载！')
+			// $.confirm({
+			// 	title: '批量下载',
+			// 	content: dialogTml.wContent.allCreditDownload,
+			// 	onContentReady: function() {
+			// 		$scope.$radios = this.$content.find('.checkbox').checking();
+
+			// 		$scope.$radios.each(function() {
+			// 			var that = this;
+			// 			that.$checking.onChange(function() {
+			// 				$scope.$radios.removeClass('checked').attr('checked', false);
+			// 				$(that).removeClass('checked').addClass('checked').attr('checked', true);
+			// 			});
+			// 		})
+			// 	},
+			// 	buttons: {
+			// 		close: {
+			// 			text: '取消',
+			// 			btnClass: 'btn-default btn-cancel'
+			// 		},
+			// 		ok: {
+			// 			text: '确定',
+			// 			action: function() {
+			// 				$scope.userIds = [];
+			// 				$scope.$el.$tbl.find('.checkbox').each(function() {
+			// 					if($(this).attr('checked')) {
+			// 						$scope.userIds.push($(this).data('userId'));
+			// 					}
+			// 				});
+			// 				$scope.userIds = $scope.userIds.join(',');
+			// 				console.log($scope.userIds)
+			// 				this.$content.find('.checkbox').each(function() {
+			// 					if($(this).attr('checked')) {
+			// 						$scope.downLoadType = $(this).data('type');
+			// 					}
+			// 				});
+			// 				window.open($http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + $scope.userIds + '&downLoadType=' + $scope.downLoadType, true), '_blank');
+			// 			}
+			// 		}
+			// 	}
+			// })
 		});
 	}
 
@@ -189,7 +239,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 		}
 		setupDropDown();
 		loadArchiveDownloadList(apiParams, function() {
-			setupEvt();
+			evt();
 		});
 	});
 
@@ -201,6 +251,15 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 		cb();
 	}
 
+	//下拉点击回调
+	$scope.demandBankPicker = function(picked) {
+
+	}
+	$scope.templatePicker = function(picked) {
+		console.log(picked)
+		$scope.fileId = picked.id;
+	}
+
 	/**
 	 * 下拉框请求数据回调
 	 */
@@ -210,11 +269,31 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 				type: 'post',
 				url: $http.api('demandBank/selectBank', 'zyj'),
 				dataType: 'json',
+				global: false,
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'bankId',
 						name: 'bankName'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		template: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('contractPrint/queryContractExeclList', 'zyj'),
+				dataType: 'json',
+				global: false,
+				data: {
+					deptOrgId: 62
+				},
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'attachmentId',
+						name: 'fileName'
 					};
 					cb(sourceData);
 				})

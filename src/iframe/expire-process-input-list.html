@@ -61,15 +61,16 @@
 			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope[''].paging" data-pages="50" data-current="1"></div>
 			
 			<script type="text/x-dot-template" id="expireProcessInputListTmpl">
+				{{ for(var i=0,len=it.length;i<len;i++){ var role = it[i]; }} 
 					<table class="expire-orders-table expire-orders-table-hover" width="100%">
 						<thead class="expire-title">
 							<tr>
 								<td colspan="4">
 									<i class="iconfont iconfont-man">&#xe656;</i>
-									<span class="userName">韩梅梅</span>
+									<span class="userName">{{= role.userName}}</span>
 									<div class="key-value-box clearfix">
-										<span class="key">逾期更新状态：</span>
-										<span class="value">2016/12/13</span>
+										<span class="key">逾期状态更新时间：</span>
+										<span class="value">{{= role.statusChangeDate}}</span>
 									</div>
 								</td>
 							</tr>
@@ -80,15 +81,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">经办银行：</td>
-											<td class="value">261736726483478347364</td>
+											<td class="value">{{= role.bankName}}</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">卡余额：</td>
-											<td class="value">110,022,00元</td>
+											<td class="value">{{= role.cardBalance}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">公司已垫款：</td>
-											<td class="value">110,022.00元</td>
+											<td class="value">{{= role.companyAdvance}}元</td>
 										</tr>
 									</table>
 								</td>
@@ -96,15 +97,15 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">当前逾期金额：</td>
-											<td class="value">621,226.00元</td>
+											<td class="value">{{= role.overdueAmount}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">每期应还：</td>
-											<td class="value">2,944.00元</td>
+											<td class="value">{{= role.eachRepayment}}元</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">当前逾期金额/每期应还：</td>
-											<td class="value">2,944.00元</td>
+											<td class="value">{{= role.repaymentPeriod}}元</td>
 										</tr>
 									</table>
 								</td>
@@ -112,94 +113,26 @@
 									<table class="table-inner">
 										<tr class="table-inner-tr">
 											<td class="key">连续逾期次数：</td>
-											<td class="value">4次</td>
+											<td class="value">{{= role.currentDefaultNum}}次</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">累计逾期次数：</td>
-											<td class="value">4次</td>
+											<td class="value">{{= role.cumulativeDefaultNum}}次</td>
 										</tr>
 										<tr class="table-inner-tr">
 											<td class="key">逾期状态：</td>
-											<td class="value color-blue">逾期需要处理</td>
+											<td class="value color-blue">{{= role.statusStr}}</td>
 										</tr>
 									</table>
 								</td>
 								<td class="expire-content-item expire-content-item-last">
-									<div class="button button-mini">完善订单信息</div>
+									<div class="button button-mini">最新处理意见</div>
+									<div class="button button-mini">查看详情</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-
-					<table class="expire-orders-table expire-orders-table-hover" width="100%">
-						<thead class="expire-title">
-							<tr>
-								<td colspan="4">
-									<i class="iconfont iconfont-man">&#xe656;</i>
-									<span class="userName">韩梅梅</span>
-									<div class="key-value-box clearfix">
-										<span class="key">逾期更新状态：</span>
-										<span class="value">2016/12/13</span>
-									</div>
-								</td>
-							</tr>
-						</thead>
-						<tbody class="expire-content match-fail">
-							<tr class="expire-content-tr">
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">经办银行：</td>
-											<td class="value">261736726483478347364</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">卡余额：</td>
-											<td class="value">110,022,00元</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">公司已垫款：</td>
-											<td class="value">110,022.00元</td>
-										</tr>
-									</table>
-								</td>
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">当前逾期金额：</td>
-											<td class="value">621,226.00元</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">每期应还：</td>
-											<td class="value">2,944.00元</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">当前逾期金额/每期应还：</td>
-											<td class="value">2,944.00元</td>
-										</tr>
-									</table>
-								</td>
-								<td class="expire-content-item">
-									<table class="table-inner">
-										<tr class="table-inner-tr">
-											<td class="key">连续逾期次数：</td>
-											<td class="value">4次</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">累计逾期次数：</td>
-											<td class="value">4次</td>
-										</tr>
-										<tr class="table-inner-tr">
-											<td class="key">逾期状态：</td>
-											<td class="value color-blue">电话催收进行中</td>
-										</tr>
-									</table>
-								</td>
-								<td class="expire-content-item expire-content-item-last">
-									<div class="button button-mini">完善订单信息</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+				{{ } }}	
 			</script>
 
 

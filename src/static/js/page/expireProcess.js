@@ -1,11 +1,10 @@
 'use strict';
 page.ctrl('expireProcess', [], function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
-			process: $params.process || 0,
-			page: $params.page || 1,
-			pageSize: 20
+			pageNum: $params.pageNum || 1,
+			process: $params.process || ''
 		};
 	/**
 	* 加载逾期管理数据

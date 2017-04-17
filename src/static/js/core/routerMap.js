@@ -123,12 +123,17 @@
 		'expireInfoInput': {
 			title: '逾期信息录入',
 			refer: [],
-			page: 'expireInfoInput'
+			page: 'expireInfoInputHead'
 		},
 		'expire/expireInfoInput': {
 			title: '逾期信息批量导入',
 			refer: [],
 			page: 'expireInfoInput'
+		},
+		'expire/importHistory': {
+			title: '逾期信息历史记录',
+			refer: [],
+			page: 'importHistory'
 		},
 		'expire/expireInfoPrev': {
 			title: '逾期信息导入详情',
@@ -140,10 +145,20 @@
 			refer: [],
 			page: 'expireInfoInputSingle'
 		},
+		'expire/expireInfoDetail': {
+			title: '批量导入详情',
+			refer: [],
+			page: 'expireInfoDetail'
+		},
 		'expireProcess': {
 			title: '逾期处理',
 			refer: [],
-			page: 'expireProcess'
+			page: 'expireProcessInputList'
+		},
+		'expireProcess/expireProcessDetail': {
+			title: '逾期处理详情',
+			refer: [],
+			page: 'expireProcessDetail'
 		},
 		'creditArchiveDownload': {
 			title: '征信资料下载',
@@ -155,11 +170,46 @@
 			refer: [],
 			page: 'loadArchiveDownload'
 		},
+
+		
 		'operationsAnalysis': {
 			title: '运营分析',
 			refer: [],
 			page: 'operationsAnalysis'
 		},
+		'operations/operationsTab1': {
+			title: '风控服务统计',
+			refer: [],
+			page: 'operationsTab1'
+		},
+		'operations/operationsTab2': {
+			title: '业务量日统计',
+			refer: [],
+			page: 'operationsTab2'
+		},
+		'operations/operationsTab3': {
+			title: '业务量区间统计',
+			refer: [],
+			page: 'operationsTab3'
+		},
+		'operations/operationsTab4': {
+			title: '放款调度统计',
+			refer: [],
+			page: 'operationsTab4'
+		},
+		'operations/operationsTab5': {
+			title: '逾期情况统计',
+			refer: [],
+			page: 'operationsTab5'
+		},
+		'operations/operationsTab6': {
+			title: '报表下载',
+			refer: [],
+			page: 'operationsTab6'
+		},
+
+
+
 		'organizationManage': {
 			title: '合作机构维护',
 			refer: [],

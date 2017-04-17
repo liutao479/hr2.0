@@ -5,7 +5,8 @@ page.ctrl('materialInspection', function($scope) {
 		apiParams = {
 			orderNo: $params.orderNo,
 			//orderNo: 'nfdb2016102820480790',
-			sceneCode:'creditApproval'
+			//orderNo: "vxnfdb20170412105846795",
+			sceneCode:'loanApproval'
 		},userType=[
 			{userType:0,text:"主申请人"},
 			{userType:1,text:"共同还款人"},
@@ -19,15 +20,17 @@ page.ctrl('materialInspection', function($scope) {
 			url: $http.api('verifyResult/resultDetail',true),
 			data: param,
 			success: $http.ok(function(res) {
-				var _mout=res.data.data;
+				var _mout={body:[]};
+				if(res.data&&res.data.data&&res.data.data.body)
+					_mout=res.data.data;
 				/*整理title中发起人，最新发起时间等信息*/
 				if(_mout.verifyRecord&&_mout.verifyRecord.submitByName)
-					_mout.body.submitByName=_mout.verifyRecord.submitByName;
+					_mout.submitByName=_mout.verifyRecord.submitByName;
 				if(_mout.verifyRecord&&_mout.verifyRecord.updateTime)
-					_mout.body.updateTime=_mout.verifyRecord.updateTime;
+					_mout.updateTime=_mout.verifyRecord.updateTime;
 				if(_mout.itemNum)
-					_mout.body.itemNum=_mout.itemNum;
-				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout.body, true);
+					_mout.itemNum=_mout.itemNum;
+				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout, true);
 				if(callback && typeof callback == 'function') {
 					callback();
 				};
@@ -50,6 +53,7 @@ page.ctrl('materialInspection', function($scope) {
 						};
 					};
 					render.compile($scope.$el.$tab, $scope.def.tabTmpl, res.data, true);
+					apiParams.serviceType='1';/*1材料验真，2数据辅证，必传*/
 					apiParams.userId=res.data[0].userId;
 					//apiParams.userId='334232';
 					search(apiParams, function() {
@@ -90,10 +94,11 @@ page.ctrl('materialInspection', function($scope) {
 				$.ajax({
 					type: 'post',
 					dataType:"json",
-					url: $http.api('creditAudit/startVerify',true),
+					url: $http.api('loanAudit/verifyCheck',true),
 					data: {
 						key:key,
 						orderNo:apiParams.orderNo,
+						serviceType:'1',/*1材料验真，2数据辅证，必传*/
 						userIds:_arr.join("_")
 					},
 					success: $http.ok(function(res) {
@@ -102,7 +107,7 @@ page.ctrl('materialInspection', function($scope) {
 							if(context){
 								setTimeout(function() {
 									jc.close();
-									search(apiParams);
+									//search(apiParams);
 								},1500);
 							};
 						});
@@ -166,15 +171,17 @@ page.ctrl('materialInspection', function($scope) {
 	};
 	// 页面首次载入时绑定事件
  	var evt = function() {
-		$scope.$el.$tab.off("click","li.role-bar-li").on("click","li.role-bar-li",function() {
-			if($(this).siblings("li").length>0){
-				$(this).siblings("li").find("a").removeClass("role-item-active");
-				$(this).find("a").addClass("role-item-active");
-				search();
+		$scope.$el.$tab.off("click","a.role-item:not(.role-item-active)").on("click","a.role-item:not(.role-item-active)",function() {
+			$(this).parent("li").siblings("li").find("a").removeClass("role-item-active");
+			$(this).addClass("role-item-active");
+			var _id=$(this).parent('li').data('id');
+			if(_id){
+				apiParams.userId=_id;
+				search(apiParams);
 			};
 		});
 		/*获取核查列表*/
-		$scope.$el.$startCheck.click(function(){
+		$scope.$el.$listDiv.off("click","#startCheck").on("click","#startCheck",function() {
 			var that=$(this);
 			$.ajax({
 				type: 'post',
@@ -201,8 +208,7 @@ page.ctrl('materialInspection', function($scope) {
 		$scope.def.toastTmpl = render.$console.find('#importResultTmpl').html();
 		$scope.$el = {
 			$tab: $console.find('#roleBarTab'),
-			$listDiv: $console.find('#listDiv'),
-			$startCheck: $console.find('#startCheck'),
+			$listDiv: $console.find('#listDiv')
 		};
 		searchUserList({
 			orderNo:apiParams.orderNo,

@@ -6,6 +6,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 			queryType: 1,  //征信资料下载
 			pageNum: 1
 		};
+	$scope.userIds = [];//资料待下载用户userId
 	/**
 	* 加载征信资料数据
 	* @params {object} params 请求参数
@@ -19,7 +20,9 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data.resultlist, function() {
+					setupEvt();
+				}, true);
 				setupPaging(result.page, true);
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -50,11 +53,34 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	 * 绑定立即处理事件
 	 */
 	var setupEvt = function() {
+		$scope.isAllClick = false;//批量下载是否能点击
+		$scope.$checks = $scope.$el.$tbl.find('.checkbox').checking();
 
+		$scope.$checks.each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				var flag = 0;
+				$scope.$checks.each(function() {
+					if($(this).attr('checked')) {
+						flag++;
+					} else {
+					}
+				})
+				if(flag == 0) {
+					$scope.$allCheck.removeClass('checked').attr('checked', false);
+					$scope.isAllClick = false;
+				} else if(flag == $scope.$checks.length) {
+					$scope.$allCheck.removeClass('checked').addClass('checked').attr('checked', true);
+					$scope.isAllClick = true;
+				} else {
+					$scope.isAllClick = true;
+				}
+			});
+		})
 	}
 
 	/**
-	 * 绑定立即处理事件
+	 * 首次加载页面绑定事件
 	 */
 	var evt = function() {
 		// 绑定搜索框模糊查询事件
@@ -103,22 +129,65 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 		});
 
 		// 初始化复选框
-		$console.find('.all-check-box .checkbox').checking(function($self) {
-			
+		$scope.$allCheck = $console.find('.all-check-box .checkbox').checking();
+		$scope.$allCheck[0].$checking.onChange(function() {
+			if(!$scope.$allCheck.attr('checked')) {
+				$scope.$el.$tbl.find('.checkbox').removeClass('checked').attr('checked', false);
+				$scope.isAllClick = false;
+			} else {
+				$scope.$el.$tbl.find('.checkbox').removeClass('checked').addClass('checked').attr('checked', true);
+				$scope.isAllClick = true;
+			}
 		});
 
-		//启动下拉框插件
-		setupDropDown();
+		// 批量下载按钮
+		$console.find('#allDownload').on('click', function() {
 
-		// 绑定全选按钮
-		$console.find('#allCheck').on('click', function() {
 			var that = $(this);
-			if(!$(this).hasClass('checked')) {
-				// 去做全选操作
-				// $console.find('#creditArchiveDownloadTable .checkbox')
-			} else {
-				// 去做全选取消操作
+			if(!$scope.isAllClick) {
+				//toast('请选择批量下载的订单！')
+				return false;
 			}
+			$.confirm({
+				title: '批量下载',
+				content: dialogTml.wContent.allCreditDownload,
+				onContentReady: function() {
+					$scope.$radios = this.$content.find('.checkbox').checking();
+
+					$scope.$radios.each(function() {
+						var that = this;
+						that.$checking.onChange(function() {
+							$scope.$radios.removeClass('checked').attr('checked', false);
+							$(that).removeClass('checked').addClass('checked').attr('checked', true);
+						});
+					})
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							$scope.userIds = [];
+							$scope.$el.$tbl.find('.checkbox').each(function() {
+								if($(this).attr('checked')) {
+									$scope.userIds.push($(this).data('userId'));
+								}
+							});
+							$scope.userIds = $scope.userIds.join(',');
+							console.log($scope.userIds)
+							this.$content.find('.checkbox').each(function() {
+								if($(this).attr('checked')) {
+									$scope.downLoadType = $(this).data('type');
+								}
+							});
+							window.open($http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + $scope.userIds + '&downLoadType=' + $scope.downLoadType, true), '_blank');
+						}
+					}
+				}
+			})
 		});
 	}
 
@@ -134,6 +203,8 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 		loadCreaditList(apiParams, function() {
 			evt();
 		});
+		//启动下拉框插件
+		setupDropDown();
 	});
 
 	/**

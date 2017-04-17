@@ -37,14 +37,16 @@
 	_.$http.api = function(method, name) {
 		// name不传值，代表取mock中假数据
 		if(!name) 
-			//return 'http://192.168.1.92:8083/mock/' + method;
-			return 'http://127.0.0.1:8083/mock/' + method;
+			// return 'http://192.168.1.92:8083/mock/' + method;
+			//return 'http://192.168.1.90:8083/mock/' + method;
+			return 'http://192.168.1.144:8083/mock/' + method;
 		else
 			// return 'http://192.168.1.86:8089/' + method;
-			return 'http://192.168.0.186:9999/' + method;
-			//return 'http://192.168.1.194:8686/' + method;//cyj
+			//return 'http://192.168.0.186:9999/' + method;
+			return 'http://192.168.1.194:8686/' + method;//cyj
 			// return 'http://192.168.1.55:8080/' + method;
 			// return 'http://192.168.1.124:8080/' + method;
+			// return 'http://192.168.1.132:8080/' + method;
 			// return 'http://192.168.0.22:8080/' + method;
 			
 		//Todo 发布时增加prefix
@@ -67,6 +69,22 @@
 				//统一的失败处理
 				var code = response.code;
 				switch (code) {
+					case 1000:
+						$.alert({
+							title: '提示',
+							content: tool.alert('合同模板不存在！'),
+							buttons:{
+								ok: {
+									text: '确定',
+									action: function() {
+										// location.href = 'login.html';
+										// alert(1)
+									}
+								}
+							}
+						})
+						return false;
+						break;
 					case 1001:
 						$.alert({
 							title: '提示',
@@ -123,6 +141,17 @@
 							}
 						})
 						break;
+					case -2:
+						$.alert({
+							title: '提示',
+							content: tool.alert(response.data.msg),
+							buttons:{
+								ok: {
+									text: '确定'
+								}
+							}
+						})
+						break;	
 					default:
 						$.alert({
 							title: '提示',
@@ -131,7 +160,7 @@
 								ok: {
 									text: '确定',
 									action: function() {
-										router.render('loanProcess');
+										// router.render('loanProcess');
 									}
 								}
 							}
