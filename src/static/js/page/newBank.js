@@ -70,18 +70,11 @@ page.ctrl('newBank', [], function($scope) {
 	}
 
 	/**
-	* dropdown控件
-	*/
-	function setupDropDown() {
-		$console.find('.select').dropdown();
-	}
-
-	/**
 	 * 加载（银行信息）立即处理事件
 	 */
 	var setupBankEvt = function() {
 
-		setupDropDown();
+		$scope.$el.$bankDataPanel.find('.select').dropdown();
 
 		$console.find('#bankDataSave').on('click', function() {
 			var _params = {
@@ -299,23 +292,23 @@ page.ctrl('newBank', [], function($scope) {
 						$(this).parent().removeClass('error-input').addClass('error-input');
 						item++;
 					} else {
-						_params[$(this).attr('class')] = parseFloat(value).tofixed(4);
+						_params[$(this).attr('class')] = Number(parseFloat(value).toFixed(4));
 					}
 				});
 				if(item == 0) {
 					console.log(_params);
-					// $.ajax({
-					// 	url: $http.api('demandBankRate/save', 'cyj'),
-					// 	type: 'post',
-					// 	data: _params,
-					// 	dataType: 'json',
-					// 	success: $http.ok(function(result) {
-					// 		console.log(result);
-					// 		loadNewBank(function() {
-					// 			loadBankRate();
-					// 		})
-					// 	})
-					// })
+					$.ajax({
+						url: $http.api('demandBankRate/save', 'cyj'),
+						type: 'post',
+						data: _params,
+						dataType: 'json',
+						success: $http.ok(function(result) {
+							console.log(result);
+							loadNewBank(function() {
+								loadBankRate();
+							})
+						})
+					})
 				} else {
 					$.alert({
 						title: '提示',
@@ -326,16 +319,7 @@ page.ctrl('newBank', [], function($scope) {
 							}
 						}
 					});
-				}
-				// var rate12 = $.trim($parent.find('#rate12').val());
-				// var rate18 = $.trim($parent.find('#rate18').val());
-				// var rate24 = $.trim($parent.find('#rate24').val());
-				// var rate30 = $.trim($parent.find('#rate30').val());
-				// var rate36 = $.trim($parent.find('#rate36').val());
-				// var rate48 = $.trim($parent.find('#rate48').val());
-				// var rate60 = $.trim($parent.find('#rate60').val());
-				
-				
+				}	
 			}
 		})
 
