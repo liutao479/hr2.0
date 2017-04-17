@@ -482,20 +482,20 @@
 														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'sex' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
+																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
 																	<input type="hidden" name="{{= detailCode}}"  value="{{= it.data[fieldCode][detailCode]}}" />
 																{{ }else{ }}
-																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
+																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
 																	<input type="hidden" name="{{= detailCode }}" />
 																{{ } }}
 															</td>
 														{{ }else if( detailCode == 'isDiscount' ){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
+																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
 																	<input id="isDiscount" type="hidden" name="{{= detailCode}}"  value="{{= it.data[fieldCode][detailCode]}}" />
 																{{ }else{ }}
-																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
+																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
 																	<input id="isDiscount" type="hidden" name="{{= detailCode }}" />
 																{{ } }}
 															</td>
