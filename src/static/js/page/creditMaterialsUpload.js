@@ -581,9 +581,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		/**
 		 * 启动上传图片控件
 		 */
-		$self.find('.uploadEvt').imgUpload({
-			viewable: false
-		});
+		$self.find('.uploadEvt').imgUpload();
 
 		/**
 		 * 下拉框启动

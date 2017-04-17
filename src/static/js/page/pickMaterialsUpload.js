@@ -329,21 +329,27 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		imgsBars.each(function(index) {
 			var that = $(this),
 				_url = that.data('url'),
-				_type = that.data('type');
-			that.find('.uploadEvt').imgUpload({
+				_type = that.data('type'),
+				$imgs = that.find('.uploadEvt.imgs'),
+				$noimgs = that.find('.uploadEvt.noimgs');
+			$imgs.imgUpload({
 				viewable: true,
+				markable: $params.refer ? true : false,
 				getimg: function(cb) {
 					cb($scope.result.data[_type])
 				},
 				marker: function (img, mark, cb) {
+					var params = {
+						id: img.id,
+						auditResult: mark
+					}
+					if(mark == 0) {
+						params.auditOpinion = '';
+					}
 					$.ajax({
 						type: 'post',
 						url: $http.api(_url + '/addOrUpdate', true), 
-						data: {
-							id: img.id,
-							auditResult: mark,
-							auditOpinion: '审核原因审核原因审核原因审核原因审核原因'
-						},
+						data: params,
 						dataType: 'json',
 						success: $http.ok(function(result) {
 							console.log(result);
@@ -352,6 +358,8 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 					})
 				}
 			});
+
+			$noimgs.imgUpload();
 		});
 	}
 

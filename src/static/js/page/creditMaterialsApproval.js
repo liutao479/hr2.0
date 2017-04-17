@@ -355,44 +355,45 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		 */
 		var imgsBars = $self.find('.credit-imgs-bar');
 		imgsBars.each(function(index) {
-			var $imgs = $(this).find('.uploadEvt');
-			$imgs.each(function(idx) {
-				var that = $(this);
-				that.imgUpload({
-					viewable: true,
-					markable: true,
-					idx: idx,
-					getimg: function(cb) {
-						cb($scope.result.data.creditUsers[_type][index].loanUserCredit.creditMaterials)
-					},
-					marker: function (img, mark, cb) {
-						console.log(img);
-						console.log(mark);
-						var params = {
-							id: img.id,
-							auditResult: mark
-						}
-						if(mark == 0) {
-							params.auditOpinion = '';
-						}
-						$.ajax({
-							type: 'post',
-							url: $http.api('creditMaterials/material/mark', 'zyj'),
-							global: false,
-							data: params,
-							dataType: 'json',
-							success: $http.ok(function(result) {
-								console.log(result);
-								cb();
-							})
-						})
-					},
-					onclose: function(imgs) {
-						that.find('.imgs-err').remove();
-						that.find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
+			var $imgs = $(this).find('.uploadEvt.imgs'),
+				$noimgs = $(this).find('.uploadEvt.noimgs');
+			$imgs.imgUpload({
+				viewable: true,
+				markable: true,
+				getimg: function(cb) {
+					cb($scope.result.data.creditUsers[_type][index].loanUserCredit.creditMaterials)
+				},
+				marker: function (img, mark, cb) {
+					console.log(img);
+					console.log(mark);
+					var params = {
+						id: img.id,
+						auditResult: mark
 					}
-				});
+					if(mark == 0) {
+						params.auditOpinion = '';
+					}
+					$.ajax({
+						type: 'post',
+						url: $http.api('creditMaterials/material/mark', 'zyj'),
+						global: false,
+						data: params,
+						dataType: 'json',
+						success: $http.ok(function(result) {
+							console.log(result);
+							cb();
+						})
+					})
+				},
+				onclose: function(imgs) {
+					$imgs.each(function(idx) {
+						$(this).find('.imgs-error').remove();
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
+					});
+				}
 			});
+
+			$noimgs.imgUpload();
 		});
 	}
 
