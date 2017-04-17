@@ -224,7 +224,8 @@
 			}
 			loadImg(function(imgs) {
 				new Preview(imgs, marker, self.options.onclose || $.noop, {
-					markable: self.options.markable
+					markable: self.options.markable,
+					idx: self.options.idx
 				});
 			})
 		})
@@ -469,7 +470,6 @@
 					self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name,self.url));
-//						self.$el.data('img', url);
 						self.status = 1;	
 						self.listen();
 						self.$el.find('img').attr('src',_url);
@@ -680,7 +680,6 @@
 	* 获取对应的错误提示图片
 	*/
 	Preview.prototype.getMark = function(idx) {
-		console.log(idx)
 		var m = imgs[idx || 0];
 		if(m != "") {
 			m = "<div class='errHook'><div class='err-mask'></div>" + m + '</div>';
