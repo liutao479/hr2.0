@@ -86,8 +86,7 @@ page.ctrl('newBank', [], function($scope) {
 		$console.find('#bankDataSave').on('click', function() {
 			var _params = {
 				bankId: $scope.bankId,
-				bankName: $scope.bankName,
-				organId: 99
+				bankName: $scope.bankName
 			};
 			$.ajax({
 				url: $http.api('demandBank/save', 'cyj'),
@@ -142,7 +141,7 @@ page.ctrl('newBank', [], function($scope) {
 				$.ajax({
 					url: $http.api('demandBankAccount/save', 'cyj'),
 					type: 'post',
-					data: _params,
+					data: params,
 					dataType: 'json',
 					success: $http.ok(function(result) {
 						console.log(result);
