@@ -41,17 +41,20 @@
 			return 'http://192.168.1.90:8083/mock/' + method;
 			// return 'http://192.168.1.144:8083/mock/' + method;
 		else
-			// return 'http://192.168.1.68:8089/' + method;
-			return 'http://192.168.0.187:9999/' + method;
-			// return 'http://192.168.1.194:8686/' + method;//cyj
-			// return 'http://192.168.1.74:8080/' + method;
-			// return 'http://192.168.1.124:8080/' + method;
-			// return 'http://192.168.1.132:8080/' + method;
-			// return 'http://192.168.0.22:8080/' + method;
-			
-		//Todo 发布时增加prefix
-		// return 'http://192.168.0.113:8080/' + method;
+			switch (name) {
+				case 'operations':
+					return 'http://192.168.0.187:8090/' + method;
+				default:
+					// return 'http://192.168.1.68:8089/' + method;
+					return 'http://192.168.0.187:9999/' + method;
+					// return 'http://192.168.1.194:8686/' + method;//cyj
+					// return 'http://192.168.1.74:8080/' + method;
+					// return 'http://192.168.1.124:8080/' + method;
+					// return 'http://192.168.1.132:8080/' + method;
+					// return 'http://192.168.0.22:8080/' + method;
+			}
 	}
+	
 	_.$http.authorization = function(key) {
 		$.ajaxSetup({
 			headers: {'Authorization': "Bearer " + key }

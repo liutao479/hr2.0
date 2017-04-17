@@ -90,7 +90,7 @@ page.ctrl('operationsTab2', ['vendor/echarts.min'], function($scope) {
 //		debugger
 		$.ajax({
 			type: 'post',
-			url: 'http://192.168.1.55:8080/statisticsPic/queryStatisticsByDayTime.html',
+			url: $http.api('statisticsPic/queryStatisticsByDayTime.html', 'operations'),
 			data: apiParams,
 			dataType:"json",	
 			headers: '',
