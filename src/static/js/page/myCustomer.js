@@ -520,10 +520,10 @@ page.ctrl('myCustomer', [], function($scope) {
 	//经办行ID
 	$scope.demandBankPicker = function(picked) {
 		if(picked.id == '全部') {
-			delete apiParams.bankId;
+			delete apiParams.demandBankId;
 			return false;
 		}
-		apiParams.bankId = picked.id;
+		apiParams.demanBankId = picked.id;
 	}
 	//进度id
 	$scope.categoryPicker = function(picked) {
@@ -659,12 +659,12 @@ page.ctrl('myCustomer', [], function($scope) {
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					xhr.data.unshift({
-						bankId: '全部',
+						id: '全部',
 						bankName: '全部'
 					});
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'id',
 						name: 'bankName'
 					};
 					cb(sourceData);

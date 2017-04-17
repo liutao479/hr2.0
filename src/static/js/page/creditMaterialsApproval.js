@@ -317,7 +317,8 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		$scope.$checks.filter('.checkbox-radio').each(function() {
 			var that = this;
 			that.$checking.onChange(function() {
-				$reason.val('');
+				var value = $reason.val();
+				$reason.val(value.substring(value.lastIndexOf('#', '')));
 				$(that).parent().parent().find('.checkbox-normal').removeClass('checked').attr('checked', false);
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 			});
