@@ -19,7 +19,13 @@ page.ctrl('phoneAudit', function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
+//				if(result.cfgData.frames[0].code != 'T0046'){
+//					debugger
+//					$(".saveBtn").hide();
+//					$(".selecter").addClass('pointDisabled');
+//					$(".textArea").addClass('pointDisabled');
+//				}
 				loanFinishedSelect();
 				setupEvt();
 				if(cb && typeof cb == 'function') {
