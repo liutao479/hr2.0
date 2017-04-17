@@ -467,6 +467,7 @@
 				var _url = host + '/' + fd.get('key');
 				self.options.img = _url;
 				if(self.options.card){
+					debugger
 					self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name,self.url));
@@ -475,12 +476,11 @@
 						self.$el.find('img').attr('src',_url);
 						self.uplCb(self, response);
 					} else {
-						if(self.options.credit) {
-							self.options.id = response.data.id;
-						} else {
-							self.options.id = response.data;
-						}
+						self.$el.html(internalTemplates.modify.format(self.name,self.url));
+						self.status = 1;	
+						self.listen();
 						self.$el.find('img').attr('src',_url);
+						self.uplCb(self, response);
 					}
 					return false;
 				}else{
