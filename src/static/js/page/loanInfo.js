@@ -753,6 +753,13 @@ page.ctrl('loanInfo', function($scope) {
 	});
 
 	$scope.selfPicker = function(picked) {
+		var isDiscount = $("#isDiscount").val();
+		console.log(isDiscount);
+//		if(isDiscount != '1'){
+//			
+//		}else{
+//			
+//		}
 	}
 	$scope.areaPicker = function(picked) {
 	}
