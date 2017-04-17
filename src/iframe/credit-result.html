@@ -19,7 +19,7 @@
 							<!--一级标题  end-->
 							{{for(var j = 0, len2 = it.data.creditUsers[i].length; j < len2; j++) { var col = it.data.creditUsers[i][j]; }}
 								{{ for(var m = 0, len3 = it.cfgData.frames[0].sections.length; m < len3; m++) { var item = it.cfgData.frames[0].sections[m]; }}
-									{{ if(it.format[item.code] == m) { var row = item; break; } }}
+									{{ if(it.format[item.code] == i) { var row = item; break; } }}
 								{{ } }}
 								
 
@@ -32,7 +32,13 @@
 									<div class="key-value-box">
 										<span class="key">姓名：</span>
 										<span class="value">{{=col.userName}}</span>
-									</div>
+									</div>{{ console.log(row.code);}}
+									{{ if(row.code == 'GTHKR') { }}
+										<div class="key-value-box">
+											<span class="key">与借款人关系：</span>
+											<span class="value">{{=it.userRalaMap[col.userRelationship] || '（未录入）'}}</span>
+										</div>
+									{{ } }}
 									<div class="key-value-box">
 										<span class="key">身份证号：</span>
 										<span class="value">{{=col.idCard}}</span>
@@ -48,7 +54,7 @@
 								<!--二级标题（姓名，身份证等等...）end-->
 
 								<!--详细内容罗列-->
-								<div class="panel-detail-content panel-detail-table">
+								<div class="panel-detail-content panel-detail-table">{{console.log(row);}}
 									{{ for(var p = 0, len4 = row.segments.length; p < len4; p++) { var ml = row.segments[p]; }}
 									<div class="panel-item-box mt15">
 										<div class="panel-key-area">{{=ml.name}}：</div>
@@ -69,7 +75,6 @@
 											{{ for(var h = 0, len5 = col.loanCreditReportList.length; h < len5; h++) { var hl = col.loanCreditReportList[h], flag = 0; }}
 											<div class="imgs-item-group uploadEvt" data-markable="false" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.aduitResult || 0}}" data-msg="{{=hl.aduitOpinion}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 											{{ } }}
-											<div class="imgs-item-group uploadEvt" data-markable="false" data-request="true" data-name="征信报告照片{{=len5 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}" data-empty="1"></div>
 										{{ } if(ml.code == 'ZXZD') { }}
 											<table border="1" class="field-table">
 												{{ var zxzd = col.loanCreditResultList; }}
@@ -105,14 +110,25 @@
 										</div>
 									</div>
 									<!-- 备注信息 end-->
+									{{ if(it.cfgData.code != 'creditApproval') { }}
 									<!-- 辅证数据 -->
 									<div class="panel-item-box">
 										<div class="panel-key-area">辅证数据：</div>
 										<div class="panel-value-area clearfix">
-											<a data-href="#" class="to-view">点击查看</a>
+											<div class="button button-mini gocheck mr24">发起核查</div>
+											<a data-href="#" class="to-view assistData">查看报告结果</a>
 										</div>
 									</div>
 									<!-- 辅证数据 end-->
+									<!-- 征信报告详表 -->
+									<div class="panel-item-box">
+										<div class="panel-key-area">征信报告详表：</div>
+										<div class="panel-value-area clearfix">
+											<a data-href="#" href="{{=col.creditReportFile}}" target="_blank" class="to-view">点击查看</a>
+										</div>
+									</div>
+									<!-- 征信报告详表 end-->
+									{{ } }}
 								</div>
 								<!--详细内容罗列结束 end-->
 								

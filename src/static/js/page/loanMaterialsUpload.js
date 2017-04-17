@@ -89,6 +89,23 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	}
 
 	/**
+	 * 材料必填，必传检验
+	 */
+	function checkData(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('userMaterials/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
 	* 设置底部按钮操作栏
 	*/
 	var setupSubmitBar = function() {
@@ -98,39 +115,44 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		});
 		$submitBar.submitBar();
 		var $sub = $submitBar[0].$submitBar;
+
+		/**
+		 * 提交订单
+		 */
 		$sub.on('taskSubmit', function() {
-			var canSubmit = flow.taskSubmit($params.tasks);
-			console.log(canSubmit)
-			if(canSubmit) {
-				return process();
-			}
-			$.alert({
-				title: '提示',
-				content: tool.alert('你还有数据未填写!'),
-				buttons: {
-					ok: {
-						text: '确定',
-						action: function() {
-							var taskIds = [];
-							for(var i = 0, len = $params.tasks.length; i < len; i++) {
-								taskIds.push(parseInt($params.tasks[i].id));
+			checkData(function() {
+				var canSubmit = flow.taskSubmit($params.tasks);
+				if(canSubmit) {
+					return process();
+				}
+				$.alert({
+					title: '提示',
+					content: tool.alert('您还有未完成的tab栏任务，前往完善？'),
+					buttons: {
+						ok: {
+							text: '确定',
+							action: function() {
+								var taskIds = [];
+								for(var i = 0, len = $params.tasks.length; i < len; i++) {
+									taskIds.push(parseInt($params.tasks[i].id));
+								}
+								var params = {
+									taskId: $params.taskId,
+									taskIds: taskIds,
+									orderNo: $params.orderNo
+								}
+								flow.tasksJump(params, 'complete');
 							}
-							var params = {
-								taskId: $params.taskId,
-								taskIds: taskIds,
-								orderNo: $params.orderNo
-							}
-							flow.tasksJump(params, 'complete');
 						}
 					}
-				}
-			})
+				})
+			});
 		})
 
+		/**
+		 * 退回订单
+		 */
 		$sub.on('backOrder', function() {
-			/**
-			 * 退回订单
-			 */
 			$.alert({
 				title: '退回订单',
 				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),

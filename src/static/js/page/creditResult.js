@@ -35,6 +35,13 @@ page.ctrl('creditResult', function($scope) {
 					'GTHKR': 1,
 					'FDBR': 2
 				};
+				$scope.result.userRalaMap = {
+					'0': '本人',
+					'1': '配偶',
+					'2': '父母',
+					'3': '子女',
+					'-1': '其他'
+				};
 				$scope.result.editable = 0;
 				console.log($scope.result)
 				initApiParams();
