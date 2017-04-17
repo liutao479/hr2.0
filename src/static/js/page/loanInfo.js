@@ -132,6 +132,9 @@ page.ctrl('loanInfo', function($scope) {
 	*/
 	var keyType;
 	var setupEvt = function($el) {
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
 		$('i').each(function(){
 			var dataNum = $(this).data('num');
 			var that = $(this);

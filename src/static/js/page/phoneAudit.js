@@ -51,6 +51,9 @@ page.ctrl('phoneAudit', function($scope) {
 	}
 
 	var setupEvt = function($el) {
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
 		$console.find('.textArea').on('blur', function() {
 			var tContext = $(this).text();
 			console.log(tContext);
