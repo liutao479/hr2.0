@@ -175,7 +175,10 @@ page.ctrl('creditApproval', [], function($scope) {
 			if($this.hasClass('role-item-active')) return;
 			var _type = $this.data('type');
 			var _userId=$scope.result.data.creditUsers[_type][0].userId;
-			searchIsPre({userId:_userId},function(){		
+			searchIsPre({
+				userId:_userId,
+				orderNo:$params.orderNo
+			},function(){		
 				if(!$scope.tabs[_type]) {
 					var _tabTrigger = $scope.$el.$tbls.eq(_type);
 					$scope.tabs[_type] = _tabTrigger;
@@ -238,6 +241,9 @@ page.ctrl('creditApproval', [], function($scope) {
 							if(context){
 								setTimeout(function() {
 									jc.close();
+									loadOrderInfo($scope.idx, function() {
+										evt();
+									});/*关闭之后自动刷新页面数据*/
 								},1500);
 							};
 						});
