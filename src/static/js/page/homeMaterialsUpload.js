@@ -342,8 +342,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 						url: $http.api(_url + '/addOrUpdate', true), 
 						data: {
 							id: img.id,
-							auditResult: mark,
-							auditOpinion: '审核原因审核原因审核原因审核原因审核原因'
+							auditResult: mark
 						},
 						dataType: 'json',
 						success: $http.ok(function(result) {

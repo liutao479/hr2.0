@@ -844,7 +844,7 @@ body[class*=jconfirm-no-scroll-] {
 	text-align: center
 }
 .jconfirm-box {
-	overflow: hidden;
+	// overflow: hidden;
 }
 .jconfirm.jconfirm-supervan .jconfirm-box .jconfirm-buttons button {
 	font-size: 16px;

@@ -37,8 +37,8 @@ page.ctrl('historyInspectDetail', function($scope) {
 		//$params.orderNo='nfdb2016102820480790';
 		/*$params.orderNo='nfdb2016102820480799';
 		$params.Id=6;
-		$params.taskId=6;*/
-
+		$params.taskId=6;
+*/
 		if(!($params&&$params.taskId&&$params.orderNo&&$params.Id))
 			return false;
 		var _obj=model.filter(it=>it.type==$params.taskId);

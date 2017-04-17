@@ -1,7 +1,8 @@
 'use strict';
 page.ctrl('creditApproval', [], function($scope) {
 	var $console = render.$console,
-		$params = $scope.$params;
+		$params = $scope.$params,
+		hasCheck="0";/*是否已经核查过*/;
 	$scope.tabs = {};
 	$scope.idx = 0;
 	$scope.apiParams = [];
@@ -20,7 +21,22 @@ page.ctrl('creditApproval', [], function($scope) {
 		});
 		$location.location();
 	}
-
+	/*查询是否有报告*/
+	var searchIsPre=function(param,callback){
+		$.ajax({
+			type: 'post',
+			dataType:"json",
+			url: $http.api('creditAudit/checkUserItem',true),
+			data: param,
+			success: $http.ok(function(res) {
+				hasCheck=res.data.hasCheck;
+				/*回调*/
+				if(callback && typeof callback == 'function') {
+					callback();
+				};
+			})
+		});
+	};
 	/**
 	* 加载征信预审核数据
 	* @params {object} params 请求参数
@@ -37,7 +53,6 @@ page.ctrl('creditApproval', [], function($scope) {
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				console.log(result);
 				$scope.result = result;
 				$scope.result.index = idx;
 				$scope.idx = idx;
@@ -50,7 +65,6 @@ page.ctrl('creditApproval', [], function($scope) {
 						break;
 					}
 					if(userType != 0) {
-						console.log(userType);
 						$scope.result.index = userType;
 						$scope.idx = userType;
 					} else {
@@ -66,17 +80,21 @@ page.ctrl('creditApproval', [], function($scope) {
 					'3': '子女',
 					'-1': '其他'
 				};
-				// 编译tab栏
-				setupTab($scope.result, function() {
-					setupTabEvt();
-				});
-
-				// 编译tab项对应内容
-				setupCreditPanel(idx, $scope.result);
-
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
+				var _userId=creditUsers[$scope.result.index][0].userId;
+				searchIsPre({
+					userId:_userId,
+					orderNo:$params.orderNo
+				},function(){
+					// 编译tab栏
+					setupTab($scope.result, function() {
+						setupTabEvt();
+					});
+					// 编译tab项对应内容
+					setupCreditPanel(idx, $scope.result);
+					if(cb && typeof cb == 'function') {
+						cb();
+					};					
+				});/*查询是否有报告*/
 			})
 		})
 	}
@@ -130,6 +148,10 @@ page.ctrl('creditApproval', [], function($scope) {
 		render.compile(_tabTrigger, $scope.def.listTmpl, result, function() {
 			setupEvt(_tabTrigger, idx);
 		}, true);
+		if(hasCheck=="1")/*1已结查过了*/
+			_tabTrigger.find(".assistData").show();
+		else/*0没有查过*/
+			_tabTrigger.find(".assistData").hide();
 		for(var i = 0, len = $scope.$el.$tbls.length; i < len; i++) {
 			if(i == idx) {
 				$scope.$el.$tbls.eq(i).show();
@@ -152,24 +174,32 @@ page.ctrl('creditApproval', [], function($scope) {
 			var $this = $(this);
 			if($this.hasClass('role-item-active')) return;
 			var _type = $this.data('type');
-			if(!$scope.tabs[_type]) {
-				var _tabTrigger = $scope.$el.$tbls.eq(_type);
-				$scope.tabs[_type] = _tabTrigger;
-				$scope.result.index = _type;
-				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, function() {
-					setupEvt(_tabTrigger, _type);
-				}, true);
-			}
-			$scope.$el.$tabs.removeClass('role-item-active');
-			$this.addClass('role-item-active');
-			$scope.$el.$tbls.eq($scope.idx).hide();
-			$scope.$el.$tbls.eq(_type).show();
-			$scope.idx = _type;
+			var _userId=$scope.result.data.creditUsers[_type][0].userId;
+			searchIsPre({userId:_userId},function(){		
+				if(!$scope.tabs[_type]) {
+					var _tabTrigger = $scope.$el.$tbls.eq(_type);
+					$scope.tabs[_type] = _tabTrigger;
+					$scope.result.index = _type;
+					render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, function() {
+						setupEvt(_tabTrigger, _type);
+					}, true);
+				}
+				$scope.$el.$tabs.removeClass('role-item-active');
+				$this.addClass('role-item-active');
+				$scope.$el.$tbls.eq($scope.idx).hide();
+				$scope.$el.$tbls.eq(_type).show();
+				$scope.idx = _type;	
+					
+				if(hasCheck=="1")/*1已结查过了*/
+					 $scope.$el.$tbls.eq(_type).find(".assistData").show();
+				else/*0没有查过*/
+					 $scope.$el.$tbls.eq(_type).find(".assistData").hide();
+			});/*查询是否有报告*/
 		})
 	}
 
 	/*发起核查*/
-	var openDialog=function(that,_data){
+	var openDialog=function(that,_data,_uid){
 		that.openWindow({
 			title:"核查项目选择",
 			content: dialogTml.wContent.btngroup,
@@ -184,7 +214,7 @@ page.ctrl('creditApproval', [], function($scope) {
 				if($(this).hasClass("selected"))
 					_arr.push(_thisVal);	
 				else
-					_arr.splice(_thisVal,1);
+					_arr.splice(_arr.indexOf(_thisVal),1);
 			});
 			$dialog.find(".w-sure").click(function() {
 				$dialog.remove();
@@ -194,11 +224,12 @@ page.ctrl('creditApproval', [], function($scope) {
 					type: "post",
 					url: $http.api('creditAudit/startVerify','cyj'),
 					data:{
-						//keys:_arr.join(','),
-						//orderNo:$params.orderNo,
-						keys:'doPolice,bankWater',
+						keys:_arr.join(','),
+						orderNo:$params.orderNo,
+						userId:_uid
+					/*	keys:'doPolice,bankWater',
 						orderNo:'nfdb2016102820480799',
-						userId:"334232"
+						userId:"334232"*/
 					},
 					dataType:"json",
 					success: $http.ok(function(res) {
@@ -244,7 +275,6 @@ page.ctrl('creditApproval', [], function($scope) {
 						data: params,
 						dataType: 'json',
 						success: $http.ok(function(result) {
-							console.log(result);
 							cb();
 						})
 					})
@@ -258,8 +288,6 @@ page.ctrl('creditApproval', [], function($scope) {
 			var that = $(this);
 			var imgs = $scope.result.data.creditUsers[that.data('type')][that.data('idx')].creditMaterials;
 			$.preview(imgs, function(img, mark, cb) {
-				console.log(img);
-				console.log(mark);
 				cb();	
 			}, {
 				markable: false
@@ -290,27 +318,54 @@ page.ctrl('creditApproval', [], function($scope) {
 		//发起核查
 		$self.off('click','.gocheck').on('click','.gocheck', function() {
 			var that=$(this);
+			var _uid=that.data('user-id');
+			if(!_uid)
+				return false;
 			$.ajax({
 				type: 'post',
 				dataType:'json',
 				url: $http.api('creditAudit/itemList','cyj'),
 				data: {
-					userId:"10"
+					//userId:"10"
+					orderNo:$params.orderNo,
+					userId:_uid
 				},
 				success: $http.ok(function(res) {
 					if(res&&res.data&&res.data.length>0)
-						openDialog(that,res.data);
-					else
-						openDialog(that,[]);
+						openDialog(that,res.data,_uid);
+					else{
+						$.alert({
+							title: '提示',
+							content: tool.alert("您没有权限进行该操作！"),
+							buttons:{
+								ok: {
+									text: '确定',
+								}
+							}
+						})
+					};
 				})
 			});
 		});
 		//查看报告结果
-		$self.find('.assistData').on('click', function() {
+		$self.find('.assistData').off('click').on('click', function() {
+			var _uid=$(this).data('user-id');
+			if(!_uid)
+				return false;
 			router.render("preAuditDataAssistant", {	
-				orderNo:'nfdb2016102820480790',
-				userId:'334232',
-				sceneCode:'creditApproval'
+				orderNo:$params.orderNo,
+				//userId:'334232',
+				userId:_uid,
+				sceneCode:'creditApproval',
+				upperLevelData:$params,
+				backJson:{
+					firstHref:"loanProcess",
+					firstText:"返回列表",
+					secondHref:"loanProcess/creditApproval",
+					secondText:"征信预审核",
+					secondParam:JSON.stringify($params),
+					text:"数据辅证报告"
+				}
 			});
 		});
 	}
@@ -391,14 +446,12 @@ page.ctrl('creditApproval', [], function($scope) {
 								jumpId: $scope.jumpId,
 								reason: _reason
 							}
-							console.log(_params)
 							$.ajax({
 								type: 'post',
 								url: $http.api('task/jump', 'zyj'),
 								data: _params,
 								dataType: 'json',
 								success: $http.ok(function(result) {
-									console.log(result);
 									router.render('loanProcess');
 									// toast.hide();
 								})
@@ -448,7 +501,6 @@ page.ctrl('creditApproval', [], function($scope) {
 								},
 								dataType: 'json',
 								success: $http.ok(function(result) {
-									console.log(result);
 									router.render('loanProcess');
 									// toast.hide();
 								})
