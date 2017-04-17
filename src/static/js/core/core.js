@@ -38,7 +38,8 @@
 		// name不传值，代表取mock中假数据
 		if(!name) 
 			// return 'http://192.168.1.92:8083/mock/' + method;
-			return 'http://192.168.1.90:8083/mock/' + method;
+			//return 'http://192.168.1.90:8083/mock/' + method;
+			return 'http://192.168.1.144:8083/mock/' + method;
 		else
 			// return 'http://192.168.1.68:8089/' + method;
 			return 'http://192.168.0.186:9999/' + method;
