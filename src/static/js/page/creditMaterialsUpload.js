@@ -631,6 +631,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				if(i == 0) {
 					item.userRelationship = 0;
 				}
+				if(i == 2) {
+					item.userRelationship = -1;
+				}
 				$scope.apiParams.push(item);
 			}
 		}
