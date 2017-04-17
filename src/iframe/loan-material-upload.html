@@ -58,25 +58,29 @@
 						</div>
 						{{ } }}
 					{{ } else if(row.code == 'QTCL') { }}
-					<div class="panel mt15 clearfix">
-						<!-- 其他材料类别名 -->
-						<div class="panel-title-box">
-							<div class="panel-title">
-								<i class="iconfont">&#xe626;</i>
-								<span class="panel-title-name">{{=row.name}}</span>
+						{{ if(it.editable || (!it.editable && it.data.QTCL[0].materials.length)) { }}
+						<div class="panel mt15 panel-other">
+							<!-- 其他材料类别名 -->
+							<div class="panel-title-box">
+								<div class="panel-title">
+									<i class="iconfont">&#xe626;</i>
+									<span class="panel-title-name">{{=row.name}}</span>
+								</div>
 							</div>
-						</div>
-						<!-- 其他材料类别名 -->
+							<!-- 其他材料类别名 -->
 
-						<!-- 其他材料对应上传材料项 -->
-						<div class="panel-content panel-content-imgs otherMaterials clearfix" data-type="{{=row.code}}" data-idx="0" data-url="otherMaterials">
-							{{ for(var n = 0, len4 = it.data.QTCL[0].materials.length; n < len4; n++) { var nl = it.data.QTCL[0].materials[n]; }}
-								<div class="imgs-item-group uploadEvt imgs" data-idx="{{=n}}" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb" data-other="true" data-orderno="{{=it.orderNo}}" data-name="{{=nl.materialsName || '其他材料'}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || ''}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}"></div>
-							{{ } }}
-							<div class="imgs-item-group uploadEvt noimgs" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb"  data-other="true" data-orderno="{{=it.orderNo}}" data-name="其他材料" data-scene="{{=it.category}}" data-editable="{{=it.editable}}"></div>
+							<!-- 其他材料对应上传材料项 -->
+							<div class="panel-content panel-content-imgs otherMaterials clearfix" data-type="{{=row.code}}" data-idx="0" data-url="otherMaterials">
+								{{ for(var n = 0, len4 = it.data.QTCL[0].materials.length; n < len4; n++) { var nl = it.data.QTCL[0].materials[n]; }}
+									<div class="imgs-item-group uploadEvt imgs" data-idx="{{=n}}" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb" data-other="true" data-orderno="{{=it.orderNo}}" data-name="{{=nl.materialsName || '其他材料'}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || ''}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}"></div>
+								{{ } }}
+								{{ if(it.editable) { }}
+								<div class="imgs-item-group uploadEvt noimgs" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb"  data-other="true" data-orderno="{{=it.orderNo}}" data-name="其他材料" data-scene="{{=it.category}}" data-editable="{{=it.editable}}"></div>
+								{{ } }}
+							</div>
+							<!-- 其他材料对应上传材料项 -->
 						</div>
-						<!-- 其他材料对应上传材料项 -->
-					</div>
+						{{ } }}
 					{{ } }}
 				{{ } }}
 			</script>
