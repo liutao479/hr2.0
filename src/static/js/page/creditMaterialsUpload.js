@@ -563,6 +563,21 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			console.log($scope.apiParams)
 		})
 
+		$self.find('.input-text input[readonly]').on('click', function() {
+			$.alert({
+				title: '提示',
+				content: tool.alert('征信已经返回，不能修改！'),
+				buttons:{
+					ok: {
+						text: '确定',
+						action: function() {
+							// router.render('loanProcess');
+						}
+					}
+				}
+			})
+		});
+
 		/**
 		 * 启动上传图片控件
 		 */
@@ -666,8 +681,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				dataType: 'json',
 				success: $http.ok(function(result) {
 					console.log(result)
-					var $name = self.$el.parent().prev().find('.input-name');
-					var $idc = self.$el.parent().prev().find('.input-idc');
+					var $name = self.$el.parent().next().find('.input-name');
+					var $idc = self.$el.parent().next().find('.input-idc');
 					if(result.data.userName) $name.find('input').val(result.data.userName);
 					if(result.data.idCard) $idc.find('input').val(result.data.idCard);
 					$name.removeClass('error-input');
