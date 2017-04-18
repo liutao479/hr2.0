@@ -113,13 +113,13 @@ page.ctrl('openCardSheet', function($scope) {
 		$(".select-text").each(function(){
 			$(this).attr('readonly','readonly')
 		})
-		if($("#dateStart").val("9999-99-99")){
+		if($("#dateStart").val("9999-12-31")){
 			$("#dateStart").addClass('pointDisabled');
 			$("#longTime").attr("checked", true); 
 		}
 		$console.find('#longTime').on('click', function(){
 			if($("input[type='checkbox']").is(':checked')){
-				$("#dateStart").val("9999-99-99").addClass('pointDisabled');
+				$("#dateStart").val("9999-12-31").addClass('pointDisabled');
 			}else{
 				$("#dateStart").val("").removeClass('pointDisabled');
 			}
@@ -134,6 +134,25 @@ page.ctrl('openCardSheet', function($scope) {
 			$("#cophoneno").val(cophone2);
 			$("#cophonext").val(cophone3);
 		})
+		$scope.money = function(){
+			
+			if($scope.icbcCreditCardForm.loanMoney == '' || $scope.icbcCreditCardForm.feeRate == ''){
+				$scope.icbcCreditCardForm.feeamount = '';
+			}else{
+				$scope.icbcCreditCardForm.feeamount = $scope.icbcCreditCardForm.loanMoney * $scope.icbcCreditCardForm.feeRate / 100
+			};
+			if($scope.icbcCreditCardForm.feeamount == ''){
+				$scope.icbcCreditCardForm.adjustamount = '';
+			}else{
+				$scope.icbcCreditCardForm.adjustamount = $scope.icbcCreditCardForm.feeamount*1 + $scope.icbcCreditCardForm.loanMoney*1;
+			};
+			if($scope.icbcCreditCardForm.carPrice == '' || $scope.icbcCreditCardForm.carPrice == null || $scope.icbcCreditCardForm.carPrice == '0' || $scope.icbcCreditCardForm.adjustamount == ''){
+				$scope.icbcCreditCardForm.loanratio = '';
+			}else{
+				$scope.icbcCreditCardForm.loanratio = $scope.icbcCreditCardForm.adjustamount / $scope.icbcCreditCardForm.carPrice *100;
+			};
+		}
+		
 	}		
 
 	function saveData(cb) {
@@ -175,9 +194,14 @@ page.ctrl('openCardSheet', function($scope) {
 				type: 'post',
 				url: urlStr+'/icbcCreditCardForm/saveICBCCreditCardForm/' + $params.taskId,
 				data: data1,
-				dataType:"json",
+				dataType: "json",
 //				contentType : 'application/json;charset=utf-8',
 				success: $http.ok(function(result){
+					if(result.data){
+						var iptNode = "<input type='hidden' class='id' name='id'>";
+						$('#dataform').append(iptNode);
+						$('#dataform').find(".id").val(result.data);
+					}
 					debugger
 					process();
 				})

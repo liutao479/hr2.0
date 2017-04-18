@@ -39,7 +39,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 		}
 		$.ajax({
 			type: 'post',
-			url: $http.api('loanInfoInput/loanInfoByOrderNo','jbs'),
+			url: $http.api(url,'jbs'),
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -88,7 +88,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 		});
 	}
 	
-	
 	/**
 	* 绑定立即处理事件
 	*/
@@ -120,14 +119,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 			}
 		})
 		$('.info-key-check-box').each(function(){
-			var edit = $(this).data('edit');
-			if(edit == '0'){
-				$(this).addClass('pointDisabled');
-			}else{
-				$(this).removeClass('pointDisabled');
-			}
-		})
-		$('.info-key-value-box').each(function(){
 			var edit = $(this).data('edit');
 			if(edit == '0'){
 				$(this).addClass('pointDisabled');

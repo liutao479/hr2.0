@@ -333,6 +333,28 @@ page.ctrl('cardInfoApproval', function($scope) {
 			$(this).addClass("pointDisabled");
 		});
 	}
+	/**
+	* 下拉
+	*/
+	var seleLoad = function(){
+		$(".select").each(function(){
+			var $that = $(this);
+			var selected = $(this).data('selected');
+			var re = /^[0-9]+.?[0-9]*$/;
+			if((selected && re.test(selected)) || selected=='0'){
+				$(this).find('.arrow-trigger').click();
+				var lilist = $(this).find('li');
+				$("li",$(this)).each(function(){
+					var idx = $(this).data('id');
+					if(selected == idx){
+						$that.find('.select-text').val($(this).text());
+						$(this).click();
+						$that.find('.select-box').hide();
+					}
+				})
+			}
+		})
+	}
 	/***
 	* 加载页面模板
 	*/
@@ -350,6 +372,7 @@ page.ctrl('cardInfoApproval', function($scope) {
 				setupSubmitBar();
 			}
 			setupDropDown();
+			seleLoad();
 			cannotClick();
 			$console.find('.uploadEvt').imgUpload();
 		});
