@@ -135,7 +135,7 @@ page.ctrl('openCardSheet', function($scope) {
 			$("#cophonext").val(cophone3);
 		})
 		$console.find('#loanMoney').on('change', function() {
-			debugger
+			
 			var loanMoney = $("#loanMoney").val(),
 				feeRate = $("#feeRate").val(),
 				carPrice = $("#carPrice").val(),
@@ -155,7 +155,7 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		})
 		$console.find('#feeRate').on('change', function() {
-			debugger
+			
 			var loanMoney = $("#loanMoney").val(),
 				feeRate = $("#feeRate").val(),
 				carPrice = $("#carPrice").val(),
@@ -175,7 +175,7 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		})
 		$console.find('#carPrice').on('change', function() {
-			debugger
+			
 			var adjustAmount = $("#adjustAmount").val(),
 				carPrice = $("#carPrice").val(),
 				loanRatio;
@@ -188,7 +188,7 @@ page.ctrl('openCardSheet', function($scope) {
 	}		
 
 	function saveData(cb) {
-		debugger
+		
 		var isTure = true;
 		var requireList = $("#dataform").find(".required");
 		requireList.each(function(){
@@ -211,7 +211,7 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		});
 		if(isTure){
-			debugger
+			
 	        var params = $("#dataform").serialize();
             params = decodeURIComponent(params,true);
             var paramArray = params.split("&");
@@ -234,7 +234,7 @@ page.ctrl('openCardSheet', function($scope) {
 						$('#dataform').append(iptNode);
 						$('#dataform').find(".id").val(result.data);
 					}
-					debugger
+					
 					process();
 				})
 			});

@@ -119,6 +119,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 			}
 		})
 		$('.info-key-check-box').each(function(){
+//			debugger
 			var edit = $(this).data('edit');
 			if(edit == '0'){
 				$(this).addClass('pointDisabled');
@@ -402,24 +403,39 @@ page.ctrl('loanInfoAudit', function($scope) {
 			}else{
 				if(bxxbLength == 1){
 					$("#year1").show();
+					$("#year2").hide();
+					$("#year3").hide();
+					$("#year4").hide();
+					$("#year5").hide();
+					$("#year6").hide();
 				}else if(bxxbLength == 2){
 					$("#year1").show();
 					$("#year2").show();
+					$("#year3").hide();
+					$("#year4").hide();
+					$("#year5").hide();
+					$("#year6").hide();
 				}else if(bxxbLength == 3){
 					$("#year1").show();
 					$("#year2").show();
 					$("#year3").show();
+					$("#year4").hide();
+					$("#year5").hide();
+					$("#year6").hide();
 				}else if(bxxbLength == 4){
 					$("#year1").show();
 					$("#year2").show();
 					$("#year3").show();
 					$("#year4").show();
+					$("#year5").hide();
+					$("#year6").hide();
 				}else if(bxxbLength == 5){
 					$("#year1").show();
 					$("#year2").show();
 					$("#year3").show();
 					$("#year4").show();
 					$("#year5").show();
+					$("#year6").hide();
 				}else{
 					$("#year1").show();
 					$("#year2").show();
