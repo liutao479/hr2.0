@@ -4,7 +4,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 		$console = $params.refer ? $($params.refer) : render.$console;
 	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
-	$params.orderNo = 'nfdb20170407100357095';
+	$params.orderNo = $params.orderNo;
 
 	var postUrl = {
 		"saveDDXX": $http.api('loanInfoInput/updLoanOrder', 'jbs'),

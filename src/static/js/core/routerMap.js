@@ -420,6 +420,15 @@
 			page: 'newCar'
 		},
 
+		'message' :{
+			title: '消息列表',
+			page: 'message'
+		},
+		'message/detail': {
+			title: '消息详情',
+			page: 'msgdetail'
+		},	
+
 		'test': {
 			title: '测试文件',
 			page: 'test'

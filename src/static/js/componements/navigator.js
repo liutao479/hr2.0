@@ -11,6 +11,8 @@ $(function() {
 		var self = this;
 		self.$panel = $('#navigator');
 		self.$user = self.$panel.find('#userPanel');
+		self.$msg = $('#messagePanel');
+		self.$msgCounter = $('#msgCounter');
 		self.template = self.$user.html();
 		self.__signature();
 		self.__compile();
@@ -64,17 +66,29 @@ $(function() {
 			var $this = $(this),
 				key = $this.data('id');
 			var fn = NavComponent.internal[key];
-			if(fn) { fn.apply(); }
+			if(fn) { fn.apply(null, $this); }
 		})
 
 		self.$panel.find('.user-li').on('mouseenter', function() {
 			var $that = $(this);
 			var item = $that.data('item');
 			$that.find('.'+item+'-area').toggle();
+			if(item == 'message') {
+				self.showMessage();
+			}
 		}).on('mouseleave', function() {
 			var $that = $(this);
 			var item = $that.data('item');
 			$that.find('.'+item+'-area').toggle();
+		})
+		self.$msg.on('click', '.msgEvt', function() {
+			if(!self.message) return;
+			var idx = $(this).data('idx');
+			var item = self.message.items[idx];
+			router.render('message/detail', {
+				id: item.id,
+				status: item.status
+			})
 		})
 	}
 
@@ -162,11 +176,43 @@ $(function() {
 		})
 	}
 
+	NavComponent.prototype.setMessage = function(data, size) {
+		this.message = {
+			items: data,
+			size: size
+		}
+		this.$msgCounter.html(this.message.size)
+	}
+
+	NavComponent.prototype.showMessage = function() {
+		var self = this;
+		if(!self.message) {
+			return self.$msg.html('<li class="message-item clearfix">暂无消息</li>');
+		}
+		var arr = [];
+		for(var i = 0; i < self.message.items.length; i++) {	
+			var row = self.message.items[i];
+			var date = new Date(row.createDate);
+			arr.push(templateMsg.format(i, row.title, [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-'), row.status));
+		}
+		self.$msg.html(arr.join(''));
+		self.$msg.append('<li class="message-item clearfix"><a href="#message" class="message-more">更多&gt;&gt;</a></li>')
+	}
+	var templateMsg = '<li class="message-item clearfix">\
+							<div class="message-item-data">\
+								<a class="msgEvt" data-idx="{0}">{1}</a>\
+							</div>\
+							<span class="message-time">{2}</span>\
+						</li>';
+
 	function setPhone() {
 
 	}
 
-	function updatePhone() {
+	function unbindPhone($dialog, phone, cb) {
+		var self = $dialog;
+		var code = $.trim(self.find('.input-text').val());
+		if(!code) return false;
 
 	}
 
@@ -220,16 +266,68 @@ $(function() {
 
 	NavComponent.internal = {
 		bind: function() {
-
-		},
-		change: function() {
 			$.confirm({
-				title: '修改手机号码',
-				content:'url:./defs/phone.html',
+				title: '绑定手机号码',
+				content: 'url:./defs/phone.html',
 				buttons: {
-
+					ok: {
+						text: '确定',
+						action: function() {
+							var self = this;
+							return setPhone(self.$content, function(status) {
+								!!status && self.close();
+							});
+						}
+					}
 				}
 			})
+		},
+		change: function(phone) {
+			var p = $(phone).data('phone');
+			$.ajax({
+				url: 'http://192.168.0.33:8080/sms/send',
+				type: 'post',
+				global: false,
+				data: {
+					businessKey: 'changeMobile',
+					mobile: p
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					if(!xhr.code) {
+						cf();
+					} else {
+						$.alert({
+							title: '错误',
+							content: '验证码发送失败，请重试',
+							buttons: {ok:{text:'确定'}}
+						})
+					}
+				})
+			})
+
+			function cf() {
+				$.confirm({
+					title: '修改手机号码',
+					content:'url:./defs/phone.modify.html',
+					buttons: {
+						ok: {
+							text: '确定',
+							action: function() {
+								var self = this;
+								self.$content.find('#phoneNumber').html(p);
+								self.$content.find('#codeCountDown')
+								return unbindPhone(self.$content, p, function(status) {
+									!!status && self.close();
+								});
+							}
+						},
+						cancel: {
+							text: '取消'
+						}
+					}
+				})
+			}
 		},
 		password: function() {
 			$.confirm({
@@ -242,15 +340,12 @@ $(function() {
 							var self = this;
 							return updatePassword(this.$content, function(status) {
 								if(status)
-								self.close();
+									self.close();
 							});
 						}
 					},
 					cancel: {
-						text: '取消',
-						action: function() {
-
-						}
+						text: '取消'
 					}
 				}
 			})

@@ -15,8 +15,15 @@
 	$.fn.dropdown = function() {
 		return this.each(function() {
 			var that = $(this);
-			that.$dropdown = new dropdown(that, that.data());
-			dropdownCollections.push(that.$dropdown);
+			this.$dropdown = new dropdown(that, that.data());
+			dropdownCollections.push(this.$dropdown);
+		})
+	}
+	$.fn.undropdown = function() {
+		return this.each(function() {
+			if(this.$dropdown) {
+				this.$dropdown.reset();
+			}
 		})
 	}
 
@@ -205,6 +212,13 @@
 		}
 		self.compileItems(self.actionIdx);
 	};
+	dropdown.prototype.reset = function() {
+		this.$text.val('');
+		this.text = [];
+		this.textInstance = [];
+		this.picked = undefined;
+		this.actionIdx = 0;
+	}
 	
 	/**
 	* 关闭dropdown

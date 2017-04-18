@@ -109,23 +109,6 @@
 			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + Base64.btoa($.param(params)) : '');
 		}
 		router.get(key, params, true);
-		/*
-		var item = g.routerMap[key];
-		if(!item) {
-			return g.location.href = '404.html';
-		}
-		g.render.renderTitle(item.title);
-		var __currentPage = item.page;
-		if(page.ctrls[__currentPage]) {
-			return setTimeout(function() {
-				return page.excute(__currentPage, key, params, true);
-			}, 0);
-		}
-		$.getScript(internal.script(__currentPage))
-			.done(function() {
-				page.excute(__currentPage, key, params);
-			});
-			*/
 	}
 
 	router.innerRender = function(el, key, params, opts) {
@@ -151,6 +134,14 @@
 			.done(function() {
 				page.excute(__currentPage, key, params);
 			});
+	}
+	/**
+	* 更新参数
+	*/
+	router.updateQuery = function(params) {
+		router.closeRefresh = true;
+		var path = location.hash.substr(1).split('?')[0];
+		location.hash = path + '?' + Base64.btoa($.param(params));
 	}
 	/**
 	* 点击tab跳转
