@@ -111,8 +111,8 @@ page.ctrl('activeInspect', function($scope) {
 			success: $http.ok(function(res) {
 				var _data=res.data;
 				for(var i in _data){
-					_data.checkStatus=0;
-					_data.funcName=_data.taskName;
+					_data[i].checkStatus=0;
+					_data[i].funcName=_data[i].taskName;
 				};
 				that.openWindow({
 					title:"请选择查询类型",
@@ -312,6 +312,7 @@ page.ctrl('activeInspect', function($scope) {
 	// 下拉功能数据
 	$scope.dropdownTrigger = {
 		demandBank: function(t, p, cb) {
+			debugger
 			$.ajax({
 				type: 'post',
 				url: $http.api('demandBank/selectBank', 'zyj'),

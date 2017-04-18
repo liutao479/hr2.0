@@ -5,7 +5,7 @@ page.ctrl('materialInspection', function($scope) {
 		apiParams = {
 			orderNo: $params.orderNo,
 			//orderNo: 'nfdb2016102820480790',
-			//orderNo: "vxnfdb20170412105846795",
+			//orderNo:'vxnfdb20170417174718965',
 			sceneCode:'loanApproval'
 		},userType=[
 			{userType:0,text:"主申请人"},

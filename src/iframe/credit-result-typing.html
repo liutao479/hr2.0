@@ -226,7 +226,11 @@
 				<div class="panel-key-area">辅证数据：</div>
 				<div class="panel-value-area clearfix">
 					<div data-user-id="{{=col.userId}}" class="button button-mini gocheck mr24">发起核查</div>
+					{{ if(col.hasCheck=='1'){ }}
 					<a data-user-id="{{=col.userId}}" data-href="javascript:;" class="to-view assistData">查看报告结果</a>
+					{{ }else if(col.hasCheck=='0'){ }}
+					<a data-href="javascript:;">查看报告结果</a>
+					{{ } }}
 				</div>
 			</div>
 			<!-- 辅证数据 end-->

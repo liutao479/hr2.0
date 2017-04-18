@@ -431,8 +431,8 @@
 		'T0023': 'loanMaterialsUpload',//贷款材料
 //		'T0024': 'cardAudit',//开卡信息表
 		'T0024': 'cardInfoApproval',//开卡信息表
-		'T0025': '',//材料验真
-		'T0026': '',//数据辅证
+		'T0025': 'materialInspection',//材料验真
+		'T0026': 'dataAssistant',//数据辅证
 		'T0027': '',//材料交叉验证
 		'T0028': 'loanLog',//订单日志
 		'T0038': 'loanLog',//订单日志
