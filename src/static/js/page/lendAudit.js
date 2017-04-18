@@ -135,7 +135,25 @@ page.ctrl('lendAudit', function($scope) {
 		 * 自行垫资按钮
 		 */
 		$sub.on('selfAdvance', function() {
-			alert('未做');
+			$.alert({
+				title: '自行垫资',
+				content: doT.template(dialogTml.wContent.selfAdvance)({}),
+				onContentReady: function() {
+					
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							
+						}
+					}
+				}
+			})
 		})
 
 		/**

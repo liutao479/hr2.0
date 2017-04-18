@@ -177,14 +177,12 @@ page.ctrl('newBank', [], function($scope) {
 				stopUseChange(_params, function() {
 					that.html('启用').data('status', 1);
 					$parent.find('.search-item').addClass('search-item-disabled');
-					$parent.find('input').attr('disabled', true);
 				});
 			} else {
 				_params.status = 0;
 				stopUseChange(_params, function() {
 					that.html('停用').data('status', 0);
 					$parent.find('.search-item').removeClass('search-item-disabled');
-					$parent.find('input').attr('disabled', false);
 				});
 			}
 		})
