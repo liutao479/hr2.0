@@ -375,6 +375,9 @@ page.ctrl('cardInfoApproval', function($scope) {
 			seleLoad();
 			cannotClick();
 			$console.find('.uploadEvt').imgUpload();
+			$console.find('.imgs-upload').hide();
+			$console.find('.imgs-delete').hide();
+			
 		});
 		
 	});

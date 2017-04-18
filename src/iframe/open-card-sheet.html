@@ -33,7 +33,7 @@
 										</td>
 										<td>
 											{{ if(it.creditCard.dealerId || it.creditCard.dealerId == '0'){ }}
-												<div class="select select-common" data-selected="{{= it.creditCard.dealerId}}" data-dropdown="page.$scope['openCardSheet'].dealerIdPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.dealerId"></div>
+												<div class="select select-common" data-selected="{{= it.creditCard.dealerName}}" data-dropdown="page.$scope['openCardSheet'].dealerIdPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.dealerId"></div>
 												<input type="hidden" name="dealerId" value="{{= it.creditCard.dealerId}}" />
 											{{ }else{ }}
 												<div class="select select-common" data-dropdown="page.$scope['openCardSheet'].dealerIdPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.dealerId"></div>
