@@ -178,9 +178,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.adjustAmount){ }}
-													<input type="text" name="adjustAmount" value="{{= it.creditCard.adjustAmount}}" />
+													<input type="text" readonly="readonly" name="adjustAmount" value="{{= it.creditCard.adjustAmount}}" />
 												{{ }else{ }}
-													<input type="text" name="adjustAmount" />
+													<input type="text" readonly="readonly" name="adjustAmount" />
 												{{ } }}
 											</span>
 										</td>
@@ -196,9 +196,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.loanRatio){ }}
-													<input type="text" name="loanRatio" value="{{= it.creditCard.loanRatio}}" />
+													<input type="text" readonly="readonly" name="loanRatio" value="{{= it.creditCard.loanRatio}}" />
 												{{ }else{ }}
-													<input type="text" name="loanRatio" />
+													<input type="text" readonly="readonly" name="loanRatio" />
 												{{ } }}
 											</span>
 										</td>
@@ -358,13 +358,13 @@
 											<span class="info-key"><i>*</i>婚姻状况：</span>
 										</td>
 										<td>
-											<span class="info-value">
-												{{ if(it.creditCard.mrtlstat){ }}
-													<input type="text" name="mrtlstat" value="{{= it.creditCard.mrtlstat}}" />
-												{{ }else{ }}
-													<input type="text" name="mrtlstat" />
-												{{ } }}
-											</span>
+											{{ if(it.creditCard.mrtlstat){ }}
+												<div data-key="mrtlstat" data-selected="{{= it.creditCard.mrtlstat}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="mrtlstat"  value="{{= it.creditCard.mrtlstat}}" />
+											{{ }else{ }}
+												<div data-key="mrtlstat" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="mrtlstat" />
+											{{ } }}
 										</td>
 									</tr>
 								</table>
