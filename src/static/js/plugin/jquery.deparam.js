@@ -39,7 +39,6 @@
       // Are we dealing with a name=value pair, or just a name?
       if (param.length === 2) {
         val = decodeURIComponent(param[1]);
-          
         // Coerce values.
         if (coerce) {
           val = val && !isNaN(val)              ? +val              // number
