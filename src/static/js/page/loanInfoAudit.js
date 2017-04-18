@@ -88,6 +88,24 @@ page.ctrl('loanInfoAudit', function($scope) {
 		});
 	}
 	
+	var dis = function(){
+		$('.info-key-value-box').each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		})
+		$('.info-key-check-box').each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		})
+	}
 	/**
 	* 绑定立即处理事件
 	*/
@@ -116,15 +134,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 						}
 					}
 				}
-			}
-		})
-		$('.info-key-check-box').each(function(){
-//			debugger
-			var edit = $(this).data('edit');
-			if(edit == '0'){
-				$(this).addClass('pointDisabled');
-			}else{
-				$(this).removeClass('pointDisabled');
 			}
 		})
 		$console.find('.checkbox-normal').on('click', function() {
@@ -226,8 +235,10 @@ page.ctrl('loanInfoAudit', function($scope) {
 		        var formList = $(this).parent().parent().siblings().find('form');
 		        if(formList.length == 1){
 			        var params = formList.serialize();
-		            params = decodeURIComponent(params,true);
-		            var paramArray = params.split("&");
+			        var b = params.replace(/\+/g," ");
+					b =  decodeURIComponent(b);
+//		            params = decodeURIComponent(params,true);
+		            var paramArray = b.split("&");
 		            var data1 = {};
 		            for(var i=0;i<paramArray.length;i++){
 		                var valueStr = paramArray[i];
@@ -238,8 +249,10 @@ page.ctrl('loanInfoAudit', function($scope) {
 		        	data = [];
 			        formList.each(function(index){
 				        var params = $(this).serialize();
-			            params = decodeURIComponent(params,true);
-			            var paramArray = params.split("&");
+				        var b = params.replace(/\+/g," ");
+						b =  decodeURIComponent(b);
+//			            params = decodeURIComponent(params,true);
+			            var paramArray = b.split("&");
 			            var data1 = {};
 			            for(var i=0;i<paramArray.length;i++){
 			                var valueStr = paramArray[i];
@@ -257,7 +270,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 						data:dataPost,
 						dataType:"json",
 						contentType : 'application/json;charset=utf-8',
-						success: function(result){
+						success: $http.ok(function(result){
 							if(result.data){
 								if(key == 'saveQTXX'){
 									var formlist = $btn.parent().parent().siblings('panel-detail-content-layout').find('form');
@@ -278,7 +291,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 							        }
 							    }
 							})
-						}
+						})
 					});
 		        }else{
 		        	dataPost = data;
@@ -287,7 +300,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 						url: postUrl[key],
 						data:dataPost,
 						dataType:"json",
-						success: function(result){
+						success: $http.ok(function(result){
 							if(result.data){
 								if(key == 'saveCLXX'){
 									var formlist = $btn.parent().parent().siblings('panel-detail-content-layout').find('form');
@@ -324,7 +337,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 							        }
 							    }
 							})
-						}
+						})
 					});
 		        }
 			}else{
@@ -717,6 +730,11 @@ page.ctrl('loanInfoAudit', function($scope) {
 			}
 		})
 	}
+	var seNotInp = function(){
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
+	}
 	
 	/**
 	 * 加载页面模板
@@ -730,6 +748,8 @@ page.ctrl('loanInfoAudit', function($scope) {
 			setupSubmitBar();
 			setupDropDown();
 			seleLoad();
+			dis();
+			seNotInp();
 		});
 	});
 	

@@ -428,6 +428,11 @@ page.ctrl('secondhandInput', function($scope) {
 			cb(sourceData);
 		}
 	}
+	var seNotInp = function(){
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
+	}
 	/***
 	* 加载页面模板
 	*/
@@ -441,6 +446,7 @@ page.ctrl('secondhandInput', function($scope) {
 			setupSubmitBar();
 			setupDropDown();
 			seleLoad();
+			seNotInp();
 		});
 	});
 });
