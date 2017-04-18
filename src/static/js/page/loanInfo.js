@@ -515,7 +515,6 @@ page.ctrl('loanInfo', function($scope) {
 	* 设置底部按钮操作栏
 	*/
 	var setupSubmitBar = function() {
-		debugger
 		var $submitBar = $console.find('#submitBar');
 		$submitBar.data({
 			taskId: $params.taskId

@@ -1,7 +1,7 @@
 'use strict';
 page.ctrl('materialInspection', function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
 			orderNo: $params.orderNo,
 			//orderNo: 'nfdb2016102820480790',
@@ -107,7 +107,7 @@ page.ctrl('materialInspection', function($scope) {
 							if(context){
 								setTimeout(function() {
 									jc.close();
-									//search(apiParams);
+									search(apiParams);
 								},1500);
 							};
 						});
@@ -202,10 +202,10 @@ page.ctrl('materialInspection', function($scope) {
  	};
  	
 	// 加载页面模板
-	render.$console.load(router.template('iframe/material-inspection'), function() {
-		$scope.def.tabTmpl = render.$console.find('#roleBarTabTmpl').html();
-		$scope.def.listTmpl = render.$console.find('#materialInspectionTmpl').html();
-		$scope.def.toastTmpl = render.$console.find('#importResultTmpl').html();
+	$console.load(router.template('iframe/material-inspection'), function() {
+		$scope.def.tabTmpl = $console.find('#roleBarTabTmpl').html();
+		$scope.def.listTmpl = $console.find('#materialInspectionTmpl').html();
+		$scope.def.toastTmpl = $console.find('#importResultTmpl').html();
 		$scope.$el = {
 			$tab: $console.find('#roleBarTab'),
 			$listDiv: $console.find('#listDiv')

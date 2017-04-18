@@ -112,14 +112,29 @@ page.ctrl('lendAudit', function($scope) {
 		/**
 		 * 申请平台垫资按钮
 		 */
-		$sub.on('#applyAdvance', function() {
-			alert('未做');
+		$sub.on('applyAdvance', function() {
+			$.alert({
+				title: '申请平台垫资',
+				content: tool.alert('确定申请平台垫资并同意签署《代还款承诺函》吗？'),
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							
+						}
+					}
+				}
+			})
 		})
 
 		/**
 		 * 自行垫资按钮
 		 */
-		$sub.on('#selfAdvance', function() {
+		$sub.on('selfAdvance', function() {
 			alert('未做');
 		})
 
@@ -217,6 +232,20 @@ page.ctrl('lendAudit', function($scope) {
 	}
 
 	/**
+	* 退回原因选项分割
+	*/
+	var evt = function() {
+		/**
+		 * 订单退回的条件选项分割
+		 */
+		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		if(!taskJumps) return;
+		for(var i = 0, len = taskJumps.length; i < len; i++) {
+			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
+		}
+	}
+
+	/**
 	 * 任务提交跳转
 	 */
 	function process() {
@@ -262,6 +291,50 @@ page.ctrl('lendAudit', function($scope) {
 					}
 				}
 			}
+		})
+	}
+
+	/**
+	 * 取消订单弹窗内事件逻辑处理
+	 */
+	var dialogEvt = function($dialog) {
+		var $reason = $dialog.find('#suggestion');
+		$scope.$checks = $dialog.find('.checkbox').checking();
+		// 复选框
+		$scope.$checks.filter('.checkbox-normal').each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				//用于监听意见有一个选中，则标题项选中
+				var flag = 0;
+				var str = '';
+				$(that).parent().parent().find('.checkbox-normal').each(function() {
+					if($(this).attr('checked')) {
+						str += $(this).data('value') + ',';
+						flag++;
+					}
+				})
+				str = '#' + str.substring(0, str.length - 1) + '#';				
+				$reason.val(str);
+				if(flag > 0) {
+					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
+				} else {
+					$reason.val('');
+					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
+				}
+				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+
+				// if()
+			});
+		})
+
+		// 单选框
+		$scope.$checks.filter('.checkbox-radio').each(function() {
+			var that = this;
+			that.$checking.onChange(function() {
+				$reason.val('');
+				$(that).parent().parent().find('.checkbox-normal').removeClass('checked').attr('checked', false);
+				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+			});
 		})
 	}
 

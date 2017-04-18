@@ -50,20 +50,15 @@
 			refer: [],
 			page: 'historyInspectDetail'
 		},
-		'materialInspection': {
+		'loanProcess/materialInspection': {
 			title: '材料验真',
 			refer: [],
 			page: 'materialInspection'
 		},
-		'dataAssistant': {
+		'loanProcess/dataAssistant': {
 			title: '数据辅证',
 			refer: [],
 			page: 'dataAssistant'
-		},
-		'riskManagement': {
-			title: '风控服务统计',
-			refer: [],
-			page: 'riskManagement'
 		},
 		'riskManagementDetail': {
 			title: '风控服务统计明细',

@@ -235,6 +235,7 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		 * 订单退回的条件选项分割
 		 */
 		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		if(!taskJumps) return;
 		for(var i = 0, len = taskJumps.length; i < len; i++) {
 			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
 		}
