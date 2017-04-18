@@ -88,9 +88,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.loanMoney){ }}
-													<input type="text" name="loanMoney" value="{{= it.creditCard.loanMoney}}" />
+													<input type="text" id="loanMoney" name="loanMoney" value="{{= it.creditCard.loanMoney}}" />
 												{{ }else{ }}
-													<input type="text" name="loanMoney" />
+													<input type="text" id="loanMoney" name="loanMoney" />
 												{{ } }}
 											</span>
 										</td>
@@ -106,9 +106,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.feeRate){ }}
-													<input type="text" name="feeRate" value="{{= it.creditCard.feeRate}}" />
+													<input type="text" id="feeRate" name="feeRate" value="{{= it.creditCard.feeRate}}" />
 												{{ }else{ }}
-													<input type="text" name="feeRate" />
+													<input type="text" id="feeRate" name="feeRate" />
 												{{ } }}
 											</span>
 										</td>
@@ -124,9 +124,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.feeamount){ }}
-													<input type="text" name="feeamount" value="{{= it.creditCard.feeamount}}" />
+													<input type="text" id="feeamount" readonly="readonly" name="feeamount" value="{{= it.creditCard.feeamount}}" />
 												{{ }else{ }}
-													<input type="text" name="feeamount" />
+													<input type="text" id="feeamount" readonly="readonly" name="feeamount" />
 												{{ } }}
 											</span>
 										</td>
@@ -160,9 +160,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.carPrice){ }}
-													<input type="text" name="carPrice" value="{{= it.creditCard.carPrice}}" />
+													<input type="text" id="carPrice" name="carPrice" value="{{= it.creditCard.carPrice}}" />
 												{{ }else{ }}
-													<input type="text" name="carPrice" />
+													<input type="text" id="carPrice" name="carPrice" />
 												{{ } }}
 											</span>
 										</td>
@@ -178,9 +178,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.adjustAmount){ }}
-													<input type="text" readonly="readonly" name="adjustAmount" value="{{= it.creditCard.adjustAmount}}" />
+													<input type="text" id="adjustAmount" readonly="readonly" name="adjustAmount" value="{{= it.creditCard.adjustAmount}}" />
 												{{ }else{ }}
-													<input type="text" readonly="readonly" name="adjustAmount" />
+													<input type="text" id="adjustAmount" readonly="readonly" name="adjustAmount" />
 												{{ } }}
 											</span>
 										</td>
@@ -196,9 +196,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.loanRatio){ }}
-													<input type="text" readonly="readonly" name="loanRatio" value="{{= it.creditCard.loanRatio}}" />
+													<input type="text" id="loanRatio" readonly="readonly" name="loanRatio" value="{{= it.creditCard.loanRatio}}" />
 												{{ }else{ }}
-													<input type="text" readonly="readonly" name="loanRatio" />
+													<input type="text" id="loanRatio" readonly="readonly" name="loanRatio" />
 												{{ } }}
 											</span>
 										</td>

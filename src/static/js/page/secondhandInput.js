@@ -167,7 +167,7 @@ page.ctrl('secondhandInput', function($scope) {
 			}
 		});
 		if(isTure){
-			debugger
+//			debugger
 			var data;
 	        var formList = $('#dataform');
 	        var params = formList.serialize();

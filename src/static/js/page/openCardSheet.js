@@ -134,29 +134,61 @@ page.ctrl('openCardSheet', function($scope) {
 			$("#cophoneno").val(cophone2);
 			$("#cophonext").val(cophone3);
 		})
-		$scope.money = function(){
+		$console.find('#loanMoney').on('change', function() {
 			
-			if($scope.icbcCreditCardForm.loanMoney == '' || $scope.icbcCreditCardForm.feeRate == ''){
-				$scope.icbcCreditCardForm.feeamount = '';
-			}else{
-				$scope.icbcCreditCardForm.feeamount = $scope.icbcCreditCardForm.loanMoney * $scope.icbcCreditCardForm.feeRate / 100
-			};
-			if($scope.icbcCreditCardForm.feeamount == ''){
-				$scope.icbcCreditCardForm.adjustamount = '';
-			}else{
-				$scope.icbcCreditCardForm.adjustamount = $scope.icbcCreditCardForm.feeamount*1 + $scope.icbcCreditCardForm.loanMoney*1;
-			};
-			if($scope.icbcCreditCardForm.carPrice == '' || $scope.icbcCreditCardForm.carPrice == null || $scope.icbcCreditCardForm.carPrice == '0' || $scope.icbcCreditCardForm.adjustamount == ''){
-				$scope.icbcCreditCardForm.loanratio = '';
-			}else{
-				$scope.icbcCreditCardForm.loanratio = $scope.icbcCreditCardForm.adjustamount / $scope.icbcCreditCardForm.carPrice *100;
-			};
-		}
-		
+			var loanMoney = $("#loanMoney").val(),
+				feeRate = $("#feeRate").val(),
+				carPrice = $("#carPrice").val(),
+				feeamount,
+				adjustAmount,
+				loanRatio;
+			if(loanMoney && feeRate){
+				feeamount = loanMoney * feeRate;
+				adjustAmount = feeamount*1 + loanMoney*1;
+				$("#feeamount").val(feeamount);
+				$("#adjustAmount").val(adjustAmount);
+				if(carPrice){
+					loanRatio = (adjustAmount*1) / (carPrice*1);
+					var loanRatio1 = loanRatio.toFixed(2)
+					$("#loanRatio").val(loanRatio1);
+				}
+			}
+		})
+		$console.find('#feeRate').on('change', function() {
+			
+			var loanMoney = $("#loanMoney").val(),
+				feeRate = $("#feeRate").val(),
+				carPrice = $("#carPrice").val(),
+				feeamount,
+				adjustAmount,
+				loanRatio;
+			if(loanMoney && feeRate){
+				feeamount = loanMoney * feeRate;
+				adjustAmount = feeamount*1 + loanMoney*1;
+				$("#feeamount").val(feeamount);
+				$("#adjustAmount").val(adjustAmount);
+				if(carPrice){
+					loanRatio = (adjustAmount*1) / (carPrice*1);
+					var loanRatio1 = loanRatio.toFixed(2)
+					$("#loanRatio").val(loanRatio1);
+				}
+			}
+		})
+		$console.find('#carPrice').on('change', function() {
+			
+			var adjustAmount = $("#adjustAmount").val(),
+				carPrice = $("#carPrice").val(),
+				loanRatio;
+			if(adjustAmount && carPrice){
+				loanRatio = (adjustAmount*1) / (carPrice*1);
+				var loanRatio1 = loanRatio.toFixed(2)
+				$("#loanRatio").val(loanRatio1);
+			}
+		})
 	}		
 
 	function saveData(cb) {
-		debugger
+		
 		var isTure = true;
 		var requireList = $("#dataform").find(".required");
 		requireList.each(function(){
@@ -179,7 +211,7 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		});
 		if(isTure){
-			debugger
+			
 	        var params = $("#dataform").serialize();
             params = decodeURIComponent(params,true);
             var paramArray = params.split("&");
@@ -202,7 +234,7 @@ page.ctrl('openCardSheet', function($scope) {
 						$('#dataform').append(iptNode);
 						$('#dataform').find(".id").val(result.data);
 					}
-					debugger
+					
 					process();
 				})
 			});

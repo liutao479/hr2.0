@@ -87,7 +87,7 @@ page.ctrl('phoneAudit', function($scope) {
 				}
 			});
 			if(isTure){
-				debugger
+//				debugger
 				var data;
 		        var formList = $(this).parent().parent().siblings().find('form');
 	        	data = [];

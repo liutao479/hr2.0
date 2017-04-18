@@ -467,7 +467,6 @@
 				var _url = host + '/' + fd.get('key');
 				self.options.img = _url;
 				if(self.options.card){
-					debugger
 					self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name,self.url));
