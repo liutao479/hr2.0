@@ -472,12 +472,14 @@
 						self.$el.html(internalTemplates.modify.format(self.name,self.url));
 						self.status = 1;	
 						self.listen();
+						self.$el.find('.imgs-error').remove();
 						self.$el.find('img').attr('src',_url);
 						self.uplCb(self, response);
 					} else {
 						self.$el.html(internalTemplates.modify.format(self.name,self.url));
 						self.status = 1;	
 						self.listen();
+						self.$el.find('.imgs-error').remove();
 						self.$el.find('img').attr('src',_url);
 						self.uplCb(self, response);
 					}

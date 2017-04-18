@@ -507,7 +507,7 @@ page.ctrl('myCustomer', [], function($scope) {
 			delete apiParams.carName;
 			return false;
 		}
-		apiParams.carName = picked['品牌'].name + '-' + picked['车型'].name + '-' + picked['车系'].name;
+		apiParams.carName = picked['品牌'].name + '-' + picked['车系'].name + '-' + picked['车型'].name;
 		console.log(apiParams.carName)
 	}
 	//分公司ID
