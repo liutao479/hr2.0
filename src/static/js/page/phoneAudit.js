@@ -163,6 +163,14 @@ page.ctrl('phoneAudit', function($scope) {
 		return false;
 	});
 
+//点击下拉消失	zhy
+	$(document).on("click",function(e){ 
+		var target = $(e.target);
+		if(target.closest(".selectOptBox1").length == 0){ 
+			$(".selectOptBox1").hide();
+			return;
+		}
+	})
 	/***
 	* 加载页面模板
 	*/
