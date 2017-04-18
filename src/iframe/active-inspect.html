@@ -84,7 +84,12 @@
 							<span>{{= item.orderNo}}</span>
 							<div class="key-value-box clearfix">
 								<span class="key">解析时间：</span>
-								<span class="value">{{=tool.formatDate(item.recordEntryTime)}}</span>
+								<span class="value">
+									{{ if(item.recordEntryTime){ }}
+										{{=tool.formatDate(item.recordEntryTime)}}
+									{{ }else{ }}-
+									{{ } }}
+								</span>
 							</div>
 						</td>
 					</tr>
@@ -111,7 +116,7 @@
 							<table class="table-inner">
 								<tr class="table-inner-tr">
 									<td class="key">担保机构：</td>
-									<td class="value">{{= item.mechanism}}</td>
+									<td class="value">{{= item.mechanism||'-'}}</td>
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">经办网点：</td>
@@ -119,7 +124,7 @@
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">放款金额：</td>
-									<td class="value">{{= item.totalMoney}}</td>
+									<td class="value">{{= item.totalMoney||'-'}}</td>
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">放款日期：</td>
@@ -135,7 +140,7 @@
 								</tr>
 								<tr class="table-inner-tr">
 									<td class="key">发动机号：</td>
-									<td class="value">{{= item.engineNo}}</td>
+									<td class="value">{{= item.engineNo||'-'}}</td>
 								</tr>
 							</table>
 						</td>

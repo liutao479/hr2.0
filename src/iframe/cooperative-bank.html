@@ -174,7 +174,7 @@
 													<tr>
 														<td>{{=col.account}}-{{=col.accountName}}</td>
 													</tr>
-												{{ }else{ }}
+												{{ } else { }}
 													{{ if(j == len2 - 1){ }}
 														<tr>
 															<td><i class="iconfont">&#xe608;</i></td>
@@ -197,13 +197,34 @@
 										</table>
 										{{ } }}
 									</td>
-									<td class="orders-item-data">
-										{{for(var j = 0, len2 = row.demandCarShopPolicyList.length; j < len2; j++) { var col = row.demandCarShopPolicyList[j]; }}
-											{{  if(j < len2 - 1) { }}
-												<span>{{=(col.costRate/100 + '%')}}</span>，
-											{{ } else { }}
-												<span>{{=(col.costRate/100 + '%')}}</span>
+									<td class="orders-item-data loanTasks">
+										<table class="meanwhile">
+											{{for(var j = 0, len2 = row.demandCarShopPolicyList.length; j < len2; j++) { var col = row.demandCarShopPolicyList[j]; }}
+												{{ if(j < 2){ }}
+													<tr>
+														<td>{{=(col.costRate + '%')}}</td>
+													</tr>
+												{{ } else { }}
+													{{ if(j == len2 - 1){ }}
+														<tr>
+															<td><i class="iconfont">&#xe608;</i></td>
+														</tr>
+													{{ } }}
+												{{ } }}
+												
 											{{ } }}
+										</table>
+										{{ if(len2 > 2) { }}
+										<table class="meanwhile-hover" style="display: none;">
+											{{for(var j = 0, len2 = row.demandCarShopPolicyList.length; j < len2; j++) { var col = row.demandCarShopPolicyList[j]; }}
+												<tr>
+													<td>{{=(col.costRate + '%')}}</td>
+												</tr>
+											{{ } }}
+											<tr>
+												<td><i class="iconfont">&#xe606;</i></td>
+											</tr>
+										</table>
 										{{ } }}
 									</td>
 									<td class="orders-item-data orders-item-data-operate">

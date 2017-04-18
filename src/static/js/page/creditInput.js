@@ -681,7 +681,9 @@ page.ctrl('creditInput', [], function($scope) {
 		// self.$el.after(self.outerHTML);
 		// self.$el.next().imgUpload();
 		var $parent = self.$el.parent();
-		self.$el.after(self.outerHTML);
+		if($parent.find('.uploadEvt').length == self.$el.data('idx') + 1) {
+			self.$el.after(self.outerHTML);
+		}
 		pictureListen($parent);
 		self.$el.next().imgUpload();
 		//重置带保存参数里的征信报告图片（loanCreditReportList）
