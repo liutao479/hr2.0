@@ -169,7 +169,7 @@ page.ctrl('dataAssistant', function($scope) {
 							if(context){
 								setTimeout(function() {
 									jc.close();
-									//search(apiParams);
+									search(apiParams);
 								},1500);
 							};
 						});

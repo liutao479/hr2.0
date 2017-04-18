@@ -17,7 +17,7 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 	/*查询前去除空查询字段*/
 	var delNull=function(obj){
 		for(var i in obj){
-			if(obj[i]==null||(obj[i]==""&&obj[i]!==0)||obj[i]==undefined)
+			if(obj[i]==null||(obj[i]==""&&obj[i]!==0)||obj[i]==undefined||obj[i]=='undefined')
 				delete obj[i];
 		};
 		return obj;
@@ -113,8 +113,6 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 				var _data=res.data.list;
 				$scope.$el.$searchTimeTitle.text(apiParams.strStartDate+"至"+apiParams.strEndDate+"明细");
 				render.compile($scope.$el.$table, $scope.def.tableTmpl, _data, true);
-				if(!_data||_data.length==0)
-					return false;
 				/*数据汇总及echarts图表数据整理*/
 				var totalSummary={
 					historyCalls:0,
@@ -192,6 +190,10 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 				url: $http.api('riskStatis/getDeptList',true),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						id: null,
+						name: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
 						id: 'id',
@@ -207,9 +209,13 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 				url: $http.api('demandBank/selectBank',true),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						bankCode: null,
+						bankName: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'bankCode',
 						name: 'bankName'
 					};
 					cb(sourceData);
