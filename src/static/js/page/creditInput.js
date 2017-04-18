@@ -668,6 +668,7 @@ page.ctrl('creditInput', [], function($scope) {
 		$imgel.each(function(index) {
 			$(this).find('.imgs-item-p').html('<i class="is-empty">*</i>征信报告照片' + (index + 1));
 		});
+		$imgel.last().data('idx', $imgel.length - 1);
 		$imgel.last().data('name', '征信报告照片' + $imgel.length);
 		$imgel.last().find('.imgs-item-p').html('征信报告照片' + $imgel.length);
 	}
