@@ -79,8 +79,12 @@ page.ctrl('openCardSheet', function($scope) {
 	* 日历控件
 	*/
 	var setupDatepicker = function() {
-		$console.find('.dateBtn').datepicker({});
-		$console.find('#dateStart').val();
+		$console.find('.dateBtn').datepicker({
+			onpicked: function() {
+				$(this).parents().removeClass("error-input");
+				$(this).siblings("i").remove();
+			}
+		});
 	}
 
 
@@ -106,6 +110,9 @@ page.ctrl('openCardSheet', function($scope) {
 		});
 	}
 	var setupEvt = function($el) {
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
 		if($("#dateStart").val("9999-99-99")){
 			$("#dateStart").addClass('pointDisabled');
 			$("#longTime").attr("checked", true); 
@@ -130,6 +137,7 @@ page.ctrl('openCardSheet', function($scope) {
 	}		
 
 	function saveData(cb) {
+		debugger
 		var isTure = true;
 		var requireList = $("#dataform").find(".required");
 		requireList.each(function(){
@@ -152,6 +160,7 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		});
 		if(isTure){
+			debugger
 	        var params = $("#dataform").serialize();
             params = decodeURIComponent(params,true);
             var paramArray = params.split("&");
@@ -168,10 +177,20 @@ page.ctrl('openCardSheet', function($scope) {
 				data: data1,
 				dataType:"json",
 //				contentType : 'application/json;charset=utf-8',
-				success: function(result){
-					console.log("提交订单");
-					if(cb && typeof cb == 'function') {
-						cb();
+				success: $http.ok(function(result){
+					debugger
+					process();
+				})
+			});
+		}else{
+			$.alert({
+				title: '提示',
+				content: tool.alert('请完善相关必填项！'),
+				buttons: {
+					ok: {
+						text: '确定',
+						action: function() {
+						}
 					}
 				}
 			});
@@ -384,6 +403,28 @@ page.ctrl('openCardSheet', function($scope) {
 			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
 		}
 	}
+	/**
+	* 下拉
+	*/
+	var seleLoad = function(){
+		$(".select").each(function(){
+			var $that = $(this);
+			var selected = $(this).data('selected');
+			var re = /^[0-9]+.?[0-9]*$/;
+			if((selected && re.test(selected)) || selected=='0'){
+				$(this).find('.arrow-trigger').click();
+				var lilist = $(this).find('li');
+				$("li",$(this)).each(function(){
+					var idx = $(this).data('id');
+					if(selected == idx){
+						$that.find('.select-text').val($(this).text());
+						$(this).click();
+						$that.find('.select-box').hide();
+					}
+				})
+			}
+		})
+	}
 	
 	/***
 	* 加载页面模板
@@ -395,11 +436,11 @@ page.ctrl('openCardSheet', function($scope) {
 			$tbl: $console.find('#openCardSheet')
 		}
 		loadLoanList(function(){
-			console.log('zhixing');
 			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
 			evt();
 			setupSubmitBar();
 			setupDropDown();
+			seleLoad();
 		});
 	});
 
@@ -417,28 +458,28 @@ page.ctrl('openCardSheet', function($scope) {
 		brand: function(cb) {
 			$.ajax({
 				url: 'http://localhost:8083/mock/carBrandlist',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'brandId',
 						name: 'carBrandName'
 					}
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		series: function(brandId, cb) {
 			$.ajax({
 				url: 'http://localhost:8083/mock/carSeries',
 				data: {brandId: brandId},
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'id',
 						name: 'serieName'
 					}
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		specs: function(seriesId, cb) {
@@ -447,14 +488,14 @@ page.ctrl('openCardSheet', function($scope) {
 				data: {
 					serieId: seriesId
 				},
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'carSerieId',
 						name: 'specName'
 					};
 					cb(sourceData);
-				}
+				})
 			})
 		}
 	}
@@ -464,14 +505,14 @@ page.ctrl('openCardSheet', function($scope) {
 			$.ajax({
 				url: urlStr+'/area/get',
 				dataType:'json',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'areaId',
 						name: 'name'
 					};
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		city: function(areaId, cb) {
@@ -481,14 +522,14 @@ page.ctrl('openCardSheet', function($scope) {
 					parentId: areaId
 				},
 				dataType: 'json',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'areaId',
 						name: 'name'
 					}
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		country: function(areaId, cb) {
@@ -498,14 +539,14 @@ page.ctrl('openCardSheet', function($scope) {
 					parentId: areaId
 				},
 				dataType: 'json',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'areaId',
 						name: 'name'
 					};
 					cb(sourceData);
-				}
+				})
 			})
 		}
 	}

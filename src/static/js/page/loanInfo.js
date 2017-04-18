@@ -220,7 +220,7 @@ page.ctrl('loanInfo', function($scope) {
 		   		$(this).removeClass('checked').attr('checked',false);
 		   		$(this).html('');
 		   	}
-		   	var boxChecked = $(this).parent().parent().parent().find('.checked');
+		   	var boxChecked = $(this).parents('.info-key-check-box').find('.checked');
 		   	var renewalStr = '';
 			for(var i=0;i<boxChecked.length;i++){
 				var rene = boxChecked[i];
@@ -229,6 +229,7 @@ page.ctrl('loanInfo', function($scope) {
 //				}
 				renewalStr += rene.getAttribute('data-value')+',';
 			}
+			debugger
 			$("input[name='residentType']").val(renewalStr);
 	    })
 
@@ -307,7 +308,7 @@ page.ctrl('loanInfo', function($scope) {
 						data:dataPost,
 						dataType:"json",
 						contentType : 'application/json;charset=utf-8',
-						success: function(result){
+						success: $http.ok(function(result){
 							if(result.data){
 								if(key == 'saveQTXX'){
 									var formlist = $btn.parent().parent().siblings('panel-detail-content-layout').find('form');
@@ -328,7 +329,7 @@ page.ctrl('loanInfo', function($scope) {
 							        }
 							    }
 							})
-						}
+						})
 					});
 		        }else{
 		        	dataPost = data;
@@ -337,7 +338,7 @@ page.ctrl('loanInfo', function($scope) {
 						url: postUrl[key],
 						data:dataPost,
 						dataType:"json",
-						success: function(result){
+						success: $http.ok(function(result){
 							if(result.data){
 								if(key == 'saveCLXX'){
 									var formlist = $btn.parent().parent().siblings('panel-detail-content-layout').find('form');
@@ -374,7 +375,7 @@ page.ctrl('loanInfo', function($scope) {
 							        }
 							    }
 							})
-						}
+						})
 					});
 		        }
 			}else{
@@ -394,8 +395,7 @@ page.ctrl('loanInfo', function($scope) {
 	}		
 	var loanFinishedCheckbox = function(){
 		$(".info-key-check-box").each(function(){
-			var that =$("input",$(this)),
-				checkBox =$("div.checkbox",$(this));
+			var that =$("input",$(this));
 			var data={};
 			data = that.val().split(",");
 			$(".checkbox",$(this)).each(function(){
@@ -515,6 +515,7 @@ page.ctrl('loanInfo', function($scope) {
 	* 设置底部按钮操作栏
 	*/
 	var setupSubmitBar = function() {
+		debugger
 		var $submitBar = $console.find('#submitBar');
 		$submitBar.data({
 			taskId: $params.taskId
@@ -760,14 +761,18 @@ page.ctrl('loanInfo', function($scope) {
 		var isDiscount = $("#isDiscount").val();
 		console.log(isDiscount);
 		if(isDiscount != '1'){
-			$("#discountRate").siblings().find('i').hide();
-			$("#discountRate").find('input').removeClass('required');
-			$("#discountMoney").siblings().find('i').hide();
-			$("#discountMoney").find('input').removeClass('required');
+//			$("#discountRate").siblings().find('i').hide();
+			$("#discountRate").parents('.info-key-value-box').hide();
+			$("#discountRate").find('input').removeClass('required').val('');
+//			$("#discountMoney").siblings().find('i').hide();
+			$("#discountMoney").parents('.info-key-value-box').hide();
+			$("#discountMoney").find('input').removeClass('required').val('');
 		}else{
-			$("#discountRate").siblings().find('i').show();
+//			$("#discountRate").siblings().find('i').show();
+			$("#discountRate").parents('.info-key-value-box').show();
 			$("#discountRate").find('input').addClass('required');
-			$("#discountMoney").siblings().find('i').show();
+			$("#discountMoney").parents('.info-key-value-box').show();
+//			$("#discountMoney").siblings().find('i').show();
 			$("#discountMoney").find('input').addClass('required');
 		}
 	}
@@ -814,14 +819,14 @@ page.ctrl('loanInfo', function($scope) {
 				type: 'post',
 				url: $http.api('car/carBrandList', 'jbs'),
 				dataType: 'json',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'brandId',
 						name: 'carBrandName'
 					}
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		series: function(brandId, cb) {
@@ -832,14 +837,14 @@ page.ctrl('loanInfo', function($scope) {
 				data: {
 					brandId: brandId
 				},
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'id',
 						name: 'serieName'
 					}
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		specs: function(seriesId, cb) {
@@ -850,14 +855,14 @@ page.ctrl('loanInfo', function($scope) {
 				data: {
 					serieId: seriesId
 				},
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'carSerieId',
 						name: 'specName'
 					};
 					cb(sourceData);
-				}
+				})
 			})
 		}
 	}
@@ -868,14 +873,14 @@ page.ctrl('loanInfo', function($scope) {
 				type: 'post',
 				url: $http.api('area/get', 'jbs'),
 				dataType:'json',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'areaId',
 						name: 'name'
 					};
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		city: function(areaId, cb) {
@@ -886,14 +891,14 @@ page.ctrl('loanInfo', function($scope) {
 					parentId: areaId
 				},
 				dataType: 'json',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'areaId',
 						name: 'name'
 					}
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		country: function(areaId, cb) {
@@ -904,14 +909,14 @@ page.ctrl('loanInfo', function($scope) {
 					parentId: areaId
 				},
 				dataType: 'json',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'areaId',
 						name: 'name'
 					};
 					cb(sourceData);
-				}
+				})
 			})
 		}
 	}

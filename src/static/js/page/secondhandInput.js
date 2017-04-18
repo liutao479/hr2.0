@@ -194,11 +194,24 @@ page.ctrl('secondhandInput', function($scope) {
 						buttons: {
 							'确定': {
 					            action: function () {
+					            	process()
 					            }
 					        }
 					    }
 					})
-				})
+				}),
+				error:function(){
+					$.alert({
+						title: '提示',
+						content: tool.alert(xhr.msg),
+						buttons: {
+							'确定': {
+					            action: function () {
+					            }
+					        }
+					    }
+					})
+				}
 			})				
 		}else{
 			$.alert({
