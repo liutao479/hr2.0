@@ -115,7 +115,7 @@ page.ctrl('lendAudit', function($scope) {
 		$sub.on('applyAdvance', function() {
 			$.alert({
 				title: '申请平台垫资',
-				content: tool.alert('确定申请平台垫资并同意签署《代还款承诺函》吗？'),
+				content: tool.alert('确定申请平台垫资并同意签署<a href="javascript:;" style="text-decoration: underline;">《代还款承诺函》</a>吗？'),
 				buttons: {
 					close: {
 						text: '取消',
