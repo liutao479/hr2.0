@@ -44,19 +44,19 @@ page.ctrl('creditApproval', [], function($scope) {
 	*/
 	var loadOrderInfo = function(idx, cb) {
 		$.ajax({
-			// url: 'http://127.0.0.1:8083/mock/creditInput',
 			type: 'post',
 			url: $http.api('creditUser/getCreditInfo', 'jbs'),
 			data: {
 				taskId: $params.taskId,
-				frameCode: 'T0061'
+				frameCode: $scope.frameCode || 'T0061'
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
+
 				$scope.result = result;
 				$scope.result.index = idx;
 				$scope.idx = idx;
-				
+				console.log(result)
 				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
 				if($scope.firstLoad) {
 					var creditUsers = $scope.result.data.creditUsers, userType;
@@ -67,9 +67,6 @@ page.ctrl('creditApproval', [], function($scope) {
 					if(userType != 0) {
 						$scope.result.index = userType;
 						$scope.idx = userType;
-					} else {
-						$scope.result.index = idx;
-						$scope.idx = idx;
 					}
 				}
 				$scope.result.editable = 0;
@@ -635,14 +632,23 @@ page.ctrl('creditApproval', [], function($scope) {
 			$paging: $console.find('#pageToolbar')
 		}
 		$scope.firstLoad = true;
-		loadOrderInfo($scope.idx, function() {
-			setupLocation();
-			evt();
-			setupSubmitBar();
-			setupBackReason($scope.result.data.loanTask.backApprovalInfo);
-			$scope.firstLoad = false;
-		});
-		
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditApproval/info', 'zyj'),
+			data: {
+				taskId: $params.taskId
+			},
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				$scope.frameCode = result.cfgData.frames[0].code;
+				loadOrderInfo($scope.idx, function() {
+					setupLocation();
+					evt();
+					setupSubmitBar();
+					setupBackReason($scope.result.data.loanTask.backApprovalInfo);
+					$scope.firstLoad = false;
+				});
+			})
+		})		
 	});
-
 });

@@ -20,6 +20,7 @@
 			return this.replace(/(^\s*)|(\s*$)/g, '');
 		};
 	}
+
 	/*
 	* 本地验证规则
 	*/
@@ -226,6 +227,17 @@
 		if(!total) return 0;
 		return Math.floor(total / pageSize) + (total % pageSize == 0 ? 0 : 1);
 	}
+
+	/**
+	 * 添加判断是否为空对象的方法
+	 */
+	tool.isEmptyObject = function(e) {  
+	    var t;  
+	    for (t in e)  
+	        return !1;  
+	    return !0  
+	} 
+
 	/**
 	 * 添加日期格式化方法
 	 * @params {number} time 时间戳

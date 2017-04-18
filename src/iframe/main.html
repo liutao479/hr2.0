@@ -46,8 +46,8 @@
 			{{ } else { }}
 			<tr class="orders-item tr-odd">
 			{{ } }}
-				<td class="orders-item-data">{{=tool.formatDate(row.createDate, true)}}</td>
-				<td class="orders-item-data">{{=row.orderNo}}</td>
+				<td class="orders-item-data">{{=row.loanTasks[0].createDateStr || ''}}</td>
+				<td class="orders-item-data">{{=row.orderNo || ''}}</td>
 				<td class="orders-item-data">{{=row.realName || '未知'}}（{{=row.idCard || '未知'}}）</td>
 				<td class="orders-item-data loanTasks">
 					<table class="meanwhile">

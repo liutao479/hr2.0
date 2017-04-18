@@ -504,10 +504,10 @@ page.ctrl('myCustomer', [], function($scope) {
 	$scope.carPicker = function(picked) {
 		console.log(picked)
 		if(picked.id == '全部') {
-			delete apiParams.carMode;
+			delete apiParams.carName;
 			return false;
 		}
-		apiParams.carMode = picked['品牌'].name + '-' + picked['车型'].name + '-' + picked['车系'].name;
+		apiParams.carName = picked['品牌'].name + '-' + picked['车型'].name + '-' + picked['车系'].name;
 	}
 	//分公司ID
 	$scope.deptCompanyPicker = function(picked) {
