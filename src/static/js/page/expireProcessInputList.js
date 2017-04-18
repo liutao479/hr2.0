@@ -137,7 +137,9 @@ page.ctrl('expireProcessInputList', [], function($scope) {
 			var $that = $(this);
 			router.render('expireProcess/expireProcessDetail', {
 				orderNo: $that.data('order'),
-				type: 'overdue'
+				type: 'overdue',
+				path: 'expireProcess',
+				test: false
 			})
 		})
 	}

@@ -1,11 +1,41 @@
 'use strict';
 page.ctrl('expireProcessDetail', [], function($scope) {
 	var $params = $scope.$params,
-		$console = $params.refer ? $($params.refer) : render.$console,
+		$console = render.$console,
 		apiParams = {
 			pageNum: $params.pageNum || 1,
 			pageSize: 20
 		};
+
+	var internel = {};
+	internel.tabs = [
+		{
+			code: 'O001',
+			name: '逾期记录',
+			path: 'overdue'
+		},
+		{
+			code: 'O002',
+			name: '逾期处理意见',
+			path: 'overdue'
+		}
+	];
+
+	internel.pickedType = function() {
+
+	}
+
+	internel.openType = function() {
+
+	}
+
+	internel.pickedUser = function() {
+
+	}
+
+	internel.openUser = function() {
+
+	}
 
 	/**
 	* 加载订单详情左侧列表项配置
@@ -23,12 +53,10 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 			success: $http.ok(function(xhr) {
 				$scope.result = xhr;
 				setupLocation();
-				loadGuide(xhr.cfgData);
-				if($params.type == 'OrderDetails') {
-					render.compile($scope.$el.$buttonsPanel, $scope.def.buttonsTmpl, xhr.data.BTNSTATUS, true);
-				}
+				var cfg = xhr.cfgData;
+				cfg.frames = internel.tabs.concat(cfg.frames);
+				loadGuide(cfg);
 				setupEvent();
-				leftArrow();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -45,9 +73,9 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: $scope.result.data.loanTask.taskName,
+			current: $scope.result.data.loanTask.taskName || '逾期处理详情',
 			orderDate: $scope.result.data.loanTask.loanOrder.createDateStr,
-			pmsDept: $scope.result.data.loanTask.loanOrder.pmsDept.name
+			// pmsDept: $scope.result.data.loanTask.loanOrder.pmsDept.name
 		});
 		$location.location();
 	}
@@ -57,6 +85,7 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 	* @params {object} cfg 配置对象
 	*/
 	function loadGuide(cfg) {
+		$scope.cfg = cfg;
 		render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
 		if(cfg.frames.length == 1) {
 			$scope.$el.$tab.remove();
@@ -70,14 +99,21 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 			orderNo: $params.orderNo,
 			type: $params.type
 		}
-		router.innerRender('#innerPanel', 'loanProcess/' + pageCode, params);
+		setActiveItem(0);
+		if(cfg.frames[0].path) {
+			router.innerRender('#innerPanel', 'expireProcess/' + pageCode, params);
+		} else {
+			router.innerRender('#innerPanel', 'loanProcess/' + pageCode, params);
+		}
 		return listenGuide();
 	}
 
 	function listenGuide() {
 		$console.find('.tabLeftEvt').on('click', function() {
 			var $that = $(this);
-			var code = $that.data('type');
+			var code = $that.data('type'),
+				idx = $that.data('idx');
+			var frm = $scope.cfg.frames[idx];
 			var pageCode = subRouterMap[code];
 			if(!pageCode) return false;
 			var params = {
@@ -85,17 +121,18 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 				orderNo: $params.orderNo,
 				type: $params.type
 			}
+			setActiveItem(idx);
+			if(frm && frm['path']) {
+				return router.innerRender('#innerPanel', 'expireProcess/' + pageCode, params);
+			}
 			router.innerRender('#innerPanel', 'loanProcess/' + pageCode, params);
 		})
 	}
 
-	var leftArrow = function(){
-		$('.panel-menu-item').each(function(){
-			$(this).find('.arrow').hide();
-			if($(this).hasClass('panel-menu-item-active')){
-				$(this).find('.arrow').show();
-			}
-		})
+	function setActiveItem(idx) {
+		var css = 'panel-menu-item-active';
+		$console.find('.tabLeftEvt').filter('.'+css).removeClass(css).find('.arrow').hide();
+		$console.find('.tabLeftEvt').eq(idx).addClass(css).find('.arrow').show();
 	}
 
 
@@ -140,6 +177,26 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 		//详情页面跳转
 		$console.find('#sendExp').on('click', function() {
 			$.confirm({
+				title: '派发逾期处理',
+				content: 'url:./defs/overdue.send.html',
+				onContentReady: function() {
+					this.$content.find('.select').dropdown()
+				},
+				buttons: {
+					ok: {
+						text: '确定',
+						action: function() {
+
+						}
+					},
+					cancel: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					}
+				}
+			})
+			/*
+			$.confirm({
 				title: '选择提交对象',
 				content: dialogTml.wContent.suggestion,
 				buttons: {
@@ -167,7 +224,7 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 						}
 					}
 				}
-			})
+			})*/
 		});
 	}
 
@@ -176,6 +233,7 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 	*/
 	$console.load(router.template('iframe/expire-process-detail'), function() {
 		$scope.def.listTmpl = render.$console.find('#expireProcessDetailTmpl').html();
+		$scope.def.tabTmpl = render.$console.find('#checkResultTabsTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#expireProcessDetailTable'),
 			$paging: $console.find('#pageToolbar'),

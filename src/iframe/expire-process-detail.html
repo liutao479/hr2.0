@@ -1,103 +1,108 @@
-	<!--逾期管理详情-->
-			<div class="container expire-info-prev" id="expire-info-prev">
-				<!-- 面包屑 -->
-				<div class="path-back-bar clearfix">
-					<div class="path-back">
-						<i class="iconfont">&#xe626;</i>
-						<a id="expManage">逾期管理</a>&nbsp;&gt;
-						<span class="current-page">逾期管理详情</span>
-					</div>
-				</div>
-				<!-- 面包屑 end-->
-				<!--提交修改等等按钮-->
-				<div class="commit-orders-box commit-orders-box-area mb15">
-					<a href="javascript:;" id="sendExp" class="commit-item">
-						<i class="iconfont">&#xe640;</i>
-						<span>派发逾期处理任务</span>
-					</a>
-				</div>
-				<!--提交修改等等按钮   end-->
+<!--逾期管理详情-->
+<div class="container expire-info-prev" id="expire-info-prev">
+	<!-- 面包屑 -->
+	<!-- <div class="path-back-bar clearfix">
+		<div class="path-back">
+			<i class="iconfont">&#xe626;</i>
+			<a id="expManage">逾期管理</a>&nbsp;&gt;
+			<span class="current-page">逾期管理详情</span>
+		</div>
+	</div> -->
+	<div id="location"></div>
+	<!-- 面包屑 end-->
+	<!--提交修改等等按钮-->
+	<div class="commit-orders-box commit-orders-box-area mb15">
+		<a id="sendExp" class="commit-item">
+			<i class="iconfont">&#xe640;</i>
+			<span>派发逾期处理任务</span>
+		</a>
+	</div>
+	<!--提交修改等等按钮   end-->
 
-				<!-- tab切换 -->
-				<div class="tab-bar">
-					<ul class="role-bar-ul clearfix">
-						<li class="role-bar-li"><a href="#" class="role-item">贷款信息表</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">逾期记录</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item role-item-active">逾期处理意见</a></li>
-					</ul>
-					<div class="button button-mini">
-						<i class="iconfont">&#xe615;</i>添加逾期处理意见
-					</div>
+	<!-- tab切换 -->
+	<!-- <div class="tab-bar">
+		<ul class="role-bar-ul clearfix">
+			<li class="role-bar-li"><a href="#" class="role-item">贷款信息表</a></li>
+			<li class="role-bar-li"><a href="#" class="role-item">逾期记录</a></li>
+			<li class="role-bar-li"><a href="#" class="role-item role-item-active">逾期处理意见</a></li>
+		</ul>
+		<div class="button button-mini">
+			<i class="iconfont">&#xe615;</i>添加逾期处理意见
+		</div>
+	</div> -->
+	<!-- tab切换 end-->
+	<!--工作台左侧菜单面板-->
+	<div class="panel panel-menu mt15" id="checkTabs"></div>
+	<!--工作台左侧菜单面板 end-->
+	
+	<!-- 面板 -->
+	<div id="innerPanel" class="panel-detail mt15"></div>
+</div>
+<!--逾期管理详情 end-->
+	
+<script type="text/x-dot-template" id="expireProcessDetailTmpl">
+	<div class="tab-content-item layout no-top-border">
+		<dl class="expire-opinion">
+			<dt class="clearfix">
+				<div class="expire-left">
+					逾期管理员：<span class="expire-manager">张三</span>
 				</div>
-				<!-- tab切换 end-->
-				<!--工作台左侧菜单面板-->
-				<div class="panel panel-menu mt15" id="checkTabs"></div>
-				<!--工作台左侧菜单面板 end-->
-				
-				<!-- 面板 -->
-				<div id="innerPanel" class="panel-detail mt15"></div>
-				<!-- tab对应栏 -->
-				<div class="tab-content" id="expireProcessDetailTable"></div>
-				<!-- tab对应栏 end-->
-			</div>
-			<!--逾期管理详情 end-->
-				
-			<script type="text/x-dot-template" id="expireProcessDetailTmpl">
-				<div class="tab-content-item layout no-top-border">
-					<dl class="expire-opinion">
-						<dt class="clearfix">
-							<div class="expire-left">
-								逾期管理员：<span class="expire-manager">张三</span>
-							</div>
-							<div class="expire-right">
-								2016-10-20 15:30
-							</div>
-						</dt>
-						<dd>
-							意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见
-						</dd>
-					</dl>
-					<dl class="expire-opinion">
-						<dt class="clearfix">
-							<div class="expire-left">
-								逾期管理员：<span class="expire-manager">张三</span>
-							</div>
-							<div class="expire-right">
-								2016-10-20 15:30
-							</div>
-						</dt>
-						<dd>
-							意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见
-						</dd>
-					</dl>
-					<dl class="expire-opinion">
-						<dt class="clearfix">
-							<div class="expire-left">
-								逾期管理员：<span class="expire-manager">张三</span>
-							</div>
-							<div class="expire-right">
-								2016-10-20 15:30
-							</div>
-						</dt>
-						<dd>
-							意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见
-						</dd>
-					</dl>
-					<dl class="expire-opinion">
-						<dt class="clearfix">
-							<div class="expire-left">
-								逾期管理员：<span class="expire-manager">张三</span>
-							</div>
-							<div class="expire-right">
-								2016-10-20 15:30
-							</div>
-						</dt>
-						<dd>
-							意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见
-						</dd>
-					</dl>
+				<div class="expire-right">
+					2016-10-20 15:30
 				</div>
-			</script>
+			</dt>
+			<dd>
+				意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见
+			</dd>
+		</dl>
+		<dl class="expire-opinion">
+			<dt class="clearfix">
+				<div class="expire-left">
+					逾期管理员：<span class="expire-manager">张三</span>
+				</div>
+				<div class="expire-right">
+					2016-10-20 15:30
+				</div>
+			</dt>
+			<dd>
+				意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见
+			</dd>
+		</dl>
+		<dl class="expire-opinion">
+			<dt class="clearfix">
+				<div class="expire-left">
+					逾期管理员：<span class="expire-manager">张三</span>
+				</div>
+				<div class="expire-right">
+					2016-10-20 15:30
+				</div>
+			</dt>
+			<dd>
+				意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见
+			</dd>
+		</dl>
+		<dl class="expire-opinion">
+			<dt class="clearfix">
+				<div class="expire-left">
+					逾期管理员：<span class="expire-manager">张三</span>
+				</div>
+				<div class="expire-right">
+					2016-10-20 15:30
+				</div>
+			</dt>
+			<dd>
+				意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见意见
+			</dd>
+		</dl>
+	</div>
+</script>
 				
-				
+<script type="text/x-dot-template" id="checkResultTabsTmpl">
+	{{ for(var i = 0, len = it.frames.length; i < len; i++) { var row = it.frames[i];  }}
+		<a href="javascript:;" data-idx="{{= i}}" class="panel-menu-item tabLeftEvt" data-type="{{=row.code}}">
+			{{=row.name}}
+			<span class='arrow arrow-right' style="display: none;"></span>
+		</a>
+	{{ } }}
+</script>
 			

@@ -164,7 +164,7 @@
 		var _origin = sp[0],
 			_search = !!sp[1] ? sp[1] : undefined;
 		var _paths = _origin.split('/'),
-			_params = !!_search ? $.deparam(Base64.atob(decodeURI(_search))) : undefined;
+			_params = !!_search ? $.deparam(Base64.atob(decodeURI(_search)), true) : undefined;
 		router.render(_origin, _params);
 		cb && typeof cb == 'function' && cb(_paths[0]);
 	}

@@ -56,7 +56,6 @@ page.ctrl('orderDetails', function($scope) {
 		render.compile($scope.$el.$tab, $scope.def.tabTmpl, cfg, true);
 		if(cfg.frames.length == 1) {
 			$scope.$el.$tab.remove();
-			console.log($console.find('#innerPanel'))
 			$console.find('#innerPanel').removeClass('panel-detail');
 			$console.find('#commitPanel').removeClass('ml162');
 		}
