@@ -864,6 +864,18 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			})
 		},
 		relationShip: function(t, p, cb) {
+			if(this.$el.attr('readonly')) {
+				$.alert({
+					title: '提示',
+					content: tool.alert('征信已经返回，不能修改！'),
+					buttons:{
+						ok: {
+							text: '确定'
+						}
+					}
+				})
+				return false;
+			}
 			var data = [
 				{
 					id: 1,

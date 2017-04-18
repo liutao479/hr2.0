@@ -73,7 +73,7 @@
 			tmp;
 		self.errImg = '';
 		self.errMsg = '';
-		self.empty = !self.options.empty ? '<i class="is-empty">*</i>' : '';
+		self.empty = self.options.empty == 0 ? '<i class="is-empty">*</i>' : '';
 		if(!self.options.img || self.options.img == 'undefined') {
 			if(self.options.editable) {
 				if(self.options.other) {

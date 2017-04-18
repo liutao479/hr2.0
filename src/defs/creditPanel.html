@@ -66,7 +66,7 @@
 				<div class="key-item">与借款人关系：</div>
 				<div class="key-value">
 					{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
-					<div class="select select-common" data-type="userRelationship" data-disabled="disabled" data-readonly="true" data-user-id="{{=row.userId}}" data-dropdown="page.$scope['{{=it.loanTask.category}}'].relationShipPicker" data-trigger="page.$scope['{{=it.loanTask.category}}'].dropdownTrigger.relationShip" data-selected="{{=it.userRalaMap[row.userRelationship] || ''}}"></div>
+					<div class="select select-common" data-type="userRelationship"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-disabled="disabled" data-user-id="{{=row.userId}}" data-dropdown="page.$scope['{{=it.loanTask.category}}'].relationShipPicker" data-trigger="page.$scope['{{=it.loanTask.category}}'].dropdownTrigger.relationShip" data-selected="{{=it.userRalaMap[row.userRelationship] || ''}}"></div>
 					{{ } }}
 					{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}
 						{{=it.userRalaMap[row.userRelationship] || ''}}
