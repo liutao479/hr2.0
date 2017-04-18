@@ -39,7 +39,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 		}
 		$.ajax({
 			type: 'post',
-			url: $http.api(url,'jbs'),
+			url: $http.api('loanInfoInput/loanInfoByOrderNo','jbs'),
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {

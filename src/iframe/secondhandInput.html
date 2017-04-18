@@ -25,7 +25,6 @@
 						<div class="loan-info">
 							{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x]; }}
 								{{ var fieldCode = seg.fieldName;}}
-								{{ var fieldCode1 = fieldCode+'123';}}
 							<div class="info-key-value-box">
 								<table>
 									<tr>
@@ -37,10 +36,34 @@
 												{{= seg.name}}:
 											</span>
 										</td>
-										{{if(fieldCode == 'annualAuditPeriodDate' || fieldCode == 'highwayChargesDate' || fieldCode == 'firstLicenseDate' || fieldCode == 'productionDate' || fieldCode == 'identifyAssessDate'){ }}
+										{{ if(fieldCode == 'identifyAssessDate'){ }}
 											<td>
 												<div class="input-text input-date-mid borderNone">
-													<input name="{{= fieldCode}}" id="{{= fieldCode}}" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />	
+													<input name="{{= fieldCode}}" id="{{= fieldCode}}" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.identifyAssessDateStr || '') : ''}}" />	
+												</div>
+											</td>
+										{{ }else if(fieldCode == 'productionDate'){ }}
+											<td>
+												<div class="input-text input-date-mid borderNone">
+													<input name="{{= fieldCode}}" id="{{= fieldCode}}" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.productionDateStr || '') : ''}}" />	
+												</div>
+											</td>
+										{{ }else if(fieldCode == 'firstLicenseDate'){ }}
+											<td>
+												<div class="input-text input-date-mid borderNone">
+													<input name="{{= fieldCode}}" id="{{= fieldCode}}" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.firstLicenseDateStr || '') : ''}}" />	
+												</div>
+											</td>
+										{{ }else if(fieldCode == 'highwayChargesDate'){ }}
+											<td>
+												<div class="input-text input-date-mid borderNone">
+													<input name="{{= fieldCode}}" id="{{= fieldCode}}" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.highwayChargesDateStr || '') : ''}}" />	
+												</div>
+											</td>
+										{{ }else if(fieldCode == 'annualAuditPeriodDate'){ }}
+											<td>
+												<div class="input-text input-date-mid borderNone">
+													<input name="{{= fieldCode}}" id="{{= fieldCode}}" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.annualAuditPeriodDateStr || '') : ''}}" />	
 												</div>
 											</td>
 										{{ }else if(fieldCode == 'taxIsPay'){ }}
@@ -50,13 +73,16 @@
 											</td>
 										{{ }else if(fieldCode == 'carMode'){ }}
 											<td>
-												<div id="carMode" readonly="readonly" class="select select-common" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['secondhandInput'].carPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.car"></div>
+												<div id="carMode" readonly="readonly" class="select select-common" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.carName || '') : ''}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['secondhandInput'].carPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.car"></div>
 												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
 											</td>
-										{{ }else if(fieldCode == 'originArea' || fieldCode == 'location'){ }}
+										{{ }else if(fieldCode == 'originArea'){ }}
 											<td>
-												<div class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
-												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
+												<div id="originArea" class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
+											</td>
+										{{ }else if(fieldCode == 'location'){ }}
+											<td>
+												<div id="location" class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
 											</td>
 										{{ }else{ }}
 											<td>
@@ -75,10 +101,20 @@
 				{{ } }}
 				{{ } }}
 				{{ } }}
-				<input type="hidden" id="carName" name="carName" />
+				{{if(it.data.loanCarAssess && it.data.loanCarAssess.location){}}
+					<input type="hidden" id="locationName" name="location" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.location || '') : ''}}" />
+				{{ } }}
+				{{if(it.data.loanCarAssess && it.data.loanCarAssess.originArea){}}
+					<input type="hidden" id="originAreaName" name="originArea" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.originArea || '') : ''}}" />
+				{{ } }}
+				{{if(it.data.loanCarAssess && it.data.loanCarAssess.carName){}}
+					<input type="hidden" id="carName" name="carName" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.carName || '') : ''}}" />
+				{{ } }}
 				<!-- <input type="hidden" name="updateDate" value="{{=it.data.loanTask.updateDate}}" />
 				<input type="hidden" name="updateUser" value="{{=it.data.loanTask.updateUser}}" /> -->
-				<input type="hidden" name="id" value="{{=it.data.loanTask.id}}" />
+				{{ if(it.data.loanCarAssess && it.data.loanCarAssess.id){ }}
+					<input type="hidden" name="id" value="{{=it.data.loanCarAssess.id}}" />
+				{{ } }}
 				<input type="hidden" name="orderNo" value="{{=it.data.loanTask.orderNo}}" />
 				</form>
 			</script>
