@@ -59,7 +59,7 @@ page.ctrl('creditApproval', [], function($scope) {
 				$scope.result.index = idx;
 				$scope.idx = idx;
 				console.log(result)
-				
+
 				var creditUsers = $scope.result.data.creditUsers;
 				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
 				if($scope.firstLoad) {
@@ -330,7 +330,7 @@ page.ctrl('creditApproval', [], function($scope) {
 		});
 
 
-		//查看征信材料
+		//切换主借款人
 		$self.find('.setJkrEvt').on('click', function() {
 			var that = $(this);
 			$.ajax({
