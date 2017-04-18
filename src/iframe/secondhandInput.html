@@ -103,12 +103,18 @@
 				{{ } }}
 				{{if(it.data.loanCarAssess && it.data.loanCarAssess.location){}}
 					<input type="hidden" id="locationName" name="location" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.location || '') : ''}}" />
+				{{ }else{ }}
+					<input type="hidden" id="locationName" name="location" />
 				{{ } }}
 				{{if(it.data.loanCarAssess && it.data.loanCarAssess.originArea){}}
 					<input type="hidden" id="originAreaName" name="originArea" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.originArea || '') : ''}}" />
+				{{ }else{ }}
+					<input type="hidden" id="originAreaName" name="originArea" />
 				{{ } }}
 				{{if(it.data.loanCarAssess && it.data.loanCarAssess.carName){}}
 					<input type="hidden" id="carName" name="carName" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.carName || '') : ''}}" />
+				{{ }else{ }}
+					<input type="hidden" id="carName" name="carName" />
 				{{ } }}
 				<!-- <input type="hidden" name="updateDate" value="{{=it.data.loanTask.updateDate}}" />
 				<input type="hidden" name="updateUser" value="{{=it.data.loanTask.updateUser}}" /> -->

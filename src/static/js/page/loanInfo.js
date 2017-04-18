@@ -126,15 +126,16 @@ page.ctrl('loanInfo', function($scope) {
 			}
 		});
 	}
-	
+	var seNotInp = function(){
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
+	}
 	/**
 	* 绑定立即处理事件
 	*/
 	var keyType;
 	var setupEvt = function($el) {
-		$(".select-text").each(function(){
-			$(this).attr('readonly','readonly')
-		})
 		$('i').each(function(){
 			var dataNum = $(this).data('num');
 			var that = $(this);
@@ -622,7 +623,18 @@ page.ctrl('loanInfo', function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
-			process();
+			$.alert({
+				title: '提示',
+				content: tool.alert('请确认保存各模块信息！'),
+				buttons: {
+					ok: {
+						text: '确定',
+						action: function() {
+							process();
+						}
+					}
+				}
+			});
 		})
 	}
 
@@ -768,6 +780,7 @@ page.ctrl('loanInfo', function($scope) {
 			setupDropDown();
 			evt();
 			seleLoad();
+			seNotInp();
 		});
 	});
 
