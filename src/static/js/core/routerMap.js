@@ -60,11 +60,6 @@
 			refer: [],
 			page: 'dataAssistant'
 		},
-		'riskManagement': {
-			title: '风控服务统计',
-			refer: [],
-			page: 'riskManagement'
-		},
 		'riskManagementDetail': {
 			title: '风控服务统计明细',
 			refer: [],

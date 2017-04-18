@@ -64,7 +64,7 @@ page.ctrl('riskManagementDetail', function($scope) {
 	// 页面首次载入时绑定事件
  	var evt = function() {
  		$scope.$el.$backspace.click(function() {
-			router.render("riskManagement");
+			router.render("operationsAnalysis");
 		});
  		$scope.$el.$table.off("click",".detailed").on("click",".detailed",function() {
  			var _uid=$(this).data('userid');
@@ -77,7 +77,7 @@ page.ctrl('riskManagementDetail', function($scope) {
 				sceneCode:_sceneCode,
 				upperLevelData:$params,
 				backJson:{
-					firstHref:"riskManagement",
+					firstHref:"operationsAnalysis",
 					firstText:"返回列表",
 					secondHref:"riskManagementDetail",
 					secondText:"服务明细",
