@@ -400,7 +400,7 @@
 						}
 						self.$el.data('img', url);
 						self.$el.find('.imgs-error').remove();
-						self.status = 0;	
+						self.status = 1;	
 						self.listen();
 						self.uplCb(self, xhr);
 					} else {

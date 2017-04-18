@@ -407,18 +407,33 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 		});
 	})
 	
+	/**
+	 * 监听其它材料最后一个控件的名称
+	 */
+	var otherMaterialsListen = function() {
+		var $imgel = $console.find('.otherMaterials .uploadEvt');
+		$imgel.each(function(index) {
+			$(this).data('idx', index);
+		});
+	}
+
 	/***
 	* 删除图片后的回调函数
 	*/
 	$scope.deletecb = function(self) {
 		self.$el.remove();
+		otherMaterialsListen();
 	}
 
 	/***
 	* 上传图片成功后的回调函数
 	*/
 	$scope.uploadcb = function(self) {
-		self.$el.after(self.outerHTML);
+		var $parent = self.$el.parent();
+		if($parent.find('.uploadEvt').length == self.$el.data('idx') + 1) {
+			self.$el.after(self.outerHTML);
+		}
 		self.$el.next().imgUpload();
+		otherMaterialsListen();
 	}
 });
