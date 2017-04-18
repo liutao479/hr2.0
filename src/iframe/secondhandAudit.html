@@ -111,6 +111,12 @@
 				{{ if(it.data.loanCarAssess && it.data.loanCarAssess.id){ }}
 					<input type="hidden" name="id" value="{{=it.data.loanCarAssess.id}}" />
 				{{ } }}
-				<input type="hidden" name="orderNo" value="{{=it.data.loanTask.orderNo}}" />
+				{{ if(it.data.loanCarAssess && it.data.loanCarAssess.orderNo){ }}
+					<input type="hidden" name="orderNo" value="{{=it.data.loanCarAssess.orderNo}}" />
+				{{ } }}
+				{{ if(it.data.loanTask && it.data.loanTask.orderNo){ }}
+					<input type="hidden" name="orderNo" value="{{=it.data.loanTask.orderNo}}" />
+				{{ } }}
+				
 				</form>
 			</script>
