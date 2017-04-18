@@ -54,11 +54,9 @@ page.ctrl('creditApproval', [], function($scope) {
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
-
 				$scope.result = result;
 				$scope.result.index = idx;
 				$scope.idx = idx;
-				console.log(result)
 
 				var creditUsers = $scope.result.data.creditUsers;
 				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户

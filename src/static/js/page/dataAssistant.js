@@ -1,7 +1,7 @@
 'use strict';
 page.ctrl('dataAssistant', function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
 			orderNo: $params.orderNo,
 			//orderNo: 'nfdb2016102820480790',
@@ -344,10 +344,10 @@ page.ctrl('dataAssistant', function($scope) {
  	};
  	
 	// 加载页面模板
-	render.$console.load(router.template('iframe/data-assistant'), function() {
-		$scope.def.tabTmpl = render.$console.find('#roleBarTabTmpl').html();
-		$scope.def.listTmpl = render.$console.find('#listTmpl').html();
-		$scope.def.toastTmpl = render.$console.find('#importResultTmpl').html();
+	$console.load(router.template('iframe/data-assistant'), function() {
+		$scope.def.tabTmpl = $console.find('#roleBarTabTmpl').html();
+		$scope.def.listTmpl = $console.find('#listTmpl').html();
+		$scope.def.toastTmpl = $console.find('#importResultTmpl').html();
 		$scope.$context=$console.find('#data-assistant');
 		$scope.$el = {
 			$tab: $scope.$context.find('#roleBarTab'),
