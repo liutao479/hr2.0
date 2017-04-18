@@ -10,7 +10,7 @@ page.ctrl('historyInspect', function($scope) {
 			minSelectDate:new Date(startDate),
 			maxSelectDate:new Date(endDate),
 			isReturn:null,/*查询状态*/
-			bankName:null,/*经办网点*/
+			bankId:null,/*经办网点*/
 			methodWay:null,/*主动核查标记--查询方式*/
 			keyWord:null
 		},
@@ -26,7 +26,7 @@ page.ctrl('historyInspect', function($scope) {
 	/*查询前去除空查询字段*/
 	var delNull=function(obj){
 		for(var i in obj){
-			if(obj[i]==null||(obj[i]==""&&obj[i]!==0)||obj[i]==undefined)
+			if(obj[i]==null||(obj[i]==""&&obj[i]!==0)||obj[i]==undefined||obj[i]=='undefined')
 				delete obj[i];
 		};
 		return obj;
@@ -43,7 +43,7 @@ page.ctrl('historyInspect', function($scope) {
 			minSelectDate:new Date(startDate),
 			maxSelectDate:new Date(endDate),
 			isReturn:null,/*查询状态*/
-			bankName:null,/*经办网点*/
+			bankId:null,/*经办网点*/
 			methodWay:null,/*主动核查标记--查询方式*/
 			keyWord:null
 		};
@@ -166,6 +166,7 @@ page.ctrl('historyInspect', function($scope) {
 		TypeSel: function(t, p, cb) {
 			var sourceData = {
 				items: [
+					{value:null,text:"全部"},
 					{value:'0',text:"手动"},
 					{value:'1',text:"系统"}
 				],
@@ -177,6 +178,7 @@ page.ctrl('historyInspect', function($scope) {
 		statusSel: function(t, p, cb) {			
 			var sourceData = {
 				items: [
+					{value:null,text:"全部"},
 					{value:'0',text:"查询中"},
 					{value:'1',text:"已返回"}
 				],
@@ -191,9 +193,13 @@ page.ctrl('historyInspect', function($scope) {
 				url: $http.api('demandBank/selectBank', 'zyj'),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						id: null,
+						bankName: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'id',
 						name: 'bankName'
 					};
 					cb(sourceData);
@@ -209,7 +215,7 @@ page.ctrl('historyInspect', function($scope) {
 		apiParams.isReturn=val.id;
 	};
 	$scope.bankPicker=function(val){
-		apiParams.bankName=val.name;
+		apiParams.bankId=val.id;
 	};
 });
 
