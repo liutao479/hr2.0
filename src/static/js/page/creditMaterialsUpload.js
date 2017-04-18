@@ -530,36 +530,33 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
 				$parent.append('<span class=\"input-err\">该项不能为空！</span>');
+				value = '';
 				// return false;
 			} else if(!regMap[type].test(value)) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
 				$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
-				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-					var item = $scope.apiParams[i];
-					if(that.data('userId') == item.userId) {
-						item[that.data('type')] = '';
-					}
-				}
+				value = '';
 				// return false;
 			} else {
 				$parent.removeClass('error-input');
 				$parent.find('.input-err').remove();
-				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-					var item = $scope.apiParams[i];
-					if(that.data('userId') == item.userId) {
-						if(type == 'idCard' && value.substring(value.length - 1) == 'x') {
-							value = value.replace(/x/, 'X');
-						}
-						item[that.data('type')] = value;
-					}
+				if(type == 'idCard' && value.substring(value.length - 1) == 'x') {
+					value = value.replace(/x/, 'X');
 				}
-				params = {
-					userId: that.data('userId')
-				}
-				params[that.data('type')] = value;
-				updateUser(params);
 			}
+			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+				var item = $scope.apiParams[i];
+				if(that.data('userId') == item.userId) {
+					item[that.data('type')] = value;
+				}
+			}
+			if(!value) return false;
+			params = {
+				userId: that.data('userId')
+			}
+			params[that.data('type')] = value;
+			updateUser(params);
 			console.log($scope.apiParams)
 		})
 

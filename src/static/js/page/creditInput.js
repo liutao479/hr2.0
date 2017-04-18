@@ -338,12 +338,18 @@ page.ctrl('creditInput', [], function($scope) {
 		$el.find('.creditReportId').on('blur', function() {
 			var that = $(this),
 				value = that.val(),
-				$parent = that.parent();
+				$parent = that.parent(),
+				type = that.data('type');
 			if(that.hasClass('required') && !value) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
 				$parent.append('<span class=\"input-err\">该项不能为空！</span>');
-				return false;
+				value = '';
+			} else if(!regMap[type].test(value)) {
+				$parent.removeClass('error-input').addClass('error-input');
+				$parent.find('.input-err').remove();
+				$parent.append('<span class=\"input-err\">请输入30位以内的数字和字母组合的编号</span>');
+				value = '';
 			} else {
 				$parent.removeClass('error-input');
 				$parent.find('.input-err').remove();
@@ -374,9 +380,9 @@ page.ctrl('creditInput', [], function($scope) {
 		}
 
 		//征信报告编号
-		$el.find('.creditReportId').on('keypress', function(event) {
-			return noNumbers(event);
-		})
+		// $el.find('.creditReportId').on('key', function(event) {
+		// 	return noNumbers(event);
+		// })
 
 		// 备注失去焦点事件
 		// $el.find('.remark').on('blur', function() {
@@ -407,7 +413,8 @@ page.ctrl('creditInput', [], function($scope) {
 		// $el.find('.remark').next().text('还可输入' + (maxLen - $el.find('.remark').val().length) + '/' + maxLen + '字');
 		$el.find('.remark').on('input', function() {
 			var that = $(this),
-				value = that.val();
+				value = that.val(),
+				$parent = that.parent();
 			if(value.length > maxLen) {
 				that.val(value.substr(0, maxLen));
 				that.next().text('还可输入0/' + maxLen + '字');
@@ -415,10 +422,41 @@ page.ctrl('creditInput', [], function($scope) {
 			}
 			that.next().text('还可输入' + (maxLen - that.val().length) + '/' + maxLen + '字');
 			if(that.hasClass('required') && !value) {
-				that.removeClass('error-input').addClass('error-input');
+				$parent.find('.input-err').remove();
+				$parent.removeClass('error-input').addClass('error-input');
 				return false;
 			} else {
-				that.removeClass('error-input');
+				$parent.find('.input-err').remove();
+				$parent.removeClass('error-input');
+			}
+			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+				var item = $scope.apiParams[i];
+				if(that.data('userId') == item.userId) {
+					item[that.data('type')] = value;
+				}
+			}
+			console.log($scope.apiParams);
+		});
+
+		$el.find('.remark').on('blur', function() {
+			var that = $(this),
+				value = $.trim(that.val()),
+				$parent = that.parent(),
+				type = that.data('type');
+			if(that.hasClass('required') && !value) {
+				$parent.removeClass('error-input').addClass('error-input');
+				$parent.find('.input-err').remove();
+				$parent.append('<span class=\"input-err\">该项不能为空！</span>');
+				value = '';
+			} else if(regMap[type].test(value)) {
+				$parent.removeClass('error-input').addClass('error-input');
+				$parent.find('.input-err').remove();
+				$parent.append('<span class=\"input-err\">该输入不符合规则！</span>');
+				value = '';
+			} else {
+				$parent.removeClass('error-input');
+				$parent.find('.input-err').remove();
+				value = '';
 			}
 			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 				var item = $scope.apiParams[i];

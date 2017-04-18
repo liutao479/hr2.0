@@ -14,6 +14,8 @@
 		accountNumber: /^(\d{16}|\d{19})$/,
 		account: /^(\d{16}|\d{19})$/,
 		phone: /^1[\d+]{10}$/,
-		mobile: /^1[\d+]{10}$/
+		mobile: /^1[\d+]{10}$/,
+		creditReportId: /^[0-9a-zA-Z]{1,30}$/,
+		remark: /<\/?[^>]*>/g
 	}
 })(window);
