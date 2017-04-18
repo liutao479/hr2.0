@@ -93,8 +93,11 @@ page.ctrl('phoneAudit', function($scope) {
 	        	data = [];
 		        formList.each(function(index){
 			        var params = $(this).serialize();
-		            params = decodeURIComponent(params,true);
-		            var paramArray = params.split("&");
+			        var b = params.replace(/\+/g," ");
+					b =  decodeURIComponent(b);
+		            var paramArray = b.split("&");
+//		            params = decodeURIComponent(params,true);
+//		            var paramArray = params.split("&");
 		            var data1 = {};
 		            for(var i=0;i<paramArray.length;i++){
 		                var valueStr = paramArray[i];

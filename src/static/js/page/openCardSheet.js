@@ -135,7 +135,6 @@ page.ctrl('openCardSheet', function($scope) {
 			$("#cophonext").val(cophone3);
 		})
 		$console.find('#loanMoney').on('change', function() {
-			
 			var loanMoney = $("#loanMoney").val(),
 				feeRate = $("#feeRate").val(),
 				carPrice = $("#carPrice").val(),
@@ -143,7 +142,7 @@ page.ctrl('openCardSheet', function($scope) {
 				adjustAmount,
 				loanRatio;
 			if(loanMoney && feeRate){
-				feeamount = loanMoney * feeRate;
+				feeamount = loanMoney * feeRate / 100;
 				adjustAmount = feeamount*1 + loanMoney*1;
 				$("#feeamount").val(feeamount);
 				$("#adjustAmount").val(adjustAmount);
@@ -163,7 +162,7 @@ page.ctrl('openCardSheet', function($scope) {
 				adjustAmount,
 				loanRatio;
 			if(loanMoney && feeRate){
-				feeamount = loanMoney * feeRate;
+				feeamount = loanMoney * feeRate / 100;
 				adjustAmount = feeamount*1 + loanMoney*1;
 				$("#feeamount").val(feeamount);
 				$("#adjustAmount").val(adjustAmount);
@@ -213,8 +212,10 @@ page.ctrl('openCardSheet', function($scope) {
 		if(isTure){
 			
 	        var params = $("#dataform").serialize();
-            params = decodeURIComponent(params,true);
-            var paramArray = params.split("&");
+//          params = decodeURIComponent(params,true);
+	        var b = params.replace(/\+/g," ");
+			b =  decodeURIComponent(b);
+            var paramArray = b.split("&");
             var data1 = {};
             for(var i=0;i<paramArray.length;i++){
                 var valueStr = paramArray[i];
@@ -234,7 +235,6 @@ page.ctrl('openCardSheet', function($scope) {
 						$('#dataform').append(iptNode);
 						$('#dataform').find(".id").val(result.data);
 					}
-					
 					process();
 				})
 			});

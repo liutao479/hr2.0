@@ -131,11 +131,27 @@ page.ctrl('loanInfo', function($scope) {
 			$(this).attr('readonly','readonly')
 		})
 	}
+	
 	/**
 	* 绑定立即处理事件
 	*/
 	var keyType;
 	var setupEvt = function($el) {
+		$console.find('input[type="text"]').on('change', function() {
+			$("input[type='text']").each(function(){
+				var thisName = $(this).attr('name'),
+					that = $(this);
+				if(thisName == 'carPrice' || thisName == 'systemCarPrice' || thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'advancedMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'familyZipcode' || thisName == 'companyTel' || thisName == 'companyZipcode' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
+					var thisVal = that.val();
+					var reg = /^(\d+\.\d{1,4}|\d+)$/;
+					if(!reg.test(thisVal)){
+						$(this).parent().addClass("error-input");
+						$(this).after('<i class="error-input-tip sel-err">该项只能填写数字及最多四位小数</i>');
+						that.val('');
+					}
+				}
+			})
+		})
 		$('i').each(function(){
 			var dataNum = $(this).data('num');
 			var that = $(this);
@@ -506,10 +522,17 @@ page.ctrl('loanInfo', function($scope) {
 		}
 	}
 	
-//日期选择
-	$(document).on('click', '.dateBtn', function() {
-		$('#loaningDate').datepicker();
-	})
+	/**
+	* 日历控件
+	*/
+	var setupDatepicker = function() {
+		$console.find('.dateBtn').datepicker({
+			onpicked: function() {
+				$(this).parents().removeClass("error-input");
+				$(this).siblings("i").remove();
+			}
+		});
+	}
 	
 	/***
 	* 为完善项更改去掉错误提示
@@ -523,7 +546,7 @@ page.ctrl('loanInfo', function($scope) {
 		$(this).parent().parent().siblings("i").remove();
 	})
 	$(document).on('click','.select', function() {
-		$(this).parents().removeClass("error-input");
+		$(this).removeClass("error-input");
 		$(this).siblings("i").remove();
 	})
 
@@ -781,6 +804,7 @@ page.ctrl('loanInfo', function($scope) {
 			evt();
 			seleLoad();
 			seNotInp();
+			setupDatepicker();
 		});
 	});
 

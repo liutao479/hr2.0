@@ -171,8 +171,10 @@ page.ctrl('secondhandInput', function($scope) {
 			var data;
 	        var formList = $('#dataform');
 	        var params = formList.serialize();
-            params = decodeURIComponent(params,true);
-            var paramArray = params.split("&");
+//          params = decodeURIComponent(params,true);
+	        var b = params.replace(/\+/g," ");
+			b =  decodeURIComponent(b);
+            var paramArray = b.split("&");
             var data1 = {};
             for(var i=0;i<paramArray.length;i++){
                 var valueStr = paramArray[i];
