@@ -1,8 +1,7 @@
 'use strict';
 page.ctrl('creditApproval', [], function($scope) {
 	var $console = render.$console,
-		$params = $scope.$params,
-		hasCheck="0";/*是否已经核查过*/;
+		$params = $scope.$params;
 	$scope.tabs = {};
 	$scope.idx = 0;
 	$scope.apiParams = [];
@@ -22,18 +21,21 @@ page.ctrl('creditApproval', [], function($scope) {
 		$location.location();
 	}
 	/*查询是否有报告*/
-	var searchIsPre=function(param,callback){
+	var searchIsPre=function(param,cb){
 		$.ajax({
 			type: 'post',
 			dataType:"json",
 			url: $http.api('creditAudit/checkUserItem',true),
-			data: param,
+			data: {
+				userId:param.userId,
+				orderNo:param.orderNo
+			},
 			success: $http.ok(function(res) {
-				hasCheck=res.data.hasCheck;
-				/*回调*/
-				if(callback && typeof callback == 'function') {
-					callback();
-				};
+				/*是否已经核查过0未核查，1已核查*/;
+				$scope.result.data.creditUsers[param.idx][param.sed].hasCheck=res.data.hasCheck;
+				if(cb && typeof cb == 'function') {
+					cb();
+				};	
 			})
 		});
 	};
@@ -56,12 +58,12 @@ page.ctrl('creditApproval', [], function($scope) {
 				$scope.result = result;
 				$scope.result.index = idx;
 				$scope.idx = idx;
-				
+				var creditUsers = $scope.result.data.creditUsers;
 				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
 				if($scope.firstLoad) {
-					var creditUsers = $scope.result.data.creditUsers, userType;
+					var userType;
 					for(var i in creditUsers) {
-						userType = i;
+						userType= i;
 						break;
 					}
 					if(userType != 0) {
@@ -80,21 +82,36 @@ page.ctrl('creditApproval', [], function($scope) {
 					'3': '子女',
 					'-1': '其他'
 				};
-				var _userId=creditUsers[$scope.result.index][0].userId;
-				searchIsPre({
-					userId:_userId,
-					orderNo:$params.orderNo
-				},function(){
-					// 编译tab栏
-					setupTab($scope.result, function() {
-						setupTabEvt();
-					});
-					// 编译tab项对应内容
-					setupCreditPanel(idx, $scope.result);
-					if(cb && typeof cb == 'function') {
-						cb();
-					};					
-				});/*查询是否有报告*/
+				//var _userId=creditUsers[$scope.result.index][0].userId;
+				var _userIdArr = creditUsers[$scope.idx];
+				for(var j in _userIdArr){/*循环某一个类别下的用户列表*/
+					var _userId=_userIdArr[j].userId;
+					if(j==_userIdArr.length-1){
+						searchIsPre({
+							userId:_userId,
+							orderNo:$params.orderNo,
+							idx:$scope.idx,
+							sed:j
+						},function(){
+							// 编译tab栏
+							setupTab($scope.result, function() {
+								setupTabEvt();
+							});
+							// 编译tab项对应内容
+							setupCreditPanel(idx, $scope.result);
+							if(cb && typeof cb == 'function') {
+								cb();
+							};						
+						});/*查询是否有报告*/
+					}else{
+						searchIsPre({
+							userId:_userId,
+							orderNo:$params.orderNo,
+							idx:$scope.idx,
+							sed:j
+						});
+					};
+				};
 			})
 		})
 	}
@@ -148,10 +165,6 @@ page.ctrl('creditApproval', [], function($scope) {
 		render.compile(_tabTrigger, $scope.def.listTmpl, result, function() {
 			setupEvt(_tabTrigger, idx);
 		}, true);
-		if(hasCheck=="1")/*1已结查过了*/
-			_tabTrigger.find(".assistData").show();
-		else/*0没有查过*/
-			_tabTrigger.find(".assistData").hide();
 		for(var i = 0, len = $scope.$el.$tbls.length; i < len; i++) {
 			if(i == idx) {
 				$scope.$el.$tbls.eq(i).show();
@@ -174,30 +187,39 @@ page.ctrl('creditApproval', [], function($scope) {
 			var $this = $(this);
 			if($this.hasClass('role-item-active')) return;
 			var _type = $this.data('type');
-			var _userId=$scope.result.data.creditUsers[_type][0].userId;
-			searchIsPre({
-				userId:_userId,
-				orderNo:$params.orderNo
-			},function(){		
-				if(!$scope.tabs[_type]) {
-					var _tabTrigger = $scope.$el.$tbls.eq(_type);
-					$scope.tabs[_type] = _tabTrigger;
-					$scope.result.index = _type;
-					render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, function() {
-						setupEvt(_tabTrigger, _type);
-					}, true);
-				}
-				$scope.$el.$tabs.removeClass('role-item-active');
-				$this.addClass('role-item-active');
-				$scope.$el.$tbls.eq($scope.idx).hide();
-				$scope.$el.$tbls.eq(_type).show();
-				$scope.idx = _type;	
-					
-				if(hasCheck=="1")/*1已结查过了*/
-					 $scope.$el.$tbls.eq(_type).find(".assistData").show();
-				else/*0没有查过*/
-					 $scope.$el.$tbls.eq(_type).find(".assistData").hide();
-			});/*查询是否有报告*/
+			var _userIdArr=$scope.result.data.creditUsers[_type];
+			for(var j in _userIdArr){/*循环某一个类别下的用户列表*/
+				var _userId=_userIdArr[j].userId;
+				if(j==_userIdArr.length-1){		
+					searchIsPre({
+						userId:_userId,
+						orderNo:$params.orderNo,
+						idx:_type,
+						sed:j
+					},function(){
+						if(!$scope.tabs[_type]) {
+							var _tabTrigger = $scope.$el.$tbls.eq(_type);
+							$scope.tabs[_type] = _tabTrigger;
+							$scope.result.index = _type;
+							render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, function() {
+								setupEvt(_tabTrigger, _type);
+							}, true);
+						}
+						$scope.$el.$tabs.removeClass('role-item-active');
+						$this.addClass('role-item-active');
+						$scope.$el.$tbls.eq($scope.idx).hide();
+						$scope.$el.$tbls.eq(_type).show();
+						$scope.idx = _type;	
+					});/*查询是否有报告*/
+				}else{
+					searchIsPre({
+						userId:_userId,
+						orderNo:$params.orderNo,
+						idx:_type,
+						sed:j
+					});/*查询是否有报告*/
+				};
+			};
 		})
 	}
 
