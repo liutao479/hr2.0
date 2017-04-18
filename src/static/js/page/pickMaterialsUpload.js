@@ -410,11 +410,11 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 	 */
 	var otherMaterialsListen = function() {
 		var $imgel = $console.find('.otherMaterials .uploadEvt');
-		$imgel.last().data('name', '其它材料' + $imgel.length);
-		$imgel.last().data('count', $imgel.length);
-		$imgel.last().find('.input-text input').val('其它材料' + $imgel.length);
+		$imgel.each(function(index) {
+			$(this).data('idx', index);
+		});
 	}
-	
+
 	/***
 	* 删除图片后的回调函数
 	*/
@@ -427,9 +427,11 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 	* 上传图片成功后的回调函数
 	*/
 	$scope.uploadcb = function(self) {
-		self.$el.after(self.outerHTML);
-		otherMaterialsListen();
+		var $parent = self.$el.parent();
+		if($parent.find('.uploadEvt').length == self.$el.data('idx') + 1) {
+			self.$el.after(self.outerHTML);
+		}
 		self.$el.next().imgUpload();
-
+		otherMaterialsListen();
 	}
 });
