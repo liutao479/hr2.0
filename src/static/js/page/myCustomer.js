@@ -503,11 +503,11 @@ page.ctrl('myCustomer', [], function($scope) {
 	//车辆品牌
 	$scope.carPicker = function(picked) {
 		console.log(picked)
-		// if(picked.id == '全部') {
-		// 	delete apiParams.carMode;
-		// 	return false;
-		// }
-		apiParams.carMode = picked.name;
+		if(picked.id == '全部') {
+			delete apiParams.carName;
+			return false;
+		}
+		apiParams.carName = picked['品牌'].name + '-' + picked['车型'].name + '-' + picked['车系'].name;
 	}
 	//分公司ID
 	$scope.deptCompanyPicker = function(picked) {
@@ -520,10 +520,10 @@ page.ctrl('myCustomer', [], function($scope) {
 	//经办行ID
 	$scope.demandBankPicker = function(picked) {
 		if(picked.id == '全部') {
-			delete apiParams.bankId;
+			delete apiParams.demandBankId;
 			return false;
 		}
-		apiParams.bankId = picked.id;
+		apiParams.demanBankId = picked.id;
 	}
 	//进度id
 	$scope.categoryPicker = function(picked) {
@@ -659,12 +659,12 @@ page.ctrl('myCustomer', [], function($scope) {
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					xhr.data.unshift({
-						bankId: '全部',
+						id: '全部',
 						bankName: '全部'
 					});
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'id',
 						name: 'bankName'
 					};
 					cb(sourceData);
@@ -697,12 +697,12 @@ page.ctrl('myCustomer', [], function($scope) {
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					xhr.data.unshift({
-						taskCode: '全部',
+						taskNameCode: '全部',
 						taskName: '全部'
 					});
 					var sourceData = {
 						items: xhr.data,
-						id: 'taskCode',
+						id: 'taskNameCode',
 						name: 'taskName'
 					};
 					cb(sourceData);

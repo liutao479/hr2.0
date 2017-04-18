@@ -12,10 +12,11 @@
 	* @params {object} data 要渲染的数据 
 	**/
 	function hcommitBar($el, data, cb) {
-		// if(!data.commitBar) {
-		// 	$el.remove();
-		// 	return;
-		// }
+		console.log($el)
+		if(tool.isEmptyObject(data)) {
+			$el.remove();
+			return;
+		}
 		this.$commitBar = $(_.template(tpl)(data)).appendTo($el);
 	}
 	var tpl = '<div class="commit-orders-box">\

@@ -54,7 +54,15 @@
 								<!--二级标题（姓名，身份证等等...）end-->
 
 								<!--详细内容罗列-->
-								<div class="panel-detail-content panel-detail-table">{{console.log(row);}}
+								<div class="panel-detail-content panel-detail-table">
+									<!-- 征信是否合格 -->
+									<div class="panel-item-box mt15">
+										<div class="panel-key-area">征信是否合格：</div>
+										<div class="panel-value-area clearfix">
+											<div class="panel-value-item">{{=(col.creditLevel == 1 ? '正常' : (col.creditLevel == 2 ? '关注' : (col.creditLevel == 3 ? '禁入' : '')))}}</div>
+										</div>
+									</div>
+									<!-- 征信是否合格 end-->
 									{{ for(var p = 0, len4 = row.segments.length; p < len4; p++) { var ml = row.segments[p]; }}
 									<div class="panel-item-box mt15">
 										<div class="panel-key-area">{{=ml.name}}：</div>
@@ -84,13 +92,13 @@
 													{{ }else{ }}
 													<tr class="tr-even">
 													{{ } }}
-														<td class="td-key">{{=zxzd[2 * k].fieldName}}</td>
+														<td class="td-key"><i class="{{=(!zxzd[2 * k].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k].fieldName}}</td>
 														<td class="td-value"><input class="input zxzd{{=(zxzd[2 * k].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k].creditKey}}" data-required="{{=zxzd[2 * k].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit || ''}}</span></td>
 														{{ if(k == len6) { }}
 															<td class="td-key"></td>
 															<td class="td-value"></td>
 														{{ }else{ }}
-															<td class="td-key">{{=zxzd[2 * k + 1].fieldName}}</td>
+															<td class="td-key"><i class="{{=(!zxzd[2 * k + 1].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k + 1].fieldName}}</td>
 															<td class="td-value"><input class="input zxzd{{=(zxzd[2 * k + 1].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k + 1].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k + 1].creditKey}}" data-required="{{=zxzd[2 * k + 1].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit  || ''}}</span></td>
 														{{ } }}
 													</tr>

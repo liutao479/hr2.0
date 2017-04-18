@@ -101,9 +101,10 @@ page.ctrl('operationsTab3', ['vendor/echarts.min'], function($scope) {
 
 	// 查询列表数据
 	var searchlist=function(apiParams,cb){
+		console.log($http.api('statisticsPic/queryStatisticsByDayTime.html', 'operations'));
 		$.ajax({
 			type: 'post',
-			url: 'http://192.168.1.55:8080/statisticsPic/queryStatisticsByDayTime.html',
+			url: $http.api('statisticsPic/queryStatisticsByDayTime.html', 'operations'),
 			data: apiParams,
 			dataType:"json",	
 			headers: '',
@@ -119,8 +120,8 @@ page.ctrl('operationsTab3', ['vendor/echarts.min'], function($scope) {
 			cb();
 		}
 	};
-	var searchEcharts=function(params,_url){
-		var _src='http://192.168.1.55:8080/statisticsPic/'+_url+'.html';
+	var searchEcharts=function(params, _url){
+		var _src = $http.api('statisticsPic/' + _url + '.html', 'operations');
 		$.ajax({
 			type: 'post',
 			url: _src,

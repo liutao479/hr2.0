@@ -20,6 +20,7 @@
 			return this.replace(/(^\s*)|(\s*$)/g, '');
 		};
 	}
+
 	/*
 	* 本地验证规则
 	*/
@@ -41,17 +42,21 @@
 			return 'http://192.168.1.90:8083/mock/' + method;
 			// return 'http://192.168.1.144:8083/mock/' + method;
 		else
-			// return 'http://192.168.1.68:8089/' + method;
-			return 'http://192.168.0.186:9999/' + method;
-			// return 'http://192.168.1.194:8686/' + method;//cyj
-			// return 'http://192.168.1.74:8080/' + method;
-			// return 'http://192.168.1.124:8080/' + method;
-			// return 'http://192.168.1.132:8080/' + method;
-			// return 'http://192.168.0.22:8080/' + method;
-			
-		//Todo 发布时增加prefix
-		// return 'http://192.168.0.113:8080/' + method;
+			switch (name) {
+				case 'operations':
+					return 'http://192.168.0.187:8090/' + method;
+				default:
+					//return 'http://192.168.1.68:8089/' + method;
+					return 'http://192.168.0.187:9999/' + method;
+					// return 'http://192.168.0.186:9999/' + method;
+					// return 'http://192.168.1.194:8686/' + method;//cyj
+					// return 'http://192.168.1.74:8080/' + method;
+					 // return 'http://192.168.1.124:8080/' + method;
+					// return 'http://192.168.1.132:8080/' + method;
+					// return 'http://192.168.0.22:8080/' + method;
+			}
 	}
+
 	_.$http.authorization = function(key) {
 		$.ajaxSetup({
 			headers: {'Authorization': "Bearer " + key }
@@ -222,6 +227,17 @@
 		if(!total) return 0;
 		return Math.floor(total / pageSize) + (total % pageSize == 0 ? 0 : 1);
 	}
+
+	/**
+	 * 添加判断是否为空对象的方法
+	 */
+	tool.isEmptyObject = function(e) {  
+	    var t;  
+	    for (t in e)  
+	        return !1;  
+	    return !0  
+	} 
+
 	/**
 	 * 添加日期格式化方法
 	 * @params {number} time 时间戳

@@ -46,12 +46,11 @@ page.ctrl('creditApproval', [], function($scope) {
 	*/
 	var loadOrderInfo = function(idx, cb) {
 		$.ajax({
-			// url: 'http://127.0.0.1:8083/mock/creditInput',
 			type: 'post',
 			url: $http.api('creditUser/getCreditInfo', 'jbs'),
 			data: {
 				taskId: $params.taskId,
-				frameCode: 'T0061'
+				frameCode: $scope.frameCode || 'T0061'
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -69,9 +68,6 @@ page.ctrl('creditApproval', [], function($scope) {
 					if(userType != 0) {
 						$scope.result.index = userType;
 						$scope.idx = userType;
-					} else {
-						$scope.result.index = idx;
-						$scope.idx = idx;
 					}
 				}
 				$scope.result.editable = 0;
@@ -309,9 +305,10 @@ page.ctrl('creditApproval', [], function($scope) {
 					})
 				},
 				onclose: function(imgs) {
+					console.log(imgs)
 					$imgs.each(function(idx) {
 						$(this).find('.imgs-error').remove();
-						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].aduitResult]);
 					});
 				}
 			});
@@ -662,14 +659,23 @@ page.ctrl('creditApproval', [], function($scope) {
 			$paging: $console.find('#pageToolbar')
 		}
 		$scope.firstLoad = true;
-		loadOrderInfo($scope.idx, function() {
-			setupLocation();
-			evt();
-			setupSubmitBar();
-			setupBackReason($scope.result.data.loanTask.backApprovalInfo);
-			$scope.firstLoad = false;
-		});
-		
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditApproval/info', 'zyj'),
+			data: {
+				taskId: $params.taskId
+			},
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				$scope.frameCode = result.cfgData.frames[0].code;
+				loadOrderInfo($scope.idx, function() {
+					setupLocation();
+					evt();
+					setupSubmitBar();
+					setupBackReason($scope.result.data.loanTask.backApprovalInfo);
+					$scope.firstLoad = false;
+				});
+			})
+		})		
 	});
-
 });

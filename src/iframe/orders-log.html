@@ -71,12 +71,12 @@
 					<tbody>
 						{{ for(var i = 0; i < len; i++) { var row = it[i]; }}
 						<tr class="orders-item">
-							<td class="orders-item-data">{{=row.propertyName}}</td>
-							<td class="orders-item-data">{{=row.preValue}}</td>
-							<td class="orders-item-data">{{=row.curValue}}</td>
-							<td class="orders-item-data">{{=row.createDateStr}}</td>
-							<td class="orders-item-data">{{=row.roleName}}</td>
-							<td class="orders-item-data">{{=row.editUserName}}</td>
+							<td class="orders-item-data">{{=row.propertyName || ''}}</td>
+							<td class="orders-item-data">{{=row.preValue || ''}}</td>
+							<td class="orders-item-data">{{=row.curValue || ''}}</td>
+							<td class="orders-item-data">{{=row.createDateStr || ''}}</td>
+							<td class="orders-item-data">{{=row.roleName || ''}}</td>
+							<td class="orders-item-data">{{=row.editUserName || ''}}</td>
 						</tr>
 						{{ } }}
 					</tbody>
@@ -99,9 +99,9 @@
 					<tbody>
 						{{ for(var i = 0; i < len; i++) { var row = it[i]; }}
 						<tr class="orders-item">
-							<td class="orders-item-data">{{=row.telApprovalDateStr}}</td>
-							<td class="orders-item-data">{{=row.telUserName}}</td>
-							<td class="orders-item-data">{{=row.telApprovalName}}</td>
+							<td class="orders-item-data">{{=row.telApprovalDateStr || ''}}</td>
+							<td class="orders-item-data">{{=row.telUserName || ''}}</td>
+							<td class="orders-item-data">{{=row.telApprovalName || ''}}</td>
 						</tr>
 						{{ } }}
 					</tbody>
@@ -131,7 +131,7 @@
 								{{ } }}
 								<div class="catalog-content-text blue">
 									<span class="blue">
-										<span class="weight">【{{=row.taskName || '' || ''}}】</span><span>操作人：{{=row.userName}}（客户经理）</span>	
+										<span class="weight">【{{=row.taskName || '' || ''}}】</span><span>操作人：{{=row.userName}}（{{=row.roleName || '未知'}}）</span>	
 									</span>
 								</div>
 							</div>
@@ -143,7 +143,7 @@
 						<div class="catalog-time">
 							{{ if(i == 0) { }}
 							<div class="catalog-time-item catalog-year">
-								<span class="blue weight">{{=col.transDateYear}}</span>
+								<span class="blue weight">{{=col.transDateYear || ''}}</span>
 							</div>
 							{{ } }}
 							<div class="catalog-time-item catalog-date">
@@ -151,7 +151,7 @@
 							</div>
 							<div class="catalog-time-item catalog-hour">
 								<span>{{=col.transDateDay.split(' ')[1]}}</span><br />
-								<span>{{=col.transDateWeek}}</span>
+								<span>{{=col.transDateWeek || ''}}</span>
 							</div>
 						</div>
 						<div class="catalog-content{{=(i == len - 1 ? ' catalog-content-special' : '')}}">
@@ -163,7 +163,7 @@
 								</div>
 								<div class="catalog-content-text color-gray">
 									<span class="catalog-back">
-										<span class="weight">【{{=col.taskName || ''}}】</span><span>操作人：{{=col.userName}}（{{=col.rolaName || '角色名称'}}）</span>	
+										<span class="weight">【{{=col.taskName || ''}}】</span><span>操作人：{{=col.userName}}（{{=col.roleName || '未知'}}）</span>	
 									</span>
 								</div>
 							</div>
