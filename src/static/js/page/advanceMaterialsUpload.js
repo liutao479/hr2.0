@@ -19,14 +19,15 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 		}
 		$.ajax({
 			type: 'post',
-			url: $http.api('advancedMaterials/index'),
+			url: $http.api('advancedMaterials/index', true),
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
 				$scope.result = result;
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
-				$scope.result.category = 'loanMaterialsUpload';
+				$scope.result.orderNo = $params.orderNo;
+				$scope.result.category = 'advanceMaterialsUpload';
 				if($params.refer) {
 					$scope.result.editable = 0;
 				} else {
@@ -221,13 +222,14 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 	}
 
 	/**
-	* 底部按钮操作栏事件
+	* 退回原因选项分割
 	*/
 	var evt = function() {
 		/**
 		 * 订单退回的条件选项分割
 		 */
 		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		if(!taskJumps) return;
 		for(var i = 0, len = taskJumps.length; i < len; i++) {
 			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
 		}
