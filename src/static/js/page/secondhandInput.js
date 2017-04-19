@@ -192,7 +192,7 @@ page.ctrl('secondhandInput', function($scope) {
 					if(xhr.data){
 						var iptNode = "<input type='hidden' class='individuationId' name='id'>";
 						$("#dataform").append(iptNode);
-						$("#dataform").find(".individuationId").val(result.data);
+						$("#dataform").find(".individuationId").val(xhr.data);
 					}
 					console.log(xhr);
 					$.alert({
