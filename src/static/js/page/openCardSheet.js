@@ -110,6 +110,56 @@ page.ctrl('openCardSheet', function($scope) {
 		});
 	}
 	var setupEvt = function($el) {
+		$console.find('input[type="text"]').on('change', function() {
+			var thisName = $(this).attr('name'),
+				thisId = $(this).attr('id'),
+				that = $(this);
+			if(thisName == 'yearIncomeMoney' || thisName == 'loanMoney' || thisName == 'feeRate' || thisName == 'carPrice'){
+				var thisVal = that.val();
+				var reg = /^(\d+\.\d{1,4}|\d+)$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">该项只能填写数字及最多四位小数</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'homezip' || thisName == 'corpzip' ){
+				var thisVal = that.val();
+				var reg = /^[1-9][0-9]{5}$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">邮政编码格式不正确</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'mvblno' || thisName == 'reltmobl1' || thisName == 'reltmobl2' ){
+				var thisVal = that.val();
+				var reg = /^(13[0-9]{9})|(15[89][0-9]{8})$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">手机号码格式不正确</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'hphoneno' || thisId == 'cophone' || thisName == 'relaphone1'|| thisName == 'rtcophon2'){
+				var thisVal = that.val();
+				var reg = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">固码格式为“XXXX-12345678-8888”</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'stmtemail' ){
+				var thisVal = that.val();
+				var reg = /\w@\w*\.\w/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">邮箱格式不正确</i>');
+					that.val('');
+				}
+			}
+		})
 		$(".select-text").each(function(){
 			$(this).attr('readonly','readonly')
 		})
