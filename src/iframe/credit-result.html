@@ -132,7 +132,11 @@
 									<div class="panel-item-box">
 										<div class="panel-key-area">征信报告详表：</div>
 										<div class="panel-value-area clearfix">
-											<a data-href="#" href="{{=col.creditReportFile}}" target="_blank" class="to-view">点击查看</a>
+											{{ if(!col.creditReportFile) { }}
+											<div class="panel-value-item">未上传征信报告文件</div>
+											{{ } else { }}
+											<a href="{{=col.creditReportFile}}" target="_blank" class="to-view">点击查看</a>
+											{{ } }}
 										</div>
 									</div>
 									<!-- 征信报告详表 end-->
