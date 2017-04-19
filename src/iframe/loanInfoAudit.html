@@ -141,6 +141,16 @@
 																	<input type="hidden" name="{{= detailCode }}" />
 																{{ } }}
 															</td>
+														{{ }else if( detailCode == 'sex' ){ }}
+															<td>
+																{{ if(row[detailCode] || row[detailCode] == '0'){ }}
+																	<div data-key="{{= detailCode}}" data-selected="{{= row[detailCode]}}" class="select select-common pointDisabled" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+																	<input type="hidden" name="{{= detailCode}}"  value="{{= row[detailCode]}}" />
+																{{ }else{ }}
+																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+																	<input type="hidden" name="{{= detailCode }}" />
+																{{ } }}
+															</td>
 														{{ }else if(detailCode == 'serviceType' || detailCode == 'businessModel' || detailCode == 'brand' || detailCode == 'busiSourceTypeCode' || detailCode == 'busimode' || detailCode == 'repayPeriod'){ }}
 															<td>
 																{{ if(row[detailCode] || row[detailCode] == '0'){ }}
