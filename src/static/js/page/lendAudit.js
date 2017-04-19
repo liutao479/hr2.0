@@ -115,7 +115,21 @@ page.ctrl('lendAudit', function($scope) {
 		$sub.on('applyAdvance', function() {
 			$.alert({
 				title: '申请平台垫资',
-				content: tool.alert('确定申请平台垫资并同意签署<a href="javascript:;" style="text-decoration: underline;">《代还款承诺函》</a>吗？'),
+				content: tool.alert('确定申请平台垫资并同意签署<a href="javascript:;" class="view-sign" style="text-decoration: underline;">《代还款承诺函》</a>吗？'),
+				onContentReady: function() {
+					// this.$content.find('view-sign')
+					$.ajax({
+						type: 'post',
+						url: $http.api('contract/sign', 'jbs'),
+						data: {
+							orderNo: $params.orderNo
+						},
+						dataType: 'json',
+						success: $http.ok(function(xhr) {
+							console.log(xhr)
+						})
+					})
+				},
 				buttons: {
 					close: {
 						text: '取消',
@@ -139,7 +153,18 @@ page.ctrl('lendAudit', function($scope) {
 				title: '自行垫资',
 				content: doT.template(dialogTml.wContent.selfAdvance)({}),
 				onContentReady: function() {
-					
+					this.$content.find('.uploadEvt').imgUpload();
+					//启动用款时间日历控件
+					this.$content.find('.dateBtn').datepicker({
+						dateFmt: 'yyyy-MM-dd HH:mm',
+						onpicked: function() {
+						},
+						oncleared: function() {
+						}
+					});
+					this.$content.find('.input-text input').on('focus', function() {
+						$(this).parent().find('.input-err').remove();
+					})
 				},
 				buttons: {
 					close: {
@@ -149,7 +174,61 @@ page.ctrl('lendAudit', function($scope) {
 					ok: {
 						text: '确定',
 						action: function() {
-							
+							var that = this,
+								flag = true,
+								params = {},
+								$inputs = that.$content.find('.input-text input'),
+								reason = $.trim(that.$content.find('#suggestion').val());
+							$inputs.each(function() {
+								var value = $.trim($(this).val());
+								if(!value) {
+									$(this).parent().append('<span class="input-err">该项不能为空！</span>');
+									flag = false;
+								} else if(!regMap[$(this).data('type')].test(value)) {
+									$(this).parent().find('.input-err').remove();
+									// if($(this).data('type') == 'accountNumber') {
+									// 	$(this).parent().append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
+									// } else {
+									// 	$(this).parent().append('<span class="input-err">该项不符合输入规则！（10位汉字）</span>')
+									// }
+									$(this).parent().append('<span class="input-err">该项不符合输入规则！</span>');
+									flag = false;
+								} else {
+									params[$(this).data('key')] = value;
+								}
+							});
+							if(reason) params.reason = reason;
+							if(flag) {
+								// $.ajax({
+								// 	type: 'post',
+								// 	url: $http.api('makeLoanApproval/submit/' + $params.taskId, 'zyj'),
+								// 	data: params,
+								// 	dataType: 'json',
+								// 	success: $http.ok(function(result) {
+								// 		console.log(result);
+								// 		// router.render('loanProcess');
+								// 		// toast.hide();
+								// 	})
+								// })
+							} else {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请完善各项信息！'),
+									buttons: {
+										close: {
+											text: '取消',
+											btnClass: 'btn-default btn-cancel'
+										},
+										ok: {
+											text: '确定',
+											action: function() {
+
+											}
+										}
+									}
+								});
+								return false;
+							}
 						}
 					}
 				}
@@ -282,7 +361,7 @@ page.ctrl('lendAudit', function($scope) {
 						var that = this;
         				$.ajax({
 							type: 'post',
-							url: $http.api('loanApproval/submit/' + $params.taskId),
+							url: $http.api('loanApproval/submit/' + $params.taskId, true),
 							dataType: 'json',
 							data: {
 								taskId: $params.taskId,

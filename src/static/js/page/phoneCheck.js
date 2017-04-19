@@ -201,7 +201,7 @@ page.ctrl('phoneCheck', function($scope) {
 						var that = this;
         				$.ajax({
 							type: 'post',
-							url: $http.api('loanApproval/submit/' + $params.taskId),
+							url: $http.api('loanApproval/submit/' + $params.taskId, true),
 							dataType: 'json',
 							data: {
 								taskId: $params.taskId,

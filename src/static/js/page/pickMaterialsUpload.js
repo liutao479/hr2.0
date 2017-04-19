@@ -89,6 +89,23 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 	}
 
 	/**
+	 * 材料必填，必传检验
+	 */
+	function checkData(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('orderMaterial/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
 	* 设置底部按钮操作栏
 	*/
 	var setupSubmitBar = function() {
@@ -179,7 +196,9 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 		})
 	}
 
@@ -216,7 +235,6 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 								}
 								var reason = $.trim(that.$content.find('#suggestion').val());
 								if(reason) params.reason = reason;
-								console.log(params);
 								flow.tasksJump(params, 'complete');
 							})
 						})
