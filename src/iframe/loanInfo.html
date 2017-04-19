@@ -134,11 +134,26 @@
 																{{ } }} 
 																{{= seg.name}}：</span>
 														</td>
-														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'isDiscount' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship'){ }}
+														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'isDiscount' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise'){ }}
 															<td>
 																{{ if(row[detailCode] || row[detailCode] == '0'){ }}
 																	<div data-key="{{= detailCode}}" data-selected="{{= row[detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
 																	<input type="hidden" name="{{= detailCode}}"  value="{{= row[detailCode]}}" />
+																{{ }else{ }}
+																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
+																	<input type="hidden" name="{{= detailCode }}" />
+																{{ } }}
+															</td>
+														{{ }else if(detailCode == 'userRelationship'){ }}
+															<td>
+																{{ if(row[detailCode] || row[detailCode] == '0'){ }}
+																	{{ if(row[detailCode] == '-1'){ }}
+																		<div data-key="{{= detailCode}}" data-selected="其他" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
+																		<input type="hidden" name="{{= detailCode}}"  value="{{= row[detailCode]}}" />
+																	{{ }else{ }}
+																		<div data-key="{{= detailCode}}" data-selected="{{= row[detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
+																		<input type="hidden" name="{{= detailCode}}"  value="{{= row[detailCode]}}" />
+																	{{ } }}
 																{{ }else{ }}
 																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfo'].selfPicker" data-trigger="page.$scope['loanInfo'].dropdownTrigger.selfPicker"></div>
 																	<input type="hidden" name="{{= detailCode }}" />

@@ -552,6 +552,7 @@ page.ctrl('openCardSheet', function($scope) {
 			setupSubmitBar();
 			setupDropDown();
 			seleLoad();
+			$console.find('#cophonext').removeClass('required');
 		});
 	});
 
