@@ -120,42 +120,44 @@ flow.tasksJump = function(params, type, cb) {
 		contentType: 'application/json;charset=utf-8',
 		success: $http.ok(function(result) {
 			console.log(result);
-			var loanTasks = result.data;
-			if(loanTasks.length == 0) {
-				// toast显示
-				router.render('loanProcess');
-			} else {
-				var taskObj = [], flag = 0;
-				for(var i = 0, len = loanTasks.length; i < len; i++) {
-					var obj = loanTasks[i];
-					taskObj.push({
-						key: obj.category,
-						id: obj.id,
-						name: obj.sceneName,
-						submited: obj.submited
-					})
-					if(!loanTasks[i].submited) {
-						flag++;
+			var loanTasks = result.data,
+				content = type == 'creditQuery' ? '已发送征信查询！': '提交成功！';
+			$.toast(content, function() {
+				if(loanTasks.length == 0) {
+					router.render('loanProcess');
+				} else {
+					var taskObj = [], flag = 0;
+					for(var i = 0, len = loanTasks.length; i < len; i++) {
+						var obj = loanTasks[i];
+						taskObj.push({
+							key: obj.category,
+							id: obj.id,
+							name: obj.sceneName,
+							submited: obj.submited
+						})
+						if(!loanTasks[i].submited) {
+							flag++;
+						}
 					}
-				}
-				// debugger
-				for(var j = 0, len2 = loanTasks.length; j < len2; j++) {
-					if(!loanTasks[j].submited) {
-						var target = loanTasks[j];
-						var selected = j;
-						if(flag == 1) taskObj[selected].submited = true;
-						break;
+					// debugger
+					for(var j = 0, len2 = loanTasks.length; j < len2; j++) {
+						if(!loanTasks[j].submited) {
+							var target = loanTasks[j];
+							var selected = j;
+							if(flag == 1) taskObj[selected].submited = true;
+							break;
+						}
 					}
+
+					router.render('loanProcess/' + target.category, {
+						taskId: target.id, 
+						orderNo: target.orderNo,
+						selected: selected,
+						tasks: taskObj,
+						path: 'loanProcess'
+					});
 				}
-				router.render('loanProcess/' + target.category, {
-					taskId: target.id, 
-					orderNo: target.orderNo,
-					selected: selected,
-					tasks: taskObj,
-					path: 'loanProcess'
-				});
-			}
-			
+			});
 		})
 	})
 	
