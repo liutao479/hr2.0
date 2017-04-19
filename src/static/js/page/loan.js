@@ -25,9 +25,7 @@ page.ctrl('loan', function($scope) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page, true);
 				setupEvent();
-				$.toast('积分电视剧覅好的覅点击覅点击覅电话费杜甫', function() {
-
-				})
+				
 
 				// 测试复选框
 				// $scope.$checks = $('.checkbox').checking();
@@ -35,6 +33,7 @@ page.ctrl('loan', function($scope) {
 				// $scope.$checks[0].$checking.onChange(function() {
 				// 	console.log(this)
 				// });
+				// $.toast('电视机顶精神抖擞及第三季度年四季度年四季度年四季度你说的就是你的就是你的就是你的几十年倒计时电脑上几年的就是你的就是你的及时的', function() {})
 
 				if(cb && typeof cb == 'function') {
 					cb();

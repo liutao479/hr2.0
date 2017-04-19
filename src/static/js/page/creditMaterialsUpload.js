@@ -244,7 +244,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result);
-									router.render('loanProcess');
+									$.toast('已取消该订单！', function() {
+										router.render('loanProcess');
+									});
 								})
 							})
 						}
@@ -548,7 +550,13 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			} else if(!regMap[type].test(value)) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
-				$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
+				if(type == 'userName') {
+					$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
+				} else if(type == 'idCard') {
+					$parent.append('<span class=\"input-err\">请输入15或18位身份证号！</span>');
+				} else if(type == 'mobile') {
+					$parent.append('<span class=\"input-err\">请输入11位手机号！</span>');
+				}
 				value = '';
 				// return false;
 			} else {
