@@ -147,8 +147,8 @@ page.ctrl('openCardSheet', function($scope) {
 				$("#feeamount").val(feeamount);
 				$("#adjustAmount").val(adjustAmount);
 				if(carPrice){
-					loanRatio = (adjustAmount*1) / (carPrice*1);
-					var loanRatio1 = loanRatio.toFixed(2)
+					loanRatio = (adjustAmount*1) / (carPrice*1) * 100;
+					var loanRatio1 = loanRatio.toFixed(6)
 					$("#loanRatio").val(loanRatio1);
 				}
 			}
@@ -167,8 +167,8 @@ page.ctrl('openCardSheet', function($scope) {
 				$("#feeamount").val(feeamount);
 				$("#adjustAmount").val(adjustAmount);
 				if(carPrice){
-					loanRatio = (adjustAmount*1) / (carPrice*1);
-					var loanRatio1 = loanRatio.toFixed(2)
+					loanRatio = (adjustAmount*1) / (carPrice*1) * 100;
+					var loanRatio1 = loanRatio.toFixed(6)
 					$("#loanRatio").val(loanRatio1);
 				}
 			}
@@ -179,8 +179,8 @@ page.ctrl('openCardSheet', function($scope) {
 				carPrice = $("#carPrice").val(),
 				loanRatio;
 			if(adjustAmount && carPrice){
-				loanRatio = (adjustAmount*1) / (carPrice*1);
-				var loanRatio1 = loanRatio.toFixed(2)
+				loanRatio = (adjustAmount*1) / (carPrice*1) * 100;
+				var loanRatio1 = loanRatio.toFixed(6)
 				$("#loanRatio").val(loanRatio1);
 			}
 		})
