@@ -7,7 +7,7 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 			pageSize: 20
 		};
 
-	var internel = {};
+	var internel = $scope.internel = {};
 	internel.tabs = [
 		{
 			code: 'O001',
@@ -20,21 +20,95 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 			path: 'overdue'
 		}
 	];
-
-	internel.pickedType = function() {
-
+	//选择催收类型
+	internel.pickedType = function(picked) {
+		$scope.overdueType = picked.id;
+	}
+	//展开催收类型
+	internel.openType = function(t, p, cb) {
+		cb({
+			items: [
+				{
+					id: 0,
+					name: '电话催收'
+				},
+				{
+					id: 1,
+					name: '线下催收'
+				},
+				{
+					id: 2,
+					name: '法务催收'
+				}
+			],
+			id: 'id',
+			name: 'name'
+		})
 	}
 
-	internel.openType = function() {
-
+	internel.pickedUser = function(picked) {
+		$scope.overdueUser = picked.id;
 	}
 
-	internel.pickedUser = function() {
-
+	internel.openUser = function(t, p, cb) {
+		if($scope.overdueType == undefined) return;
+		if($scope.overdueUsers && $scope.overdueUsers[$scope.overdueType]) {
+			return cb({
+				items: $scope.overdueUsers[$scope.overdueType],
+				id: 'id',
+				name: 'name'
+			})
+		}
+		$.ajax({
+			url: $http.api('loanOverdueOrder/queryCollectionUsers', true),
+			data: {
+				auditState: $scope.overdueType + 1
+			},
+			global: false,
+			success: $http.ok(function(response) {
+				if(!$scope.overdueUsers) $scope.overdueUsers = {};
+				$scope.overdueUsers[$scope.overdueType] = response.data;
+				cb({
+					items: response.data,
+					id: 'id',
+					name: 'name'
+				})
+			})
+		})
 	}
-
-	internel.openUser = function() {
-
+	/**
+	* 执行派发
+	*/
+	internel.dispatch = function($diag) {
+		var $err = $diag.$content.find('.color-red');
+		if(!$scope.overdueType || !$scope.overdueUser) {
+			$err.html('请选择催收处理人员').show();
+			return false;
+		}
+		if(!$scope.overdueType || !$scope.overdueUser) {
+			return false;
+		}
+		$.ajax({
+			url: $http.api('loanOverdueOrder/orderHanded', true),
+			data: {
+				orderNo: $params.orderNo,
+				auditState: $scope.overdueType + 1,
+				handleUserId: $scope.overdueUser,
+				auditIdea: $diag.find('textarea').val().trim()
+			},
+			success: $http.ok(function() {
+				$diag.close();
+			}),
+			error: function() {
+				$diag.close();
+				$.alert({
+					title: '错误',
+					content: '派发失败，请重试',
+					autoClose: 'ok|3000',
+					buttons: { ok: {text: '确定'}}
+				})
+			}
+		})
 	}
 
 	/**
@@ -170,12 +244,10 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 	* 绑定搜索事件
 	**/
 	var setupEvent = function($el) {
-		//详情页面确定取消按钮
-		$console.find('#expManage').on('click', function() {
-			router.render('expireProcess');
-		});
 		//详情页面跳转
 		$console.find('#sendExp').on('click', function() {
+			$scope.overdueType = undefined;
+			$scope.overdueUser = undefined;
 			$.confirm({
 				title: '派发逾期处理',
 				content: 'url:./defs/overdue.send.html',
@@ -186,7 +258,10 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 					ok: {
 						text: '确定',
 						action: function() {
+							$.toast('我勒个去代理商可的上队列反馈是两地分居开始落地加福禄寿', function() {
 
+							})
+							return internel.dispatch(this);
 						}
 					},
 					cancel: {

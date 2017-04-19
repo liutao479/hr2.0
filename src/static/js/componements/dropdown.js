@@ -139,6 +139,7 @@
 		
 	};
 	dropdown.prototype.listenItem = function(items){
+		if(!items) return;
 		var self = this;
 		items.actionName = self.text[self.actionIdx];
 		if(self.opts.tabs.length <= 1) {
@@ -252,7 +253,7 @@
 	internal.template = {};
 	internal.template.fields = '<div class="select-field{{=(it.readonly ? \" readonly\": \"\")}}">\
 									{{ if(it.placeholder) { }}\
-									<input type="text" {{=it.disabled || \"\"}} placeholder="{{=(it.readonly ? \"全部\" : \"可输入过滤条件\")}}" class="select-text" value="{{=it.selected}}" />\
+									<input type="text" {{=it.disabled || \"\"}} placeholder="{{=it.placeholder}}" class="select-text" value="{{=it.selected}}" />\
 									{{ } else { }}\
 									<input type="text" {{=it.disabled || \"\"}} placeholder="{{=(it.readonly ? \"请选择\" : \"可输入过滤条件\")}}" class="select-text" value="{{=it.selected}}" />\
 									{{ } }}\
