@@ -68,8 +68,8 @@
 											</td>
 										{{ }else if(fieldCode == 'taxIsPay'){ }}
 											<td>
-												<div class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-dropdown="page.$scope['secondhandInput'].selfPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.selfPicker"></div>
-												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
+												<div class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '0') : ''}}" data-dropdown="page.$scope['secondhandInput'].selfPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '0') : ''}}" />
 											</td>
 										{{ }else if(fieldCode == 'carMode'){ }}
 											<td>
@@ -78,7 +78,7 @@
 											</td>
 										{{ }else if(fieldCode == 'location'){ }}
 											<td>
-												<div id="location" class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
+												<div id="location1" class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
 											</td>
 										{{ }else{ }}
 											<td>

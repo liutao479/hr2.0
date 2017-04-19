@@ -24,6 +24,7 @@ page.ctrl('secondhandInput', function($scope) {
 				loanFinishedInput();
 				loanFinishedInputReq();
 				setupDatepicker();
+				setupEvt();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -44,7 +45,30 @@ page.ctrl('secondhandInput', function($scope) {
 		});
 		$location.location();
 	}
-
+	var setupEvt = function($el) {
+		$console.find('input[type="text"]').on('change', function() {
+			var thisName = $(this).attr('name'),
+				that = $(this);
+			if(thisName == 'salePrice' || thisName == 'systemCarPrice' || thisName == 'systemCarPriceLowest'){
+				var thisVal = that.val();
+				var reg = /^(\d+\.\d{1,2}|\d+)$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">该项只能填写数字及最多两位位小数</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'purchasedAdditionalFee' || thisName == 'usedPeriod' || thisName == 'carMileage' || thisName == 'assessPrice' || thisName == 'transferTimes' ){
+				var thisVal = that.val();
+				var reg = /^\d+$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">该项只能填写整数</i>');
+					that.val('');
+				}
+			}
+		})
+	}
 	/**
 	* 设置底部按钮操作栏
 	*/
@@ -167,7 +191,6 @@ page.ctrl('secondhandInput', function($scope) {
 			}
 		});
 		if(isTure){
-//			debugger
 			var data;
 	        var formList = $('#dataform');
 	        var params = formList.serialize();
@@ -184,17 +207,14 @@ page.ctrl('secondhandInput', function($scope) {
 			$.ajax({
 				type: 'post',
 				url: $http.api('loanCarAssess/submit/' + $params.taskId, 'jbs'),
-//				data: JSON.stringify(data),
 				data: data,
 				dataType: 'json',
-//				contentType: 'application/json;charset=utf-8',
 				success: $http.ok(function(xhr) {
 					if(xhr.data){
 						var iptNode = "<input type='hidden' class='individuationId' name='id'>";
 						$("#dataform").append(iptNode);
 						$("#dataform").find(".individuationId").val(xhr.data);
 					}
-					console.log(xhr);
 					$.alert({
 						title: '提示',
 						content: tool.alert('信息已保存！'),
@@ -276,7 +296,7 @@ page.ctrl('secondhandInput', function($scope) {
 		$("#carName").val(carname);
 	}
 	$scope.areaPicker = function(picked) {
-		var locationName = $("#location").find('.select-text').val();
+		var locationName = $("#location1").find('.select-text').val();
 		$("#locationName").val(locationName);
 		var originAreaName = $("#originArea").find('.select-text').val();
 		$("#originAreaName").val(originAreaName);
