@@ -25,6 +25,9 @@ page.ctrl('loan', function($scope) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page, true);
 				setupEvent();
+				$.toast('积分电视剧覅好的覅点击覅点击覅电话费杜甫', function() {
+
+				})
 
 				// 测试复选框
 				// $scope.$checks = $('.checkbox').checking();

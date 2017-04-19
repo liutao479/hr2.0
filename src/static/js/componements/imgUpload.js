@@ -716,8 +716,6 @@
 			left: pointer.left + half,
 			len: half
 		}
-		// self.$toolbar.$zoomThumb.css({left: self.tool.zeroPoint.left - 5 + 'px'});
-
 		if(!self.opts.markable) {
 			self.$toolbar.$mark.remove();
 		}
