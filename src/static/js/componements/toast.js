@@ -4,10 +4,70 @@
  * @return 
  */  
 'use strict';
-(function($, _) {
-    
-})(jQuery, doT);
+(function(_) {
+    var toast = function() {
+        this.def = {
+            opacity: .7,
+            zIndex: 99999999
+        }
+        this.__init();
+    }
 
+    toast.prototype.__init = function() {
+        this.background = '<div style="position: fixed; left: 50%; top: 50%; width:300px; margin-left: -150px; z-index:{1}; border-radius:2px; background-color: #000; opacity: {0};"></div>';
+        this.content = '<div style="position: fixed; left: 50%; top: 50%; padding: 20px; color: #fff; line-height: 22px; z-index:{0};">{1}</div>';
+        this.$el = $('body');
+    }
+
+    toast.prototype.__setup = function(msg, opts) {
+        var self = this;
+        opts = $.extend(self.def, opts);
+        self.$background = $(self.background.format(opts.opacity, opts.zIndex)).appendTo(self.$el);
+        self.$content = $(self.content.format(opts.zIndex+1, msg)).appendTo(self.$el);
+        var width = self.$content.width() + 40;
+        if(width > 300) {
+            width = 300;
+        }
+        self.$content.css({
+            width: width + 'px',
+            marginLeft: -width/2 + 'px'
+        });
+        var height = self.$content.height() + 40;
+        self.$background.css({
+            height: height + 'px',
+            marginTop: -height/2 +'px'
+        });
+        self.$content.css({
+            marginTop: -height/2 + 'px'
+        });
+    }
+
+    toast.prototype.show = function(msg, opts, callback) {
+        var self = this;
+        self.__setup(msg, opts || {});
+        setTimeout(function() {
+            self.close();
+            callback && typeof callback == 'function' && callback();
+        }, opts.timeout || 1500);
+    }
+
+    toast.prototype.close = function() {
+        this.$background.remove();
+        this.$content.remove();
+    }
+
+    var _toast = new toast();
+
+    _.toast = function(msg, opts, callback) {
+        if(typeof opts == 'function') {
+            callback = opts;
+            opts = {};
+        }
+        _toast.show(msg, opts, callback);
+    }
+})(jQuery);
+
+/*
 var Toast = function(config){  
     this.context = config.context==null?$('body'):config.context;//上下文  
     this.message = config.message;//显示内容  
@@ -40,4 +100,5 @@ Toast.prototype = {
     }  
           
 }  
+*/
     // new Toast({context:$('body'),message:'Toast效果显示'}).show();    

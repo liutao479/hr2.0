@@ -117,7 +117,7 @@
 
 		function internal(e) {
 			$.ajax({
-				url: $http.api('busiMsg/get', true),
+				url: $http.api('busiMsg/get', 'test'),
 				global: false,
 				data: {
 					pageNum: 1,

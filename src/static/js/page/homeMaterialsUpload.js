@@ -198,7 +198,8 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
-			// checkData(function() {
+			checkData(function() {
+				debugger
 				var canSubmit = flow.taskSubmit($params.tasks, $params.taskId);
 				if(canSubmit) {
 					return process();
@@ -224,7 +225,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 						}
 					}
 				})
-			// })
+			})
 		})
 	}
 

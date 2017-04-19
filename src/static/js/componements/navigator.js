@@ -85,10 +85,22 @@ $(function() {
 			if(!self.message) return;
 			var idx = $(this).data('idx');
 			var item = self.message.items[idx];
-			router.render('message/detail', {
-				id: item.id,
-				status: item.status
-			})
+			if(item.taskId) {
+				$.ajax({
+					url: $http.api('busiMsg/getLoanTaskId', 'test'),
+					data: {
+						orderNo: item.orderNo
+					},
+					success: $http.ok(function(response) {
+						redirect.toLoanProcess(response.data);
+					})
+				})
+			} else {
+				router.render('message/detail', {
+					id: item.id,
+					status: item.status
+				})	
+			}
 		})
 	}
 

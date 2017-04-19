@@ -59,7 +59,8 @@
 			deletecb: $.noop,
 			uploadcb: $.noop,
 			viewable: false,
-			markable: false
+			markable: false,
+			creditClickAble: undefined
 		}
 		var self = this;
 		self.$el = $el;
@@ -152,6 +153,20 @@
 	imgUpload.prototype.listen = function() {
 		var self = this;
 		if(self.status != 2) {
+			if(self.options.creditClickAble) {
+				self.$el.find('.activeEvt').on('click', function() {
+					$.alert({
+						title: '提示',
+						content: tool.alert('征信已经返回,不能修改'),
+						buttons: {
+							ok: {
+								text: '确定'
+							}
+						}
+					})
+					return false;
+				})
+			}
 			self.$el.find('.activeEvt').on('change', function() {
 				// console.log(this.files[0])
 				// console.log(this.value.split("\\\\"));
@@ -207,8 +222,38 @@
 		}
 		if(self.status == 1) {
 			self.$el.find('.imgs-delete').on('click', function() {
-				self.$el.find('.imgs-item-upload').LoadingOverlay("show");
-				self.onDelete();
+				if(self.options.creditClickAble) {
+					$.alert({
+						title: '提示',
+						content: tool.alert('征信已经返回,不能修改'),
+						buttons: {
+							ok: {
+								text: '确定',
+								action: function() {
+									
+								}
+							}
+						}
+					})
+					return false;
+				}
+				$.alert({
+					title: '提示',
+					content: tool.alert('确认删除该照片吗？'),
+					buttons: {
+						close: {
+							text: '取消',
+							btnClass: 'btn-default btn-cancel'
+						},
+						ok: {
+							text: '确定',
+							action: function() {
+								self.$el.find('.imgs-item-upload').LoadingOverlay("show");
+								self.onDelete();
+							}
+						}
+					}
+				})
 			});	
 		}
 		self.$el.find('.viewEvt').on('click', function() {
@@ -671,8 +716,6 @@
 			left: pointer.left + half,
 			len: half
 		}
-		// self.$toolbar.$zoomThumb.css({left: self.tool.zeroPoint.left - 5 + 'px'});
-
 		if(!self.opts.markable) {
 			self.$toolbar.$mark.remove();
 		}
