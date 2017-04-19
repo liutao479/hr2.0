@@ -116,6 +116,14 @@ page.ctrl('loanInfoAudit', function($scope) {
 				$(this).removeClass('pointDisabled');
 			}
 		})
+		$(".reneDiv").each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		});
 	}
 	/**
 	* 绑定立即处理事件
@@ -512,7 +520,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 	})
 	$(document).on('click','.loan-info .checkbox', function() {
 		$(this).parents().removeClass("error-input");
-		$(this).parent().parent().siblings("i").remove();
+		$(this).parent().parent().parent().siblings("i").remove();
 	})
 	$(document).on('click','.select', function() {
 		$(this).removeClass("error-input");
@@ -730,14 +738,6 @@ page.ctrl('loanInfoAudit', function($scope) {
 			});
 		})
 	}
-	var cannotClick = function(){
-		$(".info-key-value-box").each(function(){
-			$(this).addClass("pointDisabled");
-		});
-		$(".info-key-check-box").each(function(){
-			$(this).addClass("pointDisabled");
-		});
-	}
 	/**
 	* 下拉
 	*/
@@ -787,14 +787,14 @@ page.ctrl('loanInfoAudit', function($scope) {
 		var isDiscount = $("#isDiscount").val();
 		console.log(isDiscount);
 		if(isDiscount != '1'){
-			$("#discountRate").siblings().find('i').hide();
-			$("#discountRate").find('input').removeClass('required');
-			$("#discountMoney").siblings().find('i').hide();
-			$("#discountMoney").find('input').removeClass('required');
+			$("#discountRate").parents('.info-key-value-box').hide();
+			$("#discountRate").find('input').removeClass('required').val('0');
+			$("#discountMoney").parents('.info-key-value-box').hide();
+			$("#discountMoney").find('input').removeClass('required').val('0');
 		}else{
-			$("#discountRate").siblings().find('i').show();
+			$("#discountRate").parents('.info-key-value-box').show();
 			$("#discountRate").find('input').addClass('required');
-			$("#discountMoney").siblings().find('i').show();
+			$("#discountMoney").parents('.info-key-value-box').show();
 			$("#discountMoney").find('input').addClass('required');
 		}
 	}
@@ -811,16 +811,19 @@ page.ctrl('loanInfoAudit', function($scope) {
 		console.log(picked);
 	}
 	$scope.busiSourceNamePicker = function(picked) {
-		console.log(picked);
 		$scope.busiSourceNameId = picked.id;
 		$("#numIpt").val('');
+		$("#bankName").val('');
+		$("#accountName").val('');
+		$("#numSel").find('.select-text').hide();
+		
 		var numSeled = $("#numSel").data('selected');
 		if(numSeled){
 			numSeled = '';
 		}
 	}
 	$scope.remitAccountNumberPicker = function(picked) {
-		console.log(picked);
+		$("#numSel").find('.select-text').show();
 		$("#bankName").val(picked.bankName)
 		$("#accountName").val(picked.accountName)
 	}
@@ -833,8 +836,11 @@ page.ctrl('loanInfoAudit', function($scope) {
 		loanFinishedrepay();
 	}
 	$scope.carPicker = function(picked) {
+		var pirce = picked['车型'].price;
+		$("#systemCarPrice").val(pirce);
 		var carname = $("#carMode").find('.select-text').val();
 		$("#carName").val(carname);
+		
 	}
 	$scope.bankPicker = function(picked) {
 		console.log(picked);
@@ -890,7 +896,8 @@ page.ctrl('loanInfoAudit', function($scope) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'carSerieId',
-						name: 'specName'
+						name: 'specName',
+						price: 'advisePrics'
 					};
 					cb(sourceData);
 				}

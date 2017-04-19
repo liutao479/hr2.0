@@ -146,7 +146,7 @@ page.ctrl('openCardSheet', function($scope) {
 				var reg = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
-					$(this).after('<i class="error-input-tip sel-err">固码格式为“XXXX-12345678-8888”</i>');
+					$(this).after('<i class="error-input-tip sel-err">0000-12345678-8888(如有分机号)</i>');
 					that.val('');
 				}
 			}
@@ -177,12 +177,17 @@ page.ctrl('openCardSheet', function($scope) {
 		$console.find('.uploadEvt').imgUpload();
 		$console.find('#cophone').on('change', function() {
 			var cophone = $(this).val();
-			var cophone1 = cophone.substring(0,4),
-				cophone2 = cophone.substring(cophone.length-8,cophone.length-4),
-				cophone3 = cophone.substring(cophone.length-4,cophone.length);
-			$("#cophozono").val(cophone1);
-			$("#cophoneno").val(cophone2);
-			$("#cophonext").val(cophone3);
+			var phoneArr = cophone.split('-');
+			if(!phoneArr[2]){
+				$("#cophozono").val(phoneArr[0]);
+				$("#cophoneno").val(phoneArr[1]);
+				$("#cophonext").val('');
+				$("#cophonext").removeClass('required');
+			}else{
+				$("#cophozono").val(phoneArr[0]);
+				$("#cophoneno").val(phoneArr[1]);
+				$("#cophonext").val(phoneArr[2]);
+			}
 		})
 		$console.find('#loanMoney').on('change', function() {
 			var loanMoney = $("#loanMoney").val(),

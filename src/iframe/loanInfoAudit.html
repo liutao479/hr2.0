@@ -469,6 +469,88 @@
 									<div class="loan-info">
 										{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x]; }}
 											{{var detailCode = seg.code;}}
+											{{ if(detailCode == 'renewalMode'){ }}
+											<div class="positionRela">
+												<div class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
+													<table>
+														<tr>
+															<td>
+																<span class="info-key">
+																	{{ if(seg.empty == '0'){ }}
+																	<i>*</i>
+																	{{ } }} 
+																	{{= seg.name}}：</span>
+															</td>
+															<td>
+																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
+																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+																	<input type="hidden" name="{{= detailCode}}"  value="{{= it.data[fieldCode][detailCode]}}" />
+																{{ }else{ }}
+																	<div data-key="{{= detailCode}}" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+																	<input type="hidden" name="{{= detailCode }}" />
+																{{ } }}
+															</td>
+														</tr>
+													</table>		
+												</div>
+												<div class="positionAbso" style="left: 50%;top: 13px;">
+													<div class="reneDiv" data-edit='{{= seg.isEditor}}' id="year1">
+														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[0]){ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.renewalInfo[0]}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="{{= it.data.FQXX.renewalInfo[0]}}" />
+														{{ }else{ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="1" />
+														{{ } }}
+													</div>
+													<div class="reneDiv" data-edit='{{= seg.isEditor}}' id="year2">
+														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[1]){ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.renewalInfo[1]}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="{{= it.data.FQXX.renewalInfo[1]}}" />
+														{{ }else{ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="1" />
+														{{ } }}
+													</div>
+													<div class="reneDiv" data-edit='{{= seg.isEditor}}' id="year3">
+														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[2]){ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.renewalInfo[2]}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="{{= it.data.FQXX.renewalInfo[2]}}" />
+														{{ }else{ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="1" />
+														{{ } }}
+													</div>
+													<div class="reneDiv" data-edit='{{= seg.isEditor}}' id="year4">
+														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[3]){ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.renewalInfo[3]}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="{{= it.data.FQXX.renewalInfo[3]}}" />
+														{{ }else{ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="1" />
+														{{ } }}
+													</div>
+													<div class="reneDiv" data-edit='{{= seg.isEditor}}' id="year5">
+														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[4]){ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.renewalInfo[4]}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="{{= it.data.FQXX.renewalInfo[4]}}" />
+														{{ }else{ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="1" />
+														{{ } }}
+													</div>
+													<div class="reneDiv" data-edit='{{= seg.isEditor}}' id="year6">
+														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[5]){ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.renewalInfo[5]}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="{{= it.data.FQXX.renewalInfo[5]}}" />
+														{{ }else{ }}
+															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
+															<input type="hidden" class="bxxbyearIpt" value="1" />
+														{{ } }}
+													</div>
+												</div>
+											</div>
+											{{ }else{ }}	
 											<div class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
 												<table>
 													<tr>
@@ -479,7 +561,7 @@
 																{{ } }} 
 																{{= seg.name}}：</span>
 														</td>
-														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'sex' || detailCode == 'renewalMode' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship'){ }}
+														{{ if(detailCode == 'isSecond' || detailCode == 'licenseType' || detailCode == 'isInstallGps' || detailCode == 'isFinanceLeaseVehicle' || detailCode == 'isOperationVehicle' || detailCode == 'sex' || detailCode == 'renewalModeList' || detailCode == 'isAdvanced' || detailCode == 'maritalStatus' || detailCode == 'houseStatus' || detailCode == 'isEnterprise' || detailCode == 'userRelationship'){ }}
 															<td>
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																	<div data-key="{{= detailCode}}" data-selected="{{= it.data[fieldCode][detailCode]}}" class="select select-common" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
@@ -609,6 +691,18 @@
 																	{{ } }}
 																</span>
 															</td>
+														{{ }else if(detailCode == 'utilityTime'){ }}
+															<td>
+																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
+																	<div class="input-text input-date-mid borderNone">
+																		<input name="{{= detailCode}}" id="id" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{= it.data[fieldCode].utilityTimeStr}}" />	
+																	</div>
+																{{ }else{ }}
+																	<div class="input-text input-date-mid borderNone">
+																		<input name="{{= detailCode}}" id="id" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="" />	
+																	</div>
+																{{ } }}
+															</td>
 														{{ }else{ }}
 															<td>
 																<span class="info-value">
@@ -623,128 +717,8 @@
 													</tr>
 												</table>
 											</div>
+											{{ } }}
 										{{ } }}
-										<div id="year1" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
-											<table>
-												<tr>
-													<td>
-														<span class="info-key">
-															<i>*</i>
-															第一年：</span>
-													</td>
-													<td>
-														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[0]){ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.firstYear}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" value="{{= it.data.FQXX.renewalInfo[0]}}" />
-														{{ }else{ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" class="bxxbyearIpt" value="1" />
-														{{ } }}
-													</td>
-												</tr>
-											</table>
-										</div>
-										<div id="year2" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
-											<table>
-												<tr>
-													<td>
-														<span class="info-key">
-															<i>*</i>
-															第二年：</span>
-													</td>
-													<td>
-														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[1]){ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.firstYear}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" value="{{= it.data.FQXX.renewalInfo[1]}}" />
-														{{ }else{ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" class="bxxbyearIpt" value="1" />
-														{{ } }}
-													</td>
-												</tr>
-											</table>
-										</div>
-										<div id="year3" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
-											<table>
-												<tr>
-													<td>
-														<span class="info-key">
-															<i>*</i>
-															第三年：</span>
-													</td>
-													<td>
-														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[2]){ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.firstYear}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" value="{{= it.data.FQXX.renewalInfo[2]}}" />
-														{{ }else{ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" class="bxxbyearIpt" value="1" />
-														{{ } }}
-													</td>
-												</tr>
-											</table>
-										</div>
-										<div id="year4" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
-											<table>
-												<tr>
-													<td>
-														<span class="info-key">
-															<i>*</i>
-															第四年：</span>
-													</td>
-													<td>
-														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[3]){ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.firstYear}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" value="{{= it.data.FQXX.renewalInfo[3]}}" />
-														{{ }else{ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" class="bxxbyearIpt" value="1" />
-														{{ } }}
-													</td>
-												</tr>
-											</table>
-										</div>
-										<div id="year5" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
-											<table>
-												<tr>
-													<td>
-														<span class="info-key">
-															<i>*</i>
-															第五年：</span>
-													</td>
-													<td>
-														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[4]){ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.firstYear}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" value="{{= it.data.FQXX.renewalInfo[4]}}" />
-														{{ }else{ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" class="bxxbyearIpt" value="1" />
-														{{ } }}
-													</td>
-												</tr>
-											</table>
-										</div>
-										<div id="year6" class="info-key-value-box" data-edit='{{= seg.isEditor}}'>
-											<table>
-												<tr>
-													<td>
-														<span class="info-key">
-															<i>*</i>
-															第六年：</span>
-													</td>
-													<td>
-														{{ if(it.data.FQXX && it.data.FQXX.renewalInfo && it.data.FQXX.renewalInfo[5]){ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="{{= it.data.FQXX.firstYear}}" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" value="{{= it.data.FQXX.renewalInfo[5]}}" />
-														{{ }else{ }}
-															<div data-key="renewalModeList" class="select select-common" data-selected="单位承保" data-dropdown="page.$scope['loanInfoAudit'].selfPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.selfPicker"></div>
-															<input type="hidden" class="bxxbyearIpt" value="1" />
-														{{ } }}
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
 										<input type="hidden" name="renewalInfo">
 									{{ if(it.data[fieldCode] && it.data[fieldCode].stageId){ }}
 										<input type="hidden" name="stageId" value="{{= it.data[fieldCode].stageId}}">
@@ -755,6 +729,7 @@
 								</form>
 							</div>
 						</div>
+					</div>	
 					{{ }else if(fieldCode == 'CLXX'){ }}
 						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
 						<div class="panel panel-loan no-top-border">
@@ -958,6 +933,16 @@
 																	<div id="carMode" class="select select-common" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['loanInfoAudit'].carPicker" data-trigger="page.$scope['loanInfoAudit'].dropdownTrigger.car"></div>
 																	<input type="hidden" name="carMode" />
 																{{ } }}
+															</td>
+														{{ }else if(detailCode == 'systemCarPrice'){ }}
+															<td>
+																<span class="info-value pointDisabled">
+																	{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
+																		<input id="systemCarPrice" type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
+																	{{ }else{ }}
+																		<input id="systemCarPrice" type="text" name="{{= detailCode}}" />
+																	{{ } }}
+																</span>
 															</td>
 														{{ }else{ }}
 															<td>
