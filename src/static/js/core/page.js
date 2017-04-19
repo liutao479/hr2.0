@@ -80,9 +80,28 @@ $('.tips-area').hover(function() {
 flow = {};
 
 flow.taskSubmit = function(data) {
+	// var taskObj, flag;
+	// for(var i = 0, len = data.length; i < len; i++) {
+	// 	var row = data[i];
+	// 	if(!row.submited) {
+	// 		taskObj.push(row);
+	// 		flag++;
+	// 	}
+	// }
+	debugger
 	for(var i = 0, len = data.length; i < len; i++) {
 		var row = data[i];
-		if(!row.submited) return false; 
+		if(!row.submited) {
+			for(var j = i + 1, len2 = data.length; j < len2; j++) {
+				var col = data[j];
+				if(!col.submited) {
+					flow.nextTaskName = col.name;
+				} else {
+					flow.nextTaskName = '';
+				}
+			}
+			return false; 
+		}
 	}
 	return true;
 }

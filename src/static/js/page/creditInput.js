@@ -456,7 +456,6 @@ page.ctrl('creditInput', [], function($scope) {
 			} else {
 				$parent.removeClass('error-input');
 				$parent.find('.input-err').remove();
-				value = '';
 			}
 			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 				var item = $scope.apiParams[i];

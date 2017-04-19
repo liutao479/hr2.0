@@ -205,7 +205,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 				}
 				$.alert({
 					title: '提示',
-					content: tool.alert('您还有未完成的tab栏任务，前往完善？'),
+					content: tool.alert('请完成' + flow.nextTaskName + '再提交！'),
 					buttons: {
 						ok: {
 							text: '确定',

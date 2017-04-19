@@ -382,6 +382,14 @@
 			title: '逾期记录',
 			page: 'expireSingleDetail'
 		},
+		'expireProcess/overdueList': {
+			title: '逾期处理详情',
+			page: 'expireOverdueList'
+		},
+		'expireProcess/overdueIdea': {
+			title: '逾期处理详情',
+			page: 'expireOverdueIdea'
+		},
 		'licenceProcess/licenceProcessDetail': {
 			title: '上牌办理详情',
 			page: 'licenceProcessDetail'
@@ -414,6 +422,15 @@
 			title: '新建/编辑合作车商',
 			page: 'newCar'
 		},
+
+		'message' :{
+			title: '消息列表',
+			page: 'message'
+		},
+		'message/detail': {
+			title: '消息详情',
+			page: 'msgdetail'
+		},	
 
 		'test': {
 			title: '测试文件',
@@ -480,7 +497,9 @@
 		'T00108': 'loanMaterialsUpload',//贷款材料
 		'T00109': 'signMaterialsUpload',//签约材料
 		'T00110': 'loanMaterialsUpload',//贷款材料
-		'T00111': 'homeMaterialsUpload'//上门材料
+		'T00111': 'homeMaterialsUpload',//上门材料
+		'O001': 'overdueList',
+		'O002': 'overdueIdea'
 	}
 	var todoMap = {'T0004': '',
 	'T0005': '',

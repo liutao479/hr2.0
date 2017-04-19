@@ -43,14 +43,28 @@ page.ctrl('expireInfoInput', [], function($scope) {
 				processData: false,
 				dataType: 'json',
 				contentType: false,
-				success: function() {
-					$("#content").hide();
-					render.compile($console.find('#importResultTable'), $console.find('#importResultTmpl').html(), arguments[0].data, true);
-					setupEvt();
+				success: function(xhr) {
+					if(!xhr.code) {
+						$("#content").hide();
+						render.compile($console.find('#importResultTable'), $scope.def.importResultTmpl, xhr.data, true);
+					} else {
+						$.alert({
+							title: '错误',
+							content: xhr.msg,
+							autoClose: 'ok|3000',
+							buttons: {
+								ok: {text: '确定'}
+							}
+						})
+					}
 				},
 				error: function() {
-					$("#content").hide();
-					render.compile($console.find('#importResultTable'), $console.find('#importErrorTmpl').html(), arguments, true);
+					$.alert({
+						title: '错误',
+						content: '逾期数据解析失败，请重试',
+						autoClose: 'ok|3000',
+						buttons: {ok:{text:'确定'}}
+					})
 				}
 			})
 			
@@ -59,8 +73,9 @@ page.ctrl('expireInfoInput', [], function($scope) {
     
 	$scope.bankPicker = function(picked) {
 		var demandBankId = $("#demandBankId").val();
+		console.log(picked);
 		if(demandBankId){
-			$("#bankCnName").text(picked.accountName + '-' + picked.name);
+			// $("#bankCnName").text(picked.name);
 			$("#updFileBox").show();
 		};
 	}
@@ -73,9 +88,9 @@ page.ctrl('expireInfoInput', [], function($scope) {
 		demandBankId: function(t, p, cb) {
 			$.ajax({
 				type: 'post',
-//				url: $http.api('loanOverdueImport/queryDemandBank', 'jbs'),
-				url: urlStr + '/loanOverdueImport/queryDemandBank',
+				url: $http.api('loanOverdueImport/queryDemandBank', true),
 				dataType: 'json',
+				global: false,
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
@@ -93,6 +108,10 @@ page.ctrl('expireInfoInput', [], function($scope) {
 	* 加载页面模板
 	*/
 	$console.load(router.template('iframe/expire-info-input'), function() {
+		$scope.def.importResultTmpl = $console.find('#importResultTmpl').html();
+		$scope.$el = {
+			$result : $console.find('#importResultTable')
+		}
 		setupDropDown();
 		setupEvt();
 	});

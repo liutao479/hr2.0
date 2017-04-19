@@ -472,12 +472,14 @@
 						self.$el.html(internalTemplates.modify.format(self.name,self.url));
 						self.status = 1;	
 						self.listen();
+						self.$el.find('.imgs-error').remove();
 						self.$el.find('img').attr('src',_url);
 						self.uplCb(self, response);
 					} else {
 						self.$el.html(internalTemplates.modify.format(self.name,self.url));
 						self.status = 1;	
 						self.listen();
+						self.$el.find('.imgs-error').remove();
 						self.$el.find('img').attr('src',_url);
 						self.uplCb(self, response);
 					}
@@ -582,6 +584,8 @@
 		self.setToolbar();
 		self.setClose()
 		self.listen();
+		self.setImage(self.imgs[self.runtime.idx]);
+		self.$items.eq(self.runtime.idx).addClass('active');	
 	};
 
 	/**
@@ -620,8 +624,6 @@
 		self.$viewbox = self.$preview.find('#__move__trigger');
 		self.$prev = self.$preview.find('.prev');
 		self.$next = self.$preview.find('.next');
-		self.setImage(self.imgs[self.runtime.idx]);
-		self.$items.eq(self.runtime.idx).addClass('active');
 	};
 	/**
 	* 构造工具条
@@ -662,8 +664,15 @@
 		self.$toolbar.$zoomTrack = self.$toolbar.$root.find('.zoom-track');
 		self.$toolbar.$zoomThumb = self.$toolbar.$zoomTrack.find('.track-thumb');
 		self.$toolbar.$zoomScale = self.$toolbar.$root.find('.zoom-scale');
-		self.tool.zeroPoint = self.$toolbar.$zoomTrack.offset();
 		self.tool.trackWidth = (self.runtime.vw - 370 > 270 ? 200 : 100);
+		var half = self.tool.trackWidth / 2,
+		 	pointer = self.$toolbar.$zoomTrack.offset();
+		self.tool.zeroPoint = {
+			left: pointer.left + half,
+			len: half
+		}
+		// self.$toolbar.$zoomThumb.css({left: self.tool.zeroPoint.left - 5 + 'px'});
+
 		if(!self.opts.markable) {
 			self.$toolbar.$mark.remove();
 		}
@@ -780,17 +789,21 @@
 		self.$toolbar.$zoomTrack.on('mousemove', function(evt) {
 			if(!self.tool.canZoom) return false;
 			var xAxis = evt.pageX - self.tool.zeroPoint.left;
-			if(xAxis >= self.tool.trackWidth) return self.tool.canZoom = false;
-			var mod = 1 + xAxis / self.tool.trackWidth;
+			if(Math.abs(xAxis) >= self.tool.zeroPoint.len) return self.tool.canZoom = false;
+			var mod = 1 + xAxis / self.tool.zeroPoint.len;
 			var rate = mod.toFixed(2);
-			if(xAxis > self.tool.trackWidth - 10) { 
-				xAxis = self.tool.trackWidth - 10;
+			if(xAxis > self.tool.zeroPoint.len - 10) { 
+				xAxis = self.tool.zeroPoint.len - 10;
 				rate = "2.00";
 				mod = 2;
+			} else if(xAxis < -(self.tool.zeroPoint.len - 10)) {
+				xAxis = -self.tool.zeroPoint.len;
+				rate = '0.00';
+				mod = 0;
 			}
+			xAxis = self.tool.zeroPoint.len + xAxis;
 			self.$toolbar.$zoomThumb.css({left: xAxis+'px'});
 			self.$toolbar.$zoomScale.html(parseInt(mod * 100) + '%')
-			console.log(rate)
 			self.zoom(rate);
 		})
 		self.$toolbar.$zoomTrack.on('mouseleave mouseup', function(evt) {
@@ -863,9 +876,10 @@
 	}
 
 	Preview.prototype.reset = function() {
+		var self = this;
 		this.tool.transform = '';
 		this.$view.css({transform: this.tool.transform});
-		this.$toolbar.$zoomThumb.css({left: 0});
+		this.$toolbar.$zoomThumb.css({left: self.tool.zeroPoint.len - 5 + 'px'});
 		this.$toolbar.$zoomScale.html('100%');
 		this.originPos = null;
 		this.endPos = null;

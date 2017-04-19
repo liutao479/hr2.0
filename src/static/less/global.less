@@ -887,6 +887,9 @@ input[disabled]{
     &.panel-mb0 {
         margin-bottom: 0;
     }
+    &.panel-nonetop {
+        border-top: none;
+    }
     &.panel-bottom {
         padding-bottom: 180px;
     }
@@ -1359,7 +1362,7 @@ input[disabled]{
                 .iconfont-box {
                     display: inline-block;
                     text-align: center;
-                    line-height: 40px;
+                    line-height: 34px;
                     width: 40px;
                     height: 40px;
                     color: #FFF;
@@ -1925,6 +1928,7 @@ input[disabled]{
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 a {
+                    cursor: pointer;
                     color: @fontColor;
                     &:hover {
                         color: @mainColor;
@@ -3207,6 +3211,13 @@ input[disabled]{
             position: absolute;
             left: 120px;
             width: 240px;
+        }
+        .btn {
+            position: absolute;
+            height: 32px;
+            right: 100px;
+            line-height: 32px;
+            padding: 0 8px;
         }
     }
     
