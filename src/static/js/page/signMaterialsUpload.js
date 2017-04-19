@@ -120,33 +120,34 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		 * 提交订单
 		 */
 		$sub.on('taskSubmit', function() {
-			checkData(function() {
-				var canSubmit = flow.taskSubmit($params.tasks, $params.taskId);
-				if(canSubmit) {
-					return process();
-				}
-				$.alert({
-					title: '提示',
-					content: tool.alert('请完成' + flow.nextTaskName + '再提交！'),
-					buttons: {
-						ok: {
-							text: '确定',
-							action: function() {
-								var taskIds = [];
-								for(var i = 0, len = $params.tasks.length; i < len; i++) {
-									taskIds.push(parseInt($params.tasks[i].id));
-								}
-								var params = {
-									taskId: $params.taskId,
-									taskIds: taskIds,
-									orderNo: $params.orderNo
-								}
-								flow.tasksJump(params, 'complete');
-							}
-						}
-					}
-				})
-			})
+			process();
+			// checkData(function() {
+			// 	var canSubmit = flow.taskSubmit($params.tasks, $params.taskId);
+			// 	if(canSubmit) {
+			// 		return process();
+			// 	}
+			// 	$.alert({
+			// 		title: '提示',
+			// 		content: tool.alert('请完成' + flow.nextTaskName + '再提交！'),
+			// 		buttons: {
+			// 			ok: {
+			// 				text: '确定',
+			// 				action: function() {
+			// 					var taskIds = [];
+			// 					for(var i = 0, len = $params.tasks.length; i < len; i++) {
+			// 						taskIds.push(parseInt($params.tasks[i].id));
+			// 					}
+			// 					var params = {
+			// 						taskId: $params.taskId,
+			// 						taskIds: taskIds,
+			// 						orderNo: $params.orderNo
+			// 					}
+			// 					flow.tasksJump(params, 'complete');
+			// 				}
+			// 			}
+			// 		}
+			// 	})
+			// })
 		})
 
 		/**
