@@ -317,7 +317,6 @@ page.ctrl('creditApproval', [], function($scope) {
 
 		//查看征信材料
 		$self.find('.view-creditMaterials').on('click', function() {
-			// alert('还未做该功能，暂时不测！谢谢！ T.T');
 			var that = $(this);
 			var imgs = $scope.result.data.creditUsers[that.data('type')][that.data('idx')].creditMaterials;
 			$.preview(imgs, function(img, mark, cb) {

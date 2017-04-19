@@ -117,7 +117,7 @@ page.ctrl('loan', function($scope) {
 				if(!loanTasks[i].submited) {
 					var target = loanTasks[i];
 					var selected = i;
-					if(flag == 1) taskObj[selected].submited = true;
+					// if(flag == 1) taskObj[selected].submited = true;
 					break;
 				}
 			}

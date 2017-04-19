@@ -120,8 +120,30 @@ flow.tasksJump = function(params, type, cb) {
 		contentType: 'application/json;charset=utf-8',
 		success: $http.ok(function(result) {
 			console.log(result);
-			var loanTasks = result.data,
-				content = type == 'creditQuery' ? '已发送征信查询！': '提交成功！';
+			var loanTasks = result.data, content;
+			switch (type) {
+				case 'creditQuery':
+					content = '已发送征信查询！';
+					break;
+				case 'backOrder':
+					content = '处理成功！';
+					break;
+				case 'rejectOrder':
+					content = '该订单已被终止！';
+					break;
+				case 'cancelOrder':
+					content = '已取消该订单！';
+					break;
+				case 'approvalPass':
+					content = '处理成功！';
+					break;
+				case 'taskSubmit':
+					content = '提交成功！';
+					break;
+				default:
+					content = '提交成功！';
+					break;
+			}
 			$.toast(content, function() {
 				if(loanTasks.length == 0) {
 					router.render('loanProcess');
@@ -139,12 +161,11 @@ flow.tasksJump = function(params, type, cb) {
 							flag++;
 						}
 					}
-					// debugger
 					for(var j = 0, len2 = loanTasks.length; j < len2; j++) {
 						if(!loanTasks[j].submited) {
 							var target = loanTasks[j];
 							var selected = j;
-							if(flag == 1) taskObj[selected].submited = true;
+							// if(flag == 1) taskObj[selected].submited = true;
 							break;
 						}
 					}
