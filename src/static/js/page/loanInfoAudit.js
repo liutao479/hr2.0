@@ -100,18 +100,20 @@ page.ctrl('loanInfoAudit', function($scope) {
 	}
 	
 	var dis = function(){
-		$('.info-key-value-box').each(function(){
-			var edit = $(this).data('edit');
-			if(edit == '0'){
-				$(this).addClass('pointDisabled');
-			}else{
-				$(this).removeClass('pointDisabled');
-			}
-		})
 		$('.info-key-check-box').each(function(){
 			var edit = $(this).data('edit');
 			if(edit == '0'){
 				$(this).addClass('pointDisabled');
+				$(this).find('input').removeClass('required');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		})
+		$('.info-key-value-box').each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+				$(this).find('input').removeClass('required');
 			}else{
 				$(this).removeClass('pointDisabled');
 			}
@@ -120,6 +122,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 			var edit = $(this).data('edit');
 			if(edit == '0'){
 				$(this).addClass('pointDisabled');
+				$(this).find('input').removeClass('required');
 			}else{
 				$(this).removeClass('pointDisabled');
 			}
@@ -133,12 +136,21 @@ page.ctrl('loanInfoAudit', function($scope) {
 		$console.find('input[type="text"]').on('change', function() {
 			var thisName = $(this).attr('name'),
 				that = $(this);
-			if(thisName == 'carPrice' || thisName == 'phone' || thisName == 'systemCarPrice' || thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'advancedMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'companyTel' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
+			if(thisName == 'carPrice' || thisName == 'phone' || thisName == 'systemCarPrice' || thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'advancedMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
 				var thisVal = that.val();
 				var reg = /^(\d+\.\d{1,4}|\d+)$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip sel-err">该项只能填写数字及最多四位小数</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'familyTel' || thisName == 'companyTel' ){
+				var thisVal = that.val();
+				var reg = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">0000-12345678-8888(如有分机号)</i>');
 					that.val('');
 				}
 			}
@@ -765,6 +777,11 @@ page.ctrl('loanInfoAudit', function($scope) {
 			$(this).attr('readonly','readonly')
 		})
 	}
+	var noWrite = function(){
+		$(".pointDisabled").each(function(){
+			$(this).find('input').attr('readonly','readonly')
+		})
+	}
 	
 	/**
 	 * 加载页面模板
@@ -780,6 +797,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 			seleLoad();
 			dis();
 			seNotInp();
+			noWrite();
 		});
 	});
 	

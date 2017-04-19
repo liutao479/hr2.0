@@ -140,12 +140,21 @@ page.ctrl('loanInfo', function($scope) {
 		$console.find('input[type="text"]').on('change', function() {
 			var thisName = $(this).attr('name'),
 				that = $(this);
-			if(thisName == 'carPrice' || thisName == 'phone' || thisName == 'systemCarPrice' || thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'advancedMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'companyTel' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
+			if(thisName == 'carPrice' || thisName == 'phone' || thisName == 'systemCarPrice' || thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'advancedMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
 				var thisVal = that.val();
 				var reg = /^(\d+\.\d{1,4}|\d+)$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip sel-err">该项只能填写数字及最多四位小数</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'familyTel' || thisName == 'companyTel' ){
+				var thisVal = that.val();
+				var reg = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">0000-12345678-8888(如有分机号)</i>');
 					that.val('');
 				}
 			}
@@ -181,30 +190,6 @@ page.ctrl('loanInfo', function($scope) {
 				}
 			}
 		})
-		$('.info-key-check-box').each(function(){
-			var edit = $(this).data('edit');
-			if(edit == '0'){
-				$(this).addClass('pointDisabled');
-			}else{
-				$(this).removeClass('pointDisabled');
-			}
-		})
-		$('.info-key-value-box').each(function(){
-			var edit = $(this).data('edit');
-			if(edit == '0'){
-				$(this).addClass('pointDisabled');
-			}else{
-				$(this).removeClass('pointDisabled');
-			}
-		})
-		$(".reneDiv").each(function(){
-			var edit = $(this).data('edit');
-			if(edit == '0'){
-				$(this).addClass('pointDisabled');
-			}else{
-				$(this).removeClass('pointDisabled');
-			}
-		});
 		$console.find('.checkbox-normal').on('click', function() {
 		   	var keyData = $(this).attr("data-key");
 		   	var keyCode = $(this).attr("data-code");
@@ -661,18 +646,7 @@ page.ctrl('loanInfo', function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
-			$.alert({
-				title: '提示',
-				content: tool.alert('请确认保存各模块信息！'),
-				buttons: {
-					ok: {
-						text: '确定',
-						action: function() {
-							process();
-						}
-					}
-				}
-			});
+			process();
 		})
 	}
 
@@ -801,8 +775,39 @@ page.ctrl('loanInfo', function($scope) {
 				})
 			}
 		})
+		$('.info-key-check-box').each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+				$(this).find('input').removeClass('required');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		})
+		$('.info-key-value-box').each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+				$(this).find('input').removeClass('required');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		})
+		$(".reneDiv").each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+				$(this).find('input').removeClass('required');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		});
 	}
-
+	var noWrite = function(){
+		$(".pointDisabled").each(function(){
+			$(this).find('input').attr('readonly','readonly')
+		})
+	}
 	/**
 	 * 加载页面模板
 	 */
@@ -820,6 +825,7 @@ page.ctrl('loanInfo', function($scope) {
 			seleLoad();
 			seNotInp();
 			setupDatepicker();
+			noWrite();
 		});
 	});
 
