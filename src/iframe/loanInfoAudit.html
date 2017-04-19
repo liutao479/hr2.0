@@ -994,7 +994,7 @@
 															</td>
 														{{ }else if(detailCode == 'carPrice'){ }}
 															<td>
-																<span class="info-value pointDisabled">
+																<span class="info-value">
 																	{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																	{{ }else{ }}

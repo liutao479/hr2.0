@@ -255,6 +255,11 @@ page.ctrl('secondhandAudit', function($scope) {
 			$(this).addClass("pointDisabled");
 		});
 	}
+	var noWrite = function(){
+		$(".pointDisabled").each(function(){
+			$(this).find('input').attr('readonly','readonly')
+		})
+	}
 	/***
 	* 加载页面模板
 	*/
@@ -267,6 +272,7 @@ page.ctrl('secondhandAudit', function($scope) {
 		loadLoanList(function(){
 			setupDropDown();
 			cannotClick();
+			noWrite();
 		});
 	});
 });

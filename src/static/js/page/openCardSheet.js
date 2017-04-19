@@ -536,6 +536,11 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		})
 	}
+	var noWrite = function(){
+		$(".pointDisabled").each(function(){
+			$(this).find('input').attr('readonly','readonly')
+		})
+	}
 	
 	/***
 	* 加载页面模板
@@ -552,6 +557,7 @@ page.ctrl('openCardSheet', function($scope) {
 			setupSubmitBar();
 			setupDropDown();
 			seleLoad();
+			noWrite();
 			$console.find('#cophonext').removeClass('required');
 		});
 	});
