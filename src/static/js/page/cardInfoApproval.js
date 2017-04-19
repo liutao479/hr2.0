@@ -69,7 +69,6 @@ page.ctrl('cardInfoApproval', function($scope) {
 
 	var piclick = function(){
 		$console.find('.viewEvt').on('click', function() {
-			debugger
 			var that = $(this);
 			var imgs = {},
 				ipt = [];
