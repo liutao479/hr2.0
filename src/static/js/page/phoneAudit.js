@@ -21,7 +21,6 @@ page.ctrl('phoneAudit', function($scope) {
 				$scope.result = result;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				if(result.cfgData.frames[0].code != 'T0046'){
-					debugger
 					$(".saveBtn").hide();
 					$(".selecter").addClass('pointDisabled');
 					$(".textArea").addClass('pointDisabled');
@@ -163,10 +162,10 @@ page.ctrl('phoneAudit', function($scope) {
 		return false;
 	});
 
-//点击下拉消失	zhy
-	$(document).on("click",function(e){ 
+	//点击下拉消失	zhy
+	$(document).on("click",function(e){
 		var target = $(e.target);
-		if(target.closest(".selectOptBox1").length == 0){ 
+		if(target.closest(".selecter").length == 0){ 
 			$(".selectOptBox1").hide();
 			return;
 		}
