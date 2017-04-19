@@ -120,8 +120,8 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		 * 提交订单
 		 */
 		$sub.on('taskSubmit', function() {
-			checkData(function() {
-				var canSubmit = flow.taskSubmit($params.tasks);
+			// checkData(function() {
+				var canSubmit = flow.taskSubmit($params.tasks, $params.taskId);
 				if(canSubmit) {
 					return process();
 				}
@@ -146,7 +146,7 @@ page.ctrl('signMaterialsUpload', function($scope) {
 						}
 					}
 				})
-			})
+			// })
 		})
 
 		/**
