@@ -356,7 +356,7 @@
 							<dt class="dt">打款单位名称：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="receiveCompany" value="{{=it.receiveCompany || \"\"}}">\
+									<input type="text required" id="receiveCompany" data-key="receiveCompany" data-type="accountName" value="{{=it.receiveCompany || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
@@ -364,7 +364,15 @@
 							<dt class="dt">账号：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="receiveAccountName" value="{{=it.receiveAccountName || \"\"}}">\
+									<input type="text required" id="receiveAccount" data-key="receiveAccount" data-type="accountNumber" value="{{=it.receiveAccount || \"\"}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown">\
+							<dt class="dt">账户：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="receiveAccountName" data-key="receiveAccountName" data-type="accountName" value="{{=it.receiveAccountName || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
@@ -372,7 +380,7 @@
 							<dt class="dt">开户行：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || \"\"}}">\
+									<input type="text required" id="receiveAccountBank" data-key="receiveAccountBank" data-type="accountName" value="{{=it.receiveAccountBank || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
@@ -380,7 +388,7 @@
 							<dt class="dt">垫资时间：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-date">\
-									<input id="loaningDate" type="text" class="dateBtn" readonly="readonly" value="{{=it.loaningDateStr || \"\"}}" />\
+									<input id="loaningDate" type="text" class="dateBtn" data-key="loaningDate" data-type="yymmddhhmm" readonly="readonly" value="{{=it.loaningDate || \"\"}}" />\
 								</div>\
 							</dd>\
 						</dl>\
@@ -388,7 +396,7 @@
 							<dt class="dt">打款金额：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="paymentMoney" value="{{=it.paymentMoney || \"\"}}"><span class="unit">元</span>\
+									<input type="text required" id="paymentMoney" data-key="paymentMoney" data-type="money" value="{{=it.paymentMoney || \"\"}}"><span class="unit">元</span>\
 								</div>\
 							</dd>\
 						</dl>\
@@ -396,7 +404,7 @@
 							<dt class="dt">垫资开户银行：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="advanceAccountName" value="{{=it.advanceAccountName || \"\"}}">\
+									<input type="text required" id="advanceAccountName" data-key="advanceAccountName" data-type="accountName" value="{{=it.advanceAccountName || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
@@ -404,14 +412,14 @@
 							<dt class="dt">垫资账户：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="advanceAccount" value="{{=it.advanceAccount || \"\"}}">\
+									<input type="text required" id="advanceAccount" data-key="advanceAccount" data-type="accountName" value="{{=it.advanceAccount || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
 						<dl class="w-dropdown">\
 							<dt class="dt">垫资凭证：</dt>\
 							<dd class="dd">\
-								<div class="imgs-item-group pointDisabled openCardPic uploadEvt" data-deletecb="page.$scope[\"lendAudit\"].deletecb" data-uploadcb="page.$scope[\"lendAudit\"].uploadcb" data-upl-url="" data-id="" data-orderno="" data-code="" data-name="信用卡申请表" data-scene="" data-user="" data-img="" data-err="0" data-editable="1"></div>\
+								<div class="imgs-item-group pointDisabled openCardPic uploadEvt" data-deletecb="page.$scope[\"lendAudit\"].deletecb" data-uploadcb="page.$scope[\"lendAudit\"].uploadcb" data-upl-url="" data-id="" data-orderno="" data-code="" data-name="垫资回单" data-scene="" data-user="" data-img="" data-err="0" data-editable="1"></div>\
 							</dd>\
 						</dl>\
 					</div>'

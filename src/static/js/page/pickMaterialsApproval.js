@@ -45,6 +45,7 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 		});
 		$location.location();
 	}
+
 	
 	/**
 	* 加载左侧导航菜单
