@@ -77,9 +77,20 @@ page.ctrl('newBank', [], function($scope) {
 		$scope.$el.$bankDataPanel.find('.select').dropdown();
 
 		$console.find('#bankDataSave').on('click', function() {
+			if(!$scope.bankId) {
+				$.alert({
+					title: '提示',
+					content: tool.alert('请选择银行！'),
+					buttons: {
+						ok: {
+							text: '确定'
+						}
+					}
+				});
+				return false;
+			}
 			var _params = {
-				bankId: $scope.bankId,
-				bankName: $scope.bankName
+				bankCode: $scope.bankId
 			};
 			$.ajax({
 				url: $http.api('demandBank/save', 'cyj'),
@@ -122,7 +133,7 @@ page.ctrl('newBank', [], function($scope) {
 					if($(this).data('type') == 'accountNumber') {
 						$(this).parent().append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
 					} else {
-						$(this).parent().append('<span class="input-err">该项不符合输入规则！</span>')
+						$(this).parent().append('<span class="input-err">该项不符合输入规则！（10位户名）</span>')
 					}
 				} else {
 					params[$(this).data('type')] = value;

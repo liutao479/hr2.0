@@ -95,7 +95,7 @@ page.ctrl('creditApproval', [], function($scope) {
 								setupTabEvt();
 							});
 							// 编译tab项对应内容
-							setupCreditPanel(idx, $scope.result);
+							setupCreditPanel($scope.idx, $scope.result);
 							if(cb && typeof cb == 'function') {
 								cb();
 							};						

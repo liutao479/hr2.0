@@ -41,7 +41,7 @@ $(function() {
 	
 	function init() {
 		setupMenu();
-		addListener();
+		// addListener();
 		setDefault();
 	}
 
