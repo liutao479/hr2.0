@@ -110,6 +110,56 @@ page.ctrl('openCardSheet', function($scope) {
 		});
 	}
 	var setupEvt = function($el) {
+		$console.find('input[type="text"]').on('change', function() {
+			var thisName = $(this).attr('name'),
+				thisId = $(this).attr('id'),
+				that = $(this);
+			if(thisName == 'yearIncomeMoney' || thisName == 'loanMoney' || thisName == 'feeRate' || thisName == 'carPrice'){
+				var thisVal = that.val();
+				var reg = /^(\d+\.\d{1,4}|\d+)$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">该项只能填写数字及最多四位小数</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'homezip' || thisName == 'corpzip' ){
+				var thisVal = that.val();
+				var reg = /^[1-9][0-9]{5}$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">邮政编码格式不正确</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'mvblno' || thisName == 'reltmobl1' || thisName == 'reltmobl2' ){
+				var thisVal = that.val();
+				var reg = /^(13[0-9]{9})|(15[89][0-9]{8})$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">手机号码格式不正确</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'hphoneno' || thisId == 'cophone' || thisName == 'relaphone1'|| thisName == 'rtcophon2'){
+				var thisVal = that.val();
+				var reg = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">0000-12345678-8888(如有分机号)</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'stmtemail' ){
+				var thisVal = that.val();
+				var reg = /\w@\w*\.\w/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">邮箱格式不正确</i>');
+					that.val('');
+				}
+			}
+		})
 		$(".select-text").each(function(){
 			$(this).attr('readonly','readonly')
 		})
@@ -127,12 +177,17 @@ page.ctrl('openCardSheet', function($scope) {
 		$console.find('.uploadEvt').imgUpload();
 		$console.find('#cophone').on('change', function() {
 			var cophone = $(this).val();
-			var cophone1 = cophone.substring(0,4),
-				cophone2 = cophone.substring(cophone.length-8,cophone.length-4),
-				cophone3 = cophone.substring(cophone.length-4,cophone.length);
-			$("#cophozono").val(cophone1);
-			$("#cophoneno").val(cophone2);
-			$("#cophonext").val(cophone3);
+			var phoneArr = cophone.split('-');
+			if(!phoneArr[2]){
+				$("#cophozono").val(phoneArr[0]);
+				$("#cophoneno").val(phoneArr[1]);
+				$("#cophonext").val('');
+				$("#cophonext").removeClass('required');
+			}else{
+				$("#cophozono").val(phoneArr[0]);
+				$("#cophoneno").val(phoneArr[1]);
+				$("#cophonext").val(phoneArr[2]);
+			}
 		})
 		$console.find('#loanMoney').on('change', function() {
 			var loanMoney = $("#loanMoney").val(),

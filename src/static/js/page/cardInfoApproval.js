@@ -67,7 +67,21 @@ page.ctrl('cardInfoApproval', function($scope) {
 		});
 	}
 
-	
+	var piclick = function(){
+		$console.find('.viewEvt').on('click', function() {
+			debugger
+			var that = $(this);
+			var imgs = {},
+				ipt = [];
+				imgs['materialsPic'] = $(this).attr("src");
+				ipt[0]=imgs;
+			$.preview(ipt, function(img, mark, cb) {
+				cb();	
+			}, {
+				markable: false
+			});
+		});
+	}
 
 	/**
 	* 设置底部按钮操作栏
@@ -377,7 +391,8 @@ page.ctrl('cardInfoApproval', function($scope) {
 			$console.find('.uploadEvt').imgUpload();
 			$console.find('.imgs-upload').hide();
 			$console.find('.imgs-delete').hide();
-			
+			$console.find('.imgs-view').addClass('viewEvt');
+			piclick();
 		});
 		
 	});

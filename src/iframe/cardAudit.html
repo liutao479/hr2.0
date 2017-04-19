@@ -626,7 +626,12 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.cophozono && it.creditCard.cophoneno && it.creditCard.cophonext){ }}
-													<input id="cophone" type="text" value="{{= it.creditCard.cophozono+"--"+it.creditCard.cophoneno+it.creditCard.cophonext}}" />
+													<input id="cophone" type="text" value="{{= it.creditCard.cophozono+"-"+it.creditCard.cophoneno+"-"+it.creditCard.cophonext}}" />
+													<input type="hidden" id="cophozono" name="cophozono" value="{{= it.creditCard.cophozono}}" />
+													<input type="hidden" id="cophoneno" name="cophoneno" value="{{= it.creditCard.cophoneno}}" />
+													<input type="hidden" id="cophonext" name="cophonext" value="{{= it.creditCard.cophonext}}" />
+												{{ }else if(it.creditCard.cophozono && it.creditCard.cophoneno && (!it.creditCard.cophonext)){ }}
+													<input id="cophone" type="text" value="{{= it.creditCard.cophozono+"-"+it.creditCard.cophoneno}}" />
 													<input type="hidden" id="cophozono" name="cophozono" value="{{= it.creditCard.cophozono}}" />
 													<input type="hidden" id="cophoneno" name="cophoneno" value="{{= it.creditCard.cophoneno}}" />
 													<input type="hidden" id="cophonext" name="cophonext" value="{{= it.creditCard.cophonext}}" />

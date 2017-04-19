@@ -153,6 +153,7 @@
 			var id = $that.data('id'),
 				accountName = $that.data('accountname'),
 				bankName = $that.data('bankname'),
+				price = $that.data('price'),
 				name = $that.text();
 			self.text.push(name);
 			//只有一级，选中即表示结束
@@ -176,9 +177,17 @@
 				self.close(true);
 				self.onDropdown(self.picked);
 			} else {
-				self.picked[self.opts.tabs[self.actionIdx]] = {
-					id: id,
-					name: name
+				if(!price){
+					self.picked[self.opts.tabs[self.actionIdx]] = {
+						id: id,
+						name: name
+					}
+				}else{
+					self.picked[self.opts.tabs[self.actionIdx]] = {
+						id: id,
+						name: name,
+						price: price
+					}
 				}
 				//选中最后一级，也关闭
 				if(self.actionIdx == self.opts.tabs.length - 1) {
@@ -273,8 +282,11 @@
 								{{ } }}';
 	internal.template.brandContent = '<dl class="word-area">\
 										<dd class="clearfix">\
-											{{ for(var i = 0, len=it.items.length; i < len; i++) { var row = it.items[i]; name=row[it.name]; }}\
-											<a class="car-item{{=(it.actionName == name ? \" picked\":\"\")}} itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</a>\
+											{{ for(var i = 0, len=it.items.length; i < len; i++) { var row = it.items[i]; name=row[it.name]; if(row[it.price]){ }}\
+												<a class="car-item{{=(it.actionName == name ? \" picked\":\"\")}} itemEvt" data-id="{{=row[it.id]}}" data-price="{{=row[it.price]}}">{{=row[it.name]}}</a>\
+											{{ }else{ }}\
+												<a class="car-item{{=(it.actionName == name ? \" picked\":\"\")}} itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</a>\
+											{{ } }}\
 											{{ } }}\
 										</dd>\
 									</dl>';

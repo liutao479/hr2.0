@@ -189,6 +189,11 @@ page.ctrl('secondhandInput', function($scope) {
 				dataType: 'json',
 //				contentType: 'application/json;charset=utf-8',
 				success: $http.ok(function(xhr) {
+					if(xhr.data){
+						var iptNode = "<input type='hidden' class='individuationId' name='id'>";
+						$("#dataform").append(iptNode);
+						$("#dataform").find(".individuationId").val(xhr.data);
+					}
 					console.log(xhr);
 					$.alert({
 						title: '提示',

@@ -25,7 +25,6 @@ page.ctrl('loan', function($scope) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page, true);
 				setupEvent();
-				
 
 				// 测试复选框
 				// $scope.$checks = $('.checkbox').checking();

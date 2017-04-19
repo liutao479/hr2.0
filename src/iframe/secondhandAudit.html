@@ -84,7 +84,7 @@
 										{{ }else{ }}
 											<td>
 												<span class="info-value">
-													<input type="text" name="{{= seg.fieldName}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
+													<input type="text" name="{{= seg.fieldName}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '0') : ''}}" />
 												</span>
 											</td>
 										{{ } }}
