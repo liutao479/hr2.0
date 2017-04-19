@@ -80,7 +80,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 
 
 		// 绑定合同套打按钮
-		$console.find('.contractPrint').on('click', function() {
+		$scope.$el.$tbl.find('.contractPrint').on('click', function() {
 			var orderNo = $(this).data('orderNo');
 			$.confirm({
 				title: '选择套打模板',
@@ -96,6 +96,18 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 					ok: {
 						text: '确定',
 						action: function() {
+							if(!$scope.fileId) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请选择要套打的合同模板！'),
+									buttons: {
+										ok: {
+											text: '确定'
+										}
+									}
+								});
+								return false;
+							}
 							$.ajax({
 								url: $http.api('contractPrint/queryContractExeclList', 'lyb'),
 								type: 'post',
@@ -103,8 +115,9 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 									fileId: $scope.fileId
 								},
 								dataType: 'json',
-								success: $http.ok(function() {
-									window.open($http.api('contractPrint/printContractFile?fileId=' + $scope.fileId + '&orderNo=' + orderNo, true), '_self');
+								success: $http.ok(function(result) {
+									console.log(result)
+									// window.open($http.api('contractPrint/printContractFile?fileId=' + $scope.fileId + '&orderNo=' + orderNo, true), '_self');
 								})
 							});
 						}
@@ -112,7 +125,38 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 				}
 			})
 		})
+
+		// 绑定下载按钮
+		$scope.$el.$tbl.find('.loanDownload').on('click', function() {
+			$.confirm({
+				title: '下载',
+				content: dialogTml.wContent.loanDownload,
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							
+						}
+					}
+				}
+			})
+		});
 	}
+	// $.ajax({
+	// 	url: $http.api('contractPrint/queryContractExeclList', 'lyb'),
+	// 	type: 'post',
+	// 	data: {
+	// 		fileId: $scope.fileId
+	// 	},
+	// 	dataType: 'json',
+	// 	success: $http.ok(function() {
+	// 		window.open($http.api('contractPrint/printContractFile?fileId=' + $scope.fileId + '&orderNo=' + orderNo, true), '_self');
+	// 	})
+	// });
 
 
 	/**

@@ -3,7 +3,7 @@ page.ctrl('creditResult', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
 	/**
-	* 加载征信预审核数据
+	* 加载征信结果数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
@@ -34,6 +34,13 @@ page.ctrl('creditResult', function($scope) {
 					'ZJR': 0,
 					'GTHKR': 1,
 					'FDBR': 2
+				};
+				$scope.result.userRalaMap = {
+					'0': '本人',
+					'1': '配偶',
+					'2': '父母',
+					'3': '子女',
+					'-1': '其他'
 				};
 				$scope.result.editable = 0;
 				console.log($scope.result)

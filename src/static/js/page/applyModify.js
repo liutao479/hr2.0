@@ -508,9 +508,9 @@ page.ctrl('applyModify', function($scope) {
 	        console.log("form的个数为："+formList.length);
 	        if(formList.length == 1){
 		        var params = formList.serialize();
-	            params = decodeURIComponent(params,true);
-//	            params = decodeURI(params,true);
-	            var paramArray = params.split("&");
+		        var b = params.replace(/\+/g," ");
+				b =  decodeURIComponent(b);
+	            var paramArray = b.split("&");
 	            var data1 = {};
 	            for(var i=0;i<paramArray.length;i++){
 	                var valueStr = paramArray[i];
@@ -521,8 +521,9 @@ page.ctrl('applyModify', function($scope) {
 	        	data = [];
 		        formList.each(function(index){
 			        var params = $(this).serialize();
-		            params = decodeURIComponent(params,true);
-		            var paramArray = params.split("&");
+			        var b = params.replace(/\+/g," ");
+					b =  decodeURIComponent(b);
+		            var paramArray = b.split("&");
 		            var data1 = {};
 		            for(var i=0;i<paramArray.length;i++){
 		                var valueStr = paramArray[i];

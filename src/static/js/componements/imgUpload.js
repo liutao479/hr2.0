@@ -59,7 +59,8 @@
 			deletecb: $.noop,
 			uploadcb: $.noop,
 			viewable: false,
-			markable: false
+			markable: false,
+			creditClickAble: undefined
 		}
 		var self = this;
 		self.$el = $el;
@@ -73,7 +74,7 @@
 			tmp;
 		self.errImg = '';
 		self.errMsg = '';
-		self.empty = !self.options.empty ? '<i class="is-empty">*</i>' : '';
+		self.empty = self.options.empty == 0 ? '<i class="is-empty">*</i>' : '';
 		if(!self.options.img || self.options.img == 'undefined') {
 			if(self.options.editable) {
 				if(self.options.other) {
@@ -152,6 +153,20 @@
 	imgUpload.prototype.listen = function() {
 		var self = this;
 		if(self.status != 2) {
+			if(self.options.creditClickAble) {
+				self.$el.find('.activeEvt').on('click', function() {
+					$.alert({
+						title: '提示',
+						content: tool.alert('征信已经返回,不能修改'),
+						buttons: {
+							ok: {
+								text: '确定'
+							}
+						}
+					})
+					return false;
+				})
+			}
 			self.$el.find('.activeEvt').on('change', function() {
 				// console.log(this.files[0])
 				// console.log(this.value.split("\\\\"));
@@ -188,7 +203,7 @@
 						return false;
 					}
 				}
-				self.$el.find('.imgs-error').remove();
+				// self.$el.find('.imgs-error').remove();
 				self.onUpload(this.files[0]);
 			});
 			self.$el.find('.imgs-input-text input').on('blur', function() {
@@ -207,7 +222,38 @@
 		}
 		if(self.status == 1) {
 			self.$el.find('.imgs-delete').on('click', function() {
-				self.onDelete();
+				if(self.options.creditClickAble) {
+					$.alert({
+						title: '提示',
+						content: tool.alert('征信已经返回,不能修改'),
+						buttons: {
+							ok: {
+								text: '确定',
+								action: function() {
+									
+								}
+							}
+						}
+					})
+					return false;
+				}
+				$.alert({
+					title: '提示',
+					content: tool.alert('确认删除该照片吗？'),
+					buttons: {
+						close: {
+							text: '取消',
+							btnClass: 'btn-default btn-cancel'
+						},
+						ok: {
+							text: '确定',
+							action: function() {
+								self.$el.find('.imgs-item-upload').LoadingOverlay("show");
+								self.onDelete();
+							}
+						}
+					}
+				})
 			});	
 		}
 		self.$el.find('.viewEvt').on('click', function() {
@@ -223,7 +269,8 @@
 			}
 			loadImg(function(imgs) {
 				new Preview(imgs, marker, self.options.onclose || $.noop, {
-					markable: self.options.markable
+					markable: self.options.markable,
+					idx: self.options.idx
 				});
 			})
 		})
@@ -286,19 +333,35 @@
 		if(self.options.delUrl) {
 			_url = self.options.delUrl;
 		}
-		console.log(params)
+		console.log(params);
 		$.ajax({
 			url: _url,
 			type: 'post',
 			data: params,
+			global: false,
 			dataType: 'json',
 			success: function(xhr) {
 				console.log(xhr)
+				self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 				if(!xhr.code) {
 					self.delCb(self, xhr);
 					self.$el.html(internalTemplates.edit.format(self.name));
+					delete self.options.id;
 					self.status = 0;
-					self.listen();			
+					self.listen();		
+				}
+				if(xhr.code == 7001) {
+					$.alert({
+						title: '提示',
+						content: tool.alert(xhr.msg),
+						buttons:{
+							ok: {
+								text: '确定',
+								action: function() {
+								}
+							}
+						}
+					})
 				}
 			}
 		});
@@ -341,6 +404,9 @@
 			params.materialsPic = url;
 			_url = api.otherUpload;
 		} else {
+			if(self.options.id) {
+				params.id = self.options.id;
+			}
 			if(self.options.orderno) {
 				params.orderNo = self.options.orderno;
 			}
@@ -378,6 +444,7 @@
 							self.options.id = xhr.data;
 						}
 						self.$el.data('img', url);
+						self.$el.find('.imgs-error').remove();
 						self.status = 1;	
 						self.listen();
 						self.uplCb(self, xhr);
@@ -388,10 +455,24 @@
 							self.options.id = xhr.data;
 						}
 						self.$el.data('img', url);
+						self.$el.find('.imgs-error').remove();
 						self.$el.find('img').attr('src', url);
 						self.uplCb(self, xhr);
 					}
 					
+				}
+				if(xhr.code == 7001) {
+					$.alert({
+						title: '提示',
+						content: tool.alert(xhr.msg),
+						buttons:{
+							ok: {
+								text: '确定',
+								action: function() {
+								}
+							}
+						}
+					})
 				}
 			}
 		})
@@ -434,18 +515,18 @@
 					self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name,self.url));
-//						self.$el.data('img', url);
 						self.status = 1;	
 						self.listen();
+						self.$el.find('.imgs-error').remove();
 						self.$el.find('img').attr('src',_url);
 						self.uplCb(self, response);
 					} else {
-						if(self.options.credit) {
-							self.options.id = response.data.id;
-						} else {
-							self.options.id = response.data;
-						}
+						self.$el.html(internalTemplates.modify.format(self.name,self.url));
+						self.status = 1;	
+						self.listen();
+						self.$el.find('.imgs-error').remove();
 						self.$el.find('img').attr('src',_url);
+						self.uplCb(self, response);
 					}
 					return false;
 				}else{
@@ -650,7 +731,6 @@
 	* 获取对应的错误提示图片
 	*/
 	Preview.prototype.getMark = function(idx) {
-		console.log(idx)
 		var m = imgs[idx || 0];
 		if(m != "") {
 			m = "<div class='errHook'><div class='err-mask'></div>" + m + '</div>';
@@ -914,7 +994,7 @@
 	Preview.prototype.close = function() {
 		this.$preview.remove();
 		this.$mask.remove();
-		this.onclose(this.imgs);
+		this.onclose(this.imgs, this.runtime.idx);
 	};
 
 	$.preview = function(imgCollections, marker, opt) {

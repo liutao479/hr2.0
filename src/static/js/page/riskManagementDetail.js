@@ -2,6 +2,7 @@
 page.ctrl('riskManagementDetail', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
+		pageBcData={},/*保存点击分页时的查询参数*/
 		apiParams = {
 			pageNum: $params.pageNum || 1,
 			strStartDate: $params.strStartDate,
@@ -17,6 +18,14 @@ page.ctrl('riskManagementDetail', function($scope) {
 			apiKey: 'bankWater',
 			apiPrimary: $params.apiPrimary*/
 		};
+	/*查询前去除空查询字段*/
+	var delNull=function(obj){
+		for(var i in obj){
+			if(obj[i]==null||(obj[i]==""&&obj[i]!==0)||obj[i]==undefined||obj[i]=="undefined")
+				delete obj[i];
+		};
+		return obj;
+	};
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
@@ -25,6 +34,7 @@ page.ctrl('riskManagementDetail', function($scope) {
 			url: $http.api('riskStatis/getDetailList','cyj'),
 			data: param,
 			success: $http.ok(function(res) {
+				pageBcData=param;
 				render.compile($scope.$el.$searchInfo, $scope.def.searchInfoTmpl, res.data.headerInfo, true);
 				render.compile($scope.$el.$table, $scope.def.tableTmpl, res.data.list, true);
 				// 构造分页
@@ -38,7 +48,7 @@ page.ctrl('riskManagementDetail', function($scope) {
 	// 构造分页
 	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
-			current: parseInt(apiParams.pageNum),
+			current: parseInt(pageBcData.pageNum),
 			pages: isPage ? _page.pages : (tool.pages(_page.pages || 0, _page.pageSize)),
 			size: _page.pageSize
 		});
@@ -46,15 +56,35 @@ page.ctrl('riskManagementDetail', function($scope) {
 	};
 	// 分页回调
 	$scope.paging = function(_pageNum, _size, $el, cb) {
-		apiParams.pageNum = _pageNum;
+		pageBcData.pageNum = _pageNum;
 		$params.pageNum = _pageNum;
-		search(apiParams);
+		search(pageBcData);
 		cb();
 	};
 	// 页面首次载入时绑定事件
  	var evt = function() {
  		$scope.$el.$backspace.click(function() {
-			router.render("riskManagement");
+			router.render("operationsAnalysis");
+		});
+ 		$scope.$el.$table.off("click",".detailed").on("click",".detailed",function() {
+ 			var _uid=$(this).data('userid');
+ 			var _orderno=$(this).data('orderno');
+ 			var _sceneCode=$(this).data('scenecode');
+			router.render("preAuditDataAssistant", {	
+				orderNo:_orderno,
+				//userId:'334232',
+				userId:_uid,
+				sceneCode:_sceneCode,
+				upperLevelData:$params,
+				backJson:{
+					firstHref:"operationsAnalysis",
+					firstText:"返回列表",
+					secondHref:"riskManagementDetail",
+					secondText:"服务明细",
+					secondParam:JSON.stringify($params),
+					text:"数据辅证报告"
+				}
+			});
 		});
  	};
 	// 加载页面模板
@@ -68,8 +98,11 @@ page.ctrl('riskManagementDetail', function($scope) {
 			$table: $scope.$context.find('#riskManagementDetailTable'),/*表格列表*/
 			$paging: $scope.$context.find('#pageToolbar')/*分页*/
 		};
-		search(apiParams, function() {
-			evt();	
-		});
+		var info=delNull(apiParams);
+		if(info.pageNum&&info.apiKey){
+			search(info, function() {
+				evt();	
+			});
+		};
 	});
 });

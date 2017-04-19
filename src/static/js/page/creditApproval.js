@@ -20,7 +20,25 @@ page.ctrl('creditApproval', [], function($scope) {
 		});
 		$location.location();
 	}
-
+	/*查询是否有报告*/
+	var searchIsPre=function(param,cb){
+		$.ajax({
+			type: 'post',
+			dataType:"json",
+			url: $http.api('creditAudit/checkUserItem',true),
+			data: {
+				userId:param.userId,
+				orderNo:param.orderNo
+			},
+			success: $http.ok(function(res) {
+				/*是否已经核查过0未核查，1已核查*/;
+				$scope.result.data.creditUsers[param.idx][param.sed].hasCheck=res.data.hasCheck;
+				if(cb && typeof cb == 'function') {
+					cb();
+				};	
+			})
+		});
+	};
 	/**
 	* 加载征信预审核数据
 	* @params {object} params 请求参数
@@ -28,34 +46,29 @@ page.ctrl('creditApproval', [], function($scope) {
 	*/
 	var loadOrderInfo = function(idx, cb) {
 		$.ajax({
-			// url: 'http://127.0.0.1:8083/mock/creditInput',
 			type: 'post',
 			url: $http.api('creditUser/getCreditInfo', 'jbs'),
 			data: {
 				taskId: $params.taskId,
-				frameCode: 'T0061'
+				frameCode: $scope.frameCode || 'T0061'
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				console.log(result);
 				$scope.result = result;
 				$scope.result.index = idx;
 				$scope.idx = idx;
-				
+
+				var creditUsers = $scope.result.data.creditUsers;
 				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
 				if($scope.firstLoad) {
-					var creditUsers = $scope.result.data.creditUsers, userType;
+					var userType;
 					for(var i in creditUsers) {
-						userType = i;
+						userType= i;
 						break;
 					}
 					if(userType != 0) {
-						console.log(userType);
 						$scope.result.index = userType;
 						$scope.idx = userType;
-					} else {
-						$scope.result.index = idx;
-						$scope.idx = idx;
 					}
 				}
 				$scope.result.editable = 0;
@@ -66,17 +79,36 @@ page.ctrl('creditApproval', [], function($scope) {
 					'3': '子女',
 					'-1': '其他'
 				};
-				// 编译tab栏
-				setupTab($scope.result, function() {
-					setupTabEvt();
-				});
-
-				// 编译tab项对应内容
-				setupCreditPanel(idx, $scope.result);
-
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
+				//var _userId=creditUsers[$scope.result.index][0].userId;
+				var _userIdArr = creditUsers[$scope.idx];
+				for(var j in _userIdArr){/*循环某一个类别下的用户列表*/
+					var _userId=_userIdArr[j].userId;
+					if(j==_userIdArr.length-1){
+						searchIsPre({
+							userId:_userId,
+							orderNo:$params.orderNo,
+							idx:$scope.idx,
+							sed:j
+						},function(){
+							// 编译tab栏
+							setupTab($scope.result, function() {
+								setupTabEvt();
+							});
+							// 编译tab项对应内容
+							setupCreditPanel($scope.idx, $scope.result);
+							if(cb && typeof cb == 'function') {
+								cb();
+							};						
+						});/*查询是否有报告*/
+					}else{
+						searchIsPre({
+							userId:_userId,
+							orderNo:$params.orderNo,
+							idx:$scope.idx,
+							sed:j
+						});
+					};
+				};
 			})
 		})
 	}
@@ -152,24 +184,44 @@ page.ctrl('creditApproval', [], function($scope) {
 			var $this = $(this);
 			if($this.hasClass('role-item-active')) return;
 			var _type = $this.data('type');
-			if(!$scope.tabs[_type]) {
-				var _tabTrigger = $scope.$el.$tbls.eq(_type);
-				$scope.tabs[_type] = _tabTrigger;
-				$scope.result.index = _type;
-				render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, function() {
-					setupEvt(_tabTrigger, _type);
-				}, true);
-			}
-			$scope.$el.$tabs.removeClass('role-item-active');
-			$this.addClass('role-item-active');
-			$scope.$el.$tbls.eq($scope.idx).hide();
-			$scope.$el.$tbls.eq(_type).show();
-			$scope.idx = _type;
+			var _userIdArr=$scope.result.data.creditUsers[_type];
+			for(var j in _userIdArr){/*循环某一个类别下的用户列表*/
+				var _userId=_userIdArr[j].userId;
+				if(j==_userIdArr.length-1){		
+					searchIsPre({
+						userId:_userId,
+						orderNo:$params.orderNo,
+						idx:_type,
+						sed:j
+					},function(){
+						if(!$scope.tabs[_type]) {
+							var _tabTrigger = $scope.$el.$tbls.eq(_type);
+							$scope.tabs[_type] = _tabTrigger;
+							$scope.result.index = _type;
+							render.compile(_tabTrigger, $scope.def.listTmpl, $scope.result, function() {
+								setupEvt(_tabTrigger, _type);
+							}, true);
+						}
+						$scope.$el.$tabs.removeClass('role-item-active');
+						$this.addClass('role-item-active');
+						$scope.$el.$tbls.eq($scope.idx).hide();
+						$scope.$el.$tbls.eq(_type).show();
+						$scope.idx = _type;	
+					});/*查询是否有报告*/
+				}else{
+					searchIsPre({
+						userId:_userId,
+						orderNo:$params.orderNo,
+						idx:_type,
+						sed:j
+					});/*查询是否有报告*/
+				};
+			};
 		})
 	}
 
 	/*发起核查*/
-	var openDialog=function(that,_data){
+	var openDialog=function(that,_data,_uid){
 		that.openWindow({
 			title:"核查项目选择",
 			content: dialogTml.wContent.btngroup,
@@ -184,7 +236,7 @@ page.ctrl('creditApproval', [], function($scope) {
 				if($(this).hasClass("selected"))
 					_arr.push(_thisVal);	
 				else
-					_arr.splice(_thisVal,1);
+					_arr.splice(_arr.indexOf(_thisVal),1);
 			});
 			$dialog.find(".w-sure").click(function() {
 				$dialog.remove();
@@ -194,11 +246,12 @@ page.ctrl('creditApproval', [], function($scope) {
 					type: "post",
 					url: $http.api('creditAudit/startVerify','cyj'),
 					data:{
-						//keys:_arr.join(','),
-						//orderNo:$params.orderNo,
-						keys:'doPolice,bankWater',
+						keys:_arr.join(','),
+						orderNo:$params.orderNo,
+						userId:_uid
+					/*	keys:'doPolice,bankWater',
 						orderNo:'nfdb2016102820480799',
-						userId:"334232"
+						userId:"334232"*/
 					},
 					dataType:"json",
 					success: $http.ok(function(res) {
@@ -207,6 +260,9 @@ page.ctrl('creditApproval', [], function($scope) {
 							if(context){
 								setTimeout(function() {
 									jc.close();
+									loadOrderInfo($scope.idx, function() {
+										evt();
+									});/*关闭之后自动刷新页面数据*/
 								},1500);
 							};
 						});
@@ -224,7 +280,8 @@ page.ctrl('creditApproval', [], function($scope) {
 		 */
 		var imgsBars = $self.find('.creditMaterials');
 		imgsBars.each(function(index) {
-			$(this).find('.uploadEvt').imgUpload({
+			var $imgs = $(this).find('.uploadEvt.imgs');
+			$imgs.imgUpload({
 				viewable: true,
 				markable: true,
 				getimg: function(cb) {
@@ -244,22 +301,25 @@ page.ctrl('creditApproval', [], function($scope) {
 						data: params,
 						dataType: 'json',
 						success: $http.ok(function(result) {
-							console.log(result);
 							cb();
 						})
 					})
+				},
+				onclose: function(imgs) {
+					console.log(imgs)
+					$imgs.each(function(idx) {
+						$(this).find('.imgs-error').remove();
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].aduitResult]);
+					});
 				}
 			});
 		});
 
 		//查看征信材料
 		$self.find('.view-creditMaterials').on('click', function() {
-			// alert('还未做该功能，暂时不测！谢谢！ T.T');
 			var that = $(this);
 			var imgs = $scope.result.data.creditUsers[that.data('type')][that.data('idx')].creditMaterials;
 			$.preview(imgs, function(img, mark, cb) {
-				console.log(img);
-				console.log(mark);
 				cb();	
 			}, {
 				markable: false
@@ -267,7 +327,7 @@ page.ctrl('creditApproval', [], function($scope) {
 		});
 
 
-		//查看征信材料
+		//切换主借款人
 		$self.find('.setJkrEvt').on('click', function() {
 			var that = $(this);
 			$.ajax({
@@ -290,27 +350,54 @@ page.ctrl('creditApproval', [], function($scope) {
 		//发起核查
 		$self.off('click','.gocheck').on('click','.gocheck', function() {
 			var that=$(this);
+			var _uid=that.data('user-id');
+			if(!_uid)
+				return false;
 			$.ajax({
 				type: 'post',
 				dataType:'json',
 				url: $http.api('creditAudit/itemList','cyj'),
 				data: {
-					userId:"10"
+					//userId:"10"
+					orderNo:$params.orderNo,
+					userId:_uid
 				},
 				success: $http.ok(function(res) {
 					if(res&&res.data&&res.data.length>0)
-						openDialog(that,res.data);
-					else
-						openDialog(that,[]);
+						openDialog(that,res.data,_uid);
+					else{
+						$.alert({
+							title: '提示',
+							content: tool.alert("您没有权限进行该操作！"),
+							buttons:{
+								ok: {
+									text: '确定',
+								}
+							}
+						})
+					};
 				})
 			});
 		});
 		//查看报告结果
-		$self.find('.assistData').on('click', function() {
+		$self.find('.assistData').off('click').on('click', function() {
+			var _uid=$(this).data('user-id');
+			if(!_uid)
+				return false;
 			router.render("preAuditDataAssistant", {	
-				orderNo:'nfdb2016102820480790',
-				userId:'334232',
-				sceneCode:'creditApproval'
+				orderNo:$params.orderNo,
+				//userId:'334232',
+				userId:_uid,
+				sceneCode:'creditApproval',
+				upperLevelData:$params,
+				backJson:{
+					firstHref:"loanProcess",
+					firstText:"返回列表",
+					secondHref:"loanProcess/creditApproval",
+					secondText:"征信预审核",
+					secondParam:JSON.stringify($params),
+					text:"数据辅证报告"
+				}
 			});
 		});
 	}
@@ -391,14 +478,12 @@ page.ctrl('creditApproval', [], function($scope) {
 								jumpId: $scope.jumpId,
 								reason: _reason
 							}
-							console.log(_params)
 							$.ajax({
 								type: 'post',
 								url: $http.api('task/jump', 'zyj'),
 								data: _params,
 								dataType: 'json',
 								success: $http.ok(function(result) {
-									console.log(result);
 									router.render('loanProcess');
 									// toast.hide();
 								})
@@ -448,7 +533,6 @@ page.ctrl('creditApproval', [], function($scope) {
 								},
 								dataType: 'json',
 								success: $http.ok(function(result) {
-									console.log(result);
 									router.render('loanProcess');
 									// toast.hide();
 								})
@@ -575,14 +659,23 @@ page.ctrl('creditApproval', [], function($scope) {
 			$paging: $console.find('#pageToolbar')
 		}
 		$scope.firstLoad = true;
-		loadOrderInfo($scope.idx, function() {
-			setupLocation();
-			evt();
-			setupSubmitBar();
-			setupBackReason($scope.result.data.loanTask.backApprovalInfo);
-			$scope.firstLoad = false;
-		});
-		
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditApproval/info', 'zyj'),
+			data: {
+				taskId: $params.taskId
+			},
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				$scope.frameCode = result.cfgData.frames[0].code;
+				loadOrderInfo($scope.idx, function() {
+					setupLocation();
+					evt();
+					setupSubmitBar();
+					setupBackReason($scope.result.data.loanTask.backApprovalInfo);
+					$scope.firstLoad = false;
+				});
+			})
+		})		
 	});
-
 });

@@ -150,15 +150,15 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 	}
 
 	var setupEvt = function() {
-		$scope.$el.$tbl.find('.uploadEvt').imgUpload({
+		var $imgs = $scope.$el.$tbl.find('.uploadEvt.imgs'),
+			$noimgs = $scope.$el.$tbl.find('.uploadEvt.noimgs');
+		$imgs.imgUpload({
 			viewable: true,
 			markable: true,
 			getimg: function(cb) {
 				cb($scope.result.data.userMaterials)
 			},
 			marker: function (img, mark, cb) {
-				console.log(img);
-				console.log(mark);
 				var params = {
 					id: img.id,
 					auditResult: mark
@@ -177,8 +177,16 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 						cb();
 					})
 				})
+			},
+			onclose: function(imgs) {
+				$imgs.each(function(idx) {
+					$(this).find('.imgs-error').remove();
+					$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
+				});
 			}
 		});
+
+		$noimgs.imgUpload();
 	}
 
 	/**

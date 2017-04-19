@@ -48,8 +48,8 @@
 		<table>
 			<tr>
 				<td><span class="key">查询时间：</span>{{=it.startDate}}至{{=it.endDate}}</td>
-				<td><span class="key">分公司：</span>{{=it.deptId}}</td>
-				<td><span class="key">银行：</span>{{=it.bankCode}}</td>
+				<td><span class="key">分公司：</span>{{=it.deptId||'-'}}</td>
+				<td><span class="key">银行：</span>{{=it.bankCode||'-'}}</td>
 			</tr>
 			<tr>
 				<td><span class="key">订单数：</span>{{=it.orderNum}}笔</td>
@@ -67,7 +67,7 @@
 				<td class="orders-item-data">{{=item.orderNo}}</td>
 				<td class="orders-item-data">{{=tool.formatDate(item.orderCreateDate)}}</td>
 				<td class="orders-item-data">{{=item.realName}}</td>
-				<td class="orders-item-data">{{=item.demandBankName}}</td>
+				<td class="orders-item-data">{{=item.demandBankName||'-'}}</td>
 				<td class="orders-item-data">
 					{{ if(item.isBankVery=="1"){ }}是
 					{{ }else{ }}否
@@ -78,7 +78,9 @@
 				<td class="orders-item-data">{{=tool.formatDate(item.lastestVerifyTime)}}</td>
 				<td class="orders-item-data">{{=item.submitByName}}</td>
 				<td class="orders-item-data">
-					<span class="detailed">明细</span>
+					<span class="detailed view-fee" 
+					data-userid="{{=item.userId}}" data-orderno="{{=item.orderNo}}" 
+					data-scenecode="{{=item.sceneCode}}">详情</span>
 				</td>
 			</tr>
 		{{ } }}

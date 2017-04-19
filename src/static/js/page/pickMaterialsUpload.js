@@ -235,6 +235,7 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		 * 订单退回的条件选项分割
 		 */
 		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		if(!taskJumps) return;
 		for(var i = 0, len = taskJumps.length; i < len; i++) {
 			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
 		}
@@ -329,29 +330,43 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		imgsBars.each(function(index) {
 			var that = $(this),
 				_url = that.data('url'),
-				_type = that.data('type');
-			that.find('.uploadEvt').imgUpload({
+				_type = that.data('type'),
+				$imgs = that.find('.uploadEvt.imgs'),
+				$noimgs = that.find('.uploadEvt.noimgs');
+			$imgs.imgUpload({
 				viewable: true,
+				markable: $params.refer ? true : false,
 				getimg: function(cb) {
 					cb($scope.result.data[_type])
 				},
 				marker: function (img, mark, cb) {
+					var params = {
+						id: img.id,
+						auditResult: mark
+					}
+					if(mark == 0) {
+						params.auditOpinion = '';
+					}
 					$.ajax({
 						type: 'post',
 						url: $http.api(_url + '/addOrUpdate', true), 
-						data: {
-							id: img.id,
-							auditResult: mark,
-							auditOpinion: '审核原因审核原因审核原因审核原因审核原因'
-						},
+						data: params,
 						dataType: 'json',
 						success: $http.ok(function(result) {
 							console.log(result);
 							cb();
 						})
 					})
+				},
+				onclose: function(imgs) {
+					$imgs.each(function(idx) {
+						$(this).find('.imgs-error').remove();
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
+					});
 				}
 			});
+
+			$noimgs.imgUpload();
 		});
 	}
 
@@ -395,11 +410,11 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 	 */
 	var otherMaterialsListen = function() {
 		var $imgel = $console.find('.otherMaterials .uploadEvt');
-		$imgel.last().data('name', '其它材料' + $imgel.length);
-		$imgel.last().data('count', $imgel.length);
-		$imgel.last().find('.input-text input').val('其它材料' + $imgel.length);
+		$imgel.each(function(index) {
+			$(this).data('idx', index);
+		});
 	}
-	
+
 	/***
 	* 删除图片后的回调函数
 	*/
@@ -412,9 +427,11 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 	* 上传图片成功后的回调函数
 	*/
 	$scope.uploadcb = function(self) {
-		self.$el.after(self.outerHTML);
-		otherMaterialsListen();
+		var $parent = self.$el.parent();
+		if($parent.find('.uploadEvt').length == self.$el.data('idx') + 1) {
+			self.$el.after(self.outerHTML);
+		}
 		self.$el.next().imgUpload();
-
+		otherMaterialsListen();
 	}
 });

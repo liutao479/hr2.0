@@ -1,8 +1,24 @@
 <script type="text/dot-x-template" id="creditUploadListTmpl">
 	<!-- 借款人信息填写栏 -->
 	{{ for(var i = 0, len = it.creditUsers[it.currentType].length; i < len; i++){ var row = it.creditUsers[it.currentType][i]; }}
-		{{ if(i == 0){ }}
-			<div class="credit-datas-bar credit-datas-bar-special clearfix">
+		<!--借款人照片嵌入栏-->
+		<div class="credit-imgs-bar">
+		{{ for(var j = 0, len2 = it.cfgMaterials.length; j < len2; j++) { var nl = it.cfgMaterials[j], flag = 0; }}
+			{{ var len3 = row.loanUserCredit.creditMaterials.length; if(len3) { }}
+				{{ for(var k = 0; k < len3; k++) { var mr = row.loanUserCredit.creditMaterials[k]; }}
+					{{ if(mr.materialsCode == nl.materialCode) { }}
+						<div class="imgs-item-group uploadEvt imgs" data-idx="{{=k}}" data-credit-click-able="{{=(row.loanUserCredit.creditStatus == 9 ? 1 : 0)}}" data-uploadcb="page.$scope['{{=it.loanTask.category}}'].uploadcb" data-deletecb="page.$scope['{{=it.loanTask.category}}'].deletecb" data-upl-url="{{=it.uplUrl}}" data-del-url="{{=it.delUrl}}" data-credit="true" data-id="{{=mr.id}}" data-orderno="{{=it.loanTask.orderNo}}" data-code="{{=nl.materialCode}}" data-name="{{=it.types[it.currentType]}}{{=nl.name}}" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-err="{{=mr.auditResult || 0}}" data-msg="{{=mr.auditOpinion}}" data-editable="{{=(it.loanTask.category == 'creditMaterialsUpload' ? 1 : 0)}}" data-empty="{{=nl.empty}}"></div>
+					{{ break;} else { flag++; }}
+					{{ } }}
+				{{ } }}
+			{{ } }}
+			{{ if(flag == len3) { }}
+			<div class="imgs-item-group uploadEvt noimgs" data-credit-click-able="{{=(row.loanUserCredit.creditStatus == 9 ? 1 : 0)}}" data-uploadcb="page.$scope['{{=it.loanTask.category}}'].uploadcb" data-deletecb="page.$scope['{{=it.loanTask.category}}'].deletecb" data-upl-url="{{=it.uplUrl}}" data-del-url="{{=it.delUrl}}" data-credit="true" data-orderno="{{=it.loanTask.orderNo}}" data-code="{{=nl.materialCode}}" data-name="{{=it.types[it.currentType]}}{{=nl.name}}" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-err="0" data-editable="{{=(it.loanTask.category == 'creditMaterialsUpload' ? 1 : 0)}}" data-empty="{{=nl.empty}}"></div>
+			{{ } }}
+		{{ } }}
+		</div>
+		{{ if(i == len - 1){ }}
+			<div class="credit-datas-bar no-bottom-border clearfix">
 		{{ }else{ }}
 			<div class="credit-datas-bar clearfix">
 		{{ } }}
@@ -11,7 +27,7 @@
 				<div class="key-value">
 					{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
 					<div class="input-text input-name">
-						<input type="text" value="{{=row.userName || ''}}" data-user-id="{{=row.userId}}" data-type="userName"/>
+						<input type="text" value="{{=row.userName || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="userName"/>
 					</div>
 					{{ } }}
 					{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}
@@ -24,7 +40,7 @@
 				<div class="key-value">
 					{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
 						<div class="input-text input-idc">
-							<input type="text" value="{{=row.idCard || ''}}" data-user-id="{{=row.userId}}" data-type="idCard"/>		
+							<input type="text" value="{{=row.idCard || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="idCard"/>		
 						</div>	
 					{{ } }}
 					{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}
@@ -37,7 +53,7 @@
 				<div class="key-value">
 					{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
 						<div class="input-text input-phone">
-							<input type="text" value="{{=row.mobile || ''}}" data-user-id="{{=row.userId}}" data-type="mobile"/>		
+							<input type="text" value="{{=row.mobile || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="mobile"/>		
 						</div>	
 					{{ } }}
 					{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}
@@ -50,7 +66,7 @@
 				<div class="key-item">与借款人关系：</div>
 				<div class="key-value">
 					{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
-					<div class="select select-common" data-type="userRelationship" data-disabled="disabled" data-readonly="true" data-user-id="{{=row.userId}}" data-dropdown="page.$scope['{{=it.loanTask.category}}'].relationShipPicker" data-trigger="page.$scope['{{=it.loanTask.category}}'].dropdownTrigger.relationShip" data-selected="{{=it.userRalaMap[row.userRelationship] || ''}}"></div>
+					<div class="select select-common" data-type="userRelationship"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-disabled="disabled" data-user-id="{{=row.userId}}" data-dropdown="page.$scope['{{=it.loanTask.category}}'].relationShipPicker" data-trigger="page.$scope['{{=it.loanTask.category}}'].dropdownTrigger.relationShip" data-selected="{{=it.userRalaMap[row.userRelationship] || ''}}"></div>
 					{{ } }}
 					{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}
 						{{=it.userRalaMap[row.userRelationship] || ''}}
@@ -70,21 +86,6 @@
 		</div>
 		{{ } }}
 		</div>
-		<!--借款人照片嵌入栏-->
-		<div class="credit-imgs-bar">
-		{{ for(var j = 0, len2 = it.cfgMaterials.length; j < len2; j++) { var nl = it.cfgMaterials[j], flag = 0; }}
-			{{ var len3 = row.loanUserCredit.creditMaterials.length; if(len3) { }}
-				{{ for(var k = 0; k < len3; k++) { var mr = row.loanUserCredit.creditMaterials[k]; }}
-					{{ if(mr.materialsCode == nl.materialCode) { }}
-						<div class="imgs-item-group uploadEvt" data-uploadcb="page.$scope['{{=it.loanTask.category}}'].uploadcb" data-deletecb="page.$scope['{{=it.loanTask.category}}'].deletecb" data-upl-url="{{=it.uplUrl}}" data-del-url="{{=it.delUrl}}" data-credit="true" data-id="{{=mr.id}}" data-orderno="{{=it.loanTask.orderNo}}" data-code="{{=nl.materialCode}}" data-name="{{=it.types[it.currentType]}}{{=nl.name}}" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-img="{{=mr.materialsPic}}" data-err="{{=mr.auditResult || 0}}" data-msg="{{=mr.auditOpinion}}" data-editable="{{=(it.loanTask.category == 'creditMaterialsUpload' ? 1 : 0)}}" data-empty="{{=nl.empty}}"></div>
-					{{ break;} else { flag++; }}
-					{{ } }}
-				{{ } }}
-			{{ } }}
-			{{ if(flag == len3) { }}
-			<div class="imgs-item-group uploadEvt" data-uploadcb="page.$scope['{{=it.loanTask.category}}'].uploadcb" data-deletecb="page.$scope['{{=it.loanTask.category}}'].deletecb" data-upl-url="{{=it.uplUrl}}" data-del-url="{{=it.delUrl}}" data-credit="true" data-orderno="{{=it.loanTask.orderNo}}" data-code="{{=nl.materialCode}}" data-name="{{=it.types[it.currentType]}}{{=nl.name}}" data-scene="{{=it.loanTask.category}}" data-user="{{=row.userId}}" data-err="0" data-editable="{{=(it.loanTask.category == 'creditMaterialsUpload' ? 1 : 0)}}" data-empty="{{=nl.empty}}"></div>
-			{{ } }}
-		{{ } }}
-		</div>
+		
 	{{ } }}
 </script>

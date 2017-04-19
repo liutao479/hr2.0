@@ -21,23 +21,23 @@
 							<div class="info-key-value-box">
 								<span class="info-key">
 									客户姓名：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.userName || ''}}" /></span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.data.KHXX.userName || ''}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
 									身份证号：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.idCard || ''}}" /></span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.data.KHXX.idCard || ''}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
 									手机号：</span>
-								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.KHXX.mobile || ''}}" /></span>
+								<span class="info-value"><input type="text" readonly="readonly" value="{{= it.data.KHXX.mobile || ''}}" /></span>
 							</div>
 							<div class="info-key-value-box">
 								<span class="info-key">
 									性别：</span>
 								<span class="info-value">
-									{{ if(it.KHXX.sex == '0'){ }}
+									{{ if(it.data.KHXX.sex == '0'){ }}
 										<input type="text" readonly="readonly" value="男" />
 									{{ }else{ }}
 										<input type="text" readonly="readonly" value="女" />
@@ -53,14 +53,16 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">必问问题</span>
-							<div class="button button-mini saveBtn" data-key="saveOrderInfo">
-								保存
-							</div>
+							{{ if(it.cfgData.frames[0].sections[1].btnList && it.cfgData.frames[0].sections[1].btnList.length != 0) { }}
+								<div class="button button-mini saveBtn" data-key="saveOrderInfo">
+									保存
+								</div>
+							{{ } }}
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
-						{{for(var i = 0, len = it.BWWT.length; i < len; i++) { var row = it.BWWT[i]; }}
+						{{for(var i = 0, len = it.data.BWWT.length; i < len; i++) { var row = it.data.BWWT[i]; }}
 							<form>
 							<div class="question-box">
 								<div class="question-box-title">
@@ -87,20 +89,21 @@
 								<div class="question-box-cont">
 									<span class="info-key">备注：</span>
 									<span class="info-value info-value-long">
-									{{if(row.answer){ }}
+									{{if(row.remark){ }}
 										<!--<textarea name="editInfo" rows="4" value="{{= row.editInfo}}"></textarea>-->
-										<div class="textArea" contenteditable="true">{{= row.remark || ''}}</div>
+										<div class="textArea" contenteditable="true">{{= row.remark}}</div>
 									{{ }else{ }}
 										<!--<textarea name="editInfo" rows="4"></textarea>-->
 										<div class="textArea" contenteditable="true"></div>
 									{{ } }}
-										<input type="hidden" name="editInfo" value="{{= row.remark  || ''}}" />
+										<input type="hidden" name="remark" value="{{= row.remark  || ''}}" />
 									</span>
 								</div>
 							</div>
-							<input type="hidden" name="qid" value="{{= row.id}}"  />
-							<input type="hidden" name="id" value="{{= row.id}}"  />
-							<input type="hidden" name="orderNo" value="{{= row.id}}"  />
+							{{ if(row.id){ }}
+								<input type="hidden" name="qid" value="{{= row.id}}"  />
+							{{ } }} 	
+							<input type="hidden" name="orderNo" value="{{= it.data.KHXX.orderNo}}"  />
 							</form>
 						{{ } }}
 						</div>
@@ -111,14 +114,16 @@
 						<div class="panel-title">
 							<i class="iconfont">&#xe626;</i>
 							<span class="panel-title-name">选问问题</span>
-							<div class="button button-mini saveBtn" data-key="saveOrderInfo">
-								保存
-							</div>
+							{{ if(it.cfgData.frames[0].sections[2].btnList && it.cfgData.frames[0].sections[2].btnList.length != 0) { }}
+								<div class="button button-mini saveBtn" data-key="saveOrderInfo">
+									保存
+								</div>
+							{{ } }}
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
 						<div class="loan-info">
-						{{for(var j = 0, lenj = it.XWWT.length; j < len; j++) { var role = it.XWWT[j]; }}
+						{{for(var j = 0, lenj = it.data.XWWT.length; j < len; j++) { var role = it.data.XWWT[j]; }}
 							<form>
 							<div class="question-box">
 								<div class="question-box-title">
@@ -139,26 +144,27 @@
 										</div>
 										<span class="placeholder">请选择</span>
 										<span class="arrow arrow-bottom right8px"></span>
-										<input type="hidden" name="qvalue" class="required" />
+										<input type="hidden" name="qvalue" class="required" value="{{= role.remark}}" />
 									</span>
 								</div>
 								<div class="question-box-cont">
 									<span class="info-key">备注：</span>
 									<span class="info-value info-value-long">
-									{{if(role.answer){ }}
+									{{if(role.remark){ }}
 										<div class="textArea" contenteditable="true">{{= role.remark || ''}}</div>
 										<!--<textarea name="editInfo" rows="4" value="{{= role.editInfo}}"></textarea>-->
 									{{ }else{ }}
 										<!--<textarea name="editInfo" rows="4"></textarea>-->
 										<div class="textArea" contenteditable="true"></div>
 									{{ } }}	
-										<input type="hidden" name="editInfo" value="{{= row.remark}}" />
+										<input type="hidden" name="remark" value="{{= role.remark}}" />
 									</span>
 								</div>
 							</div>
-							<input type="hidden" name="qid" value="{{= role.id}}"  />
-							<input type="hidden" name="id" value="{{= role.id}}"  />
-							<input type="hidden" name="orderNo" value="{{= role.id}}"  />
+							{{ if(role.id){ }}
+								<input type="hidden" name="qid" value="{{= role.id}}"  />
+							{{ } }} 	
+							<input type="hidden" name="orderNo" value="{{= it.data.KHXX.orderNo}}"  />
 							</form>
 						{{ } }}
 						</div>

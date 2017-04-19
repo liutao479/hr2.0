@@ -19,7 +19,7 @@
 							<!--一级标题  end-->
 							{{for(var j = 0, len2 = it.data.creditUsers[i].length; j < len2; j++) { var col = it.data.creditUsers[i][j]; }}
 								{{ for(var m = 0, len3 = it.cfgData.frames[0].sections.length; m < len3; m++) { var item = it.cfgData.frames[0].sections[m]; }}
-									{{ if(it.format[item.code] == m) { var row = item; break; } }}
+									{{ if(it.format[item.code] == i) { var row = item; break; } }}
 								{{ } }}
 								
 
@@ -32,7 +32,13 @@
 									<div class="key-value-box">
 										<span class="key">姓名：</span>
 										<span class="value">{{=col.userName}}</span>
-									</div>
+									</div>{{ console.log(row.code);}}
+									{{ if(row.code == 'GTHKR') { }}
+										<div class="key-value-box">
+											<span class="key">与借款人关系：</span>
+											<span class="value">{{=it.userRalaMap[col.userRelationship] || '（未录入）'}}</span>
+										</div>
+									{{ } }}
 									<div class="key-value-box">
 										<span class="key">身份证号：</span>
 										<span class="value">{{=col.idCard}}</span>
@@ -49,6 +55,14 @@
 
 								<!--详细内容罗列-->
 								<div class="panel-detail-content panel-detail-table">
+									<!-- 征信是否合格 -->
+									<div class="panel-item-box mt15">
+										<div class="panel-key-area">征信是否合格：</div>
+										<div class="panel-value-area clearfix">
+											<div class="panel-value-item">{{=(col.creditLevel == 1 ? '正常' : (col.creditLevel == 2 ? '关注' : (col.creditLevel == 3 ? '禁入' : '')))}}</div>
+										</div>
+									</div>
+									<!-- 征信是否合格 end-->
 									{{ for(var p = 0, len4 = row.segments.length; p < len4; p++) { var ml = row.segments[p]; }}
 									<div class="panel-item-box mt15">
 										<div class="panel-key-area">{{=ml.name}}：</div>
@@ -69,7 +83,6 @@
 											{{ for(var h = 0, len5 = col.loanCreditReportList.length; h < len5; h++) { var hl = col.loanCreditReportList[h], flag = 0; }}
 											<div class="imgs-item-group uploadEvt" data-markable="false" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.aduitResult || 0}}" data-msg="{{=hl.aduitOpinion}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 											{{ } }}
-											<div class="imgs-item-group uploadEvt" data-markable="false" data-request="true" data-name="征信报告照片{{=len5 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}" data-empty="1"></div>
 										{{ } if(ml.code == 'ZXZD') { }}
 											<table border="1" class="field-table">
 												{{ var zxzd = col.loanCreditResultList; }}
@@ -79,13 +92,13 @@
 													{{ }else{ }}
 													<tr class="tr-even">
 													{{ } }}
-														<td class="td-key">{{=zxzd[2 * k].fieldName}}</td>
+														<td class="td-key"><i class="{{=(!zxzd[2 * k].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k].fieldName}}</td>
 														<td class="td-value"><input class="input zxzd{{=(zxzd[2 * k].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k].creditKey}}" data-required="{{=zxzd[2 * k].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit || ''}}</span></td>
 														{{ if(k == len6) { }}
 															<td class="td-key"></td>
 															<td class="td-value"></td>
 														{{ }else{ }}
-															<td class="td-key">{{=zxzd[2 * k + 1].fieldName}}</td>
+															<td class="td-key"><i class="{{=(!zxzd[2 * k + 1].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k + 1].fieldName}}</td>
 															<td class="td-value"><input class="input zxzd{{=(zxzd[2 * k + 1].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k + 1].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k + 1].creditKey}}" data-required="{{=zxzd[2 * k + 1].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit  || ''}}</span></td>
 														{{ } }}
 													</tr>
@@ -105,14 +118,29 @@
 										</div>
 									</div>
 									<!-- 备注信息 end-->
+									{{ if(it.cfgData.code != 'creditApproval') { }}
 									<!-- 辅证数据 -->
 									<div class="panel-item-box">
 										<div class="panel-key-area">辅证数据：</div>
 										<div class="panel-value-area clearfix">
-											<a data-href="#" class="to-view">点击查看</a>
+											<div class="button button-mini gocheck mr24">发起核查</div>
+											<a data-href="#" class="to-view assistData">查看报告结果</a>
 										</div>
 									</div>
 									<!-- 辅证数据 end-->
+									<!-- 征信报告详表 -->
+									<div class="panel-item-box">
+										<div class="panel-key-area">征信报告详表：</div>
+										<div class="panel-value-area clearfix">
+											{{ if(!col.creditReportFile) { }}
+											<div class="panel-value-item">未上传征信报告文件</div>
+											{{ } else { }}
+											<a href="{{=col.creditReportFile}}" target="_blank" class="to-view">点击查看</a>
+											{{ } }}
+										</div>
+									</div>
+									<!-- 征信报告详表 end-->
+									{{ } }}
 								</div>
 								<!--详细内容罗列结束 end-->
 								

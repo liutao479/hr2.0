@@ -21,7 +21,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 	var loadOrderInfo = function(_type, cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('creditMaterials/index', 'zyj'),
+			url: $http.api('creditMaterialsApproval/info', 'zyj'),
 			data: {
 				taskId: $params.taskId
 			},
@@ -40,7 +40,21 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 					'-1': '其他'
 				};
  				$scope.orderNo = result.data.loanTask.orderNo;
+				$scope.currentType = _type;
 				$scope.result.data.currentType = _type;
+
+				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
+				if($scope.firstLoad) {
+					var creditUsers = $scope.result.data.creditUsers, userType;
+					for(var i in creditUsers) {
+						userType = i;
+						break;
+					}
+					if(userType != 0) {
+						$scope.currentType = userType;
+						$scope.result.data.currentType = userType;
+					}
+				}
 
 				// 编译tab
 				setupTab($scope.result.data || {}, function() {
@@ -48,8 +62,8 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 				});
 
 				// 编译tab项对应内容
-				setupCreditPanel(_type, $scope.result.data, function() {
-					setupEvt($scope.$el.$tbls.eq(_type), _type);
+				setupCreditPanel($scope.currentType, $scope.result.data, function() {
+					setupEvt($scope.$el.$tbls.eq($scope.currentType), $scope.currentType);
 				});
 
 				if( cb && typeof cb == 'function' ) {
@@ -97,6 +111,23 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 	}
 
 	/**
+	 * 图片必传校验
+	 */
+	var checkData = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditApproval/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if( cb && typeof cb == 'function' ) {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
 	* 设置底部按钮操作栏
 	*/
 	var setupSubmitBar = function() {
@@ -111,7 +142,9 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 		})
 
 		/**
@@ -317,7 +350,8 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		$scope.$checks.filter('.checkbox-radio').each(function() {
 			var that = this;
 			that.$checking.onChange(function() {
-				$reason.val('');
+				var value = $reason.val();
+				$reason.val(value.substring(value.lastIndexOf('#', '')));
 				$(that).parent().parent().find('.checkbox-normal').removeClass('checked').attr('checked', false);
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 			});
@@ -355,7 +389,9 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 		 */
 		var imgsBars = $self.find('.credit-imgs-bar');
 		imgsBars.each(function(index) {
-			$(this).find('.uploadEvt').imgUpload({
+			var $imgs = $(this).find('.uploadEvt.imgs'),
+				$noimgs = $(this).find('.uploadEvt.noimgs');
+			$imgs.imgUpload({
 				viewable: true,
 				markable: true,
 				getimg: function(cb) {
@@ -382,8 +418,17 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 							cb();
 						})
 					})
+				},
+				onclose: function(imgs) {
+					console.log(imgs)
+					$imgs.each(function(idx) {
+						$(this).find('.imgs-error').remove();
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
+					});
 				}
 			});
+
+			$noimgs.imgUpload();
 		});
 	}
 
@@ -402,10 +447,14 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 			$modifyBankPanel: $console.find('#modifyBankPanel')
 		}
 		
+
+		//首次载入
+		$scope.firstLoad = true;
 		loadOrderInfo($scope.currentType, function() {
 			evt();
 			setupSubmitBar();
 			setupLocation();
+			$scope.firstLoad = false;
 		});
 	});
 

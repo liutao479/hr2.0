@@ -30,7 +30,6 @@ page.ctrl('creditInput', [], function($scope) {
 				$scope.result = result;
 				$scope.result.index = idx;
 				$scope.idx = idx;
-				
 				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
 				if($scope.firstLoad) {
 					var creditUsers = $scope.result.data.creditUsers, userType;
@@ -42,9 +41,6 @@ page.ctrl('creditInput', [], function($scope) {
 						console.log(userType);
 						$scope.result.index = userType;
 						$scope.idx = userType;
-					} else {
-						$scope.result.index = idx;
-						$scope.idx = idx;
 					}
 				}
 				
@@ -62,7 +58,7 @@ page.ctrl('creditInput', [], function($scope) {
 				});
 
 				// 编译tab项对应内容
-				setupCreditPanel(idx, $scope.result);
+				setupCreditPanel($scope.idx, $scope.result);
 
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -150,7 +146,8 @@ page.ctrl('creditInput', [], function($scope) {
 				ok: {
 					text: '确定',
 					action: function () {
-						var taskIds = [];
+						var that = this,
+							taskIds = [];
 						for(var i = 0, len = $params.tasks.length; i < len; i++) {
 							taskIds.push(parseInt($params.tasks[i].id));
 						}
@@ -159,9 +156,19 @@ page.ctrl('creditInput', [], function($scope) {
 							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}
-						var reason = $.trim(this.$content.find('#suggestion').val());
+						var reason = $.trim(that.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
-						flow.tasksJump(params, 'complete');
+						$.ajax({
+							type: 'post',
+							url: $http.api('creditUser/updCreditList/' + $params.taskId, 'jbs'),
+							data: JSON.stringify($scope.apiParams),
+							dataType: 'json',
+							contentType: 'application/json;charset=utf-8',
+							success: $http.ok(function(result) {
+								console.log(result);
+								flow.tasksJump(params, 'complete');
+							})
+						})
 					}
 				}
 			}
@@ -338,12 +345,18 @@ page.ctrl('creditInput', [], function($scope) {
 		$el.find('.creditReportId').on('blur', function() {
 			var that = $(this),
 				value = that.val(),
-				$parent = that.parent();
+				$parent = that.parent(),
+				type = that.data('type');
 			if(that.hasClass('required') && !value) {
 				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
 				$parent.append('<span class=\"input-err\">该项不能为空！</span>');
-				return false;
+				value = '';
+			} else if(!regMap[type].test(value)) {
+				$parent.removeClass('error-input').addClass('error-input');
+				$parent.find('.input-err').remove();
+				$parent.append('<span class=\"input-err\">请输入30位以内的数字和字母组合的编号</span>');
+				value = '';
 			} else {
 				$parent.removeClass('error-input');
 				$parent.find('.input-err').remove();
@@ -374,9 +387,9 @@ page.ctrl('creditInput', [], function($scope) {
 		}
 
 		//征信报告编号
-		$el.find('.creditReportId').on('keypress', function(event) {
-			return noNumbers(event);
-		})
+		// $el.find('.creditReportId').on('key', function(event) {
+		// 	return noNumbers(event);
+		// })
 
 		// 备注失去焦点事件
 		// $el.find('.remark').on('blur', function() {
@@ -407,7 +420,8 @@ page.ctrl('creditInput', [], function($scope) {
 		// $el.find('.remark').next().text('还可输入' + (maxLen - $el.find('.remark').val().length) + '/' + maxLen + '字');
 		$el.find('.remark').on('input', function() {
 			var that = $(this),
-				value = that.val();
+				value = that.val(),
+				$parent = that.parent();
 			if(value.length > maxLen) {
 				that.val(value.substr(0, maxLen));
 				that.next().text('还可输入0/' + maxLen + '字');
@@ -415,10 +429,40 @@ page.ctrl('creditInput', [], function($scope) {
 			}
 			that.next().text('还可输入' + (maxLen - that.val().length) + '/' + maxLen + '字');
 			if(that.hasClass('required') && !value) {
-				that.removeClass('error-input').addClass('error-input');
+				$parent.find('.input-err').remove();
+				$parent.removeClass('error-input').addClass('error-input');
 				return false;
 			} else {
-				that.removeClass('error-input');
+				$parent.find('.input-err').remove();
+				$parent.removeClass('error-input');
+			}
+			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+				var item = $scope.apiParams[i];
+				if(that.data('userId') == item.userId) {
+					item[that.data('type')] = value;
+				}
+			}
+			console.log($scope.apiParams);
+		});
+
+		$el.find('.remark').on('blur', function() {
+			var that = $(this),
+				value = $.trim(that.val()),
+				$parent = that.parent(),
+				type = that.data('type');
+			if(that.hasClass('required') && !value) {
+				$parent.removeClass('error-input').addClass('error-input');
+				$parent.find('.input-err').remove();
+				$parent.append('<span class=\"input-err\">该项不能为空！</span>');
+				value = '';
+			} else if(regMap[type].test(value)) {
+				$parent.removeClass('error-input').addClass('error-input');
+				$parent.find('.input-err').remove();
+				$parent.append('<span class=\"input-err\">该输入不符合规则！</span>');
+				value = '';
+			} else {
+				$parent.removeClass('error-input');
+				$parent.find('.input-err').remove();
 			}
 			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 				var item = $scope.apiParams[i];
@@ -561,19 +605,9 @@ page.ctrl('creditInput', [], function($scope) {
 		}
 		if(!_alert) {
 			console.log($scope.apiParams);
-			$.ajax({
-				type: 'post',
-				url: $http.api('creditUser/updCreditList/' + $params.taskId, 'jbs'),
-				data: JSON.stringify($scope.apiParams),
-				dataType: 'json',
-				contentType: 'application/json;charset=utf-8',
-				success: $http.ok(function(result) {
-					console.log(result);
-					if(cb && typeof cb == 'function') {
-						cb();
-					}
-				})
-			})
+			if(cb && typeof cb == 'function') {
+				cb();
+			}
 		} else {
 			$.alert({
 				title: '提示',
@@ -668,6 +702,7 @@ page.ctrl('creditInput', [], function($scope) {
 		$imgel.each(function(index) {
 			$(this).find('.imgs-item-p').html('<i class="is-empty">*</i>征信报告照片' + (index + 1));
 		});
+		$imgel.last().data('idx', $imgel.length - 1);
 		$imgel.last().data('name', '征信报告照片' + $imgel.length);
 		$imgel.last().find('.imgs-item-p').html('征信报告照片' + $imgel.length);
 	}
@@ -681,7 +716,9 @@ page.ctrl('creditInput', [], function($scope) {
 		// self.$el.after(self.outerHTML);
 		// self.$el.next().imgUpload();
 		var $parent = self.$el.parent();
-		self.$el.after(self.outerHTML);
+		if($parent.find('.uploadEvt').length == self.$el.data('idx') + 1) {
+			self.$el.after(self.outerHTML);
+		}
 		pictureListen($parent);
 		self.$el.next().imgUpload();
 		//重置带保存参数里的征信报告图片（loanCreditReportList）

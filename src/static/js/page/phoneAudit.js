@@ -19,7 +19,13 @@ page.ctrl('phoneAudit', function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				$scope.result = result;
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
+				if(result.cfgData.frames[0].code != 'T0046'){
+					debugger
+					$(".saveBtn").hide();
+					$(".selecter").addClass('pointDisabled');
+					$(".textArea").addClass('pointDisabled');
+				}
 				loanFinishedSelect();
 				setupEvt();
 				if(cb && typeof cb == 'function') {
@@ -51,6 +57,9 @@ page.ctrl('phoneAudit', function($scope) {
 	}
 
 	var setupEvt = function($el) {
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
 		$console.find('.textArea').on('blur', function() {
 			var tContext = $(this).text();
 			console.log(tContext);
@@ -78,14 +87,17 @@ page.ctrl('phoneAudit', function($scope) {
 				}
 			});
 			if(isTure){
-				debugger
+//				debugger
 				var data;
 		        var formList = $(this).parent().parent().siblings().find('form');
 	        	data = [];
 		        formList.each(function(index){
 			        var params = $(this).serialize();
-		            params = decodeURIComponent(params,true);
-		            var paramArray = params.split("&");
+			        var b = params.replace(/\+/g," ");
+					b =  decodeURIComponent(b);
+		            var paramArray = b.split("&");
+//		            params = decodeURIComponent(params,true);
+//		            var paramArray = params.split("&");
 		            var data1 = {};
 		            for(var i=0;i<paramArray.length;i++){
 		                var valueStr = paramArray[i];
@@ -151,6 +163,14 @@ page.ctrl('phoneAudit', function($scope) {
 		return false;
 	});
 
+//点击下拉消失	zhy
+	$(document).on("click",function(e){ 
+		var target = $(e.target);
+		if(target.closest(".selectOptBox1").length == 0){ 
+			$(".selectOptBox1").hide();
+			return;
+		}
+	})
 	/***
 	* 加载页面模板
 	*/

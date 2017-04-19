@@ -67,7 +67,20 @@ page.ctrl('cardInfoApproval', function($scope) {
 		});
 	}
 
-	
+	var piclick = function(){
+		$console.find('.viewEvt').on('click', function() {
+			var that = $(this);
+			var imgs = {},
+				ipt = [];
+				imgs['materialsPic'] = $(this).attr("src");
+				ipt[0]=imgs;
+			$.preview(ipt, function(img, mark, cb) {
+				cb();	
+			}, {
+				markable: false
+			});
+		});
+	}
 
 	/**
 	* 设置底部按钮操作栏
@@ -333,6 +346,28 @@ page.ctrl('cardInfoApproval', function($scope) {
 			$(this).addClass("pointDisabled");
 		});
 	}
+	/**
+	* 下拉
+	*/
+	var seleLoad = function(){
+		$(".select").each(function(){
+			var $that = $(this);
+			var selected = $(this).data('selected');
+			var re = /^[0-9]+.?[0-9]*$/;
+			if((selected && re.test(selected)) || selected=='0'){
+				$(this).find('.arrow-trigger').click();
+				var lilist = $(this).find('li');
+				$("li",$(this)).each(function(){
+					var idx = $(this).data('id');
+					if(selected == idx){
+						$that.find('.select-text').val($(this).text());
+						$(this).click();
+						$that.find('.select-box').hide();
+					}
+				})
+			}
+		})
+	}
 	/***
 	* 加载页面模板
 	*/
@@ -350,8 +385,13 @@ page.ctrl('cardInfoApproval', function($scope) {
 				setupSubmitBar();
 			}
 			setupDropDown();
+			seleLoad();
 			cannotClick();
 			$console.find('.uploadEvt').imgUpload();
+			$console.find('.imgs-upload').hide();
+			$console.find('.imgs-delete').hide();
+			$console.find('.imgs-view').addClass('viewEvt');
+			piclick();
 		});
 		
 	});

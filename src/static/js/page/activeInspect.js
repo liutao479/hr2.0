@@ -15,7 +15,7 @@ page.ctrl('activeInspect', function($scope) {
 			areaId:null,
 			status:null,/*状态*/
 			keyWord:null,
-			bankName:null,/*经办网点*/
+			bankId:null,/*经办网点*/
 			isSecond:null,/*车辆类型*/
 			stageMinMoney:null,
 			stageMaxMoney:null,
@@ -25,7 +25,7 @@ page.ctrl('activeInspect', function($scope) {
 	/*查询前去除空查询字段*/
 	var delNull=function(obj){
 		for(var i in obj){
-			if(obj[i]==null||(obj[i]==""&&obj[i]!==0)||obj[i]==undefined)
+			if(obj[i]==null||(obj[i]==""&&obj[i]!==0)||obj[i]==undefined||obj[i]=='undefined')
 				delete obj[i];
 		};
 		return obj;
@@ -47,7 +47,7 @@ page.ctrl('activeInspect', function($scope) {
 			areaId:null,
 			status:null,/*状态*/
 			keyWord:null,
-			bankName:null,/*经办网点*/
+			bankId:null,/*经办网点*/
 			isSecond:null,/*车辆类型*/
 			stageMinMoney:null,
 			stageMaxMoney:null,
@@ -111,8 +111,8 @@ page.ctrl('activeInspect', function($scope) {
 			success: $http.ok(function(res) {
 				var _data=res.data;
 				for(var i in _data){
-					_data.checkStatus=0;
-					_data.funcName=_data.taskName;
+					_data[i].checkStatus=0;
+					_data[i].funcName=_data[i].taskName;
 				};
 				that.openWindow({
 					title:"请选择查询类型",
@@ -149,7 +149,7 @@ page.ctrl('activeInspect', function($scope) {
 											setTimeout(function() {
 												jc.close();
 												resetForm();
-												var _searchMsg=getFormMsg();
+												//var _searchMsg=getFormMsg();
 												search(delNull(_searchMsg));
 											}, 1500);
 										};
@@ -317,9 +317,13 @@ page.ctrl('activeInspect', function($scope) {
 				url: $http.api('demandBank/selectBank', 'zyj'),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						id: null,
+						bankName: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'id',
 						name: 'bankName'
 					};
 					cb(sourceData);
@@ -348,6 +352,7 @@ page.ctrl('activeInspect', function($scope) {
 		statusSel: function(t, p, cb) {
 			var sourceData = {
 				items: [
+					{value:null,text:"全部"},
 					{value:0,text:"未结清"},
 					{value:1,text:"已结清"}
 				],
@@ -359,6 +364,7 @@ page.ctrl('activeInspect', function($scope) {
 		carTypeSel: function(t, p, cb) {
 			var sourceData = {
 				items: [
+					{value:null,text:"全部"},
 					{value:0,text:"新车"},
 					{value:1,text:"二手车"}
 				],
@@ -370,6 +376,7 @@ page.ctrl('activeInspect', function($scope) {
 		mortgageSel: function(t, p, cb) {
 			var sourceData = {
 				items: [
+					{value:null,text:"全部"},
 					{value:"1",text:"未办理"},
 					{value:"2",text:"已办理"}
 				],
@@ -381,6 +388,7 @@ page.ctrl('activeInspect', function($scope) {
 		recordSel: function(t, p, cb) {
 			var sourceData = {
 				items: [
+					{value:null,text:"全部"},
 					{value:"0",text:"手动"},
 					{value:"1",text:"系统"}
 				],
@@ -392,7 +400,7 @@ page.ctrl('activeInspect', function($scope) {
 	};
 	// 下拉回调
 	$scope.bankPicker=function(val){
-		apiParams.bankName=val.name;
+		apiParams.bankId=val.id;
 	};
 	$scope.areaPicker=function(val){
 		apiParams.provinceId=val['省'].id;

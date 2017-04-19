@@ -24,6 +24,7 @@ page.ctrl('secondhandInput', function($scope) {
 				loanFinishedInput();
 				loanFinishedInputReq();
 				setupDatepicker();
+				setupEvt();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -44,7 +45,30 @@ page.ctrl('secondhandInput', function($scope) {
 		});
 		$location.location();
 	}
-
+	var setupEvt = function($el) {
+		$console.find('input[type="text"]').on('change', function() {
+			var thisName = $(this).attr('name'),
+				that = $(this);
+			if(thisName == 'salePrice' || thisName == 'systemCarPrice' || thisName == 'systemCarPriceLowest'){
+				var thisVal = that.val();
+				var reg = /^(\d+\.\d{1,2}|\d+)$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">该项只能填写数字及最多两位位小数</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'purchasedAdditionalFee' || thisName == 'usedPeriod' || thisName == 'carMileage' || thisName == 'assessPrice' || thisName == 'transferTimes' ){
+				var thisVal = that.val();
+				var reg = /^\d+$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">该项只能填写整数</i>');
+					that.val('');
+				}
+			}
+		})
+	}
 	/**
 	* 设置底部按钮操作栏
 	*/
@@ -167,12 +191,13 @@ page.ctrl('secondhandInput', function($scope) {
 			}
 		});
 		if(isTure){
-			debugger
 			var data;
 	        var formList = $('#dataform');
 	        var params = formList.serialize();
-            params = decodeURIComponent(params,true);
-            var paramArray = params.split("&");
+//          params = decodeURIComponent(params,true);
+	        var b = params.replace(/\+/g," ");
+			b =  decodeURIComponent(b);
+            var paramArray = b.split("&");
             var data1 = {};
             for(var i=0;i<paramArray.length;i++){
                 var valueStr = paramArray[i];
@@ -182,15 +207,30 @@ page.ctrl('secondhandInput', function($scope) {
 			$.ajax({
 				type: 'post',
 				url: $http.api('loanCarAssess/submit/' + $params.taskId, 'jbs'),
-//				data: JSON.stringify(data),
 				data: data,
 				dataType: 'json',
-//				contentType: 'application/json;charset=utf-8',
 				success: $http.ok(function(xhr) {
-					console.log(xhr);
+					if(xhr.data){
+						var iptNode = "<input type='hidden' class='individuationId' name='id'>";
+						$("#dataform").append(iptNode);
+						$("#dataform").find(".individuationId").val(xhr.data);
+					}
 					$.alert({
 						title: '提示',
 						content: tool.alert('信息已保存！'),
+						buttons: {
+							'确定': {
+					            action: function () {
+					            	process()
+					            }
+					        }
+					    }
+					})
+				}),
+				error:function(){
+					$.alert({
+						title: '提示',
+						content: tool.alert(xhr.msg),
 						buttons: {
 							'确定': {
 					            action: function () {
@@ -198,7 +238,7 @@ page.ctrl('secondhandInput', function($scope) {
 					        }
 					    }
 					})
-				})
+				}
 			})				
 		}else{
 			$.alert({
@@ -218,6 +258,9 @@ page.ctrl('secondhandInput', function($scope) {
 	* 下拉
 	*/
 	var seleLoad = function(){
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
 		$(".select").each(function(){
 			var $that = $(this);
 			var selected = $(this).data('selected');
@@ -249,12 +292,14 @@ page.ctrl('secondhandInput', function($scope) {
 	})
 
 	$scope.carPicker = function(picked) {
-		debugger
 		var carname = $("#carMode").find('.select-text').val();
 		$("#carName").val(carname);
 	}
 	$scope.areaPicker = function(picked) {
-		console.log(picked);
+		var locationName = $("#location1").find('.select-text').val();
+		$("#locationName").val(locationName);
+		var originAreaName = $("#originArea").find('.select-text').val();
+		$("#originAreaName").val(originAreaName);
 	}
 	/**dropdown 测试*/
 	function setupDropDown() {
@@ -410,6 +455,11 @@ page.ctrl('secondhandInput', function($scope) {
 			cb(sourceData);
 		}
 	}
+	var seNotInp = function(){
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
+	}
 	/***
 	* 加载页面模板
 	*/
@@ -423,6 +473,7 @@ page.ctrl('secondhandInput', function($scope) {
 			setupSubmitBar();
 			setupDropDown();
 			seleLoad();
+			seNotInp();
 		});
 	});
 });

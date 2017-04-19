@@ -70,24 +70,27 @@ page.ctrl('newBank', [], function($scope) {
 	}
 
 	/**
-	* dropdown控件
-	*/
-	function setupDropDown() {
-		$console.find('.select').dropdown();
-	}
-
-	/**
 	 * 加载（银行信息）立即处理事件
 	 */
 	var setupBankEvt = function() {
 
-		setupDropDown();
+		$scope.$el.$bankDataPanel.find('.select').dropdown();
 
 		$console.find('#bankDataSave').on('click', function() {
+			if(!$scope.bankId) {
+				$.alert({
+					title: '提示',
+					content: tool.alert('请选择银行！'),
+					buttons: {
+						ok: {
+							text: '确定'
+						}
+					}
+				});
+				return false;
+			}
 			var _params = {
-				bankId: $scope.bankId,
-				bankName: $scope.bankName,
-				organId: 99
+				bankCode: $scope.bankId
 			};
 			$.ajax({
 				url: $http.api('demandBank/save', 'cyj'),
@@ -130,7 +133,7 @@ page.ctrl('newBank', [], function($scope) {
 					if($(this).data('type') == 'accountNumber') {
 						$(this).parent().append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
 					} else {
-						$(this).parent().append('<span class="input-err">该项不符合输入规则！</span>')
+						$(this).parent().append('<span class="input-err">该项不符合输入规则！（10位汉字）</span>')
 					}
 				} else {
 					params[$(this).data('type')] = value;
@@ -142,7 +145,7 @@ page.ctrl('newBank', [], function($scope) {
 				$.ajax({
 					url: $http.api('demandBankAccount/save', 'cyj'),
 					type: 'post',
-					data: _params,
+					data: params,
 					dataType: 'json',
 					success: $http.ok(function(result) {
 						console.log(result);
@@ -185,14 +188,12 @@ page.ctrl('newBank', [], function($scope) {
 				stopUseChange(_params, function() {
 					that.html('启用').data('status', 1);
 					$parent.find('.search-item').addClass('search-item-disabled');
-					$parent.find('input').attr('disabled', true);
 				});
 			} else {
 				_params.status = 0;
 				stopUseChange(_params, function() {
 					that.html('停用').data('status', 0);
 					$parent.find('.search-item').removeClass('search-item-disabled');
-					$parent.find('input').attr('disabled', false);
 				});
 			}
 		})
@@ -300,23 +301,23 @@ page.ctrl('newBank', [], function($scope) {
 						$(this).parent().removeClass('error-input').addClass('error-input');
 						item++;
 					} else {
-						_params[$(this).attr('class')] = parseFloat(value).tofixed(4);
+						_params[$(this).attr('class')] = Number(parseFloat(value).toFixed(4));
 					}
 				});
 				if(item == 0) {
 					console.log(_params);
-					// $.ajax({
-					// 	url: $http.api('demandBankRate/save', 'cyj'),
-					// 	type: 'post',
-					// 	data: _params,
-					// 	dataType: 'json',
-					// 	success: $http.ok(function(result) {
-					// 		console.log(result);
-					// 		loadNewBank(function() {
-					// 			loadBankRate();
-					// 		})
-					// 	})
-					// })
+					$.ajax({
+						url: $http.api('demandBankRate/save', 'cyj'),
+						type: 'post',
+						data: _params,
+						dataType: 'json',
+						success: $http.ok(function(result) {
+							console.log(result);
+							loadNewBank(function() {
+								loadBankRate();
+							})
+						})
+					})
 				} else {
 					$.alert({
 						title: '提示',
@@ -327,16 +328,7 @@ page.ctrl('newBank', [], function($scope) {
 							}
 						}
 					});
-				}
-				// var rate12 = $.trim($parent.find('#rate12').val());
-				// var rate18 = $.trim($parent.find('#rate18').val());
-				// var rate24 = $.trim($parent.find('#rate24').val());
-				// var rate30 = $.trim($parent.find('#rate30').val());
-				// var rate36 = $.trim($parent.find('#rate36').val());
-				// var rate48 = $.trim($parent.find('#rate48').val());
-				// var rate60 = $.trim($parent.find('#rate60').val());
-				
-				
+				}	
 			}
 		})
 

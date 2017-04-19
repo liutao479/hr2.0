@@ -3,27 +3,109 @@ page.ctrl('operationsTab2', ['vendor/echarts.min'], function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
-			pageNum: 1
+			deptId:62
 		};
 	/**
-	* 加载运营分析信息表数据
-	* @params {object} params 请求参数
-	* @params {function} cb 回调函数
-	*/
-	var loadLoanList = function(params, cb) {
-		$.ajax({
-			url: $http.api($http.apiMap.operationsAnalysis, true),
-			data: params,
-			success: $http.ok(function(result) {
-				console.log(result);
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
-			})
+	 * 首次加载页面绑定立即处理事件
+	 */
+	var evt = function() {
+		$console.find('#search').on('click',function(){
+			searchlist(apiParams);
 		});
 	}
+	/**
+	* 日历控件
+	*/
+	var setupDatepicker = function() {
+		$console.find('.dateBtn').datepicker({
+			onpicked: function() {
+				var that = $(this);
+				apiParams[that.data('type')] = that.val();
+			},
+			oncleared: function() {
+				delete apiParams[$(this).data('type')];
+			}
+		});
+	}
+	/**
+	* dropdown控件
+	*/
+	function setupDropDown() {
+		$console.find('.select').dropdown();
+	}
+	/*echarts图表绘制*/
+	var setEcharts=function(_listName,_seriesList,_xAxisList){
+		/*折线图start*/
+		var myChart = echarts.init(document.getElementById('linechart'));                    
+		var option = {
+    			    title : {
+    			        text: '',
+    			        subtext: ''
+    			    },
+    			    tooltip : {
+    			    	show: true,
+            	    	trigger: 'item'
+    			    },
+    			    legend: {
+    			        data:_listName
+    			    },
+    			  	dataZoom: {
+    			        show: true,
+    			        start : 0
+    			    },
+    			    toolbox: {
+    			        show : true,
+    			        feature : {
+//    			            mark : {show: true},
+    			            dataView : {show: true, readOnly: false},
+    			            magicType : {show: true, type: ['line', 'bar']},
+    			            restore : {show: true},
+    			            saveAsImage : {show: true}
+    			        }
+    			    },
+    			    calculable : true,
+    			    xAxis : [
+    			        {
+    			            type : 'category',
+    			            boundaryGap : true,
+    			            data : _xAxisList
+    			        }
+    			    ],
+    			    yAxis : [
+    			        {
+    			            type : 'value',
+    			            axisLabel : {
+    			                formatter: '{value} 万'
+    			            }
+    			        }
+    			    ],
+    			    series : _seriesList
+    			};
+		myChart.setOption(option);
+		/*折线图end*/
+	};
+
+	// 查询列表数据
+	var searchlist=function(apiParams,cb){
+//		debugger
+		$.ajax({
+			type: 'post',
+			url: $http.api('statisticsPic/queryStatisticsByDayTime.html', 'operations'),
+			data: apiParams,
+			dataType:"json",	
+			headers: '',
+			success: $http.ok(function(res) {
+				console.log(res);
+				var _listName = res.data.listName;
+				var _seriesList = res.data.seriesList;
+				var _xAxisList = res.data.xAxisList;
+				setEcharts(_listName,_seriesList,_xAxisList);
+			})
+		});
+		if(cb && typeof cb == 'function') {
+			cb();
+		}
+	};
 	/**
 	* 构造分页
 	*/
@@ -43,11 +125,11 @@ page.ctrl('operationsTab2', ['vendor/echarts.min'], function($scope) {
 		$scope.def = {
 			listTmpl : $console.find('#operateAnatmpl').html()
 		}
-		$scope.$el = {
-			$tbl: $console.find('#operateAna'),
-			$paging: $console.find('#pageToolbar')
-		}
-
+		setupDatepicker();
+		setupDropDown();
+		searchlist(apiParams,function(){
+			evt();
+		});
 		// loadLoanList(apiParams);
 	});
 
@@ -58,5 +140,62 @@ page.ctrl('operationsTab2', ['vendor/echarts.min'], function($scope) {
 		apiParams.page = _page;
 		loadLoanList(apiParams);
 		cb();
+	}
+	//分公司ID
+	$scope.deptCompanyPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.deptId;
+			return false;
+		}
+		apiParams.deptIds = picked.id;
+	}
+	//当前进度
+	$scope.categoryPicker = function(picked) {
+		if(picked.id == '全部') {
+			delete apiParams.progressCode;
+			return false;
+		}
+		debugger
+		apiParams.progressCode = picked.id;
+	}
+	$scope.dropdownTrigger = {
+		deptCompany: function(t, p, cb) {
+			$.ajax({
+				type: 'get',
+				url: $http.api('pmsDept/getPmsDeptList', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						id: '全部',
+						name: '全部'
+					});
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		category: function(t, p, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('product/taskNameCode', 'zyj'),
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						taskCode: '全部',
+						taskName: '全部'
+					});
+					var sourceData = {
+						items: xhr.data,
+						id: 'taskCode',
+						name: 'taskName'
+					};
+					cb(sourceData);
+				})
+			})
+		}
 	}
 });

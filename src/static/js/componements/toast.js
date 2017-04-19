@@ -15,7 +15,7 @@
 
     toast.prototype.__init = function() {
         this.background = '<div style="position: fixed; left: 50%; top: 50%; width:300px; margin-left: -150px; z-index:{1}; border-radius:2px; background-color: #000; opacity: {0};"></div>';
-        this.content = '<div style="position: fixed; left: 50%; top: 50%; padding: 20px; color: #fff; line-height: 22px; z-index:{0};">{1}</div>';
+        this.content = '<div style="position: fixed; left: 50%; top: 50%; padding: 20px; color: #fff; line-height: 22px; z-index:{0}; font-size: 15px;">{1}</div>';
         this.$el = $('body');
     }
 

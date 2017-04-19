@@ -89,6 +89,23 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	}
 
 	/**
+	 * 材料必填，必传检验
+	 */
+	function checkData(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('loanMaterials/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
 	* 设置底部按钮操作栏
 	*/
 	var setupSubmitBar = function() {
@@ -98,39 +115,46 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		});
 		$submitBar.submitBar();
 		var $sub = $submitBar[0].$submitBar;
+
+		/**
+		 * 提交订单
+		 */
 		$sub.on('taskSubmit', function() {
-			var canSubmit = flow.taskSubmit($params.tasks);
-			console.log(canSubmit)
-			if(canSubmit) {
-				return process();
-			}
-			$.alert({
-				title: '提示',
-				content: tool.alert('你还有数据未填写!'),
-				buttons: {
-					ok: {
-						text: '确定',
-						action: function() {
-							var taskIds = [];
-							for(var i = 0, len = $params.tasks.length; i < len; i++) {
-								taskIds.push(parseInt($params.tasks[i].id));
-							}
-							var params = {
-								taskId: $params.taskId,
-								taskIds: taskIds,
-								orderNo: $params.orderNo
-							}
-							flow.tasksJump(params, 'complete');
-						}
-					}
-				}
-			})
+			process();
+			// checkData(function() {
+			// 	debugger
+			// 	var canSubmit = flow.taskSubmit($params.tasks, $params.taskId);
+			// 	if(canSubmit) {
+			// 		return process();
+			// 	}
+			// 	$.alert({
+			// 		title: '提示',
+			// 		content: tool.alert('请完成' + flow.nextTaskName + '再提交！'),
+			// 		buttons: {
+			// 			ok: {
+			// 				text: '确定',
+			// 				action: function() {
+			// 					var taskIds = [];
+			// 					for(var i = 0, len = $params.tasks.length; i < len; i++) {
+			// 						taskIds.push(parseInt($params.tasks[i].id));
+			// 					}
+			// 					var params = {
+			// 						taskId: $params.taskId,
+			// 						taskIds: taskIds,
+			// 						orderNo: $params.orderNo
+			// 					}
+			// 					flow.tasksJump(params, 'complete');
+			// 				}
+			// 			}
+			// 		}
+			// 	})
+			// });
 		})
 
+		/**
+		 * 退回订单
+		 */
 		$sub.on('backOrder', function() {
-			/**
-			 * 退回订单
-			 */
 			$.alert({
 				title: '退回订单',
 				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
@@ -201,8 +225,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 						}
 					}
 				}
-			})
-			
+			})	
 		})
 	}
 
@@ -214,6 +237,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		 * 订单退回的条件选项分割
 		 */
 		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		if(!taskJumps) return;
 		for(var i = 0, len = taskJumps.length; i < len; i++) {
 			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
 		}
@@ -310,29 +334,44 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 			var that = $(this),
 				_type = that.data('type'),
 				_url = that.data('url'),
-				_idx = that.data('idx');
-			that.find('.uploadEvt').imgUpload({
+				_idx = that.data('idx'),
+				$imgs = that.find('.uploadEvt.imgs'),
+				$noimgs = that.find('.uploadEvt.noimgs');
+			$imgs.imgUpload({
 				viewable: true,
+				markable: $params.refer ? true : false,
 				getimg: function(cb) {
 					cb($scope.result.data[_type][_idx].materials)
 				},
 				marker: function (img, mark, cb) {
+					var params = {
+						id: img.id,
+						auditResult: mark
+					}
+					if(mark == 0) {
+						params.auditOpinion = '';
+					}
 					$.ajax({
 						type: 'post',
 						url: $http.api(_url + '/addOrUpdate', true), 
-						data: {
-							id: img.id,
-							auditResult: mark,
-							auditOpinion: '审核原因审核原因审核原因审核原因审核原因'
-						},
+						data: params,
 						dataType: 'json',
 						success: $http.ok(function(result) {
 							console.log(result);
 							cb();
 						})
 					})
+				},
+				onclose: function(imgs) {
+					console.log(imgs)
+					$imgs.each(function(idx) {
+						$(this).find('.imgs-error').remove();
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
+					});
 				}
 			});
+
+			$noimgs.imgUpload();
 		});
 	}
 
@@ -367,20 +406,33 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		});
 	});
 
+	/**
+	 * 监听其它材料最后一个控件的名称
+	 */
+	var otherMaterialsListen = function() {
+		var $imgel = $console.find('.otherMaterials .uploadEvt');
+		$imgel.each(function(index) {
+			$(this).data('idx', index);
+		});
+	}
+
 	/***
 	* 删除图片后的回调函数
 	*/
 	$scope.deletecb = function(self) {
 		self.$el.remove();
+		otherMaterialsListen();
 	}
 
 	/***
 	* 上传图片成功后的回调函数
 	*/
 	$scope.uploadcb = function(self) {
-		self.$el.after(self.outerHTML);
+		var $parent = self.$el.parent();
+		if($parent.find('.uploadEvt').length == self.$el.data('idx') + 1) {
+			self.$el.after(self.outerHTML);
+		}
 		self.$el.next().imgUpload();
+		otherMaterialsListen();
 	}
-
-	
 });

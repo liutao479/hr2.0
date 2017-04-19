@@ -2,18 +2,26 @@
 page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console,
-		selValObj={},
-		savedQuery={},/*全局保存查询的条件*/
-		tabList=[
-			{text:"风控服务统计"},
-			{text:"业务量日统计"},
-			{text:"业务量区间统计"},
-			{text:"放款调度统计"},
-			{text:"逾期情况统计"},
-			{text:"报表下载"},
-		];
+		endDate = tool.formatDate(new Date().getTime()),
+		startDate = tool.getPreMonth(endDate),
+		apiParams={
+			strStartDate:startDate,
+			strEndDate:endDate,
+			/*strStartDate:'2017-01-01',
+			strEndDate:'2017-08-01'*/
+			deptId:null,
+			bankCode:null,
+		},
+		pageBcData={};/*保存点击分页时的查询参数*/;
 
-
+	/*查询前去除空查询字段*/
+	var delNull=function(obj){
+		for(var i in obj){
+			if(obj[i]==null||(obj[i]==""&&obj[i]!==0)||obj[i]==undefined||obj[i]=='undefined')
+				delete obj[i];
+		};
+		return obj;
+	};
 	/*echarts图表绘制*/
 	var setEcharts=function(_name,_list){
 		/*饼图start*/
@@ -43,7 +51,7 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 		        {
 		            name: '访问来源',
 		            type: 'pie',//指定类型为饼图
-		            center: ['70%', '55%'],
+		            center: ['65%', '50%'],
 		            data:_list,
 		            itemStyle: {
 		                emphasis: {//鼠标经过时样式
@@ -81,7 +89,7 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 		};
 		setEcharts(nameArr,dataList);
 	};
-	// 查询列表数据
+	// 查询数据总览
 	var searchTotal=function(){
 		$.ajax({
 			type: 'post',
@@ -101,11 +109,10 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 			url: $http.api('riskStatis/queryRisk','cyj'),
 			data: param,
 			success: $http.ok(function(res) {
+				pageBcData=param;
 				var _data=res.data.list;
-				$scope.$el.$searchTimeTitle.text(savedQuery.strStartDate+"至"+savedQuery.strEndDate+"明细");
+				$scope.$el.$searchTimeTitle.text(apiParams.strStartDate+"至"+apiParams.strEndDate+"明细");
 				render.compile($scope.$el.$table, $scope.def.tableTmpl, _data, true);
-				if(!_data||_data.length==0)
-					return false;
 				/*数据汇总及echarts图表数据整理*/
 				var totalSummary={
 					historyCalls:0,
@@ -129,45 +136,33 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 	};
 	// 页面首次载入时绑定事件
  	var evt = function() {
-		$scope.$el.$tab.off("click","li.role-bar-li").on("click","li.role-bar-li",function() {
-			if($(this).siblings("li").length>0){
-				$(this).siblings("li").find("a").removeClass("role-item-active");
-				$(this).find("a").addClass("role-item-active");
-				//search();
-			};
-		});
 		$scope.$el.$searchBtn.click(function(){
-			savedQuery={
-				strStartDate:$scope.$el.$startTime.val(),
-				strEndDate:$scope.$el.$endTime.val(),
-				deptId:selValObj.deptId,
-				bankCode:selValObj.bankCode
-			};
-			searchlist();
+			apiParams.strStartDate=$scope.$el.$startTime.val();
+			apiParams.strEndDate=$scope.$el.$endTime.val();
+			searchlist(delNull(apiParams));
 		});
 		$scope.$el.$table.off("click",".detailed").on("click",".detailed",function() {
-			var _apiKey=$(this).data("apiKey");
-			var _apiPrimary=$(this).data("apiPrimary");
-			router.render("riskManagementDetail", {				
-				pageNum: 1,
-				strStartDate: savedQuery.strStartDate,
-				strEndDate: savedQuery.strEndDate,
-				deptId: savedQuery.deptId,
-				bankCode: savedQuery.bankCode,
-				apiKey: _apiKey,
-				apiPrimary: _apiPrimary,
-			});
+			var _apiKey=$(this).data("apikey");/*必填*/
+			var _apiPrimary=$(this).data("apiprimary");/*非必填*/
+			if(_apiKey)
+				router.render("riskManagementDetail", {				
+					pageNum: 1,
+					strStartDate: pageBcData.strStartDate,
+					strEndDate: pageBcData.strEndDate,
+					deptId: pageBcData.deptId,
+					bankCode: pageBcData.bankCode,
+					apiKey: _apiKey,
+					apiPrimary: _apiPrimary,
+				});
 		});
  	};
 	// 加载页面模板
 	$console.load(router.template('iframe/operationsTab1'), function() {
-		$scope.def.tabTmpl = $console.find('#roleBarTabTmpl').html();//tab模板
 		$scope.def.valuationTotalTemp = $console.find('#valuationTotalTemp').html();//数据总览模板
-		$scope.def.serviceStaticTemp = $console.find('#serviceStaticTemp').html();//数据总览模板
+		$scope.def.serviceStaticTemp = $console.find('#serviceStaticTemp').html();//服务使用情况统计
 		$scope.def.tableTmpl = $console.find('#riskManagementTmpl').html();//表格模板
 		$scope.$context=$console.find("#risk-management");
 		$scope.$el = {
-			$tab: $scope.$context.find('#roleBarTab'),
 			$valuationTotal:$scope.$context.find('#valuation-total'),
 			$serviceStatic:$scope.$context.find('#serviceStatic'),
 			$table: $scope.$context.find('#riskManagementTable'),
@@ -176,51 +171,37 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 			$endTime: $scope.$context.find('#dateEnd'),
 			$searchTimeTitle: $scope.$context.find('#searchTimeTitle'),
 		};
-		render.compile($scope.$el.$tab, $scope.def.tabTmpl, tabList, true);
 		// 启用下拉功能
 		$console.find('.select').dropdown();
 		// 日期控件
 		$console.find('.dateBtn').datepicker();
-		$console.find('.dateBtn').val(tool.formatDate(new Date().getTime()));
+		$scope.$el.$startTime.val(startDate);
+		$scope.$el.$endTime.val(endDate);
 		searchTotal();/*查询数据总览*/
-		savedQuery={
-			/*strStartDate:$scope.$el.$startTime.val(),
-			strEndDate:$scope.$el.$endTime.val(),
-			deptId:"",
-			bankCode:""*/
-			strStartDate:'2017-01-01',
-			strEndDate:'2017-08-01'
-		};
-		searchlist(savedQuery, function() {
+		searchlist(delNull(apiParams), function() {
 			evt();	
 		});/*查询服务使用情况统计*/
 	});
 	// 下拉功能数据
 	$scope.dropdownTrigger = {
 		TypeSel: function(t, p, cb) {
-			var sourceData = {
-				items: [
-					{bankId:"001",bankName:"杭州总部"},
-					{bankId:"002",bankName:"成都分部"}
-				],
-				id: 'bankId',
-				name: 'bankName'
-			};
-			cb(sourceData);
-			/*$.ajax({
+			$.ajax({
 				type: 'post',
-				url: $http.api('demandBank/selectBank'),
+				url: $http.api('riskStatis/getDeptList',true),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
-					debugger
+					xhr.data.unshift({
+						id: null,
+						name: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
-						name: 'bankName'
+						id: 'id',
+						name: 'name'
 					};
 					cb(sourceData);
 				})
-			})*/
+			})
 		},
 		bankSel: function(t, p, cb) {
 			$.ajax({
@@ -228,9 +209,13 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 				url: $http.api('demandBank/selectBank',true),
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
+					xhr.data.unshift({
+						bankCode: null,
+						bankName: '全部'
+					});
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'bankCode',
 						name: 'bankName'
 					};
 					cb(sourceData);
@@ -240,9 +225,9 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 	};
 	// 下拉回调
 	$scope.TypePicker=function(val){
-		selValObj.deptId=val.id;
+		apiParams.deptId=val.id;
 	};
 	$scope.bankPicker=function(val){
-		selValObj.bankCode=val.id;
+		apiParams.bankCode=val.id;
 	};
 });
