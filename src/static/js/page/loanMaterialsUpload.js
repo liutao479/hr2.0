@@ -120,8 +120,8 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		 * 提交订单
 		 */
 		$sub.on('taskSubmit', function() {
-			checkData(function() {
-				var canSubmit = flow.taskSubmit($params.tasks);
+			// checkData(function() {
+				var canSubmit = flow.taskSubmit($params.tasks, $params.taskId);
 				if(canSubmit) {
 					return process();
 				}
@@ -132,7 +132,6 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 						ok: {
 							text: '确定',
 							action: function() {
-								debugger
 								var taskIds = [];
 								for(var i = 0, len = $params.tasks.length; i < len; i++) {
 									taskIds.push(parseInt($params.tasks[i].id));
@@ -147,7 +146,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 						}
 					}
 				})
-			});
+			// });
 		})
 
 		/**
