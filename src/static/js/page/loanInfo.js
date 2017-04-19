@@ -801,6 +801,13 @@ page.ctrl('loanInfo', function($scope) {
 				})
 			}
 		})
+		$(".panel").each(function(){
+			var saveBtn = $(this).find(".saveBtn");
+			console.log(saveBtn);
+			if(saveBtn){
+				$(this).find('.info-value').addClass('pointDisabled');
+			}
+		})
 	}
 
 	/**

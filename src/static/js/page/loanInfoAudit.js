@@ -123,7 +123,14 @@ page.ctrl('loanInfoAudit', function($scope) {
 			}else{
 				$(this).removeClass('pointDisabled');
 			}
-		});
+		})
+		$(".panel").each(function(){
+			var saveBtn = $(this).find(".saveBtn");
+			console.log(saveBtn);
+			if(saveBtn){
+				$(this).find('.info-value').addClass('pointDisabled');
+			}
+		})
 	}
 	/**
 	* 绑定立即处理事件
