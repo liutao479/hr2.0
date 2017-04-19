@@ -74,6 +74,7 @@
 												{{ }else{ }}
 													<input type="text" name="yearIncomeMoney" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -92,6 +93,7 @@
 												{{ }else{ }}
 													<input type="text" id="loanMoney" name="loanMoney" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -110,6 +112,7 @@
 												{{ }else{ }}
 													<input type="text" id="feeRate" name="feeRate" />
 												{{ } }}
+												<span class="unitInfo">%</span>
 											</span>
 										</td>
 									</tr>
@@ -128,6 +131,7 @@
 												{{ }else{ }}
 													<input type="text" id="feeamount" readonly="readonly" name="feeamount" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -164,6 +168,7 @@
 												{{ }else{ }}
 													<input type="text" id="carPrice" name="carPrice" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -200,6 +205,7 @@
 												{{ }else{ }}
 													<input type="text" id="loanRatio" readonly="readonly" name="loanRatio" />
 												{{ } }}
+												<span class="unitInfo">%</span>
 											</span>
 										</td>
 									</tr>
@@ -244,9 +250,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.engname){ }}
-													<input type="text" name="engname" value="{{= it.creditCard.engname}}" />
+													<input type="text" maxlength="50" name="engname" value="{{= it.creditCard.engname}}" />
 												{{ }else{ }}
-													<input type="text" name="engname" />
+													<input type="text" maxlength="50" name="engname" />
 												{{ } }}
 											</span>
 										</td>
@@ -298,9 +304,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.custcode){ }}
-													<input type="text" name="custcode" value="{{= it.creditCard.custcode}}" />
+													<input type="text" maxlength="18" name="custcode" value="{{= it.creditCard.custcode}}" />
 												{{ }else{ }}
-													<input type="text" name="custcode" />
+													<input type="text" maxlength="18" name="custcode" />
 												{{ } }}
 											</span>
 										</td>
@@ -316,9 +322,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.authref){ }}
-													<input type="text" name="authref" value="{{= it.creditCard.authref}}" />
+													<input type="text" maxlength="20" name="authref" value="{{= it.creditCard.authref}}" />
 												{{ }else{ }}
-													<input type="text" name="authref" />
+													<input type="text" maxlength="20" name="authref" />
 												{{ } }}
 											</span>
 										</td>
@@ -378,9 +384,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.mvblno){ }}
-													<input type="text" name="mvblno" value="{{= it.creditCard.mvblno}}" />
+													<input type="text" maxlength="11" name="mvblno" value="{{= it.creditCard.mvblno}}" />
 												{{ }else{ }}
-													<input type="text" name="mvblno" />
+													<input type="text" maxlength="11" name="mvblno" />
 												{{ } }}
 											</span>
 										</td>
@@ -396,9 +402,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.hprovince){ }}
-													<input type="text" name="hprovince" value="{{= it.creditCard.hprovince}}" />
+													<input type="text" maxlength="15" name="hprovince" value="{{= it.creditCard.hprovince}}" />
 												{{ }else{ }}
-													<input type="text" name="hprovince" />
+													<input type="text" maxlength="15" name="hprovince" />
 												{{ } }}
 											</span>
 										</td>
@@ -414,9 +420,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.hcity){ }}
-													<input type="text" name="hcity" value="{{= it.creditCard.hcity}}" />
+													<input type="text" maxlength="15" name="hcity" value="{{= it.creditCard.hcity}}" />
 												{{ }else{ }}
-													<input type="text" name="hcity" />
+													<input type="text" maxlength="15" name="hcity" />
 												{{ } }}
 											</span>
 										</td>
@@ -432,9 +438,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.hcounty){ }}
-													<input type="text" name="hcounty" value="{{= it.creditCard.hcounty}}" />
+													<input type="text" maxlength="15" name="hcounty" value="{{= it.creditCard.hcounty}}" />
 												{{ }else{ }}
-													<input type="text" name="hcounty" />
+													<input type="text" maxlength="15" name="hcounty" />
 												{{ } }}
 											</span>
 										</td>
@@ -450,9 +456,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.haddress){ }}
-													<input type="text" name="haddress" value="{{= it.creditCard.haddress}}" />
+													<input type="text" maxlength="20" name="haddress" value="{{= it.creditCard.haddress}}" />
 												{{ }else{ }}
-													<input type="text" name="haddress" />
+													<input type="text" maxlength="20" name="haddress" />
 												{{ } }}
 											</span>
 										</td>
@@ -468,9 +474,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.hphoneno){ }}
-													<input type="text" name="hphoneno" value="{{= it.creditCard.hphoneno}}" />
+													<input type="text" maxlength="20" name="hphoneno" value="{{= it.creditCard.hphoneno}}" />
 												{{ }else{ }}
-													<input type="text" name="hphoneno" />
+													<input type="text" maxlength="20" name="hphoneno" />
 												{{ } }}
 											</span>
 										</td>
@@ -486,9 +492,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.homezip){ }}
-													<input type="text" name="homezip" value="{{= it.creditCard.homezip}}" />
+													<input type="text" maxlength="6" name="homezip" value="{{= it.creditCard.homezip}}" />
 												{{ }else{ }}
-													<input type="text" name="homezip" />
+													<input type="text" maxlength="6" name="homezip" />
 												{{ } }}
 											</span>
 										</td>
@@ -536,9 +542,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.unitname){ }}
-													<input type="text" name="unitname" value="{{= it.creditCard.unitname}}" />
+													<input type="text" maxlength="25" name="unitname" value="{{= it.creditCard.unitname}}" />
 												{{ }else{ }}
-													<input type="text" name="unitname" />
+													<input type="text" maxlength="25" name="unitname" />
 												{{ } }}
 											</span>
 										</td>
@@ -554,9 +560,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.cprovince){ }}
-													<input type="text" name="cprovince" value="{{= it.creditCard.cprovince}}" />
+													<input type="text" maxlength="15" name="cprovince" value="{{= it.creditCard.cprovince}}" />
 												{{ }else{ }}
-													<input type="text" name="cprovince" />
+													<input type="text" maxlength="15" name="cprovince" />
 												{{ } }}
 											</span>
 										</td>
@@ -572,9 +578,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.ccity){ }}
-													<input type="text" name="ccity" value="{{= it.creditCard.ccity}}" />
+													<input type="text" maxlength="15" name="ccity" value="{{= it.creditCard.ccity}}" />
 												{{ }else{ }}
-													<input type="text" name="ccity" />
+													<input type="text" maxlength="15" name="ccity" />
 												{{ } }}
 											</span>
 										</td>
@@ -590,9 +596,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.ccounty){ }}
-													<input type="text" name="ccounty" value="{{= it.creditCard.ccounty}}" />
+													<input type="text" maxlength="20" name="ccounty" value="{{= it.creditCard.ccounty}}" />
 												{{ }else{ }}
-													<input type="text" name="ccounty" />
+													<input type="text" maxlength="20" name="ccounty" />
 												{{ } }}
 											</span>
 										</td>
@@ -608,9 +614,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.caddress){ }}
-													<input type="text" name="caddress" value="{{= it.creditCard.caddress}}" />
+													<input type="text" maxlength="20" name="caddress" value="{{= it.creditCard.caddress}}" />
 												{{ }else{ }}
-													<input type="text" name="caddress" />
+													<input type="text" maxlength="20" name="caddress" />
 												{{ } }}
 											</span>
 										</td>
@@ -650,9 +656,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.corpzip){ }}
-													<input type="text" name="corpzip" value="{{= it.creditCard.corpzip}}" />
+													<input type="text" maxlength="6" name="corpzip" value="{{= it.creditCard.corpzip}}" />
 												{{ }else{ }}
-													<input type="text" name="corpzip" />
+													<input type="text" maxlength="6" name="corpzip" />
 												{{ } }}
 											</span>
 										</td>
@@ -736,9 +742,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.reltname1){ }}
-													<input type="text" name="reltname1" value="{{= it.creditCard.reltname1}}" />
+													<input type="text" maxlength="5" name="reltname1" value="{{= it.creditCard.reltname1}}" />
 												{{ }else{ }}
-													<input type="text" name="reltname1" />
+													<input type="text" maxlength="5" name="reltname1" />
 												{{ } }}
 											</span>
 										</td>
@@ -772,9 +778,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.reltmobl1){ }}
-													<input type="text" name="reltmobl1" value="{{= it.creditCard.reltmobl1}}" />
+													<input type="text" maxlength="11" name="reltmobl1" value="{{= it.creditCard.reltmobl1}}" />
 												{{ }else{ }}
-													<input type="text" name="reltmobl1" />
+													<input type="text" maxlength="11" name="reltmobl1" />
 												{{ } }}
 											</span>
 										</td>
@@ -790,9 +796,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.relaphone1){ }}
-													<input type="text" name="relaphone1" value="{{= it.creditCard.relaphone1}}" />
+													<input type="text" maxlength="20" name="relaphone1" value="{{= it.creditCard.relaphone1}}" />
 												{{ }else{ }}
-													<input type="text" name="relaphone1" />
+													<input type="text" maxlength="20" name="relaphone1" />
 												{{ } }}
 											</span>
 										</td>
@@ -808,9 +814,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.reltname2){ }}
-													<input type="text" name="reltname2" value="{{= it.creditCard.reltname2}}" />
+													<input type="text" maxlength="5" name="reltname2" value="{{= it.creditCard.reltname2}}" />
 												{{ }else{ }}
-													<input type="text" name="reltname2" />
+													<input type="text" maxlength="5" name="reltname2" />
 												{{ } }}
 											</span>
 										</td>
@@ -844,9 +850,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.reltmobl2){ }}
-													<input type="text" name="reltmobl2" value="{{= it.creditCard.reltmobl2}}" />
+													<input type="text" maxlength="11" name="reltmobl2" value="{{= it.creditCard.reltmobl2}}" />
 												{{ }else{ }}
-													<input type="text" name="reltmobl2" />
+													<input type="text" maxlength="11" name="reltmobl2" />
 												{{ } }}
 											</span>
 										</td>
@@ -862,9 +868,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.rtcophon2){ }}
-													<input type="text" name="rtcophon2" value="{{= it.creditCard.rtcophon2}}" />
+													<input type="text" maxlength="20" name="rtcophon2" value="{{= it.creditCard.rtcophon2}}" />
 												{{ }else{ }}
-													<input type="text" name="rtcophon2" />
+													<input type="text" maxlength="20" name="rtcophon2" />
 												{{ } }}
 											</span>
 										</td>
@@ -892,9 +898,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.stmtemail || it.creditCard.stmtemail == '0'){ }}
-													<input type="text" placeholder="选填" name="stmtemail" value="{{= it.creditCard.stmtemail}}" />
+													<input type="text" maxlength="30" placeholder="选填" name="stmtemail" value="{{= it.creditCard.stmtemail}}" />
 												{{ }else{ }}
-													<input type="text" placeholder="选填" name="stmtemail" />
+													<input type="text" maxlength="30" placeholder="选填" name="stmtemail" />
 												{{ } }}
 											</span>
 										</td>
