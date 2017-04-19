@@ -66,6 +66,23 @@ page.ctrl('loanApproval', function($scope) {
 			$backReason.backReason();
 		}
 	}
+
+	/**
+	 * 材料必填，必传检验
+	 */
+	function checkData(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('loanApproval/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
 	
 	/**
 	* 加载左侧导航菜单
@@ -281,7 +298,9 @@ page.ctrl('loanApproval', function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
-			process();
+			checkData(function() {
+				process();
+			})
 		})
 
 		/**

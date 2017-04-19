@@ -3,7 +3,7 @@ page.ctrl('creditResult', function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console;
 	/**
-	* 加载征信预审核数据
+	* 加载征信结果数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/

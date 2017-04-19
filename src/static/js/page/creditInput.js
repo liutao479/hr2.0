@@ -146,7 +146,8 @@ page.ctrl('creditInput', [], function($scope) {
 				ok: {
 					text: '确定',
 					action: function () {
-						var taskIds = [];
+						var that = this,
+							taskIds = [];
 						for(var i = 0, len = $params.tasks.length; i < len; i++) {
 							taskIds.push(parseInt($params.tasks[i].id));
 						}
@@ -155,9 +156,19 @@ page.ctrl('creditInput', [], function($scope) {
 							taskIds: taskIds,
 							orderNo: $params.orderNo
 						}
-						var reason = $.trim(this.$content.find('#suggestion').val());
+						var reason = $.trim(that.$content.find('#suggestion').val());
 						if(reason) params.reason = reason;
-						flow.tasksJump(params, 'complete');
+						$.ajax({
+							type: 'post',
+							url: $http.api('creditUser/updCreditList/' + $params.taskId, 'jbs'),
+							data: JSON.stringify($scope.apiParams),
+							dataType: 'json',
+							contentType: 'application/json;charset=utf-8',
+							success: $http.ok(function(result) {
+								console.log(result);
+								flow.tasksJump(params, 'complete');
+							})
+						})
 					}
 				}
 			}
@@ -594,19 +605,9 @@ page.ctrl('creditInput', [], function($scope) {
 		}
 		if(!_alert) {
 			console.log($scope.apiParams);
-			$.ajax({
-				type: 'post',
-				url: $http.api('creditUser/updCreditList/' + $params.taskId, 'jbs'),
-				data: JSON.stringify($scope.apiParams),
-				dataType: 'json',
-				contentType: 'application/json;charset=utf-8',
-				success: $http.ok(function(result) {
-					console.log(result);
-					if(cb && typeof cb == 'function') {
-						cb();
-					}
-				})
-			})
+			if(cb && typeof cb == 'function') {
+				cb();
+			}
 		} else {
 			$.alert({
 				title: '提示',

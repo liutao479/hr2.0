@@ -7,7 +7,7 @@
 * data-trigger {function} 多级的数据请求函数，选中上级后触发请求子级数据
 * data-search {function} 搜索触发时的请求函数，不传则表示不支持搜索
 * data-forceload {boolean} 值为true时，每次打开下拉框均会再次请求下拉源数据
-* data-selected {object key} 当前选中项
+* data-selected {object key} 默认选中项
 */
 'use strict';
 (function($, _) {

@@ -169,7 +169,7 @@ page.ctrl('loan', function($scope) {
 		/**
 		* 绑定搜索事件
 		**/
-		$console.find('#searchInput').on('keydown', function(evt) {
+		$console.find('#search input').on('keydown', function(evt) {
 			var that = $(this);
 			if(evt.which == 13) {
 				var	searchText = $.trim(that.val());
@@ -183,7 +183,7 @@ page.ctrl('loan', function($scope) {
 				loadLoanList(apiParams);
 			}
 		});
-		$console.find('#searchInput').on('keyup', function(evt) {
+		$console.find('#search input').on('keyup', function(evt) {
 			var that = $(this);
 			if(evt.which == 8) {
 				var	searchText = $.trim(that.val());
@@ -196,7 +196,7 @@ page.ctrl('loan', function($scope) {
 
 
 		// 文本框失去焦点记录文本框的值
-		$console.find('#searchInput').on('blur', function(evt) {
+		$console.find('#search input').on('blur', function(evt) {
 			var that = $(this),
 				searchText = $.trim(that.val());
 			if(!searchText) {
@@ -210,7 +210,7 @@ page.ctrl('loan', function($scope) {
 		$console.find('#search .iconfont').on('click', function() {
 			var searchText = $.trim($console.find('#search input').val());
 			if(!searchText) {
-				$console.find('#searchInput').focus();
+				$console.find('#search input').focus();
 				loadLoanList(apiParams);
 				return false;
 			}

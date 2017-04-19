@@ -94,7 +94,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	function checkData(cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('userMaterials/submit/' + $params.taskId, 'zyj'),
+			url: $http.api('loanMaterials/submit/' + $params.taskId, 'zyj'),
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
@@ -120,7 +120,8 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		 * 提交订单
 		 */
 		$sub.on('taskSubmit', function() {
-			// checkData(function() {
+			checkData(function() {
+				debugger
 				var canSubmit = flow.taskSubmit($params.tasks, $params.taskId);
 				if(canSubmit) {
 					return process();
@@ -146,7 +147,7 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 						}
 					}
 				})
-			// });
+			});
 		})
 
 		/**

@@ -84,6 +84,7 @@
 								}
 							}
 						})
+						return false;
 						break;
 					case 2102:
 						$.alert({
@@ -95,6 +96,7 @@
 								}
 							}
 						})
+						return false;
 						break;
 					case 1000:
 						$.alert({
