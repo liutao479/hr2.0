@@ -152,6 +152,7 @@ page.ctrl('lendAudit', function($scope) {
 			$.alert({
 				title: '自行垫资',
 				content: doT.template(dialogTml.wContent.selfAdvance)({}),
+				boxWidth: '900px',
 				onContentReady: function() {
 					this.$content.find('.uploadEvt').imgUpload();
 					//启动用款时间日历控件
@@ -165,6 +166,7 @@ page.ctrl('lendAudit', function($scope) {
 					this.$content.find('.input-text input').on('focus', function() {
 						$(this).parent().find('.input-err').remove();
 					})
+
 				},
 				buttons: {
 					close: {
@@ -176,40 +178,56 @@ page.ctrl('lendAudit', function($scope) {
 						action: function() {
 							var that = this,
 								flag = true,
-								params = {},
+								imgFlag = true,
+								params = {
+									orderNo: $params.orderNo
+								},
 								$inputs = that.$content.find('.input-text input'),
 								reason = $.trim(that.$content.find('#suggestion').val());
 							$inputs.each(function() {
-								var value = $.trim($(this).val());
+								var value = $.trim($(this).val()),
+									$parent = $(this).parent();
 								if(!value) {
-									$(this).parent().append('<span class="input-err">该项不能为空！</span>');
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
+									$parent.append('<span class="input-err">该项不能为空！</span>');
 									flag = false;
 								} else if(!regMap[$(this).data('type')].test(value)) {
-									$(this).parent().find('.input-err').remove();
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
 									// if($(this).data('type') == 'accountNumber') {
-									// 	$(this).parent().append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
+									// 	$parent.append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
 									// } else {
-									// 	$(this).parent().append('<span class="input-err">该项不符合输入规则！（10位汉字）</span>')
+									// 	$parent.append('<span class="input-err">该项不符合输入规则！（10位汉字）</span>')
 									// }
-									$(this).parent().append('<span class="input-err">该项不符合输入规则！</span>');
+									$parent.append('<span class="input-err">该项不符合输入规则！</span>');
 									flag = false;
 								} else {
+									$parent.removeClass('error-input');
+									$parent.find('.input-err').remove();
 									params[$(this).data('key')] = value;
 								}
 							});
 							if(reason) params.reason = reason;
+							if(!$scope.imgUrl) {
+								that.$content.find('.uploadEvt').removeClass('error-input').addClass('error-input');
+								flag = false;
+							} else {
+								that.$content.find('.uploadEvt').removeClass('error-input');
+								params.advanceCertificate = $scope.imgUrl;
+							}
 							if(flag) {
-								// $.ajax({
-								// 	type: 'post',
-								// 	url: $http.api('makeLoanApproval/submit/' + $params.taskId, 'zyj'),
-								// 	data: params,
-								// 	dataType: 'json',
-								// 	success: $http.ok(function(result) {
-								// 		console.log(result);
-								// 		// router.render('loanProcess');
-								// 		// toast.hide();
-								// 	})
-								// })
+								$.ajax({
+									type: 'post',
+									url: $http.api('makeLoanApproval/submit/' + $params.taskId, 'zyj'),
+									data: params,
+									dataType: 'json',
+									success: $http.ok(function(result) {
+										console.log(result);
+										// router.render('loanProcess');
+										// toast.hide();
+									})
+								})
 							} else {
 								$.alert({
 									title: '提示',
@@ -326,6 +344,18 @@ page.ctrl('lendAudit', function($scope) {
 			process();
 		})
 
+	}
+
+	/***
+	* 上传图片成功后的回调函数
+	*/
+	$scope.uploadcb = function(self) {
+		self.$el.removeClass('error-input');
+		$scope.imgUrl = $('.jconfirm .imgs-view').attr('src');
+	}
+	
+	$scope.deletecb = function(self) {
+		delete $scope.imgUrl;
 	}
 
 	/**
