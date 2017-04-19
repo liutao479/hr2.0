@@ -21,7 +21,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 	var loadOrderInfo = function(_type, cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('creditMaterials/index', 'zyj'),
+			url: $http.api('creditMaterialsApproval/info', 'zyj'),
 			data: {
 				taskId: $params.taskId
 			},
@@ -40,7 +40,21 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 					'-1': '其他'
 				};
  				$scope.orderNo = result.data.loanTask.orderNo;
+				$scope.currentType = _type;
 				$scope.result.data.currentType = _type;
+
+				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
+				if($scope.firstLoad) {
+					var creditUsers = $scope.result.data.creditUsers, userType;
+					for(var i in creditUsers) {
+						userType = i;
+						break;
+					}
+					if(userType != 0) {
+						$scope.currentType = userType;
+						$scope.result.data.currentType = userType;
+					}
+				}
 
 				// 编译tab
 				setupTab($scope.result.data || {}, function() {
@@ -48,8 +62,8 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 				});
 
 				// 编译tab项对应内容
-				setupCreditPanel(_type, $scope.result.data, function() {
-					setupEvt($scope.$el.$tbls.eq(_type), _type);
+				setupCreditPanel($scope.currentType, $scope.result.data, function() {
+					setupEvt($scope.$el.$tbls.eq($scope.currentType), $scope.currentType);
 				});
 
 				if( cb && typeof cb == 'function' ) {
@@ -433,10 +447,14 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 			$modifyBankPanel: $console.find('#modifyBankPanel')
 		}
 		
+
+		//首次载入
+		$scope.firstLoad = true;
 		loadOrderInfo($scope.currentType, function() {
 			evt();
 			setupSubmitBar();
 			setupLocation();
+			$scope.firstLoad = false;
 		});
 	});
 

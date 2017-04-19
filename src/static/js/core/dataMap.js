@@ -1,6 +1,6 @@
 'use strict';
 (function(g) {
-	// g.urlStr = "http://192.168.1.86:8089";
+	g.urlStr = "http://192.168.1.86:8089";
 	// g.urlStr = "http://192.168.1.124:8080";
 	// g.urlStr = "http://192.168.0.22:8080";
 	// g.urlStr = "http://192.168.1.55:8080";

@@ -46,9 +46,22 @@ page.ctrl('creditMaterialsUpload', function($scope) {
  				$scope.bankName = result.data.loanTask.loanOrder.demandBankName || '';
  				$scope.busiAreaCode = result.data.loanTask.loanOrder.area ? result.data.loanTask.loanOrder.area.areaId : '';
  				$scope.areaName = result.data.loanTask.loanOrder.area ? result.data.loanTask.loanOrder.area.wholeName : '';
-				$scope.result.data.currentType = _type;
 				$scope.result.data.types = ['借款人', '共同还款人', '反担保人'];
+				$scope.currentType = _type;
+				$scope.result.data.currentType = _type;
 
+				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
+				if($scope.firstLoad) {
+					var creditUsers = $scope.result.data.creditUsers, userType;
+					for(var i in creditUsers) {
+						userType = i;
+						break;
+					}
+					if(userType != 0) {
+						$scope.currentType = userType;
+						$scope.result.data.currentType = userType;
+					}
+				}
 				// 编译tab
 				setupTab($scope.result.data || {}, function() {
 					setupTabEvt();
@@ -58,8 +71,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				initApiParams();
 
 				// 编译tab项对应内容
-				setupCreditPanel(_type, $scope.result.data, function() {
-					setupEvt($scope.$el.$tbls.eq(_type));
+				setupCreditPanel($scope.currentType, $scope.result.data, function() {
+					setupEvt($scope.$el.$tbls.eq($scope.currentType));
 				});
 
 				if( cb && typeof cb == 'function' ) {
@@ -651,6 +664,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		}
 		//征信查询机构弹窗确定按钮是否可点击
 		$scope.clickable = false;
+		//首次载入
+		$scope.firstLoad = true;
 		loadOrderInfo($scope.currentType, function() {
 			setupBackReason($scope.result.data.loanTask.backApprovalInfo)
 			setupCreditBank();
@@ -661,6 +676,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			if($scope.demandBankId) {
 				$scope.clickable = true;
 			}
+			$scope.firstLoad = false;
 		});
 	});
 

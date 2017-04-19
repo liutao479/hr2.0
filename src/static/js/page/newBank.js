@@ -133,7 +133,7 @@ page.ctrl('newBank', [], function($scope) {
 					if($(this).data('type') == 'accountNumber') {
 						$(this).parent().append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
 					} else {
-						$(this).parent().append('<span class="input-err">该项不符合输入规则！（10位户名）</span>')
+						$(this).parent().append('<span class="input-err">该项不符合输入规则！（10位汉字）</span>')
 					}
 				} else {
 					params[$(this).data('type')] = value;
