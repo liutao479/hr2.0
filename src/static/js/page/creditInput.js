@@ -30,7 +30,6 @@ page.ctrl('creditInput', [], function($scope) {
 				$scope.result = result;
 				$scope.result.index = idx;
 				$scope.idx = idx;
-				
 				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
 				if($scope.firstLoad) {
 					var creditUsers = $scope.result.data.creditUsers, userType;
@@ -42,9 +41,6 @@ page.ctrl('creditInput', [], function($scope) {
 						console.log(userType);
 						$scope.result.index = userType;
 						$scope.idx = userType;
-					} else {
-						$scope.result.index = idx;
-						$scope.idx = idx;
 					}
 				}
 				
@@ -62,7 +58,7 @@ page.ctrl('creditInput', [], function($scope) {
 				});
 
 				// 编译tab项对应内容
-				setupCreditPanel(idx, $scope.result);
+				setupCreditPanel($scope.idx, $scope.result);
 
 				if(cb && typeof cb == 'function') {
 					cb();
