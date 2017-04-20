@@ -68,26 +68,22 @@
 											</td>
 										{{ }else if(fieldCode == 'taxIsPay'){ }}
 											<td>
-												<div class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-dropdown="page.$scope['secondhandInput'].selfPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.selfPicker"></div>
-												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
+												<div class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '0') : ''}}" data-dropdown="page.$scope['secondhandInput'].selfPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '0') : ''}}" />
 											</td>
 										{{ }else if(fieldCode == 'carMode'){ }}
 											<td>
 												<div id="carMode" readonly="readonly" class="select select-common" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.carName || '') : ''}}" data-tabs="品牌|车系|车型" data-dropdown="page.$scope['secondhandInput'].carPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.car"></div>
 												<input type="hidden" name="{{= fieldCode}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
 											</td>
-										{{ }else if(fieldCode == 'originArea'){ }}
-											<td>
-												<div id="originArea" class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
-											</td>
 										{{ }else if(fieldCode == 'location'){ }}
 											<td>
-												<div id="location" class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
+												<div id="location1" class="select select-common" readonly="readonly" data-selected="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" data-tabs="省|市|区" data-dropdown="page.$scope['secondhandInput'].areaPicker" data-trigger="page.$scope['secondhandInput'].dropdownTrigger.areaSel"></div>
 											</td>
 										{{ }else{ }}
 											<td>
 												<span class="info-value">
-													<input type="text" name="{{= seg.fieldName}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '') : ''}}" />
+														<input type="text" name="{{= seg.fieldName}}" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess[fieldCode] || '0') : ''}}" />
 												</span>
 											</td>
 										{{ } }}
@@ -103,15 +99,14 @@
 				{{ } }}
 				{{if(it.data.loanCarAssess && it.data.loanCarAssess.location){}}
 					<input type="hidden" id="locationName" name="location" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.location || '') : ''}}" />
-				{{ } }}
-				{{if(it.data.loanCarAssess && it.data.loanCarAssess.originArea){}}
-					<input type="hidden" id="originAreaName" name="originArea" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.originArea || '') : ''}}" />
+				{{ }else{ }}
+					<input type="hidden" id="locationName" name="location" />
 				{{ } }}
 				{{if(it.data.loanCarAssess && it.data.loanCarAssess.carName){}}
 					<input type="hidden" id="carName" name="carName" value="{{=it.data.loanCarAssess ? (it.data.loanCarAssess.carName || '') : ''}}" />
+				{{ }else{ }}
+					<input type="hidden" id="carName" name="carName" />
 				{{ } }}
-				<!-- <input type="hidden" name="updateDate" value="{{=it.data.loanTask.updateDate}}" />
-				<input type="hidden" name="updateUser" value="{{=it.data.loanTask.updateUser}}" /> -->
 				{{ if(it.data.loanCarAssess && it.data.loanCarAssess.id){ }}
 					<input type="hidden" name="id" value="{{=it.data.loanCarAssess.id}}" />
 				{{ } }}

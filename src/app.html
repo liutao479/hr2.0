@@ -36,7 +36,7 @@
 			<li class="user-li message" data-item="message">
 				<a href="javascript:;" class="user-field-item message-a">
 					<i class="iconfont">&#xe6b4;</i>
-					<span class="message-number">533</span>
+					<span class="message-number" id="msgCounter">0</span>
 				</a>
 				<div class="message-area">
 					<ul class="message-panel" id="messagePanel"></ul>
@@ -69,7 +69,7 @@
 								<a class="phone-bind navEvt" data-id="bind">绑定</a>
 							</dd>
 							{{ } else { }}
-							<dd class="user-panel-value">{{=it.phone}}<a class="phone-bind navEvt" data-id="change">更换</a></dd>
+							<dd class="user-panel-value">{{=it.phone}}<a class="phone-bind navEvt" data-phone="{{=it.phone}}" data-id="change">更换</a></dd>
 							{{ } }}
 						</dl>
 					</div>

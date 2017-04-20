@@ -17,7 +17,7 @@ page.ctrl('loan', function($scope) {
 		$.ajax({
 			type: 'post',
 			dataType:"json",
-			url: $http.api('loanOrder/workbench', 'jbs'),
+			url: $http.api('loanOrder/workbench', true),
 			data: params,
 			success: $http.ok(function(result) {
 				console.log(result);
@@ -32,6 +32,7 @@ page.ctrl('loan', function($scope) {
 				// $scope.$checks[0].$checking.onChange(function() {
 				// 	console.log(this)
 				// });
+				// $.toast('电视机顶精神抖擞及第三季度年四季度年四季度年四季度你说的就是你的就是你的就是你的几十年倒计时电脑上几年的就是你的就是你的及时的', function() {})
 
 				if(cb && typeof cb == 'function') {
 					cb();
@@ -116,7 +117,7 @@ page.ctrl('loan', function($scope) {
 				if(!loanTasks[i].submited) {
 					var target = loanTasks[i];
 					var selected = i;
-					if(flag == 1) taskObj[selected].submited = true;
+					// if(flag == 1) taskObj[selected].submited = true;
 					break;
 				}
 			}
@@ -169,7 +170,7 @@ page.ctrl('loan', function($scope) {
 		/**
 		* 绑定搜索事件
 		**/
-		$console.find('#searchInput').on('keydown', function(evt) {
+		$console.find('#search input').on('keydown', function(evt) {
 			var that = $(this);
 			if(evt.which == 13) {
 				var	searchText = $.trim(that.val());
@@ -183,7 +184,7 @@ page.ctrl('loan', function($scope) {
 				loadLoanList(apiParams);
 			}
 		});
-		$console.find('#searchInput').on('keyup', function(evt) {
+		$console.find('#search input').on('keyup', function(evt) {
 			var that = $(this);
 			if(evt.which == 8) {
 				var	searchText = $.trim(that.val());
@@ -196,7 +197,7 @@ page.ctrl('loan', function($scope) {
 
 
 		// 文本框失去焦点记录文本框的值
-		$console.find('#searchInput').on('blur', function(evt) {
+		$console.find('#search input').on('blur', function(evt) {
 			var that = $(this),
 				searchText = $.trim(that.val());
 			if(!searchText) {
@@ -210,7 +211,7 @@ page.ctrl('loan', function($scope) {
 		$console.find('#search .iconfont').on('click', function() {
 			var searchText = $.trim($console.find('#search input').val());
 			if(!searchText) {
-				$console.find('#searchInput').focus();
+				$console.find('#search input').focus();
 				loadLoanList(apiParams);
 				return false;
 			}

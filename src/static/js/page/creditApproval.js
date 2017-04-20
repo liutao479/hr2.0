@@ -57,6 +57,7 @@ page.ctrl('creditApproval', [], function($scope) {
 				$scope.result = result;
 				$scope.result.index = idx;
 				$scope.idx = idx;
+
 				var creditUsers = $scope.result.data.creditUsers;
 				//检测是否是首次加载页面，若是则加载返回结果中第一个用户，而不是加载idx个用户
 				if($scope.firstLoad) {
@@ -94,7 +95,7 @@ page.ctrl('creditApproval', [], function($scope) {
 								setupTabEvt();
 							});
 							// 编译tab项对应内容
-							setupCreditPanel(idx, $scope.result);
+							setupCreditPanel($scope.idx, $scope.result);
 							if(cb && typeof cb == 'function') {
 								cb();
 							};						
@@ -289,10 +290,10 @@ page.ctrl('creditApproval', [], function($scope) {
 				marker: function (img, mark, cb) {
 					var params = {
 						id: img.id,
-						aduitResult: mark
+						auditResult: mark
 					}
 					if(mark == 0) {
-						params.aduitOpinion = '';
+						params.auditOpinion = '';
 					}
 					$.ajax({
 						type: 'post',
@@ -316,7 +317,6 @@ page.ctrl('creditApproval', [], function($scope) {
 
 		//查看征信材料
 		$self.find('.view-creditMaterials').on('click', function() {
-			// alert('还未做该功能，暂时不测！谢谢！ T.T');
 			var that = $(this);
 			var imgs = $scope.result.data.creditUsers[that.data('type')][that.data('idx')].creditMaterials;
 			$.preview(imgs, function(img, mark, cb) {
@@ -327,7 +327,7 @@ page.ctrl('creditApproval', [], function($scope) {
 		});
 
 
-		//查看征信材料
+		//切换主借款人
 		$self.find('.setJkrEvt').on('click', function() {
 			var that = $(this);
 			$.ajax({
@@ -548,6 +548,7 @@ page.ctrl('creditApproval', [], function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
+			if(!window.clickable) return;
 			process();
 		})
 	}

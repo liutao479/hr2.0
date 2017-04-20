@@ -29,15 +29,18 @@
 						<div class="panel-item-box" style="display: block;">
 							<div class="panel-key-area">请选择逾期业务所在经办银行：</div>
 							<div class="panel-value-area">
-								<div data-key="demandBankId" class="select select-common" data-dropdown="page.$scope['expireInfoInput'].bankPicker" data-trigger="page.$scope['expireInfoInput'].dropdownTrigger.demandBankId"></div>
+								<div data-key="demandBankId" class="select select-common" style="width: 200px;" data-dropdown="page.$scope['expireInfoInput'].bankPicker" data-trigger="page.$scope['expireInfoInput'].dropdownTrigger.demandBankId"></div>
 								<input type="hidden" id="demandBankId" name="demandBankId" />
 							</div>
 						</div>
 						<div class="panel-item-box" id="updFileBox">
-							<div class="panel-key-area">批量导入<span id="bankCnName" class="special-word">中国农业银行浙江省分行杭州城战支行</span>逾期记录：</div>
+							<div class="panel-key-area">
+								<!-- 批量导入<span id="bankCnName" class="special-word">中国农业银行浙江省分行杭州城战支行</span>逾期记录： -->
+								&nbsp;
+							</div>
 							<div class="panel-value-area">
 								<div class="import-doc">
-									<div class="button positionRela"><input name="fileData" class="btnInfoFile" type="file" id="fileData" />导入文档</div>
+									<div class="button positionRela"><input name="fileData" class="btnInfoFile" type="file" id="fileData" />导入逾期数据</div>
 									<div id="fileName" class="fileName"></div>
 								</div>
 							</div>

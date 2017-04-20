@@ -79,8 +79,12 @@ page.ctrl('openCardSheet', function($scope) {
 	* 日历控件
 	*/
 	var setupDatepicker = function() {
-		$console.find('.dateBtn').datepicker({});
-		$console.find('#dateStart').val();
+		$console.find('.dateBtn').datepicker({
+			onpicked: function() {
+				$(this).parents().removeClass("error-input");
+				$(this).siblings("i").remove();
+			}
+		});
 	}
 
 
@@ -106,13 +110,66 @@ page.ctrl('openCardSheet', function($scope) {
 		});
 	}
 	var setupEvt = function($el) {
-		if($("#dateStart").val("9999-99-99")){
+		$console.find('input[type="text"]').on('change', function() {
+			var thisName = $(this).attr('name'),
+				thisId = $(this).attr('id'),
+				that = $(this);
+			if(thisName == 'yearIncomeMoney' || thisName == 'loanMoney' || thisName == 'feeRate' || thisName == 'carPrice'){
+				var thisVal = that.val();
+				var reg = /^(\d+\.\d{1,4}|\d+)$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">该项只能填写数字及最多四位小数</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'homezip' || thisName == 'corpzip' ){
+				var thisVal = that.val();
+				var reg = /^[1-9][0-9]{5}$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">邮政编码格式不正确</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'mvblno' || thisName == 'reltmobl1' || thisName == 'reltmobl2' ){
+				var thisVal = that.val();
+				var reg = /^1(3|4|5|7|8)\d{9}$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">手机号码格式不正确</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'hphoneno' || thisId == 'cophone' || thisName == 'relaphone1'|| thisName == 'rtcophon2'){
+				var thisVal = that.val();
+				var reg = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">0000-12345678-8888(如有分机号)</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'stmtemail' ){
+				var thisVal = that.val();
+				var reg = /\w@\w*\.\w/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">邮箱格式不正确</i>');
+					that.val('');
+				}
+			}
+		})
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
+		if($("#dateStart").val("9999-12-31")){
 			$("#dateStart").addClass('pointDisabled');
 			$("#longTime").attr("checked", true); 
 		}
 		$console.find('#longTime').on('click', function(){
 			if($("input[type='checkbox']").is(':checked')){
-				$("#dateStart").val("9999-99-99").addClass('pointDisabled');
+				$("#dateStart").val("9999-12-31").addClass('pointDisabled');
 			}else{
 				$("#dateStart").val("").removeClass('pointDisabled');
 			}
@@ -120,16 +177,72 @@ page.ctrl('openCardSheet', function($scope) {
 		$console.find('.uploadEvt').imgUpload();
 		$console.find('#cophone').on('change', function() {
 			var cophone = $(this).val();
-			var cophone1 = cophone.substring(0,4),
-				cophone2 = cophone.substring(cophone.length-8,cophone.length-4),
-				cophone3 = cophone.substring(cophone.length-4,cophone.length);
-			$("#cophozono").val(cophone1);
-			$("#cophoneno").val(cophone2);
-			$("#cophonext").val(cophone3);
+			var phoneArr = cophone.split('-');
+			if(!phoneArr[2]){
+				$("#cophozono").val(phoneArr[0]);
+				$("#cophoneno").val(phoneArr[1]);
+				$("#cophonext").val('');
+				$("#cophonext").removeClass('required');
+			}else{
+				$("#cophozono").val(phoneArr[0]);
+				$("#cophoneno").val(phoneArr[1]);
+				$("#cophonext").val(phoneArr[2]);
+			}
+		})
+		$console.find('#loanMoney').on('change', function() {
+			var loanMoney = $("#loanMoney").val(),
+				feeRate = $("#feeRate").val(),
+				carPrice = $("#carPrice").val(),
+				feeamount,
+				adjustAmount,
+				loanRatio;
+			if(loanMoney && feeRate){
+				feeamount = loanMoney * feeRate / 100;
+				adjustAmount = feeamount*1 + loanMoney*1;
+				$("#feeamount").val(feeamount);
+				$("#adjustAmount").val(adjustAmount);
+				if(carPrice){
+					loanRatio = (adjustAmount*1) / (carPrice*1) * 100;
+					var loanRatio1 = loanRatio.toFixed(6)
+					$("#loanRatio").val(loanRatio1);
+				}
+			}
+		})
+		$console.find('#feeRate').on('change', function() {
+			
+			var loanMoney = $("#loanMoney").val(),
+				feeRate = $("#feeRate").val(),
+				carPrice = $("#carPrice").val(),
+				feeamount,
+				adjustAmount,
+				loanRatio;
+			if(loanMoney && feeRate){
+				feeamount = loanMoney * feeRate / 100;
+				adjustAmount = feeamount*1 + loanMoney*1;
+				$("#feeamount").val(feeamount);
+				$("#adjustAmount").val(adjustAmount);
+				if(carPrice){
+					loanRatio = (adjustAmount*1) / (carPrice*1) * 100;
+					var loanRatio1 = loanRatio.toFixed(6)
+					$("#loanRatio").val(loanRatio1);
+				}
+			}
+		})
+		$console.find('#carPrice').on('change', function() {
+			
+			var adjustAmount = $("#adjustAmount").val(),
+				carPrice = $("#carPrice").val(),
+				loanRatio;
+			if(adjustAmount && carPrice){
+				loanRatio = (adjustAmount*1) / (carPrice*1) * 100;
+				var loanRatio1 = loanRatio.toFixed(6)
+				$("#loanRatio").val(loanRatio1);
+			}
 		})
 	}		
 
 	function saveData(cb) {
+		
 		var isTure = true;
 		var requireList = $("#dataform").find(".required");
 		requireList.each(function(){
@@ -152,9 +265,12 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		});
 		if(isTure){
+			
 	        var params = $("#dataform").serialize();
-            params = decodeURIComponent(params,true);
-            var paramArray = params.split("&");
+//          params = decodeURIComponent(params,true);
+	        var b = params.replace(/\+/g," ");
+			b =  decodeURIComponent(b);
+            var paramArray = b.split("&");
             var data1 = {};
             for(var i=0;i<paramArray.length;i++){
                 var valueStr = paramArray[i];
@@ -166,12 +282,26 @@ page.ctrl('openCardSheet', function($scope) {
 				type: 'post',
 				url: urlStr+'/icbcCreditCardForm/saveICBCCreditCardForm/' + $params.taskId,
 				data: data1,
-				dataType:"json",
+				dataType: "json",
 //				contentType : 'application/json;charset=utf-8',
-				success: function(result){
-					console.log("提交订单");
-					if(cb && typeof cb == 'function') {
-						cb();
+				success: $http.ok(function(result){
+					if(result.data){
+						var iptNode = "<input type='hidden' class='id' name='id'>";
+						$('#dataform').append(iptNode);
+						$('#dataform').find(".id").val(result.data);
+					}
+					process();
+				})
+			});
+		}else{
+			$.alert({
+				title: '提示',
+				content: tool.alert('请完善相关必填项！'),
+				buttons: {
+					ok: {
+						text: '确定',
+						action: function() {
+						}
 					}
 				}
 			});
@@ -384,6 +514,33 @@ page.ctrl('openCardSheet', function($scope) {
 			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
 		}
 	}
+	/**
+	* 下拉
+	*/
+	var seleLoad = function(){
+		$(".select").each(function(){
+			var $that = $(this);
+			var selected = $(this).data('selected');
+			var re = /^[0-9]+.?[0-9]*$/;
+			if((selected && re.test(selected)) || selected=='0'){
+				$(this).find('.arrow-trigger').click();
+				var lilist = $(this).find('li');
+				$("li",$(this)).each(function(){
+					var idx = $(this).data('id');
+					if(selected == idx){
+						$that.find('.select-text').val($(this).text());
+						$(this).click();
+						$that.find('.select-box').hide();
+					}
+				})
+			}
+		})
+	}
+	var noWrite = function(){
+		$(".pointDisabled").each(function(){
+			$(this).find('input').attr('readonly','readonly')
+		})
+	}
 	
 	/***
 	* 加载页面模板
@@ -395,11 +552,13 @@ page.ctrl('openCardSheet', function($scope) {
 			$tbl: $console.find('#openCardSheet')
 		}
 		loadLoanList(function(){
-			console.log('zhixing');
 			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);
 			evt();
 			setupSubmitBar();
 			setupDropDown();
+			seleLoad();
+			noWrite();
+			$console.find('#cophonext').removeClass('required');
 		});
 	});
 
@@ -417,28 +576,28 @@ page.ctrl('openCardSheet', function($scope) {
 		brand: function(cb) {
 			$.ajax({
 				url: 'http://localhost:8083/mock/carBrandlist',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'brandId',
 						name: 'carBrandName'
 					}
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		series: function(brandId, cb) {
 			$.ajax({
 				url: 'http://localhost:8083/mock/carSeries',
 				data: {brandId: brandId},
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'id',
 						name: 'serieName'
 					}
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		specs: function(seriesId, cb) {
@@ -447,14 +606,14 @@ page.ctrl('openCardSheet', function($scope) {
 				data: {
 					serieId: seriesId
 				},
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'carSerieId',
 						name: 'specName'
 					};
 					cb(sourceData);
-				}
+				})
 			})
 		}
 	}
@@ -464,14 +623,14 @@ page.ctrl('openCardSheet', function($scope) {
 			$.ajax({
 				url: urlStr+'/area/get',
 				dataType:'json',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'areaId',
 						name: 'name'
 					};
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		city: function(areaId, cb) {
@@ -481,14 +640,14 @@ page.ctrl('openCardSheet', function($scope) {
 					parentId: areaId
 				},
 				dataType: 'json',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'areaId',
 						name: 'name'
 					}
 					cb(sourceData);
-				}
+				})
 			})
 		},
 		country: function(areaId, cb) {
@@ -498,14 +657,14 @@ page.ctrl('openCardSheet', function($scope) {
 					parentId: areaId
 				},
 				dataType: 'json',
-				success: function(xhr) {
+				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
 						id: 'areaId',
 						name: 'name'
 					};
 					cb(sourceData);
-				}
+				})
 			})
 		}
 	}

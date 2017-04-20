@@ -18,9 +18,7 @@
 * 				data-creditid="征信人id" 
 * 				data-uplUrl="特殊材料上传url"
 * 				data-delUrl="特殊材料删除url"
-* 				data-materialspic="征信报告照片"
-* 				data-thumbnailpic="征信报告缩略图照片"
-* 				data-materialsAduitResult="",
+* 				data-auditResult="",
 *				data-materialsAduitOpinion="图片意见">
 * 		</element>
 */
@@ -59,7 +57,8 @@
 			deletecb: $.noop,
 			uploadcb: $.noop,
 			viewable: false,
-			markable: false
+			markable: false,
+			creditClickAble: undefined
 		}
 		var self = this;
 		self.$el = $el;
@@ -73,7 +72,7 @@
 			tmp;
 		self.errImg = '';
 		self.errMsg = '';
-		self.empty = !self.options.empty ? '<i class="is-empty">*</i>' : '';
+		self.empty = self.options.empty == 0 ? '<i class="is-empty">*</i>' : '';
 		if(!self.options.img || self.options.img == 'undefined') {
 			if(self.options.editable) {
 				if(self.options.other) {
@@ -152,6 +151,20 @@
 	imgUpload.prototype.listen = function() {
 		var self = this;
 		if(self.status != 2) {
+			if(self.options.creditClickAble) {
+				self.$el.find('.activeEvt').on('click', function() {
+					$.alert({
+						title: '提示',
+						content: tool.alert('征信已经返回,不能修改'),
+						buttons: {
+							ok: {
+								text: '确定'
+							}
+						}
+					})
+					return false;
+				})
+			}
 			self.$el.find('.activeEvt').on('change', function() {
 				// console.log(this.files[0])
 				// console.log(this.value.split("\\\\"));
@@ -207,8 +220,38 @@
 		}
 		if(self.status == 1) {
 			self.$el.find('.imgs-delete').on('click', function() {
-				self.$el.find('.imgs-item-upload').LoadingOverlay("show");
-				self.onDelete();
+				if(self.options.creditClickAble) {
+					$.alert({
+						title: '提示',
+						content: tool.alert('征信已经返回,不能修改'),
+						buttons: {
+							ok: {
+								text: '确定',
+								action: function() {
+									
+								}
+							}
+						}
+					})
+					return false;
+				}
+				$.alert({
+					title: '提示',
+					content: tool.alert('确认删除该照片吗？'),
+					buttons: {
+						close: {
+							text: '取消',
+							btnClass: 'btn-default btn-cancel'
+						},
+						ok: {
+							text: '确定',
+							action: function() {
+								self.$el.find('.imgs-item-upload').LoadingOverlay("show");
+								self.onDelete();
+							}
+						}
+					}
+				})
 			});	
 		}
 		self.$el.find('.viewEvt').on('click', function() {
@@ -238,6 +281,7 @@
 	imgUpload.prototype.onUpload = function(file) {
 		var self = this;
 		self.$el.find('.imgs-item-upload').LoadingOverlay("show");
+		window.clickable = false;
 		imgUpload.getLicense(self.options.type, function(res) {
 			if(!res) {
 				throw "can not get the license";
@@ -336,12 +380,6 @@
 			if(self.options.thumbnailpic) {
 				params.thumbnailPic = self.options.thumbnailpic;
 			}
-			if(self.options.materialsaduitresult) {
-				params.materialsAduitResult = self.options.materialsaduitresult;
-			}
-			if(self.options.materialsaduitopinion) {
-				params.materialsAduitOpinion = self.options.materialsaduitopinion;
-			}
 			params.orderNo = self.options.orderno;
 			params.creditId = self.options.creditid;
 			params.materialsPic = url;
@@ -390,6 +428,7 @@
 			success: function(xhr) {
 				console.log(xhr);
 				self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
+				window.clickable = true;
 				if(!xhr.code) {					
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name, url, self.errImg, self.errMsg));
@@ -400,7 +439,7 @@
 						}
 						self.$el.data('img', url);
 						self.$el.find('.imgs-error').remove();
-						self.status = 0;	
+						self.status = 1;	
 						self.listen();
 						self.uplCb(self, xhr);
 					} else {
@@ -472,12 +511,14 @@
 						self.$el.html(internalTemplates.modify.format(self.name,self.url));
 						self.status = 1;	
 						self.listen();
+						self.$el.find('.imgs-error').remove();
 						self.$el.find('img').attr('src',_url);
 						self.uplCb(self, response);
 					} else {
 						self.$el.html(internalTemplates.modify.format(self.name,self.url));
 						self.status = 1;	
 						self.listen();
+						self.$el.find('.imgs-error').remove();
 						self.$el.find('img').attr('src',_url);
 						self.uplCb(self, response);
 					}
@@ -582,6 +623,8 @@
 		self.setToolbar();
 		self.setClose()
 		self.listen();
+		self.setImage(self.imgs[self.runtime.idx]);
+		self.$items.eq(self.runtime.idx).addClass('active');	
 	};
 
 	/**
@@ -610,7 +653,7 @@
 		for(var i = 0, len = self.imgs.length; i < len; i++) {
 			var img = self.imgs[i],
 				ml = i * self.size.im,
-				mark = self.getMark(img.auditResult || img.aduitResult);
+				mark = self.getMark(img.auditResult);
 			if(ml > 0) ml = self.size.im;
 			arr.push('<div data-idx="'+i+'" class="thumb-view" style="cursor: pointer; position:relative; float:left; width:'+self.size.iw+'px;height:'+self.size.iw+'px;margin-left:'+ml+'px;"><img src="'+img.materialsPic+'" style="width:100%; height:100%;" />'+mark+'</div>');
 		}
@@ -619,8 +662,6 @@
 		self.$viewbox = self.$preview.find('#__move__trigger');
 		self.$prev = self.$preview.find('.prev');
 		self.$next = self.$preview.find('.next');
-		self.setImage(self.imgs[self.runtime.idx]);
-		self.$items.eq(self.runtime.idx).addClass('active');
 	};
 	/**
 	* 构造工具条
@@ -661,8 +702,13 @@
 		self.$toolbar.$zoomTrack = self.$toolbar.$root.find('.zoom-track');
 		self.$toolbar.$zoomThumb = self.$toolbar.$zoomTrack.find('.track-thumb');
 		self.$toolbar.$zoomScale = self.$toolbar.$root.find('.zoom-scale');
-		self.tool.zeroPoint = self.$toolbar.$zoomTrack.offset();
 		self.tool.trackWidth = (self.runtime.vw - 370 > 270 ? 200 : 100);
+		var half = self.tool.trackWidth / 2,
+		 	pointer = self.$toolbar.$zoomTrack.offset();
+		self.tool.zeroPoint = {
+			left: pointer.left + half,
+			len: half
+		}
 		if(!self.opts.markable) {
 			self.$toolbar.$mark.remove();
 		}
@@ -779,17 +825,21 @@
 		self.$toolbar.$zoomTrack.on('mousemove', function(evt) {
 			if(!self.tool.canZoom) return false;
 			var xAxis = evt.pageX - self.tool.zeroPoint.left;
-			if(xAxis >= self.tool.trackWidth) return self.tool.canZoom = false;
-			var mod = 1 + xAxis / self.tool.trackWidth;
+			if(Math.abs(xAxis) >= self.tool.zeroPoint.len) return self.tool.canZoom = false;
+			var mod = 1 + xAxis / self.tool.zeroPoint.len;
 			var rate = mod.toFixed(2);
-			if(xAxis > self.tool.trackWidth - 10) { 
-				xAxis = self.tool.trackWidth - 10;
+			if(xAxis > self.tool.zeroPoint.len - 10) { 
+				xAxis = self.tool.zeroPoint.len - 10;
 				rate = "2.00";
 				mod = 2;
+			} else if(xAxis < -(self.tool.zeroPoint.len - 10)) {
+				xAxis = -self.tool.zeroPoint.len;
+				rate = '0.00';
+				mod = 0;
 			}
+			xAxis = self.tool.zeroPoint.len + xAxis;
 			self.$toolbar.$zoomThumb.css({left: xAxis+'px'});
 			self.$toolbar.$zoomScale.html(parseInt(mod * 100) + '%')
-			console.log(rate)
 			self.zoom(rate);
 		})
 		self.$toolbar.$zoomTrack.on('mouseleave mouseup', function(evt) {
@@ -862,9 +912,10 @@
 	}
 
 	Preview.prototype.reset = function() {
+		var self = this;
 		this.tool.transform = '';
 		this.$view.css({transform: this.tool.transform});
-		this.$toolbar.$zoomThumb.css({left: 0});
+		this.$toolbar.$zoomThumb.css({left: self.tool.zeroPoint.len - 5 + 'px'});
 		this.$toolbar.$zoomScale.html('100%');
 		this.originPos = null;
 		this.endPos = null;

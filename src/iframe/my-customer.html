@@ -107,8 +107,7 @@
 							</tr>
 							<tr>
 								<td class="status-name">身份证：<span class="status-value idCard">{{=row.idCard || ''}}</span></td>
-								<td class="status-name">首付比例：<span class="status-value">{{=(row.sfProportion ? (row.sfProportion*100).toFixed(2) + '%' : '')}}</span></td>
-								
+								<td></td>
 							</tr>
 							<tr>
 								<td class="status-name">分期金额：<span class="status-value">{{=(row.stageMoney ? row.stageMoney + '元' : '')}}</span></td>
@@ -119,10 +118,12 @@
 								<td colspan="3" class="status-name">
 									<div class="status-name-key">当前进度：</div>
 									<div class="status-name-value clearfix">
-										{{ for(var j = 0, len2 = row.loanTasks.length; j < len2; j++) { }}
-										<span class="status-value" style="{{=(j == 0 ? 'display: block;' : 'display: none;')}}">{{=window.categoryMap[row.loanTasks[j].category]}}</span>
+										{{ for(var j = 0, len2 = row.progressNameList.length; j < len2; j++) { }}
+										<span class="status-value" style="{{=(j == 0 ? 'display: block;' : 'display: none;')}}">{{=row.progressNameList[j]}}</span>
 										{{ } }}
+										{{ if(j > 1) { }}
 										<a href="javascript:;" class="spread-tips" data-trigger="false"><i class="iconfont">&#xe670;</i></a>
+										{{ } }}
 									</div>
 								</td>
 							</tr>

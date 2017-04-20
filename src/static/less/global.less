@@ -93,6 +93,9 @@
 .positionRela{
     position: relative;
 }
+.positionAbso{
+    position: absolute;
+}
 .right8px{
     position: absolute;
     right: 8px;
@@ -395,6 +398,7 @@ input[disabled]{
 .commit-item {
     color: @fontColor;
     margin-right: 30px;
+    cursor: pointer;
     .iconfont {
         vertical-align: middle;
         color: @mainColor;
@@ -884,6 +888,9 @@ input[disabled]{
     &.panel-mb0 {
         margin-bottom: 0;
     }
+    &.panel-nonetop {
+        border-top: none;
+    }
     &.panel-bottom {
         padding-bottom: 180px;
     }
@@ -1050,7 +1057,7 @@ input[disabled]{
             padding-left: 92px;
         }
         &.panel-detail-table {
-            padding: 20px;
+            padding: 25px;
         }
         //详细内容区域放图片的区域
         &.panel-detail-imgs {
@@ -1126,6 +1133,12 @@ input[disabled]{
                         bottom: 10px;
                         right: 10px;
                         color: @tiperColor;
+                    }
+                    .input-err {
+                        position: absolute;
+                        left: 0;
+                        bottom: -18px;
+                        color: @msgErr;
                     }
                 }
 
@@ -1398,7 +1411,7 @@ input[disabled]{
                 .iconfont-box {
                     display: inline-block;
                     text-align: center;
-                    line-height: 40px;
+                    line-height: 34px;
                     width: 40px;
                     height: 40px;
                     color: #FFF;
@@ -1473,6 +1486,16 @@ input[disabled]{
 //textarea输入框
 .remarks-box {
     width: 100%;
+    .borderRadius(3px);
+    border: 1px solid @borderColor;
+    resize:none;
+    padding: 7px;
+    color: @fontColor; 
+}
+.remarks-box-mini {
+    display: inline-block;
+    min-width: 250px;
+    min-height: 160px;
     .borderRadius(3px);
     border: 1px solid @borderColor;
     resize:none;
@@ -1964,6 +1987,7 @@ input[disabled]{
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 a {
+                    cursor: pointer;
                     color: @fontColor;
                     &:hover {
                         color: @mainColor;
@@ -2216,7 +2240,7 @@ input[disabled]{
 }
 //贷款信息录入 zhy
 .loan-info {
-    padding: 24px 125px;
+    padding: 24px 80px;
     &.select-search-bar {
         .search-item {
             .select-name {
@@ -3035,6 +3059,7 @@ input[disabled]{
     }
 }
 .serviceItems{
+    margin-top:20px;
     li{
         float:left;
         overflow:hidden;
@@ -3245,10 +3270,27 @@ input[disabled]{
             left: 120px;
             width: 240px;
         }
+        .btn {
+            position: absolute;
+            height: 32px;
+            right: 100px;
+            line-height: 32px;
+            padding: 0 8px;
+        }
     }    
 }
-@singleQuery: ~"(min-width: 1024)";  
-@singleQuery2: ~"(max-width: 1024)";  
+.reneDiv{
+    float: left;
+    margin: 0 5px;
+    .select.select-common {
+        width: 100px;
+    }
+}
+.unitInfo{
+    position: absolute;
+    right: 5px;
+    top: 5px;    
+}
 @media screen and (min-width: 1024px) {  
     .serviceItems li{
         width:23%;

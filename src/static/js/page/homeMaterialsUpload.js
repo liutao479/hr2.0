@@ -198,33 +198,34 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
-			checkData(function() {
-				var canSubmit = flow.taskSubmit($params.tasks);
-				if(canSubmit) {
-					return process();
-				}
-				$.alert({
-					title: '提示',
-					content: tool.alert('您还有未完成的tab栏任务，前往完善？'),
-					buttons: {
-						ok: {
-							text: '确定',
-							action: function() {
-								var taskIds = [];
-								for(var i = 0, len = $params.tasks.length; i < len; i++) {
-									taskIds.push(parseInt($params.tasks[i].id));
-								}
-								var params = {
-									taskId: $params.taskId,
-									taskIds: taskIds,
-									orderNo: $params.orderNo
-								}
-								flow.tasksJump(params, 'complete');
-							}
-						}
-					}
-				})
-			})
+			process();
+			// checkData(function() {
+			// 	var canSubmit = flow.taskSubmit($params.tasks, $params.taskId);
+			// 	if(canSubmit) {
+			// 		return process();
+			// 	}
+			// 	$.alert({
+			// 		title: '提示',
+			// 		content: tool.alert('请完成' + flow.nextTaskName + '再提交！'),
+			// 		buttons: {
+			// 			ok: {
+			// 				text: '确定',
+			// 				action: function() {
+			// 					var taskIds = [];
+			// 					for(var i = 0, len = $params.tasks.length; i < len; i++) {
+			// 						taskIds.push(parseInt($params.tasks[i].id));
+			// 					}
+			// 					var params = {
+			// 						taskId: $params.taskId,
+			// 						taskIds: taskIds,
+			// 						orderNo: $params.orderNo
+			// 					}
+			// 					flow.tasksJump(params, 'complete');
+			// 				}
+			// 			}
+			// 		}
+			// 	})
+			// })
 		})
 	}
 
@@ -236,6 +237,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 		 * 订单退回的条件选项分割
 		 */
 		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		if(!taskJumps) return;
 		for(var i = 0, len = taskJumps.length; i < len; i++) {
 			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
 		}
@@ -406,18 +408,33 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 		});
 	})
 	
+	/**
+	 * 监听其它材料最后一个控件的名称
+	 */
+	var otherMaterialsListen = function() {
+		var $imgel = $console.find('.otherMaterials .uploadEvt');
+		$imgel.each(function(index) {
+			$(this).data('idx', index);
+		});
+	}
+
 	/***
 	* 删除图片后的回调函数
 	*/
 	$scope.deletecb = function(self) {
 		self.$el.remove();
+		otherMaterialsListen();
 	}
 
 	/***
 	* 上传图片成功后的回调函数
 	*/
 	$scope.uploadcb = function(self) {
-		self.$el.after(self.outerHTML);
+		var $parent = self.$el.parent();
+		if($parent.find('.uploadEvt').length == self.$el.data('idx') + 1) {
+			self.$el.after(self.outerHTML);
+		}
 		self.$el.next().imgUpload();
+		otherMaterialsListen();
 	}
 });

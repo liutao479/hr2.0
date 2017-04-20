@@ -60,7 +60,7 @@
 							<div class="search-item">
 								<span class="select-name">账户户名：</span>
 								<span class="input-text input-text-mini accountName">
-									<input type="text" value="" data-type="accountName" placeholder="姓名" />
+									<input type="text" value="" data-type="accountName" placeholder="1到10位汉字" />
 								</span>
 							</div>
 						</div>
@@ -77,13 +77,13 @@
 							<div class="search-item{{=(row.status == 0 ? '' : ' search-item-disabled')}}">
 								<span class="select-name">开户账户：</span>
 								<span class="input-text input-text-mini accountNumber">
-									<input type="text" value="{{=row.accountNumber}}" disabled="disabled" />
+									<input type="text" value="{{=row.accountNumber}}" readonly="readonly" />
 								</span>
 							</div>
 							<div class="search-item{{=(row.status == 0 ? '' : ' search-item-disabled')}}">
 								<span class="select-name">账户户名：</span>
 								<span class="input-text input-text-mini accountName">
-									<input type="text" value="{{=row.accountName}}" disabled="disabled" >
+									<input type="text" value="{{=row.accountName}}" readonly="readonly" >
 								</span>
 							</div>
 						</div>
@@ -127,37 +127,37 @@
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small rate">
-										<input type="text" class="rate12"><span class="unit">%</span>
+										<input type="text" class="interestRate12"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small rate">
-										<input type="text" class="rate18"><span class="unit">%</span>
+										<input type="text" class="interestRate18"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small rate">
-										<input type="text" class="rate24"><span class="unit">%</span>
+										<input type="text" class="interestRate24"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small rate">
-										<input type="text" class="rate30"><span class="unit">%</span>
+										<input type="text" class="interestRate30"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small rate">
-										<input type="text" class="rate36"><span class="unit">%</span>
+										<input type="text" class="interestRate36"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small rate">
-										<input type="text" class="rate48"><span class="unit">%</span>
+										<input type="text" class="interestRate48"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">
 									<div class="input-text input-text-small rate">
-										<input type="text" class="rate60"><span class="unit">%</span>
+										<input type="text" class="interestRate60"><span class="unit">%</span>
 									</div>
 								</td>
 								<td class="orders-item-data">

@@ -12,7 +12,6 @@
 	* @params {object} data 要渲染的数据 
 	**/
 	function hcommitBar($el, data, cb) {
-		console.log($el)
 		if(tool.isEmptyObject(data)) {
 			$el.remove();
 			return;

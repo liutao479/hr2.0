@@ -44,14 +44,14 @@
 									{{ var len4 = it.data.materials.length; if(len4) { }}
 									{{ for(var n = 0; n < len4; n++) { var nl = it.data.materials[n];}}
 										{{ if(ml.code == nl.materialsCode) { }}
-											<div class="imgs-item-group uploadEvt imgs" data-idx="{{=n}}" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || 0}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}"></div>
+											<div class="imgs-item-group uploadEvt imgs" data-idx="{{=n}}" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || 0}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 										{{ break; }}
 										{{ } else { flag++; }}
 										{{ } }}
 									{{ } }}
 									{{ } }}
 									{{ if(flag == len4) { }}
-										<div class="imgs-item-group uploadEvt noimgs" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-editable="{{=it.editable}}"></div>
+										<div class="imgs-item-group uploadEvt noimgs" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 									{{ } }}
 								{{ } }}
 							</div>
@@ -79,14 +79,14 @@
 									{{ var len4 = it.data.materials.length; if(len4) { }}
 									{{ for(var n = 0; n < len4; n++) { var nl = it.data.materials[n]; }}
 										{{ if(ml.code == nl.materialsCode) { }}
-											<div class="imgs-item-group uploadEvt imgs" data-idx="{{=n}}" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || 0}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}"></div>
+											<div class="imgs-item-group uploadEvt imgs" data-idx="{{=n}}" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || 0}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 										{{ break; }}
 										{{ } else { flag++; }}
 										{{ } }}
 									{{ } }}
 									{{ } }}
 									{{ if(flag == len4) { }}
-										<div class="imgs-item-group uploadEvt noimgs" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-editable="{{=it.editable}}"></div>
+										<div class="imgs-item-group uploadEvt noimgs" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 									{{ } }}
 								{{ } }}
 							</div>
@@ -114,14 +114,14 @@
 									{{ var len4 = it.data.materials.length; if(len4) { }}
 									{{ for(var n = 0; n < len4; n++) { var nl = it.data.materials[n]; }}
 										{{ if(ml.code == nl.materialsCode) { }}
-											<div class="imgs-item-group uploadEvt imgs" data-idx="{{=n}}" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || 0}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}"></div>
+											<div class="imgs-item-group uploadEvt imgs" data-idx="{{=n}}" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || 0}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 										{{ break; }}
 										{{ } else { flag++; }}
 										{{ } }}
 									{{ } }}
 									{{ } }}
 									{{ if(flag == len4) { }}
-										<div class="imgs-item-group uploadEvt noimgs" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-editable="{{=it.editable}}"></div>
+										<div class="imgs-item-group uploadEvt noimgs" data-orderno="{{=it.orderNo}}" data-code="{{=ml.code}}" data-name="{{=ml.name}}" data-scene="{{=it.category}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 									{{ } }}
 								{{ } }}
 							</div>
@@ -146,7 +146,7 @@
 									<div class="imgs-item-group uploadEvt imgs" data-idx="{{=n}}" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb" data-other="true" data-orderno="{{=it.orderNo}}" data-name="{{=nl.materialsName || '其他材料'}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || 0}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}"></div>
 								{{ } }}
 								{{ if(it.editable) { }}
-								<div class="imgs-item-group uploadEvt noimgs" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb" data-other="true" data-orderno="{{=it.orderNo}}" data-name="其他材料" data-scene="{{=it.category}}" data-editable="{{=it.editable}}"></div>
+								<div class="imgs-item-group uploadEvt noimgs" data-idx="{{=n}}" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb" data-other="true" data-orderno="{{=it.orderNo}}" data-name="其他材料" data-scene="{{=it.category}}" data-editable="{{=it.editable}}"></div>
 								{{ } }}
 							</div>
 							<!-- {{=it.cfgData.name}}对应上传材料项 -->

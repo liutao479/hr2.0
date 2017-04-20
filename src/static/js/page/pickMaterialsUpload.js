@@ -89,6 +89,23 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 	}
 
 	/**
+	 * 材料必填，必传检验
+	 */
+	function checkData(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('orderMaterial/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
 	* 设置底部按钮操作栏
 	*/
 	var setupSubmitBar = function() {
@@ -179,7 +196,9 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 		})
 	}
 
@@ -216,7 +235,6 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 								}
 								var reason = $.trim(that.$content.find('#suggestion').val());
 								if(reason) params.reason = reason;
-								console.log(params);
 								flow.tasksJump(params, 'complete');
 							})
 						})
@@ -235,6 +253,7 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		 * 订单退回的条件选项分割
 		 */
 		var taskJumps = $scope.result.data.loanTask.taskJumps;
+		if(!taskJumps) return;
 		for(var i = 0, len = taskJumps.length; i < len; i++) {
 			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
 		}
@@ -409,11 +428,11 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 	 */
 	var otherMaterialsListen = function() {
 		var $imgel = $console.find('.otherMaterials .uploadEvt');
-		$imgel.last().data('name', '其它材料' + $imgel.length);
-		$imgel.last().data('count', $imgel.length);
-		$imgel.last().find('.input-text input').val('其它材料' + $imgel.length);
+		$imgel.each(function(index) {
+			$(this).data('idx', index);
+		});
 	}
-	
+
 	/***
 	* 删除图片后的回调函数
 	*/
@@ -426,9 +445,11 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 	* 上传图片成功后的回调函数
 	*/
 	$scope.uploadcb = function(self) {
-		self.$el.after(self.outerHTML);
-		otherMaterialsListen();
+		var $parent = self.$el.parent();
+		if($parent.find('.uploadEvt').length == self.$el.data('idx') + 1) {
+			self.$el.after(self.outerHTML);
+		}
 		self.$el.next().imgUpload();
-
+		otherMaterialsListen();
 	}
 });

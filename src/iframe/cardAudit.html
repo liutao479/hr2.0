@@ -33,10 +33,10 @@
 										</td>
 										<td>
 											{{ if(it.creditCard.dealerId || it.creditCard.dealerId == '0'){ }}
-												<div class="select select-common" data-selected="{{= it.creditCard.dealerId}}" data-dropdown="page.$scope['openCardSheet'].dealerIdPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.dealerId"></div>
+												<div class="select select-common" data-selected="{{= it.creditCard.dealerName}}" data-dropdown="page.$scope['cardInfoApproval'].dealerIdPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.dealerId"></div>
 												<input type="hidden" name="dealerId" value="{{= it.creditCard.dealerId}}" />
 											{{ }else{ }}
-												<div class="select select-common" data-dropdown="page.$scope['openCardSheet'].dealerIdPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.dealerId"></div>
+												<div class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].dealerIdPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.dealerId"></div>
 												<input type="hidden" name="dealerId" />
 											{{ } }}
 										</td>
@@ -74,6 +74,7 @@
 												{{ }else{ }}
 													<input type="text" name="yearIncomeMoney" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -88,10 +89,11 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.loanMoney){ }}
-													<input type="text" name="loanMoney" value="{{= it.creditCard.loanMoney}}" />
+													<input type="text" id="loanMoney" name="loanMoney" value="{{= it.creditCard.loanMoney}}" />
 												{{ }else{ }}
-													<input type="text" name="loanMoney" />
+													<input type="text" id="loanMoney" name="loanMoney" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -106,10 +108,11 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.feeRate){ }}
-													<input type="text" name="feeRate" value="{{= it.creditCard.feeRate}}" />
+													<input type="text" id="feeRate" name="feeRate" value="{{= it.creditCard.feeRate}}" />
 												{{ }else{ }}
-													<input type="text" name="feeRate" />
+													<input type="text" id="feeRate" name="feeRate" />
 												{{ } }}
+												<span class="unitInfo">%</span>
 											</span>
 										</td>
 									</tr>
@@ -124,10 +127,11 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.feeamount){ }}
-													<input type="text" name="feeamount" value="{{= it.creditCard.feeamount}}" />
+													<input type="text" id="feeamount" readonly="readonly" name="feeamount" value="{{= it.creditCard.feeamount}}" />
 												{{ }else{ }}
-													<input type="text" name="feeamount" />
+													<input type="text" id="feeamount" readonly="readonly" name="feeamount" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -141,10 +145,10 @@
 										</td>
 										<td>
 											{{ if(it.creditCard.repayPeriod || it.creditCard.repayPeriod == '0'){ }}
-												<div class="select select-common" data-selected="{{= it.creditCard.repayPeriod}}" data-dropdown="page.$scope['openCardSheet'].repayPeriod" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.repayPeriod"></div>
+												<div class="select select-common" data-selected="{{= it.creditCard.repayPeriod}}" data-dropdown="page.$scope['cardInfoApproval'].repayPeriod" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.repayPeriod"></div>
 												<input type="hidden" name="repayPeriod" value="{{= it.creditCard.repayPeriod}}" />
 											{{ }else{ }}
-												<div class="select select-common" data-dropdown="page.$scope['openCardSheet'].repayPeriod" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.repayPeriod"></div>
+												<div class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].repayPeriod" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.repayPeriod"></div>
 												<input type="hidden" name="repayPeriod" />
 											{{ } }}
 										</td>
@@ -160,10 +164,11 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.carPrice){ }}
-													<input type="text" name="carPrice" value="{{= it.creditCard.carPrice}}" />
+													<input type="text" id="carPrice" name="carPrice" value="{{= it.creditCard.carPrice}}" />
 												{{ }else{ }}
-													<input type="text" name="carPrice" />
+													<input type="text" id="carPrice" name="carPrice" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -178,9 +183,9 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.adjustAmount){ }}
-													<input type="text" name="adjustAmount" value="{{= it.creditCard.adjustAmount}}" />
+													<input type="text" id="adjustAmount" readonly="readonly" name="adjustAmount" value="{{= it.creditCard.adjustAmount}}" />
 												{{ }else{ }}
-													<input type="text" name="adjustAmount" />
+													<input type="text" id="adjustAmount" readonly="readonly" name="adjustAmount" />
 												{{ } }}
 											</span>
 										</td>
@@ -196,10 +201,11 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.loanRatio){ }}
-													<input type="text" name="loanRatio" value="{{= it.creditCard.loanRatio}}" />
+													<input type="text" id="loanRatio" readonly="readonly" name="loanRatio" value="{{= it.creditCard.loanRatio}}" />
 												{{ }else{ }}
-													<input type="text" name="loanRatio" />
+													<input type="text" id="loanRatio" readonly="readonly" name="loanRatio" />
 												{{ } }}
+												<span class="unitInfo">%</span>
 											</span>
 										</td>
 									</tr>
@@ -261,10 +267,10 @@
 										</td>
 										<td>
 											{{ if(it.creditCard.sex || it.creditCard.sex == '0'){ }}
-												<div data-key="sex" data-selected="{{= it.creditCard.sex}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="sex" data-selected="{{= it.creditCard.sex}}" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="sex"  value="{{= it.creditCard.sex}}" />
 											{{ }else{ }}
-												<div data-key="sex" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="sex" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="sex" />
 											{{ } }}
 										</td>
@@ -279,10 +285,10 @@
 										</td>
 										<td>
 											{{ if(it.creditCard.custsort || it.creditCard.custsort == '0'){ }}
-												<div data-key="custsort" data-selected="{{= it.creditCard.custsort}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="custsort" data-selected="{{= it.creditCard.custsort}}" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="custsort"  value="{{= it.creditCard.custsort}}" />
 											{{ }else{ }}
-												<div data-key="custsort" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="custsort" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="custsort" />
 											{{ } }}
 										</td>
@@ -334,10 +340,18 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.statdate){ }}
-													<input type="text" name="statdate" value="{{= it.creditCard.statdate}}" />
+													<div class="input-text input-date-mini statdate">
+														<input name="statdate" id="dateStart" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{= it.creditCard.statdate}}" />	
+													</div>
 												{{ }else{ }}
-													<input type="text" name="statdate" />
+													<div class="input-text input-date-mini statdate">
+														<input name="statdate" id="dateStart" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="" />	
+													</div>
 												{{ } }}
+												<div class="longtime" style="position: absolute;right: 5px;top: 50%;transform: translateY(-50%);">
+													<input type="checkbox" id="longTime" style="float: left;display:block;width: 12px;" />
+													<div style="float: left;">长期</div>	
+												</div>
 											</span>
 										</td>
 									</tr>
@@ -350,13 +364,13 @@
 											<span class="info-key"><i>*</i>婚姻状况：</span>
 										</td>
 										<td>
-											<span class="info-value">
-												{{ if(it.creditCard.mrtlstat){ }}
-													<input type="text" name="mrtlstat" value="{{= it.creditCard.mrtlstat}}" />
-												{{ }else{ }}
-													<input type="text" name="mrtlstat" />
-												{{ } }}
-											</span>
+											{{ if(it.creditCard.mrtlstat){ }}
+												<div data-key="mrtlstat" data-selected="{{= it.creditCard.mrtlstat}}" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="mrtlstat"  value="{{= it.creditCard.mrtlstat}}" />
+											{{ }else{ }}
+												<div data-key="mrtlstat" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
+												<input type="hidden" name="mrtlstat" />
+											{{ } }}
 										</td>
 									</tr>
 								</table>
@@ -494,14 +508,16 @@
 											<span class="info-key"><i>*</i>入住日期：</span>
 										</td>
 										<td>
-											<span class="info-value">
-												{{ if(it.creditCard.indate){ }}
-													<input type="text" name="indate" value="{{= it.creditCard.indate}}" />
-												{{ }else{ }}
-													<input type="text" name="indate" />
-												{{ } }}
-											</span>
-										</td>
+											{{ if(it.creditCard.indate){ }}
+												<div class="input-text input-date-mid borderNone">
+													<input name="indate" id="indate" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{= it.creditCard.indate}}" />	
+												</div>
+											{{ }else{ }}
+												<div class="input-text input-date-mid borderNone">
+													<input name="indate" id="indate" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="" />	
+												</div>
+											{{ } }}
+									</td>
 									</tr>
 								</table>
 							</div>
@@ -616,7 +632,12 @@
 										<td>
 											<span class="info-value">
 												{{ if(it.creditCard.cophozono && it.creditCard.cophoneno && it.creditCard.cophonext){ }}
-													<input id="cophone" type="text" value="{{= it.creditCard.cophozono+"--"+it.creditCard.cophoneno+it.creditCard.cophonext}}" />
+													<input id="cophone" type="text" value="{{= it.creditCard.cophozono+"-"+it.creditCard.cophoneno+"-"+it.creditCard.cophonext}}" />
+													<input type="hidden" id="cophozono" name="cophozono" value="{{= it.creditCard.cophozono}}" />
+													<input type="hidden" id="cophoneno" name="cophoneno" value="{{= it.creditCard.cophoneno}}" />
+													<input type="hidden" id="cophonext" name="cophonext" value="{{= it.creditCard.cophonext}}" />
+												{{ }else if(it.creditCard.cophozono && it.creditCard.cophoneno && (!it.creditCard.cophonext)){ }}
+													<input id="cophone" type="text" value="{{= it.creditCard.cophozono+"-"+it.creditCard.cophoneno}}" />
 													<input type="hidden" id="cophozono" name="cophozono" value="{{= it.creditCard.cophozono}}" />
 													<input type="hidden" id="cophoneno" name="cophoneno" value="{{= it.creditCard.cophoneno}}" />
 													<input type="hidden" id="cophonext" name="cophonext" value="{{= it.creditCard.cophonext}}" />
@@ -657,10 +678,10 @@
 										</td>
 										<td>
 											{{ if(it.creditCard.modelcode || it.creditCard.modelcode == '0'){ }}
-												<div data-key="modelcode" data-selected="{{= it.creditCard.modelcode}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="modelcode" data-selected="{{= it.creditCard.modelcode}}" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="modelcode"  value="{{= it.creditCard.modelcode}}" />
 											{{ }else{ }}
-												<div data-key="modelcode" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="modelcode" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="modelcode" />
 											{{ } }}
 										</td>
@@ -675,10 +696,10 @@
 										</td>
 										<td>
 											{{ if(it.creditCard.occptn || it.creditCard.occptn == '0'){ }}
-												<div data-key="occptn" data-selected="{{= it.creditCard.occptn}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="occptn" data-selected="{{= it.creditCard.occptn}}" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="occptn"  value="{{= it.creditCard.occptn}}" />
 											{{ }else{ }}
-												<div data-key="occptn" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="occptn" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="occptn" />
 											{{ } }}
 										</td>
@@ -692,13 +713,15 @@
 											<span class="info-key"><i>*</i>何时进入现单位工作：</span>
 										</td>
 										<td>
-											<span class="info-value">
-												{{ if(it.creditCard.joindate){ }}
-													<input type="text" name="joindate" value="{{= it.creditCard.joindate}}" />
-												{{ }else{ }}
-													<input type="text" name="joindate" />
-												{{ } }}
-											</span>
+											{{ if(it.creditCard.joindate){ }}
+												<div class="input-text input-date-mid borderNone">
+													<input name="joindate" id="joindate" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="{{= it.creditCard.joindate}}" />	
+												</div>
+											{{ }else{ }}
+												<div class="input-text input-date-mid borderNone">
+													<input name="joindate" id="joindate" type="text" class="dateBtn" data-max="" readonly="readonly" data-type="startDate" value="" />	
+												</div>
+											{{ } }}
 										</td>
 									</tr>
 								</table>
@@ -741,10 +764,10 @@
 										</td>
 										<td>
 											{{ if(it.creditCard.reltship1 || it.creditCard.reltship1 == '0'){ }}
-												<div data-key="reltship1" data-selected="{{= it.creditCard.reltship1}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="reltship1" data-selected="{{= it.creditCard.reltship1}}" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="reltship1"  value="{{= it.creditCard.reltship1}}" />
 											{{ }else{ }}
-												<div data-key="reltship1" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="reltship1" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="reltship1" />
 											{{ } }}
 										</td>
@@ -813,10 +836,10 @@
 										</td>
 										<td>
 											{{ if(it.creditCard.reltship2 || it.creditCard.reltship2 == '0'){ }}
-												<div data-key="reltship2" data-selected="{{= it.creditCard.reltship2}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="reltship2" data-selected="{{= it.creditCard.reltship2}}" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="reltship2"  value="{{= it.creditCard.reltship2}}" />
 											{{ }else{ }}
-												<div data-key="reltship2" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="reltship2" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="reltship2" />
 											{{ } }}
 										</td>
@@ -897,10 +920,10 @@
 										</td>
 										<td>
 											{{ if(it.creditCard.drawmode || it.creditCard.drawmode == '0'){ }}
-												<div data-key="drawmode" data-selected="{{= it.creditCard.drawmode}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="drawmode" data-selected="{{= it.creditCard.drawmode}}" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="drawmode"  value="{{= it.creditCard.drawmode}}" />
 											{{ }else{ }}
-												<div data-key="drawmode" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="drawmode" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="drawmode" />
 											{{ } }}
 										</td>
@@ -915,10 +938,10 @@
 										</td>
 										<td>
 											{{ if(it.creditCard.machgf || it.creditCard.machgf == '0'){ }}
-												<div data-key="machgf" data-selected="{{= it.creditCard.machgf}}" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="machgf" data-selected="{{= it.creditCard.machgf}}" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="machgf" value="{{= it.creditCard.machgf}}" />
 											{{ }else{ }}
-												<div data-key="machgf" class="select select-common" data-dropdown="page.$scope['openCardSheet'].selfPicker" data-trigger="page.$scope['openCardSheet'].dropdownTrigger.selfPicker"></div>
+												<div data-key="machgf" class="select select-common" data-dropdown="page.$scope['cardInfoApproval'].selfPicker" data-trigger="page.$scope['cardInfoApproval'].dropdownTrigger.selfPicker"></div>
 												<input type="hidden" name="machgf" />
 											{{ } }}
 										</td>
@@ -936,14 +959,14 @@
 						</div>
 					</div>
 					<div class="panel-detail-content-layout">
-						<div class="loan-imgs-bar clearfix">
-							<div class="imgs-item-group pointDisabled openCardPic uploadEvt" data-deletecb="page.$scope['openCardSheet'].deletecb" data-uploadcb="page.$scope['openCardSheet'].uploadcb" data-upl-url="" data-id="" data-orderno="{{= it.loanTask.orderNo}}" data-code="" data-name="信用卡申请表" data-scene="{{= it.loanTask.category}}" data-user="" data-img="{{= it.creditCard.creditCardImgUrl}}" data-err="0" data-editable="1"></div>
+						<div class="loan-imgs-bar clearfix positionRela">
+							<div class="imgs-item-group openCardPic uploadEvt" data-deletecb="page.$scope['cardInfoApproval'].deletecb" data-uploadcb="page.$scope['cardInfoApproval'].uploadcb" data-card="true" data-id="" data-orderno="{{= it.loanTask.orderNo}}" data-code="cardUpd" data-name="信用卡申请表" data-scene="homeMaterialsUpload" data-img="{{= it.creditCard.creditCardImgUrl ? it.creditCard.creditCardImgUrl :''}}" data-err="0" data-editable="1"></div>
+							{{if(it.creditCard.creditCardImgUrl){ }}
+								<input id="imgUrl" class="required" type="hidden" name="creditCardImgUrl" value="{{= it.creditCard.creditCardImgUrl}}" />
+							{{ }else{ }}
+								<input id="imgUrl" class="required" type="hidden" name="creditCardImgUrl" />
+							{{ } }} 
 						</div>
-						{{if(it.creditCard.creditCardImgUrl){ }}
-							<input id="imgUrl" class="required" type="hidden" name="creditCardImgUrl" value="{{= it.creditCard.creditCardImgUrl}}" />
-						{{ }else{ }}
-							<input id="imgUrl" class="required" type="hidden" name="creditCardImgUrl" />
-						{{ } }} 
 					</div>
 				</div>
 				{{if(it.creditCard.id){ }}
@@ -951,6 +974,6 @@
 				{{ } }} 
 				
 				<input type="hidden" name="orderNo" value="{{= it.loanTask.orderNo}}" />
-				</form>
+							</form>
 			</script>
 				

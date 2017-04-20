@@ -614,6 +614,10 @@
         margin: 0;
         padding: 0;
         border: none;
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
     }
     .iconfont {
         position: absolute;
@@ -1124,9 +1128,9 @@
 .w-content {
     width: 100%;
     background-color: #FFF;
-    padding: 20px 50px 20px 50px;
     height: calc(~"100% - 54px");
     overflow-x: hidden;
+    padding: 0px 50px 20px 50px;
     &.w-content-padding {
         padding: 20px 32px 50px 32px;
     }
@@ -1186,7 +1190,7 @@
     }
     // 选择框
     .w-dropdown {
-        margin: 10px 0;
+        margin: 16px 0;
         .dt {
             width: 100px;
             float: left;

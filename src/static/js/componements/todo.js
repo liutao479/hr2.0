@@ -25,7 +25,6 @@
 		self.$icon = self.$trigger.find('.iconfont');
 		self.$number = self.$el.find('.message-number');
 		self.$items = self.$el.find('.remind-box');
-		self.$msg = $('#messagePanel');
 		self.listen();
 		self.connect(true);
 	};
@@ -109,16 +108,8 @@
 		}
 	};
 
-	Todo.prototype.addMessage = function(data) {
-		var self = this;
-		var arr = [];
-		for(var i = 0; i < data.length; i++) {
-			var row = data[i];
-			var date = new Date(row.createDate);
-			arr.push(template.msg.format(row.id, row.content, [date.getFullYear(), date.getMonth() + 1, date.getDate()]));
-		}
-		self.$msg.html(arr.join(''));
-		self.$msg.append('<li class="message-item clearfix"><a href="#message" class="message-more">更多&gt;&gt;</a></li>')
+	Todo.prototype.addMessage = function(data, size) {
+		window.navInstance.setMessage(data, size);
 	}
 
 	Todo.prototype.connect = function(immediately) {
@@ -126,7 +117,7 @@
 
 		function internal(e) {
 			$.ajax({
-				url: $http.api('busiMsg/get', true),
+				url: $http.api('busiMsg/get', 'test'),
 				global: false,
 				data: {
 					pageNum: 1,
@@ -135,8 +126,8 @@
 				dataType: 'json',
 				success: function(xhr) {
 					if(!xhr.code && xhr.data) {
-						e.addItems(xhr.data.taskCategorys);
-						e.addMessage(xhr.data.busiMsgs);
+						e.addItems(xhr.data.taskCategorys, xhr.data.taskSize);
+						e.addMessage(xhr.data.busiMsgs, xhr.page.total);
 					}
 				}
 			})
@@ -162,13 +153,7 @@
 				<div class="remind-content">\
 					<ul class="remind-box"></ul>\
 				</div>',
-		item: '<li class="remind-item remindEvt" data-code="{2}">{0}<span class="message-number">{1}</span></li>',
-		msg: '<li class="message-item clearfix">\
-					<div class="message-item-data">\
-						<a href="#message?id={0}">{1}</a>\
-					</div>\
-					<span class="message-time">{2}</span>\
-				</li>'
+		item: '<li class="remind-item remindEvt" data-code="{2}">{0}<span class="message-number">{1}</span></li>'
 	};
 
 	_.Todo = Todo

@@ -47,6 +47,23 @@ page.ctrl('phoneCheck', function($scope) {
 	}
 
 	/**
+	 * 材料必填，必传检验
+	 */
+	function checkData(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('loanApproval/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
 	* 设置底部按钮操作栏
 	*/
 	var setupSubmitBar = function() {
@@ -144,7 +161,9 @@ page.ctrl('phoneCheck', function($scope) {
 		 * 提交
 		 */
 		$sub.on('approvalPass', function() {
-			process();
+			checkData(function() {
+				process();
+			})
 		})
 
 	}
@@ -182,7 +201,7 @@ page.ctrl('phoneCheck', function($scope) {
 						var that = this;
         				$.ajax({
 							type: 'post',
-							url: $http.api('loanApproval/submit/' + $params.taskId),
+							url: $http.api('loanApproval/submit/' + $params.taskId, true),
 							dataType: 'json',
 							data: {
 								taskId: $params.taskId,
