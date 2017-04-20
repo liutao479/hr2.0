@@ -505,12 +505,26 @@ page.ctrl('newBank', [], function($scope) {
 			})
 		},
 		bankName: function(cb) {
+			var params = {};
+			if($scope.level) {
+				params.level = $scope.level
+			}
+			if($scope.brandId) {
+				params.brandId = $scope.brandId
+			}
+			if($scope.province) {
+				params.provinceId = $scope.province
+			}
+			if($scope.cityId) {
+				params.cityId = $scope.cityId
+			}
+			if($scope.areaId) {
+				params.areaId = $scope.areaId
+			}
 			$.ajax({
 				type: 'post',
 				url: $http.api('bank/select', 'jbs'),
-				data: {
-					
-				},
+				data: params,
 				dataType: 'json',
 				success: $http.ok(function(xhr) {
 					var sourceData = {
@@ -598,9 +612,16 @@ page.ctrl('newBank', [], function($scope) {
 	$scope.bankPicker = function(picked) {
 		console.log(picked);
 		console.log(this)
-		this.$el.find('input').val(picked['银行名称'].name)
-		$scope.bankCode = picked['银行名称'].id;
-		$scope.bankName = picked['银行名称'].name;	
+		if(picked['银行名称']) {
+			this.$el.find('input').val(picked['银行名称'].name);
+			$scope.bankCode = picked['银行名称'].id;
+			$scope.bankName = picked['银行名称'].name;
+		}
+		$scope.level = picked['银行等级'] || picked['银行等级'] == 0 ? picked['银行等级'].id : undefined;
+		$scope.brandId = picked['银行品牌'] || picked['银行品牌'] == 0 ? picked['银行品牌'].brandId : undefined;
+		$scope.province = picked['省'] || picked['省'] == 0 ? picked['省'].provinceId : undefined;
+		$scope.cityId = picked['市'] || picked['市'] == 0 ? picked['市'].cityId : undefined;
+		$scope.areaId = picked['区'] || picked['区'] == 0 ? picked['区'].areaId : undefined;
 	}
 
 	$scope.isSecondPicker = function(picked) {

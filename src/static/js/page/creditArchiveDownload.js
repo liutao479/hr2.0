@@ -55,7 +55,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	var setupEvt = function() {
 		$scope.isAllClick = false;//批量下载是否能点击
 		$scope.$checks = $scope.$el.$tbl.find('.checkbox').checking();
-
+		
 		$scope.$checks.each(function() {
 			var that = this;
 			that.$checking.onChange(function() {
