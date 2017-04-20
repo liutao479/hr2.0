@@ -248,6 +248,14 @@ page.ctrl('secondhandAudit', function($scope) {
 				default:
 					break;
 			}
+		},
+		selfPicker: function(t, p, cb) {
+			var sourceData = {
+				items: dataMap.yesNo,
+				id: 'value',
+				name: 'name'
+			};
+			cb(sourceData);
 		}
 	}
 	var cannotClick = function(){
@@ -258,6 +266,31 @@ page.ctrl('secondhandAudit', function($scope) {
 	var noWrite = function(){
 		$(".pointDisabled").each(function(){
 			$(this).find('input').attr('readonly','readonly')
+		})
+	}
+	/**
+	* 下拉
+	*/
+	var seleLoad = function(){
+		$(".select-text").each(function(){
+			$(this).attr('readonly','readonly')
+		})
+		$(".select").each(function(){
+			var $that = $(this);
+			var selected = $(this).data('selected');
+			var re = /^[0-9]+.?[0-9]*$/;
+			if((selected && re.test(selected)) || selected=='0'){
+				$(this).find('.arrow-trigger').click();
+				var lilist = $(this).find('li');
+				$("li",$(this)).each(function(){
+					var idx = $(this).data('id');
+					if(selected == idx){
+						$that.find('.select-text').val($(this).text());
+						$(this).click();
+						$that.find('.select-box').hide();
+					}
+				})
+			}
 		})
 	}
 	/***
@@ -272,6 +305,7 @@ page.ctrl('secondhandAudit', function($scope) {
 		loadLoanList(function(){
 			setupDropDown();
 			cannotClick();
+			seleLoad();
 			noWrite();
 		});
 	});

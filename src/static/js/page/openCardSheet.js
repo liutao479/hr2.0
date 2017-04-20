@@ -134,7 +134,7 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 			if( thisName == 'mvblno' || thisName == 'reltmobl1' || thisName == 'reltmobl2' ){
 				var thisVal = that.val();
-				var reg = /^(13[0-9]{9})|(15[89][0-9]{8})$/;
+				var reg = /^1(3|4|5|7|8)\d{9}$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip sel-err">手机号码格式不正确</i>');
