@@ -22,9 +22,9 @@
 	}
 }
 
-body[class*=jconfirm-no-scroll-] {
-	overflow: hidden!important
-}
+// body[class*=jconfirm-no-scroll-] {
+// 	overflow: hidden!important
+// }
 
 .jconfirm {
 	position: fixed;
@@ -35,7 +35,7 @@ body[class*=jconfirm-no-scroll-] {
 	// z-index: 99999999;
 	z-index: 99999;
 	font-family: inherit;
-	overflow: hidden
+	// overflow: hidden
 }
 
 .jconfirm .jconfirm-bg {
