@@ -38,7 +38,7 @@ page.ctrl('expireProcess', [], function($scope) {
  	/**
 	* 绑定搜索事件
 	**/
-	$(document).on('keydown', '#search', function(evt) {
+	$console.on('keydown', '#search', function(evt) {
 		if(evt.which == 13) {
 			alert("查询");
 			var that = $(this),
@@ -57,7 +57,7 @@ page.ctrl('expireProcess', [], function($scope) {
 	/**
 	* 绑定立即处理事件
 	*/
-	$(document).on('click', '#expireProcessTable .button', function() {
+	$console.on('click', '#expireProcessTable .button', function() {
 		var that = $(this);
 		router.render(that.data('href'), {orderNo: that.data('id')});
 	});
@@ -65,14 +65,11 @@ page.ctrl('expireProcess', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('iframe/expire-process'), function() {
-		$scope.def.listTmpl = render.$console.find('#expireProcessTmpl').html();
+	$console.load(router.template('iframe/expire-process'), function() {
+		$scope.def.listTmpl = $console.find('#expireProcessTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#expireProcessTable'),
 			$paging: $console.find('#pageToolbar')
-		}
-		if($params.process) {
-			
 		}
 		loadExpireProcessList(apiParams);
 	});
@@ -80,7 +77,6 @@ page.ctrl('expireProcess', [], function($scope) {
 	$scope.paging = function(_page, _size, $el, cb) {
 		apiParams.page = _page;
 		$params.page = _page;
-		// router.updateQuery($scope.$path, $params);
 		loadExpireProcessList(apiParams);
 		cb();
 	}

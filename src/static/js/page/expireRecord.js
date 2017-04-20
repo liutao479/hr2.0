@@ -6,7 +6,6 @@ page.ctrl('expireRecord', [], function($scope) {
 			page: $params.page || 1,
 			pageSize: 20
 		};
-	debugger
 	/**
 	 *逾期处理意见 
 	* 加载逾期管理数据

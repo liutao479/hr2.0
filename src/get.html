@@ -110,6 +110,7 @@
 		}
 		.form-text .code {
 			width: 80px;
+			border: 1px solid #ddd;
 			border-radius: 0 3px 3px 0;
 		}
 		.form-text .code-btn {
@@ -128,6 +129,9 @@
 			height: 20px;
 			content: "";
 			border-left: 1px solid #ddd;
+		}
+		.form-text .code-btn.disabled {
+			color: #999;
 		}
 	</style>
 </head>
@@ -180,7 +184,7 @@
 	<script type="text/javascript" src="static/js/vendor/third.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			var api = 'http://192.168.0.22:8080/',
+			var api = 'http://192.168.0.33:8080/',
 				token;
 			var $phone = $('#phone'),
 				$icode = $('#imgCode'),
@@ -229,7 +233,9 @@
 				})
 			}
 
-			function getPhoneCode() {
+			function getPhoneCode(that) {
+				if(that.counter) return false;
+				var $that = $(that);
 				var phone = $.trim($phone.val()),
 					icode = $.trim($icode.val());
 				if(!phone || !icode) {
@@ -245,17 +251,32 @@
 						},
 						dataType: 'json',
 						success: function(xhr) {
-							if(!xhr.code) {
-
+							var code = xhr.code;
+							if(!code) {
+								var count = 60;
+								that.counter = setInterval(function() {
+									$that.addClass('disabled').text(count + 's后获取');
+									count--;
+									if(count == 0) {
+										clearInterval(that.counter);
+										$that.removeClass('disabled').text('获取验证码');
+										that.counter = null;
+										$('#getImageCode').click();
+									}
+								}, 1000);
+							} else {
+								$.alert({
+									title: '错误',
+									content: xhr.msg,
+									buttons: {
+										ok: { text: '确定' }
+									}
+								})
 							}
 						}
 					})
 				}
-
-				if(!token) {
-					return getToken(_g);
-				}
-				_g();
+				return getToken(_g);
 			}
 
 			function submit() {
@@ -266,30 +287,26 @@
 					};
 					$.ajax({
 						url: method('password/retrive'),
-						type: 'post',
 						dataType: 'json',
 						data: {
-							account: acc,
-							password: md5(pwd),
-							LoginAgent: 'WEB'
+							mobile: phone,
+							code: pcode
 						},
 						success: function (xhr) {
-							if(xhr && !xhr.code) {
+							if(!xhr.code) {
 								var result = xhr.data;
-								var token = result.token,
-									info = result.loginInfo;
-								Cookies.set('_hr_token', result.token);
-								Cookies.set('_hr_name', info.name)
-								Cookies.set('_hr_account', info.account);
-								Cookies.set('_hr_dept', info.organization.name + '-' + info.dept.name);
-								Cookies.set('_hr_role', info.role.name);
-								if(info.phone1)
-									Cookies.set('_hr_phone', info.phone1);
-								window.location.href = 'app.html';
+								$.alert({
+									title: '成功',
+									content: '密码重置成功，新密码已发送到你的手机，请及时登录修改你的密码。',
+									autoClose: 'ok|3000',
+									buttons: { ok: {text: '确定', action: function() {
+										window.location.href = 'login.html';		
+									}}}
+								})
 							} else {
 								$.alert({
 									title: '错误',
-									content: '登录失败，请重试',
+									content: (xhr && xhr.msg) || '找回密码失败',
 									action: {
 										ok: {
 											text: '确定'
@@ -307,7 +324,7 @@
 				}).click();
 
 				$('#getPhoneCode').on('click', function() {
-					getPhoneCode();
+					getPhoneCode(this);
 				})
 
 				$('#form > .input-text').on('keydown', function(e) {
