@@ -1,15 +1,16 @@
 <div class="dialog-input-form">
 	<div class="input-row">
 		<label>手机号码</label>
-		<input type="password" class="input-text phone" placeholder="请输入你的手机号码">	
+		<input type="text" class="input-text phone" id="phone" placeholder="请输入你的手机号码">	
 	</div>
-	<div class="input-row">
+	<!-- <div class="input-row">
 		<label>图型验证码</label>
-		<input type="text" class="input-text imgcode" placeholder="请输入验证码">
-	</div>
+		<input type="text" class="input-text imgcode" id="code" placeholder="请输入验证码">
+	</div> -->
 	<div class="input-row" style="margin-bottom: 10px;">
 		<label>手机验证码</label>
-		<input type="text" class="input-text phonecode">
+		<input type="text" class="input-text phonecode" id="code">
+		<a class="btn btn-default link" id="codeCountDown">获取验证码</a>
 	</div>
 	<div class="input-row" style="margin: 0;">
 		<label style="line-height: 12px;">&nbsp;</label>

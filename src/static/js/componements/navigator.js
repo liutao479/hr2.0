@@ -62,7 +62,7 @@ $(function() {
 	NavComponent.prototype.__addListener = function() {
 		var self = this;
 		
-		self.$panel.find('.navEvt').on('click', function() {
+		self.$panel.on('click', '.navEvt', function() {
 			var $this = $(this),
 				key = $this.data('id');
 			var fn = NavComponent.internal[key];
@@ -217,15 +217,73 @@ $(function() {
 							<span class="message-time">{2}</span>\
 						</li>';
 
-	function setPhone() {
-
+	function setPhone($dialog, cb) {
+		var phone = $dialog.find('#phone').val(),
+			code = $dialog.find('#code').val();
+		var $err = $dialog.find('.color-red');
+		if(!phone || !code) {
+			$err.html('请输入手机号码和手机验证码');
+			return false;
+		};
+		$.ajax({
+			url: $http.api('mobile/bind', 'test'),
+			data: {
+				mobile: phone,
+				code: code
+			},
+			dataType: 'json',
+			success: function(xhr) {
+				if(!xhr.code) {
+					$.alert({
+						title: '成功',
+						content: '<div class="dialog-input-form">手机绑定成功</div>',
+						buttons: {ok: {text: '确定', action: function() {
+							Cookies.set('_hr_phone', phone);
+							navInstance.info.phone = phone;
+							navInstance.__compile();
+						}}}
+					})
+					return cb(true);
+				} else {
+					$err.html(xhr.msg || '手机绑定失败，请重试').show();
+					return false;
+				}
+			},
+			error: function() {
+				$err.html('网络异常，手机绑定失败，请重试').show();
+				return false;
+			}
+		})
+		return false;
 	}
 
 	function unbindPhone($dialog, phone, cb) {
 		var self = $dialog;
 		var code = $.trim(self.find('.input-text').val());
+		var $err = $dialog.find('.color-red');
 		if(!code) return false;
-
+		$.ajax({
+			url: $http.api('mobile/unBind', 'test'),
+			data: {
+				mobile: phone,
+				code: code
+			},
+			global: false,
+			dataType: 'json',
+			success: function(xhr) {
+				if(!xhr.code)
+					return cb(true);
+				else {
+					$err.html(xhr.msg || '手机验证失败');
+					return false;
+				}
+			},
+			error: function() {
+				$err.html('验证失败，请重试');
+				return false;
+			}
+		})
+		return false;
 	}
 
 	function updatePassword($dialog, cb) {
@@ -254,7 +312,7 @@ $(function() {
 			return false;
 		}
 		$.ajax({
-			url: $http.api('password/change'),
+			url: $http.api('password/change', 'test'),
 			data: {
 				password: md5(ov),
 				newPassword: md5(nv)
@@ -262,6 +320,17 @@ $(function() {
 			dataType: 'json',
 			success: function(xhr) {
 				if(!xhr.code) {
+					$.alert({
+						title: '成功',
+						content: '<div class="dialog-input-form">密码修改成功，请重新登录</div>',
+						autoClose: 'ok|3000',
+						buttons: {
+							ok: { text: '确定', action: function() {
+								navInstance.clear();
+								location.href = 'login.html';
+							}}
+						}
+					})
 					return cb(true);
 				} else {
 					etip('修改密码失败，请重试');
@@ -277,10 +346,58 @@ $(function() {
 	}
 
 	NavComponent.internal = {
+		getPhoneCode: function(phone, cf) {
+			$.ajax({
+				url: $http.api('sms/send', 'test'),
+				type: 'post',
+				global: false,
+				data: {
+					businessKey: 'bindMobile',
+					mobile: phone
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					if(!xhr.code) {
+						cf();
+					} else {
+						$.alert({
+							title: '错误',
+							content: '<div class="dialog-input-form">验证码发送失败，请重试</div>',
+							buttons: {ok:{text:'确定'}}
+						})
+					}
+				})
+			})
+		},
 		bind: function() {
 			$.confirm({
 				title: '绑定手机号码',
 				content: 'url:./defs/phone.html',
+				onContentReady: function() {
+					var self = this.$content,
+						$err = self.find('.color-red');
+					self.find('#codeCountDown').on('click', function() {
+						var $this = this,
+							$that = $(this);
+						if($this.counter) return;
+						var phone = self.find('#phone').val();
+						if(!phone) {
+							return $err.html('请输入手机号码').show();
+						}
+						NavComponent.internal.getPhoneCode(phone, function() {
+							var counter = 60;
+							$this.counter = setInterval(function() {
+								$that.html(counter + 's后重新获取');
+								counter--;
+								if(counter == 0) {
+									$that.html('获取验证码');
+									clearInterval(self.counter);
+									$this.counter = null;
+								}
+							}, 1000);
+						});
+					})
+				},
 				buttons: {
 					ok: {
 						text: '确定',
@@ -296,46 +413,73 @@ $(function() {
 		},
 		change: function(phone) {
 			var p = $(phone).data('phone');
-			$.ajax({
-				url: 'http://192.168.0.33:8080/sms/send',
-				type: 'post',
-				global: false,
-				data: {
-					businessKey: 'changeMobile',
-					mobile: p
-				},
-				dataType: 'json',
-				success: $http.ok(function(xhr) {
-					if(!xhr.code) {
-						cf();
-					} else {
-						$.alert({
-							title: '错误',
-							content: '验证码发送失败，请重试',
-							buttons: {ok:{text:'确定'}}
-						})
-					}
+
+			function _gc(phone) {
+				$.ajax({
+					url: $http.api('sms/send', 'test'),
+					type: 'post',
+					global: false,
+					data: {
+						businessKey: 'changeMobile',
+						mobile: phone
+					},
+					dataType: 'json',
+					success: $http.ok(function(xhr) {
+						if(!xhr.code) {
+							cf();
+						} else {
+							$.alert({
+								title: '错误',
+								content: '<div class="dialog-input-form">验证码发送失败，请重试</div>',
+								buttons: {ok:{text:'确定'}}
+							})
+						}
+					})
 				})
-			})
+			}
+			
+			_gc(p);
 
 			function cf() {
 				$.confirm({
 					title: '修改手机号码',
 					content:'url:./defs/phone.modify.html',
+					onContentReady: function() {
+						var self = this;
+						self.$content.find('#phoneNumber').html(p);
+						var $cd = self.$content.find('#codeCountDown'),
+							counter = 60;
+						$cd[0].counter = setInterval(function() {
+							$cd.text(counter + 's后重新获取');
+							counter--;
+							if(counter == 0) {
+								clearInterval($cd[0].counter);
+								$cd[0].counter = null;
+								$cd.html('获取验证码');
+							}
+						}, 1000);
+						$cd.on('click', function() {
+							if(this.counter) return false;
+							_gc(p);
+						})
+					},
 					buttons: {
 						ok: {
 							text: '确定',
 							action: function() {
 								var self = this;
-								self.$content.find('#phoneNumber').html(p);
-								self.$content.find('#codeCountDown')
 								return unbindPhone(self.$content, p, function(status) {
 									!!status && self.close();
+									Cookies.remove('_hr_phone');
+									delete navInstance.info.phone
+									navInstance.__compile();
+									NavComponent.internal.bind();
 								});
 							}
 						},
 						cancel: {
-							text: '取消'
+							text: '取消',
+							btnClass: 'btn-cancel'
 						}
 					}
 				})
@@ -348,10 +492,7 @@ $(function() {
 				buttons: {
 					cancel: {
 						text: '取消',
-						btnClass: 'btn-default btn-cancel',
-						action: function() {
-
-						}
+						btnClass: 'btn-default btn-cancel'
 					},
 					ok: {
 						text: '确定',
