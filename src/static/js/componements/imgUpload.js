@@ -18,9 +18,7 @@
 * 				data-creditid="征信人id" 
 * 				data-uplUrl="特殊材料上传url"
 * 				data-delUrl="特殊材料删除url"
-* 				data-materialspic="征信报告照片"
-* 				data-thumbnailpic="征信报告缩略图照片"
-* 				data-materialsAduitResult="",
+* 				data-auditResult="",
 *				data-materialsAduitOpinion="图片意见">
 * 		</element>
 */
@@ -283,6 +281,7 @@
 	imgUpload.prototype.onUpload = function(file) {
 		var self = this;
 		self.$el.find('.imgs-item-upload').LoadingOverlay("show");
+		window.clickable = false;
 		imgUpload.getLicense(self.options.type, function(res) {
 			if(!res) {
 				throw "can not get the license";
@@ -381,12 +380,6 @@
 			if(self.options.thumbnailpic) {
 				params.thumbnailPic = self.options.thumbnailpic;
 			}
-			if(self.options.materialsaduitresult) {
-				params.materialsAduitResult = self.options.materialsaduitresult;
-			}
-			if(self.options.materialsaduitopinion) {
-				params.materialsAduitOpinion = self.options.materialsaduitopinion;
-			}
 			params.orderNo = self.options.orderno;
 			params.creditId = self.options.creditid;
 			params.materialsPic = url;
@@ -435,6 +428,7 @@
 			success: function(xhr) {
 				console.log(xhr);
 				self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
+				window.clickable = true;
 				if(!xhr.code) {					
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name, url, self.errImg, self.errMsg));
@@ -660,7 +654,7 @@
 		for(var i = 0, len = self.imgs.length; i < len; i++) {
 			var img = self.imgs[i],
 				ml = i * self.size.im,
-				mark = self.getMark(img.auditResult || img.aduitResult);
+				mark = self.getMark(img.auditResult);
 			if(ml > 0) ml = self.size.im;
 			arr.push('<div data-idx="'+i+'" class="thumb-view" style="cursor: pointer; position:relative; float:left; width:'+self.size.iw+'px;height:'+self.size.iw+'px;margin-left:'+ml+'px;"><img src="'+img.materialsPic+'" style="width:100%; height:100%;" />'+mark+'</div>');
 		}

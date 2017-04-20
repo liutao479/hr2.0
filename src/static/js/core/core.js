@@ -213,6 +213,7 @@
 	    	$.LoadingOverlay("hide");
 	    	_.__onloading = false;
 		}
+		window.clickable = true;
 	});
 	$(document).ajaxError(function(event, request, settings, error) {
 		//todo show global error

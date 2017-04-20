@@ -75,7 +75,7 @@
 									<div class="imgs-item-group uploadEvt imgs" data-idx="{{=n}}" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb" data-other="true" data-orderno="{{=it.orderNo}}" data-name="{{=nl.materialsName || '其他材料'}}" data-scene="{{=it.category}}" data-img="{{=nl.materialsPic}}" data-id="{{=nl.id}}" data-err="{{=nl.auditResult || ''}}" data-msg="{{=nl.auditOpinion || ''}}" data-editable="{{=it.editable}}"></div>
 								{{ } }}
 								{{ if(it.editable) { }}
-								<div class="imgs-item-group uploadEvt noimgs" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb"  data-other="true" data-orderno="{{=it.orderNo}}" data-name="其他材料" data-scene="{{=it.category}}" data-editable="{{=it.editable}}"></div>
+								<div class="imgs-item-group uploadEvt noimgs" data-idx="{{=n}}" data-deletecb="page.$scope['{{=it.category}}'].deletecb" data-uploadcb="page.$scope['{{=it.category}}'].uploadcb"  data-other="true" data-orderno="{{=it.orderNo}}" data-name="其他材料" data-scene="{{=it.category}}" data-editable="{{=it.editable}}"></div>
 								{{ } }}
 							</div>
 							<!-- 其他材料对应上传材料项 -->

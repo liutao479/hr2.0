@@ -290,10 +290,10 @@ page.ctrl('creditApproval', [], function($scope) {
 				marker: function (img, mark, cb) {
 					var params = {
 						id: img.id,
-						aduitResult: mark
+						auditResult: mark
 					}
 					if(mark == 0) {
-						params.aduitOpinion = '';
+						params.auditOpinion = '';
 					}
 					$.ajax({
 						type: 'post',
@@ -548,6 +548,7 @@ page.ctrl('creditApproval', [], function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
+			if(!window.clickable) return;
 			process();
 		})
 	}
