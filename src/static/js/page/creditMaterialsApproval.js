@@ -116,7 +116,7 @@ page.ctrl('creditMaterialsApproval', function($scope) {
 	var checkData = function(cb) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('creditApproval/submit/' + $params.taskId, 'zyj'),
+			url: $http.api('creditMaterialsApproval/submit/' + $params.taskId, 'zyj'),
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);

@@ -4,42 +4,48 @@
 				
 				
 				<!--面板-->
+				
 				<div class="panel panel-nomargintop no-top-border">
 					<!--银行汇款日期选择-->
 					<div class="select-search-bar no-border clearfix">
 						<div class="search-item">
-							<span class="select-name">统计日期：</span>
-							<span class="select select-common">
-								<span class="placeholder">2016-12-19</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
-							<span class="separator">-</span>
-							<span class="select select-common">
-								<span class="placeholder">2016-12-19</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
+							<div class="search-item">
+								<span class="select-name">统计日期：</span>
+								<div class="input-text input-date-mini">
+									<input id="dateStart" type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" value="" />	
+								</div>
+								<span class="separator">-</span>
+								<div class="input-text input-date-mini">
+									<input id="dateEnd" type="text" class="dateBtn" data-min="dateStart" readonly="readonly" value="" />	
+								</div>
+							</div>
 						</div>
 						<div class="search-item">
 							<span class="select-name">分公司：</span>
-							<span class="select select-common">
+							<span class="select select-common" data-dropdown="page.$scope['operationsTab4'].deptCompanyPicker" data-trigger="page.$scope['operationsTab4'].dropdownTrigger.deptCompany">
 								<span class="placeholder">全部</span>
 								<span class="arrow arrow-bottom"></span>
 							</span>
 						</div>
 						<div class="search-item">
 							<span class="select-name">银行：</span>
-							<span class="select select-common">
+							<span class="select select-common" data-dropdown="page.$scope['operationsTab4'].BankPicker" data-trigger="page.$scope['operationsTab4'].dropdownTrigger.BankSel">
 								<span class="placeholder">全部</span>
 								<span class="arrow arrow-bottom"></span>
 							</span>
 						</div>
+						<div class="search-item">
+							<div id="search" class="button button-mini button-deep">搜索</div>
+						</div>	
 					</div>
 					<!--银行汇款日期选择  end-->
-					
+				
+				
+				
 					<!--二级标题-->
 					<div class="panel-content-title panel-content-title-special">
 						<div class="key-value-box">
-							<span class="key"><span>2016-11-01</span>至<span>2016-11-07</span>概览</span>
+							<span class="key"><span id="dateStartContent"></span>至<span id="dateEndContent"></span>概览</span>
 						</div>
 					</div>
 					<!--二级标题  end-->
@@ -54,31 +60,33 @@
 											财务应放未放
 										</div>
 										<div class="operational-item-bottom clearfix">
-											<p class="operational-item-money"><span>64</span>笔<span>320</span>万元</p>
+											<p class="operational-item-money"><span id="financeReleasedTotal"></span>笔<span id="financeReleasedAccountTotal"></span>万元</p>
 											<div class="iconfont-box"><i class="iconfont">&#xe623;</i></div>
 										</div>
 									</div>
 								</td>
+								<!--
 								<td class="td-even">
 									<div class="operational-item">
 										<div class="operational-item-top">
-											财务应放未放
+											银行放款
 										</div>
 										<div class="operational-item-bottom clearfix">
-											<p class="operational-item-money"><span>64</span>笔<span>320</span>万元</p>
+											<p class="operational-item-money"><span id="bankLendersTotal"></span>笔<span id="bankLendersAccountTotal	"></span>万元</p>
 											<div class="iconfont-box">
 												<i class="iconfont">&#xe623;</i>
 											</div>
 										</div>
 									</div>
 								</td>
+								-->
 								<td class="td-odd">
 									<div class="operational-item">
 										<div class="operational-item-top">
-											财务应放未放
+											垫资总量
 										</div>
 										<div class="operational-item-bottom clearfix">
-											<p class="operational-item-money"><span>64</span>笔<span>320</span>万元</p>
+											<p class="operational-item-money"><span id="financeAccountTotal"></span>笔<span id="financeAmountTotal"></span>万元</p>
 											<div class="iconfont-box">
 												<i class="iconfont">&#xe623;</i>
 											</div>
@@ -89,10 +97,10 @@
 								<td class="td-even">
 									<div class="operational-item">
 										<div class="operational-item-top">
-											财务应放未放
+											自行垫资
 										</div>
 										<div class="operational-item-bottom clearfix">
-											<p class="operational-item-money"><span>64</span>笔<span>320</span>万元</p>
+											<p class="operational-item-money"><span id="selfFinanceAccountTotal"></span>笔<span id="selfFinanceAmountTotal"></span>万元</p>
 											<div class="iconfont-box">
 												<i class="iconfont">&#xe623;</i>
 											</div>
@@ -125,7 +133,7 @@
 					<!--二级标题-->
 					<div class="panel-content-title">
 						<div class="key-value-box">
-							<span class="key"><span>2016-11-01</span>至<span>2016-11-07</span>明细</span>
+							<span class="key"><span id="dateStartContent2"></span>至<span id="dateEndContent2"></span>明细</span>
 						</div>
 					</div>
 					<!--二级标题  end-->
@@ -138,10 +146,8 @@
 									<td class="orders-item-data">统计日期</td>
 									<td class="orders-item-data">财务应放为放<br />金额（元）</td>
 									<td class="orders-item-data">财务应放未放<br />笔数</td>
-									<td class="orders-item-data">银行放款<br />金额(元)</td>
-									<td class="orders-item-data">银行放款<br />笔数</td>
-									<td class="orders-item-data">银行应放未放<br />金额（元）</td>
-									<td class="orders-item-data">银行应放<br />未放笔数</td>
+									<!--<td class="orders-item-data">银行放款<br />金额(元)</td>
+									<td class="orders-item-data">银行放款<br />笔数</td>-->
 									<td class="orders-item-data">垫资总金额<br />（元）</td>
 									<td class="orders-item-data">垫资<br />总笔数</td>
 									<td class="orders-item-data">自行垫资<br />金额（元）</td>
@@ -167,17 +173,16 @@
 			<script type="text/x-dot-template" id="operationsAnalysisListTmpl">
 				{{for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
 				<tr class="orders-item">
-					<td class="orders-item-data">{{=row.statisticsTime}}</td>
-					<td class="orders-item-data">{{=row.financeMoney}}</td>
-					<td class="orders-item-data">{{=row.financeNumber}}</td>
-					<td class="orders-item-data">{{=row.bankMoney}}</td>
-					<td class="orders-item-data">{{=row.bankNumber}}</td>
-					<td class="orders-item-data">{{=row.bankShouldBank}}</td>
-					<td class="orders-item-data">{{=row.bankShouldNumber}}</td>
-					<td class="orders-item-data">{{=row.paidMoney}}</td>
-					<td class="orders-item-data">{{=row.paidNumber}}</td>
-					<td class="orders-item-data">{{=row.selfPaidMoney}}</td>
-					<td class="orders-item-data">{{=row.selfPaidNumber}}</td>
+					<td class="orders-item-data">{{=row.day}}</td>
+					<td class="orders-item-data">{{=row.financeReleased}}</td>
+					<td class="orders-item-data">{{=row.financeReleasedAccount}}</td>
+					<!--<td class="orders-item-data">{{=row.bankLenders}}</td>
+					<td class="orders-item-data">{{=row.bankLendersAccount}}</td>-->
+					<td class="orders-item-data">{{=row.financeAmount}}</td>
+					<td class="orders-item-data">{{=row.financeAccount}}</td>
+					<td class="orders-item-data">{{=row.selfFinanceAmount}}</td>
+					<td class="orders-item-data">{{=row.selfFinanceAccount}}</td>
 				</tr>
 				{{ } }}
 			</script>
+			

@@ -309,22 +309,22 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				flag = true;
 			for(var j in item) {
 				if(j == 'idCard' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.idx : '') + '的身份证号！<br/>';
+					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.sortNo + 1 : '') + '的身份证号！<br/>';
 					flag = false;
 					break;
 				}
 				if(j == 'userName' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.idx : '') + '的真实姓名！<br/>';
+					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.sortNo + 1 : '') + '的真实姓名！<br/>';
 					flag = false;
 					break;
 				}
 				if(j == 'mobile' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.idx : '') + '的手机号！<br/>';
+					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.sortNo + 1 : '') + '的手机号！<br/>';
 					flag = false;
 					break;
 				}
 				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType == 0) {
-					_alert += '请选择' + $scope.userMap[item.userType] + item.idx + '与借款人的关系！<br/>';
+					_alert += '请选择' + $scope.userMap[item.userType] + item.sortNo + 1 + '与借款人的关系！<br/>';
 					flag = false;
 					break;
 				}
@@ -647,7 +647,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				item.userType = row.userType;
 				item.mobile = row.mobile || '';
 				item.userRelationship = row.userRelationship;
-				item.idx = j + 1;
+				item.sortNo = j + 1;
 				if(i == 0) {
 					item.userRelationship = 0;
 				}

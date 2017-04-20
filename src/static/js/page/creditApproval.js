@@ -300,7 +300,7 @@ page.ctrl('creditApproval', [], function($scope) {
 			var $imgs = $(this).find('.uploadEvt.imgs');
 			$imgs.imgUpload({
 				viewable: true,
-				markable: true,
+				markable: false,
 				getimg: function(cb) {
 					cb($scope.result.data.creditUsers[_type][index].loanCreditReportList);
 				},
