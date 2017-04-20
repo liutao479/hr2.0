@@ -309,7 +309,7 @@ page.ctrl('creditApproval', [], function($scope) {
 					console.log(imgs)
 					$imgs.each(function(idx) {
 						$(this).find('.imgs-error').remove();
-						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].aduitResult]);
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
 					});
 				}
 			});
@@ -401,6 +401,7 @@ page.ctrl('creditApproval', [], function($scope) {
 			});
 		});
 	}
+
 
 	/**
 	* 设置底部按钮操作栏

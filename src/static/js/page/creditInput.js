@@ -610,25 +610,31 @@ page.ctrl('creditInput', [], function($scope) {
 		if(!_alert) {
 			console.log($scope.apiParams);
 			//检查图片是否有标记，有则不能提交
-			var temp = true;
-			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-				var item = $scope.apiParams[i];
-				for(var j = 0, len2 = item.loanCreditReportList.length; j < len2; j++) {
-					if(item.loanCreditReportList[j].auditResult != 0) {
-						$.alert({
-							title: '提示',
-							content: tool.alert($scope.userMap[item.userType] + '的征信报告图片被标记，不能提交！'),
-							buttons: {
-								ok: {
-									text: '确定'
-								}
-							}
-						})
-						temp = false;
-					}
-				}
-			}
-			if(temp && cb && typeof cb == 'function') {
+			// var temp = true, mp;
+			// for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+			// 	var item = $scope.apiParams[i], np = true;
+			// 	for(var j = 0, len2 = item.loanCreditReportList.length; j < len2; j++) {
+			// 		if(item.loanCreditReportList[j].auditResult != 0) {
+			// 			temp = false;
+			// 			np = false;
+			// 			mp = item.userType;
+			// 			break;
+			// 		}
+			// 	}
+			// 	if(!np) break;
+			// }
+			// if(!temp) {
+			// 	$.alert({
+			// 		title: '提示',
+			// 		content: tool.alert($scope.userMap[mp] + '的征信报告图片被标记，不能提交！'),
+			// 		buttons: {
+			// 			ok: {
+			// 				text: '确定'
+			// 			}
+			// 		}
+			// 	})
+			// }
+			if(cb && typeof cb == 'function') {
 				cb();
 			}
 		} else {
