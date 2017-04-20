@@ -63,7 +63,6 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 				$scope.$checks.each(function() {
 					if($(this).attr('checked')) {
 						flag++;
-					} else {
 					}
 				})
 				if(flag == 0) {

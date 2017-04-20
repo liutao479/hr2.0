@@ -66,7 +66,7 @@
 						<tr class="orders-item">
 						{{ } }}
 							<td class="orders-item-data order-item-first">
-								<div class="checkbox checkbox-normal" data-checked="false"></div>
+								<div class="checkbox checkbox-normal" data-checked="false"  data-order-no="{{=row.orderNo}}" data-user-id="{{=row.userId}}"></div>
 							</td>
 							<td class="orders-item-data">{{=row.orderNo}}</td>
 							<td class="orders-item-data">{{=row.userName}}（{{=row.idCard}}）</td>
@@ -76,7 +76,7 @@
 							
 							<td class="orders-item-data">
 								<a class="button button-mini button-gray contractPrint" data-order-no="{{=row.orderNo}}">合同套打</a>
-								<a class="button button-mini button-gray ml15 loanDownload">下载</a>
+								<a class="button button-mini button-gray ml15 loanDownload" data-order-no="{{=row.orderNo}}" data-user-id="{{=row.userId}}">下载</a>
 							</td>
 						</tr>
 					{{ } }}

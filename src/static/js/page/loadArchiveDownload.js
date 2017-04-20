@@ -63,7 +63,6 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 				$scope.$checks.each(function() {
 					if($(this).attr('checked')) {
 						flag++;
-					} else {
 					}
 				})
 				if(flag == 0) {
@@ -128,24 +127,52 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 
 		// 绑定下载按钮
 		$scope.$el.$tbl.find('.loanDownload').on('click', function() {
-			$.confirm({
-				title: '下载',
-				content: dialogTml.wContent.loanDownload,
-				buttons: {
-					close: {
-						text: '取消',
-						btnClass: 'btn-default btn-cancel'
+			var that = this,
+				orderNos = $(that).data('orderNo'),
+				userIds = $(that).data('userId');
+			downLoad(userIds, orderNos);
+		});
+	}
+
+	function downLoad(userIds, orderNos) {
+		debugger
+		$.ajax({
+			url: $http.api('materialsDownLoad/getArchiveDownload', 'lyb'),
+			type: 'post',
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				$.confirm({
+					title: '下载',
+					content: doT.template(dialogTml.wContent.loanDownload)(result.data),
+					onContentReady: function() {
+						this.$content.find('.checkbox').checking();
 					},
-					ok: {
-						text: '确定',
-						action: function() {
-							
+					buttons: {
+						close: {
+							text: '取消',
+							btnClass: 'btn-default btn-cancel'
+						},
+						ok: {
+							text: '确定',
+							action: function() {
+								var funcIds = [];
+								this.$content.find('.checkbox').each(function() {
+									if($(this).attr('checked')) {
+										funcIds.push($(this).data('id'));
+									}
+								});
+								funcIds = funcIds.join(',');
+								window.open($http.api('materialsDownLoad/downLoad?userIds=' + userIds + '&orderNos=' + orderNos + '&downLoadTypes=' + funcIds, true), '_blank');
+							}
 						}
 					}
-				}
+				})
 			})
 		});
 	}
+
+
 	// $.ajax({
 	// 	url: $http.api('contractPrint/queryContractExeclList', 'lyb'),
 	// 	type: 'post',
@@ -228,7 +255,16 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 				//toast('请选择批量下载的订单！')
 				return false;
 			}
-			alert('批量下载！')
+			$scope.userIds = [], $scope.orderNos = [];
+			$scope.$el.$tbl.find('.checkbox').each(function() {
+				if($(this).attr('checked')) {
+					$scope.userIds.push($(this).data('userId'));
+					$scope.orderNos.push($(this).data('orderNo'));
+				}
+			});
+			$scope.userIds = $scope.userIds.join(',');
+			$scope.orderNos = $scope.orderNos.join(',');
+			downLoad($scope.userIds, $scope.orderNos);
 			// $.confirm({
 			// 	title: '批量下载',
 			// 	content: dialogTml.wContent.allCreditDownload,
@@ -258,7 +294,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 			// 					}
 			// 				});
 			// 				$scope.userIds = $scope.userIds.join(',');
-			// 				console.log($scope.userIds)
+			// 				console.log($scope.userIds);
 			// 				this.$content.find('.checkbox').each(function() {
 			// 					if($(this).attr('checked')) {
 			// 						$scope.downLoadType = $(this).data('type');

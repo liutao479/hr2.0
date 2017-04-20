@@ -1,177 +1,144 @@
-	<!--逾期管理详情-->
-			<div class="container expire-info-prev" id="expire-info-prev">
-				<!-- 面包屑 -->
-				<div class="path-back-bar clearfix">
-					<div class="path-back">
-						<i class="iconfont">&#xe626;</i>
-						<a href="#">逾期管理</a>&nbsp;&gt;
-						<span class="current-page">逾期管理详情</span>
-					</div>
-				</div>
-				<!-- 面包屑 end-->
-				<!--提交修改等等按钮-->
-				<div class="commit-orders-box commit-orders-box-area mb15">
-					<a href="javascript:;" class="commit-item">
-						<i class="iconfont">&#xe640;</i>
-						<span>派发逾期处理任务</span>
-					</a>
-				</div>
-				<!--提交修改等等按钮   end-->
 
-				<!-- tab切换 -->
-				<div class="tab-bar">
-					<ul class="role-bar-ul clearfix">
-						<li class="role-bar-li"><a href="#" class="role-item">贷款信息表</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item role-item-active">逾期记录</a></li>
-						<li class="role-bar-li"><a href="#" class="role-item">逾期处理意见</a></li>
-					</ul>
-				</div>
-				<!-- tab切换 end-->
-
-				<!-- tab对应栏 -->
-				<div class="tab-content" id="expireRecordTable"></div>
-			</div>
-			<!--逾期管理详情 end-->
-				
-			<script type="text/x-dot-template" id="expireRecordTmpl">
-					<div class="tab-content-item">
-						<!--订单表格 （逾期记录）-->
-						<table class="expire-orders-table expire-orders-table-special" width="100%">
-							<tbody class="expire-content">
-								<tr class="expire-content-tr">
-									<td class="expire-content-item">
-										<table class="table-inner">
-											<tr class="table-inner-tr">
-												<td class="key">记录生成时间：</td>
-												<td class="value">2016-09-06 11:34</td>
-											</tr>
-											<tr class="table-inner-tr">
-												<td class="key">卡号：</td>
-												<td class="value">261736726483478347364</td>
-											</tr>
-											
-											<tr class="table-inner-tr">
-												<td class="key">账单日：</td>
-												<td class="value">2016/12/13</td>
-											</tr>
-										</table>
-									</td>
-									<td class="expire-content-item">
-										<table class="table-inner">
-											<tr class="table-inner-tr">
-												<td class="key">卡余额：</td>
-												<td class="value">40000元</td>
-											</tr>
-											<tr class="table-inner-tr">
-												<td class="key">公司垫款：</td>
-												<td class="value">40000元</td>
-											</tr>
-										</table>
-									</td>
-									<td class="expire-content-item">
-										<table class="table-inner">
-											<tr class="table-inner-tr">
-												<td class="key">当前逾期金额：</td>
-												<td class="value">621,226.00元</td>
-											</tr>
-											<tr class="table-inner-tr">
-												<td class="key">每期应还：</td>
-												<td class="value">2944元</td>
-											</tr>
-											<tr class="table-inner-tr">
-												<td class="key">当前逾期金额/每期应还：</td>
-												<td class="value">100元</td>
-											</tr>
-										</table>
-									</td>
-									<td class="expire-content-item">
-										<table class="table-inner">
-											<tr class="table-inner-tr">
-												<td class="key">当前连续违约次数：</td>
-												<td class="value">3次</td>
-											</tr>
-											<tr class="table-inner-tr">
-												<td class="key">历史累计违约次数：</td>
-												<td class="value">3次</td>
-											</tr>
-										</table>
-									</td>
-									<td class="expire-content-item expire-content-item-last">
-										<div class="color-red">未结清</div>
-									</td>
+<div class="tab-content" id="expireRecordTable"></div>
+<script type="text/x-dot-template" id="expireRecordTmpl">
+		<div class="tab-content-item">
+			<!--订单表格 （逾期记录）-->
+			<table class="expire-orders-table expire-orders-table-special" width="100%">
+				<tbody class="expire-content">
+					<tr class="expire-content-tr">
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">记录生成时间：</td>
+									<td class="value">2016-09-06 11:34</td>
 								</tr>
-							</tbody>
-						</table>
-						<!--订单表格（逾期记录） end-->
-						<!--订单表格 （逾期记录）-->
-						<table class="expire-orders-table" width="100%">
-							<tbody class="expire-content">
-								<tr class="expire-content-tr">
-									<td class="expire-content-item">
-										<table class="table-inner">
-											<tr class="table-inner-tr">
-												<td class="key">记录生成时间：</td>
-												<td class="value">2016-09-06 11:34</td>
-											</tr>
-											<tr class="table-inner-tr">
-												<td class="key">卡号：</td>
-												<td class="value">261736726483478347364</td>
-											</tr>
-											
-											<tr class="table-inner-tr">
-												<td class="key">账单日：</td>
-												<td class="value">2016/12/13</td>
-											</tr>
-										</table>
-									</td>
-									<td class="expire-content-item">
-										<table class="table-inner">
-											<tr class="table-inner-tr">
-												<td class="key">卡余额：</td>
-												<td class="value">40000元</td>
-											</tr>
-											<tr class="table-inner-tr">
-												<td class="key">公司垫款：</td>
-												<td class="value">40000元</td>
-											</tr>
-										</table>
-									</td>
-									<td class="expire-content-item">
-										<table class="table-inner">
-											<tr class="table-inner-tr">
-												<td class="key">当前逾期金额：</td>
-												<td class="value">621,226.00元</td>
-											</tr>
-											<tr class="table-inner-tr">
-												<td class="key">每期应还：</td>
-												<td class="value">2944元</td>
-											</tr>
-											<tr class="table-inner-tr">
-												<td class="key">当前逾期金额/每期应还：</td>
-												<td class="value">100元</td>
-											</tr>
-										</table>
-									</td>
-									<td class="expire-content-item">
-										<table class="table-inner">
-											<tr class="table-inner-tr">
-												<td class="key">当前连续违约次数：</td>
-												<td class="value">3次</td>
-											</tr>
-											<tr class="table-inner-tr">
-												<td class="key">历史累计违约次数：</td>
-												<td class="value">3次</td>
-											</tr>
-										</table>
-									</td>
-									<td class="expire-content-item expire-content-item-last">
-										<div class="color-green">未结清</div>
-									</td>
+								<tr class="table-inner-tr">
+									<td class="key">卡号：</td>
+									<td class="value">261736726483478347364</td>
 								</tr>
-							</tbody>
-						</table>
-						<!--订单表格（逾期记录） end-->
-					</div>
-			</script>	
-				
+								
+								<tr class="table-inner-tr">
+									<td class="key">账单日：</td>
+									<td class="value">2016/12/13</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">卡余额：</td>
+									<td class="value">40000元</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">公司垫款：</td>
+									<td class="value">40000元</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">当前逾期金额：</td>
+									<td class="value">621,226.00元</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">每期应还：</td>
+									<td class="value">2944元</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">当前逾期金额/每期应还：</td>
+									<td class="value">100元</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">当前连续违约次数：</td>
+									<td class="value">3次</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">历史累计违约次数：</td>
+									<td class="value">3次</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item expire-content-item-last">
+							<div class="color-red">未结清</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!--订单表格（逾期记录） end-->
+			<!--订单表格 （逾期记录）-->
+			<table class="expire-orders-table" width="100%">
+				<tbody class="expire-content">
+					<tr class="expire-content-tr">
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">记录生成时间：</td>
+									<td class="value">2016-09-06 11:34</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">卡号：</td>
+									<td class="value">261736726483478347364</td>
+								</tr>
+								
+								<tr class="table-inner-tr">
+									<td class="key">账单日：</td>
+									<td class="value">2016/12/13</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">卡余额：</td>
+									<td class="value">40000元</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">公司垫款：</td>
+									<td class="value">40000元</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">当前逾期金额：</td>
+									<td class="value">621,226.00元</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">每期应还：</td>
+									<td class="value">2944元</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">当前逾期金额/每期应还：</td>
+									<td class="value">100元</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item">
+							<table class="table-inner">
+								<tr class="table-inner-tr">
+									<td class="key">当前连续违约次数：</td>
+									<td class="value">3次</td>
+								</tr>
+								<tr class="table-inner-tr">
+									<td class="key">历史累计违约次数：</td>
+									<td class="value">3次</td>
+								</tr>
+							</table>
+						</td>
+						<td class="expire-content-item expire-content-item-last">
+							<div class="color-green">未结清</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!--订单表格（逾期记录） end-->
+		</div>
+</script>	
+	
 			

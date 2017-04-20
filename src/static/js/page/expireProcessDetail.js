@@ -258,9 +258,6 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 					ok: {
 						text: '确定',
 						action: function() {
-							$.toast('我勒个去代理商可的上队列反馈是两地分居开始落地加福禄寿', function() {
-
-							})
 							return internel.dispatch(this);
 						}
 					},

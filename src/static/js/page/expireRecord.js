@@ -1,12 +1,12 @@
 'use strict';
 page.ctrl('expireRecord', [], function($scope) {
-	var $console = render.$console,
-		$params = $scope.$params,
+	var $params = $scope.$params,
+		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
-			process: $params.process || 0,
 			page: $params.page || 1,
 			pageSize: 20
 		};
+	debugger
 	/**
 	 *逾期处理意见 
 	* 加载逾期管理数据
@@ -15,7 +15,7 @@ page.ctrl('expireRecord', [], function($scope) {
 	*/
 	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: $http.api($http.apiMap.expireProcess),
+			url: $http.api('loanOverdueRecord/queryRecordList', true),
 			data: params,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
@@ -67,14 +67,11 @@ page.ctrl('expireRecord', [], function($scope) {
 	/***
 	* 加载页面模板
 	*/
-	render.$console.load(router.template('expire-record'), function() {
-		$scope.def.listTmpl = render.$console.find('#expireRecordTmpl').html();
+	$console.load(router.template('iframe/expire-record'), function() {
+		$scope.def.listTmpl = $console.find('#expireRecordTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#expireRecordTable'),
 			$paging: $console.find('#pageToolbar')
-		}
-		if($params.process) {
-			
 		}
 		loadExpireProcessList(apiParams);
 	});

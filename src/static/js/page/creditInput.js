@@ -126,9 +126,7 @@ page.ctrl('creditInput', [], function($scope) {
 		$sub.on('taskSubmit', function() {
 			if(!window.clickable) return;
 			saveData(function() {
-				// checkData(function() {
-					process();
-				// });
+				process();
 			});
 		})
 	}
