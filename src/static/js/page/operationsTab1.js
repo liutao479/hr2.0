@@ -68,22 +68,32 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 	};
 	/*echarts图表数据整理*/
 	var getEchartsData=function(data){
-		var nameArr=[],dataList=[];
-		for(var i in data){
+		var nameArr=[],dataList=[],otherTotal=0;
+		for(var i=0;i<data.length;i++){
 			var _it=data[i];
-			if(_it.serviceName&&nameArr.indexOf(_it.serviceName)!=-1){//已经存在该服务名称
-				if(_it.serviceCallNum){
-					for(var j=0;j<dataList.length;j++){
-						if(dataList[j].name==_it.serviceName){
-							dataList[j].value+=_it.serviceCallNum;
-							break;
+			if(i<6){
+				if(_it.serviceName&&nameArr.indexOf(_it.serviceName)!=-1){//已经存在该服务名称
+					if(_it.serviceCallNum){
+						for(var j=0;j<dataList.length;j++){
+							if(dataList[j].name==_it.serviceName){
+								dataList[j].value+=_it.serviceCallNum;
+								break;
+							};
 						};
 					};
+				}else{//数组没有该服务名称
+					if(_it.serviceCallNum){
+						nameArr.push(_it.serviceName);
+						dataList.push({value:_it.serviceCallNum, name:_it.serviceName});
+					};
 				};
-			}else{//数组没有该服务名称
+			}else{
 				if(_it.serviceCallNum){
-					nameArr.push(_it.serviceName);
-					dataList.push({value:_it.serviceCallNum, name:_it.serviceName});
+					otherTotal+=Number(_it.serviceCallNum);
+				};
+				if(i==data.length-1){
+					nameArr.push("其他");
+					dataList.push({value:otherTotal, name:"其他"});					
 				};
 			};
 		};
@@ -155,6 +165,9 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 					apiPrimary: _apiPrimary,
 				});
 		});
+		$scope.$el.$titleIcon.hover(function() {
+			$(this).find(".hid-tip").toggle();
+		});
  	};
 	// 加载页面模板
 	$console.load(router.template('iframe/operationsTab1'), function() {
@@ -163,6 +176,7 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 		$scope.def.tableTmpl = $console.find('#riskManagementTmpl').html();//表格模板
 		$scope.$context=$console.find("#risk-management");
 		$scope.$el = {
+			$titleIcon:$scope.$context.find('#radius-icon'),
 			$valuationTotal:$scope.$context.find('#valuation-total'),
 			$serviceStatic:$scope.$context.find('#serviceStatic'),
 			$table: $scope.$context.find('#riskManagementTable'),

@@ -32,7 +32,10 @@
 			<div class="panel-content-title no-top-border">
 				{{ if(it.itemNum&&it.updateTime){ }}
 				<div class="key-value-box">
-					<div class="value">已核验{{=it.itemNum}}项</div>
+					<div class="value">
+						已核验{{=it.itemNum}}项，
+						查询中{{=it.verifyingNum||'0'}}项
+					</div>
 				</div>
 				<div class="key-value-box">
 					<span class="key">最新核查时间：</span>
@@ -81,6 +84,7 @@
 									</div>
 								{{ } }}
 								{{var buyCar=col.basicInfo;}}
+								{{ if(buyCar){ }}
 								<div class="detail-item-context clearfix">
 									<div class="no-img-group left-model clearfix">
 										<div class="no-img-list">
@@ -114,18 +118,34 @@
 										</ul>
 									</div>
 								</div>
+								{{ }else{ }}
+									<div class="detail-item-context clearfix">
+										<div class="explain">
+											<span class="key">
+												{{=col.msg||'该用户无购车记录'}}！
+											</span>
+										</div>
+									</div>								
+								{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中！'}}</span>
+										<span class="key">{{=col.msg||'数据处理中'}}！</span>
 									</div>
 								</div>								
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
+						<div class="detail-item-alert alert-success">
+							<span class="icon"><i class="iconfont">&#xe659;</i></span>
+							<span class="status">已查询</span>
+							<span class="text"></span>
+						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
-								<span class="key">已查询，该用户无购车记录！</span>
+								<span class="key">
+								该用户无购车记录！
+								</span>
 							</div>
 						</div>
 					{{ } }}
@@ -160,9 +180,9 @@
 										<!-- <span class="message-number">new</span> -->
 									</div>
 								{{ } }}
+								{{ if(col.basicInfo){var hourseBasic=col.basicInfo; }}
 								<div class="detail-item-context clearfix">
-									{{var hourseBasic=col.basicInfo;}}
-									{{ if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
+									{{ if(sourCode&&sourCode==-1||sourCode==-2||sourCode==-3){ }}
 										<div>
 											<table class="table-search-msg" cellspacing="0" cellpadding="0">
 												<tr>
@@ -223,19 +243,35 @@
 											<li><span class="key">开票方名称：</span>{{=hourseBasic.receiverName}}</li>
 										</ul>
 									</div>
-								</div>		
+								</div>			
+								{{ }else{ }}
+									<div class="detail-item-context clearfix">
+										<div class="explain">
+											<span class="key">
+												{{=col.msg||'该用户无购房记录'}}！
+											 </span>
+										</div>
+									</div>								
+								{{ } }}		
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中！'}}</span>
+										<span class="key">{{=col.msg||'数据处理中'}}！</span>
 									</div>
 								</div>								
 							{{ } }}				
 						{{ } }}
 					{{ }else{ }}
+						<div class="detail-item-alert alert-success">
+							<span class="icon"><i class="iconfont">&#xe659;</i></span>
+							<span class="status">已查询</span>
+							<span class="text"></span>
+						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
-								<span class="key">已查询，该用户无购房记录！</span>
+								<span class="key">
+								该用户无购房记录！
+								</span>
 							</div>
 						</div>
 					{{ } }}
@@ -346,17 +382,27 @@
 										<span class="key">
 											{{ if(col.details&&col.details.verifyContent){ }}
 											{{=col.details.verifyContent}}
-											{{ }else{ }}数据处理中！
-											{{ } }}
+											{{ }else if(col.msg){ }}
+											{{=col.msg}}
+											{{ }else{ }}
+											数据处理中！
+											{{ } }}！
 										</span>
 									</div>
 								</div>								
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
+						<div class="detail-item-alert alert-success">
+							<span class="icon"><i class="iconfont">&#xe659;</i></span>
+							<span class="status">已查询</span>
+							<span class="text"></span>
+						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
-								<span class="key">已查询，该用户无银行流水记录！</span>
+								<span class="key">
+								该用户无银行流水记录！
+								</span>
 							</div>
 						</div>
 					{{ } }}
@@ -392,6 +438,7 @@
 									</div>
 								{{ } }}
 								{{var certificate=col.basicInfo;}}
+								{{ if(certificate){ }}
 								<div class="detail-item-context clearfix">
 									<div class="no-img-group clearfix left-model">
 										<div class="no-img-list">
@@ -408,25 +455,41 @@
 									<div class="right-model">
 										<h3>合格证管理部平台查得信息</h3>
 										<ul class="table-key-val">
-											<li><span class="key">车辆合格证编号：</span>{{=certificate.certifitionNum}}</li>
-											<li><span class="key">车辆制造企业名称：</span>{{=certificate.carManufacturer}}</li>
-											<li><span class="key">车辆识别代号/车架号：</span>{{=certificate.carVin}}</li>
-											<li><span class="key">发动机号码：</span>{{=certificate.engineNum}}元</li>
+											<li><span class="key">车辆合格证编号：</span>{{=certificate.certifitionNum||'-'}}</li>
+											<li><span class="key">车辆制造企业名称：</span>{{=certificate.carManufacturer||'-'}}</li>
+											<li><span class="key">车辆识别代号/车架号：</span>{{=certificate.carVin||'-'}}</li>
+											<li><span class="key">发动机号码：</span>{{=certificate.engineNum||'-'}}</li>
 										</ul>
 									</div>
 								</div>
+								{{ }else{ }}
+									<div class="detail-item-context clearfix">
+										<div class="explain">
+											<span class="key">
+												{{=col.houseMsg||'该用户无合格证记录'}}！
+											</span>
+										</div>
+									</div>
+								{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中！'}}</span>
+										<span class="key">{{=col.msg||'数据处理中'}}!</span>
 									</div>
 								</div>								
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
+						<div class="detail-item-alert alert-success">
+							<span class="icon"><i class="iconfont">&#xe659;</i></span>
+							<span class="status">已查询</span>
+							<span class="text"></span>
+						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
-								<span class="key">已查询，该用户无合格证记录！</span>
+								<span class="key">
+								该用户无合格证记录！
+								</span>
 							</div>
 						</div>
 					{{ } }}
@@ -513,19 +576,34 @@
 											</ul>
 										</div>
 									</div>
+								{{ }else{ }}
+									<div class="detail-item-context clearfix">
+										<div class="explain">
+											<span class="key">
+												{{=col.msg||'该用户无保单记录'}}！
+											</span>
+										</div>
+									</div>
 								{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中！'}}</span>
+										<span class="key">{{=col.msg||'数据处理中'}}！</span>
 									</div>
 								</div>
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
+						<div class="detail-item-alert alert-success">
+							<span class="icon"><i class="iconfont">&#xe659;</i></span>
+							<span class="status">已查询</span>
+							<span class="text"></span>
+						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
-								<span class="key">已查询，该用户无保单记录！</span>
+								<span class="key">
+								该用户无保单记录！
+								</span>
 							</div>
 						</div>
 					{{ } }}
@@ -560,7 +638,7 @@
 										<!-- <span class="message-number">new</span> -->
 									</div>
 								{{ } }}
-								{{var carReg=col.basicInfo;}}
+								{{  if(col.basicInfo){var carReg=col.basicInfo; }}
 								<div class="detail-item-context clearfix">
 									<div>
 										<table class="table-search-msg" cellspacing="0" cellpadding="0">
@@ -594,18 +672,34 @@
 										</div>
 									</div>
 								</div>
+								{{ }else{ }}
+									<div class="detail-item-context clearfix">
+										<div class="explain">
+											<span class="key">
+												{{=col.houseMsg||'该用户无车辆登记记录'}}！
+											</span>
+										</div>
+									</div>
+								{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中！'}}</span>
+										<span class="key">{{=col.msg||'数据处理中'}}！</span>
 									</div>
 								</div>								
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
+						<div class="detail-item-alert alert-success">
+							<span class="icon"><i class="iconfont">&#xe659;</i></span>
+							<span class="status">已查询</span>
+							<span class="text"></span>
+						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
-								<span class="key">已查询，该用户无车辆登记记录！</span>
+								<span class="key">
+								该用户无车辆登记记录！
+								</span>
 							</div>
 						</div>
 					{{ } }}
@@ -638,59 +732,66 @@
 										<span class="status">不通过</span>
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
-									{{ } }}
-							{{ }else{ }}
-								<div class="detail-item-context clearfix">
-									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中！'}}</span>
-									</div>
-								</div>
-							{{ } }}
-							{{ if(col.basicInfo){ }}
-								{{var _hours=col.basicInfo;}}
-								<div class="detail-item-context clearfix">
-									<div>
-										<table class="table-search-msg" cellspacing="0" cellpadding="0">
-											<tr>
-												<td class="table-key">提供查询的参数</td>
-												<td class="table-val">
-													<table class="table-inner">
-														<tr>
-															<td><span class="key">权利人：</span>
-															{{=_hours.name_tag}}</td>
-															<td><span class="key">房产坐落：</span>
-															{{=_hours.houseAddress_tag}}</td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</table>
-									</div>
-									<div class="no-img-group clearfix">
-										<div class="no-img-list">
-											<div class="no-img">
-												{{ if(_hours.elationship_tag){ }}
+								{{ } }}
+								{{ if(col.basicInfo){ }}
+									{{var _hours=col.basicInfo;}}
+									<div class="detail-item-context clearfix">
+										<div>
+											<table class="table-search-msg" cellspacing="0" cellpadding="0">
+												<tr>
+													<td class="table-key">提供查询的参数</td>
+													<td class="table-val">
+														<table class="table-inner">
+															<tr>
+																<td><span class="key">权利人：</span>
+																{{=_hours.name_tag}}</td>
+																<td><span class="key">房产坐落：</span>
+																{{=_hours.houseAddress_tag}}</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</div>
+										{{ if(_hours.elationship_tag){ }}
+										<div class="no-img-group clearfix">
+											<div class="no-img-list">
+												<div class="no-img">
 													<img src="{{=_hours.elationship_tag}}" />
-												{{ }else{ }}
-													<i class="iconfont">&#xe61f;</i>
-												{{ } }}
+												</div>
+												<p class="img-explain">房产证原件</p>
 											</div>
-											<p class="img-explain">房产证原件</p>
+										</div>
+										{{ } }}
+									</div>
+								{{ }else{ }}
+									<div class="detail-item-context clearfix">
+										<div class="explain">
+											<span class="key">
+												{{=col.houseMsg||'该用户无房产记录'}}！
+											</span>
 										</div>
 									</div>
-								</div>
+								{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中！'}}</span>
+										<span class="key">{{=col.houseMsg||'数据处理中'}}！</span>
 									</div>
 								</div>
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
+						<div class="detail-item-alert alert-success">
+							<span class="icon"><i class="iconfont">&#xe659;</i></span>
+							<span class="status">已查询</span>
+							<span class="text"></span>
+						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
-								<span class="key">已查询，该用户无房产记录！</span>
+								<span class="key">
+								该用户无房产记录！
+								</span>
 							</div>
 						</div>
 					{{ } }}
@@ -712,8 +813,8 @@
 			</div>
 		</dt>
 		<dd class="import-msg-box">
-			<div class="import-result">查询成功！</div>
-			<div class="import-text">请点击“历史核查记录”中查看详情</div>
+			<div class="import-result">您已成功发起该项服务，</div>
+			<div class="import-result">核查成功后会收到消息提醒</div>
 		</dd>
 	</dl>
 </script>	

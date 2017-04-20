@@ -1070,6 +1070,7 @@
     display: inline-block;
     vertical-align:middle;
     width: 500px;
+    max-height:80%;
     // 标题部分
     .w-title {
         position: relative;
@@ -1113,7 +1114,10 @@
             margin-right: 5px;
         }
     }
-    
+    &.contextWidth{
+        width:70%;
+        height:80%;
+    }
 
 }
 // 内容部分
@@ -1121,6 +1125,8 @@
     width: 100%;
     background-color: #FFF;
     padding: 20px 50px 20px 50px;
+    height: calc(~"100% - 54px");
+    overflow-x: hidden;
     &.w-content-padding {
         padding: 20px 32px 50px 32px;
     }

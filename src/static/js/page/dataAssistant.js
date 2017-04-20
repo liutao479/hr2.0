@@ -85,6 +85,8 @@ page.ctrl('dataAssistant', function($scope) {
 					_mout.body.updateTime=_mout.verifyRecord.updateTime;
 				if(_mout.itemNum)
 					_mout.body.itemNum=_mout.itemNum;
+				if(_mout.verifyingNum)
+					_mout.body.verifyingNum=_mout.verifyingNum;
 				/*网贷平台借贷数据统计end*/
 				/*模板绑定数据*/
 				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout.body, true);
@@ -134,7 +136,7 @@ page.ctrl('dataAssistant', function($scope) {
 		};
 		that.openWindow({
 			title:"———— 服务项目 ————",
-			width:"70%",
+			isContext:true,
 			content: dialogTml.wContent.userBtnGroup,	
 			commit: dialogTml.wCommit.cancelSure,			
 			data:_data
@@ -209,7 +211,7 @@ page.ctrl('dataAssistant', function($scope) {
 		};
 		that.openWindow({
 			title:"———— 服务项目 ————",
-			width:"70%",
+			isContext:true,
 			content: dialogTml.wContent.serviceItems,				
 			data:_data//0：未核查，1:未查询，缺少相关数据,2: 查询中,3：已核查
 		},function($dialog){
@@ -340,6 +342,38 @@ page.ctrl('dataAssistant', function($scope) {
 						openDialog(that,[]);
 				})
 			});			
+		});
+		$scope.$el.$listDiv.off("click",".no-img").on("click",".no-img",function() {
+			var _parent=$(this).parents('.no-img-group');
+			var _imgs=[],
+				_idx=$(this).parent(".no-img-list").index();
+			_parent.find('.no-img-list').each(function(){
+				var _src=$(this).find("img").attr('src');
+				if(_src)
+					_imgs.push({materialsPic:_src});
+			});
+			$.preview(_imgs, function(img, mark, cb) {
+				cb();	
+			}, {
+				markable: false,
+				idx: _idx
+			});
+		});
+		$scope.$el.$listDiv.off("click",".no-img").on("click",".no-img",function() {
+			var _parent=$(this).parents('.no-img-group');
+			var _imgs=[],
+				_idx=$(this).parent(".no-img-list").index();
+			_parent.find('.no-img-list').each(function(){
+				var _src=$(this).find("img").attr('src');
+				if(_src)
+					_imgs.push({materialsPic:_src});
+			});
+			$.preview(_imgs, function(img, mark, cb) {
+				cb();	
+			}, {
+				markable: false,
+				idx: _idx
+			});
 		});
  	};
  	
