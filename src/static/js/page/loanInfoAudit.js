@@ -855,7 +855,11 @@ page.ctrl('loanInfoAudit', function($scope) {
 	}
 	$scope.carPicker = function(picked) {
 		var pirce = picked['车型'].price;
-		$("#systemCarPrice").val(pirce);
+		if(pirce){
+			$("#systemCarPrice").val(pirce);
+		}else{
+			$("#systemCarPrice").val('0');
+		}
 		var carname = $("#carMode").find('.select-text').val();
 		$("#carName").val(carname);
 		
