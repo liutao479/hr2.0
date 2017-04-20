@@ -9,10 +9,10 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 		],
 		apiParams = {
 			orderNo: $params.orderNo,
-			userId: $params.userId,
+			userId: $params.userId,	
 			/*orderNo: 'nfdb2016102820480790',
 			userId: '334232',*/
-			sceneCode: $params.sceneCode
+			sceneCode: $params.sceneCode		
 		};
 	/**
 	* 设置面包屑
@@ -36,16 +36,7 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 			data: param,
 			success: $http.ok(function(res) {
 				var _mout=res.data.data;
-				/*var _mobil=_mout.body[1021];*/
 				var _platLend=_mout.body[1018];
-				/*在网列表的运营商数据处理*/
-				/*if(_mobil){
-					for(var i in _mobil){
-						var _thisOperator=operator.filter(it=>it.type==_mobil[i].OPERATOR);
-						if(_thisOperator&&_thisOperator.length==1)
-							_mout.body[1021][i].operatorName=_thisOperator[0].text;
-					};
-				};*/
 				/*网贷平台借贷数据统计start*/
 				var _platArr=[];
 				var repeatPlat=function(platJson,attr){
@@ -112,7 +103,6 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 			var _href=$(this).data('href');
 			var _param=$(this).data('param');
 			var _cparam={};
-			debugger
 			if(_param){
 				if(typeof _param=='string')
 					_cparam=JSON.parse(_param);
@@ -122,6 +112,22 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 			if(_href){
 				router.render(_href,_cparam);
 			};
+		});
+		$scope.$el.$listDiv.off("click",".no-img").on("click",".no-img",function() {
+			var _parent=$(this).parents('.no-img-group');
+			var _imgs=[],
+				_idx=$(this).parent(".no-img-list").index();
+			_parent.find('.no-img-list').each(function(){
+				var _src=$(this).find("img").attr('src');
+				if(_src)
+					_imgs.push({materialsPic:_src});
+			});
+			$.preview(_imgs, function(img, mark, cb) {
+				cb();	
+			}, {
+				markable: false,
+				idx: _idx
+			});
 		});
  	};
  	

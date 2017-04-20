@@ -290,10 +290,10 @@ page.ctrl('creditApproval', [], function($scope) {
 				marker: function (img, mark, cb) {
 					var params = {
 						id: img.id,
-						aduitResult: mark
+						auditResult: mark
 					}
 					if(mark == 0) {
-						params.aduitOpinion = '';
+						params.auditOpinion = '';
 					}
 					$.ajax({
 						type: 'post',
@@ -309,7 +309,7 @@ page.ctrl('creditApproval', [], function($scope) {
 					console.log(imgs)
 					$imgs.each(function(idx) {
 						$(this).find('.imgs-error').remove();
-						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].aduitResult]);
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
 					});
 				}
 			});
@@ -401,6 +401,7 @@ page.ctrl('creditApproval', [], function($scope) {
 			});
 		});
 	}
+
 
 	/**
 	* 设置底部按钮操作栏
@@ -548,6 +549,7 @@ page.ctrl('creditApproval', [], function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
+			if(!window.clickable) return;
 			process();
 		})
 	}

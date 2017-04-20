@@ -84,8 +84,8 @@
 
 
 	var dialogTml = '<div class="dialog">\
-                        {{ if(it.width){ }}\
-                            <div class="window" style=width:{{=it.width}}>\
+                        {{ if(it.isContext){ }}\
+                            <div class="window contextWidth">\
                         {{ }else{ }}\
                             <div class="window">\
                         {{ } }}\

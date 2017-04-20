@@ -259,6 +259,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		 * 征信查询
 		 */
 		$sub.on('creditQuery', function() {
+			if(!window.clickable) return;
 			saveData(function() {
 				process();
 			});
@@ -420,6 +421,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		 * 增加共同还款人
 		 */
 		$console.find('#btnNewLoanPartner').on('click', function() {
+			if(!window.clickable) return;
 			// 后台接口修改完成时使用
 			$.ajax({
 				type: 'post',
@@ -440,6 +442,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		 * 增加反担保人
 		 */
 		$console.find('#btnNewGuarantor').on('click', function() {
+			if(!window.clickable) return;
 			// 后台接口修改完成时使用
 			$.ajax({
 				type: 'post',
@@ -463,6 +466,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 */
 	var setupTabEvt = function() {
 		$console.find('#creditTabs .tabEvt').on('click', function() {
+			if(!window.clickable) return;
 			var $this = $(this);
 			if($this.hasClass('role-item-active')) return;
 			var _type = $this.data('type');
@@ -695,6 +699,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		console.log(self.$el)
 		if(self.options.code == 'sfzzm') {
 			self.$el.find('.imgs-item-upload').LoadingOverlay("show");
+			window.clickable = false;
 			$.ajax({
 				type: 'post',
 				url: $http.api('materials/ocr', true),
@@ -722,6 +727,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					}
 				}),
 				complete: function() {
+					window.clickable = true;
 					self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 				}
 			});

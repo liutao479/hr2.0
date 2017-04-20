@@ -5,6 +5,14 @@
 			<div class="panel-title">
 				<i class="iconfont">&#xe646;</i>
 				<span class="panel-title-name">数据总览</span>
+				<i class="iconfont radius-icon" id="radius-icon">&#xe67f;
+					<div class="hid-tip">
+						<p>今日服务调用次数：截止最新更新时间的今日所有服务调用次数。</p>
+						<p>历史服务调用次数：截止最新更新时间的历史所有服务调用次数。</p>
+						<p>总服务使用费：历史服务调用的费用情况。</p>
+						<p>可用余额：当前账户的剩余金额。</p>
+					</div>
+				</i>
 			</div>
 		</div>
 		<div class="detail-item-group">
@@ -49,7 +57,7 @@
 			</div>
 			<div class="float-right" id="serviceStatic"></div>
 		</div>
-		<div id="piechart" style="width:65%;height:320px;margin:40px auto;"></div>
+		<div id="piechart" style="width:70%;height:320px;margin:40px auto;"></div>
 		<div class="panel-content-title">
 			<div class="key-value-box">
 				<span class="value" id="searchTimeTitle">2017.03.21至2017.03.22明细</span>
@@ -131,11 +139,11 @@
 			<tr class="orders-item">
 				<td class="orders-item-data">{{=i+1}}</td>
 				<td class="orders-item-data">{{=item.typeName}}</td>
-				<td class="orders-item-data">{{=item.serviceName}}</td>
-				<td class="orders-item-data">{{=item.serviceCallNum}}</td>
-				<td class="orders-item-data">{{=item.serviceAmount}}</td>
-				<td class="orders-item-data">{{=item.verifyNum}}</td>
-				<td class="orders-item-data">{{=item.serviceAmount}}</td>
+				<td class="orders-item-data">{{=item.serviceName||'-'}}</td>
+				<td class="orders-item-data">{{=item.serviceCallNum||'0'}}</td>
+				<td class="orders-item-data">{{=item.serviceAmount||'0'}}</td>
+				<td class="orders-item-data">{{=item.verifyNum||'0'}}</td>
+				<td class="orders-item-data">{{=item.serviceAmount||'0'}}</td>
 				<td class="orders-item-data">
 					<span class="detailed view-fee" data-apikey="{{=item.apiKey}}" data-apiprimary="{{=item.apiPrimary}}">明细</span>
 				</td>
