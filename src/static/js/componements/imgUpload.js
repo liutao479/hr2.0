@@ -641,7 +641,6 @@
 		var self = this;
 		var items = self.runtime.items = parseInt((self.runtime.vw - 120) / (self.size.iw + self.size.im));
 		var boxWidth = items * self.size.iw + (items -1) * self.size.im;
-
 		var viewbox = '<div class="img-view-box" onselectstart="return false;" style="background: #000; position: fixed; z-index:99999999; width: '+self.runtime.vw+'px;height:'+self.runtime.vh+'px;border-raidus:3px;left:50%;top:50%;margin-left:-'+self.runtime.vw/2+'px;margin-top:-'+self.runtime.vh/2+'px;">\
 							<div style="width:'+boxWidth+'px; position:relative; margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;overflow:hidden;" id="__move__trigger"><img ondragstart="return false" style="position: absolute; left:50%;top:50%; display:block; cursor:move; margin: 0 auto;" id="___originImage___" src="'+self.imgs[0].materialsPic+'" /></div>\
 							<a class="prev big"></a><a class="next big"></a>\
