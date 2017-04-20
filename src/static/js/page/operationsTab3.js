@@ -4,9 +4,7 @@ page.ctrl('operationsTab3', ['vendor/echarts.min'], function($scope) {
 		$console = $params.refer ? $($params.refer) : render.$console,
 		tabNum=0,/*订单量0，贷款金额1*/
 		dimension=0,/*维度,默认0当前进度*/
-		apiParams = {
-			deptId: 62
-		},
+		apiParams = {},
 		srcItemList={
 			order:[
 				{index:0,src:"queryByProgress"},/*当前进度*/
@@ -33,6 +31,24 @@ page.ctrl('operationsTab3', ['vendor/echarts.min'], function($scope) {
 				{index:9,src:"queryStatisticsByRenewalMode"}/*续保方式*/
 			]
 		};
+
+	/**
+	 * 取得登录用户deptId
+	 */
+	var getDeptId = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('pmsDept/getDept', 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(xhr) {
+				apiParams.deptId = xhr.data.id;
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
 	/**
 	* 日历控件
 	*/
@@ -189,10 +205,12 @@ page.ctrl('operationsTab3', ['vendor/echarts.min'], function($scope) {
 		setupDatepicker();
 		setupDropDown();
 		evt();
-		var _defaultSrc=srcItemList.order[0].src;
-		searchEcharts({
-			deptId:apiParams.deptId
-		},_defaultSrc);/*默认查询订单量图表*/
+		getDeptId(function() {
+			var _defaultSrc=srcItemList.order[0].src;
+			searchEcharts({
+				deptId:apiParams.deptId
+			},_defaultSrc);/*默认查询订单量图表*/
+		})
 	});
 
 	//分公司ID

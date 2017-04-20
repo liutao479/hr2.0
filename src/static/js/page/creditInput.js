@@ -126,8 +126,27 @@ page.ctrl('creditInput', [], function($scope) {
 		$sub.on('taskSubmit', function() {
 			if(!window.clickable) return;
 			saveData(function() {
-				process();
+				// checkData(function() {
+					process();
+				// });
 			});
+		})
+	}
+
+	/**
+	 * 图片必传校验
+	 */
+	var checkData = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditApproval/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if( cb && typeof cb == 'function' ) {
+					cb();
+				}
+			})
 		})
 	}
 
