@@ -223,18 +223,6 @@ page.ctrl('orderDetails', function($scope) {
 						text: '确定',
 						action: function() {
 							var reason = $.trim(this.$content.find('#suggestion').val());
-							if(!reason) {
-								$.alert({
-									title: '提示',
-									content: tool.alert('请填写审批意见！'),
-									buttons: {
-										ok: {
-											text: '确定'
-										}
-									}
-								});
-								return false;
-							}
 							applySubmit(1, reason);
 						}
 					}
@@ -244,13 +232,63 @@ page.ctrl('orderDetails', function($scope) {
 
 		//终止订单审核（保留订单）
 		$console.find('#keepOrder').on('click', function() {
-			alert('后台没有接口！')
+			$.confirm({
+				title: '保留订单',
+				content: dialogTml.wContent.suggestion,
+				onContentReady: function() {
+					this.$content.find('#suggestion').attr('placeholder', '#建议保留此笔订单！#');
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							var reason = $.trim(this.$content.find('#suggestion').val());
+							teminateSubmit(2, reason);
+						}
+					}
+				}
+			});
 		})
 
 
-		//终止订单审核（保留订单）
+		//终止订单审核（终止订单）
 		$console.find('#terminateOrder').on('click', function() {
-			alert('后台没有接口！')
+			$.confirm({
+				title: '终止订单',
+				content: dialogTml.wContent.suggestion,
+				onContentReady: function() {
+					this.$content.find('#suggestion').attr('placeholder', '请在此填写终止原因！');
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							var reason = $.trim(this.$content.find('#suggestion').val());
+							if(!reason) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('终止原因不能为空！'),
+									buttons: {
+										ok: {
+											text: '确定'
+										}
+									}
+								});
+								return false;
+							}
+							teminateSubmit(1, reason);
+						}
+					}
+				}
+			});
 		})
 	}
 
@@ -293,19 +331,63 @@ page.ctrl('orderDetails', function($scope) {
 	 * @param  {[type]} approvalStatus // 0申请待审核 1同意申请 2拒绝申请
 	 */
 	function applySubmit(approvalStatus, reason) {
+		var params = {
+			orderNo: $params.orderNo,
+			approvalStatus: approvalStatus, // 申请待审核 1同意终止订单 2保留终止订单
+		};
+		if(!reason) {
+			params.reason = reason;
+		}
 		$.ajax({
 			type: "post",
 			url: $http.api('loanOrderApply/approval', 'cyj'),
-			data: {
-				orderNo: $params.orderNo,
-				approvalStatus: approvalStatus, // 申请待审核 1同意申请 2拒绝申请
-				approvalReason: reason  //审核意见
-			},
+			data: params,
 			dataType:"json",
 			success: $http.ok(function(result) {
 				console.log(result)
 				//toast('贷款信息已更新！')
-				router.render($params.path);
+				if(approvalStatus == 1) {
+					$.toast('贷款信息已更新！', function() {
+						router.render($params.path);
+					})
+				} else {
+					$.toast('已拒绝此次申请！', function() {
+						router.render($params.path);
+					})
+				}
+			})
+		});
+	}
+
+	/**
+	 * 终止订单审核底部提交ajax
+	 * @param  {[type]} approvalStatus // 1同意终止订单 2保留终止订单
+	 */
+	function teminateSubmit(approvalStatus, reason) {
+		var params = {
+			orderNo: $params.orderNo,
+			approvalStatus: approvalStatus, // 申请待审核 1同意终止订单 2保留终止订单
+		};
+		if(!reason) {
+			params.reason = reason;
+		}
+		$.ajax({
+			type: "post",
+			url: $http.api('loanOrderApply/passOrCancelTeminate', 'cyj'),
+			data: params,
+			dataType:"json",
+			success: $http.ok(function(result) {
+				console.log(result)
+				//toast('贷款信息已更新！')
+				if(approvalStatus == 1) {
+					$.toast('该订单已被终止！', function() {
+						router.render($params.path);
+					})
+				} else {
+					$.toast('处理成功！', function() {
+						router.render($params.path);
+					})
+				}
 			})
 		});
 	}

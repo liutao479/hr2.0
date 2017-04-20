@@ -237,7 +237,7 @@ page.ctrl('organizationManage', [], function($scope) {
 		$console.find('#organizationManageTable .toNewBank').on('click', function() {
 			var that = $(this);
 			router.render(that.data('href'), {
-				bankId: parseInt(that.data('bankId')),
+				bankCode: that.data('bankCode'),
 				demandBankId: parseInt(that.data('demandBankId')),
 				path: 'organizationManage'
 			});

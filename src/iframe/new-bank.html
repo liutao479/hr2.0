@@ -35,7 +35,7 @@
 						<div class="search-item">
 							<span class="select-name">银行名称：</span>
 							{{ if(!it.bankName) { }}
-							<div class="select select-bank" data-dropdown="page.$scope['newBank'].bankPicker" data-trigger="page.$scope['newBank'].dropdownTrigger.bankName" data-selected="{{=it.bankName || ''}}"></div>
+							<div class="select select-bank" data-tabs="银行等级|银行品牌|省|市|区|银行名称" data-dropdown="page.$scope['newBank'].bankPicker" data-trigger="page.$scope['newBank'].dropdownTrigger.bank" data-selected="{{=it.bankName || ''}}"></div>
 							{{ } else { }}
 							<span class="select-name">{{=it.bankName}}</span>
 							{{ } }}

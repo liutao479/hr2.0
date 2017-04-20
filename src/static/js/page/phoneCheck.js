@@ -161,9 +161,7 @@ page.ctrl('phoneCheck', function($scope) {
 		 * 提交
 		 */
 		$sub.on('approvalPass', function() {
-			checkData(function() {
-				process();
-			})
+			process();
 		})
 
 	}
