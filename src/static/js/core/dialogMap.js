@@ -351,8 +351,8 @@
 							</div>\
 						</div>\
 					</div>',
-		selfAdvance: '<div class="w-content">\
-						<dl class="w-dropdown">\
+		selfAdvance: '<div class="w-content clearfix">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">打款单位名称：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
@@ -360,7 +360,7 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">账号：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
@@ -368,7 +368,7 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">账户：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
@@ -376,7 +376,7 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">开户行：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
@@ -384,7 +384,7 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">垫资时间：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-date">\
@@ -392,7 +392,7 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">打款金额：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
@@ -400,15 +400,15 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">垫资开户银行：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="advanceAccountName" data-key="advanceAccountName" data-type="accountName" value="{{=it.advanceAccountName || \"\"}}">\
+									<input type="text required" id="advanceBank" data-key="advanceBank" data-type="accountName" value="{{=it.advanceBank || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">垫资账户：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
@@ -416,10 +416,16 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">垫资凭证：</dt>\
 							<dd class="dd">\
-								<div class="imgs-item-group pointDisabled openCardPic uploadEvt" data-deletecb="page.$scope[\"lendAudit\"].deletecb" data-uploadcb="page.$scope[\"lendAudit\"].uploadcb" data-upl-url="" data-id="" data-orderno="" data-code="" data-name="垫资回单" data-scene="" data-user="" data-img="" data-err="0" data-editable="1"></div>\
+								<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope[\'lendAudit\'].deletecb" data-uploadcb="page.$scope[\'lendAudit\'].uploadcb" data-card="true" data-id="" data-orderno="123" data-code="cardUpd" data-name="电子回单" data-scene="homeMaterialsUpload" data-img="{{= it.advanceCertificate || \'\'}}" data-err="0" data-editable="1"></div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">审核意见：</dt>\
+							<dd class="dd">\
+								<textarea id="suggestion" class="remarks-box-mini" placeholder="在此处填写处理意见"></textarea>\
 							</dd>\
 						</dl>\
 					</div>'
