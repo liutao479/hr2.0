@@ -38,6 +38,7 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	 */
 	var submitOrders = function(params, cb) {
 		console.log(params);
+		debugger
 		$.ajax({
 			url: $http.api('loanPledge/sumbit', 'cyj'),
 			type: 'post',

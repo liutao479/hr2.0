@@ -544,15 +544,16 @@ page.ctrl('creditApproval', [], function($scope) {
 							} 
 							$.ajax({
 								type: 'post',
-								url: $http.api('loanOrder/terminate', 'zyj'),
+								url: $http.api('loanOrder/refused', 'zyj'),
 								data: {
 									taskId: $params.taskId,
 									reason: _reason
 								},
 								dataType: 'json',
 								success: $http.ok(function(result) {
-									router.render('loanProcess');
-									// toast.hide();
+									$.toast('该订单已被终止！', function() {
+										router.render('loanProcess');	
+									});
 								})
 							})
 			            }

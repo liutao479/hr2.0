@@ -3,7 +3,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			queryType: 2,  //贷款资料下载
+			// queryType: 2,  //贷款资料下载
 			pageNum: 1
 		};
 	$scope.userIds = [];//资料待下载用户userId
@@ -108,15 +108,16 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 								return false;
 							}
 							$.ajax({
-								url: $http.api('contractPrint/queryContractExeclList', 'lyb'),
+								url: $http.api('contractPrint/verifyTemplateIsExist', 'lyb'),
 								type: 'post',
 								data: {
 									fileId: $scope.fileId
 								},
+								async: false,
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result)
-									// window.open($http.api('contractPrint/printContractFile?fileId=' + $scope.fileId + '&orderNo=' + orderNo, true), '_self');
+									window.open($http.api('contractPrint/printContractFile?fileId=' + $scope.fileId + '&orderNo=' + orderNo, true), '_self');
 								})
 							});
 						}
@@ -130,16 +131,25 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 			var that = this,
 				orderNos = $(that).data('orderNo'),
 				userIds = $(that).data('userId');
-			downLoad(userIds, orderNos);
+			downLoad(userIds, orderNos, 2);
 		});
 	}
 
-	function downLoad(userIds, orderNos) {
-		debugger
+	/**
+	 * [downLoad description]
+	 * @param  {[type]} userIds  [description]
+	 * @param  {[type]} orderNos [description]
+	 * @param  {[type]} type     1表示批量下载，2表示单个下载
+	 * @return {[type]}          [description]
+	 */
+	function downLoad(userIds, orderNos, type) {
 		$.ajax({
 			url: $http.api('materialsDownLoad/getArchiveDownload', 'lyb'),
 			type: 'post',
 			dataType: 'json',
+			data: {
+				type: type
+			},
 			success: $http.ok(function(result) {
 				console.log(result);
 				$.confirm({
@@ -264,7 +274,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 			});
 			$scope.userIds = $scope.userIds.join(',');
 			$scope.orderNos = $scope.orderNos.join(',');
-			downLoad($scope.userIds, $scope.orderNos);
+			downLoad($scope.userIds, $scope.orderNos, 1);
 			// $.confirm({
 			// 	title: '批量下载',
 			// 	content: dialogTml.wContent.allCreditDownload,
@@ -325,18 +335,16 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 
 	$scope.paging = function(_pageNum, _size, $el, cb) {
 		apiParams.pageNum = _pageNum;
-		$params.pageNum = _pageNum;
-		// router.updateQuery($scope.$path, $params);
 		loadArchiveDownloadList(apiParams);
 		cb();
 	}
 
 	//下拉点击回调
 	$scope.demandBankPicker = function(picked) {
-
+		console.log(picked);
 	}
 	$scope.templatePicker = function(picked) {
-		console.log(picked)
+		console.log(picked);
 		$scope.fileId = picked.id;
 	}
 
@@ -353,7 +361,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'id',
 						name: 'bankName'
 					};
 					cb(sourceData);

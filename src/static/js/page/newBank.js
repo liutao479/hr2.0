@@ -134,7 +134,7 @@ page.ctrl('newBank', [], function($scope) {
 					if($(this).data('type') == 'accountNumber') {
 						$(this).parent().append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
 					} else {
-						$(this).parent().append('<span class="input-err">该项不符合输入规则！（10位汉字）</span>')
+						$(this).parent().append('<span class="input-err">该项不符合输入规则！（1~25位汉字）</span>')
 					}
 				} else {
 					params[$(this).data('type')] = value;
@@ -506,20 +506,20 @@ page.ctrl('newBank', [], function($scope) {
 		},
 		bankName: function(cb) {
 			var params = {};
-			if($scope.level) {
-				params.level = $scope.level
+			if($scope.level || $scope.level == 0) {
+				params.level = $scope.level;
 			}
 			if($scope.brandId) {
-				params.brandId = $scope.brandId
+				params.brandId = $scope.brandId;
 			}
 			if($scope.province) {
-				params.provinceId = $scope.province
+				params.provinceId = $scope.province;
 			}
 			if($scope.cityId) {
-				params.cityId = $scope.cityId
+				params.cityId = $scope.cityId;
 			}
 			if($scope.areaId) {
-				params.areaId = $scope.areaId
+				params.areaId = $scope.areaId;
 			}
 			$.ajax({
 				type: 'post',
@@ -617,11 +617,11 @@ page.ctrl('newBank', [], function($scope) {
 			$scope.bankCode = picked['银行名称'].id;
 			$scope.bankName = picked['银行名称'].name;
 		}
-		$scope.level = picked['银行等级'] || picked['银行等级'] == 0 ? picked['银行等级'].id : undefined;
-		$scope.brandId = picked['银行品牌'] || picked['银行品牌'] == 0 ? picked['银行品牌'].brandId : undefined;
-		$scope.province = picked['省'] || picked['省'] == 0 ? picked['省'].provinceId : undefined;
-		$scope.cityId = picked['市'] || picked['市'] == 0 ? picked['市'].cityId : undefined;
-		$scope.areaId = picked['区'] || picked['区'] == 0 ? picked['区'].areaId : undefined;
+		$scope.level = picked['银行等级'] ? picked['银行等级'].id : undefined;
+		$scope.brandId = picked['银行品牌'] ? picked['银行品牌'].id : undefined;
+		$scope.province = picked['省'] ? picked['省'].id : undefined;
+		$scope.cityId = picked['市'] ? picked['市'].id : undefined;
+		$scope.areaId = picked['区'] ? picked['区'].id : undefined;
 	}
 
 	$scope.isSecondPicker = function(picked) {

@@ -12,6 +12,7 @@ page.ctrl('operationsTab4', ['vendor/echarts.min'], function($scope) {
 	 * 取得登录用户deptId
 	 */
 	var getDeptId = function(cb) {
+		debugger
 		$.ajax({
 			type: 'post',
 			url: $http.api('pmsDept/getDept', 'zyj'),
@@ -31,6 +32,8 @@ page.ctrl('operationsTab4', ['vendor/echarts.min'], function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadLoanList = function(params, cb) {
+		debugger
+		//getDeptId();
 		console.log(params);
 		$.ajax({
 			type:'post',
@@ -161,6 +164,7 @@ page.ctrl('operationsTab4', ['vendor/echarts.min'], function($scope) {
 				dataType:'json',
 				url: $http.api('statisticsPic/queryLoanScheduling.html', 'operations'),
 				data: savedQuery,
+				headers:'',
 				success: $http.ok(function(res) {
 					loadLoanListSearch(res);
 				})
@@ -196,13 +200,16 @@ page.ctrl('operationsTab4', ['vendor/echarts.min'], function($scope) {
 		}
 		// 日期控件
 		$console.find('.dateBtn').datepicker();
-		getDeptId(function() {
-			loadLoanList(apiParams,function(){
-				evt();
+		debugger
+		//loadLoanList(apiParams,function(){
+			//evt();
+			getDeptId(function() {
+				loadLoanList(apiParams,function(){
+					evt();
+				});
 			});
-		});
+		//});
 	});
-
 	/**
 	 * 分页
 	 */
