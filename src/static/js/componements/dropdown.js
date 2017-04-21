@@ -177,6 +177,13 @@
 				self.close(true);
 				self.onDropdown(self.picked);
 			} else {
+				if(self.opts.tabs.length == 6) {
+					self.picked[self.opts.tabs[self.actionIdx]] = {
+						id: id,
+						name: name
+					}
+					self.onDropdown(self.picked);
+				}
 				if(!price){
 					self.picked[self.opts.tabs[self.actionIdx]] = {
 						id: id,

@@ -28,11 +28,11 @@
 				<!--全选删除框-->
 				<div class="all-select-panel all-select-panel-nobottomborder clearfix">
 					<div class="all-check-box">
-						<div class="checkbox checkbox-normal"></div>
+						<div class="checkbox checkbox-normal" data-checked="false" id="allCheck"></div>
 						<span>全选</span>
 					</div>
 					<div class="all-check-box">
-						<div class="button button-mini button-deep">批量打印</div>
+						<div class="button button-mini button-deep" id="allPrint">批量打印</div>
 					</div>
 				</div>
 				<!--全选删除框  end-->
@@ -74,12 +74,12 @@
 							<td class="orders-item-data order-item-first">
 								<div class="checkbox checkbox-normal"></div>
 							</td>
-							<td class="orders-item-data">{{=row.orderNo}}</td>
-							<td class="orders-item-data">{{=row.userName}}（{{=row.idCard}}）</td>
-							<td class="orders-item-data">{{=tool.formatDate(row.utilityTime)}}</td>
-							<td class="orders-item-data">{{=row.deptName}}</td>
-							<td class="orders-item-data">{{=row.stageMoney}}</td>
-							<td class="orders-item-data"><div class="button button-mini button-gray">打印</div></td>
+							<td class="orders-item-data">{{=row.orderNo || ''}}</td>
+							<td class="orders-item-data">{{=row.userName || ''}}（{{=row.idCard || ''}}）</td>
+							<td class="orders-item-data">{{=row.tilityTimeStr || ''}}</td>
+							<td class="orders-item-data">{{=row.deptName || ''}}</td>
+							<td class="orders-item-data">{{=row.stageMoney || ''}}</td>
+							<td class="orders-item-data"><div class="button button-mini button-gray businessPrint">打印</div></td>
 						</tr>
 					{{ } }}
 				{{ } else { }}

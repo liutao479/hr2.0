@@ -298,9 +298,7 @@ page.ctrl('loanApproval', function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
-			checkData(function() {
-				process();
-			})
+			process();
 		})
 
 		/**

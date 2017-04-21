@@ -307,47 +307,12 @@
 						<div class="w-download-area">\
 							<div class="w-download-title">选择下载内容</div>\
 							<div class="w-download clearfix">\
-								<div class="w-select float-left mr24 clearfix">\
-									<div class="checkbox checkbox-normal" data-checked="false" >\
+								{{ for(var i = 0, len = it.length; i < len; i++) { }}\
+									<div class="w-select float-left mr24 clearfix">\
+										<div class="checkbox checkbox-normal" data-checked="false" data-id="{{=it[i].funcId}}" ></div>\
+										<span class="w-select-item">{{=it[i].funcName}}</span>\
 									</div>\
-									<span class="w-select-item">征信材料</span>\
-								</div>\
-								<div class="w-select float-left mr24 clearfix">\
-									<div class="checkbox checkbox-normal" data-checked="false"></div>\
-									<span class="w-select-item">贷款信息表</span>\
-								</div>\
-								<div class="w-select float-left mr24 clearfix">\
-									<div class="checkbox checkbox-normal" data-checked="false"></div>\
-									<span class="w-select-item">二手车评估信息</span>\
-								</div>\
-								<div class="w-select float-left mr24 clearfix">\
-									<div class="checkbox checkbox-normal" data-checked="false"></div>\
-									<span class="w-select-item">贷款材料</span>\
-								</div>\
-								<div class="w-select float-left mr24 clearfix">\
-									<div class="checkbox checkbox-normal" data-checked="false"></div>\
-									<span class="w-select-item">签约材料</span>\
-								</div>\
-								<div class="w-select float-left mr24 clearfix">\
-									<div class="checkbox checkbox-normal" data-checked="false"></div>\
-									<span class="w-select-item">提车材料</span>\
-								</div>\
-								<div class="w-select float-left mr24 clearfix">\
-									<div class="checkbox checkbox-normal" data-checked="false"></div>\
-									<span class="w-select-item">上门材料</span>\
-								</div>\
-								<div class="w-select float-left mr24 clearfix">\
-									<div class="checkbox checkbox-normal" data-checked="false"></div>\
-									<span class="w-select-item">登记证材料</span>\
-								</div>\
-								<div class="w-select float-left mr24 clearfix">\
-									<div class="checkbox checkbox-normal" data-checked="false"></div>\
-									<span class="w-select-item">合同套打</span>\
-								</div>\
-								<div class="w-select float-left mr24 clearfix">\
-									<div class="checkbox checkbox-normal" data-checked="false"></div>\
-									<span class="w-select-item">核心系统信息表</span>\
-								</div>\
+								{{ } }}\
 							</div>\
 						</div>\
 					</div>',

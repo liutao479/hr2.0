@@ -133,6 +133,23 @@ page.ctrl('creditApproval', [], function($scope) {
 	}
 
 	/**
+	 * 图片必传校验
+	 */
+	var checkData = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditApproval/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if( cb && typeof cb == 'function' ) {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
 	 * 渲染tab栏
 	 * @param  {object} result 请求获得的数据
 	 */
@@ -283,7 +300,7 @@ page.ctrl('creditApproval', [], function($scope) {
 			var $imgs = $(this).find('.uploadEvt.imgs');
 			$imgs.imgUpload({
 				viewable: true,
-				markable: true,
+				markable: false,
 				getimg: function(cb) {
 					cb($scope.result.data.creditUsers[_type][index].loanCreditReportList);
 				},
@@ -309,7 +326,7 @@ page.ctrl('creditApproval', [], function($scope) {
 					console.log(imgs)
 					$imgs.each(function(idx) {
 						$(this).find('.imgs-error').remove();
-						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].aduitResult]);
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
 					});
 				}
 			});
@@ -401,6 +418,7 @@ page.ctrl('creditApproval', [], function($scope) {
 			});
 		});
 	}
+
 
 	/**
 	* 设置底部按钮操作栏
@@ -549,7 +567,9 @@ page.ctrl('creditApproval', [], function($scope) {
 		 */
 		$sub.on('approvalPass', function() {
 			if(!window.clickable) return;
-			process();
+			// checkData(function() {
+				process();
+			// });
 		})
 	}
 

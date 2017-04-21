@@ -2,9 +2,25 @@
 page.ctrl('operationsTab2', ['vendor/echarts.min'], function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console,
-		apiParams = {
-			deptId:62
-		};
+		apiParams = {};
+
+	/**
+	 * 取得登录用户deptId
+	 */
+	var getDeptId = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('pmsDept/getDept', 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(xhr) {
+				apiParams.deptId = xhr.data.id;
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
 	/**
 	 * 首次加载页面绑定立即处理事件
 	 */
@@ -87,7 +103,7 @@ page.ctrl('operationsTab2', ['vendor/echarts.min'], function($scope) {
 
 	// 查询列表数据
 	var searchlist=function(apiParams,cb){
-//		debugger
+		// debugger
 		$.ajax({
 			type: 'post',
 			url: $http.api('statisticsPic/queryStatisticsByDayTime.html', 'operations'),
@@ -127,9 +143,12 @@ page.ctrl('operationsTab2', ['vendor/echarts.min'], function($scope) {
 		}
 		setupDatepicker();
 		setupDropDown();
-		searchlist(apiParams,function(){
-			evt();
-		});
+		getDeptId(function() {
+			searchlist(apiParams,function(){
+				evt();
+			});
+		})
+		
 		// loadLoanList(apiParams);
 	});
 

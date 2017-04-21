@@ -114,7 +114,7 @@ page.ctrl('expireProcessInputList', [], function($scope) {
 			$console.find('.select').undropdown();
 			internel.loadList(true);
 		})
-		$console.on('click', '.dEvt', function() {
+		$console.find('#expireProcessInputListTable').on('click', '.dEvt', function() {
 			var $that = $(this);
 			$.ajax({
 				url: $http.api('loanOverdueOpinion/getOpinionNewest', true),
@@ -133,7 +133,7 @@ page.ctrl('expireProcessInputList', [], function($scope) {
 				})
 			})
 		})
-		$console.on('click', '.vEvt', function() {
+		$console.find('#expireProcessInputListTable').on('click', '.vEvt', function() {
 			var $that = $(this);
 			router.render('expireProcess/expireProcessDetail', {
 				orderNo: $that.data('order'),
@@ -164,7 +164,7 @@ page.ctrl('expireProcessInputList', [], function($scope) {
 	*/
 	$console.load(router.template('iframe/expire-process-input-list'), function() {
 
-		$scope.def.listTmpl = render.$console.find('#expireProcessInputListTmpl').html();
+		$scope.def.listTmpl = $console.find('#expireProcessInputListTmpl').html();
 		$scope.$el = {
 			$tbl: $console.find('#expireProcessInputListTable'),
 			$paging: $console.find('#pageToolbar')
