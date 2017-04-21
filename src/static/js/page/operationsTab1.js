@@ -158,10 +158,10 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 					totalServiceAmt:0,
 					ableBalance:0
 				};
+				if(res.data.totalVerifyOrderNum)
+					totalSummary.historyCalls=Number(res.data.totalVerifyOrderNum);
 				for(var i in $scope.result){
 					var _it=$scope.result[i];
-					if(_it.totalVerifyOrderNum)
-						totalSummary.historyCalls+=Number(_it.totalVerifyOrderNum);
 					if(_it.serviceCallNum)
 						totalSummary.totalServiceAmt+=Number(_it.serviceCallNum);
 					if(_it.serviceAmount)
@@ -235,7 +235,7 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 		$console.find('.dateBtn').datepicker();
 		$scope.$el.$startTime.val(startDate);
 		$scope.$el.$endTime.val(endDate);
-		//searchTotal();/*查询数据总览*/
+		searchTotal();/*查询数据总览*/
 		searchlist(delNull(apiParams), function() {
 			evt();	
 		});/*查询服务使用情况统计*/
