@@ -156,18 +156,21 @@ page.ctrl('materialInspection', function($scope) {
 			content: dialogTml.wContent.serviceItems,				
 			data:_data//0：未核查，1:未查询，缺少相关数据,2: 查询中,3：已核查
 		},function($dialog){
+			var _title="提示";
 			$dialog.find(".nextDialog").confirm({
-				title:"提示",
-				content:"<p class='blank'>确定要核查该项目吗？</p>",
+				title:_title,
+				content:"<p class='blank'>请确认是否发起本次核查？</p>",
+				onOpenBefore:function(a,b,c){
+					_title=_data[this.$target.data('index')].funcName;
+					this.setTitle(_title);
+				},
 			    buttons: {
 			        close: {
 			        	text:"取消",
-						//btnClass: 'button-empty w-close',
 			        	action:function(){}
 			        },
 			        ok: {
 			        	text:"确定",
-			        	//btnClass:'button-mini w-sure',
 			        	action:function(){
 							var _key=_data[this.$target.data('index')].key;
 							$.ajax({

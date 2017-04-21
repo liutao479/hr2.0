@@ -7,8 +7,8 @@
 				<span class="panel-title-name">数据总览</span>
 				<i class="iconfont radius-icon" id="radius-icon">&#xe67f;
 					<div class="hid-tip">
-						<p>今日服务调用次数：截止最新更新时间的今日所有服务调用次数。</p>
-						<p>历史服务调用次数：截止最新更新时间的历史所有服务调用次数。</p>
+						<p>今日服务调用次数：截止当前时间的今日所有服务调用次数。</p>
+						<p>历史服务调用次数：截止当前时间的历史所有服务调用次数。</p>
 						<p>总服务使用费：历史服务调用的费用情况。</p>
 						<p>可用余额：当前账户的剩余金额。</p>
 					</div>
@@ -66,14 +66,30 @@
 		<div class="panel-content panel-content-layout">
 			<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">
 				<thead>
-					<tr class="orders-bar-title">
+					<tr class="orders-bar-title" id="sort-tr">
 						<td class="orders-item-data">序号</td>
 						<td class="orders-item-data">服务类别</td>
 						<td class="orders-item-data">服务名称</td>
-						<td class="orders-item-data">服务调用次数/次</td>
-						<td class="orders-item-data">服务使用费/元</td>
-						<td class="orders-item-data">历史核查次数/次</td>
-						<td class="orders-item-data">总服务使用费/元</td>
+						<td class="orders-item-data">
+							<a href="javascript:;" class="time-sort time-sort-special time-sort-down" data-type="srvNum">
+								服务调用次数/次
+							</a>
+						</td>
+						<td class="orders-item-data">
+							<a href="javascript:;" class="time-sort time-sort-special time-sort-down" data-type="srvMoney">
+								服务使用费/元
+							</a>
+						</td>
+						<td class="orders-item-data">
+							<a href="javascript:;" class="time-sort time-sort-special time-sort-down" data-type="hisNum">
+								历史核查次数/次
+							</a>
+						</td>
+						<td class="orders-item-data">
+							<a href="javascript:;" class="time-sort time-sort-special time-sort-down" data-type="totalMoney">
+								总服务使用费/元
+							</a>
+						</td>
 						<td class="orders-item-data">操作</td>
 					</tr>
 				</thead>
@@ -141,7 +157,7 @@
 				<td class="orders-item-data">{{=item.typeName}}</td>
 				<td class="orders-item-data">{{=item.serviceName||'-'}}</td>
 				<td class="orders-item-data">{{=item.serviceCallNum||'0'}}</td>
-				<td class="orders-item-data">{{=item.serviceAmount||'0'}}</td>
+				<td class="orders-item-data">{{=item.serviceFee||'0'}}</td>
 				<td class="orders-item-data">{{=item.verifyNum||'0'}}</td>
 				<td class="orders-item-data">{{=item.serviceAmount||'0'}}</td>
 				<td class="orders-item-data">
