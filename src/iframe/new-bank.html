@@ -35,7 +35,7 @@
 						<div class="search-item">
 							<span class="select-name">银行名称：</span>
 							{{ if(!it.bankName) { }}
-							<div class="select select-bank" data-dropdown="page.$scope['newBank'].bankPicker" data-trigger="page.$scope['newBank'].dropdownTrigger.bankName" data-selected="{{=it.bankName || ''}}"></div>
+							<div class="select select-bank" data-tabs="银行等级|银行品牌|省|市|区|银行名称" data-dropdown="page.$scope['newBank'].bankPicker" data-trigger="page.$scope['newBank'].dropdownTrigger.bank" data-selected="{{=it.bankName || ''}}"></div>
 							{{ } else { }}
 							<span class="select-name">{{=it.bankName}}</span>
 							{{ } }}
@@ -52,7 +52,7 @@
 					<div class="account">
 						<div class="account-left clearfix">
 							<div class="search-item">
-								<span class="select-name">开户账户：</span>
+								<span class="select-name">开户账号：</span>
 								<span class="input-text input-text-mini accountNumber">
 									<input type="text" value="" data-type="accountNumber" placeholder="16或19位银行卡号" />
 								</span>
@@ -75,7 +75,7 @@
 					<div class="account">
 						<div class="account-left clearfix">
 							<div class="search-item{{=(row.status == 0 ? '' : ' search-item-disabled')}}">
-								<span class="select-name">开户账户：</span>
+								<span class="select-name">开户账号：</span>
 								<span class="input-text input-text-mini accountNumber">
 									<input type="text" value="{{=row.accountNumber}}" readonly="readonly" />
 								</span>

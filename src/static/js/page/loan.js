@@ -40,6 +40,15 @@ page.ctrl('loan', function($scope) {
 			})
 		})
 	}
+
+	$.ajax({
+		type: 'post',
+		dataType:"json",
+		url: $http.api('task/todo', true),
+		success: $http.ok(function(result) {
+			console.log(result);
+		})
+	})
 	/**
 	* 构造分页
 	*/

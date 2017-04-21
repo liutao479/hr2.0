@@ -214,9 +214,7 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 		 * 提交
 		 */
 		$sub.on('approvalPass', function() {
-			checkData(function() {
-				process();
-			})
+			process();
 		})
 	}
 

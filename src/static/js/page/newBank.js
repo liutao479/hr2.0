@@ -7,7 +7,7 @@ page.ctrl('newBank', [], function($scope) {
 		};
 	$scope.result = {};
 	$scope.result.data = {};
-	$scope.bankId = $params.bankId || '';
+	$scope.bankCode = $params.bankCode || '';
 	$scope.demandBankId = $params.demandBankId || '';
 
 	/**
@@ -18,7 +18,7 @@ page.ctrl('newBank', [], function($scope) {
 			url: $http.api('demandBank/detail', 'cyj'),
 			type: 'post',
 			data: {
-				bankId: $scope.bankId
+				bankCode: $scope.bankCode
 			},
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -64,7 +64,7 @@ page.ctrl('newBank', [], function($scope) {
 		var $location = $console.find('#location');
 		$location.data({
 			backspace: $scope.$params.path,
-			current: $params.bankId ? '编辑合作银行' : '新建合作银行'
+			current: $params.bankCode ? '编辑合作银行' : '新建合作银行'
 		});
 		$location.location();
 	}
@@ -77,7 +77,7 @@ page.ctrl('newBank', [], function($scope) {
 		$scope.$el.$bankDataPanel.find('.select').dropdown();
 
 		$console.find('#bankDataSave').on('click', function() {
-			if(!$scope.bankId) {
+			if(!$scope.bankCode) {
 				$.alert({
 					title: '提示',
 					content: tool.alert('请选择银行！'),
@@ -90,7 +90,8 @@ page.ctrl('newBank', [], function($scope) {
 				return false;
 			}
 			var _params = {
-				bankCode: $scope.bankId
+				bankCode: $scope.bankCode,
+				bankName: $scope.bankName
 			};
 			$.ajax({
 				url: $http.api('demandBank/save', 'cyj'),
@@ -99,7 +100,7 @@ page.ctrl('newBank', [], function($scope) {
 				dataType: 'json',
 				success: $http.ok(function(result) {
 					console.log(result);
-					$scope.demandBankId = result.data;
+					$scope.demandBankId = result.data.id;
 					loadNewBank(function() {
 						loadBankData();
 						loadBankAccount();
@@ -389,7 +390,7 @@ page.ctrl('newBank', [], function($scope) {
 			$bankRatePanel: $console.find('#bankRatePanel')
 		}
 		setupLocation();
-		if($scope.bankId) {
+		if($scope.bankCode) {
 			loadNewBank(function() {
 				loadBankData();
 				loadBankAccount();
@@ -401,27 +402,174 @@ page.ctrl('newBank', [], function($scope) {
 		
 	});
 
-	/**
-	 * 下拉框请求数据回调
-	 */
-	$scope.dropdownTrigger = {
-		bankName: function(t, p, cb) {
+
+	var bank = {
+		level: function(cb) {
+			var data = [
+				{
+					id: 0,
+					name: '总行'
+				},
+				{
+					id: 1,
+					name: '省行'
+				},
+				{
+					id: 2,
+					name: '一级分行'
+				},
+				{
+					id: 3,
+					name: '二级分行'
+				},
+				{
+					id: 4,
+					name: '支行'
+				},
+				{
+					id: 5,
+					name: '网点'
+				}
+			];
+			var sourceData = {
+				items: data,
+				id: 'id',
+				name: 'name'
+			};
+			cb(sourceData);
+		},
+		brand: function(cb) {
 			$.ajax({
 				type: 'post',
-				url: $http.api('pmsBank/searchBank', 'cyj'),
-				data: {
-					// keyWord: undefined
-				},
-				dataType: 'json',
+				url: $http.api('bankBrand/select', 'jbs'),
+				dataType:'json',
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
-						id: 'value',
+						id: 'id',
 						name: 'name'
 					};
 					cb(sourceData);
 				})
 			})
+		},
+		province: function(cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('area/get', 'jbs'),
+				dataType:'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		city: function(areaId, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('area/get', 'jbs'),
+				data: {
+					parentId: areaId
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					}
+					cb(sourceData);
+				})
+			})
+		},
+		area: function(areaId, cb) {
+			$.ajax({
+				type: 'post',
+				url: $http.api('area/get', 'jbs'),
+				data: {
+					parentId: areaId
+				},
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'areaId',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		},
+		bankName: function(cb) {
+			var params = {};
+			if($scope.level) {
+				params.level = $scope.level
+			}
+			if($scope.brandId) {
+				params.brandId = $scope.brandId
+			}
+			if($scope.province) {
+				params.provinceId = $scope.province
+			}
+			if($scope.cityId) {
+				params.cityId = $scope.cityId
+			}
+			if($scope.areaId) {
+				params.areaId = $scope.areaId
+			}
+			$.ajax({
+				type: 'post',
+				url: $http.api('bank/select', 'jbs'),
+				data: params,
+				dataType: 'json',
+				success: $http.ok(function(xhr) {
+					var sourceData = {
+						items: xhr.data,
+						id: 'id',
+						name: 'name'
+					};
+					cb(sourceData);
+				})
+			})
+		}
+
+	}
+
+	/**
+	 * 下拉框请求数据回调
+	 */
+	$scope.dropdownTrigger = {
+		bank: function(tab, parentId, cb) {
+			if(!cb && typeof cb != 'function') {
+				cb = $.noop;
+			}
+			if(!tab) return cb();
+			switch (tab) {
+				case '银行等级':
+					bank.level(cb);
+					break;
+				case "银行品牌":
+					bank.brand(cb);
+					break;
+				case "省":
+					bank.province(cb);
+					break;
+				case '市':
+					bank.city(parentId, cb);
+					break;
+				case "区":
+					bank.area(parentId, cb);
+					break;
+				case "银行名称":
+					bank.bankName(cb);
+					break;
+				default:
+					break;
+			}
 		},
 		carType: function(t, p, cb) {
 			var data = [
@@ -463,8 +611,17 @@ page.ctrl('newBank', [], function($scope) {
 
 	$scope.bankPicker = function(picked) {
 		console.log(picked);
-		$scope.bankId = picked.id;
-		$scope.bankName = picked.name;		
+		console.log(this)
+		if(picked['银行名称']) {
+			this.$el.find('input').val(picked['银行名称'].name);
+			$scope.bankCode = picked['银行名称'].id;
+			$scope.bankName = picked['银行名称'].name;
+		}
+		$scope.level = picked['银行等级'] || picked['银行等级'] == 0 ? picked['银行等级'].id : undefined;
+		$scope.brandId = picked['银行品牌'] || picked['银行品牌'] == 0 ? picked['银行品牌'].brandId : undefined;
+		$scope.province = picked['省'] || picked['省'] == 0 ? picked['省'].provinceId : undefined;
+		$scope.cityId = picked['市'] || picked['市'] == 0 ? picked['市'].cityId : undefined;
+		$scope.areaId = picked['区'] || picked['区'] == 0 ? picked['区'].areaId : undefined;
 	}
 
 	$scope.isSecondPicker = function(picked) {

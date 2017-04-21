@@ -45,7 +45,7 @@
 							<tr class="orders-bar-title">
 								<td colspan="5">
 									<span class="first-item">订单生成时间：<span class="color-font">{{=tool.formatDate(row.createDate)}}</span></span>
-									<span class="first-item">订单号：<span class="color-font">{{=row.orderNo}}</span></span>
+									<span class="first-item">订单号：<span class="color-font">{{=row.orderNo || '未知'}}</span></span>
 								</td>
 							</tr>
 						</thead>
@@ -61,8 +61,8 @@
 										未提供车名！
 									{{ } }}
 								</td>
-								<td class="status-name">借款人：<span class="status-value">{{=row.realName}}</span></td>
-								<td class="status-name">开卡进度：<span class="status-value">未开卡</span></td>
+								<td class="status-name">借款人：<span class="status-value">{{=row.realName || '未知'}}</span></td>
+								<td class="status-name">开卡进度：<span class="status-value">{{=row.cardStatus || '未知'}}</span></td>
 								<td class="td-last" rowspan="4">
 									<a href="javascript:;" data-href="orderModifyAudit/orderDetails" data-order-no="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray toAudit">立即审核</a><br>
 								</td>
