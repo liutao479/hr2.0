@@ -136,12 +136,21 @@ page.ctrl('loanInfoAudit', function($scope) {
 		$console.find('input[type="text"]').on('change', function() {
 			var thisName = $(this).attr('name'),
 				that = $(this);
-			if(thisName == 'carPrice' || thisName == 'phone' || thisName == 'systemCarPrice' || thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'advancedMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
+			if(thisName == 'carPrice' || thisName == 'phone' || thisName == 'systemCarPrice' ){
 				var thisVal = that.val();
-				var reg = /^(\d+\.\d{1,4}|\d+)$/;
+				var reg =  /^0\.([1-9]|\d[1-9])$|^[1-9]\d{0,8}\.\d{0,2}$|^[1-9]\d{0,8}$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
-					$(this).after('<i class="error-input-tip sel-err">该项只能填写数字及最多四位小数</i>');
+					$(this).after('<i class="error-input-tip sel-err">请填写小于10亿最多两位小数的数字</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'advancedMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
+				var thisVal = that.val();
+				var reg =  /^0\.([1-9]|\d[1-9])$|^[1-9]\d{0,8}\.\d{0,4}$|^[1-9]\d{0,8}$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">请填写小于10亿最多四位小数的数字</i>');
 					that.val('');
 				}
 			}
