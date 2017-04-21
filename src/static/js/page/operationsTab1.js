@@ -12,7 +12,7 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 			deptId:null,
 			bankCode:null,
 		},
-		pageBcData={};/*保存点击分页时的查询参数*/;
+		pageBcData={};/*保存点击跳转详情时的查询参数*/;
 
 	/*查询前去除空查询字段*/
 	var delNull=function(obj){
@@ -121,23 +121,26 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 			success: $http.ok(function(res) {
 				pageBcData=param;
 				var _data=res.data.list;
+				var sortData=_data.sort(function (a, b) {
+					    return a.serviceCallNum > b.serviceCallNum ? -1 : 1;
+					});/*根据serviceCallNum字段进行降序排序*/
 				$scope.$el.$searchTimeTitle.text(apiParams.strStartDate+"至"+apiParams.strEndDate+"明细");
-				render.compile($scope.$el.$table, $scope.def.tableTmpl, _data, true);
+				render.compile($scope.$el.$table, $scope.def.tableTmpl, sortData, true);
 				/*数据汇总及echarts图表数据整理*/
 				var totalSummary={
 					historyCalls:0,
 					totalServiceAmt:0,
 					ableBalance:0
 				};
-				for(var i in _data){
-					var _it=_data[i];
+				for(var i in sortData){
+					var _it=sortData[i];
 					if(_it.serviceCallNum)
 						totalSummary.totalServiceAmt+=_it.serviceCallNum;
 					if(_it.serviceAmount)
 						totalSummary.ableBalance+=_it.serviceAmount;
 				};
 				render.compile($scope.$el.$serviceStatic, $scope.def.serviceStaticTemp, totalSummary, true);
-				getEchartsData(_data);
+				getEchartsData(sortData);
 				if(callback && typeof callback == 'function') {
 					callback();
 				};
