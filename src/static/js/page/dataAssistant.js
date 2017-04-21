@@ -5,7 +5,6 @@ page.ctrl('dataAssistant', function($scope) {
 		apiParams = {
 			orderNo: $params.orderNo,
 			//orderNo: 'nfdb2016102820480790',
-			//orderNo: "vxnfdb20170412105846795",
 			sceneCode:'loanApproval'
 		},
 		userType=[
@@ -17,7 +16,10 @@ page.ctrl('dataAssistant', function($scope) {
 			{type:1,text:"中国电信"},
 			{type:2,text:"中国移动"},
 			{type:3,text:"中国联通"}
-		];
+		],
+		toastArr=["bankWater","carBuy","houseInfo","submitCarInvoice","submitCertificate",
+		"submitHouseInvoice","submitInsurancePolicy","submitRegister",
+		"userCarInfoBuy"];/*非及时，除此之外都是及时的*/
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
@@ -127,7 +129,7 @@ page.ctrl('dataAssistant', function($scope) {
 		});
 	};
 	/*发起核查*/
-	var openUserDialog=function(that,_data,key){
+	/*var openUserDialog=function(that,_data,key){
 		for(var z in _data){
 			var _minObj=userType.filter(it=>it.userType==_data[z].userType);
 			if(_minObj&&_minObj.length==1){
@@ -162,11 +164,15 @@ page.ctrl('dataAssistant', function($scope) {
 					data: {
 						key:key,
 						orderNo:apiParams.orderNo,
-						serviceType:'2',/*1材料验真，2数据辅证，必传*/
+						serviceType:'2',
 						userIds:_arr.join("_")
 					},
 					success: $http.ok(function(res) {
-						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
+						var _oneObj=toastArr.filter(it=>it==key);
+						var _el=$scope.def.toastTmpl;//及时提示
+						if(_oneObj&&_oneObj.length==1)
+							_el=$scope.def.toastTmpl2;//非及时提示
+						var jc=$.dialog(_el,function($dialog){
 							var context=$(".jconfirm .jconfirm-content").html();
 							if(context){
 								setTimeout(function() {
@@ -179,7 +185,7 @@ page.ctrl('dataAssistant', function($scope) {
 				});
 			});
 		});	
-	};
+	};*/
 	var openDialog=function(that,_data){
 		var _loalList=[
 			{text:"实名",isBank:true,class:"bac6b78fa",icon:"&#xe677;"},
@@ -215,7 +221,52 @@ page.ctrl('dataAssistant', function($scope) {
 			content: dialogTml.wContent.serviceItems,				
 			data:_data//0：未核查，1:未查询，缺少相关数据,2: 查询中,3：已核查
 		},function($dialog){
-			$dialog.find(".nextDialog").click(function() {
+			$dialog.find(".nextDialog").confirm({
+				title:"提示",
+				content:"<p class='blank'>确定要核查该项目吗？</p>",
+			    buttons: {
+			        close: {
+			        	text:"取消",
+						//btnClass: 'button-empty w-close',
+			        	action:function(){}
+			        },
+			        ok: {
+			        	text:"确定",
+			        	//btnClass:'button-mini w-sure',
+			        	action:function(){
+							var _key=_data[this.$target.data('index')].key;
+							$.ajax({
+								type: 'post',
+								dataType:"json",
+								url: $http.api('loanAudit/verifyCheck',true),
+								data: {
+									key:_key,
+									orderNo:apiParams.orderNo,
+									serviceType:'2',/*1材料验真，2数据辅证，必传*/
+									userIds:apiParams.userId
+								},
+								success: $http.ok(function(res) {
+									$dialog.remove();
+									var _oneObj=toastArr.filter(it=>it==_key);
+									var _el=$scope.def.toastTmpl;//及时提示
+									if(_oneObj&&_oneObj.length==1)
+										_el=$scope.def.toastTmpl2;//非及时提示
+									var jc=$.dialog(_el,function($dialog){
+										var context=$(".jconfirm .jconfirm-content").html();
+										if(context){
+											setTimeout(function() {
+												jc.close();
+												search(apiParams);
+											},1500);
+										};
+									});
+								})
+							});
+				        }
+			        }
+			    }
+			});
+			/*$dialog.find(".nextDialog").click(function() {
 				$dialog.remove();
 				var _key=_data[$(this).data('index')].key;
 				$.ajax({
@@ -233,7 +284,7 @@ page.ctrl('dataAssistant', function($scope) {
 							openUserDialog(that,[],_key);
 					})
 				});	
-			});
+			});*/
 		});		
 	};
 	var setCanvas=function(){
@@ -382,6 +433,7 @@ page.ctrl('dataAssistant', function($scope) {
 		$scope.def.tabTmpl = $console.find('#roleBarTabTmpl').html();
 		$scope.def.listTmpl = $console.find('#listTmpl').html();
 		$scope.def.toastTmpl = $console.find('#importResultTmpl').html();
+		$scope.def.toastTmpl2 = $console.find('#importResultTmpl2').html();
 		$scope.$context=$console.find('#data-assistant');
 		$scope.$el = {
 			$tab: $scope.$context.find('#roleBarTab'),

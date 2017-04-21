@@ -5,13 +5,15 @@ page.ctrl('materialInspection', function($scope) {
 		apiParams = {
 			orderNo: $params.orderNo,
 			//orderNo: 'nfdb2016102820480790',
-			//orderNo:'vxnfdb20170417174718965',
 			sceneCode:'loanApproval'
 		},userType=[
 			{userType:0,text:"主申请人"},
 			{userType:1,text:"共同还款人"},
 			{userType:2,text:"反担保人"}
-		];
+		],
+		toastArr=["bankWater","carBuy","houseInfo","submitCarInvoice","submitCertificate",
+		"submitHouseInvoice","submitInsurancePolicy","submitRegister",
+		"userCarInfoBuy"];/*非及时，除此之外都是及时的*/
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
@@ -65,7 +67,7 @@ page.ctrl('materialInspection', function($scope) {
 			})
 		});
 	};
-	var openUserDialog=function(that,_data,key){		
+	/*var openUserDialog=function(that,_data,key){		
 		for(var z in _data){
 			var _minObj=userType.filter(it=>it.userType==_data[z].userType);
 			if(_minObj&&_minObj.length==1){
@@ -100,11 +102,15 @@ page.ctrl('materialInspection', function($scope) {
 					data: {
 						key:key,
 						orderNo:apiParams.orderNo,
-						serviceType:'1',/*1材料验真，2数据辅证，必传*/
+						serviceType:'1',
 						userIds:_arr.join("_")
 					},
 					success: $http.ok(function(res) {
-						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
+						var _oneObj=toastArr.filter(it=>it==key);
+						var _el=$scope.def.toastTmpl;//及时提示
+						if(_oneObj&&_oneObj.length==1)
+							_el=$scope.def.toastTmpl2;//非及时提示
+						var jc=$.dialog(_el,function($dialog){
 							var context=$(".jconfirm .jconfirm-content").html();
 							if(context){
 								setTimeout(function() {
@@ -117,7 +123,7 @@ page.ctrl('materialInspection', function($scope) {
 				});
 			});
 		});	
-	};
+	};*/
 	/*发起核查*/
 	var openDialog=function(that,_data){
 		var _loalList=[
@@ -150,7 +156,52 @@ page.ctrl('materialInspection', function($scope) {
 			content: dialogTml.wContent.serviceItems,				
 			data:_data//0：未核查，1:未查询，缺少相关数据,2: 查询中,3：已核查
 		},function($dialog){
-			$dialog.find(".nextDialog").click(function() {
+			$dialog.find(".nextDialog").confirm({
+				title:"提示",
+				content:"<p class='blank'>确定要核查该项目吗？</p>",
+			    buttons: {
+			        close: {
+			        	text:"取消",
+						//btnClass: 'button-empty w-close',
+			        	action:function(){}
+			        },
+			        ok: {
+			        	text:"确定",
+			        	//btnClass:'button-mini w-sure',
+			        	action:function(){
+							var _key=_data[this.$target.data('index')].key;
+							$.ajax({
+								type: 'post',
+								dataType:"json",
+								url: $http.api('loanAudit/verifyCheck',true),
+								data: {
+									key:_key,
+									orderNo:apiParams.orderNo,
+									serviceType:'2',/*1材料验真，2数据辅证，必传*/
+									userIds:apiParams.userId
+								},
+								success: $http.ok(function(res) {
+									$dialog.remove();
+									var _oneObj=toastArr.filter(it=>it==_key);
+									var _el=$scope.def.toastTmpl;//及时提示
+									if(_oneObj&&_oneObj.length==1)
+										_el=$scope.def.toastTmpl2;//非及时提示
+									var jc=$.dialog(_el,function($dialog){
+										var context=$(".jconfirm .jconfirm-content").html();
+										if(context){
+											setTimeout(function() {
+												jc.close();
+												search(apiParams);
+											},1500);
+										};
+									});
+								})
+							});
+				        }
+			        }
+			    }
+			});
+			/*$dialog.find(".nextDialog").click(function() {
 				$dialog.remove();
 				var _key=_data[$(this).data('index')].key;
 				$.ajax({
@@ -168,7 +219,7 @@ page.ctrl('materialInspection', function($scope) {
 							openUserDialog(that,[],_key);
 					})
 				});	
-			});
+			});*/
 		});		
 	};
 	// 页面首次载入时绑定事件
@@ -224,6 +275,7 @@ page.ctrl('materialInspection', function($scope) {
 		$scope.def.tabTmpl = $console.find('#roleBarTabTmpl').html();
 		$scope.def.listTmpl = $console.find('#materialInspectionTmpl').html();
 		$scope.def.toastTmpl = $console.find('#importResultTmpl').html();
+		$scope.def.toastTmpl2 = $console.find('#importResultTmpl2').html();
 		$scope.$el = {
 			$tab: $console.find('#roleBarTab'),
 			$listDiv: $console.find('#listDiv')
