@@ -195,34 +195,60 @@
 							<i class="iconfont">&#xe661;</i>公安记录查询
 						</div>
 						{{ if(item&&item.length>0){ }}
-							<div class="detail-item-context clearfix">
+							<div class="detail-item-context clearfix">					
 								{{ for(j=0;j<item.length;j++){ }}
-								{{ if(item[j].criminal_msg=="未比中"){ }}
-									<div class="detail-item-alert alert-success">
-										<span class="icon"><i class="iconfont">&#xe659;</i></span>
-										<span class="status">已查询</span>
-										<span class="text"></span>
-									</div>
-									<div class="detail-item-context clearfix">
-										<div class="explain">
-											<span class="key">查询结果：</span>
-											该用户无公安记录！
+									{{ if(item[j].police_status==1){ }}
+										<div class="detail-item-alert alert-success">
+											<span class="icon"><i class="iconfont">&#xe659;</i></span>
+											<span class="status">已查询</span>
+											<span class="text"></span>
 										</div>
-									</div>
-								{{ }else{ }}
-								<table class="default-table">
-									<tr>
-										<td>
-											<span class="key">命中公安信息类型：</span>
-											{{=item[j].criminal_msg}}
-										</td>
-										<td>
-											<span class="key">时间：</span>
-											{{=item[j].criminal_times||'-'}}
-										</td>
-									</tr>
-								</table>
-								{{ } }}
+										<div class="detail-item-context clearfix">
+											<div class="explain">
+												<span class="key">查询结果：</span>
+												{{=item[j].reason_desc||'查询失败！'}}
+											</div>
+										</div>
+									{{ }else if(item[j].police_status==0){ }}
+										{{ if(item[j].reason_desc=="未比中"){ }}
+											<div class="detail-item-alert alert-success">
+												<span class="icon"><i class="iconfont">&#xe659;</i></span>
+												<span class="status">已查询</span>
+												<span class="text"></span>
+											</div>
+											<div class="detail-item-context clearfix">
+												<div class="explain">
+													<span class="key">查询结果：</span>
+													该用户无公安记录！
+												</div>
+											</div>
+										{{ }else{ }}
+										<table class="default-table">
+											<tr>
+												<td>
+													<span class="key">命中公安信息类型：</span>
+													{{=item[j].criminal_msg||'-'}}
+												</td>
+												<td>
+													<span class="key">时间：</span>
+													{{=item[j].criminal_times||'-'}}
+												</td>
+											</tr>
+										</table>
+										{{ } }}
+									{{ }else{ }}
+										<div class="detail-item-alert alert-success">
+											<span class="icon"><i class="iconfont">&#xe659;</i></span>
+											<span class="status">已查询</span>
+											<span class="text"></span>
+										</div>
+										<div class="detail-item-context clearfix">
+											<div class="explain">
+												<span class="key">查询结果：</span>
+												该用户无公安记录！
+											</div>
+										</div>
+									{{ } }}										
 								{{ } }}
 							</div>
 						{{ }else{ }}
@@ -302,48 +328,48 @@
 							</div>
 						{{ } }}
 					</div>
-					{{ }else if(i==1016){var td=item.overdue_credit; }}
+					{{ }else if(i==1016){ }}
 						<!-- 同盾网贷信息核查 -->
 						<div class="detail-item-list">
 							<div class="detail-item-title">
 								<i class="iconfont">&#xe666;</i>同盾网贷信息核查
 							</div>
 							<!-- 网贷逾期记录查询 -->
-							{{ if(td&&td.overdueInformation&&td.overdueInformation.length>0){ }}
-							{{ var _tdyq=td.overdueInformation; }}
-								<div class="detail-item-context clearfix">
-									{{ for(var q=0;q<_tdyq.length;q++){var _list=_tdyq[q].overdueArray; }}
-									{{ if(_list&&_list.length>0){ }}
-									<table class="default-table two-col">
-										<thead>
-											<tr>
-												<th>逾期金额</th>
-												<th>逾期天数</th>
-											</tr>
-										</thead>
-										<tbody class="haveHead">
-											{{ for(var j=0;j<_list.length;j++){ }}
-												<tr class="alignCenter">
-													<td>{{=_list[j].overdueAmount}}</td>
-													<td>{{=_list[j].overdueDay}}</td>
+							{{ if(item&&item.length>0){ }}	
+								<div class="detail-item-context clearfix">					
+								{{ for(var a=0;a<item.length;a++){ }}
+									{{ if(item[a]&&item[a].overdue&&item[a].overdue.overdueArray&&item[a].overdue.overdueArray.length>0){ }}
+										{{var _list=item[a].overdue.overdueArray;}}
+										<table class="default-table two-col">
+											<thead>
+												<tr>
+													<th>逾期金额</th>
+													<th>逾期天数</th>
 												</tr>
-											{{ } }}
-										</tbody>
-									</table>
+											</thead>
+											<tbody class="haveHead">
+												{{ for(var j=0;j<_list.length;j++){ }}
+													<tr class="alignCenter">
+														<td>{{=_list[j].overdueAmount}}</td>
+														<td>{{=_list[j].overdueDay}}</td>
+													</tr>
+												{{ } }}
+											</tbody>
+										</table>
 									{{ }else{ }}
-									<div class="detail-item-alert alert-success">
-										<span class="icon"><i class="iconfont">&#xe659;</i></span>
-										<span class="status">已查询</span>
-										<span class="text"></span>
-									</div>
-									<div class="detail-item-context clearfix">
-										<div class="explain">
-											<span class="key">查询结果：</span>
-											该用户无逾期记录！
+										<div class="detail-item-alert alert-success">
+											<span class="icon"><i class="iconfont">&#xe659;</i></span>
+											<span class="status">已查询</span>
+											<span class="text"></span>
 										</div>
-									</div>
+										<div class="detail-item-context clearfix">
+											<div class="explain">
+												<span class="key">查询结果：</span>
+												该用户无逾期记录！
+											</div>
+										</div>
 									{{ } }}
-									{{ } }}
+								{{ } }}
 								</div>
 							{{ }else{ }}
 								<div class="detail-item-alert alert-success">
@@ -359,33 +385,49 @@
 								</div>
 							{{ } }}
 							<!-- 网贷平台借贷查询 -->
-							{{ if(item.plat&&item.plat.length>0){ }}
-								<div class="detail-item-context clearfix">
-									<table class="default-table">
-										<thead>
-											<tr>
-												<th>借贷类型/时间区间</th>
-												<th>近7天</th>
-												<th>近1个月</th>
-												<th>近3个月</th>
-												<th>近6个月</th>
-												<th>近12个月</th>
-											</tr>
-										</thead>
-										<tbody class="haveHead">
-											{{ for(var e in item.plat){var _pl=item.plat[e]; }}
-												<tr class="alignCenter">
-													<td>{{=_pl[e].name}}</td>
-													<td>{{=_pl[e].seven_day}}</td>
-													<td>{{=_pl[e].one_month}}</td>
-													<td>{{=_pl[e].three_month}}</td>
-													<td>{{=_pl[e].six_month}}</td>
-													<td>{{=_pl[e].twelve_month}}</td>
-												</tr>
-											{{ } }}
-										</tbody>
-									</table>
-								</div>
+							{{ if(item&&item.length>0){ }}
+								{{ for(var s=0;s<item.length;s++){ }}
+									{{ if(item[s]&&item[s].plat&&item[s].plat.length>0){ }}
+										<div class="detail-item-context clearfix">
+											<table class="default-table">
+												<thead>
+													<tr>
+														<th>借贷类型/时间区间</th>
+														<th>近7天</th>
+														<th>近1个月</th>
+														<th>近3个月</th>
+														<th>近6个月</th>
+														<th>近12个月</th>
+													</tr>
+												</thead>
+												<tbody class="haveHead">
+													{{ for(var e in item[s].plat){var _pl=item[s].plat[e]; }}
+														<tr class="alignCenter">
+															<td>{{=_pl.name}}</td>
+															<td>{{=_pl.seven_day}}</td>
+															<td>{{=_pl.one_month}}</td>
+															<td>{{=_pl.three_month}}</td>
+															<td>{{=_pl.six_month}}</td>
+															<td>{{=_pl.twelve_month}}</td>
+														</tr>
+													{{ } }}
+												</tbody>
+											</table>
+										</div>
+									{{ }else{ }}
+										<div class="detail-item-alert alert-success">
+											<span class="icon"><i class="iconfont">&#xe659;</i></span>
+											<span class="status">已查询</span>
+											<span class="text"></span>
+										</div>
+										<div class="detail-item-context clearfix">
+											<div class="explain">
+												<span class="key">查询结果：</span>
+												该用户无网贷平台借贷记录！
+											</div>
+										</div>
+									{{ } }}
+								{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-alert alert-success">
 									<span class="icon"><i class="iconfont">&#xe659;</i></span>
@@ -400,95 +442,6 @@
 								</div>
 							{{ } }}
 						</div>
-				<!-- {{ }else if(i==1018){ }}
-					网贷平台借贷查询
-					<div class="detail-item-list">
-						<div class="detail-item-title">
-							<i class="iconfont">&#xe666;</i>网贷平台借贷查询
-						</div>
-						{{ if(item&&item.length>0){ }}
-							<div class="detail-item-context clearfix">
-								<table class="default-table">
-									<thead>
-										<tr>
-											<th>借贷类型/时间区间</th>
-											<th>近7天</th>
-											<th>近1个月</th>
-											<th>近3个月</th>
-											<th>近6个月</th>
-											<th>近12个月</th>
-										</tr>
-									</thead>
-									<tbody class="haveHead">
-										{{ for(var e in item){ }}
-											<tr class="alignCenter">
-												<td>{{=item[e].name}}</td>
-												<td>{{=item[e].seven_day}}</td>
-												<td>{{=item[e].one_month}}</td>
-												<td>{{=item[e].three_month}}</td>
-												<td>{{=item[e].six_month}}</td>
-												<td>{{=item[e].twelve_month}}</td>
-											</tr>
-										{{ } }}
-									</tbody>
-								</table>
-							</div>
-						{{ }else{ }}
-							<div class="detail-item-alert alert-success">
-								<span class="icon"><i class="iconfont">&#xe659;</i></span>
-								<span class="status">已查询</span>
-								<span class="text"></span>
-							</div>
-							<div class="detail-item-context clearfix">
-								<div class="explain">
-									<span class="key">查询结果：</span>
-									该用户无网贷平台借贷记录！
-								</div>
-							</div>
-						{{ } }}
-					</div>
-				{{ }else if(i==1016){ }}
-					网贷逾期记录查询
-					<div class="detail-item-list">
-						<div class="detail-item-title">
-							<i class="iconfont">&#xe671;</i>网贷逾期记录查询
-						</div>
-						{{ if(item&&item.length>0){ }}
-							<div class="detail-item-context clearfix">
-								{{ for(var q=0;q<item.length;q++){var _list=item[q].overdueArray; }}
-								{{ if(_list&&_list.length>0){ }}
-								<table class="default-table two-col">
-									<thead>
-										<tr>
-											<th>逾期金额</th>
-											<th>逾期天数</th>
-										</tr>
-									</thead>
-									<tbody class="haveHead">
-										{{ for(var j=0;j<_list.length;j++){ }}
-											<tr class="alignCenter">
-												<td>{{=_list[j].overdueAmount}}</td>
-												<td>{{=_list[j].overdueDay}}</td>
-											</tr>
-										{{ } }}
-									</tbody>
-								</table>
-								{{ } }}
-								{{ } }}
-							</div>
-						{{ }else{ }}
-							<div class="detail-item-alert alert-success">
-								<span class="icon"><i class="iconfont">&#xe659;</i></span>
-								<span class="status">已查询</span>
-								<span class="text"></span>
-							</div>
-							<div class="detail-item-context clearfix">
-								<div class="explain">
-									<span class="key">查询结果：</span>该用户无逾期记录！
-								</div>
-							</div>
-						{{ } }}
-					</div> -->
 				{{ } }}
 			{{ } }}
 		</div>
