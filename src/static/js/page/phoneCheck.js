@@ -202,9 +202,6 @@ page.ctrl('phoneCheck', function($scope) {
 							url: $http.api('loanApproval/submit/' + $params.taskId, true),
 							dataType: 'json',
 							data: {
-								taskId: $params.taskId,
-								orderNo: $params.orderNo,
-								telUserName: $scope.result.data.loanTask.loanOrder.realName,
 								frameCode: $scope.result.cfgData.frames[0].code
 							},
 							success: $http.ok(function(xhr) {

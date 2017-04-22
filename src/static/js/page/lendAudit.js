@@ -243,8 +243,12 @@ page.ctrl('lendAudit', function($scope) {
 				ok: {
 					text: '确定',
 					action: function () {
-						var reason = $.trim(that.$content.find('#suggestion').val());
-						process(reason);
+						var that = this,
+							reason = $.trim(that.$content.find('#suggestion').val());
+						var _params = {
+							advanceWay: 0
+						}
+						process(_params, reason);
 					}
 				}
 			}
@@ -285,8 +289,9 @@ page.ctrl('lendAudit', function($scope) {
 						var that = this,
 							flag = true,
 							imgFlag = true,
-							params = {
-								orderNo: $params.orderNo
+							_params = {
+								orderNo: $params.orderNo,
+								advanceWay: 1
 							},
 							$inputs = that.$content.find('.input-text input'),
 							reason = $.trim(that.$content.find('#suggestion').val());
@@ -311,7 +316,7 @@ page.ctrl('lendAudit', function($scope) {
 							} else {
 								$parent.removeClass('error-input');
 								$parent.find('.input-err').remove();
-								params[$(this).data('key')] = value;
+								_params[$(this).data('key')] = value;
 							}
 						});
 						if(!$scope.imgUrl) {
@@ -319,19 +324,20 @@ page.ctrl('lendAudit', function($scope) {
 							flag = false;
 						} else {
 							that.$content.find('.uploadEvt').removeClass('error-input');
-							params.advanceCertificate = $scope.imgUrl;
+							_params.advanceCertificate = $scope.imgUrl;
 						}
 						if(flag) {
-							$.ajax({
-								type: 'post',
-								url: $http.api('makeLoanApproval/submit/' + $params.taskId, 'zyj'),
-								data: params,
-								dataType: 'json',
-								success: $http.ok(function(result) {
-									console.log(result);
-									process(reason);
-								})
-							})
+							process(_params, reason);
+							// $.ajax({
+							// 	type: 'post',
+							// 	url: $http.api('makeLoanApproval/submit/' + $params.taskId, 'zyj'),
+							// 	data: params,
+							// 	dataType: 'json',
+							// 	success: $http.ok(function(result) {
+							// 		console.log(result);
+							// 		process(reason);
+							// 	})
+							// })
 						} else {
 							$.alert({
 								title: '提示',
@@ -363,7 +369,7 @@ page.ctrl('lendAudit', function($scope) {
 	function applyAdvance() {
 		$.alert({
 			title: '申请平台垫资',
-			content: tool.alert('确定申请平台垫资并同意签署<a href="javascript:;" class="view-sign" style="text-decoration: underline;">《代还款承诺函》</a>吗？'),
+			content: dialogTml.wContent.applyAdvance,
 			onContentReady: function() {
 				// this.$content.find('view-sign')
 				// $.ajax({
@@ -386,7 +392,12 @@ page.ctrl('lendAudit', function($scope) {
 				ok: {
 					text: '确定',
 					action: function() {
-						
+						var that = this,
+							reason = $.trim(that.$content.find('#suggestion').val());
+						var _params = {
+							advanceWay: 2
+						}
+						process(_params, reason);
 					}
 				}
 			}
@@ -422,17 +433,12 @@ page.ctrl('lendAudit', function($scope) {
 	/**
 	 * 任务提交跳转
 	 */
-	function process(reason) {
+	function process(_params, reason) {
 		$.ajax({
 			type: 'post',
-			url: $http.api('loanApproval/submit/' + $params.taskId, true),
+			url: $http.api('makeLoanApproval/submit/' + $params.taskId, true),
 			dataType: 'json',
-			data: {
-				taskId: $params.taskId,
-				orderNo: $params.orderNo,
-				telUserName: $scope.result.data.loanTask.loanOrder.realName,
-				frameCode: $scope.result.cfgData.frames[0].code
-			},
+			data: _params,
 			success: $http.ok(function(xhr) {
 				var taskIds = [];
 				for(var i = 0, len = $params.tasks.length; i < len; i++) {

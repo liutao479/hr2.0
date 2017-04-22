@@ -393,6 +393,10 @@
 								<textarea id="suggestion" class="remarks-box-mini" placeholder="在此处填写处理意见"></textarea>\
 							</dd>\
 						</dl>\
+					</div>',
+		applyAdvance: '<div class="w-content">\
+						<div class="w-text">确定申请平台垫资并同意签署<a href="javascript:;" class="view-sign" style="text-decoration: underline;">《代还款承诺函》</a>吗？</div>\
+						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					</div>'
 	}
 	g.dialogTml.wCommit = {

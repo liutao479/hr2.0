@@ -16,11 +16,21 @@ page.ctrl('cardAudit', function($scope) {
 	* @params {function} cb 回调ck函数
 	*/
 	var loadLoanList = function(cb) {
-		var data={};
-			data['taskId']=$params.taskId;
+		var data = {},
+			url = 'icbcCreditCardForm/queryICBCCreditCardForm';
+		if($params.taskId) {
+			data.taskId = $params.taskId;
+		}
+		// if($params.refer) {
+		// 	data.frameCode = $params.code;	
+		// }
+		if($params.type) {
+			data.orderNo = $params.orderNo;	
+			url = 'icbcCreditCardForm/icbcCreditCardFormOrder';
+		}
 		$.ajax({
 			type: 'post',
-			url: urlStr+'/icbcCreditCardForm/queryICBCCreditCardForm',
+			url: $http.api(url,'jbs'),
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
