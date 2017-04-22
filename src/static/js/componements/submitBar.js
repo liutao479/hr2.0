@@ -106,14 +106,21 @@
 		if(!self.$checks.length) return;
 		self.$checks.eq(0).removeClass('checked').addClass('checked');
 		self.$checks.on('click', function() {
-
+			self.$checks.removeClass('checked');
+			$(this).addClass('checked');
 		});
 	}
 
 	var tpl = '<div class="commit-orders-box">\
 					{{ for(var key in it) { var item = it[key]; if(!!item.funcId) { }}\
-						{{ if(item.funcId == "noAdvance" || item.funcId == "selfAdvance" || item.funcId == "applyAdvance") { }}\
-							<div id="{{=item.funcId}}" class="button {{=item.css}} checkItem">{{=item.text}}</div>\
+						{{ if(item.funcId == "noAdvance") { }}\
+							<div id="{{=item.funcId}}" class="button {{=item.css}} checkItem" data-type="0">{{=item.text}}</div>\
+						{{ continue;} }}\
+						{{ if(item.funcId == "selfAdvance") { }}\
+							<div id="{{=item.funcId}}" class="button {{=item.css}} checkItem" data-type="1">{{=item.text}}</div>\
+						{{ continue;} }}\
+						{{ if(item.funcId == "applyAdvance") { }}\
+							<div id="{{=item.funcId}}" class="button {{=item.css}} checkItem" data-type="2">{{=item.text}}</div>\
 						{{ continue;} }}\
 						<div id="{{=item.funcId}}" class="button {{=item.css}}">{{=item.text}}</div>\
 					{{ } }}\
