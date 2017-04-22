@@ -302,8 +302,106 @@
 							</div>
 						{{ } }}
 					</div>
-				{{ }else if(i==1018){ }}
-					<!-- 网贷平台借贷查询 -->
+					{{ }else if(i==1016){var td=item.overdue_credit; }}
+						<!-- 同盾网贷信息核查 -->
+						<div class="detail-item-list">
+							<div class="detail-item-title">
+								<i class="iconfont">&#xe666;</i>同盾网贷信息核查
+							</div>
+							<!-- 网贷逾期记录查询 -->
+							{{ if(td&&td.overdueInformation&&td.overdueInformation.length>0){ }}
+							{{ var _tdyq=td.overdueInformation; }}
+								<div class="detail-item-context clearfix">
+									{{ for(var q=0;q<_tdyq.length;q++){var _list=_tdyq[q].overdueArray; }}
+									{{ if(_list&&_list.length>0){ }}
+									<table class="default-table two-col">
+										<thead>
+											<tr>
+												<th>逾期金额</th>
+												<th>逾期天数</th>
+											</tr>
+										</thead>
+										<tbody class="haveHead">
+											{{ for(var j=0;j<_list.length;j++){ }}
+												<tr class="alignCenter">
+													<td>{{=_list[j].overdueAmount}}</td>
+													<td>{{=_list[j].overdueDay}}</td>
+												</tr>
+											{{ } }}
+										</tbody>
+									</table>
+									{{ }else{ }}
+									<div class="detail-item-alert alert-success">
+										<span class="icon"><i class="iconfont">&#xe659;</i></span>
+										<span class="status">已查询</span>
+										<span class="text"></span>
+									</div>
+									<div class="detail-item-context clearfix">
+										<div class="explain">
+											<span class="key">查询结果：</span>
+											该用户无逾期记录！
+										</div>
+									</div>
+									{{ } }}
+									{{ } }}
+								</div>
+							{{ }else{ }}
+								<div class="detail-item-alert alert-success">
+									<span class="icon"><i class="iconfont">&#xe659;</i></span>
+									<span class="status">已查询</span>
+									<span class="text"></span>
+								</div>
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">查询结果：</span>
+										该用户无逾期记录！
+									</div>
+								</div>
+							{{ } }}
+							<!-- 网贷平台借贷查询 -->
+							{{ if(item.plat&&item.plat.length>0){ }}
+								<div class="detail-item-context clearfix">
+									<table class="default-table">
+										<thead>
+											<tr>
+												<th>借贷类型/时间区间</th>
+												<th>近7天</th>
+												<th>近1个月</th>
+												<th>近3个月</th>
+												<th>近6个月</th>
+												<th>近12个月</th>
+											</tr>
+										</thead>
+										<tbody class="haveHead">
+											{{ for(var e in item.plat){var _pl=item.plat[e]; }}
+												<tr class="alignCenter">
+													<td>{{=_pl[e].name}}</td>
+													<td>{{=_pl[e].seven_day}}</td>
+													<td>{{=_pl[e].one_month}}</td>
+													<td>{{=_pl[e].three_month}}</td>
+													<td>{{=_pl[e].six_month}}</td>
+													<td>{{=_pl[e].twelve_month}}</td>
+												</tr>
+											{{ } }}
+										</tbody>
+									</table>
+								</div>
+							{{ }else{ }}
+								<div class="detail-item-alert alert-success">
+									<span class="icon"><i class="iconfont">&#xe659;</i></span>
+									<span class="status">已查询</span>
+									<span class="text"></span>
+								</div>
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">查询结果：</span>
+										该用户无网贷平台借贷记录！
+									</div>
+								</div>
+							{{ } }}
+						</div>
+				<!-- {{ }else if(i==1018){ }}
+					网贷平台借贷查询
 					<div class="detail-item-list">
 						<div class="detail-item-title">
 							<i class="iconfont">&#xe666;</i>网贷平台借贷查询
@@ -350,7 +448,7 @@
 						{{ } }}
 					</div>
 				{{ }else if(i==1016){ }}
-					<!-- 网贷逾期记录查询 -->
+					网贷逾期记录查询
 					<div class="detail-item-list">
 						<div class="detail-item-title">
 							<i class="iconfont">&#xe671;</i>网贷逾期记录查询
@@ -390,7 +488,7 @@
 								</div>
 							</div>
 						{{ } }}
-					</div>
+					</div> -->
 				{{ } }}
 			{{ } }}
 		</div>

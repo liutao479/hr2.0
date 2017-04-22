@@ -33,7 +33,7 @@ page.ctrl('dataAssistant', function($scope) {
 					_mout=res.data.data;
 				var _mobil=_mout.body[1021];
 				var _usedCar=_mout.body[1025];
-				var _platLend=_mout.body[1018];
+				var _platLend=_mout.body[1016];//同盾网贷信息核查
 				/*在网列表的运营商数据处理*/
 				if(_mobil){
 					for(var i in _mobil){
@@ -64,21 +64,21 @@ page.ctrl('dataAssistant', function($scope) {
 						};
 					};
 				};
-				if(_platLend&&_platLend.length>0){
-					for(var k in _platLend){
-						var platJson=_platLend[k].multipleJSON;
-						if(platJson&&platJson['seven_day'])
-							repeatPlat(platJson,'seven_day');
-						if(platJson&&platJson['one_month'])
-							repeatPlat(platJson,'one_month');
-						if(platJson&&platJson['three_month'])
-							repeatPlat(platJson,'three_month');
-						if(platJson&&platJson['six_month'])
-							repeatPlat(platJson,'six_month');
-						if(platJson&&platJson['twelve_month'])
-							repeatPlat(platJson,'twelve_month');
+				if(_platLend&&_platLend.overdue_credit&&_platLend.overdue_credit.multiplePlatforms){
+					var platObj=_platLend.overdue_credit.multiplePlatforms;
+					if(platObj){
+						if(platObj['seven_day'])
+							repeatPlat(platObj,'seven_day');
+						if(platObj['one_month'])
+							repeatPlat(platObj,'one_month');
+						if(platObj['three_month'])
+							repeatPlat(platObj,'three_month');
+						if(platObj['six_month'])
+							repeatPlat(platObj,'six_month');
+						if(platObj['twelve_month'])
+							repeatPlat(platObj,'twelve_month');
 					};
-					_mout.body[1018]=_platArr;
+					_mout.body[1016].plat=_platArr;
 				};
 				/*整理title中发起人，最新发起时间等信息*/
 				if(_mout.verifyRecord&&_mout.verifyRecord.submitByName)
@@ -221,18 +221,21 @@ page.ctrl('dataAssistant', function($scope) {
 			content: dialogTml.wContent.serviceItems,				
 			data:_data//0：未核查，1:未查询，缺少相关数据,2: 查询中,3：已核查
 		},function($dialog){
+			var _title="提示";
 			$dialog.find(".nextDialog").confirm({
-				title:"提示",
-				content:"<p class='blank'>确定要核查该项目吗？</p>",
+				title:_title,
+				content:"<p class='blank'>请确认是否发起本次核查？</p>",
+				onOpenBefore:function(a,b,c){
+					_title=_data[this.$target.data('index')].funcName;
+					this.setTitle(_title);
+				},
 			    buttons: {
 			        close: {
 			        	text:"取消",
-						//btnClass: 'button-empty w-close',
 			        	action:function(){}
 			        },
 			        ok: {
 			        	text:"确定",
-			        	//btnClass:'button-mini w-sure',
 			        	action:function(){
 							var _key=_data[this.$target.data('index')].key;
 							$.ajax({

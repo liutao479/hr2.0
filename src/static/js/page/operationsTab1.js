@@ -41,7 +41,7 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 		    },
 		    legend: {//图例
 		        orient: 'vertical',//图例列表的布局朝向。horizontal/vertical
-		        left: 'left',
+		        left: 'right',
 		        top:'middle',
 		        data: _name
 		    },
@@ -51,7 +51,7 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 		        {
 		            name: '访问来源',
 		            type: 'pie',//指定类型为饼图
-		            center: ['65%', '50%'],
+		            center: ['40%', '50%'],
 		            data:_list,
 		            itemStyle: {
 		                emphasis: {//鼠标经过时样式
@@ -111,6 +111,36 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 			})
 		});
 	};
+	/*排序后的数据整理及echarts图表显示*/
+	var sortCallback=function(type,upOrDown){/*upOrDown(true:up,false:down)*/
+		var sortData=[],one=-1,two=1;
+		if(upOrDown){/*升序*/
+			one=1;
+			two=-1;
+		};
+		if(!type)
+			return false;
+		if(type=="srvNum"){
+			sortData=$scope.result.sort(function (a, b) {
+				    return a.serviceCallNum > b.serviceCallNum ? one : two;
+				});/*根据serviceCallNum字段进行降序-降序排序*/
+		}else if(type=="srvMoney"){
+			sortData=$scope.result.sort(function (a, b) {
+				    return a.serviceFee > b.serviceFee ? one : two;
+				});/*根据serviceFee字段进行降序-降序排序*/
+		}else if(type=="hisNum"){
+			sortData=$scope.result.sort(function (a, b) {
+				    return a.verifyNum > b.verifyNum ? one : two;
+				});/*根据verifyNum字段进行降序-降序排序*/
+		}else if(type=="totalMoney"){
+			sortData=$scope.result.sort(function (a, b) {
+				    return a.serviceAmount > b.serviceAmount ? one : two;
+				});/*根据serviceAmount字段进行降序-降序排序*/
+		};
+		render.compile($scope.$el.$table, $scope.def.tableTmpl, sortData, true);
+		/*数据汇总及echarts图表数据整理*/
+		getEchartsData(sortData);
+	};
 	// 查询列表数据
 	var searchlist=function(param,callback){
 		$.ajax({
@@ -120,27 +150,26 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 			data: param,
 			success: $http.ok(function(res) {
 				pageBcData=param;
-				var _data=res.data.list;
-				var sortData=_data.sort(function (a, b) {
-					    return a.serviceCallNum > b.serviceCallNum ? -1 : 1;
-					});/*根据serviceCallNum字段进行降序排序*/
-				$scope.$el.$searchTimeTitle.text(apiParams.strStartDate+"至"+apiParams.strEndDate+"明细");
-				render.compile($scope.$el.$table, $scope.def.tableTmpl, sortData, true);
-				/*数据汇总及echarts图表数据整理*/
+				$scope.result=res.data.list;
+				$scope.$el.$searchTimeTitle.text(apiParams.strStartDate+"至"+apiParams.strEndDate+"明细");				
+				/*数据汇总数据整理*/
 				var totalSummary={
 					historyCalls:0,
 					totalServiceAmt:0,
 					ableBalance:0
 				};
-				for(var i in sortData){
-					var _it=sortData[i];
+				if(res.data.totalVerifyOrderNum)
+					totalSummary.historyCalls=Number(res.data.totalVerifyOrderNum);
+				for(var i in $scope.result){
+					var _it=$scope.result[i];
 					if(_it.serviceCallNum)
-						totalSummary.totalServiceAmt+=_it.serviceCallNum;
+						totalSummary.totalServiceAmt+=Number(_it.serviceCallNum);
 					if(_it.serviceAmount)
-						totalSummary.ableBalance+=_it.serviceAmount;
+						totalSummary.ableBalance+=Number(_it.serviceAmount);
 				};
 				render.compile($scope.$el.$serviceStatic, $scope.def.serviceStaticTemp, totalSummary, true);
-				getEchartsData(sortData);
+				/*排序后的数据整理及echarts图表显示*/
+				sortCallback('srvNum',false);
 				if(callback && typeof callback == 'function') {
 					callback();
 				};
@@ -171,6 +200,17 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 		$scope.$el.$titleIcon.hover(function() {
 			$(this).find(".hid-tip").toggle();
 		});
+		$scope.$el.$sortTr.off("click",".time-sort").on("click",".time-sort",function() {
+			var _type=$(this).data('type');
+			$(this).parent("td").siblings("td").find(".time-sort").removeClass("time-sort-up").addClass("time-sort-down");
+			var _bool=true;
+			if($(this).hasClass('time-sort-up')){/*升变降*/
+				_bool=false;
+			}else if($(this).hasClass('time-sort-down')){/*降变升*/
+				_bool=true;
+			};
+			sortCallback(_type,_bool);
+		});
  	};
 	// 加载页面模板
 	$console.load(router.template('iframe/operationsTab1'), function() {
@@ -183,6 +223,7 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 			$valuationTotal:$scope.$context.find('#valuation-total'),
 			$serviceStatic:$scope.$context.find('#serviceStatic'),
 			$table: $scope.$context.find('#riskManagementTable'),
+			$sortTr: $scope.$context.find('#sort-tr'),
 			$searchBtn: $scope.$context.find('#search'),
 			$startTime: $scope.$context.find('#dateStart'),
 			$endTime: $scope.$context.find('#dateEnd'),

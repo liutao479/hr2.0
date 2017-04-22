@@ -308,8 +308,106 @@
 								</div>
 							{{ } }}
 						</div>
-					{{ }else if(i==1018){ }}
-						<!-- 网贷平台借贷查询 -->
+					{{ }else if(i==1016){var td=item.overdue_credit; }}
+						<!-- 同盾网贷信息核查 -->
+						<div class="detail-item-list">
+							<div class="detail-item-title">
+								<i class="iconfont">&#xe666;</i>同盾网贷信息核查
+							</div>
+							<!-- 网贷逾期记录查询 -->
+							{{ if(td&&td.overdueInformation&&td.overdueInformation.length>0){ }}
+							{{ var _tdyq=td.overdueInformation; }}
+								<div class="detail-item-context clearfix">
+									{{ for(var q=0;q<_tdyq.length;q++){var _list=_tdyq[q].overdueArray; }}
+									{{ if(_list&&_list.length>0){ }}
+									<table class="default-table two-col">
+										<thead>
+											<tr>
+												<th>逾期金额</th>
+												<th>逾期天数</th>
+											</tr>
+										</thead>
+										<tbody class="haveHead">
+											{{ for(var j=0;j<_list.length;j++){ }}
+												<tr class="alignCenter">
+													<td>{{=_list[j].overdueAmount}}</td>
+													<td>{{=_list[j].overdueDay}}</td>
+												</tr>
+											{{ } }}
+										</tbody>
+									</table>
+									{{ }else{ }}
+									<div class="detail-item-alert alert-success">
+										<span class="icon"><i class="iconfont">&#xe659;</i></span>
+										<span class="status">已查询</span>
+										<span class="text"></span>
+									</div>
+									<div class="detail-item-context clearfix">
+										<div class="explain">
+											<span class="key">查询结果：</span>
+											该用户无逾期记录！
+										</div>
+									</div>
+									{{ } }}
+									{{ } }}
+								</div>
+							{{ }else{ }}
+								<div class="detail-item-alert alert-success">
+									<span class="icon"><i class="iconfont">&#xe659;</i></span>
+									<span class="status">已查询</span>
+									<span class="text"></span>
+								</div>
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">查询结果：</span>
+										该用户无逾期记录！
+									</div>
+								</div>
+							{{ } }}
+							<!-- 网贷平台借贷查询 -->
+							{{ if(item.plat&&item.plat.length>0){ }}
+								<div class="detail-item-context clearfix">
+									<table class="default-table">
+										<thead>
+											<tr>
+												<th>借贷类型/时间区间</th>
+												<th>近7天</th>
+												<th>近1个月</th>
+												<th>近3个月</th>
+												<th>近6个月</th>
+												<th>近12个月</th>
+											</tr>
+										</thead>
+										<tbody class="haveHead">
+											{{ for(var e in item.plat){var _pl=item.plat[e]; }}
+												<tr class="alignCenter">
+													<td>{{=_pl[e].name}}</td>
+													<td>{{=_pl[e].seven_day}}</td>
+													<td>{{=_pl[e].one_month}}</td>
+													<td>{{=_pl[e].three_month}}</td>
+													<td>{{=_pl[e].six_month}}</td>
+													<td>{{=_pl[e].twelve_month}}</td>
+												</tr>
+											{{ } }}
+										</tbody>
+									</table>
+								</div>
+							{{ }else{ }}
+								<div class="detail-item-alert alert-success">
+									<span class="icon"><i class="iconfont">&#xe659;</i></span>
+									<span class="status">已查询</span>
+									<span class="text"></span>
+								</div>
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">查询结果：</span>
+										该用户无网贷平台借贷记录！
+									</div>
+								</div>
+							{{ } }}
+						</div>
+					<!-- {{ }else if(i==1018){ }}
+						网贷平台借贷查询
 						<div class="detail-item-list">
 							<div class="detail-item-title">
 								<i class="iconfont">&#xe666;</i>网贷平台借贷查询
@@ -356,7 +454,7 @@
 							{{ } }}
 						</div>
 					{{ }else if(i==1016){ }}
-						<!-- 网贷逾期记录查询 -->
+						网贷逾期记录查询
 						<div class="detail-item-list">
 							<div class="detail-item-title">
 								<i class="iconfont">&#xe671;</i>网贷逾期记录查询
@@ -396,7 +494,7 @@
 									</div>
 								</div>
 							{{ } }}
-						</div>
+						</div> -->
 					{{ }else if(i==1021){ }}
 						<!-- 手机在网时长查询 -->
 						<div class="detail-item-list">
@@ -637,27 +735,25 @@
 							<div class="detail-item-title">
 								<i class="iconfont">&#xe674;</i>车辆保养记录查询
 							</div>
-							<div class="detail-item-alert alert-success">
-								<span class="icon"><i class="iconfont">&#xe659;</i></span>
-								<span class="status">已查询</span>
-								<span class="text"></span>
-							</div>
-							<div class="detail-item-context clearfix">
-								<div class="detail-item-msg">
-									<div class="explain">
-										<span class="key">查询结果：</span>
-										{{ if(item&&item.length>0){ }}
-											存在保养记录
-										{{ }else{ }}
-											没有保养记录
-										{{ } }}
-									</div>
+							{{ if(item&&item.length>0){ }}
 									{{ for(var z=0;z<item.length;z++){var col=item[z].dataJson; }}
+									{{ if(col){ }}
+									<div class="detail-item-alert alert-success">
+										<span class="icon"><i class="iconfont">&#xe659;</i></span>
+										<span class="status">已查询</span>
+										<span class="text"></span>
+									</div>
+									<div class="detail-item-context clearfix">
+										<div class="explain">
+											<span class="key">查询结果：</span>
+											存在保养记录
+										</div>
+									</div>
 									<div class="msg-context">
 										<div class="msg-table-list msg-borderbt-solid">
 											<h5>基本信息</h5>
-											{{var basic=col.basic;}}
 											<table class="msg-table">
+												{{ if(col.basic){var basic=col.basic; }}
 												<tr>
 													<td>车架号：{{=basic.vin}}</td>
 													<td>车型：{{=basic.model}}</td>
@@ -666,17 +762,24 @@
 												</tr>
 												<tr>
 													<td>排量：{{=basic.displacement}}T</td>
-													<td colspan="2">变速器：{{=basic.gearbox}}A/MT</td>
+													<td colspan="3">变速器：{{=basic.gearbox}}A/MT</td>
 												</tr>
+												{{ }else{ }}
+												<tr>
+													<td>暂无车辆基本信息</td>
+												</tr>
+												{{ } }}
 											</table>
 										</div>
 										<div class="msg-table-list">
 											<h5>保养信息</h5>
+											{{ if(col.reportJson&&col.reportJson.length>0){ }}
 											{{ for(var j=0;j<col.reportJson.length;j++){var repo=col.reportJson[j]; }}
 												{{ if(j>=1){ }}
 													<hr />
 												{{ } }}		
 												<table class="msg-table">
+													{{ if(repo){ }}
 													<tr>
 														<td>保养日期：{{=repo.repairDate}}</td>
 														<td>保养类型：{{=repo.type}}</td>
@@ -686,13 +789,49 @@
 													<tr>
 														<td colspan="4">保养内容：{{=repo.content}}</td>
 													</tr>
-												</table>										
+													{{ }else{ }}
+													<tr>
+														<td>暂无车辆保养信息</td>
+														</tr>
+													{{ } }}
+												</table>									
+											{{ } }}
+											{{ }else{ }}
+												<table class="msg-table">
+													<tr>
+														<td>暂无车辆保养信息</td>
+													</tr>	
+												</table>	
 											{{ } }}
 										</div>
 									</div>
+									{{ }else{ }}
+										<div class="detail-item-alert alert-success">
+											<span class="icon"><i class="iconfont">&#xe659;</i></span>
+											<span class="status">已查询</span>
+											<span class="text"></span>
+										</div>
+										<div class="detail-item-context clearfix">
+											<div class="explain">
+												<span class="key">查询结果：</span>
+												暂无车辆保养记录！
+											</div>
+										</div>
 									{{ } }}
+									{{ } }}
+							{{ }else{ }}
+								<div class="detail-item-alert alert-success">
+									<span class="icon"><i class="iconfont">&#xe659;</i></span>
+									<span class="status">已查询</span>
+									<span class="text"></span>
 								</div>
-							</div>
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">查询结果：</span>
+										暂无车辆保养记录！
+									</div>
+								</div>
+							{{ } }}
 						</div>
 					{{ } }}
 				{{ } }}
@@ -710,8 +849,8 @@
 			</div>
 		</dt>
 		<dd class="import-msg-box">
-			<div class="import-result">您已成功查询该项服务，</div>
-			<div class="import-result">请返回报告页查看</div>
+			<div class="import-result blank">您已成功查询该项服务</div>
+			<div class="import-result blank">请返回报告页查看</div>
 		</dd>
 	</dl>
 </script>	
@@ -723,8 +862,8 @@
 			</div>
 		</dt>
 		<dd class="import-msg-box">
-			<div class="import-result">您已成功发起该项服务，</div>
-			<div class="import-result">核查成功后会收到消息提醒</div>
+			<div class="import-result blank">您已成功发起该项服务</div>
+			<div class="import-text blank">核查成功后会收到消息提醒</div>
 		</dd>
 	</dl>
 </script>				
