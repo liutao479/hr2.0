@@ -59,21 +59,25 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 						};
 					};
 				};
-				if(_platLend&&_platLend.overdue_credit&&_platLend.overdue_credit.multiplePlatforms){
-					var platObj=_platLend.overdue_credit.multiplePlatforms;
-					if(platObj){
-						if(platObj['seven_day'])
-							repeatPlat(platObj,'seven_day');
-						if(platObj['one_month'])
-							repeatPlat(platObj,'one_month');
-						if(platObj['three_month'])
-							repeatPlat(platObj,'three_month');
-						if(platObj['six_month'])
-							repeatPlat(platObj,'six_month');
-						if(platObj['twelve_month'])
-							repeatPlat(platObj,'twelve_month');
+				/*借贷记录数据整理*/
+				if(_platLend&&_platLend.length>0){
+					for(var c=0;c<_platLend.length;c++){
+						_platArr=[];
+						if(_platLend[c]&&_platLend[c].credit&&_platLend[c].credit.multipleJSON){
+							var platObj=_platLend[c].credit.multipleJSON;
+							if(platObj['seven_day'])
+								repeatPlat(platObj,'seven_day');
+							if(platObj['one_month'])
+								repeatPlat(platObj,'one_month');
+							if(platObj['three_month'])
+								repeatPlat(platObj,'three_month');
+							if(platObj['six_month'])
+								repeatPlat(platObj,'six_month');
+							if(platObj['twelve_month'])
+								repeatPlat(platObj,'twelve_month');
+						};	
+						_mout.body[1016][c].plat=_platArr;					
 					};
-					_mout.body[1016].plat=_platArr;
 				};
 				/*整理title中发起人，最新发起时间等信息*/
 				if(_mout.verifyRecord&&_mout.verifyRecord.submitByName)
