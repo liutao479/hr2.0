@@ -58,9 +58,9 @@
 			cancelOrder: { css: 'button-orange'},
 			backOrder: { css: 'button-orange'},
 			rejectOrder: { css: ''},
-			noAdvance: { css: 'button-orange'},
-			selfAdvance: { css: ''},
-			applyAdvance: { css: ''},
+			noAdvance: { css: 'button-check'},
+			selfAdvance: { css: 'button-check'},
+			applyAdvance: { css: 'button-check'},
 			approvalPass: { css: 'button-deep'},
 			taskSubmit: { css: 'button-deep'},
 			creditQuery: { css: 'button-deep'}
@@ -87,23 +87,34 @@
 	hsubmitBar.prototype.addListener = function() {
 		var self = this;
 		['cancelOrder', 'backOrder', 'rejectOrder', 'noAdvance', 'selfAdvance', 'applyAdvance', 'approvalPass', 'taskSubmit', 'creditQuery'].forEach(function(key, idx) {
-			self.$submitBar.find('#' + key).on('click', function() {
-				var fns = self.events[key];
-				if(fns && fns.length > 0) {
-					for(var i = 0, len = fns.length; i < len; i++) {
-						var fn = fns[i];
-						if(fn && typeof fn == 'function') {
-							fn();
+			if(key != "noAdvance" || key != "selfAdvance" || key != "applyAdvance") {
+				self.$submitBar.find('#' + key).on('click', function() {
+					var fns = self.events[key];
+					if(fns && fns.length > 0) {
+						for(var i = 0, len = fns.length; i < len; i++) {
+							var fn = fns[i];
+							if(fn && typeof fn == 'function') {
+								fn();
+							}
 						}
 					}
-				}
-			})
+				})
+			}
+		});
 
-		})
+		self.$checks = self.$submitBar.find('.checkItem');
+		if(!self.$checks.length) return;
+		self.$checks.eq(0).removeClass('checked').addClass('checked');
+		self.$checks.on('click', function() {
+
+		});
 	}
 
 	var tpl = '<div class="commit-orders-box">\
 					{{ for(var key in it) { var item = it[key]; if(!!item.funcId) { }}\
+						{{ if(item.funcId == "noAdvance" || item.funcId == "selfAdvance" || item.funcId == "applyAdvance") { }}\
+							<div id="{{=item.funcId}}" class="button {{=item.css}} checkItem">{{=item.text}}</div>\
+						{{ continue;} }}\
 						<div id="{{=item.funcId}}" class="button {{=item.css}}">{{=item.text}}</div>\
 					{{ } }}\
 					{{ } }}\

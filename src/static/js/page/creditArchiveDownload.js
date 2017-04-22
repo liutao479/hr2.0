@@ -14,7 +14,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	*/
 	var loadCreaditList = function(params, cb) {
 		$.ajax({
-			url: $http.api('loanOrder/getMyCustomer', 'zjy'),
+			url: $http.api('creditUser/getCreditMaterials', 'zjy'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -144,7 +144,11 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 
 			var that = $(this);
 			if(!$scope.isAllClick) {
-				//toast('请选择批量下载的订单！')
+				$.toast('请选择批量下载的订单！', {
+					timeout: 500
+				}, function() {
+
+				});
 				return false;
 			}
 			$.confirm({

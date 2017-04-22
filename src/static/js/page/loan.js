@@ -4,15 +4,15 @@ page.ctrl('loan', function($scope) {
 		$params = $scope.$params,
 		apiParams = {
 			pageNum: $params.pageNum || 1,
-			process: $params.process || ''
+			taskNameCode: $params.taskNameCode || ''
 		};
 	/**
 	* 加载车贷办理数据
 	* @params {object} params 请求参数
 	*/
 	var loadLoanList = function(params, cb) {
-		if(!params.process) {
-			delete params.process;
+		if(!params.taskNameCode) {
+			delete params.taskNameCode;
 		}
 		$.ajax({
 			type: 'post',
@@ -241,8 +241,8 @@ page.ctrl('loan', function($scope) {
 			$tbl: $console.find('#loanTable'),
 			$paging: $console.find('#pageToolbar')
 		}
-		if($params.process) {
-			$('#processTag').data('category', $params.process).text($params.name);
+		if($params.taskNameCode) {
+			$('#processTag').data('category', $params.taskNameCode).text($params.name);
 		} else {
 			$('#processTag').parent().remove();
 		}

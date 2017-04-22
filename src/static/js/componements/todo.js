@@ -42,7 +42,7 @@
 		$(document).on('click', '.remindEvt', function() {
 			var key = $(this).data('code');
 			router.render('loanProcess', {
-				process: key,
+				taskNameCode: key,
 				name: self.items[key].name
 			});
 			self.close();
@@ -75,7 +75,7 @@
 		self.total = total;
 		for(var i = 0, len = list.length; i < len; i++) {
 			var row = list[i],
-				item = self.items[row.sceneCode];
+				item = self.items[row.taskNameCode];
 			if(item) {
 				if(item.size != row.size) {
 					item.$number.html(row.size);
@@ -83,14 +83,14 @@
 				}
 			} else {
 				item = {};
-				item.key = row.sceneCode;
+				item.key = row.taskNameCode;
 				item.name = row.category;
 				item.size = row.size;
-				item.$body = $(template.item.format(row.category, row.size, row.sceneCode)).appendTo(self.$items);
+				item.$body = $(template.item.format(row.category, row.size, row.taskNameCode)).appendTo(self.$items);
 				item.$number = item.$body.find('.message-number');
 			}
-			tmpl[row.sceneCode] = item;
-			delete self.items[row.sceneCode];
+			tmpl[row.taskNameCode] = item;
+			delete self.items[row.taskNameCode];
 		}
 		$.each(self.items, function(key, o) {
 			o.$body.remove();
@@ -117,7 +117,7 @@
 
 		function internal(e) {
 			$.ajax({
-				url: $http.api('busiMsg/get', 'test'),
+				url: $http.api('busiMsg/get', true),
 				global: false,
 				data: {
 					pageNum: 1,

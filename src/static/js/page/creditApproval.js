@@ -502,8 +502,9 @@ page.ctrl('creditApproval', [], function($scope) {
 								data: _params,
 								dataType: 'json',
 								success: $http.ok(function(result) {
-									router.render('loanProcess');
-									// toast.hide();
+									$.toast('处理成功！', function() {
+										router.render('loanProcess');
+									});
 								})
 							})
 						}

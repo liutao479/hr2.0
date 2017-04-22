@@ -175,22 +175,26 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 
 			var that = $(this);
 			if(!$scope.isAllClick) {
-				//toast('请选择批量下载的订单！')
+				$.toast('请选择批量打印的订单！', {
+					timeout: 500
+				}, function() {
+
+				});
 				return false;
 			}
 			$.confirm({
-				title: '批量下载',
-				content: dialogTml.wContent.allCreditDownload,
+				title: '批量打印',
+				content: tool.alert('批量打印！'),
 				onContentReady: function() {
-					$scope.$radios = this.$content.find('.checkbox').checking();
+					// $scope.$radios = this.$content.find('.checkbox').checking();
 
-					$scope.$radios.each(function() {
-						var that = this;
-						that.$checking.onChange(function() {
-							$scope.$radios.removeClass('checked').attr('checked', false);
-							$(that).removeClass('checked').addClass('checked').attr('checked', true);
-						});
-					})
+					// $scope.$radios.each(function() {
+					// 	var that = this;
+					// 	that.$checking.onChange(function() {
+					// 		$scope.$radios.removeClass('checked').attr('checked', false);
+					// 		$(that).removeClass('checked').addClass('checked').attr('checked', true);
+					// 	});
+					// })
 				},
 				buttons: {
 					close: {
@@ -200,20 +204,20 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 					ok: {
 						text: '确定',
 						action: function() {
-							$scope.userIds = [];
-							$scope.$el.$tbl.find('.checkbox').each(function() {
-								if($(this).attr('checked')) {
-									$scope.userIds.push($(this).data('userId'));
-								}
-							});
-							$scope.userIds = $scope.userIds.join(',');
-							console.log($scope.userIds)
-							this.$content.find('.checkbox').each(function() {
-								if($(this).attr('checked')) {
-									$scope.downLoadType = $(this).data('type');
-								}
-							});
-							window.open($http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + $scope.userIds + '&downLoadType=' + $scope.downLoadType, true), '_blank');
+							// $scope.userIds = [];
+							// $scope.$el.$tbl.find('.checkbox').each(function() {
+							// 	if($(this).attr('checked')) {
+							// 		$scope.userIds.push($(this).data('userId'));
+							// 	}
+							// });
+							// $scope.userIds = $scope.userIds.join(',');
+							// console.log($scope.userIds)
+							// this.$content.find('.checkbox').each(function() {
+							// 	if($(this).attr('checked')) {
+							// 		$scope.downLoadType = $(this).data('type');
+							// 	}
+							// });
+							// window.open($http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + $scope.userIds + '&downLoadType=' + $scope.downLoadType, true), '_blank');
 						}
 					}
 				}

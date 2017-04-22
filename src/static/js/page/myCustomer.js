@@ -404,7 +404,7 @@ page.ctrl('myCustomer', [], function($scope) {
 							var params = {
 								orderNo: orderNo,
 								applyReason: applyReason,
-								approvalId: $scope.approvalId    //当前审核用户的id
+								approvalId: $scope.approvalId    //下拉审核用户的id
 							}
 							console.log(params)
 							$.ajax({

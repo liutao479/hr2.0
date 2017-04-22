@@ -262,7 +262,11 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 
 			var that = $(this);
 			if(!$scope.isAllClick) {
-				//toast('请选择批量下载的订单！')
+				$.toast('请选择批量下载的订单！', {
+					timeout: 500
+				}, function() {
+
+				});
 				return false;
 			}
 			$scope.userIds = [], $scope.orderNos = [];

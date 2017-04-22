@@ -92,10 +92,19 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 	 * 材料必填，必传检验
 	 */
 	function checkData(cb) {
+		var taskIds = [];
+		for(var i = 0, len = $params.tasks.length; i < len; i++) {
+			taskIds.push($params.tasks[i].id);
+		}
+		var params = {
+			taskIds: taskIds
+		}
 		$.ajax({
 			type: 'post',
-			url: $http.api('loanMaterials/submit/' + $params.taskId, 'zyj'),
+			url: $http.api('tasks/validate', 'zyj'),
+			data: JSON.stringify(params),
 			dataType: 'json',
+			contentType: 'application/json;charset=utf-8',
 			success: $http.ok(function(result) {
 				console.log(result);
 				if(cb && typeof cb == 'function') {
@@ -120,7 +129,9 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 		 * 提交订单
 		 */
 		$sub.on('taskSubmit', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 			// checkData(function() {
 			// 	debugger
 			// 	var canSubmit = flow.taskSubmit($params.tasks, $params.taskId);

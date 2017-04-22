@@ -54,6 +54,11 @@
 			name: '历史核查记录',
 			route: 'historyInspect'
 		},
+		'historyInspect': {
+			key: 'inspectData',
+			name: '历史核查记录',
+			route: 'historyInspect'
+		},
 		licenceManage: {
 			name: '上牌管理',
 			route: '',
@@ -176,6 +181,7 @@
 			if(!$.isArray(obj)) return;
 			var len = obj.length;
 			var menuItem = menuMap[key];
+			if(!menuItem) return;
 			if(len === 0) {
 				arr.push('<a class="menu-item" data-href="{2}" id="menu{3}">\
 							<i class="iconfont mark">{0}</i>\

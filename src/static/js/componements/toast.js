@@ -47,6 +47,7 @@
     toast.prototype.show = function(msg, opts, callback) {
         var self = this;
         self.__setup(msg, opts || {});
+        // self.clickEvt();
         setTimeout(function() {
             self.close();
             callback && typeof callback == 'function' && callback();
@@ -58,6 +59,15 @@
         this.$background.remove();
         this.$content.remove();
     }
+
+    // toast.prototype.clickEvt = function(callback) {
+    //     var self = this;
+    //     self.$mask.on('click', function() {
+    //         self.close();
+    //         callback && typeof callback == 'function' && callback();
+    //         return false;
+    //     });
+    // }
 
     var _toast = new toast();
 

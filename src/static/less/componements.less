@@ -53,11 +53,39 @@
             border-color: @mainColor !important;
             background-color: @mainColor !important;
         }
+        &.checked {
+            color: #FFF !important;
+            border-color: @mainColor !important;
+            background-color: @mainColor !important;
+        }
         &:active {
             color: #FFF !important;
             border-color: lighten(@mainColor, 8%) !important;
             background-color: lighten(@mainColor, 8%) !important;
         }
+    }
+    &&-check {
+        height: 32px;
+        line-height: 30px;
+        border:1px solid @borderColor;
+        background-color: #ffffff;
+        color: @fontColor;
+        &:hover {
+            color: @mainColor !important;
+            border-color: @mainColor !important;
+            // background-color: @mainColor !important;
+        }
+        
+        // &:active {
+        //     color: #FFF !important;
+        //     border-color: lighten(@mainColor, 8%) !important;
+        //     background-color: lighten(@mainColor, 8%) !important;
+        // }
+    }
+    .checked {
+        color: @mainColor !important;
+        border-color: @mainColor !important;
+        background-color: @mainColor !important;
     }
     &&-width {
         width: 126px;
