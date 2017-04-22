@@ -36,7 +36,7 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 			data: param,
 			success: $http.ok(function(res) {
 				var _mout=res.data.data;
-				var _platLend=_mout.body[1018];
+				var _platLend=_mout.body[1016];//同盾网贷信息核查
 				/*网贷平台借贷数据统计start*/
 				var _platArr=[];
 				var repeatPlat=function(platJson,attr){
@@ -59,21 +59,21 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 						};
 					};
 				};
-				if(_platLend&&_platLend.length>0){
-					for(var k in _platLend){
-						var platJson=_platLend[k].multipleJSON;
-						if(platJson&&platJson['seven_day'])
-							repeatPlat(platJson,'seven_day');
-						if(platJson&&platJson['one_month'])
-							repeatPlat(platJson,'one_month');
-						if(platJson&&platJson['three_month'])
-							repeatPlat(platJson,'three_month');
-						if(platJson&&platJson['six_month'])
-							repeatPlat(platJson,'six_month');
-						if(platJson&&platJson['twelve_month'])
-							repeatPlat(platJson,'twelve_month');
+				if(_platLend&&_platLend.overdue_credit&&_platLend.overdue_credit.multiplePlatforms){
+					var platObj=_platLend.overdue_credit.multiplePlatforms;
+					if(platObj){
+						if(platObj['seven_day'])
+							repeatPlat(platObj,'seven_day');
+						if(platObj['one_month'])
+							repeatPlat(platObj,'one_month');
+						if(platObj['three_month'])
+							repeatPlat(platObj,'three_month');
+						if(platObj['six_month'])
+							repeatPlat(platObj,'six_month');
+						if(platObj['twelve_month'])
+							repeatPlat(platObj,'twelve_month');
 					};
-					_mout.body[1018]=_platArr;
+					_mout.body[1016].plat=_platArr;
 				};
 				/*整理title中发起人，最新发起时间等信息*/
 				if(_mout.verifyRecord&&_mout.verifyRecord.submitByName)
