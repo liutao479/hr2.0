@@ -3,10 +3,10 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			queryType: 1,  //征信资料下载
+			// queryType: 1,  //征信资料下载
 			pageNum: 1
 		};
-	$scope.userIds = [];//资料待下载用户userId
+	$scope.userIds = [];//资料待下载用户userIds
 	/**
 	* 加载征信资料数据
 	* @params {object} params 请求参数
@@ -14,7 +14,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	*/
 	var loadCreaditList = function(params, cb) {
 		$.ajax({
-			url: $http.api('creditUser/getCreditMaterials', 'zjy'),
+			url: $http.api('loanOrder/getMyCustomer', 'zjy'),
 			type: 'post',
 			data: params,
 			dataType: 'json',

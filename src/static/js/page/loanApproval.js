@@ -275,7 +275,7 @@ page.ctrl('loanApproval', function($scope) {
 							} 
 							$.ajax({
 								type: 'post',
-								url: $http.api('loanOrder/terminate', 'zyj'),
+								url: $http.api('loanOrder/refused', 'zyj'),
 								data: {
 									taskId: $params.taskId,
 									reason: _reason
@@ -283,8 +283,9 @@ page.ctrl('loanApproval', function($scope) {
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result);
-									router.render('loanProcess');
-									// toast.hide();
+									$.toast('该订单已被终止！', function() {
+										router.render('loanProcess');	
+									});
 								})
 							})
 			            }

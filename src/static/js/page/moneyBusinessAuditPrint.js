@@ -11,6 +11,7 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadMoneyPrintList = function(params, cb) {
+		console.log(params);
 		$.ajax({
 			url: $http.api('loanUserStage/getFinancialData', 'cyj'),
 			type: 'post',
@@ -44,7 +45,15 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 	* 日历控件
 	*/
 	var setupDatepicker = function() {
-		$console.find('.dateBtn').datepicker();
+		$console.find('.dateBtn').datepicker({
+			onpicked: function() {
+				var that = $(this);
+				apiParams[that.data('type')] = that.val();
+			},
+			oncleared: function() {
+				delete apiParams[$(this).data('type')];
+			}
+		});
 	}
 
 	/**
@@ -85,7 +94,19 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 
 		// 绑定打印按钮
 		$scope.$el.$tbl.find('.businessPrint').on('click', function() {
-			
+			var orderNo = $(this).data('orderNo');
+			$.ajax({
+				url: $http.api('financialInfo/financialPrint', 'cyj'),
+				type: 'post',
+				data: {
+					orderNo: orderNo
+				},
+				dataType: 'json',
+				success: $http.ok(function(result) {
+					console.log(result);
+					
+				})
+			});
 		});
 	}
 
@@ -133,7 +154,6 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 			$console.find('.select input').val('');
 			$console.find('#searchInput').val('');
 			apiParams = {
-				queryType: 1,  //征信资料下载
 		    	pageNum: 1
 			};
 		});

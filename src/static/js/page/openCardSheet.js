@@ -520,6 +520,7 @@ page.ctrl('openCardSheet', function($scope) {
 	var seleLoad = function(){
 		$(".select").each(function(){
 			var $that = $(this);
+			$that.find('input').attr('readonly','readonly');
 			var selected = $(this).data('selected');
 			var re = /^[0-9]+.?[0-9]*$/;
 			if((selected && re.test(selected)) || selected=='0'){

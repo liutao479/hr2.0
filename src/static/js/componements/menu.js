@@ -34,11 +34,6 @@
 			route: '',
 			icon: '&#xe623;'
 		},
-		'loanManage': {
-			parent: 'moneyManage',
-			name: '借款管理',
-			route: 'loanManage'
-		},
 		'marginManage': {
 			parent: 'moneyManage',
 			name: '保证金管理',
@@ -47,7 +42,7 @@
 		inspectData: {
 			name: '贷后数据核查',
 			route: '',
-			icon: '&#xe61b;'
+			icon: '&#xe65c;'
 		},
 		'activeInspect': {
 			parent: 'inspectData',
