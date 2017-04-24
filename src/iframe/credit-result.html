@@ -94,7 +94,7 @@
 													{{ } }}
 														<td class="td-key"><i class="{{=(!zxzd[2 * k].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k].fieldName}}</td>
 														<td class="td-value"><input class="input zxzd{{=(zxzd[2 * k].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k].creditKey}}" data-required="{{=zxzd[2 * k].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit || ''}}</span></td>
-														{{ if(k == len6) { }}
+														{{ if(k == len6 - 1 && zxzd.length % 2 != 0) { }}
 															<td class="td-key"></td>
 															<td class="td-value"></td>
 														{{ }else{ }}

@@ -6,7 +6,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 			// queryType: 1,  //征信资料下载
 			pageNum: 1
 		};
-	$scope.userIds = [];//资料待下载用户userIds
+	$scope.orderNos = [];//资料待下载用户orderNos
 	/**
 	* 加载征信资料数据
 	* @params {object} params 请求参数
@@ -14,7 +14,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	*/
 	var loadCreaditList = function(params, cb) {
 		$.ajax({
-			url: $http.api('creditUser/getCreditMaterials', 'zjy'),
+			url: $http.api('loanOrder/getMyCustomer', 'zjy'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -173,20 +173,20 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 					ok: {
 						text: '确定',
 						action: function() {
-							$scope.userIds = [];
+							$scope.orderNos = [];
 							$scope.$el.$tbl.find('.checkbox').each(function() {
 								if($(this).attr('checked')) {
-									$scope.userIds.push($(this).data('userId'));
+									$scope.orderNos.push($(this).data('orderNo'));
 								}
 							});
-							$scope.userIds = $scope.userIds.join(',');
-							console.log($scope.userIds)
+							$scope.orderNos = $scope.orderNos.join(',');
+							console.log($scope.orderNos)
 							this.$content.find('.checkbox').each(function() {
 								if($(this).attr('checked')) {
 									$scope.downLoadType = $(this).data('type');
 								}
 							});
-							window.open($http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + $scope.userIds + '&downLoadType=' + $scope.downLoadType, true), '_blank');
+							window.open($http.api('materialsDownLoad/downLoadCreditMaterials?orderNos=' + $scope.orderNos + '&downLoadType=' + $scope.downLoadType, true), '_blank');
 						}
 					}
 				}

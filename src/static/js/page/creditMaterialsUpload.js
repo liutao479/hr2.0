@@ -318,11 +318,11 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					flag = false;
 					break;
 				}
-				if(j == 'mobile' && !item[j]) {
-					_alert = '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.sortNo + 1 : '') + '的手机号！<br/>';
-					flag = false;
-					break;
-				}
+				// if(j == 'mobile' && !item[j]) {
+				// 	_alert = '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.sortNo + 1 : '') + '的手机号！<br/>';
+				// 	flag = false;
+				// 	break;
+				// }
 				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType == 1) {
 					_alert = '请选择' + $scope.userMap[item.userType] + (item.sortNo + 1) + '与借款人的关系！<br/>';
 					flag = false;
@@ -546,14 +546,17 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				$parent = that.parent(),
 				params = {};
 			if(!value) {
-				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
-				$parent.append('<span class=\"input-err\">该项不能为空！</span>');
+				if(that.hasClass('required')) {
+					$parent.removeClass('error-input').addClass('error-input');
+					$parent.append('<span class=\"input-err\">该项不能为空！</span>');
+				} else {
+					$parent.removeClass('error-input');
+				}
 				value = '';
-				// return false;
 			} else if(!regMap[type].test(value)) {
-				$parent.removeClass('error-input').addClass('error-input');
 				$parent.find('.input-err').remove();
+				$parent.removeClass('error-input').addClass('error-input');
 				if(type == 'userName') {
 					$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
 				} else if(type == 'idCard') {
@@ -562,7 +565,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					$parent.append('<span class=\"input-err\">请输入11位手机号！</span>');
 				}
 				value = '';
-				// return false;
 			} else {
 				$parent.removeClass('error-input');
 				$parent.find('.input-err').remove();
@@ -576,15 +578,18 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					item[that.data('type')] = value;
 				}
 			}
+			console.log($scope.apiParams)
 			if(!value) return false;
 			params = {
 				userId: that.data('userId')
 			}
 			params[that.data('type')] = value;
 			updateUser(params);
-			console.log($scope.apiParams)
 		})
 
+		/**
+		 * input框（征信已经返回，不能修改！）
+		 */
 		$self.find('.input-text input[readonly]').on('click', function() {
 			$.alert({
 				title: '提示',
@@ -645,10 +650,10 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				item.userName = row.userName || '';
 				item.idCard = row.idCard || '';
 				item.userType = row.userType;
-				item.mobile = row.mobile || '';
 				item.userRelationship = row.userRelationship;
 				item.sortNo = row.sortNo;
 				if(i == 0) {
+					item.sortNo = 0;
 					item.userRelationship = 0;
 				}
 				if(i == 2) {
@@ -696,7 +701,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 上传图片数据回调
 	 */
 	$scope.uploadcb = function(self, xhr) {
-		console.log(self.$el)
 		if(self.options.code == 'sfzzm') {
 			self.$el.find('.imgs-item-upload').LoadingOverlay("show");
 			window.clickable = false;

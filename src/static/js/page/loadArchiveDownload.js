@@ -14,7 +14,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	*/
 	var loadArchiveDownloadList = function(params, cb) {
 		$.ajax({
-			url: $http.api('creditUser/getCreditMaterials', 'zyj'),
+			url: $http.api('loanOrder/getMyCustomer', 'zyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -240,7 +240,6 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 			$console.find('.select input').val('');
 			$console.find('#searchInput').val('');
 			apiParams = {
-				queryType: 2,  //征信资料下载
 		    	pageNum: 1
 			};
 		});

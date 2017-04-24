@@ -222,6 +222,9 @@ page.ctrl('lendAudit', function($scope) {
 				case 2:
 					applyAdvance();
 					break;
+				default:
+					noAdvance();
+					break;
 			};
 		})
 
