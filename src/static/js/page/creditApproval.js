@@ -397,7 +397,7 @@ page.ctrl('creditApproval', [], function($scope) {
 					else{
 						$.alert({
 							title: '提示',
-							content: tool.alert("您没有权限进行该操作！"),
+							content: tool.alert("您尚未开通该核查权限！"),
 							buttons:{
 								ok: {
 									text: '确定',

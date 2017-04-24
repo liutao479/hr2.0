@@ -182,7 +182,15 @@ page.ctrl('materialInspection', function($scope) {
 					if(res&&res.data&&res.data.length>0)
 						openDialog(res.data);
 					else
-						openDialog([]);
+						$.alert({
+							title: '提示',
+							content: tool.alert("您尚未开通该核查权限！"),
+							buttons:{
+								ok: {
+									text: '确定',
+								}
+							}
+						});
 				})
 			});
 		});

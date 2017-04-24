@@ -12,7 +12,7 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 			userId: $params.userId,	
 			/*orderNo: 'nfdb2016102820480790',
 			userId: '334232',*/
-			sceneCode: $params.sceneCode		
+			/*sceneCode: $params.sceneCode*///接口换成resultDetailCreditApproval后，后台屏蔽了场景code	
 		};
 	/**
 	* 设置面包屑
@@ -32,7 +32,7 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 		$.ajax({
 			type: 'post',
 			dataType:"json",
-			url: $http.api('verifyResult/resultDetail',true),
+			url: $http.api('verifyResult/resultDetailCreditApproval',true),
 			data: param,
 			success: $http.ok(function(res) {
 				var _mout=res.data.data;
