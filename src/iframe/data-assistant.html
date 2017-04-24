@@ -31,7 +31,7 @@
 	{{  var ac=function(x){for(var i in x)return true;return false;}; }}
 		<div class="panel no-top-border clearfix">			
 			<div class="panel-content-title no-top-border">
-				{{ if(it.itemNum&&it.updateTime){ }}
+				{{ if(it.updateTime){ }}
 				<div class="key-value-box">
 					<div class="value">
 						已核验{{=it.itemNum}}项，
@@ -794,29 +794,3 @@
 		</div>
 	{{ } }}
 </script>	
-<script type="text/x-dot-template" id="importResultTmpl">
-	<dl class="import-dl clearfix">
-		<dt class="import-icon-box">
-			<div class="import-icon">
-				<i class="iconfont">&#xe659;</i>
-			</div>
-		</dt>
-		<dd class="import-msg-box">
-			<div class="import-result blank">您已成功查询该项服务</div>
-			<div class="import-result blank">请返回报告页查看</div>
-		</dd>
-	</dl>
-</script>	
-<script type="text/x-dot-template" id="importResultTmpl2">
-	<dl class="import-dl clearfix">
-		<dt class="import-icon-box">
-			<div class="import-icon">
-				<i class="iconfont">&#xe659;</i>
-			</div>
-		</dt>
-		<dd class="import-msg-box">
-			<div class="import-result blank">您已成功发起该项服务</div>
-			<div class="import-text blank">核查成功后会收到消息提醒</div>
-		</dd>
-	</dl>
-</script>				

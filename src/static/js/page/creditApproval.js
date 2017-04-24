@@ -238,55 +238,68 @@ page.ctrl('creditApproval', [], function($scope) {
 	}
 
 	/*发起核查*/
-	var openDialog=function(that,_data,_uid){
-		that.openWindow({
-			title:"核查项目选择",
-			content: dialogTml.wContent.btngroup,
-			commit: dialogTml.wCommit.cancelSure,
-			data:_data
-		},function($dialog){
-			var _arr=[];
-			$dialog.find(".block-item-data:not(.not-selected)").click(function() {
-				$(this).toggleClass("selected");	
-				var _index=$(this).data("index");
-				var _thisVal=_data[_index].key;
-				if($(this).hasClass("selected"))
-					_arr.push(_thisVal);	
-				else
-					_arr.splice(_arr.indexOf(_thisVal),1);
-			});
-			$dialog.find(".w-sure").click(function() {
-				$dialog.remove();
-				if(_arr.length==0)
-					return false;
-				$.ajax({
-					type: "post",
-					url: $http.api('creditAudit/startVerify','cyj'),
-					data:{
-						keys:_arr.join(','),
-						orderNo:$params.orderNo,
-						userId:_uid
-					/*	keys:'doPolice,bankWater',
-						orderNo:'nfdb2016102820480799',
-						userId:"334232"*/
-					},
-					dataType:"json",
-					success: $http.ok(function(res) {
-						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
-							var context=$(".jconfirm .jconfirm-content").html();
-							if(context){
-								setTimeout(function() {
-									jc.close();
-									loadOrderInfo($scope.idx, function() {
-										evt();
-									});/*关闭之后自动刷新页面数据*/
-								},1500);
-							};
-						});
-					})
-				});						
-			});
-		});		
+	var openDialog=function(_data,_uid){		
+		var dialogHtml = doT.template(dialogTml.wContent.btngroup)(_data);
+		$.confirm({
+			title: '核查项目选择',
+			offsetBottom: "50px",
+			content:dialogHtml,
+			onContentReady:function(){
+				var $dia=this;
+				$dia._arr=[];
+				$dia.$content.find(".block-item-data:not(.not-selected)").click(function() {
+					$(this).toggleClass("selected");	
+					var _index=$(this).data("index");
+					var _thisVal=_data[_index].key;
+					if($(this).hasClass("selected"))
+						$dia._arr.push(_thisVal);	
+					else
+						$dia._arr.splice($dia._arr.indexOf(_thisVal),1);
+				});
+			},
+			buttons: {
+				close: {
+					text: '取消',
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var _btnDialog=this;
+						if(_btnDialog._arr.length==0)
+							return false;
+						$.ajax({
+							type: "post",
+							url: $http.api('creditAudit/startVerify','cyj'),
+							data:{
+								keys:_btnDialog._arr.join(','),
+								orderNo:$params.orderNo,
+								userId:_uid
+							/*	keys:'doPolice,bankWater',
+								orderNo:'nfdb2016102820480799',
+								userId:"334232"*/
+							},
+							dataType:"json",
+							success: $http.ok(function(res) {
+								$.dialog({
+									title:false,
+									content:$scope.def.toastTmpl,
+									onContentReady:function(){
+										var _tioDialog=this;
+										setTimeout(function() {
+											_tioDialog.close();
+											loadOrderInfo($scope.idx, function() {
+												evt();
+											});/*关闭之后自动刷新页面数据*/
+										},1500);
+									}
+								});
+							})
+						});	
+					}
+				}
+			}
+		});	
 	};
 	/**
 	* 绑定立即处理事件
@@ -366,8 +379,7 @@ page.ctrl('creditApproval', [], function($scope) {
 		});
 		//发起核查
 		$self.off('click','.gocheck').on('click','.gocheck', function() {
-			var that=$(this);
-			var _uid=that.data('user-id');
+			var _uid=$(this).data('user-id');
 			if(!_uid)
 				return false;
 			$.ajax({
@@ -381,7 +393,7 @@ page.ctrl('creditApproval', [], function($scope) {
 				},
 				success: $http.ok(function(res) {
 					if(res&&res.data&&res.data.length>0)
-						openDialog(that,res.data,_uid);
+						openDialog(res.data,_uid);
 					else{
 						$.alert({
 							title: '提示',
