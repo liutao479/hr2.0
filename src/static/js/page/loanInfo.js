@@ -181,7 +181,7 @@ page.ctrl('loanInfo', function($scope) {
 				var reg = /^1[\d+]{10}$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
-					$(this).after('<i class="error-input-tip sel-err">请您填写13位正确格式的手机号码！</i>');
+					$(this).after('<i class="error-input-tip sel-err">请您填写11位正确格式的手机号码！</i>');
 					that.val('');
 				}
 			}
