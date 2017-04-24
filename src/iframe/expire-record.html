@@ -1,144 +1,54 @@
 
-<div class="tab-content" id="expireRecordTable"></div>
+<div class="panel">
+	<div class="tab-content" id="expireRecordTable"></div>	
+</div>
+<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['expireRecord'].paging"></div>
 <script type="text/x-dot-template" id="expireRecordTmpl">
-		<div class="tab-content-item">
-			<!--订单表格 （逾期记录）-->
-			<table class="expire-orders-table expire-orders-table-special" width="100%">
-				<tbody class="expire-content">
-					<tr class="expire-content-tr">
-						<td class="expire-content-item">
-							<table class="table-inner">
-								<tr class="table-inner-tr">
-									<td class="key">记录生成时间：</td>
-									<td class="value">2016-09-06 11:34</td>
-								</tr>
-								<tr class="table-inner-tr">
-									<td class="key">卡号：</td>
-									<td class="value">261736726483478347364</td>
-								</tr>
-								
-								<tr class="table-inner-tr">
-									<td class="key">账单日：</td>
-									<td class="value">2016/12/13</td>
-								</tr>
-							</table>
-						</td>
-						<td class="expire-content-item">
-							<table class="table-inner">
-								<tr class="table-inner-tr">
-									<td class="key">卡余额：</td>
-									<td class="value">40000元</td>
-								</tr>
-								<tr class="table-inner-tr">
-									<td class="key">公司垫款：</td>
-									<td class="value">40000元</td>
-								</tr>
-							</table>
-						</td>
-						<td class="expire-content-item">
-							<table class="table-inner">
-								<tr class="table-inner-tr">
-									<td class="key">当前逾期金额：</td>
-									<td class="value">621,226.00元</td>
-								</tr>
-								<tr class="table-inner-tr">
-									<td class="key">每期应还：</td>
-									<td class="value">2944元</td>
-								</tr>
-								<tr class="table-inner-tr">
-									<td class="key">当前逾期金额/每期应还：</td>
-									<td class="value">100元</td>
-								</tr>
-							</table>
-						</td>
-						<td class="expire-content-item">
-							<table class="table-inner">
-								<tr class="table-inner-tr">
-									<td class="key">当前连续违约次数：</td>
-									<td class="value">3次</td>
-								</tr>
-								<tr class="table-inner-tr">
-									<td class="key">历史累计违约次数：</td>
-									<td class="value">3次</td>
-								</tr>
-							</table>
-						</td>
-						<td class="expire-content-item expire-content-item-last">
+	{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+	<div class="table-box">
+		<table style="table-layout: fixed; width: 100%;">
+			<tbody class="table-inner">
+				<tr class="table-inner-tr">
+					<td class="key">记录生成时间：</td>
+					<td class="value">{{=row.createDateStr}}</td>
+					<td class="key">卡号：</td>
+					<td class="value">{{=row.cardNumber || '无数据'}}</td>
+					<td class="key">账单日：</td>
+					<td class="value">{{=row.statementDateStr}}</td>
+				</tr>
+				<tr class="table-inner-tr">
+					<td class="key">卡余额：</td>
+					<td class="value">{{=row.cardBalance ? (row.cardBalance + '元') : '无数据'}}</td>
+					<td class="key">公司垫款：</td>
+					<td class="value">{{=row.companyAdvance ? (row.companyAdvance + '元') : '无数据'}}</td>
+					<td class="key">每期应还：</td>
+					<td class="value">{{=row.eachRepayment ? (row.eachRepayment+'元') : '无数据'}}</td>
+				</tr>
+				<tr class="table-inner-tr">
+					<td class="key">当前逾期金额：</td>
+					<td class="value">{{=row.overdueAmount ? (row.overdueAmount + '元') : '无数据'}}</td>
+					<td class="key">当前连续违约次数：</td>
+					<td class="value">{{=row.currentDefaultNum || 0}}次</td>
+					<td class="key">当前逾期金额/每期应还：</td>
+					<td class="value">{{=row.repaymentPeriod || 0}}元</td>
+				</tr>
+				<tr class="table-inner-tr">
+					<td class="key">历史累计违约次数：</td>
+					<td class="value">{{=row.cumulativeDefaultNum || 0}}次</td>
+					<td></td>
+					<td colspan="3" class="expire-content-item expire-content-item-last">
+						{{ if(!!row.overdueStatus) { }}
+							<div class="color-green">已结清</div>
+						{{ } else { }}
 							<div class="color-red">未结清</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<!--订单表格（逾期记录） end-->
-			<!--订单表格 （逾期记录）-->
-			<table class="expire-orders-table" width="100%">
-				<tbody class="expire-content">
-					<tr class="expire-content-tr">
-						<td class="expire-content-item">
-							<table class="table-inner">
-								<tr class="table-inner-tr">
-									<td class="key">记录生成时间：</td>
-									<td class="value">2016-09-06 11:34</td>
-								</tr>
-								<tr class="table-inner-tr">
-									<td class="key">卡号：</td>
-									<td class="value">261736726483478347364</td>
-								</tr>
-								
-								<tr class="table-inner-tr">
-									<td class="key">账单日：</td>
-									<td class="value">2016/12/13</td>
-								</tr>
-							</table>
-						</td>
-						<td class="expire-content-item">
-							<table class="table-inner">
-								<tr class="table-inner-tr">
-									<td class="key">卡余额：</td>
-									<td class="value">40000元</td>
-								</tr>
-								<tr class="table-inner-tr">
-									<td class="key">公司垫款：</td>
-									<td class="value">40000元</td>
-								</tr>
-							</table>
-						</td>
-						<td class="expire-content-item">
-							<table class="table-inner">
-								<tr class="table-inner-tr">
-									<td class="key">当前逾期金额：</td>
-									<td class="value">621,226.00元</td>
-								</tr>
-								<tr class="table-inner-tr">
-									<td class="key">每期应还：</td>
-									<td class="value">2944元</td>
-								</tr>
-								<tr class="table-inner-tr">
-									<td class="key">当前逾期金额/每期应还：</td>
-									<td class="value">100元</td>
-								</tr>
-							</table>
-						</td>
-						<td class="expire-content-item">
-							<table class="table-inner">
-								<tr class="table-inner-tr">
-									<td class="key">当前连续违约次数：</td>
-									<td class="value">3次</td>
-								</tr>
-								<tr class="table-inner-tr">
-									<td class="key">历史累计违约次数：</td>
-									<td class="value">3次</td>
-								</tr>
-							</table>
-						</td>
-						<td class="expire-content-item expire-content-item-last">
-							<div class="color-green">未结清</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<!--订单表格（逾期记录） end-->
-		</div>
+						{{ } }}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	{{ } }}
+	<!--订单表格（逾期记录） end-->
 </script>	
 	
 			

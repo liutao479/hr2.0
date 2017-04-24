@@ -224,10 +224,10 @@
 					success: function(xhr) {
 						if(!xhr.code) {
 							token = xhr.data;
-							$.ajaxSetup({
-								headers: { Authorization: 'Bearer ' + token }
-							})
-							cb();
+							// $.ajaxSetup({
+							// 	headers: { Authorization: 'Bearer ' + token }
+							// })
+							cb(token);
 						}
 					}
 				})
@@ -241,14 +241,16 @@
 				if(!phone || !icode) {
 					return $alert('请输入手机号码和图形验证码');
 				}
-				function _g() {
+				function _g(_t) {
 					$.ajax({
 						url: method('sms/send'),
+						headers: { Authorization: 'Bearer ' + token },
 						data: {
 							businessKey: 'retrivePassword',
 							mobile: phone,
 							captchaCode: icode
 						},
+						type: 'post',
 						dataType: 'json',
 						success: function(xhr) {
 							var code = xhr.code;
@@ -281,11 +283,14 @@
 
 			function submit() {
 				var phone = $.trim($phone.val()),
-						pcode = $.trim($pcode.val());
-					if(!phone || !pcode) {
-						return $alert('请输入手机号和手机验证码');
-					};
+					pcode = $.trim($pcode.val());
+				if(!phone || !pcode) {
+					return $alert('请输入手机号和手机验证码');
+				};
+
+				function _f(_t) {
 					$.ajax({
+						headers: { Authorization: 'Bearer ' + _t },
 						url: method('password/retrive'),
 						dataType: 'json',
 						data: {
@@ -316,6 +321,9 @@
 							}
 						}
 					})
+				}
+
+				getToken(_f);
 			}
 
 			function addEventListener() {

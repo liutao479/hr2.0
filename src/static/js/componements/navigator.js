@@ -315,7 +315,8 @@ $(function() {
 			url: $http.api('password/change', 'test'),
 			data: {
 				password: md5(ov),
-				newPassword: md5(nv)
+				newPassword: md5(nv),
+				confirmNewPassword: md5(rv)
 			},
 			dataType: 'json',
 			success: function(xhr) {
@@ -436,6 +437,10 @@ $(function() {
 						}
 					})
 				})
+			}
+
+			function _ct($ctn) {
+				
 			}
 			
 			_gc(p);

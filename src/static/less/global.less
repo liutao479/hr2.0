@@ -660,7 +660,26 @@ input[disabled]{
         transform: translate(-50%,-50%);
     }
 }
-
+.table-box {
+    border: 1px solid @borderColor;
+    padding: 10px 0;
+    margin: 15px;
+    .table-inner {
+        margin: 0 auto;
+        .table-inner-tr {
+            .key {
+                color: @tiperColor;
+                text-align: right;
+                line-height: 24px;
+            }
+            .value {
+                color: @fontColor;
+                text-align: left;
+                line-height: 24px;
+            }
+        }
+    }
+}
 // 特殊类表格（逾期信息历史导入详情）
 .expire-orders-table {
     border: 1px solid @borderColor;
