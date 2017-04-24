@@ -177,9 +177,6 @@
 		var self = this,
 			arr = [];
 		arr.push('<div class="menu">');
-		// for(var i in self.data) {
-
-		// }
 		$.each(self.data, function(key, obj) {
 			if(!$.isArray(obj)) return;
 			var len = obj.length;
