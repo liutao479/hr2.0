@@ -181,8 +181,6 @@
 
 		// }
 		$.each(self.data, function(key, obj) {
-			console.log(key);
-			console.log(obj);
 			if(!$.isArray(obj)) return;
 			var len = obj.length;
 			var menuItem = menuMap[key];
