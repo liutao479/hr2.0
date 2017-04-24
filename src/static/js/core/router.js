@@ -109,6 +109,7 @@
 			g.location.hash = key + (!$.isEmptyObject(params) ? '?' + Base64.btoa($.param(params)) : '');
 		}
 		router.get(key, params, true);
+		menuInstance.setup((params && params.path) || key, true);
 	}
 
 	router.innerRender = function(el, key, params, opts) {

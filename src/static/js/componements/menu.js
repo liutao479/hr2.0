@@ -222,6 +222,7 @@
 	menu.prototype._trigger = function(route, $item, unRouter) {
 		var self = this;
 		// if($item.hasClass(self.activeCss)) return;
+		if(self.$selected == $item) return;
 		if(self.$selected) {
 			self.$selected.removeClass(self.activeCss);
 		}
