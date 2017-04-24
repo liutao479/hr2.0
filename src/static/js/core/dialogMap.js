@@ -366,28 +366,6 @@
 							</dd>\
 						</dl>\
 						<dl class="w-dropdown float-left">\
-							<dt class="dt">垫资开户银行：</dt>\
-							<dd class="dd">\
-								<div class="input-text input-text-mini">\
-									<input type="text required" id="advanceBank" data-key="advanceBank" data-type="accountName" value="{{=it.advanceBank || \"\"}}">\
-								</div>\
-							</dd>\
-						</dl>\
-						<dl class="w-dropdown float-left">\
-							<dt class="dt">垫资账户：</dt>\
-							<dd class="dd">\
-								<div class="input-text input-text-mini">\
-									<input type="text required" id="advanceAccount" data-key="advanceAccount" data-type="accountName" value="{{=it.advanceAccount || \"\"}}">\
-								</div>\
-							</dd>\
-						</dl>\
-						<dl class="w-dropdown float-left">\
-							<dt class="dt">垫资凭证：</dt>\
-							<dd class="dd">\
-								<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope[\'lendAudit\'].deletecb" data-uploadcb="page.$scope[\'lendAudit\'].uploadcb" data-card="true" data-id="" data-orderno="123" data-code="cardUpd" data-name="电子回单" data-scene="homeMaterialsUpload" data-img="{{= it.advanceCertificate || \'\'}}" data-err="0" data-editable="1"></div>\
-							</dd>\
-						</dl>\
-						<dl class="w-dropdown float-left">\
 							<dt class="dt">审核意见：</dt>\
 							<dd class="dd">\
 								<textarea id="suggestion" class="remarks-box-mini" placeholder="在此处填写处理意见"></textarea>\
@@ -395,6 +373,22 @@
 						</dl>\
 					</div>',
 		applyAdvance: '<div class="w-content">\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">垫资时间：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-date">\
+									<input id="loaningDate" type="text" class="dateBtn" data-key="loaningDate" data-type="yymmddhhmm" readonly="readonly" value="{{=it.loaningDateStr || \"\"}}" />\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">打款金额：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="paymentMoney" data-key="paymentMoney" data-type="money" value="{{=it.paymentMoney || \"\"}}"><span class="unit">元</span>\
+								</div>\
+							</dd>\
+						</dl>\
 						<div class="w-text">确定申请平台垫资并同意签署<a href="javascript:;" class="view-sign" style="text-decoration: underline;">《代还款承诺函》</a>吗？</div>\
 						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					</div>'
@@ -420,3 +414,26 @@
 						</div>'
 	}
 })(window);
+
+// <dl class="w-dropdown float-left">\
+// 	<dt class="dt">垫资开户银行：</dt>\
+// 	<dd class="dd">\
+// 		<div class="input-text input-text-mini">\
+// 			<input type="text required" id="advanceBank" data-key="advanceBank" data-type="accountName" value="{{=it.advanceBank || \"\"}}">\
+// 		</div>\
+// 	</dd>\
+// </dl>\
+// <dl class="w-dropdown float-left">\
+// 	<dt class="dt">垫资账户：</dt>\
+// 	<dd class="dd">\
+// 		<div class="input-text input-text-mini">\
+// 			<input type="text required" id="advanceAccount" data-key="advanceAccount" data-type="accountName" value="{{=it.advanceAccount || \"\"}}">\
+// 		</div>\
+// 	</dd>\
+// </dl>\
+// <dl class="w-dropdown float-left">\
+// <dt class="dt">垫资凭证：</dt>\
+// <dd class="dd">\
+// 	<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope[\'lendAudit\'].deletecb" data-uploadcb="page.$scope[\'lendAudit\'].uploadcb" data-card="true" data-id="" data-orderno="123" data-code="cardUpd" data-name="电子回单" data-scene="homeMaterialsUpload" data-img="{{= it.advanceCertificate || \'\'}}" data-err="0" data-editable="1"></div>\
+// </dd>\
+// </dl>\
