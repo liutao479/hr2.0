@@ -66,19 +66,19 @@
 								{{ if(sourCode==-4||sourCode==-5){ }}
 									<div class="detail-item-alert alert-danger">
 										<span class="icon"><i class="iconfont">!</i></span>
-										<span class="status">未校验</span>
+										<!-- <span class="status">未校验</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==1){ }}
 									<div class="detail-item-alert alert-success">
 										<span class="icon"><i class="iconfont">&#xe659;</i></span>
-										<span class="status">通过</span>
+										<!-- <span class="status">通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
 									<div class="detail-item-alert alert-warning">
 										<span class="icon"><i class="iconfont">&#xe612;</i></span>
-										<span class="status">不通过</span>
+										<!-- <span class="status">不通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 										<!-- <span class="message-number">new</span> -->
 									</div>
@@ -163,19 +163,19 @@
 								{{ if(sourCode==-4||sourCode==-5){ }}
 									<div class="detail-item-alert alert-danger">
 										<span class="icon"><i class="iconfont">!</i></span>
-										<span class="status">未校验</span>
+										<!-- <span class="status">未校验</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==1){ }}
 									<div class="detail-item-alert alert-success">
 										<span class="icon"><i class="iconfont">&#xe659;</i></span>
-										<span class="status">通过</span>
+										<!-- <span class="status">通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
 									<div class="detail-item-alert alert-warning">
 										<span class="icon"><i class="iconfont">&#xe612;</i></span>
-										<span class="status">不通过</span>
+										<!-- <span class="status">不通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 										<!-- <span class="message-number">new</span> -->
 									</div>
@@ -285,23 +285,23 @@
 					{{ if(item.length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
 							{{ if(col.details&&col.details.queryResult){ }}
-								{{var sourCode=col.details.queryResult;}}
-								{{ if(sourCode==1){ }}
+								{{var sourCode=col.details.queryResult;var cardStatus=col.details.cardStatus;}}
+								{{ if(sourCode==1&&cardStatus==1){ }}
 									<div class="detail-item-alert alert-success">
 										<span class="icon"><i class="iconfont">&#xe659;</i></span>
-										<span class="status">通过</span>
+										<!-- <span class="status">通过</span> -->
 										<span class="text">{{=col.details.verifyContent}}</span>
 									</div>
 								{{ }else{ }}
 									<div class="detail-item-alert alert-warning">
 										<span class="icon"><i class="iconfont">&#xe612;</i></span>
-										<span class="status">不通过</span>
+										<!-- <span class="status">不通过</span> -->
 										<span class="text">{{=col.details.verifyContent}}</span>
 										<!-- <span class="message-number">new</span> -->
 									</div>
 								{{ } }}
 								<div class="detail-item-context clearfix">
-									{{ if(sourCode==1){ }}
+									{{ if(sourCode==1&&cardStatus==1){ }}
 										{{ if(col.details&&col.details.itemArray&&col.details.itemArray.length>0){ }}
 											<div>
 												<table class="default-table">
@@ -420,19 +420,19 @@
 								{{ if(sourCode==-4||sourCode==-5){ }}
 									<div class="detail-item-alert alert-danger">
 										<span class="icon"><i class="iconfont">!</i></span>
-										<span class="status">未校验</span>
+										<!-- <span class="status">未校验</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==1){ }}
 									<div class="detail-item-alert alert-success">
 										<span class="icon"><i class="iconfont">&#xe659;</i></span>
-										<span class="status">通过</span>
+										<!-- <span class="status">通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
 									<div class="detail-item-alert alert-warning">
 										<span class="icon"><i class="iconfont">&#xe612;</i></span>
-										<span class="status">不通过</span>
+										<!-- <span class="status">不通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 										<!-- <span class="message-number">new</span> -->
 									</div>
@@ -507,19 +507,19 @@
 								{{ if(sourCode==-4||sourCode==-5){ }}
 									<div class="detail-item-alert alert-danger">
 										<span class="icon"><i class="iconfont">!</i></span>
-										<span class="status">未校验</span>
+										<!-- <span class="status">未校验</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==1){ }}
 									<div class="detail-item-alert alert-success">
 										<span class="icon"><i class="iconfont">&#xe659;</i></span>
-										<span class="status">通过</span>
+										<!-- <span class="status">通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
 									<div class="detail-item-alert alert-warning">
 										<span class="icon"><i class="iconfont">&#xe612;</i></span>
-										<span class="status">不通过</span>
+										<!-- <span class="status">不通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 										<!-- <span class="message-number">new</span> -->
 									</div>
@@ -621,19 +621,19 @@
 								{{ if(sourCode==-4||sourCode==-5){ }}
 									<div class="detail-item-alert alert-danger">
 										<span class="icon"><i class="iconfont">!</i></span>
-										<span class="status">未校验</span>
+										<!-- <span class="status">未校验</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==1){ }}
 									<div class="detail-item-alert alert-success">
 										<span class="icon"><i class="iconfont">&#xe659;</i></span>
-										<span class="status">通过</span>
+										<!-- <span class="status">通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
 									<div class="detail-item-alert alert-warning">
 										<span class="icon"><i class="iconfont">&#xe612;</i></span>
-										<span class="status">不通过</span>
+										<!-- <span class="status">不通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 										<!-- <span class="message-number">new</span> -->
 									</div>
@@ -717,19 +717,19 @@
 								{{ if(sourCode==-4||sourCode==-5){ }}
 									<div class="detail-item-alert alert-danger">
 										<span class="icon"><i class="iconfont">!</i></span>
-										<span class="status">未校验</span>
+										<!-- <span class="status">未校验</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==1){ }}
 									<div class="detail-item-alert alert-success">
 										<span class="icon"><i class="iconfont">&#xe659;</i></span>
-										<span class="status">通过</span>
+										<!-- <span class="status">通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
 									<div class="detail-item-alert alert-warning">
 										<span class="icon"><i class="iconfont">&#xe612;</i></span>
-										<span class="status">不通过</span>
+										<!-- <span class="status">不通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
 								{{ } }}
