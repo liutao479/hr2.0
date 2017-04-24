@@ -262,7 +262,7 @@
 														<td>
 															<span class="info-key">
 																<i data-num='phone{{= i+1}}'>*</i>
-																电话
+																联系电话
 																：</span>
 														</td>
 														<td>
@@ -1267,3 +1267,58 @@
 				{{ } }}
 				{{ } }}
 			</script>
+
+<ul class="sideBar" id="sideBar"></ul>
+
+<script type="text/x-dot-template" id="siderBarTmpl">
+	{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i], flag = 0, code = row.code; }}
+		{{ if(code == 'GTHK' || code == 'FDBR' || code == 'ZJKR' || code == 'QTXX' || code == 'JJLXR' || code == 'FYXX') { }}
+			{{ if(it.data[code] && it.data[code].length) { }}
+			<li class="sideBar-item">
+				<i class="iconfont" >{{=tool.icon[code]}}</i>
+				<div class="sideBar-content">
+					<a href="#" class="sideBar-content-item" >{{=row.name}}</a>
+					<span class="arrow arrow-right"></span>
+				</div>
+			</li>
+			{{ } }}
+		{{ } else if(code == 'HKKXX') { }}
+			<li class="sideBar-item">
+				<i class="iconfont" >{{=tool.icon[code]}}</i>
+				<div class="sideBar-content">
+					<a href="#" class="sideBar-content-item" >{{=row.name}}</a>
+					<span class="arrow arrow-right"></span>
+				</div>
+			</li>
+		{{ } else if(code == 'FQXX') { }}
+			<li class="sideBar-item">
+				<i class="iconfont" >{{=tool.icon[code]}}</i>
+				<div class="sideBar-content">
+					<a href="#" class="sideBar-content-item" >{{=row.name}}</a>
+					<span class="arrow arrow-right"></span>
+				</div>
+			</li>
+		{{ } else if(code == 'DDXX') { }}
+			<li class="sideBar-item">
+				<i class="iconfont" >{{=tool.icon[code]}}</i>
+				<div class="sideBar-content">
+					<a href="#" class="sideBar-content-item" >{{=row.name}}</a>
+					<span class="arrow arrow-right"></span>
+				</div>
+			</li>
+		{{ } else if(code == 'CLXX') { }}
+			<li class="sideBar-item">
+				<i class="iconfont" >{{=tool.icon[code]}}</i>
+				<div class="sideBar-content">
+					<a href="#" class="sideBar-content-item" >{{=row.name}}</a>
+					<span class="arrow arrow-right"></span>
+				</div>
+			</li>
+		{{ } }}
+	{{ } }}
+	<li class="sideBar-item last">
+		<i class="iconfont" >&#xe66c;</i>
+		<br />
+		<span class="go-top">顶部</span>
+	</li>
+</script>

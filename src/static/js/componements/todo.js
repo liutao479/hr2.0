@@ -34,8 +34,10 @@
 		self.$trigger.on('click', function() {
 			if(!self.total) return false;
 			if(self.opened) {
+				$('#sideBar').animate({right: 0}, self.opts.animation);
 				self.close();
 			} else {
+				$('#sideBar').animate({right: '155px'}, self.opts.animation);
 				self.open();
 			}
 		});

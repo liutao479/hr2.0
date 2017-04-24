@@ -68,11 +68,11 @@
 						{{ } else { }}
 						<tr class="orders-item tr-odd">
 						{{ } }}
-							<td class="orders-item-data">{{=row.orderNo}}</td>
-							<td class="orders-item-data">{{=row.acceptName}}</td>
-							<td class="orders-item-data">{{=row.realName}}<br/>（{{=row.idCard}}）</td>
-							<td class="orders-item-data">{{=row.deptName}}</td>
-							<td class="orders-item-data">{{=row.bankName}}</td>
+							<td class="orders-item-data">{{=row.orderNo || ''}}</td>
+							<td class="orders-item-data">{{=row.acceptName || ''}}</td>
+							<td class="orders-item-data">{{=row.realName || ''}}<br/>（{{=row.idCard || ''}}）</td>
+							<td class="orders-item-data">{{=row.deptName || ''}}</td>
+							<td class="orders-item-data">{{=row.bankName || ''}}</td>
 							{{ if(row.status == 0){ }}
 							<td class="orders-item-data status-wait-verify">未办理</td>
 							{{ } else if(row.status == 1) { }}
@@ -82,8 +82,8 @@
 									{{ } else if(row.status == 4) { }}
 										<td class="orders-item-data status-back">被退回</td>
 										{{ } }} 
-							<td class="orders-item-data">{{=tool.formatDate(row.pickDate)}}</td>
-							<td class="orders-item-data">{{=tool.formatDate(row.deadline)}}</td>
+							<td class="orders-item-data">{{=row.pickDateStr || ''}}</td>
+							<td class="orders-item-data">{{=row.deadlineStr || ''}}</td>
 							{{ if(row.status == 2) { }}
 							<td class="orders-item-data">--</td>
 							{{ } else if(tool.overdue(row.pickDate, row.deadline) == "已超期") { }}
