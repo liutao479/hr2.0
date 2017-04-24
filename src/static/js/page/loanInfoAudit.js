@@ -136,7 +136,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 		$console.find('input[type="text"]').on('change', function() {
 			var thisName = $(this).attr('name'),
 				that = $(this);
-			if(thisName == 'carPrice' || thisName == 'phone' || thisName == 'systemCarPrice' ){
+			if(thisName == 'carPrice' || thisName == 'systemCarPrice' ){
 				var thisVal = that.val();
 				var reg =  /^0\.([1-9]|\d[1-9])$|^[1-9]\d{0,8}\.\d{0,2}$|^[1-9]\d{0,8}$/;
 				if(!reg.test(thisVal)){
@@ -172,6 +172,16 @@ page.ctrl('loanInfoAudit', function($scope) {
 					that.val('');
 				}
 			}
+			if( thisName == 'phone'){
+				var thisVal = that.val();
+				var reg = /^1[\d+]{10}$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">请您填写11位正确格式的手机号码！</i>');
+					that.val('');
+				}
+			}
+
 		})
 		$('i').each(function(){
 			var dataNum = $(this).data('num');
