@@ -375,7 +375,7 @@
 							<dt class="dt">垫资时间：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-date">\
-									<input id="loaningDate" type="text" class="dateBtn" data-key="loaningDate" data-type="yymmddhhmm" readonly="readonly" value="{{=it.loaningDate || \"\"}}" />\
+									<input id="loaningDate" type="text" class="dateBtn" data-key="loaningDate" data-type="yymmddhhmm" readonly="readonly" value="{{=it.loaningDateStr || \"\"}}" />\
 								</div>\
 							</dd>\
 						</dl>\
@@ -399,7 +399,7 @@
 							<dt class="dt">垫资时间：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-date">\
-									<input id="loaningDate" type="text" class="dateBtn" data-key="loaningDate" data-type="yymmddhhmm" readonly="readonly" value="{{=it.loaningDateStr || \"\"}}" />\
+									<input id="loaningDate1" type="text" class="dateBtn" data-key="loaningDate" data-type="yymmddhhmm" readonly="readonly" value="{{=it.loaningDateStr || \"\"}}" />\
 								</div>\
 							</dd>\
 						</dl>\
@@ -420,10 +420,10 @@
 		contract: '<div class="w-content">\
 					<div class="news-content">\
 						<p>浙江惠瀜网络科技有限公司：<span class="color-blue underline">{{=it.orderNo || \"\"}}</span></p>\
-						<p class="news-section">根据（申请人）<span class="color-blue underline">{{=it.userName || \"\"}}</span>（身份证号:<span class="color-blue underline">{{=it.idCard || \"\"}}</span>）签署金额为<span class="color-blue underline">{{=it.orderNo || \"\"}}</span>元（大写：叁万壹仟壹佰壹拾壹元整）的车辆代购协议，本公司经研究决定，承诺向贵公司提供无限连带责任保证， 为上述申请人提供代还款承诺。代还款金额：借款本金。在上述编号的订单内的还款时间前（含），本公司将全额无条件代还。</p>\
-						<p class="news-section">中新社记者当天多次联系贾先德，其手机始终处于无人接听状态。贾先德仅于当晚约20时通过短信答复记者，称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。</p>\
+						<p class="news-section">根据（申请人）<span class="color-blue underline">{{=it.userName || \"\"}}</span>（身份证号:<span class="color-blue underline">{{=it.idCard || \"\"}}</span>）签署金额为<span class="color-blue underline">{{=it.loanMoney || \"\"}}</span>元（大写：<span class="color-blue underline">{{=it.loanMoneyCN || \"\"}}</span>）的车辆代购协议，本公司经研究决定，承诺向贵公司提供无限连带责任保证， 为上述申请人提供代还款承诺。代还款金额：借款本金。在上述编号的订单内的还款时间前（含），本公司将全额无条件代还。</p>\
+						<p class="news-section">本承诺函自资金方按照上述编号的订单内的《车辆代购协议》内约定的条款，将垫资资金划入《车辆代购协议》指定的银行账户之日起生效。如资金方未能将资金划入《车辆代购协议》指定的银行账户，本公司概不承担代还责任。</p>\
 						<p class="news-company">浙江惠瀜网络科技有限公司</p>\
-						<p class="news-time">二〇一〇年七月二十七日</p>\
+						<p class="news-time"><span class="color-blue underline">{{=it.year || \"\"}}</span>年<span class="color-blue underline">{{=it.month || \"\"}}</span>月<span class="color-blue underline">{{=it.day || \"\"}}</span>日</p>\
 					</div>\
 				</div>'
 	}

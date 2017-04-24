@@ -22,7 +22,7 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		if($params.type) {
 			data.type = $params.type;
 			data.orderNo = $params.orderNo;	
-			url = 'materials/materialsByOrderNo';
+			url = 'pickMaterials/pickMaterialsByOrderNo';
 		}
 		$.ajax({
 			type: 'post',

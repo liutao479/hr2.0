@@ -322,13 +322,13 @@ page.ctrl('lendAudit', function($scope) {
 									_params[$(this).data('key')] = value;
 								}
 							});
-							if(!$scope.imgUrl) {
-								that.$content.find('.uploadEvt').removeClass('error-input').addClass('error-input');
-								flag = false;
-							} else {
-								that.$content.find('.uploadEvt').removeClass('error-input');
-								_params.advanceCertificate = $scope.imgUrl;
-							}
+							// if(!$scope.imgUrl) {
+							// 	that.$content.find('.uploadEvt').removeClass('error-input').addClass('error-input');
+							// 	flag = false;
+							// } else {
+							// 	that.$content.find('.uploadEvt').removeClass('error-input');
+							// 	_params.advanceCertificate = $scope.imgUrl;
+							// }
 							if(flag) {
 								process(_params, reason);
 								// $.ajax({
@@ -398,12 +398,9 @@ page.ctrl('lendAudit', function($scope) {
 								orderNo: $params.orderNo
 							},
 							success: $http.ok(function(xhr) {
-								$.alert({
+								$.dialog({
 									title: '代还款承诺函',
-									content: doT.template(dialogTml.wContent.contract)(data),
-									onContentReady: function() {
-										
-									}
+									content: doT.template(dialogTml.wContent.contract)(xhr.data)
 								});
 							})
 						});
@@ -438,11 +435,6 @@ page.ctrl('lendAudit', function($scope) {
 								} else if(!regMap[$(this).data('type')].test(value)) {
 									$parent.removeClass('error-input').addClass('error-input');
 									$parent.find('.input-err').remove();
-									// if($(this).data('type') == 'accountNumber') {
-									// 	$parent.append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
-									// } else {
-									// 	$parent.append('<span class="input-err">该项不符合输入规则！（10位汉字）</span>')
-									// }
 									$parent.append('<span class="input-err">该项不符合输入规则！</span>');
 									flag = false;
 								} else {
@@ -451,8 +443,10 @@ page.ctrl('lendAudit', function($scope) {
 									_params[$(this).data('key')] = value;
 								}
 							});
+							var isCheck = true;
 							if(!that.$content.find('.checkbox').attr('checked')) {
 								flag = false;
+								isCheck = false;
 							}
 							// if(!$scope.imgUrl) {
 							// 	that.$content.find('.uploadEvt').removeClass('error-input').addClass('error-input');
@@ -463,21 +457,36 @@ page.ctrl('lendAudit', function($scope) {
 							// }
 							if(flag) {
 								console.log(_params);
-								// process(_params, reason);
-								// $.ajax({
-								// 	type: 'post',
-								// 	url: $http.api('makeLoanApproval/submit/' + $params.taskId, 'zyj'),
-								// 	data: params,
-								// 	dataType: 'json',
-								// 	success: $http.ok(function(result) {
-								// 		console.log(result);
-								// 		process(reason);
-								// 	})
-								// })
+								if(!isCheck) {
+									$.alert({
+										title: '提示',
+										content: tool.alert('请勾选《代还款承诺函》！'),
+										buttons: {
+											close: {
+												text: '取消',
+												btnClass: 'btn-default btn-cancel'
+											},
+											ok: {
+												text: '确定',
+												action: function() {
+
+												}
+											}
+										}
+									});
+									return false;
+								}
+								process(_params, reason);
 							} else {
+								var content = '';
+								if(!isCheck) {
+									content = '请完善各项信息，并勾选《代还款承诺函》！';
+								} else {
+									content = '请完善各项信息！';
+								}
 								$.alert({
 									title: '提示',
-									content: tool.alert('请完善各项信息！'),
+									content: tool.alert(content),
 									buttons: {
 										close: {
 											text: '取消',
@@ -493,7 +502,6 @@ page.ctrl('lendAudit', function($scope) {
 								});
 								return false;
 							}
-							// process(_params, reason);
 						}
 					}
 				}
@@ -552,6 +560,10 @@ page.ctrl('lendAudit', function($scope) {
 	 * 任务提交跳转
 	 */
 	function process(_params, reason) {
+		console.log(_params)
+		if(reason) {
+			_params.reason = reason;
+		}
 		$.ajax({
 			type: 'post',
 			url: $http.api('makeLoanApproval/submit/' + $params.taskId, true),
@@ -568,7 +580,7 @@ page.ctrl('lendAudit', function($scope) {
 					orderNo: $params.orderNo
 				}
 				if(reason) params.reason = reason;
-				flow.tasksJump(params, 'approval');
+				// flow.tasksJump(params, 'approval');
 			})
 		})
 	}
