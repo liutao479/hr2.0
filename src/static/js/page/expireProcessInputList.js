@@ -127,7 +127,7 @@ page.ctrl('expireProcessInputList', [], function($scope) {
 					var data = res.data;
 					$.alert({
 						title: '最新逾期处理意见',
-						content: data ? internel.diag.format(data.submitUserName, data.submitDateStr, data.overdueIdea) : tool.alert('暂无处理意见'),
+						content: data ? internel.diag.format(data.submitUserName, data.submitDateStr, data.overdueIdea || '') : tool.alert('暂无处理意见'),
 						buttons: { ok: {text: '确定'}}
 					})
 				})

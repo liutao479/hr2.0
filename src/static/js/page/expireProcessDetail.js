@@ -65,6 +65,7 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 				auditState: $scope.overdueType + 1
 			},
 			global: false,
+			dataType: 'json',
 			success: $http.ok(function(response) {
 				if(!$scope.overdueUsers) $scope.overdueUsers = {};
 				$scope.overdueUsers[$scope.overdueType] = response.data;
@@ -94,9 +95,17 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 				orderNo: $params.orderNo,
 				auditState: $scope.overdueType + 1,
 				handleUserId: $scope.overdueUser,
-				auditIdea: $diag.find('textarea').val().trim()
+				auditIdea: $diag.$content.find('textarea').val().trim()
 			},
+			global: false,
+			dataType: 'json',
 			success: $http.ok(function() {
+				$.alert({
+					title: '成功',
+					content: '<div class="w-content">逾期处理任务派发成功</div>',
+					autoClose: 'ok|3000',
+					buttons: {ok:{text:'确定'}}
+				})
 				$diag.close();
 			}),
 			error: function() {
@@ -109,6 +118,7 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 				})
 			}
 		})
+		return false;
 	}
 
 	/**
@@ -130,7 +140,6 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 				var cfg = xhr.cfgData;
 				cfg.frames = internel.tabs.concat(cfg.frames);
 				loadGuide(cfg);
-				setupEvent();
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -144,11 +153,12 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 	var setupLocation = function() {
 		if(!$scope.$params.path) return false;
 		var $location = $console.find('#location');
+		var loanTask = $scope.result.data.loanTask;
 		$location.data({
 			backspace: $scope.$params.path,
-			loanUser: $scope.result.data.loanTask.loanOrder.realName,
-			current: $scope.result.data.loanTask.taskName || '逾期处理详情',
-			orderDate: $scope.result.data.loanTask.loanOrder.createDateStr,
+			loanUser: loanTask && loanTask.loanOrder.realName,
+			current: loanTask && loanTask.taskName || '逾期处理详情',
+			orderDate: loanTask && loanTask.loanOrder.createDateStr,
 			// pmsDept: $scope.result.data.loanTask.loanOrder.pmsDept.name
 		});
 		$location.location();
@@ -222,7 +232,6 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 			data: apiParams,
 			success: $http.ok(function(result) {
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupEvent();
 				if(paging && result.page && result.page.pages){
 					setupPaging(result.page.pages, true);
 				}
@@ -252,6 +261,7 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 				title: '派发逾期处理',
 				content: 'url:./defs/overdue.send.html',
 				onContentReady: function() {
+					console.log(this.$content)
 					this.$content.find('.select').dropdown()
 				},
 				buttons: {
@@ -267,36 +277,6 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 					}
 				}
 			})
-			/*
-			$.confirm({
-				title: '选择提交对象',
-				content: dialogTml.wContent.suggestion,
-				buttons: {
-					close: {
-						text: '取消',
-						btnClass: 'btn-default btn-cancel',
-						action: function() {}
-					},
-					ok: {
-						text: '确定',
-						action: function () {
-							var that = this;
-							var taskIds = [];
-							for(var i = 0, len = $params.tasks.length; i < len; i++) {
-								taskIds.push(parseInt($params.tasks[i].id));
-							}
-							var params = {
-								taskId: $params.taskId,
-								taskIds: taskIds,
-								orderNo: $params.orderNo
-							}
-							var reason = $.trim(that.$content.find('#suggestion').val());
-							if(reason) params.reason = reason;
-							flow.tasksJump(params, 'complete');
-						}
-					}
-				}
-			})*/
 		});
 	}
 
@@ -313,6 +293,7 @@ page.ctrl('expireProcessDetail', [], function($scope) {
 		}
 		loadExpireProcessList(true);
 		loadTabList();
+		setupEvent();
 	});
 
 	$scope.paging = function(_page, _size, $el, cb) {

@@ -4,7 +4,8 @@ page.ctrl('expireRecord', [], function($scope) {
 		$console = $params.refer ? $($params.refer) : render.$console,
 		apiParams = {
 			page: $params.page || 1,
-			pageSize: 20
+			pageSize: 20,
+			orderNo: $params.orderNo
 		};
 	/**
 	 *逾期处理意见 
@@ -16,9 +17,19 @@ page.ctrl('expireRecord', [], function($scope) {
 		$.ajax({
 			url: $http.api('loanOverdueRecord/queryRecordList', true),
 			data: params,
+			dataType: 'json',
 			success: $http.ok(function(result) {
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
-				setupPaging(result.page.pages, true);
+				if(result.data.length > 0) {
+					render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
+					setupPaging(result.page.pages, true);	
+				} else {
+					var empty = '<div class="blank-box">\
+									<img src="/hr2.0/dist/static/css/img/orders_blank.png">\
+									<p>暂无逾期处理记录！</p>\
+								</div>';
+					$scope.$el.$tbl.html(empty);
+				}
+				
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -34,7 +45,7 @@ page.ctrl('expireRecord', [], function($scope) {
 			pages: isPage ? count : (tool.pages(count || 0, apiParams.pageSize)),
 			size: apiParams.pageSize
 		});
-		$('#pageToolbar').paging();
+		$scope.$el.$paging.paging();
 	}
  	/**
 	* 绑定搜索事件
@@ -55,13 +66,6 @@ page.ctrl('expireRecord', [], function($scope) {
 			// router.updateQuery($scope.$path, $params);
 		}
 	});
-	/**
-	* 绑定立即处理事件
-	*/
-	$(document).on('click', '#expireProcessTable .button', function() {
-		var that = $(this);
-		router.render(that.data('href'), {orderNo: that.data('id')});
-	});
 
 	/***
 	* 加载页面模板
@@ -78,7 +82,6 @@ page.ctrl('expireRecord', [], function($scope) {
 	$scope.paging = function(_page, _size, $el, cb) {
 		apiParams.page = _page;
 		$params.page = _page;
-		// router.updateQuery($scope.$path, $params);
 		loadExpireProcessList(apiParams);
 		cb();
 	}

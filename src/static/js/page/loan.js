@@ -20,7 +20,6 @@ page.ctrl('loan', function($scope) {
 			url: $http.api('loanOrder/workbench', true),
 			data: params,
 			success: $http.ok(function(result) {
-				console.log(result);
 				$scope.pageData = result.data;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				setupPaging(result.page, true);
