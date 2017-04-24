@@ -177,11 +177,16 @@
 		var self = this,
 			arr = [];
 		arr.push('<div class="menu">');
+		// for(var i in self.data) {
+
+		// }
 		$.each(self.data, function(key, obj) {
+			console.log(key);
+			console.log(obj);
 			if(!$.isArray(obj)) return;
 			var len = obj.length;
 			var menuItem = menuMap[key];
-			if(!menuItem) return;
+			if(!menuItem) return true;
 			if(len === 0) {
 				arr.push('<a class="menu-item" data-href="{2}" id="menu{3}">\
 							<i class="iconfont mark">{0}</i>\
@@ -197,6 +202,7 @@
 				for(var i = 0; i < len; i++) {
 					var innerKey = obj[i];
 					var innerItem = menuMap[innerKey];
+					if(!innerItem) continue;
 					arr.push('<a class="menu-group-item" id="menu{0}" data-href="{1}">{2}</a>'.format(innerKey, innerItem.route, innerItem.name));
 				}
 				arr.push('</div>');

@@ -373,7 +373,7 @@
 						</dl>\
 					</div>',
 		applyAdvance: '<div class="w-content">\
-						<dl class="w-dropdown float-left">\
+						<dl class="w-dropdown">\
 							<dt class="dt">垫资时间：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-date">\
@@ -381,7 +381,7 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown float-left">\
+						<dl class="w-dropdown">\
 							<dt class="dt">打款金额：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
@@ -389,9 +389,21 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<div class="w-text">确定申请平台垫资并同意签署<a href="javascript:;" class="view-sign" style="text-decoration: underline;">《代还款承诺函》</a>吗？</div>\
+						<dl class="w-dropdown">\
+							<dt class="checkbox checkbox-normal float-left" style= "margin-left: 5px;"></dt>\
+							<dd class="dd" style= "margin-left: 35px;">确定申请平台垫资并同意签署<a href="javascript:;" class="view-sign" style="text-decoration: underline;">《代还款承诺函》</a>吗？</dt>\
+						</dl>\
 						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
-					</div>'
+					</div>',
+		contract: '<div class="w-content">\
+					<div class="news-content">\
+						<p>浙江惠瀜网络科技有限公司：<span class="color-blue underline">{{=it.orderNo || \"\"}}</span></p>\
+						<p class="news-section">根据（申请人）<span class="color-blue underline">{{=it.userName || \"\"}}</span>（身份证号:<span class="color-blue underline">{{=it.idCard || \"\"}}</span>）签署金额为<span class="color-blue underline">{{=it.orderNo || \"\"}}</span>元（大写：叁万壹仟壹佰壹拾壹元整）的车辆代购协议，本公司经研究决定，承诺向贵公司提供无限连带责任保证， 为上述申请人提供代还款承诺。代还款金额：借款本金。在上述编号的订单内的还款时间前（含），本公司将全额无条件代还。</p>\
+						<p class="news-section">中新社记者当天多次联系贾先德，其手机始终处于无人接听状态。贾先德仅于当晚约20时通过短信答复记者，称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。称台湾康师傅公司解散对聚焦大陆市场的康师傅控股有限公司的营运及财务没有任何重大影响。</p>\
+						<p class="news-company">浙江惠瀜网络科技有限公司</p>\
+						<p class="news-time">二〇一〇年七月二十七日</p>\
+					</div>\
+				</div>'
 	}
 	g.dialogTml.wCommit = {
 		sure: '<div class="w-commit-area">\

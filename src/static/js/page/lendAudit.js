@@ -384,6 +384,31 @@ page.ctrl('lendAudit', function($scope) {
 						oncleared: function() {
 						}
 					});
+
+					//单选框
+					this.$content.find('.checkbox').checking();
+
+					//查看文签
+					this.$content.find('.view-sign').on('click', function() {
+						$.ajax({
+							type: 'post',
+							url: $http.api('contract/view', true),
+							dataType: 'json',
+							data: {
+								orderNo: $params.orderNo
+							},
+							success: $http.ok(function(xhr) {
+								$.alert({
+									title: '代还款承诺函',
+									content: doT.template(dialogTml.wContent.contract)(data),
+									onContentReady: function() {
+										
+									}
+								});
+							})
+						});
+						
+					});
 				},
 				buttons: {
 					close: {
@@ -426,6 +451,9 @@ page.ctrl('lendAudit', function($scope) {
 									_params[$(this).data('key')] = value;
 								}
 							});
+							if(!that.$content.find('.checkbox').attr('checked')) {
+								flag = false;
+							}
 							// if(!$scope.imgUrl) {
 							// 	that.$content.find('.uploadEvt').removeClass('error-input').addClass('error-input');
 							// 	flag = false;
