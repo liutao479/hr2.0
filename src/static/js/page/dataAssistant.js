@@ -132,65 +132,7 @@ page.ctrl('dataAssistant', function($scope) {
 			})
 		});
 	};
-	/*发起核查*/
-	/*var openUserDialog=function(that,_data,key){
-		for(var z in _data){
-			var _minObj=userType.filter(it=>it.userType==_data[z].userType);
-			if(_minObj&&_minObj.length==1){
-				_data[z].userTypeName=_minObj[0].text;
-			};
-		};
-		that.openWindow({
-			title:"———— 服务项目 ————",
-			isContext:true,
-			content: dialogTml.wContent.userBtnGroup,	
-			commit: dialogTml.wCommit.cancelSure,			
-			data:_data
-		},function($dia){
-			var _arr=[];
-			$dia.find(".block-item-data:not(.not-selected)").click(function() {
-				$(this).toggleClass("selected");	
-				var _index=$(this).data("index");
-				var _thisVal=_data[_index].userId;
-				if($(this).hasClass("selected"))
-					_arr.push(_thisVal);	
-				else
-					_arr.splice(_arr.indexOf(_thisVal),1);
-			});
-			$dia.find(".w-sure").click(function() {
-				$dia.remove();
-				if(_arr.length==0)
-					return false;
-				$.ajax({
-					type: 'post',
-					dataType:"json",
-					url: $http.api('loanAudit/verifyCheck',true),
-					data: {
-						key:key,
-						orderNo:apiParams.orderNo,
-						serviceType:'2',
-						userIds:_arr.join("_")
-					},
-					success: $http.ok(function(res) {
-						var _oneObj=toastArr.filter(it=>it==key);
-						var _el=$scope.def.toastTmpl;//及时提示
-						if(_oneObj&&_oneObj.length==1)
-							_el=$scope.def.toastTmpl2;//非及时提示
-						var jc=$.dialog(_el,function($dialog){
-							var context=$(".jconfirm .jconfirm-content").html();
-							if(context){
-								setTimeout(function() {
-									jc.close();
-									search(apiParams);
-								},1500);
-							};
-						});
-					})
-				});
-			});
-		});	
-	};*/
-	var openDialog=function(that,_data){
+	var openDialog=function(_data){
 		var _loalList=[
 			{text:"实名",isBank:true,class:"bac6b78fa",icon:"&#xe677;"},
 			{text:"人脸",isBank:true,class:"bacc8a5df",icon:"&#xe67c;"},
@@ -219,80 +161,69 @@ page.ctrl('dataAssistant', function($scope) {
 				};
 			};
 		};
-		that.openWindow({
-			title:"———— 服务项目 ————",
-			isContext:true,
-			content: dialogTml.wContent.serviceItems,				
-			data:_data//0：未核查，1:未查询，缺少相关数据,2: 查询中,3：已核查
-		},function($dialog){
-			var _title="提示";
-			$dialog.find(".nextDialog").confirm({
-				title:_title,
-				content:"<p class='blank'>请确认是否发起本次核查？</p>",
-				onOpenBefore:function(a,b,c){
-					_title=_data[this.$target.data('index')].funcName;
-					this.setTitle(_title);
-				},
-			    buttons: {
-			        close: {
-			        	text:"取消",
-			        	action:function(){}
-			        },
-			        ok: {
-			        	text:"确定",
-			        	action:function(){
-							var _key=_data[this.$target.data('index')].key;
-							$.ajax({
-								type: 'post',
-								dataType:"json",
-								url: $http.api('loanAudit/verifyCheck',true),
-								data: {
-									key:_key,
-									orderNo:apiParams.orderNo,
-									serviceType:'2',/*1材料验真，2数据辅证，必传*/
-									userIds:apiParams.userId
-								},
-								success: $http.ok(function(res) {
-									$dialog.remove();
-									var _oneObj=toastArr.filter(it=>it==_key);
-									var _el=$scope.def.toastTmpl;//及时提示
-									if(_oneObj&&_oneObj.length==1)
-										_el=$scope.def.toastTmpl2;//非及时提示
-									var jc=$.dialog(_el,function($dialog){
-										var context=$(".jconfirm .jconfirm-content").html();
-										if(context){
-											setTimeout(function() {
-												jc.close();
-												search(apiParams);
-											},1500);
-										};
-									});
-								})
-							});
-				        }
-			        }
-			    }
-			});
-			/*$dialog.find(".nextDialog").click(function() {
-				$dialog.remove();
-				var _key=_data[$(this).data('index')].key;
-				$.ajax({
-					type: 'post',
-					dataType:'json',
-					url: $http.api('loanAudit/checkUserList','cyj'),
-					data: {
-						orderNo:apiParams.orderNo,
-						key:_key
+		var dialogHtml = doT.template(dialogTml.wContent.serviceItems)(_data);
+		$.dialog({
+			title: '———— 服务项目 ————',
+			boxWidth:"70%",
+			offsetBottom: "50px",
+			content:dialogHtml,
+			onContentReady:function(){
+				var _title="提示";
+				var _srvDialog=this;
+				_srvDialog.$content.find(".nextDialog").confirm({
+					title:_title,
+					content:"<p class='blank'>请确认是否发起本次核查？</p>",
+					onOpenBefore:function(){
+						_title=_data[this.$target.data('index')].funcName;
+						this.setTitle(_title);
 					},
-					success: $http.ok(function(res) {
-						if(res&&res.data&&res.data.length>0)
-							openUserDialog(that,res.data,_key);
-						else
-							openUserDialog(that,[],_key);
-					})
-				});	
-			});*/
-		});		
+				    buttons: {
+				        close: {
+				        	text:"取消",
+				        	action:function(){}
+				        },
+				        ok: {
+				        	text:"确定",
+				        	action:function(){
+				        		var _conDialog=this;
+								var _key=_data[_conDialog.$target.data('index')].key;
+								$.ajax({
+									type: 'post',
+									dataType:"json",
+									url: $http.api('loanAudit/verifyCheck',true),
+									data: {
+										key:_key,
+										orderNo:apiParams.orderNo,
+										serviceType:'2',/*1材料验真，2数据辅证，必传*/
+										userIds:apiParams.userId
+									},
+									success: $http.ok(function(res) {
+										_conDialog.close();
+										_srvDialog.close();
+										var _oneObj=toastArr.filter(it=>it==_key);
+										var _el=dialogTml.wContent.realTimeMsg;//及时提示
+										if(_oneObj&&_oneObj.length==1)
+											_el=dialogTml.wContent.nonRealTimeMsg;//非及时提示
+										var _tipHtml = doT.template(_el)();
+										$.dialog({
+											title:false,
+											content:_tipHtml,
+											onContentReady:function(){
+												var _tioDialog=this;
+												setTimeout(function() {
+													_tioDialog.close();
+													search(apiParams);
+												},1500);
+											}
+										});
+									})
+								});
+					        }
+				        }
+				    }
+				});
+			}
+		});	
 	};
 	var setCanvas=function(){
 		/*画百分比相关start*/
@@ -384,7 +315,6 @@ page.ctrl('dataAssistant', function($scope) {
 			};
 		});
 		$scope.$el.$listDiv.off("click","#startCheck").on("click","#startCheck",function() {
-			var that=$(this);
 			$.ajax({
 				type: 'post',
 				dataType:'json',
@@ -395,27 +325,11 @@ page.ctrl('dataAssistant', function($scope) {
 				},
 				success: $http.ok(function(res) {
 					if(res&&res.data&&res.data.length>0)
-						openDialog(that,res.data);
+						openDialog(res.data);
 					else
-						openDialog(that,[]);
+						openDialog([]);
 				})
 			});			
-		});
-		$scope.$el.$listDiv.off("click",".no-img").on("click",".no-img",function() {
-			var _parent=$(this).parents('.no-img-group');
-			var _imgs=[],
-				_idx=$(this).parent(".no-img-list").index();
-			_parent.find('.no-img-list').each(function(){
-				var _src=$(this).find("img").attr('src');
-				if(_src)
-					_imgs.push({materialsPic:_src});
-			});
-			$.preview(_imgs, function(img, mark, cb) {
-				cb();	
-			}, {
-				markable: false,
-				idx: _idx
-			});
 		});
 		$scope.$el.$listDiv.off("click",".no-img").on("click",".no-img",function() {
 			var _parent=$(this).parents('.no-img-group');
@@ -439,8 +353,6 @@ page.ctrl('dataAssistant', function($scope) {
 	$console.load(router.template('iframe/data-assistant'), function() {
 		$scope.def.tabTmpl = $console.find('#roleBarTabTmpl').html();
 		$scope.def.listTmpl = $console.find('#listTmpl').html();
-		$scope.def.toastTmpl = $console.find('#importResultTmpl').html();
-		$scope.def.toastTmpl2 = $console.find('#importResultTmpl2').html();
 		$scope.$context=$console.find('#data-assistant');
 		$scope.$el = {
 			$tab: $scope.$context.find('#roleBarTab'),

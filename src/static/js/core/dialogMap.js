@@ -241,13 +241,13 @@
 						</tbody>\
 					</table>\
 				</div>',
-		btngroup:'{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
+		btngroup:'<div class="serviceItems">{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
 				{{ if(col.checkStatus==0){ }}\
 					<div class="block-item-data" data-index="{{=i}}">{{=col.funcName}}</div>\
 				{{ }else{ }}\
 					<div class="block-item-data not-selected">{{=col.funcName}}</div>\
 				{{ } }}\
-			{{ } }}',
+			{{ } }}</div>',
 		userBtnGroup:'{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
 				{{ if(col.checkStatus!="1"){ }}\
 					<div class="block-item-data" data-index="{{=i}}">{{=col.userName}}({{=col.userTypeName}})</div>\
@@ -271,6 +271,28 @@
 			</ul>\
 			<p class="tip">提示：带有“<span class="textfe5a58">银行</span>”标记的服务表示业务经办银行要求核查的服务项目，系统会在条件满足的情况下自动完成核查。</p>\
 		</div>',
+		realTimeMsg:'<dl class="import-dl clearfix">\
+			<dt class="import-icon-box">\
+				<div class="import-icon">\
+					<i class="iconfont">&#xe659;</i>\
+				</div>\
+			</dt>\
+			<dd class="import-msg-box">\
+				<div class="import-result blank">您已成功查询该项服务</div>\
+				<div class="import-text blank">请返回报告页查看</div>\
+			</dd>\
+		</dl>',
+		nonRealTimeMsg:'<dl class="import-dl clearfix">\
+			<dt class="import-icon-box">\
+				<div class="import-icon">\
+					<i class="iconfont">&#xe659;</i>\
+				</div>\
+			</dt>\
+			<dd class="import-msg-box">\
+				<div class="import-result blank">您已成功发起该项服务</div>\
+				<div class="import-text blank">核查成功后会收到消息提醒</div>\
+			</dd>\
+		</dl>',
 		allCreditDownload: '<div class="w-content w-content-padding">\
 								<div class="w-download-area">\
 									<div class="w-download-title">\

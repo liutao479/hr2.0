@@ -65,11 +65,6 @@
 			refer: [],
 			page: 'riskManagementDetail'
 		},
-		'preAudit': {
-			title: '预审核',
-			refer: [],
-			page: 'preAudit'
-		},
 		'preAuditDataAssistant': {
 			title: '预审核数据辅证',
 			refer: [],

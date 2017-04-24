@@ -80,7 +80,7 @@
 				<td class="orders-item-data">{{=item.serviceFee||'0'}}</td>
 				<td class="orders-item-data">{{=item.verifyNum||'0'}}</td>
 				<td class="orders-item-data">{{=tool.formatDate(item.lastestVerifyTime)}}</td>
-				<td class="orders-item-data">{{=item.submitByName}}</td>
+				<td class="orders-item-data">{{=item.submitByName||'系统'}}</td>
 				<td class="orders-item-data">
 					<span class="detailed view-fee" 
 					data-userid="{{=item.userId}}" data-orderno="{{=item.orderNo}}" 
