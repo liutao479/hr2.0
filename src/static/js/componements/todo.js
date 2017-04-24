@@ -84,9 +84,9 @@
 			} else {
 				item = {};
 				item.key = row.taskNameCode;
-				item.name = row.category;
+				item.name = row.taskName;
 				item.size = row.size;
-				item.$body = $(template.item.format(row.category, row.size, row.taskNameCode)).appendTo(self.$items);
+				item.$body = $(template.item.format(row.taskName, row.size, row.taskNameCode)).appendTo(self.$items);
 				item.$number = item.$body.find('.message-number');
 			}
 			tmpl[row.taskNameCode] = item;
