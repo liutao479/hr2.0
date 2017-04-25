@@ -582,7 +582,7 @@ page.ctrl('lendAudit', function($scope) {
 					orderNo: $params.orderNo
 				}
 				if(reason) params.reason = reason;
-				// flow.tasksJump(params, 'approval');
+				flow.tasksJump(params, 'approval');
 			})
 		})
 	}

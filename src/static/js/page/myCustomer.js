@@ -147,8 +147,7 @@ page.ctrl('myCustomer', [], function($scope) {
 									_params = {
 										orderNo: orderNo
 									},
-									$inputs = that.$content.find('.input-text input'),
-									reason = $.trim(that.$content.find('#suggestion').val());
+									$inputs = that.$content.find('.input-text input');
 								$inputs.each(function() {
 									var value = $.trim($(this).val()),
 										$parent = $(this).parent();
@@ -169,7 +168,7 @@ page.ctrl('myCustomer', [], function($scope) {
 									}
 								});
 								if(flag) {
-									process(_params, reason);
+									makeloanSubmit(_params)
 								} else {
 									$.alert({
 										title: '提示',
@@ -189,47 +188,6 @@ page.ctrl('myCustomer', [], function($scope) {
 									});
 									return false;
 								}
-
-
-							////////////////////////////
-								var isTrue = true,
-									_orderNo = orderNo,
-									that = this.$content;
-								
-								var _loaningDate = $.trim(that.find('#loaningDate').val());
-								var _paymentMoney = $.trim(that.find('#paymentMoney').val());
-								var _receiveCompanyAddress = $.trim(that.find('#receiveCompanyAddress').val());
-								var _receiveAccount = $.trim(that.find('#receiveAccount').val());
-								var _receiveAccountBank = $.trim(that.find('#receiveAccountBank').val());
-
-								console.log(that.find('.required'))
-								that.find('.required').each(function() {
-									var value = $.trim($(this).val()),
-										$parent = $(this).parent();
-									console.log(value)
-									if(!value){
-										$parent.removeClass("error-input").addClass("error-input");
-										$parent.append('<span class=\"input-err\">请完善该必填项！</span>');
-										console.log($(this).index());
-										isTrue = false;
-									} else {
-
-									}
-								})
-								if(isTrue) {
-									var _params = {
-										orderNo: _orderNo, //订单号
-										paymentId: _paymentId,
-										loaningDate: new Date(_loaningDate), //用款时间
-										paymentMoney: _paymentMoney, //垫资金额
-										receiveCompanyAddress: _receiveCompanyAddress, //收款账户名称
-										receiveAccount: _receiveAccount, //收款账号
-										receiveAccountBank: _receiveAccountBank //开户行
-									}
-									console.log(_params)
-									// makeloanSubmit(_params);
-								}
-								return false;
 							}
 						}
 					}
@@ -244,11 +202,14 @@ page.ctrl('myCustomer', [], function($scope) {
 	var makeloanSubmit = function(params) {
 		$.ajax({
 			type: "post",
-			url: $http.api('financePayment/update', 'cyj'),
+			url: $http.api('financePayment/save', 'cyj'),
 			data: params,
 			dataType: "json",
 			success: $http.ok(function(result) {
 				console.log(result)
+				$.toast('提交成功！', function() {
+
+				})
 			})
 		});
 	}
