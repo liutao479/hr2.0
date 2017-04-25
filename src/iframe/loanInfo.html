@@ -362,6 +362,9 @@
 																{{ }else{ }}
 																	<input type="text" name="value" />
 																{{ } }}
+																{{ if(row.fieldUnit){ }}
+																	<span class="unitInfo">{{=row.fieldUnit}}</span> 
+																{{ } }}
 															</span>
 														</td>
 													</tr>

@@ -161,7 +161,7 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		})
 		$(".select-text").each(function(){
-			$(this).attr('readonly','readonly')
+			$(this).attr('readonly','readonly');
 		})
 		if($("#dateStart").val("9999-12-31")){
 			$("#dateStart").addClass('pointDisabled');
