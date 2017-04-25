@@ -258,7 +258,7 @@
 		serviceItems:'<div class="serviceItems">\
 			<ul class="clearfix">\
 				{{ for(var i=0;i<it.length;i++){var col=it[i]; }}\
-				<li>{{ if(col.isBank){ }}<div class="text-bt">银行</div>{{ } }}\
+				<li>{{ if(col.isBankItem&&col.isBankItem==1){ }}<div class="text-bt">银行</div>{{ } }}\
 					<div class="serviceContext clearfix">\
 						<p class="text-icon"><span class="{{=col.class}}"><i class="iconfont">{{=col.icon}}</i></span></p>\
 						<p class="text-name">{{=col.funcName}}\

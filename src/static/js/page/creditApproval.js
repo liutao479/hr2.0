@@ -260,42 +260,42 @@ page.ctrl('creditApproval', [], function($scope) {
 			buttons: {
 				close: {
 					text: '取消',
+				    btnClass:"btn-default btn-cancel",
 					action: function() {}
 				},
 				ok: {
 					text: '确定',
 					action: function () {
 						var _btnDialog=this;
-						if(_btnDialog._arr.length==0)
-							return false;
-						$.ajax({
-							type: "post",
-							url: $http.api('creditAudit/startVerify','cyj'),
-							data:{
-								keys:_btnDialog._arr.join(','),
-								orderNo:$params.orderNo,
-								userId:_uid
-							/*	keys:'doPolice,bankWater',
-								orderNo:'nfdb2016102820480799',
-								userId:"334232"*/
-							},
-							dataType:"json",
-							success: $http.ok(function(res) {
-								$.dialog({
-									title:false,
-									content:$scope.def.toastTmpl,
-									onContentReady:function(){
-										var _tioDialog=this;
-										setTimeout(function() {
-											_tioDialog.close();
-											loadOrderInfo($scope.idx, function() {
-												evt();
-											});/*关闭之后自动刷新页面数据*/
-										},1500);
-									}
-								});
-							})
-						});	
+						if(_btnDialog._arr.length!=0)
+							$.ajax({
+								type: "post",
+								url: $http.api('creditAudit/startVerify','cyj'),
+								data:{
+									keys:_btnDialog._arr.join(','),
+									orderNo:$params.orderNo,
+									userId:_uid
+								/*	keys:'doPolice,bankWater',
+									orderNo:'nfdb2016102820480799',
+									userId:"334232"*/
+								},
+								dataType:"json",
+								success: $http.ok(function(res) {
+									$.dialog({
+										title:false,
+										content:$scope.def.toastTmpl,
+										onContentReady:function(){
+											var _tioDialog=this;
+											setTimeout(function() {
+												_tioDialog.close();
+												loadOrderInfo($scope.idx, function() {
+													evt();
+												});/*关闭之后自动刷新页面数据*/
+											},1500);
+										}
+									});
+								})
+							});	
 					}
 				}
 			}
@@ -397,7 +397,7 @@ page.ctrl('creditApproval', [], function($scope) {
 					else{
 						$.alert({
 							title: '提示',
-							content: tool.alert("您没有权限进行该操作！"),
+							content: tool.alert("您尚未开通该核查权限！"),
 							buttons:{
 								ok: {
 									text: '确定',

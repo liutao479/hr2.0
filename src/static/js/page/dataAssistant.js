@@ -86,16 +86,18 @@ page.ctrl('dataAssistant', function($scope) {
 				};
 				/*整理title中发起人，最新发起时间等信息*/
 				if(_mout.verifyRecord&&_mout.verifyRecord.submitByName)
-					_mout.body.submitByName=_mout.verifyRecord.submitByName;
+					_mout.submitByName=_mout.verifyRecord.submitByName;
 				if(_mout.verifyRecord&&_mout.verifyRecord.updateTime)
-					_mout.body.updateTime=_mout.verifyRecord.updateTime;
+					_mout.updateTime=_mout.verifyRecord.updateTime;
 				if(_mout.itemNum)
-					_mout.body.itemNum=_mout.itemNum;
+					_mout.itemNum=_mout.itemNum;
 				if(_mout.verifyingNum)
-					_mout.body.verifyingNum=_mout.verifyingNum;
+					_mout.verifyingNum=_mout.verifyingNum;
+				if($params.type)
+					_mout.type=$params.type;
 				/*网贷平台借贷数据统计end*/
 				/*模板绑定数据*/
-				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout.body, true);
+				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout, true);
 				/*如果有二手车模块则使用画布画百分比*/
 				if(_usedCar)
 					setCanvas();
@@ -134,28 +136,26 @@ page.ctrl('dataAssistant', function($scope) {
 	};
 	var openDialog=function(_data){
 		var _loalList=[
-			{text:"实名",isBank:true,class:"bac6b78fa",icon:"&#xe677;"},
-			{text:"人脸",isBank:true,class:"bacc8a5df",icon:"&#xe67c;"},
-			{text:"公安",isBank:true,class:"bac6b78fa",icon:"&#xe661;"},
-			{text:"法院",isBank:false,class:"bacc8a5df",icon:"&#xe6a5;"},
-			{text:"网贷平台",isBank:false,class:"bacf09054",icon:"&#xe666;"},
-			{text:"网贷逾期",isBank:false,class:"bac73c7df",icon:"&#xe671;"},
-			{text:"学历",isBank:false,class:"bac59cfb7",icon:"&#xe679;"},
-			{text:"手机在网",isBank:false,class:"bacAgain",icon:"&#xe66e;"},
-			{text:"二手车",isBank:false,class:"bac73c7df",icon:"&#xe64f;"},
-			{text:"车辆登记",isBank:false,class:"bac82b953",icon:"&#xe642;"},
-			{text:"车辆保养",isBank:false,class:"bacf5bf5b",icon:"&#xe674;"},
+			{text:"实名",class:"bac6b78fa",icon:"&#xe677;"},
+			{text:"人脸",class:"bacc8a5df",icon:"&#xe67c;"},
+			{text:"公安",class:"bac6b78fa",icon:"&#xe661;"},
+			{text:"法院",class:"bacc8a5df",icon:"&#xe6a5;"},
+			{text:"网贷平台",class:"bacf09054",icon:"&#xe666;"},
+			{text:"网贷逾期",class:"bac73c7df",icon:"&#xe671;"},
+			{text:"学历",class:"bac59cfb7",icon:"&#xe679;"},
+			{text:"手机在网",class:"bacAgain",icon:"&#xe66e;"},
+			{text:"二手车",class:"bac73c7df",icon:"&#xe64f;"},
+			{text:"车辆登记",class:"bac82b953",icon:"&#xe642;"},
+			{text:"车辆保养",class:"bacf5bf5b",icon:"&#xe674;"},
 		];
 		for(var i in _data){
 			for(var j=0;j<_loalList.length;j++){
 				if(_data[i].funcName.indexOf(_loalList[j].text)!=-1){
-					_data[i].isBank=_loalList[j].isBank;
 					_data[i].class=_loalList[j].class;
 					_data[i].icon=_loalList[j].icon;
 					break;
 				};
 				if(j==_loalList.length-1){
-					_data[i].isBank=false;
 					_data[i].class="bac6b78fa";
 					_data[i].icon="&#xe666;";					
 				};
@@ -165,7 +165,7 @@ page.ctrl('dataAssistant', function($scope) {
 		$.dialog({
 			title: '———— 服务项目 ————',
 			boxWidth:"70%",
-			offsetBottom: "50px",
+			offsetTop: 62,
 			content:dialogHtml,
 			onContentReady:function(){
 				var _title="提示";
@@ -180,6 +180,7 @@ page.ctrl('dataAssistant', function($scope) {
 				    buttons: {
 				        close: {
 				        	text:"取消",
+				        	btnClass:"btn-default btn-cancel",
 				        	action:function(){}
 				        },
 				        ok: {
@@ -327,7 +328,15 @@ page.ctrl('dataAssistant', function($scope) {
 					if(res&&res.data&&res.data.length>0)
 						openDialog(res.data);
 					else
-						openDialog([]);
+						$.alert({
+							title: '提示',
+							content: tool.alert("您尚未开通该核查权限！"),
+							buttons:{
+								ok: {
+									text: '确定',
+								}
+							}
+						});
 				})
 			});			
 		});

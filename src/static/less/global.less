@@ -2784,6 +2784,7 @@ input[disabled]{
     .detail-item-alert{
         padding:5px 15px;
         margin:10px 0;
+        clear:both;
         .borderRadius(6px);
         span{
             display:inline-block;
@@ -2799,14 +2800,14 @@ input[disabled]{
                 }
             }
             &.status{
-                margin:0 15px;
+                margin-left:15px;
                 vertical-align: middle;
                 font-weight: bolder;
                 vertical-align: top;
             }
             &.text{
-                width:calc(~"100% - 140px");
-                padding-right:15px;
+                width:calc(~"100% - 75px");
+                padding:0 15px;
             }
         }
     }
@@ -3342,5 +3343,10 @@ input[disabled]{
                 margin-top:10px;
             }
         }
+    }
+} 
+@media screen and (max-width: 768px) {  
+    .serviceItems li{
+        width:46%;
     }
 } 

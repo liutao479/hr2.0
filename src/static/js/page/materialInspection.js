@@ -34,6 +34,8 @@ page.ctrl('materialInspection', function($scope) {
 					_mout.itemNum=_mout.itemNum;
 				if(_mout.verifyingNum)
 					_mout.verifyingNum=_mout.verifyingNum;
+				if($params.type)
+					_mout.type=$params.type;
 				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout, true);
 				if(callback && typeof callback == 'function') {
 					callback();
@@ -70,24 +72,22 @@ page.ctrl('materialInspection', function($scope) {
 	/*发起核查*/
 	var openDialog=function(_data){
 		var _loalList=[
-			{text:"购车",isBank:true,class:"bacf09054",icon:"&#xe676;"},
-			{text:"购房",isBank:true,class:"bac73c7df",icon:"&#xe6bb;"},
-			{text:"银行",isBank:true,class:"bacAgain",icon:"&#xe673;"},
-			{text:"房产证",isBank:true,class:"bac59cfb7",icon:"&#xe679;"},
-			{text:"合格证",isBank:false,class:"bac82b953",icon:"&#xe672;"},
-			{text:"保单",isBank:false,class:"bac84bef0",icon:"&#xe642;"},
-			{text:"车辆",isBank:false,class:"bacf5bf5b",icon:"&#xe6cc;"},
+			{text:"购车",class:"bacf09054",icon:"&#xe676;"},
+			{text:"购房",class:"bac73c7df",icon:"&#xe6bb;"},
+			{text:"银行",class:"bacAgain",icon:"&#xe673;"},
+			{text:"房产证",class:"bac59cfb7",icon:"&#xe679;"},
+			{text:"合格证",class:"bac82b953",icon:"&#xe672;"},
+			{text:"保单",class:"bac84bef0",icon:"&#xe642;"},
+			{text:"车辆",class:"bacf5bf5b",icon:"&#xe6cc;"},
 		];
 		for(var i in _data){
 			for(var j=0;j<_loalList.length;j++){
 				if(_data[i].funcName.indexOf(_loalList[j].text)!=-1){
-					_data[i].isBank=_loalList[j].isBank;
 					_data[i].class=_loalList[j].class;
 					_data[i].icon=_loalList[j].icon;
 					break;
 				};
 				if(j==_loalList.length-1){
-					_data[i].isBank=false;
 					_data[i].class="bac73c7df";
 					_data[i].icon="&#xe6bb;";					
 				};
@@ -97,7 +97,7 @@ page.ctrl('materialInspection', function($scope) {
 		$.dialog({
 			title: '———— 服务项目 ————',
 			boxWidth:"70%",
-			offsetBottom: "50px",
+			offsetTop: 62,
 			content:dialogHtml,
 			onContentReady:function(){
 				var _title="提示";
@@ -112,6 +112,7 @@ page.ctrl('materialInspection', function($scope) {
 				    buttons: {
 				        close: {
 				        	text:"取消",
+				        	btnClass:"btn-default btn-cancel",
 				        	action:function(){}
 				        },
 				        ok: {
@@ -182,7 +183,15 @@ page.ctrl('materialInspection', function($scope) {
 					if(res&&res.data&&res.data.length>0)
 						openDialog(res.data);
 					else
-						openDialog([]);
+						$.alert({
+							title: '提示',
+							content: tool.alert("您尚未开通该核查权限！"),
+							buttons:{
+								ok: {
+									text: '确定',
+								}
+							}
+						});
 				})
 			});
 		});

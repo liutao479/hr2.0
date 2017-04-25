@@ -134,6 +134,7 @@ page.ctrl('activeInspect', function($scope) {
 					buttons: {
 						close: {
 							text: '取消',
+				        	btnClass:"btn-default btn-cancel",
 							action: function() {}
 						},
 						ok: {
