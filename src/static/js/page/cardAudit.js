@@ -30,7 +30,7 @@ page.ctrl('cardAudit', function($scope) {
 		}
 		$.ajax({
 			type: 'post',
-			url: $http.api(url,'jbs'),
+			url: $http.api(url, 'jbs'),
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {

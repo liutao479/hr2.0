@@ -473,7 +473,7 @@
 		'T0070': 'dataAssistant',//数据辅证
 		'T0071': 'loanInfoAudit',//修改贷款信息
 		'T0072': 'loanLog',//订单日志
-		'T0073': 'cardAudit',//开卡信息
+		'T0073': 'cardInfoApproval',//开卡信息
 		'T0074': 'loanInfoAudit',//待审核信息
 		'T0075': 'loanLog',//订单日志
 		'T0076': 'loanInfoAudit',//贷款信息表结果
