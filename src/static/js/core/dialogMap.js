@@ -8,7 +8,7 @@
 	g.dialogTml = {};
 	g.dialogTml.wContent = {
 		back: '<div class="w-content">\
-					<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
 					<div class="w-select-area mt15 clearfix">\
 						<div class="w-select clearfix">\
@@ -27,16 +27,16 @@
 		handelSuggestion: '<div class="w-content"><div class="w-text">请填写处理意见！</div></div>',
 		complete: '<div class="w-content"><div class="w-text">请完善必填项！</div></div>',
 		suggestion: '<div class="w-content">\
-						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+						<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					</div>',
 		rejectModify: '<div class="w-content">\
-						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="请在此说明拒绝意见！"></textarea>\
+						<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="请在此说明拒绝意见！"></textarea>\
 					</div>',
 		approvalPass: '<div class="w-content">\
-						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="请在此说明处理意见！">#审核通过#</textarea>\
+						<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="请在此说明处理意见！">#审核通过#</textarea>\
 					</div>',
 		loanOrderApply: '<div class="w-content">\
-							<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+							<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 							<dl class="w-dropdown">\
 								<dt class="dt">请选择审核人：</dt>\
 								<dd class="dd">\
@@ -162,7 +162,7 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+						<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					</div>',
 		ptsqdzContent: '<div class="w-content">\
 						<dl class="w-dropdown">\
@@ -205,7 +205,7 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+						<textarea  maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					</div>',
 		viewFee: '<div class="w-content">\
 					<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">\
@@ -396,7 +396,7 @@
 						<dl class="w-dropdown float-left">\
 							<dt class="dt">审核意见：</dt>\
 							<dd class="dd">\
-								<textarea id="suggestion" class="remarks-box-mini" placeholder="在此处填写处理意见"></textarea>\
+								<textarea maxlength="500" id="suggestion" class="remarks-box-mini" placeholder="在此处填写处理意见"></textarea>\
 							</dd>\
 						</dl>\
 					</div>',
@@ -421,7 +421,7 @@
 							<dt class="checkbox checkbox-normal float-left" style= "margin-left: 5px;"></dt>\
 							<dd class="dd" style= "margin-left: 35px;">确定申请平台垫资并同意签署<a href="javascript:;" class="view-sign" style="text-decoration: underline;">《代还款承诺函》</a>吗？</dt>\
 						</dl>\
-						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+						<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					</div>',
 		contract: '<div class="w-content">\
 					<div class="news-content">\
