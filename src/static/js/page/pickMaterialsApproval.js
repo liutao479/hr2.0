@@ -237,7 +237,7 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 						var that = this;
         				$.ajax({
 							type: 'post',
-							url: $http.api('loanApproval/submit/' + $params.taskId),
+							url: $http.api('loanApproval/submit/' + $params.taskId, true),
 							dataType: 'json',
 							data: {
 								frameCode: $scope.result.cfgData.frames[0].code
@@ -275,40 +275,6 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 		for(var i = 0, len = taskJumps.length; i < len; i++) {
 			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
 		}
-	}
-
-	/**
-	 * 跳流程
-	 */
-	function process() {
-		$.confirm({
-			title: '提交',
-			content: dialogTml.wContent.suggestion,
-			buttons: {
-				close: {
-					text: '取消',
-					btnClass: 'btn-default btn-cancel',
-					action: function() {}
-				},
-				ok: {
-					text: '确定',
-					action: function () {
-						var taskIds = [];
-						for(var i = 0, len = $params.tasks.length; i < len; i++) {
-							taskIds.push(parseInt($params.tasks[i].id));
-						}
-						var params = {
-							taskId: $params.taskId,
-							taskIds: taskIds,
-							orderNo: $params.orderNo
-						}
-						var reason = $.trim(this.$content.find('#suggestion').val());
-						if(reason) params.reason = reason;
-						flow.tasksJump(params, 'complete');
-					}
-				}
-			}
-		})
 	}
 
 	/**
