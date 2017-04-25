@@ -5,7 +5,7 @@
 				<div class="select-search-bar no-bottom-border clearfix">
 					<div class="search-item">
 						<span class="select-name">经办银行：</span>
-						<div class="select select-bank-name" data-dropdown="page.$scope['creditArchiveDownload'].bankPicker" data-trigger="page.$scope['creditArchiveDownload'].dropdownTrigger.demandBank"></div>
+						<div class="select select-bank-name" data-dropdown="page.$scope['creditArchiveDownload'].demanBankPicker" data-trigger="page.$scope['creditArchiveDownload'].dropdownTrigger.demandBank"></div>
 					</div>
 					<div class="search-item">
 						<div class="input-text">
@@ -64,29 +64,29 @@
 						<tr class="orders-item">
 						{{ } }}
 							<td class="orders-item-data order-item-first">
-								<div class="checkbox checkbox-normal" data-checked="false" data-user-id="{{=row.userId}}"></div>
+								<div class="checkbox checkbox-normal" data-checked="false" data-order-no="{{=row.orderNo}}"></div>
 							</td>
 							<td class="orders-item-data">{{=row.orderNo}}</td>
 							<td class="orders-item-data">{{=row.userName || '未录入'}}（{{=row.idCard || '未录入'}}）</td>
-							<td class="orders-item-data">{{=row.bankName}}</td>
+							<td class="orders-item-data">{{=row.bankName || '未知'}}</td>
 							<td class="orders-item-data orders-item-data-blank"></td>
 							<td class="orders-item-data">
 								<table class="table-inner">
 									<tr>
 										<td>
-											<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + row.userId +'&downLoadType=1', true)}}" target="_blank" class="download-trigger pdf-d">
+											<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?orderNos=' + row.orderNo +'&downLoadType=1', true)}}" target="_blank" class="download-trigger pdf-d">
 												<i class="iconfont">&#xe624;</i><br>
 												<span class="download-text">PDF下载</span>	
 											</a>
 										</td>
 										<td>
-											<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + row.userId +'&downLoadType=2', true)}}" target="_blank" class="download-trigger word-d">
+											<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?orderNos=' + row.orderNo +'&downLoadType=2', true)}}" target="_blank" class="download-trigger word-d">
 												<i class="iconfont">&#xe64c;</i><br>
 												<span class="download-text">WORD下载</span>
 											</a>
 										</td>
 										<td>
-											<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + row.userId +'&downLoadType=3', true)}}" target="_blank" class="download-trigger zip-d">
+											<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?orderNos=' + row.orderNo +'&downLoadType=3', true)}}" target="_blank" class="download-trigger zip-d">
 												<i class="iconfont">&#xe675;</i><br>
 												<span class="download-text">ZIP下载</span>
 											</a>

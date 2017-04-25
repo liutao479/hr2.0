@@ -13,8 +13,9 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadArchiveDownloadList = function(params, cb) {
+		console.log(params)
 		$.ajax({
-			url: $http.api('creditUser/getCreditMaterials', 'zyj'),
+			url: $http.api('loanOrder/getMyCustomer', 'zyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -240,7 +241,6 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 			$console.find('.select input').val('');
 			$console.find('#searchInput').val('');
 			apiParams = {
-				queryType: 2,  //征信资料下载
 		    	pageNum: 1
 			};
 		});
@@ -346,6 +346,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	//下拉点击回调
 	$scope.demandBankPicker = function(picked) {
 		console.log(picked);
+		apiParams.bankId = picked.id;
 	}
 	$scope.templatePicker = function(picked) {
 		console.log(picked);

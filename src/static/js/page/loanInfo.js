@@ -43,7 +43,64 @@ page.ctrl('loanInfo', function($scope) {
 				if(result.data.FQXX && result.data.FQXX.renewalInfo){
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				}
-				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result,true);
+				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
+				render.compile($scope.$el.$sideBar, $scope.def.siderBarTmpl, result, function() {
+					$('.remind-content').css('min-height', '550px');
+					$scope.$el.$sideBar.find('li').not(".last").hover(function() {
+						$(this).toggleClass('hover');
+						// $scope.$el.$sideBar.find('.sideBar-content').hide();
+						$(this).find('.sideBar-content').toggle();
+					});
+					 //鼠标点击
+					var mark = 1;
+					$scope.$el.$sideBar.find('li').not(".last").click(function() {
+						mark = 2; //改变标记
+						//点击右侧边导航 然后跳到指定的区块
+						var $index = $(this).index(); //找到了对应的序列号
+						//alert($index);
+						var $top = $console.find(".panel-loan").eq($index).offset().top; //获取制定Louti与浏览器上面的距离)
+						//alert($top);
+						$("body,html").animate({
+							scrollTop: $top - 75
+						}, 500, function() {
+							mark = 1;
+						}); //浏览器滚动的高度
+					});
+					 //浏览器串口滚动事件
+					// $(window).scroll(function() {
+					// 	if (mark == 1) {
+					// 		var $t = $(this).scrollTop(); //获取滚动条滚动的高度
+					// 		//document.title = $t;
+					// 		// if ($t > 1000) { //通过滚动条来判断
+					// 		// 	$("#LoutiNav").fadeIn(); //淡入 导航慢慢显示出来
+					// 		// } else {
+					// 		// 	$("#LoutiNav").fadeOut(); //淡出 导航慢慢消失
+					// 		// }
+					// 		var $obj = $console.find(".panel-loan");
+					// 		//循环每一个区块 然后找到最先满足条件的那个 区块
+					// 		$obj.each(function() {
+					// 			var $index = $(this).index();
+					// 			//楼层与浏览器上面的高度
+					// 			var $height = $obj.eq($index).offset().top + $(this).height() / 2;
+					// 			//alert($height) 
+					// 			// document.title = $t + "--" + $height;
+					// 			if ($t < $height) {
+					// 				$scope.$el.$sideBar.find('.sideBar-content').hide();
+					// 				$scope.$el.$sideBar.find('.sideBar-content').eq($index).show();
+					// 				return false;
+					// 			}
+					// 		});
+					// 	}
+					// });
+					//点击 Top按钮 跳转到浏览器顶部
+					$scope.$el.$sideBar.find('li.last').click(function() {
+						$("body,html").animate({
+							scrollTop: 0
+						}, 500, function() {
+							mark = 1;
+						});
+					});
+				}, true);
 				loanFinishedCheckbox();
 				loanFinishedGps();
 				loanFinishedBxxb();
@@ -140,7 +197,7 @@ page.ctrl('loanInfo', function($scope) {
 		$console.find('input[type="text"]').on('change', function() {
 			var thisName = $(this).attr('name'),
 				that = $(this);
-			if(thisName == 'carPrice' || thisName == 'phone' || thisName == 'systemCarPrice' ){
+			if(thisName == 'carPrice' || thisName == 'systemCarPrice' ){
 				var thisVal = that.val();
 				var reg =  /^0\.([1-9]|\d[1-9])$|^[1-9]\d{0,8}\.\d{0,2}$|^[1-9]\d{0,8}$/;
 				if(!reg.test(thisVal)){
@@ -173,6 +230,15 @@ page.ctrl('loanInfo', function($scope) {
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip sel-err">邮政编码格式不正确</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'phone'){
+				var thisVal = that.val();
+				var reg = /^1[\d+]{10}$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">请您填写11位正确格式的手机号码！</i>');
 					that.val('');
 				}
 			}
@@ -823,8 +889,10 @@ page.ctrl('loanInfo', function($scope) {
 	$console.load(router.template('iframe/loanInfo'), function() {
 		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
 		$scope.def.selectOpttmpl = $console.find('#selectOpttmpl').html();
+		$scope.def.siderBarTmpl = $console.find('#siderBarTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#loanInfoTable')
+			$tbl: $console.find('#loanInfoTable'),
+			$sideBar: $console.find('#sideBar')
 		}
 		loadLoanList(function(){
 			router.tab($console.find('#tabPanel'), $scope.tasks, $scope.activeTaskIdx, tabChange);

@@ -68,12 +68,40 @@
 							<td class="orders-item-data order-item-first">
 								<div class="checkbox checkbox-normal" data-checked="false"  data-order-no="{{=row.orderNo}}" data-user-id="{{=row.userId}}"></div>
 							</td>
-							<td class="orders-item-data">{{=row.orderNo}}</td>
-							<td class="orders-item-data">{{=row.userName}}（{{=row.idCard}}）</td>
-							<td class="orders-item-data">{{=row.stageMoney}}</td>
-							<td class="orders-item-data">{{=row.bankName}}</td>
-							<td class="orders-item-data">征信查询</td>
-							
+							<td class="orders-item-data">{{=row.orderNo || ''}}</td>
+							<td class="orders-item-data">{{=row.userName || '未知'}}（{{=row.idCard || '未知'}}）</td>
+							<td class="orders-item-data">{{=row.stageMoney || '未知'}}</td>
+							<td class="orders-item-data">{{=row.bankName || '未知'}}</td>
+							<td class="orders-item-data loanTasks">
+								<table class="meanwhile">
+									{{ for(var j = 0, len2 = row.progressNameList.length; j < len2; j++) { var col = row.progressNameList[j]; }}
+										{{ if(j < 2){ }}
+											<tr>
+												<td>{{=col}}</td>
+											</tr>
+										{{ }else{ }}
+											{{ if(j == len2 - 1){ }}
+												<tr>
+													<td><i class="iconfont">&#xe608;</i></td>
+												</tr>
+											{{ } }}
+										{{ } }}
+										
+									{{ } }}
+								</table>
+								{{ if(len2 > 2) { }}
+								<table class="meanwhile-hover" style="display: none;">
+									{{ var tasks={}; for(var j = 0, len2 = row.progressNameList.length; j < len2; j++) { var col = row.progressNameList[j]; }}
+										<tr>
+											<td>{{=col}}</td>
+										</tr>
+									{{ } }}
+									<tr>
+										<td><i class="iconfont">&#xe606;</i></td>
+									</tr>
+								</table>
+								{{ } }}
+							</td>
 							<td class="orders-item-data">
 								<a class="button button-mini button-gray contractPrint" data-order-no="{{=row.orderNo}}">合同套打</a>
 								<a class="button button-mini button-gray ml15 loanDownload" data-order-no="{{=row.orderNo}}" data-user-id="{{=row.userId}}">下载</a>

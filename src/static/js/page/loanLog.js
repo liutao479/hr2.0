@@ -20,7 +20,7 @@ page.ctrl('loanLog', function($scope) {
 				console.log(result);
 				$scope.result = result;
 				render.compile($scope.$el.$modifyPanel, $scope.def.modifyTmpl, $scope.result.data.loanEditLog, true);
-				render.compile($scope.$el.$telApproval, $scope.def.telApprovalTmpl, $scope.result.data.telPhoneApprovalLog, true);
+				// render.compile($scope.$el.$telApproval, $scope.def.telApprovalTmpl, $scope.result.data.telPhoneApprovalLog, true);
 				render.compile($scope.$el.$loanLogPanel, $scope.def.logTmpl, $scope.result.data, true);
 				if( cb && typeof cb == 'function' ) {
 					cb();

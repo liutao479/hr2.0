@@ -30,9 +30,9 @@
 					{{ if(fieldCode == 'GTHK' || fieldCode == 'FDBR' || fieldCode == 'ZJKR'){ }}
 						{{ for(var i=0,lenthI = it.data[fieldCode].length;i<lenthI;i++){ var row = it.data[fieldCode][i]; }}
 						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
-						<div class="panel panel-loan no-top-border">
+						<div class="panel panel-loan no-top-border" id="{{=fieldCode}}">
 						{{ } else { }}
-						<div class="panel panel-loan mt15">
+						<div class="panel panel-loan mt15" id="{{=fieldCode}}">
 						{{ } }}
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -233,9 +233,9 @@
 						{{ } }}
 					{{ }else if(fieldCode == 'JJLXR'){ }}
 						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
-						<div class="panel panel-loan no-top-border">
+						<div class="panel panel-loan no-top-border" id="{{=fieldCode}}">
 						{{ } else { }}
-						<div class="panel panel-loan mt15">
+						<div class="panel panel-loan mt15" id="{{=fieldCode}}">
 						{{ } }}
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -325,9 +325,9 @@
 						</div>
 					{{ }else if(fieldCode == 'FYXX'){ }}
 						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
-						<div class="panel panel-loan no-top-border">
+						<div class="panel panel-loan no-top-border" name="{{=fieldCode}}">
 						{{ } else { }}
-						<div class="panel panel-loan mt15">
+						<div class="panel panel-loan mt15" name="{{=fieldCode}}">
 						{{ } }}
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -382,9 +382,9 @@
 						</div>
 					{{ }else if(fieldCode == 'QTXX'){ }}
 						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
-						<div class="panel panel-loan no-top-border">
+						<div class="panel panel-loan no-top-border" name="{{=fieldCode}}">
 						{{ } else { }}
-						<div class="panel panel-loan mt15">
+						<div class="panel panel-loan mt15" name="{{=fieldCode}}">
 						{{ } }}
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -439,9 +439,9 @@
 						</div>
 					{{ }else if(fieldCode == 'HKKXX'){ }}
 						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
-						<div class="panel panel-loan no-top-border">
+						<div class="panel panel-loan no-top-border" name="{{=fieldCode}}">
 						{{ } else { }}
-						<div class="panel panel-loan mt15">
+						<div class="panel panel-loan mt15" name="{{=fieldCode}}">
 						{{ } }}
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -492,9 +492,9 @@
 						</div>
 					{{ }else if(fieldCode == 'FQXX'){ }}
 						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
-						<div class="panel panel-loan no-top-border">
+						<div class="panel panel-loan no-top-border" name="{{=fieldCode}}">
 						{{ } else { }}
-						<div class="panel panel-loan mt15">
+						<div class="panel panel-loan mt15" name="{{=fieldCode}}">
 						{{ } }}
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -797,9 +797,9 @@
 					</div>	
 					{{ }else if(fieldCode == 'CLXX'){ }}
 						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
-						<div class="panel panel-loan no-top-border">
+						<div class="panel panel-loan no-top-border" name="{{=fieldCode}}">
 						{{ } else { }}
-						<div class="panel panel-loan mt15">
+						<div class="panel panel-loan mt15" name="{{=fieldCode}}">
 						{{ } }}
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -1052,9 +1052,9 @@
 						</div>
 					{{ }else{ }}
 						{{ if(z == 0 && y == 0 && it.tasks > 1) { }}
-						<div class="panel panel-loan no-top-border">
+						<div class="panel panel-loan no-top-border" name="{{=fieldCode}}">
 						{{ } else { }}
-						<div class="panel panel-loan mt15">
+						<div class="panel panel-loan mt15" name="{{=fieldCode}}">
 						{{ } }}
 							<div class="panel-title-box">
 								<div class="panel-title">
@@ -1285,5 +1285,59 @@
 				{{ } }}
 				{{ } }}
 			</script>
+<ul class="sideBar" id="sideBar"></ul>
+
+<script type="text/x-dot-template" id="siderBarTmpl">
+	{{ for(var i = 0, len = it.cfgData.frames[0].sections.length; i < len; i++) { var row = it.cfgData.frames[0].sections[i], flag = 0, code = row.code; }}
+		{{ if(code == 'GTHK' || code == 'FDBR' || code == 'ZJKR' || code == 'QTXX' || code == 'JJLXR' || code == 'FYXX') { }}
+			{{ if(it.data[code] && it.data[code].length) { }}
+			<li class="sideBar-item">
+				<i class="iconfont" >{{=tool.icon[code]}}</i>
+				<div class="sideBar-content">
+					<a href="#" class="sideBar-content-item" >{{=row.name}}</a>
+					<span class="arrow arrow-right"></span>
+				</div>
+			</li>
+			{{ } }}
+		{{ } else if(code == 'HKKXX') { }}
+			<li class="sideBar-item">
+				<i class="iconfont" >{{=tool.icon[code]}}</i>
+				<div class="sideBar-content">
+					<a href="#" class="sideBar-content-item" >{{=row.name}}</a>
+					<span class="arrow arrow-right"></span>
+				</div>
+			</li>
+		{{ } else if(code == 'FQXX') { }}
+			<li class="sideBar-item">
+				<i class="iconfont" >{{=tool.icon[code]}}</i>
+				<div class="sideBar-content">
+					<a href="#" class="sideBar-content-item" >{{=row.name}}</a>
+					<span class="arrow arrow-right"></span>
+				</div>
+			</li>
+		{{ } else if(code == 'DDXX') { }}
+			<li class="sideBar-item">
+				<i class="iconfont" >{{=tool.icon[code]}}</i>
+				<div class="sideBar-content">
+					<a href="#" class="sideBar-content-item" >{{=row.name}}</a>
+					<span class="arrow arrow-right"></span>
+				</div>
+			</li>
+		{{ } else if(code == 'CLXX') { }}
+			<li class="sideBar-item">
+				<i class="iconfont" >{{=tool.icon[code]}}</i>
+				<div class="sideBar-content">
+					<a href="#" class="sideBar-content-item" >{{=row.name}}</a>
+					<span class="arrow arrow-right"></span>
+				</div>
+			</li>
+		{{ } }}
+	{{ } }}
+	<li class="sideBar-item last">
+		<i class="iconfont" >&#xe66c;</i>
+		<br />
+		<span class="go-top">顶部</span>
+	</li>
+</script>
 
 

@@ -315,7 +315,8 @@ $(function() {
 			url: $http.api('password/change', 'test'),
 			data: {
 				password: md5(ov),
-				newPassword: md5(nv)
+				newPassword: md5(nv),
+				confirmNewPassword: md5(rv)
 			},
 			dataType: 'json',
 			success: function(xhr) {
@@ -389,7 +390,7 @@ $(function() {
 							$this.counter = setInterval(function() {
 								$that.html(counter + 's后重新获取');
 								counter--;
-								if(counter == 0) {
+								if(counter <= 0) {
 									$that.html('获取验证码');
 									clearInterval(self.counter);
 									$this.counter = null;
@@ -412,9 +413,10 @@ $(function() {
 			})
 		},
 		change: function(phone) {
-			var p = $(phone).data('phone');
+			var p = $(phone).data('phone'),
+				$ctn;
 
-			function _gc(phone) {
+			function _gc(phone, status) {
 				$.ajax({
 					url: $http.api('sms/send', 'test'),
 					type: 'post',
@@ -426,7 +428,7 @@ $(function() {
 					dataType: 'json',
 					success: $http.ok(function(xhr) {
 						if(!xhr.code) {
-							cf();
+							cf(status);
 						} else {
 							$.alert({
 								title: '错误',
@@ -438,51 +440,60 @@ $(function() {
 				})
 			}
 			
+			function _ct($el) {
+				var counter = 60;
+				$el[0].counter = setInterval(function() {
+					$el.text(counter + 's后重新获取');
+					counter--;
+					if(counter == 0) {
+						clearInterval($el[0].counter);
+						$el[0].counter = null;
+						$el.html('获取验证码');
+					}
+				}, 1000);
+			}
+
 			_gc(p);
 
-			function cf() {
-				$.confirm({
-					title: '修改手机号码',
-					content:'url:./defs/phone.modify.html',
-					onContentReady: function() {
-						var self = this;
-						self.$content.find('#phoneNumber').html(p);
-						var $cd = self.$content.find('#codeCountDown'),
-							counter = 60;
-						$cd[0].counter = setInterval(function() {
-							$cd.text(counter + 's后重新获取');
-							counter--;
-							if(counter == 0) {
-								clearInterval($cd[0].counter);
-								$cd[0].counter = null;
-								$cd.html('获取验证码');
-							}
-						}, 1000);
-						$cd.on('click', function() {
-							if(this.counter) return false;
-							_gc(p);
-						})
-					},
-					buttons: {
-						ok: {
-							text: '确定',
-							action: function() {
-								var self = this;
-								return unbindPhone(self.$content, p, function(status) {
-									!!status && self.close();
-									Cookies.remove('_hr_phone');
-									delete navInstance.info.phone
-									navInstance.__compile();
-									NavComponent.internal.bind();
-								});
-							}
+			function cf(show) {
+				if(!show) {
+					$.confirm({
+						title: '修改手机号码',
+						content:'url:./defs/phone.modify.html',
+						onContentReady: function() {
+							var self = this;
+							$ctn = self.$content;
+							$ctn.find('#phoneNumber').html(p);
+							var $cd = self.$content.find('#codeCountDown');
+							_ct($cd)
+							$cd.on('click', function() {
+								if(this.counter) return false;
+								_gc(p, true);
+							})
 						},
-						cancel: {
-							text: '取消',
-							btnClass: 'btn-cancel'
+						buttons: {
+							ok: {
+								text: '确定',
+								action: function() {
+									var self = this;
+									return unbindPhone(self.$content, p, function(status) {
+										!!status && self.close();
+										Cookies.remove('_hr_phone');
+										delete navInstance.info.phone
+										navInstance.__compile();
+										NavComponent.internal.bind();
+									});
+								}
+							},
+							cancel: {
+								text: '取消',
+								btnClass: 'btn-cancel'
+							}
 						}
-					}
-				})
+					})
+				} else {
+					_ct($ctn);
+				}
 			}
 		},
 		password: function() {

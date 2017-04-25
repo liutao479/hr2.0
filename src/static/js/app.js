@@ -10,7 +10,7 @@ $(function() {
 			url: $http.api('menu/tree', true),
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				$menu = new menu('#menu', result.data, router.render);
+				window.menuInstance = $menu = new menu('#menu', result.data, router.render);
 				router.init(function(menuId) {
 					if(!menuId) { return $menu.setup('loanProcess'); }
 					$menu.setup(menuId, true);
@@ -18,6 +18,7 @@ $(function() {
 			})
 		});	
 	}
+	
 
 	function addListener() {
 		setTimeout(function() {

@@ -222,6 +222,9 @@ page.ctrl('lendAudit', function($scope) {
 				case 2:
 					applyAdvance();
 					break;
+				default:
+					noAdvance();
+					break;
 			};
 		})
 
@@ -259,107 +262,108 @@ page.ctrl('lendAudit', function($scope) {
 	 * 自行垫资
 	 */
 	function selfAdvance() {
-		$.alert({
-			title: '自行垫资',
-			content: doT.template(dialogTml.wContent.selfAdvance)({}),
-			boxWidth: '900px',
-			onContentReady: function() {
-				this.$content.find('.uploadEvt').imgUpload();
-				//启动用款时间日历控件
-				this.$content.find('.dateBtn').datepicker({
-					dateFmt: 'yyyy-MM-dd HH:mm',
-					onpicked: function() {
-					},
-					oncleared: function() {
-					}
-				});
-				this.$content.find('.input-text input').on('focus', function() {
-					$(this).parent().find('.input-err').remove();
-				})
-
-			},
-			buttons: {
-				close: {
-					text: '取消',
-					btnClass: 'btn-default btn-cancel'
-				},
-				ok: {
-					text: '确定',
-					action: function() {
-						var that = this,
-							flag = true,
-							imgFlag = true,
-							_params = {
-								orderNo: $params.orderNo,
-								advanceWay: 1
-							},
-							$inputs = that.$content.find('.input-text input'),
-							reason = $.trim(that.$content.find('#suggestion').val());
-						$inputs.each(function() {
-							var value = $.trim($(this).val()),
-								$parent = $(this).parent();
-							if(!value) {
-								$parent.removeClass('error-input').addClass('error-input');
-								$parent.find('.input-err').remove();
-								$parent.append('<span class="input-err">该项不能为空！</span>');
-								flag = false;
-							} else if(!regMap[$(this).data('type')].test(value)) {
-								$parent.removeClass('error-input').addClass('error-input');
-								$parent.find('.input-err').remove();
-								// if($(this).data('type') == 'accountNumber') {
-								// 	$parent.append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
-								// } else {
-								// 	$parent.append('<span class="input-err">该项不符合输入规则！（10位汉字）</span>')
-								// }
-								$parent.append('<span class="input-err">该项不符合输入规则！</span>');
-								flag = false;
-							} else {
-								$parent.removeClass('error-input');
-								$parent.find('.input-err').remove();
-								_params[$(this).data('key')] = value;
-							}
-						});
-						if(!$scope.imgUrl) {
-							that.$content.find('.uploadEvt').removeClass('error-input').addClass('error-input');
-							flag = false;
-						} else {
-							that.$content.find('.uploadEvt').removeClass('error-input');
-							_params.advanceCertificate = $scope.imgUrl;
+		getFinancePayment(function(data) {
+			$.alert({
+				title: '自行垫资',
+				content: doT.template(dialogTml.wContent.selfAdvance)(data),
+				onContentReady: function() {
+					// this.$content.find('.uploadEvt').imgUpload();
+					//启动用款时间日历控件
+					this.$content.find('.dateBtn').datepicker({
+						dateFmt: 'yyyy-MM-dd HH:mm',
+						onpicked: function() {
+						},
+						oncleared: function() {
 						}
-						if(flag) {
-							process(_params, reason);
-							// $.ajax({
-							// 	type: 'post',
-							// 	url: $http.api('makeLoanApproval/submit/' + $params.taskId, 'zyj'),
-							// 	data: params,
-							// 	dataType: 'json',
-							// 	success: $http.ok(function(result) {
-							// 		console.log(result);
-							// 		process(reason);
-							// 	})
-							// })
-						} else {
-							$.alert({
-								title: '提示',
-								content: tool.alert('请完善各项信息！'),
-								buttons: {
-									close: {
-										text: '取消',
-										btnClass: 'btn-default btn-cancel'
-									},
-									ok: {
-										text: '确定',
-										action: function() {
+					});
+					// this.$content.find('.input-text input').on('focus', function() {
+					// 	$(this).parent().find('.input-err').remove();
+					// })
 
-										}
-									}
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							var that = this,
+								flag = true,
+								imgFlag = true,
+								_params = {
+									orderNo: $params.orderNo,
+									advanceWay: 1
+								},
+								$inputs = that.$content.find('.input-text input'),
+								reason = $.trim(that.$content.find('#suggestion').val());
+							$inputs.each(function() {
+								var value = $.trim($(this).val()),
+									$parent = $(this).parent();
+								if(!value) {
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
+									$parent.append('<span class="input-err">该项不能为空！</span>');
+									flag = false;
+								} else if(!regMap[$(this).data('type')].test(value)) {
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
+									// if($(this).data('type') == 'accountNumber') {
+									// 	$parent.append('<span class="input-err">该项不符合输入规则！（16位或者19位卡号）</span>')
+									// } else {
+									// 	$parent.append('<span class="input-err">该项不符合输入规则！（10位汉字）</span>')
+									// }
+									$parent.append('<span class="input-err">该项不符合输入规则！</span>');
+									flag = false;
+								} else {
+									$parent.removeClass('error-input');
+									$parent.find('.input-err').remove();
+									_params[$(this).data('key')] = value;
 								}
 							});
-							return false;
+							// if(!$scope.imgUrl) {
+							// 	that.$content.find('.uploadEvt').removeClass('error-input').addClass('error-input');
+							// 	flag = false;
+							// } else {
+							// 	that.$content.find('.uploadEvt').removeClass('error-input');
+							// 	_params.advanceCertificate = $scope.imgUrl;
+							// }
+							if(flag) {
+								process(_params, reason);
+								// $.ajax({
+								// 	type: 'post',
+								// 	url: $http.api('makeLoanApproval/submit/' + $params.taskId, 'zyj'),
+								// 	data: params,
+								// 	dataType: 'json',
+								// 	success: $http.ok(function(result) {
+								// 		console.log(result);
+								// 		process(reason);
+								// 	})
+								// })
+							} else {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请完善各项信息！'),
+									buttons: {
+										close: {
+											text: '取消',
+											btnClass: 'btn-default btn-cancel'
+										},
+										ok: {
+											text: '确定',
+											action: function() {
+
+											}
+										}
+									}
+								});
+								return false;
+							}
 						}
 					}
 				}
-			}
+			})
 		})
 	}
 
@@ -367,41 +371,163 @@ page.ctrl('lendAudit', function($scope) {
 	 * 申请平台垫资
 	 */
 	function applyAdvance() {
-		$.alert({
-			title: '申请平台垫资',
-			content: dialogTml.wContent.applyAdvance,
-			onContentReady: function() {
-				// this.$content.find('view-sign')
-				// $.ajax({
-				// 	type: 'post',
-				// 	url: $http.api('contract/sign', 'jbs'),
-				// 	data: {
-				// 		orderNo: $params.orderNo
-				// 	},
-				// 	dataType: 'json',
-				// 	success: $http.ok(function(xhr) {
-				// 		console.log(xhr)
-				// 	})
-				// })
-			},
-			buttons: {
-				close: {
-					text: '取消',
-					btnClass: 'btn-default btn-cancel'
-				},
-				ok: {
-					text: '确定',
-					action: function() {
-						var that = this,
-							reason = $.trim(that.$content.find('#suggestion').val());
-						var _params = {
-							advanceWay: 2
+		getFinancePayment(function(data) {
+			$.alert({
+				title: '申请平台垫资',
+				content: doT.template(dialogTml.wContent.applyAdvance)(data),
+				onContentReady: function() {
+					//启动用款时间日历控件
+					this.$content.find('.dateBtn').datepicker({
+						dateFmt: 'yyyy-MM-dd HH:mm',
+						onpicked: function() {
+						},
+						oncleared: function() {
 						}
-						process(_params, reason);
+					});
+
+					//单选框
+					this.$content.find('.checkbox').checking();
+
+					//查看文签
+					this.$content.find('.view-sign').on('click', function() {
+						$.ajax({
+							type: 'post',
+							url: $http.api('contract/view', true),
+							dataType: 'json',
+							data: {
+								orderNo: $params.orderNo
+							},
+							success: $http.ok(function(xhr) {
+								$.dialog({
+									title: '代还款承诺函',
+									content: doT.template(dialogTml.wContent.contract)(xhr.data)
+								});
+							})
+						});
+						
+					});
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							var that = this,
+								flag = true,
+								imgFlag = true,
+								_params = {
+									orderNo: $params.orderNo,
+									advanceWay: 2
+								},
+								$inputs = that.$content.find('.input-text input'),
+								reason = $.trim(that.$content.find('#suggestion').val());
+							$inputs.each(function() {
+								var value = $.trim($(this).val()),
+									$parent = $(this).parent();
+								if(!value) {
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
+									$parent.append('<span class="input-err">该项不能为空！</span>');
+									flag = false;
+								} else if(!regMap[$(this).data('type')].test(value)) {
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
+									$parent.append('<span class="input-err">该项不符合输入规则！</span>');
+									flag = false;
+								} else {
+									$parent.removeClass('error-input');
+									$parent.find('.input-err').remove();
+									_params[$(this).data('key')] = value;
+								}
+							});
+							var isCheck = true;
+							if(!that.$content.find('.checkbox').attr('checked')) {
+								flag = false;
+								isCheck = false;
+							}
+							// if(!$scope.imgUrl) {
+							// 	that.$content.find('.uploadEvt').removeClass('error-input').addClass('error-input');
+							// 	flag = false;
+							// } else {
+							// 	that.$content.find('.uploadEvt').removeClass('error-input');
+							// 	_params.advanceCertificate = $scope.imgUrl;
+							// }
+							if(flag) {
+								console.log(_params);
+								if(!isCheck) {
+									$.alert({
+										title: '提示',
+										content: tool.alert('请勾选《代还款承诺函》！'),
+										buttons: {
+											close: {
+												text: '取消',
+												btnClass: 'btn-default btn-cancel'
+											},
+											ok: {
+												text: '确定',
+												action: function() {
+
+												}
+											}
+										}
+									});
+									return false;
+								}
+								process(_params, reason);
+							} else {
+								var content = '';
+								if(!isCheck) {
+									content = '请完善各项信息，并勾选《代还款承诺函》！';
+								} else {
+									content = '请完善各项信息！';
+								}
+								$.alert({
+									title: '提示',
+									content: tool.alert(content),
+									buttons: {
+										close: {
+											text: '取消',
+											btnClass: 'btn-default btn-cancel'
+										},
+										ok: {
+											text: '确定',
+											action: function() {
+
+											}
+										}
+									}
+								});
+								return false;
+							}
+						}
 					}
 				}
-			}
-		})
+			})
+		});
+		
+	}
+
+	/**
+	 * 弹窗前获取信息
+	 */
+	function getFinancePayment(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('financePayment/info', true),
+			dataType: 'json',
+			data: {
+				orderNo: $params.orderNo
+			},
+			success: $http.ok(function(xhr) {
+				console.log(xhr)
+				if(cb && typeof cb == 'function') {
+					cb(xhr.data);
+				}
+			})
+		});
 	}
 
 	/***
@@ -434,6 +560,10 @@ page.ctrl('lendAudit', function($scope) {
 	 * 任务提交跳转
 	 */
 	function process(_params, reason) {
+		console.log(_params)
+		if(reason) {
+			_params.reason = reason;
+		}
 		$.ajax({
 			type: 'post',
 			url: $http.api('makeLoanApproval/submit/' + $params.taskId, true),

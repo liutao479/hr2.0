@@ -74,7 +74,7 @@
 			<div class="right-Evt">
 				{{ if(it.cfgData.code == 'creditInput') { }}
 
-					<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + col.userId +'&downLoadType=3', true)}}" target="_blank" class="button button-mini download-creditMaterials" data-type="{{=it.index}}" data-idx="{{=i}}">下载征信材料</a>
+					<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterialsByUser?userIds=' + col.userId +'&downLoadType=3', true)}}" target="_blank" class="button button-mini download-creditMaterials" data-type="{{=it.index}}" data-idx="{{=i}}">下载征信材料</a>
 				{{ } else { }}
 					{{ if(row.code == 'GTHKR') { }}
 					<div class="button button-mini button-gray setJkrEvt" data-user-id="{{=col.userId}}"><i class="iconfont">&#xe66d;</i>设为主借款人</div>
@@ -179,20 +179,20 @@
 					{{ } if(ml.code == 'ZXZD') { }}
 						<table border="1" class="field-table{{=(!ml.empty ? ' required' : '')}}">
 							{{ var zxzd = col.loanCreditResultList; }}
-							{{ for(var k = 0, len3 = parseInt((zxzd.length + 1) / 2) ; k < len3; k++){ }}
+							{{ for(var k = 0, len3 = parseInt((zxzd.length + 1) / 2) ; k < len3; k++){console.log(len3); }}
 								{{ if(k % 2 == 0) { }}
 								<tr class="tr-odd">
 								{{ }else{ }}
 								<tr class="tr-even">
 								{{ } }}
-									<td class="td-key"><i class="{{=(!zxzd[2 * k].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k].fieldName}}</td>
-									<td class="td-value"><input class="input zxzd{{=(!zxzd[2 * k].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k].creditKey}}" data-required="{{=zxzd[2 * k].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit || ''}}</span></td>
-									{{ if(k == len3) { }}
+									<td class="td-key"><i class="{{=(!zxzd[2 * k].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k].fieldName || ''}}</td>
+									<td class="td-value"><input class="input zxzd{{=(!zxzd[2 * k].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k].creditVal || ''}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k].creditKey}}" data-required="{{=zxzd[2 * k].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit || ''}}</span></td>
+									{{ if(k == len3 - 1 && zxzd.length % 2 != 0) { }}
 										<td class="td-key"></td>
 										<td class="td-value"></td>
 									{{ }else{ }}
-										<td class="td-key"><i class="{{=(!zxzd[2 * k + 1].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k + 1].fieldName}}</td>
-										<td class="td-value"><input class="input zxzd{{=(!zxzd[2 * k + 1].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k + 1].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k + 1].creditKey}}" data-required="{{=zxzd[2 * k + 1].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit  || ''}}</span></td>
+										<td class="td-key"><i class="{{=(!zxzd[2 * k + 1].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k + 1].fieldName || ''}}</td>
+										<td class="td-value"><input class="input zxzd{{=(!zxzd[2 * k + 1].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k + 1].creditVal || ''}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k + 1].creditKey}}" data-required="{{=zxzd[2 * k + 1].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit  || ''}}</span></td>
 									{{ } }}
 								</tr>
 							{{ } }}
