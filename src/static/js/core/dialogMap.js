@@ -32,6 +32,9 @@
 		rejectModify: '<div class="w-content">\
 						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="请在此说明拒绝意见！"></textarea>\
 					</div>',
+		approvalPass: '<div class="w-content">\
+						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="请在此说明处理意见！">#审核通过#</textarea>\
+					</div>',
 		loanOrderApply: '<div class="w-content">\
 							<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 							<dl class="w-dropdown">\

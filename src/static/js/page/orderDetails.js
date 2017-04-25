@@ -207,10 +207,7 @@ page.ctrl('orderDetails', function($scope) {
 		$console.find('#approvalPass').on('click', function() {
 			$.confirm({
 				title: '审核通过',
-				content: dialogTml.wContent.suggestion,
-				onContentReady: function() {
-					this.$content.find('#suggestion').val('#审核通过#');
-				},
+				content: dialogTml.wContent.approvalPass,
 				buttons: {
 					close: {
 						text: '取消',
