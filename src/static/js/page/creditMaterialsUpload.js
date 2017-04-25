@@ -537,17 +537,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		});
 
 		/**
-		 * 身份证和手机号只能输入指定位数的数字
-		 */
-		$self.find('.input-text input').on('keyup', function() {
-			var type = $(this).data('type'),
-				value = $(this).val();
-			if(type == 'idCard') {
-				
-			}
-		});
-
-		/**
 		 * 表单输入失去焦点保存信息
 		 */
 		$self.find('.input-text input').on('blur', function() {
