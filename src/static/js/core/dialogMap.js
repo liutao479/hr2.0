@@ -73,44 +73,44 @@
 								</div>\
 							</div>\
 						</div>',
-		makeLoan: '<div class="w-content">\
-						<dl class="w-dropdown">\
-							<dt class="dt">用款时间：</dt>\
-							<dd class="dd">\
-								<div class="input-text input-date">\
-									<input id="loaningDate" type="text" class="dateBtn" readonly="readonly" value="{{=it.loaningDateStr || \"\"}}" />\
-								</div>\
-							</dd>\
-						</dl>\
-						<dl class="w-dropdown">\
-							<dt class="dt">垫资金额：</dt>\
+		makeLoan: '<div class="w-content clearfix">\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">收款单位：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="paymentMoney" value="{{=it.paymentMoney || \"\"}}"><span class="unit">元</span>\
+									<input type="text required" id="receiveCompany" data-key="receiveCompany" data-type="accountName" value="{{=it.receiveCompany || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
-							<dt class="dt">收款账户名称：</dt>\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">收款账号：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="receiveCompanyAddress" value="{{=it.receiveCompanyAddress || \"\"}}">\
+									<input type="text required" id="receiveAccount" data-key="receiveAccount" data-type="accountNumber" value="{{=it.receiveAccount || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">收款账户：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="receiveAccount" value="{{=it.receiveAccount || \"\"}}">\
+									<input type="text required" id="receiveAccountName" data-key="receiveAccountName" data-type="accountName" value="{{=it.receiveAccountName || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">开户行：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || \"\"}}">\
+									<input type="text required" id="receiveAccountBank" data-key="receiveAccountBank" data-type="accountName" value="{{=it.receiveAccountBank || \"\"}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">垫资时间：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-date">\
+									<input id="loaningDate" type="text" class="dateBtn" data-key="loaningDate" data-type="yymmddhhmm" readonly="readonly" value="{{=it.loaningDateStr || \"\"}}" />\
 								</div>\
 							</dd>\
 						</dl>\

@@ -85,12 +85,32 @@ page.ctrl('myCustomer', [], function($scope) {
 	}
 
 	/**
+	 * 弹窗前获取信息
+	 */
+	function getFinancePayment(orderNo, cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('financePayment/info', true),
+			dataType: 'json',
+			data: {
+				orderNo: orderNo
+			},
+			success: $http.ok(function(xhr) {
+				console.log(xhr)
+				if(cb && typeof cb == 'function') {
+					cb(xhr.data);
+				}
+			})
+		});
+	}
+
+	/**
 	* 放款预约弹窗信息取得
 	*/
 	var makeLoan = function(orderNo) {
 		$.ajax({
 			type: "post",
-			url: $http.api('financePayment/get', 'cyj'),
+			url: $http.api('financePayment/info', 'cyj'),
 			data:{
 				orderNo: orderNo
 			},
@@ -121,6 +141,57 @@ page.ctrl('myCustomer', [], function($scope) {
 						ok: {
 							text: '确定',
 							action: function() {
+								var that = this,
+									flag = true,
+									imgFlag = true,
+									_params = {
+										orderNo: orderNo
+									},
+									$inputs = that.$content.find('.input-text input'),
+									reason = $.trim(that.$content.find('#suggestion').val());
+								$inputs.each(function() {
+									var value = $.trim($(this).val()),
+										$parent = $(this).parent();
+									if(!value) {
+										$parent.removeClass('error-input').addClass('error-input');
+										$parent.find('.input-err').remove();
+										$parent.append('<span class="input-err">该项不能为空！</span>');
+										flag = false;
+									} else if(!regMap[$(this).data('type')].test(value)) {
+										$parent.removeClass('error-input').addClass('error-input');
+										$parent.find('.input-err').remove();
+										$parent.append('<span class="input-err">该项不符合输入规则！</span>');
+										flag = false;
+									} else {
+										$parent.removeClass('error-input');
+										$parent.find('.input-err').remove();
+										_params[$(this).data('key')] = value;
+									}
+								});
+								if(flag) {
+									process(_params, reason);
+								} else {
+									$.alert({
+										title: '提示',
+										content: tool.alert('请完善各项信息！'),
+										buttons: {
+											close: {
+												text: '取消',
+												btnClass: 'btn-default btn-cancel'
+											},
+											ok: {
+												text: '确定',
+												action: function() {
+
+												}
+											}
+										}
+									});
+									return false;
+								}
+
+
+							////////////////////////////
 								var isTrue = true,
 									_orderNo = orderNo,
 									that = this.$content;

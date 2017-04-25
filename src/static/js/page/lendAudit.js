@@ -211,8 +211,8 @@ page.ctrl('lendAudit', function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
-			var advanceWay = $submitBar.find('.checkItem.checked').data('type');
-			switch (advanceWay) {
+			var advancedWay = $submitBar.find('.checkItem.checked').data('type');
+			switch (advancedWay) {
 				case 0:
 					noAdvance();
 					break;
@@ -249,7 +249,8 @@ page.ctrl('lendAudit', function($scope) {
 						var that = this,
 							reason = $.trim(that.$content.find('#suggestion').val());
 						var _params = {
-							advanceWay: 0
+							orderNo: $params.orderNo,
+							advancedWay: 0
 						}
 						process(_params, reason);
 					}
@@ -294,7 +295,7 @@ page.ctrl('lendAudit', function($scope) {
 								imgFlag = true,
 								_params = {
 									orderNo: $params.orderNo,
-									advanceWay: 1
+									advancedWay: 1
 								},
 								$inputs = that.$content.find('.input-text input'),
 								reason = $.trim(that.$content.find('#suggestion').val());
@@ -420,7 +421,7 @@ page.ctrl('lendAudit', function($scope) {
 								imgFlag = true,
 								_params = {
 									orderNo: $params.orderNo,
-									advanceWay: 2
+									advancedWay: 2
 								},
 								$inputs = that.$content.find('.input-text input'),
 								reason = $.trim(that.$content.find('#suggestion').val());
@@ -560,7 +561,8 @@ page.ctrl('lendAudit', function($scope) {
 	 * 任务提交跳转
 	 */
 	function process(_params, reason) {
-		console.log(_params)
+		// debugger
+		console.log(_params);
 		if(reason) {
 			_params.reason = reason;
 		}
@@ -580,7 +582,7 @@ page.ctrl('lendAudit', function($scope) {
 					orderNo: $params.orderNo
 				}
 				if(reason) params.reason = reason;
-				flow.tasksJump(params, 'approval');
+				// flow.tasksJump(params, 'approval');
 			})
 		})
 	}
