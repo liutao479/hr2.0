@@ -41,14 +41,14 @@
 					<span class="key">最新核查时间：</span>
 					<span class="value">{{=tool.formatDate(it.updateTime)}}</span>
 				</div>
-				{{ } }}
 				<div class="key-value-box">
 					<span class="key">发起人：</span>
 					<span class="value">{{=it.submitByName||'系统'}}</span>
 				</div>
-				<div class="right-Evt">
-					<div class="button button-mini" id="startCheck">发起核查</div>
-				</div>
+				{{ } }}
+				{{ if(!(it.type&&it.type=="OrderDetails")){ }}
+				<div class="button button-mini float-right" id="startCheck">发起核查</div>
+				{{ } }}
 			</div>
 			{{ if(ac(it.body)){ }}
 			<div class="detail-item-group">
@@ -139,7 +139,6 @@
 						<div class="detail-item-alert alert-success">
 							<span class="icon"><i class="iconfont">&#xe659;</i></span>
 							<span class="status">已查询</span>
-							<span class="text"></span>
 						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
@@ -265,7 +264,6 @@
 						<div class="detail-item-alert alert-success">
 							<span class="icon"><i class="iconfont">&#xe659;</i></span>
 							<span class="status">已查询</span>
-							<span class="text"></span>
 						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
@@ -396,7 +394,6 @@
 						<div class="detail-item-alert alert-success">
 							<span class="icon"><i class="iconfont">&#xe659;</i></span>
 							<span class="status">已查询</span>
-							<span class="text"></span>
 						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
@@ -483,7 +480,6 @@
 						<div class="detail-item-alert alert-success">
 							<span class="icon"><i class="iconfont">&#xe659;</i></span>
 							<span class="status">已查询</span>
-							<span class="text"></span>
 						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
@@ -597,7 +593,6 @@
 						<div class="detail-item-alert alert-success">
 							<span class="icon"><i class="iconfont">&#xe659;</i></span>
 							<span class="status">已查询</span>
-							<span class="text"></span>
 						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
@@ -693,7 +688,6 @@
 						<div class="detail-item-alert alert-success">
 							<span class="icon"><i class="iconfont">&#xe659;</i></span>
 							<span class="status">已查询</span>
-							<span class="text"></span>
 						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
@@ -785,7 +779,6 @@
 						<div class="detail-item-alert alert-success">
 							<span class="icon"><i class="iconfont">&#xe659;</i></span>
 							<span class="status">已查询</span>
-							<span class="text"></span>
 						</div>
 						<div class="detail-item-context clearfix">
 							<div class="explain">
