@@ -543,7 +543,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			var type = $(this).data('type'),
 				value = $(this).val();
 			if(type == 'idCard') {
-
+				
 			}
 		});
 
