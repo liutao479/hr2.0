@@ -28,7 +28,7 @@ page.ctrl('expireInfoInput', [], function($scope) {
 			
 		//下载模板
 		$console.find('#modelDownload').on('click', function() {
-	 		window.open(urlStr+'/loanOverdueImport/downExcel','_self')
+	 		window.open($http.api('/loanOverdueImport/downExcel', true),'_self');
 	    })
 		//模板上传
 		$console.find('#fileData').on('change', function() {
@@ -37,7 +37,7 @@ page.ctrl('expireInfoInput', [], function($scope) {
 			fd.append('fileData', file);
 			fd.append('demandBankId', $('#demandBankId').val());
 			$.ajax({
-				url: urlStr + '/loanOverdueImport/uploadOverdue',
+				url: $http.api('/loanOverdueImport/uploadOverdue', true),
 				type: 'post',
 				data:fd,
 				processData: false,

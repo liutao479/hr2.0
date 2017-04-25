@@ -371,6 +371,40 @@
 	tool.formatCode = function(materialsCode) {
 		return _.materialsCodeMap[materialsCode];
 	}
+	/**
+	* 根据配置调整图片的顺序
+	*/
+	tool.adjust = function(cfg, key, imgs) {
+		var newImg = [],
+			segments = [];
+
+		function splice(code) {
+			for(var j = 0, l = imgs.length; j < l; j++) {
+				var img = imgs[j];
+				if(img.materialsCode == code) {
+					imgs.splice(j, 1);
+					return img;
+				}
+			}
+		}
+
+		for(var i = 0, len = cfg.length; i < len; i++) {
+			var row = cfg[i];
+			if(row.code == key) {
+				segments = row.segments;
+				break;
+			}
+		}
+		for(var i = 0, len = segments.length; i < len; i++) {
+			var row = segments[i];
+			var ni = splice(row.code);
+			if(ni) {
+				newImg.push(ni);	
+			}
+		}
+		
+		return newImg;
+	}
 	tool.cfgMaterials = [{
 			materialsCode: 'sfzzm',
 			name: '身份证正面'

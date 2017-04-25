@@ -19,8 +19,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 
 	var loadExpireProcessList = function(params, cb) {
 		$.ajax({
-			url: urlStr + '/loanOverdueImport/queryImportDetails',
-//			url: $http.api('loanOverdueImport/queryImportDetails','jbs'),
+			url: $http.api('loanOverdueImport/queryImportDetails', true),
 			data: pageData,
 			type: 'post',
 			dataType: 'json',
@@ -88,8 +87,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 			var status = $(this).data('status');
 			pageData['status']=status;
 			$.ajax({
-				url: urlStr + '/loanOverdueImport/queryImportDetails',
-//				url: $http.api('loanOverdueImport/queryImportDetails','jbs'),
+				url: $http.api('loanOverdueImport/queryImportDetails', true),
 				data: pageData,
 				type: 'post',
 				dataType: 'json',
@@ -103,6 +101,24 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 				})
 			})
 		});
+		$console.find('#cancelEvt').on('click', function() {
+			$.confirm({
+				title: '确认',
+				content: '<div class="w-content">确认取消本次导入操作？点击确认，本次导入的数据将不会保存</div>',
+				buttons: {
+					cancel: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							router.innerRender('#innerPanel', 'expire/expireInfoInput', {});
+						}
+					}
+				}
+			})
+		})
 		//全选或全不选
 		$console.find('#all').on('click', function() {
 			var importId = $(this).data('id');
@@ -117,8 +133,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	        	})
 				dataP['isFoundTask']=1;
 				$.ajax({
-					url: urlStr + '/loanOverdueImport/checkAllOverdue',
-//					url: $http.api('loanOverdueImport/checkAllOverdue','wl'),
+					url: $http.api('loanOverdueImport/checkAllOverdue', true),
 					data: dataP,
 					type: 'post',
 					dataType: 'json',
@@ -135,8 +150,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	        	})
 				dataP['isFoundTask']=0;
 				$.ajax({
-					url: urlStr + '/loanOverdueImport/checkAllOverdue',
-//					url: $http.api('loanOverdueImport/checkAllOverdue','wl'),
+					url: $http.api('loanOverdueImport/checkAllOverdue', true),
 					data: dataP,
 					type: 'post',
 					dataType: 'json',
@@ -158,8 +172,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	      		dataP['importId'] = $params.importId;
 	      	if(vals){
 				$.ajax({
-					url: urlStr + '/loanOverdueImport/prepareConfirmed',
-//					url: $http.api('loanOverdueImport/prepareConfirmed','wl'),
+					url: $http.api('loanOverdueImport/prepareConfirmed', true),
 					data: dataP,
 					type: 'post',
 					dataType: 'json',
@@ -222,8 +235,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 				$(this).html('<i class="iconfont">&#xe659;</i>');
 				dataP['isFoundTask']=1;
 				$.ajax({
-					url: urlStr+'/loanOverdueImport/isCreateOverdue',
-//					url: $http.api('loanOverdueImport/isCreateOverdue','wl'),
+					url: $http.api('loanOverdueImport/isCreateOverdue', true),
 					data: dataP,
 					type: 'post',
 					dataType: 'json',
@@ -238,8 +250,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 				$('#all').html('');
 				dataP['isFoundTask']=0;
 				$.ajax({
-					url: urlStr+'/loanOverdueImport/isCreateOverdue',
-//					url: $http.api('loanOverdueImport/isCreateOverdue','wl'),
+					url: $http.api('loanOverdueImport/isCreateOverdue', true),
 					data: dataP,
 					type: 'post',
 					dataType: 'json',
@@ -280,8 +291,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 			var detailData = {};
 				detailData['detailId']=$(this).data('detail');
 			$.ajax({
-				url: urlStr+'/loanOverdueImport/checkOverdueOrderList',
-//				url: $http.api('loanOverdueImport/checkOverdueOrderList','wl'),
+				url: $http.api('loanOverdueImport/checkOverdueOrderList', true),
 				data: detailData,
 				type: 'post',
 				dataType: 'json',
@@ -303,9 +313,6 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 			$tbl: $console.find('#expireInfoPrevTable'),
 			$paging: $console.find('#pageToolbar'),
 			$scrollBar: $console.find('#scrollBar')
-		}
-		if($params.process) {
-			
 		}
 		loadExpireProcessList();
 	});

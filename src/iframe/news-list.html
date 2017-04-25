@@ -24,12 +24,12 @@
 </div>
 <!--订单操作提醒 end-->
 <script type="text/x-dot-template" id="rowTmpl">
-	{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i], date = new Date(row.createDate); }}
+	{{ for(var i = 0, len = it.items.length; i < len; i++) { var row = it.items[i], date = new Date(row[it.time]); }}
 	<li class="message-item clearfix">
 		<div class="message-item-data">
-			<a class="detailEvt" data-idx="{{=i}}">{{=row.content}}</a>
+			<a class="detailEvt" data-idx="{{=i}}" data-id="{{=row[it.id]}}">{{=row[it.title]}}</a>
 		</div>
-		<span class="message-time">{{=[date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-') }}</span>
+		<span class="message-time">{{= !!row.mock ? '' : [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-') }}</span>
 	</li>
 	{{ } }}
 </script>

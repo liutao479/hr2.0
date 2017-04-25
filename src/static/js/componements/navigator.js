@@ -370,6 +370,18 @@ $(function() {
 				})
 			})
 		},
+		countDown: function($el) {
+			var counter = 60;
+			$el[0].counter = setInterval(function() {
+				$el.text(counter + 's后重新获取');
+				counter--;
+				if(counter <= 0) {
+					clearInterval($el[0].counter);
+					$el[0].counter = null;
+					$el.text('获取验证码');
+				}
+			}, 1000);
+		},
 		bind: function() {
 			$.confirm({
 				title: '绑定手机号码',
@@ -386,6 +398,8 @@ $(function() {
 							return $err.html('请输入手机号码').show();
 						}
 						NavComponent.internal.getPhoneCode(phone, function() {
+							NavComponent.internal.countDown($that);
+							/*
 							var counter = 60;
 							$this.counter = setInterval(function() {
 								$that.html(counter + 's后重新获取');
@@ -396,6 +410,7 @@ $(function() {
 									$this.counter = null;
 								}
 							}, 1000);
+							*/
 						});
 					})
 				},
@@ -439,19 +454,6 @@ $(function() {
 					})
 				})
 			}
-			
-			function _ct($el) {
-				var counter = 60;
-				$el[0].counter = setInterval(function() {
-					$el.text(counter + 's后重新获取');
-					counter--;
-					if(counter == 0) {
-						clearInterval($el[0].counter);
-						$el[0].counter = null;
-						$el.html('获取验证码');
-					}
-				}, 1000);
-			}
 
 			_gc(p);
 
@@ -462,10 +464,10 @@ $(function() {
 						content:'url:./defs/phone.modify.html',
 						onContentReady: function() {
 							var self = this;
-							$ctn = self.$content;
-							$ctn.find('#phoneNumber').html(p);
+							self.$content.find('#phoneNumber').html(p);
 							var $cd = self.$content.find('#codeCountDown');
-							_ct($cd)
+							$ctn = $cd;
+							NavComponent.internal.countDown($cd)
 							$cd.on('click', function() {
 								if(this.counter) return false;
 								_gc(p, true);
@@ -492,7 +494,7 @@ $(function() {
 						}
 					})
 				} else {
-					_ct($ctn);
+					NavComponent.internal.countDown($ctn);
 				}
 			}
 		},
