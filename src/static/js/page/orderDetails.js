@@ -171,13 +171,10 @@ page.ctrl('orderDetails', function($scope) {
 		})
 
 		//信息修改审核（拒绝修改）
-		$console.find('#approvalPass').on('click', function() {
+		$console.find('#rejectModify').on('click', function() {
 			$.confirm({
 				title: '拒绝修改',
-				content: dialogTml.wContent.suggestion,
-				onContentReady: function() {
-					this.$content.find('#suggestion').attr('placeholder', '请在此说明拒绝意见！');
-				},
+				content: dialogTml.wContent.rejectModify,
 				buttons: {
 					close: {
 						text: '取消',

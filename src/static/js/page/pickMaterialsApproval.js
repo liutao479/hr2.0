@@ -59,6 +59,7 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 			url: $http.api('tasks/validate', 'zyj'),
 			dataType: 'json',
 			data: JSON.stringify(data),
+			contentType: 'application/json;charset=utf-8',
 			success: $http.ok(function(result) {
 				console.log(result);
 				if(cb && typeof cb == 'function') {

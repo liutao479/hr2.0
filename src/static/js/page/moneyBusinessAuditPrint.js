@@ -67,29 +67,29 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 	 * 绑定立即处理事件
 	 */
 	var setupEvt = function() {
-		$scope.isAllClick = false;//批量下载是否能点击
-		$scope.$checks = $scope.$el.$tbl.find('.checkbox').checking();
+		// $scope.isAllClick = false;//批量下载是否能点击
+		// $scope.$checks = $scope.$el.$tbl.find('.checkbox').checking();
 
-		$scope.$checks.each(function() {
-			var that = this;
-			that.$checking.onChange(function() {
-				var flag = 0;
-				$scope.$checks.each(function() {
-					if($(this).attr('checked')) {
-						flag++;
-					}
-				})
-				if(flag == 0) {
-					$scope.$allCheck.removeClass('checked').attr('checked', false);
-					$scope.isAllClick = false;
-				} else if(flag == $scope.$checks.length) {
-					$scope.$allCheck.removeClass('checked').addClass('checked').attr('checked', true);
-					$scope.isAllClick = true;
-				} else {
-					$scope.isAllClick = true;
-				}
-			});
-		})
+		// $scope.$checks.each(function() {
+		// 	var that = this;
+		// 	that.$checking.onChange(function() {
+		// 		var flag = 0;
+		// 		$scope.$checks.each(function() {
+		// 			if($(this).attr('checked')) {
+		// 				flag++;
+		// 			}
+		// 		})
+		// 		if(flag == 0) {
+		// 			$scope.$allCheck.removeClass('checked').attr('checked', false);
+		// 			$scope.isAllClick = false;
+		// 		} else if(flag == $scope.$checks.length) {
+		// 			$scope.$allCheck.removeClass('checked').addClass('checked').attr('checked', true);
+		// 			$scope.isAllClick = true;
+		// 		} else {
+		// 			$scope.isAllClick = true;
+		// 		}
+		// 	});
+		// })
 
 
 		// 绑定打印按钮
@@ -159,71 +159,71 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 			};
 		});
 
-		// 初始化复选框
-		$scope.$allCheck = $console.find('.all-check-box .checkbox').checking();
-		$scope.$allCheck[0].$checking.onChange(function() {
-			if(!$scope.$allCheck.attr('checked')) {
-				$scope.$el.$tbl.find('.checkbox').removeClass('checked').attr('checked', false);
-				$scope.isAllClick = false;
-			} else {
-				$scope.$el.$tbl.find('.checkbox').removeClass('checked').addClass('checked').attr('checked', true);
-				$scope.isAllClick = true;
-			}
-		});
+		// // 初始化复选框
+		// $scope.$allCheck = $console.find('.all-check-box .checkbox').checking();
+		// $scope.$allCheck[0].$checking.onChange(function() {
+		// 	if(!$scope.$allCheck.attr('checked')) {
+		// 		$scope.$el.$tbl.find('.checkbox').removeClass('checked').attr('checked', false);
+		// 		$scope.isAllClick = false;
+		// 	} else {
+		// 		$scope.$el.$tbl.find('.checkbox').removeClass('checked').addClass('checked').attr('checked', true);
+		// 		$scope.isAllClick = true;
+		// 	}
+		// });
 
-		// 批量下载按钮
-		$console.find('#allPrint').on('click', function() {
+		// // 批量下载按钮
+		// $console.find('#allPrint').on('click', function() {
 
-			var that = $(this);
-			if(!$scope.isAllClick) {
-				$.toast('请选择批量打印的订单！', {
-					timeout: 500
-				}, function() {
+		// 	var that = $(this);
+		// 	if(!$scope.isAllClick) {
+		// 		$.toast('请选择批量打印的订单！', {
+		// 			timeout: 500
+		// 		}, function() {
 
-				});
-				return false;
-			}
-			$.confirm({
-				title: '批量打印',
-				content: tool.alert('批量打印！'),
-				onContentReady: function() {
-					// $scope.$radios = this.$content.find('.checkbox').checking();
+		// 		});
+		// 		return false;
+		// 	}
+		// 	$.confirm({
+		// 		title: '批量打印',
+		// 		content: tool.alert('批量打印！'),
+		// 		onContentReady: function() {
+		// 			// $scope.$radios = this.$content.find('.checkbox').checking();
 
-					// $scope.$radios.each(function() {
-					// 	var that = this;
-					// 	that.$checking.onChange(function() {
-					// 		$scope.$radios.removeClass('checked').attr('checked', false);
-					// 		$(that).removeClass('checked').addClass('checked').attr('checked', true);
-					// 	});
-					// })
-				},
-				buttons: {
-					close: {
-						text: '取消',
-						btnClass: 'btn-default btn-cancel'
-					},
-					ok: {
-						text: '确定',
-						action: function() {
-							// $scope.userIds = [];
-							// $scope.$el.$tbl.find('.checkbox').each(function() {
-							// 	if($(this).attr('checked')) {
-							// 		$scope.userIds.push($(this).data('userId'));
-							// 	}
-							// });
-							// $scope.userIds = $scope.userIds.join(',');
-							// console.log($scope.userIds)
-							// this.$content.find('.checkbox').each(function() {
-							// 	if($(this).attr('checked')) {
-							// 		$scope.downLoadType = $(this).data('type');
-							// 	}
-							// });
-							// window.open($http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + $scope.userIds + '&downLoadType=' + $scope.downLoadType, true), '_blank');
-						}
-					}
-				}
-			})
-		});
+		// 			// $scope.$radios.each(function() {
+		// 			// 	var that = this;
+		// 			// 	that.$checking.onChange(function() {
+		// 			// 		$scope.$radios.removeClass('checked').attr('checked', false);
+		// 			// 		$(that).removeClass('checked').addClass('checked').attr('checked', true);
+		// 			// 	});
+		// 			// })
+		// 		},
+		// 		buttons: {
+		// 			close: {
+		// 				text: '取消',
+		// 				btnClass: 'btn-default btn-cancel'
+		// 			},
+		// 			ok: {
+		// 				text: '确定',
+		// 				action: function() {
+		// 					// $scope.userIds = [];
+		// 					// $scope.$el.$tbl.find('.checkbox').each(function() {
+		// 					// 	if($(this).attr('checked')) {
+		// 					// 		$scope.userIds.push($(this).data('userId'));
+		// 					// 	}
+		// 					// });
+		// 					// $scope.userIds = $scope.userIds.join(',');
+		// 					// console.log($scope.userIds)
+		// 					// this.$content.find('.checkbox').each(function() {
+		// 					// 	if($(this).attr('checked')) {
+		// 					// 		$scope.downLoadType = $(this).data('type');
+		// 					// 	}
+		// 					// });
+		// 					// window.open($http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + $scope.userIds + '&downLoadType=' + $scope.downLoadType, true), '_blank');
+		// 				}
+		// 			}
+		// 		}
+		// 	})
+		// });
 	}
 
 	/***
