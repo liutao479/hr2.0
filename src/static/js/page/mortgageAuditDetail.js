@@ -21,7 +21,12 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 				result.data.loanTask = {
 					category: 'pledgeApproval',
 					editable: 0
-				}
+				};
+				result.data.cfgMaterials = [
+					{
+						zcdjzydy: '注册登记证（已抵押）'
+					}
+				];
 				$scope.result = result;
 				$scope.orderNo = result.data.orderInfo.orderNo;//订单号
 				setupLocation(result.data.orderInfo);

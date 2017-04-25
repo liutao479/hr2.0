@@ -21,7 +21,12 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 				result.data.loanTask = {
 					category: 'pledge',
 					editable: 1
-				}
+				};
+				result.data.cfgMaterials = [
+					{
+						zcdjzydy: '注册登记证（已抵押）'
+					}
+				];
 				$scope.result = result;
 				setupLocation(result.data.orderInfo);
 				setupBackReason(result.data.orderInfo.loanOrderApproval);
@@ -38,7 +43,6 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	 */
 	var submitOrders = function(params, cb) {
 		console.log(params);
-		debugger
 		$.ajax({
 			url: $http.api('loanPledge/sumbit', 'cyj'),
 			type: 'post',
@@ -253,6 +257,9 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 									for(var i = 0, len = infoParams.length; i < len; i++) {
 										infoParams[i].reason = _reason;
 									}
+								}
+								for(var i = 0, len = infoParams.length; i < len; i++) {
+									infoParams[i].orderNo = $params.orderNo;
 								}
 								submitOrders(infoParams, function() {
 									router.render('mortgageProcess');

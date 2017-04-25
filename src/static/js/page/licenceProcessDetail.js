@@ -147,6 +147,7 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 							if(_reason) {
 								_params.reason = _reason;
 							}
+							_params.orderNo = $params.orderNo;
 							submitOrders(_params, function() {
 								router.render('licenceProcess');
 							});

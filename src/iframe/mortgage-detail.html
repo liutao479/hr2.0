@@ -173,7 +173,24 @@
 					<!-- 标题对应项 -->
 					<div class="panel-content clearfix">
 						<div class="loan-imgs-bar">
-							<div class="imgs-item-group uploadEvt imgs" data-orderno="{{=it.orderInfo.orderNo}}" data-code="zcdjzydy" data-name="注册登记证（已抵押）" data-scene="{{=it.loanTask.category}}" data-img="{{=(it.userMaterials[0] ? it.userMaterials[0].materialsPic : undefined)}}" data-id="{{=(it.userMaterials[0] ? it.userMaterials[0].id : undefined)}}" data-err="{{=(it.userMaterials[0] ? it.userMaterials[0].auditResult : undefined)}}" data-editable="{{=it.loanTask.editable}}"></div>
+							{{ for(var j = 0, len2 = it.cfgMaterials.length; j < len2; j++) { var nl = it.cfgMaterials[j], flag = 0; }}
+								{{ for(var m in nl) { }}
+									{{ var len3 = it.userMaterials.length; if(len3) { }}
+										{{ for(var k = 0; k < len3; k++) { var mr = it.userMaterials[k]; }}
+											{{ if(mr.materialsCode == m) { }}
+												<div class="imgs-item-group uploadEvt imgs" data-idx="{{=k}}" data-orderno="{{=it.orderInfo.orderNo}}" data-code="{{=m}}" data-name="{{=nl[m]}}" data-scene="{{=it.loanTask.category}}" data-img="{{=mr.materialsPic}}" data-id="{{=mr.id}}" data-err="{{=mr.auditResult || 0}}" data-editable="{{=it.loanTask.editable}}"></div>
+											{{ break;} else { flag++; }}
+											{{ } }}
+										{{ } }}
+									{{ } }}
+									{{ if(flag == len3) { }}
+									<div class="imgs-item-group uploadEvt noimgs" data-orderno="{{=it.orderInfo.orderNo}}" data-code="{{=m}}" data-name="{{=nl[m]}}" data-scene="{{=it.loanTask.category}}" data-err="0" data-editable="{{=it.loanTask.editable}}"></div>
+									{{ } }}
+								{{ } }}
+							{{ } }}
+
+							
+							<!-- <div class="imgs-item-group uploadEvt imgs" data-orderno="{{=it.orderInfo.orderNo}}" data-code="zcdjzydy" data-name="注册登记证（已抵押）" data-scene="{{=it.loanTask.category}}" data-img="{{=(it.userMaterials[0] ? it.userMaterials[0].materialsPic : undefined)}}" data-id="{{=(it.userMaterials[0] ? it.userMaterials[0].id : undefined)}}" data-err="{{=(it.userMaterials[0] ? it.userMaterials[0].auditResult : undefined)}}" data-editable="{{=it.loanTask.editable}}"></div> -->
 						</div>
 					</div>
 					<!-- 标题对应项 end-->

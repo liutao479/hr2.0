@@ -216,28 +216,13 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 						text: '确定',
 						action: function () {
 							var _reason = $('.jconfirm #suggestion').val().trim();
-							if(!_reason) {
-								$.alert({
-									title: '提示',
-									content: dialogTml.wContent.handelSuggestion,
-									buttons: {
-										ok: {
-											text: '确定',
-											action: function() {
-											}
-										}
-									}
-								});
-								return false;
-							} else {
-								var _params = {
-									orderNo: $scope.orderNo,
-									reason: _reason
-								}
-								verifyOrders(_params, function() {
-									router.render('licenceAudit', {});
-								});
-							}
+							var _params = {
+								orderNo: $scope.orderNo
+							};
+							if(_reason) _params.reason = _reason;
+							verifyOrders(_params, function() {
+								router.render('licenceAudit', {});
+							});
 						}
 					}
 				}

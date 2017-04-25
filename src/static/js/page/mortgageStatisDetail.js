@@ -20,7 +20,12 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 				console.log(result);
 				result.data.loanTask = {
 					editable: 0
-				}
+				};
+				result.data.cfgMaterials = [
+					{
+						zcdjzydy: '注册登记证（已抵押）'
+					}
+				];
 				$scope.result = result;
 				setupLocation(result.data.orderInfo);
 				// console.log(result.data.backApprovalInfo)
