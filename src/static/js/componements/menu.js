@@ -234,8 +234,20 @@
 		}
 	};
 
+	menu.prototype.remove = function() {
+		var self = this;
+		if(self.$selected) {
+			self.$selected.removeClass(self.activeCss);
+			self.$selected = null;
+			self.selectedKey = '';
+		}
+	}
+
 	menu.prototype.setup = function(key, unRouter){
 		var self = this;
+		if(key.indexOf('/') > 0) {
+			return self.remove();
+		}
 		var $item = self.$dom.find('#menu'+key);
 		self._trigger(key, $item, unRouter);
 	};

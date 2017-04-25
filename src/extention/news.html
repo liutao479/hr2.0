@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>公共详情</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<style type="text/css">
+		html, body, p {
+			margin: 0;
+			padding: 0;
+		}
+		.title {
+			line-height: 22px;
+			font-size: 14px;
+			text-align: center;
+			padding: 10px 15px;
+		}
+		.timestamp {
+			line-height: 24px;
+			font-size: 12px;
+			color: #999;
+			text-align: center;
+		}
+		.content {
+			padding: 10px 15px;
+			text-align: left;
+			font-size: 13px;
+			line-height: 22px;
+		}
+		.copyright {
+			text-align: right;
+			font-size: 12px;
+			margin-top: 20px;
+			padding-right: 15px;
+		}
+	</style>
+</head>
+<body>
+	<div class="title" id="title"></div>
+	<div class="timestamp" id="timestamp"></div>
+	<div class="content" id="content"></div>
+	<div class="copyright">浙江惠瀜网络科技有限公司</div>
+	<script type="text/javascript">
+		function connectWebViewJavascriptBridge(callback) {
+	        if (window.WebViewJavascriptBridge) {
+	         	callback(WebViewJavascriptBridge)
+	        } else {
+	          	document.addEventListener('WebViewJavascriptBridgeReady', function() {
+                    callback(WebViewJavascriptBridge)
+                    }, false)
+	        }
+	    }
+
+	    connectWebViewJavascriptBridge(function(bridge) {
+	    	bridge.init(function(msg, responseCallback) {
+	    		responseCallback('初始化成功');
+	    	});
+			/**
+			* 注册事件-渲染模板
+			* @params {object} data
+			* {
+			*	data: data,
+			* 	template: '',
+			* 	pict: 1,
+			* 	defaultimg: ""
+			* }
+			*/
+			bridge.registerHandler('renderNews', function(data, responseCallback) {
+				responseCallback(data);
+				var ctn = data.data;
+				render(ctn);
+			})
+	    });
+
+	    var $title,
+	    	$content,
+	    	$timestamp;
+
+	    function render(data) {
+	    	var date = new Date(data.noticePublishTime);
+	    	$title.innerHTML = data.noticeTitle;
+	    	$timestamp.innerHTML = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-') + ' ' + date.getHours() + ':' + date.getMinutes();
+	    	$content.innerHTML = data.noticeContent;
+	    }
+
+	    function init() {
+	    	$title = document.getElementById('title'),
+	    	$content = document.getElementById('content'),
+	    	$timestamp = document.getElementById('timestamp');
+	    }
+	    init();
+	</script>
+</body>
+</html>

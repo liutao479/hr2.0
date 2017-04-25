@@ -18,15 +18,25 @@ page.ctrl('message', function($scope) {
 		router.updateQuery({
 			tab: _tab
 		})
+		internel.loadList();
 	}
 	//加载列表
 	internel.loadList = function() {
-		var api = ''
+		var api = '',
+			titleKey = '',
+			idKey = '',
+			timeKey = '';
 		switch ($scope.tabType) {
 			case 1:
-				api = $http.api('busiMsg/page', true);
+				idKey = 'noticeId';
+				titleKey = 'noticeTitle';
+				timeKey = 'noticePublishTime';
+				api = $http.api('notice/list', true);
 			break;
 			default:
+				idKey = 'orderNo';
+				timeKey = 'createDate';
+				titleKey = 'title';
 				api = $http.api('busiMsg/page', true);
 			break;
 		}
@@ -36,7 +46,20 @@ page.ctrl('message', function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(xhr) {
 				$scope.cache.list = xhr.data;
-				render.compile($scope.$el.$list, $scope.def.rowTmpl, xhr.data, true);
+				var data = xhr.data;
+				if(!data.length) {
+					data.push({
+						mock: true,
+						title: '暂无消息'
+					})
+				}
+				data = {
+					items: data,
+					title: titleKey,
+					id: idKey,
+					time: timeKey
+				}
+				render.compile($scope.$el.$list, $scope.def.rowTmpl, data, true);
 				internel.setupPaging(xhr.page, true);
 			})
 		})
@@ -54,8 +77,8 @@ page.ctrl('message', function($scope) {
 				})
 			}
 			router.render('message/detail', {
-				id: item.id,
-				status: item.status
+				id: item.noticeId,
+				path: 'message'
 			})
 		})
 
