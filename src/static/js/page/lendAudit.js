@@ -220,8 +220,9 @@ page.ctrl('lendAudit', function($scope) {
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result);
-									router.render('loanProcess');
-									// toast.hide();
+									$.toast('处理成功！', function() {
+										router.render('loanProcess');
+									});
 								})
 							})
 						}

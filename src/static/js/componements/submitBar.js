@@ -105,9 +105,11 @@
 		self.$checks = self.$submitBar.find('.checkItem');
 		if(!self.$checks.length) return;
 		self.$checks.eq(0).removeClass('checked').addClass('checked');
+		self.$checks.eq(0).append('<i class="iconfont correct">&#xe659;</i>');
 		self.$checks.on('click', function() {
 			self.$checks.removeClass('checked');
-			$(this).addClass('checked');
+			self.$checks.find('.iconfont').remove();
+			$(this).addClass('checked').append('<i class="iconfont correct">&#xe659;</i>');
 		});
 	}
 

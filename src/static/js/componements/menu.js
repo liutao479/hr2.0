@@ -176,7 +176,7 @@
 	menu.prototype._render = function(){
 		var self = this,
 			arr = [];
-		arr.push('<div class="menu">');
+		arr.push('<a href="#" class="showHide"></a><div class="menu">');
 		$.each(self.data, function(key, obj) {
 			if(!$.isArray(obj)) return;
 			var len = obj.length;

@@ -116,6 +116,9 @@
 					self.errImg = imgs[self.options.err];
 				}
 				if(self.options.msg && self.options.msg != 'undefined') {
+					if(self.options.scene == 'homeMaterialsUpload') {
+						self.options.msg = '<i class="iconfont">&#xe626;</i>' + self.options.msg
+					}
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
 				self.name = internalTemplates.name.format(self.options.name, self.empty);
