@@ -46,6 +46,28 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 		$location.location();
 	}
 
+	/**
+	 * 材料必填，必传检验(提交批量验证接口)
+	 */
+	function checkData(cb) {
+		var data = {
+			taskIds: []
+		};
+		data.taskIds.push($params.taskId);
+		$.ajax({
+			type: 'post',
+			url: $http.api('tasks/validate', 'zyj'),
+			dataType: 'json',
+			data: JSON.stringify(data),
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
 	
 	/**
 	* 加载左侧导航菜单
@@ -96,23 +118,6 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 			if($(this).hasClass('panel-menu-item-active')){
 				$(this).find('.arrow').show();
 			}
-		})
-	}
-
-	/**
-	 * 材料必填，必传检验
-	 */
-	function checkData(cb) {
-		$.ajax({
-			type: 'post',
-			url: $http.api('loanApproval/submit/' + $params.taskId, 'zyj'),
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				console.log(result);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
-			})
 		})
 	}
 
@@ -214,7 +219,9 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 		 * 提交
 		 */
 		$sub.on('approvalPass', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 		})
 	}
 

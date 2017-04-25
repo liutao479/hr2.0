@@ -153,6 +153,7 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 			// 下拉框数据以及输入框数据重置
 			$console.find('.select input').val('');
 			$console.find('#searchInput').val('');
+			$console.find('.dateBtn').val('');
 			apiParams = {
 		    	pageNum: 1
 			};
@@ -248,6 +249,11 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 		apiParams.pageNum = _page;
 		loadMoneyPrintList(apiParams);
 		cb();
+	}
+
+	$scope.deptCompanyPicker = function(picked) {
+		console.log(picked);
+		apiParams.deptId = picked.id;
 	}
 
 	/**

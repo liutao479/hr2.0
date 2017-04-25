@@ -47,13 +47,18 @@ page.ctrl('phoneCheck', function($scope) {
 	}
 
 	/**
-	 * 材料必填，必传检验
+	 * 材料必填，必传检验(提交批量验证接口)
 	 */
 	function checkData(cb) {
+		var data = {
+			taskIds: []
+		};
+		data.taskIds.push($params.taskId);
 		$.ajax({
 			type: 'post',
-			url: $http.api('loanApproval/submit/' + $params.taskId, 'zyj'),
+			url: $http.api('tasks/validate', 'zyj'),
 			dataType: 'json',
+			data: JSON.stringify(data),
 			success: $http.ok(function(result) {
 				console.log(result);
 				if(cb && typeof cb == 'function') {
@@ -147,8 +152,9 @@ page.ctrl('phoneCheck', function($scope) {
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result);
-									router.render('loanProcess');
-									// toast.hide();
+									$.toast('处理成功！', function() {
+										router.render('loanProcess');	
+									})
 								})
 							})
 						}
@@ -158,10 +164,64 @@ page.ctrl('phoneCheck', function($scope) {
 		})
 
 		/**
+		 * 拒绝受理
+		 */
+		$sub.on('rejectOrder', function() {
+			$.alert({
+				title: '拒绝受理',
+				content: dialogTml.wContent.suggestion,
+				buttons: {
+					'close': {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+			        },
+			        'ok': {
+			        	text: '确定',
+			            action: function () {
+	            			var _reason = $.trim(this.$content.find('#suggestion').val());
+            				if(!_reason) {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请填写处理意见！'),
+									buttons: {
+										ok: {
+											text: '确定',
+											action: function() {
+											}
+										}
+									}
+								});
+								return false;
+							} 
+							$.ajax({
+								type: 'post',
+								url: $http.api('loanOrder/refused', 'zyj'),
+								data: {
+									taskId: $params.taskId,
+									reason: _reason
+								},
+								dataType: 'json',
+								success: $http.ok(function(result) {
+									console.log(result);
+									$.toast('该订单已被终止！', function() {
+										router.render('loanProcess');	
+									});
+								})
+							})
+			            }
+			        }
+			        
+			    }
+			});
+		});
+
+		/**
 		 * 提交
 		 */
 		$sub.on('approvalPass', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 		})
 
 	}

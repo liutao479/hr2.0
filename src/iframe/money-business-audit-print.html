@@ -4,14 +4,14 @@
 				<!--用款时间选择-->
 				<div class="select-search-bar no-bottom-border clearfix">
 					<div class="search-item">
-						<span class="select-name">银行回款日期：</span>
+						<span class="select-name">用款日期：</span>
 						<div class="input-text input-date-mini">
 							<input id="dateStart" type="text" class="dateBtn" data-type="utilityTime" readonly="readonly" value="" />
 						</div>	
 					</div>
 					<div class="search-item">
 						<span class="select-name">分公司：</span>
-						<div class="select select-common" data-dropdown="page.$scope['moneyBusinessAuditPrint'].bankPicker" data-trigger="page.$scope['moneyBusinessAuditPrint'].dropdownTrigger.deptCompany"></div>
+						<div class="select select-common" data-dropdown="page.$scope['moneyBusinessAuditPrint'].deptCompanyPicker" data-trigger="page.$scope['moneyBusinessAuditPrint'].dropdownTrigger.deptCompany"></div>
 					</div>
 					<div class="search-item">
 						<div class="input-text">
@@ -75,10 +75,10 @@
 								<div class="checkbox checkbox-normal"></div>
 							</td>
 							<td class="orders-item-data">{{=row.orderNo || ''}}</td>
-							<td class="orders-item-data">{{=row.userName || ''}}（{{=row.idCard || ''}}）</td>
-							<td class="orders-item-data">{{=row.tilityTimeStr || ''}}</td>
+							<td class="orders-item-data">{{=row.realName || ''}}（{{=row.idCard || ''}}）</td>
+							<td class="orders-item-data">{{=row.utilityTimeStr || ''}}</td>
 							<td class="orders-item-data">{{=row.deptName || ''}}</td>
-							<td class="orders-item-data">{{=row.stageMoney || ''}}</td>
+							<td class="orders-item-data">{{=row.stageMoney + '元' || ''}}</td>
 							<td class="orders-item-data"><div class="button button-mini button-gray businessPrint" data-order-no="{{=row.orderNo}}">打印</div></td>
 						</tr>
 					{{ } }}

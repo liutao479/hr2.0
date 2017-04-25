@@ -537,6 +537,18 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		});
 
 		/**
+		 * 文本框只能输入整数，并且左右键可移动
+		 */
+		$self.find('.input-text input').on('keyup', function() {
+			if($(this).data('type') == 'idCard' || $(this).data('type') == 'mobile') {
+				var c = $(this);  
+	            if(/[^\d]/.test(c.val())) {//替换非数字字符  
+	            	var temp_amount = c.val().replace(/[^\d]/g,'');  
+	            	$(this).val(temp_amount);  
+	            }  
+			}
+		});
+		/**
 		 * 表单输入失去焦点保存信息
 		 */
 		$self.find('.input-text input').on('blur', function() {

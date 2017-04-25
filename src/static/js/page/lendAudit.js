@@ -44,6 +44,28 @@ page.ctrl('lendAudit', function($scope) {
 			})
 		})
 	}
+
+	/**
+	 * 材料必填，必传检验(提交批量验证接口)
+	 */
+	function checkData(cb) {
+		var data = {
+			taskIds: []
+		};
+		data.taskIds.push($params.taskId);
+		$.ajax({
+			type: 'post',
+			url: $http.api('tasks/validate', 'zyj'),
+			dataType: 'json',
+			data: JSON.stringify(data),
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
 	
 	/**
 	* 加载左侧导航菜单
@@ -212,20 +234,22 @@ page.ctrl('lendAudit', function($scope) {
 		 */
 		$sub.on('approvalPass', function() {
 			var advancedWay = $submitBar.find('.checkItem.checked').data('type');
-			switch (advancedWay) {
-				case 0:
-					noAdvance();
-					break;
-				case 1:
-					selfAdvance();
-					break;
-				case 2:
-					applyAdvance();
-					break;
-				default:
-					noAdvance();
-					break;
-			};
+			checkData(function() {
+				switch (advancedWay) {
+					case 0:
+						noAdvance();
+						break;
+					case 1:
+						selfAdvance();
+						break;
+					case 2:
+						applyAdvance();
+						break;
+					default:
+						noAdvance();
+						break;
+				};
+			})
 		})
 
 	}

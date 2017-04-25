@@ -221,7 +221,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 
 	$scope.demanBankPicker = function(picked) {
 		console.log(picked);
-		apiParams.bankId = picked.id;
+		apiParams.demandBankId = picked.id;
 	}
 
 	/**

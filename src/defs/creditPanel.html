@@ -40,7 +40,7 @@
 				<div class="key-value">
 					{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
 						<div class="input-text input-idc">
-							<input type="text" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" class="required" maxlength="18" value="{{=row.idCard || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="idCard"/>		
+							<input type="text" class="required" maxlength="18" value="{{=row.idCard || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="idCard"/>		
 						</div>	
 					{{ } }}
 					{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}
@@ -53,7 +53,7 @@
 				<div class="key-value">
 					{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
 						<div class="input-text input-phone">
-							<input type="text" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" value="{{=row.mobile || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="mobile"/>		
+							<input type="text" maxlength="11" value="{{=row.mobile || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="mobile"/>		
 						</div>	
 					{{ } }}
 					{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}
