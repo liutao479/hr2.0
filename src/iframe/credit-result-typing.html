@@ -91,7 +91,7 @@
 			{{ if(it.cfgData.code == 'creditInput') { }}
 				<!-- 征信是否合格 -->
 				<div class="panel-item-box mt15">
-					<div class="panel-key-area">征信是否合格：</div>
+					<div class="panel-key-area"><i class="is-empty">*</i>征信是否合格：</div>
 					<div class="panel-value-area clearfix">
 						<div class="panel-value-item">
 							<div class="select select-common required" data-user-id="{{=col.userId}}" data-type="creditLevel" data-dropdown="page.$scope['creditInput'].creditLevelPicker" data-trigger="page.$scope['creditInput'].dropdownTrigger.creditLevel" data-selected="{{=(col.creditLevel == 1 ? '正常' : (col.creditLevel == 2 ? '关注' : (col.creditLevel == 3 ? '禁入' : '')))}}"></div>
@@ -102,7 +102,7 @@
 				
 				<!-- 征信报告文件 -->
 				<div class="panel-item-box mt15">
-					<div class="panel-key-area">征信报告文件：</div>
+					<div class="panel-key-area"><i class="is-empty">*</i>征信报告文件：</div>
 					<div class="panel-value-area clearfix">
 						{{ if(col.creditReportFile) { }}
 							<div class="panel-value-item file-area">
@@ -134,7 +134,7 @@
 			{{ } else { }}
 				<!-- 征信是否合格 -->
 				<div class="panel-item-box mt15">
-					<div class="panel-key-area">征信是否合格：</div>
+					<div class="panel-key-area"><i class="is-empty">*</i>征信是否合格：</div>
 					<div class="panel-value-area clearfix">
 						<div class="panel-value-item">{{=(col.creditLevel == 1 ? '正常' : (col.creditLevel == 2 ? '关注' : (col.creditLevel == 3 ? '禁入' : '')))}}</div>
 					</div>
@@ -143,7 +143,7 @@
 			{{ } }}
 			{{ for(var j = 0, len2 = row.segments.length; j < len2; j++) { var ml = row.segments[j]; }}
 				<div class="panel-item-box mt15">
-					<div class="panel-key-area">{{=ml.name}}：</div>
+					<div class="panel-key-area">{{=(!ml.empty ? '<i class="is-empty">*</i>' : '')}}{{=ml.name}}：</div>
 					<div class="panel-value-area{{=(ml.code == 'ZXBGP' ? ' creditMaterials' : '')}} clearfix">
 					{{ if(ml.code !== 'ZXBGP' && ml.code !== 'ZXZD') { }}
 						<!-- 全配置区块 -->
@@ -205,7 +205,7 @@
 			
 			<!-- 备注信息 -->
 			<div class="panel-item-box">
-				<div class="panel-key-area">备注信息：</div>
+				<div class="panel-key-area"><i class="is-empty">*</i>备注信息：</div>
 				<div class="panel-value-area clearfix">
 					{{ if(it.cfgData.code == 'creditApproval') { }}
 						<div class="panel-value-item">{{=col.remark || ''}}</div>
