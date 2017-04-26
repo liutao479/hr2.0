@@ -592,6 +592,7 @@ page.ctrl('lendAudit', function($scope) {
 		if(reason) {
 			_params.reason = reason;
 		}
+		_params.frameCode = $scope.result.cfgData.frames[0].code;
 		$.ajax({
 			type: 'post',
 			url: $http.api('makeLoanApproval/submit/' + $params.taskId, true),
