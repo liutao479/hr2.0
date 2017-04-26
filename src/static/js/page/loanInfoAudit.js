@@ -232,10 +232,10 @@ page.ctrl('loanInfoAudit', function($scope) {
 			}
 			if( thisName == 'phone'){
 				var thisVal = that.val();
-				var reg = /^1[\d+]{10}$/;
+				var reg = /^((0\d{2,3}-\d{7,8})|(\d{11}))$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
-					$(this).after('<i class="error-input-tip sel-err">请您填写11位正确格式的手机号码！</i>');
+					$(this).after('<i class="error-input-tip sel-err">请正常填写手机号或常规电话号码。</i>');
 					that.val('');
 				}
 			}
@@ -332,6 +332,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 			var btnType = $(this).data('type');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 			requireList.each(function(){
+				$('.sel-err').remove();
 				var value = $(this).val();
 				if(!value){
 					if(!$(this).parent().hasClass('info-value') && !$(this).parent().hasClass('info-check-box')){
@@ -388,7 +389,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 						data[index]=data1;
 			        })
 		        }
-		        var dataPost;debugger
+		        var dataPost;
 		        if(btnType){
 		        	dataPost = JSON.stringify(data);
 					$.ajax({
