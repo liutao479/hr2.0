@@ -35,6 +35,8 @@ page.ctrl('riskManagementDetail', function($scope) {
 			data: param,
 			success: $http.ok(function(res) {
 				pageBcData=param;
+				res.data.headerInfo.companyName=$params.companyName;
+				res.data.headerInfo.bankName=$params.bankName;
 				render.compile($scope.$el.$searchInfo, $scope.def.searchInfoTmpl, res.data.headerInfo, true);
 				render.compile($scope.$el.$table, $scope.def.tableTmpl, res.data.list, true);
 				// 构造分页

@@ -12,7 +12,11 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 			deptId:null,
 			bankCode:null,
 		},
-		pageBcData={};/*保存点击跳转详情时的查询参数*/;
+		pageBcData={},/*保存点击跳转详情时的查询参数*/
+		textNameObj={
+			companyName:null,
+			bankName:null
+		};
 
 	/*查询前去除空查询字段*/
 	var delNull=function(obj){
@@ -118,24 +122,25 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 			one=1;
 			two=-1;
 		};
-		if(!type)
-			return false;
-		if(type=="srvNum"){
-			sortData=$scope.result.sort(function (a, b) {
-				    return a.serviceCallNum > b.serviceCallNum ? one : two;
-				});/*根据serviceCallNum字段进行降序-降序排序*/
-		}else if(type=="srvMoney"){
-			sortData=$scope.result.sort(function (a, b) {
-				    return a.serviceFee > b.serviceFee ? one : two;
-				});/*根据serviceFee字段进行降序-降序排序*/
-		}else if(type=="hisNum"){
-			sortData=$scope.result.sort(function (a, b) {
-				    return a.verifyNum > b.verifyNum ? one : two;
-				});/*根据verifyNum字段进行降序-降序排序*/
-		}else if(type=="totalMoney"){
-			sortData=$scope.result.sort(function (a, b) {
-				    return a.serviceAmount > b.serviceAmount ? one : two;
-				});/*根据serviceAmount字段进行降序-降序排序*/
+		if(type&&$scope.result&&$scope.result.length>0){
+			if(type=="srvNum"){
+				sortData=$scope.result.sort(function (a, b) {
+					    return a.serviceCallNum > b.serviceCallNum ? one : two;
+					});/*根据serviceCallNum字段进行降序-降序排序*/
+			}else if(type=="srvMoney"){
+				sortData=$scope.result.sort(function (a, b) {
+					    return a.serviceFee > b.serviceFee ? one : two;
+					});/*根据serviceFee字段进行降序-降序排序*/
+			}else if(type=="hisNum"){
+				sortData=$scope.result.sort(function (a, b) {
+					    return a.verifyNum > b.verifyNum ? one : two;
+					});/*根据verifyNum字段进行降序-降序排序*/
+			}else if(type=="totalMoney"){
+				sortData=$scope.result.sort(function (a, b) {
+					    return a.serviceAmount > b.serviceAmount ? one : two;
+					});/*根据serviceAmount字段进行降序-降序排序*/
+			};
+
 		};
 		render.compile($scope.$el.$table, $scope.def.tableTmpl, sortData, true);
 		/*数据汇总及echarts图表数据整理*/
@@ -150,6 +155,8 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 			data: param,
 			success: $http.ok(function(res) {
 				pageBcData=param;
+				pageBcData.companyName=textNameObj.companyName;
+				pageBcData.bankName=textNameObj.bankName;
 				$scope.result=res.data.list;
 				$scope.$el.$searchTimeTitle.text(apiParams.strStartDate+"至"+apiParams.strEndDate+"明细");				
 				/*数据汇总数据整理*/
@@ -195,6 +202,8 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 					bankCode: pageBcData.bankCode,
 					apiKey: _apiKey,
 					apiPrimary: _apiPrimary,
+					companyName:pageBcData.companyName,
+					bankName:pageBcData.bankName
 				});
 		});
 		$scope.$el.$titleIcon.hover(function() {
@@ -284,8 +293,10 @@ page.ctrl('operationsTab1',['vendor/echarts.min'], function($scope) {
 	// 下拉回调
 	$scope.TypePicker=function(val){
 		apiParams.deptId=val.id;
+		textNameObj.companyName=val.name;
 	};
 	$scope.bankPicker=function(val){
 		apiParams.bankCode=val.id;
+		textNameObj.bankName=val.name;
 	};
 });

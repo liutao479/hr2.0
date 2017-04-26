@@ -18,9 +18,9 @@
 		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
 			<li class="role-bar-li" data-id="{{=item.userId}}">
 				{{ if(i==0){ }}
-					<a href="javascript:;" class="role-item role-item-active">{{=item.userName}}({{=item.userTypeName}})</a>
+					<a href="javascript:;" class="role-item role-item-active">{{=item.userName||''}}({{=item.userTypeName||''}})</a>
 				{{ }else{ }}
-					<a href="javascript:;" class="role-item">{{=item.userName}}({{=item.userTypeName}})</a>		
+					<a href="javascript:;" class="role-item">{{=item.userName||''}}({{=item.userTypeName||''}})</a>		
 				{{ } }}				
 			</li>
 		{{ } }}
@@ -60,8 +60,9 @@
 							<div class="detail-item-title">
 								<i class="iconfont">&#xe677;</i>实名认证查询
 							</div>
-							{{ if(item&&item.length>0){ }}
+							{{ if(item&&item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 								{{ for(var u in item){var lastData=item[u]; }}
+								{{ var thisOb=it.methodReportList[i].filter(o=>o==lastData.reportId);if(thisOb&&thisOb.length==1){ }}
 								{{ if(lastData.result&&lastData.result=="一致"){ }}
 									<div class="detail-item-alert alert-success">
 										<span class="icon"><i class="iconfont">&#xe659;</i></span>
@@ -112,6 +113,7 @@
 									</div>
 								{{ } }}
 								{{ } }}
+								{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-alert alert-success">
 									<span class="icon"><i class="iconfont">&#xe659;</i></span>
@@ -131,9 +133,10 @@
 							<div class="detail-item-title">
 								<i class="iconfont">&#xe67c;</i>人脸识别查询
 							</div>
-							{{ if(item&&item.length>0){ }}
+							{{ if(item&&item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 								<div class="detail-item-context clearfix">
 								{{ for(var h=0;h<item.length;h++){var lastData=item[h]; }}
+								{{ var thisOb=it.methodReportList[i].filter(o=>o==lastData.reportId);if(thisOb&&thisOb.length==1){ }}
 								<div class="explain">
 									<span class="key">
 										公安网纹照片相识度比对：
@@ -141,7 +144,7 @@
 									{{ if(lastData.resultScore&&lastData.resultScore!='0'){ }}
 									{{=lastData.resultScore}}%
 									{{ }else{ }}
-									0
+									0%
 									<span class="color-red ml15">
 										(授权书签字照片人脸部分不清晰)
 									</span>
@@ -173,7 +176,8 @@
 									</div>
 									{{ } }}
 								</div>
-								{{ } }}									
+								{{ } }}		
+								{{ } }}							
 								</div>
 							{{ }else{ }}
 								<div class="detail-item-alert alert-success">
@@ -194,9 +198,10 @@
 							<div class="detail-item-title">
 								<i class="iconfont">&#xe661;</i>公安记录查询
 							</div>
-							{{ if(item&&item.length>0){ }}
+							{{ if(item&&item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 								<div class="detail-item-context clearfix">					
 									{{ for(j=0;j<item.length;j++){ }}
+									{{ var thisOb=it.methodReportList[i].filter(o=>o==item[j].reportId);if(thisOb&&thisOb.length==1){ }}
 										{{ if(item[j].police_status==1){ }}
 											<div class="detail-item-alert alert-success">
 												<span class="icon"><i class="iconfont">&#xe659;</i></span>
@@ -247,6 +252,7 @@
 											</div>
 										{{ } }}										
 									{{ } }}
+									{{ } }}
 								</div>
 							{{ }else{ }}
 								<div class="detail-item-alert alert-success">
@@ -267,9 +273,10 @@
 							<div class="detail-item-title">
 								<i class="iconfont">&#xe6a5;</i>法院记录查询
 							</div>
-							{{ if(item&&item.length>0){ }}
+							{{ if(item&&item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 								<div class="detail-item-context clearfix">
 									{{ for(var t=0;t<item.length;t++){var col=item[t].courtExecutionArray; }}
+									{{ var thisOb=it.methodReportList[i].filter(o=>o==item[t].reportId);if(thisOb&&thisOb.length>=1){ }}
 									{{ if(col&&col.length>0){ }}
 									<table class="default-table">
 										<thead>
@@ -310,6 +317,7 @@
 										</div>
 									{{ } }}
 									{{ } }}
+									{{ } }}
 								</div>
 							{{ }else{ }}
 								<div class="detail-item-alert alert-success">
@@ -331,9 +339,10 @@
 								<i class="iconfont">&#xe666;</i>同盾网贷信息核查
 							</div>
 							<!-- 网贷逾期记录查询 -->
-							{{ if(item&&item.length>0){ }}	
+							{{ if(item&&item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}	
 								<div class="detail-item-context clearfix">					
 								{{ for(var a=0;a<item.length;a++){ }}
+								{{ var thisOb=it.methodReportList[i].filter(o=>o==item[a].credit.reportId);if(thisOb&&thisOb.length>=1){ }}
 									{{ if(item[a]&&item[a].overdue&&item[a].overdue.overdueArray&&item[a].overdue.overdueArray.length>0){ }}
 										{{var _list=item[a].overdue.overdueArray;}}
 										<table class="default-table two-col">
@@ -365,6 +374,7 @@
 										</div>
 									{{ } }}
 								{{ } }}
+								{{ } }}
 								</div>
 							{{ }else{ }}
 								<div class="detail-item-alert alert-success">
@@ -379,8 +389,9 @@
 								</div>
 							{{ } }}
 							<!-- 网贷平台借贷查询 -->
-							{{ if(item&&item.length>0){ }}
+							{{ if(item&&item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 								{{ for(var s=0;s<item.length;s++){ }}
+								{{ var thisOb=it.methodReportList[i].filter(o=>o==item[s].credit.reportId);if(thisOb&&thisOb.length>=1){ }}
 									{{ if(item[s]&&item[s].plat&&item[s].plat.length>0){ }}
 										<div class="detail-item-context clearfix">
 											<table class="default-table">
@@ -421,6 +432,7 @@
 										</div>
 									{{ } }}
 								{{ } }}
+								{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-alert alert-success">
 									<span class="icon"><i class="iconfont">&#xe659;</i></span>
@@ -440,17 +452,19 @@
 							<div class="detail-item-title">
 								<i class="iconfont">&#xe66e;</i>手机在网时长查询
 							</div>
-							{{ if(item&&item.length>0){ }}
+							{{ if(item&&item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 								<div class="detail-item-context clearfix">
 									<table class="default-table">
 										<tbody class="haveHead">
 											{{ for(var j=0;j<item.length;j++){ }}
+											{{ var thisOb=it.methodReportList[i].filter(o=>o==item[j].reportId);if(thisOb&&thisOb.length==1){ }}
 												<tr>
 													<td><span class="key">手机号：</span>{{=item[j].mobile}}</td>
 													<td><span class="key">运营商：</span>{{=item[j].operatorName||"-"}}</td>
 													<td><span class="key">归属地：</span>{{=item[j].AREA_INFO||"-"}}</td>
 													<td><span class="key">在网时长：</span>{{=item[j].TIME_LENGTH||"-"}}</td>
 												</tr>								
+											{{ } }}
 											{{ } }}
 										</tbody>
 									</table>
@@ -497,8 +511,9 @@
 										<p class="nameVal">车鉴定估值</p>
 									</div>
 								</div> -->
-								{{ if(item&&item.length>0){ }}
+								{{ if(item&&item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 								{{ for(var p in item){var col=item[p]; }}
+								{{ var thisOb=it.methodReportList[i].filter(o=>o==col.reportId);if(thisOb&&thisOb.length==1){ }}
 									{{ if(col.old_result_string&&col.old_result_string.distribution&&col.old_result_string.distribution.length==3){ }}
 									{{var rad=col.old_result_string.distribution;}}
 										<div class="perent mt15">
@@ -603,6 +618,7 @@
 										{{ } }}
 									{{ } }}
 								{{ } }}
+								{{ } }}
 								{{ }else{ }}
 									<div class="detail-item-alert alert-success">
 										<span class="icon"><i class="iconfont">&#xe659;</i></span>
@@ -672,8 +688,9 @@
 							<div class="detail-item-title">
 								<i class="iconfont">&#xe674;</i>车辆保养记录查询
 							</div>
-							{{ if(item&&item.length>0){ }}
+							{{ if(item&&item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 									{{ for(var z=0;z<item.length;z++){var col=item[z].dataJson; }}
+									{{ var thisOb=it.methodReportList[i].filter(o=>o==item[z].reportId);if(thisOb&&thisOb.length==1){ }}
 									{{ if(col){ }}
 									<div class="detail-item-alert alert-success">
 										<span class="icon"><i class="iconfont">&#xe659;</i></span>
@@ -752,6 +769,7 @@
 												暂无车辆保养记录！
 											</div>
 										</div>
+									{{ } }}
 									{{ } }}
 									{{ } }}
 							{{ }else{ }}

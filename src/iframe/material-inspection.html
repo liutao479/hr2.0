@@ -18,9 +18,9 @@
 		{{for(var i = 0; i < len; i++) { var item = it[i]; }}
 			<li class="role-bar-li" data-id="{{=item.userId}}">
 				{{ if(i==0){ }}
-					<a href="javascript:;" class="role-item role-item-active">{{=item.userName}}({{=item.userTypeName}})</a>
+					<a href="javascript:;" class="role-item role-item-active">{{=item.userName||''}}({{=item.userTypeName||''}})</a>
 				{{ }else{ }}
-					<a href="javascript:;" class="role-item">{{=item.userName}}({{=item.userTypeName}})</a>		
+					<a href="javascript:;" class="role-item">{{=item.userName||''}}({{=item.userTypeName||''}})</a>		
 				{{ } }}				
 			</li>
 		{{ } }}
@@ -59,8 +59,9 @@
 					<div class="detail-item-title">
 						<i class="iconfont">&#xe676;</i>购车发票核查
 					</div>
-					{{ if(item.length>0){ }}
+					{{ if(item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
+							{{ var thisOb=it.methodReportList[i].filter(o=>o==col.reportId);if(thisOb&&thisOb.length==1){ }}
 							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
 								{{var sourCode=col.validationResult.sourceCode;}}
 								{{ if(sourCode==-4||sourCode==-5){ }}
@@ -83,7 +84,7 @@
 										<!-- <span class="message-number">new</span> -->
 									</div>
 								{{ } }}
-								{{var buyCar=col.basicInfo;}}
+								{{var buyCar=col.basicInfo;var query=col.validationResult.queryResults;}}
 								{{ if(buyCar){ }}
 								<div class="detail-item-context clearfix">
 									<div class="no-img-group left-model clearfix">
@@ -98,41 +99,114 @@
 											<p class="img-explain">购车发票原件</p>
 										</div>
 									</div>
+									{{ if(sourCode==-1||sourCode==-2||sourCode==-3||sourCode==1){ }}
 									<div class="right-model">
 										<h3>税务查得信息</h3>
 										<ul class="table-key-val">
 											<li><span class="key">发票代码：</span>
-											{{=buyCar.vehicleInvoiceCode}}</li>
+											{{=buyCar.vehicleInvoiceCode||'-'}}</li>
 											<li><span class="key">发票号码：</span>
-											{{=buyCar.vehicleInvoiceNumber}}</li>
-											<li><span class="key">开票日期：</span>{{=buyCar.vehicleInvoiceIssueDate}}</li>
-											<li><span class="key">价税合计：</span>{{=buyCar.vehicleInvoiceTotalPrice}}元</li>
-											<li><span class="key">购买方名称：</span>
-											{{=buyCar.vehicleInvoiceBuyer}}</li>
-											<!-- <li><span class="text-warning">购买方名称：方志山</span><span class="key">（购车发票原件数据：方大大）</span></li> -->
-											<li><span class="key">购买方身份证/组织证件号：</span>{{=buyCar.vehicleInvoiceBuyerId}}</li>
-											<li><span class="key">纳税人识别号：</span>
-											{{=buyCar.taxpayerNumber}}</li>
-											<li><span class="key">开票方名称：</span>
-											{{=buyCar.drawerName||'-'}}</li>
+											{{=buyCar.vehicleInvoiceNumber||'-'}}</li>
+											{{ if(query&&query.billDate&&query.billDate.isMatch){ }}
+											<li>
+												<span class="text-warning">
+													开票日期：
+													{{=query.billDate.value||'-'}}
+												</span>
+												<span class="key">
+												（购车发票原件数据：{{=buyCar.vehicleInvoiceIssueDate||'-'}}）</span>
+											</li> 
+											{{ }else{ }}
+											<li>
+												<span class="key">开票日期：</span>
+												{{=buyCar.vehicleInvoiceIssueDate||'-'}}
+											</li> 
+											{{ } }}
+											{{ if(query&&query.totalAmount&&query.totalAmount.isMatch){ }}
+											<li>
+												<span class="text-warning">
+													价税合计：
+													{{=query.totalAmount.value||'-'}}元
+												</span>
+												<span class="key">
+												（购车发票原件数据：{{=buyCar.vehicleInvoiceTotalPrice||'-'}}元）</span>
+											</li> 
+											{{ }else{ }}
+											<li>
+												<span class="key">价税合计：</span>
+												{{=buyCar.vehicleInvoiceTotalPrice||'-'}}元
+											</li> 
+											{{ } }}
+											{{ if(sourCode==1||sourCode==-2){ }}
+											{{ if(query&&query.buyerName&&query.buyerName.isMatch){ }}
+											<li>
+												<span class="text-warning">
+													购买方名称：
+													{{=query.buyerName.value||'-'}}
+												</span>
+												<span class="key">
+												（购车发票原件数据：{{=buyCar.vehicleInvoiceBuyer||'-'}}）</span>
+											</li> 
+											{{ }else{ }}
+											<li>
+												<span class="key">购买方名称：</span>
+												{{=buyCar.vehicleInvoiceBuyer||'-'}}
+											</li> 
+											{{ } }}
+											{{ } }}
+											{{ if(sourCode==1||sourCode==-2){ }}
+											<li><span class="key">购买方身份证/组织证件号：</span>{{=buyCar.vehicleInvoiceBuyerId||'-'}}</li>
+											{{ } }}
+											{{ if(query&&query.taxpayerIdentityNumber&&query.taxpayerIdentityNumber.isMatch){ }}
+											<li>
+												<span class="text-warning">
+													纳税人识别号：
+													{{=query.taxpayerIdentityNumber.value||'-'}}
+												</span>
+												<span class="key">
+												（购车发票原件数据：{{=buyCar.taxpayerNumber||'-'}}）</span>
+											</li> 
+											{{ }else{ }}
+											<li>
+												<span class="key">纳税人识别号：</span>
+												{{=buyCar.taxpayerNumber||'-'}}
+											</li> 
+											{{ } }}
+											{{ if(sourCode==1||sourCode==-2){ }}
+											{{ if(query&&query.drawerName&&query.drawerName.isMatch){ }}
+											<li>
+												<span class="text-warning">
+													开票方名称：
+													{{=query.drawerName.value||'-'}}
+												</span>
+												<span class="key">
+												（购车发票原件数据：{{=buyCar.vehicleInvoiceDealer||'-'}}）</span>
+											</li> 
+											{{ }else{ }}
+											<li>
+												<span class="key">开票方名称：</span>
+												{{=buyCar.vehicleInvoiceDealer||'-'}}
+											</li> 
+											{{ } }}
+											{{ } }}
 										</ul>
 									</div>
+									{{ } }}
 								</div>
 								{{ }else{ }}
 									<div class="detail-item-context clearfix">
 										<div class="explain">
-											<span class="key">
-												{{=col.msg||'该用户无购车记录'}}！
-											</span>
+											<span class="key">该用户无购车记录！</span>
 										</div>
 									</div>								
 								{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中'}}！</span>
+										<span class="key">数据处理中！</span>
 									</div>
 								</div>								
+							{{ } }}
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
@@ -155,8 +229,9 @@
 					<div class="detail-item-title">
 						<i class="iconfont">&#xe6bb;</i>购房发票核查
 					</div>
-					{{ if(item.length>0){ }}
+					{{ if(item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
+							{{ var thisOb=it.methodReportList[i].filter(o=>o==col.reportId);if(thisOb&&thisOb.length==1){ }}
 							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
 								{{var sourCode=col.validationResult.sourceCode;}}
 								{{ if(sourCode==-4||sourCode==-5){ }}
@@ -179,44 +254,9 @@
 										<!-- <span class="message-number">new</span> -->
 									</div>
 								{{ } }}
-								{{ if(col.basicInfo){var hourseBasic=col.basicInfo; }}
+								{{ var hourseBasic=col.basicInfo;var query=col.validationResult.queryResults; }}
+								{{ if(hourseBasic){ }}
 								<div class="detail-item-context clearfix">
-									{{ if(sourCode&&sourCode==-1||sourCode==-2||sourCode==-3){ }}
-										<div>
-											<table class="table-search-msg" cellspacing="0" cellpadding="0">
-												<tr>
-													<td class="table-key">提供查询的参数</td>
-													<td class="table-val">
-														<table class="table-inner">
-															<tr>
-																<td>
-																	<span class="key">发票代码：</span>{{=hourseBasic.invoiceCode}}
-																</td>
-																<td>
-																	<span class="key">发票号码：</span>
-																	{{=hourseBasic.invoiceNumber}}
-																</td>
-																<td>
-																	<span class="key">开票日期：</span>
-																	{{=hourseBasic.billDate}}
-																</td>
-															</tr>
-															<tr>
-																<td>
-																	<span class="key">价税合计：</span>
-																	{{=hourseBasic.totalAmount}}
-																</td>
-																<td colspan="2">
-																	<span class="key">纳税人识别号：</span>
-																	{{=hourseBasic.payerIdentity}}
-																</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-											</table>
-										</div>
-									{{ } }}
 									<div class="no-img-group left-model clearfix">
 										<div class="no-img-list">
 											<div class="no-img">
@@ -229,36 +269,96 @@
 											<p class="img-explain">购房发票原件</p>
 										</div>
 									</div>
+									{{ if(sourCode==1||sourCode==-1||sourCode==-2||sourCode==-3){ }}
 									<div class="right-model">
 										<h3>税务查得信息</h3>
 										<ul class="table-key-val">
-											<li><span class="key">发票代码：</span>{{=hourseBasic.invoiceCode}}</li>
-											<li><span class="key">发票号码：</span>{{=hourseBasic.invoiceNumber}}</li>
-											<li><span class="key">开票日期：</span>{{=hourseBasic.billDate}}</li>
-											<li><span class="key">价税合计：</span>{{=hourseBasic.totalAmount}}元</li>
-											<li><span class="key">购买方名称：</span>{{=hourseBasic.payerName}}</li>
-											<li><span class="key">购买方身份证/组织证件号：</span>{{=hourseBasic.payerIdentity}}</li>
-											<li><span class="key">纳税人识别号：</span>{{=hourseBasic.payerIdentity}}</li>
-											<li><span class="key">开票方名称：</span>{{=hourseBasic.receiverName}}</li>
+											<li><span class="key">发票代码：</span>{{=hourseBasic.invoiceCode||'-'}}</li>
+											<li><span class="key">发票号码：</span>{{=hourseBasic.invoiceNumber||'-'}}</li>
+											{{ if(query&&query.billDate&&query.billDate.isMatch){ }}
+											<li>
+												<span class="text-warning">
+													开票日期：
+													{{=query.billDate.value||'-'}}
+												</span>
+												<span class="key">
+												（购房发票原件数据：{{=hourseBasic.billDate||'-'}}）</span>
+											</li> 
+											{{ }else{ }}
+											<li>
+												<span class="key">开票日期：</span>
+												{{=hourseBasic.billDate||'-'}}
+											</li> 
+											{{ } }}
+											{{ if(query&&query.totalAmount&&query.totalAmount.isMatch){ }}
+											<li>
+												<span class="text-warning">
+													价税合计：
+													{{=query.totalAmount.value||'-'}}
+												</span>
+												<span class="key">
+												（购房发票原件数据：{{=hourseBasic.totalAmount||'-'}}）</span>
+											</li> 
+											{{ }else{ }}
+											<li>
+												<span class="key">价税合计：</span>
+												{{=hourseBasic.totalAmount||'-'}}
+											</li> 
+											{{ } }}
+											{{ if(sourCode==1||sourCode==-2){ }}
+											{{ if(query&&query.payer&&query.payer.isMatch){ }}
+											<li>
+												<span class="text-warning">
+													购买方名称：
+													{{=query.payer.value||'-'}}
+												</span>
+												<span class="key">
+												（购房发票原件数据：{{=hourseBasic.payerName||'-'}}）</span>
+											</li> 
+											{{ }else{ }}
+											<li>
+												<span class="key">购买方名称：</span>
+												{{=hourseBasic.payerName||'-'}}
+											</li> 
+											{{ } }}
+											{{ } }}
+											{{ if(query&&query.taxpayerIdentityNumber&&query.taxpayerIdentityNumber.isMatch){ }}
+											<li>
+												<span class="text-warning">
+													购买方身份证/组织证件号/纳税人识别号：
+													{{=query.taxpayerIdentityNumber.value||'-'}}
+												</span>
+												<span class="key">
+												（购房发票原件数据：{{=hourseBasic.payerIdentity||'-'}}）</span>
+											</li> 
+											{{ }else{ }}
+											<li>
+												<span class="key">购买方身份证/组织证件号/纳税人识别号：</span>
+												{{=hourseBasic.payerIdentity||'-'}}
+											</li> 
+											{{ } }}
+											{{ if(sourCode==1||sourCode==-2){ }}
+											<li><span class="key">开票方名称：</span>{{=hourseBasic.receiverName||'-'}}</li>
+											{{ } }}
 										</ul>
 									</div>
+									{{ } }}
 								</div>			
 								{{ }else{ }}
 									<div class="detail-item-context clearfix">
 										<div class="explain">
-											<span class="key">
-												{{=col.msg||'该用户无购房记录'}}！
-											 </span>
+											<span class="key">该用户无购房记录！</span>
 										</div>
 									</div>								
 								{{ } }}		
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中'}}！</span>
+										<span class="key">数据处理中！</span>
 									</div>
 								</div>								
-							{{ } }}				
+							{{ } }}	
+							{{ } }}			
 						{{ } }}
 					{{ }else{ }}
 						<div class="detail-item-alert alert-success">
@@ -280,8 +380,9 @@
 					<div class="detail-item-title">
 						<i class="iconfont">&#xe673;</i>银行流水核查
 					</div>
-					{{ if(item.length>0){ }}
+					{{ if(item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
+							{{ var thisOb=it.methodReportList[i].filter(o=>o==col.reportId);if(thisOb&&thisOb.length==1){ }}
 							{{ if(col.details&&col.details.queryResult){ }}
 								{{var sourCode=col.details.queryResult;var cardStatus=col.details.cardStatus;}}
 								{{ if(sourCode==1&&cardStatus==1){ }}
@@ -306,20 +407,24 @@
 													{{var _water=col.details.itemArray;}}
 													{{ for(var g in _water){ }}
 														<tr>
-															<td>流水时间：{{=_water[g].trans_date}}</td>
-															<td>交易类型：{{=_water[g].trans_type}}</td>
-															<td>交易金额：{{=_water[g].trans_amount}}</td>
-															<td>结果：<span class="result">
+															<td>流水时间：{{=_water[g].trans_date||'-'}}</td>
+															<td>交易类型：{{=_water[g].trans_type||'-'}}</td>
+															<td>交易金额：{{=_water[g].trans_amount||'-'}}</td>
+															<td>结果：
 															{{ if(_water[g].exception_tag==1){ }}
-															命中
+															<span class="color-red">未命中</span>
 															{{ }else{ }}
-															未命中
+															<span class="result">命中</span>
 															{{ } }}
-															</span></td>
+															</td>
 														</tr>
 													{{ } }}
 												</table>
 											</div>
+										{{ }else{ }}
+										<div class="explain">
+											<span class="key">该用户无银行流水记录！</span>
+										</div>
 										{{ } }}
 									{{ }else{ }}
 										<div>
@@ -329,9 +434,9 @@
 													<td class="table-val">
 														<table class="table-inner">
 															<tr>
-																<td><span class="key">真实姓名：</span>{{=col.name}}</td>
-																<td><span class="key">身份证号：</span>{{=col.idCard}}</td>
-																<td><span class="key">银行卡号：</span>{{=col.bankCard}}</td>
+																<td><span class="key">真实姓名：</span>{{=col.name||'-'}}</td>
+																<td><span class="key">身份证号：</span>{{=col.idCard||'-'}}</td>
+																<td><span class="key">银行卡号：</span>{{=col.bankCard||'-'}}</td>
 															</tr>
 														</table>
 													</td>
@@ -380,14 +485,13 @@
 										<span class="key">
 											{{ if(col.details&&col.details.verifyContent){ }}
 											{{=col.details.verifyContent}}
-											{{ }else if(col.msg){ }}
-											{{=col.msg}}
 											{{ }else{ }}
 											数据处理中！
 											{{ } }}！
 										</span>
 									</div>
 								</div>								
+							{{ } }}
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
@@ -410,11 +514,12 @@
 					<div class="detail-item-title">
 						<i class="iconfont">&#xe672;</i>合格证核查
 					</div>
-					{{ if(item.length>0){ }}
+					{{ if(item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
+							{{ var thisOb=it.methodReportList[i].filter(o=>o==col.reportId);if(thisOb&&thisOb.length==1){ }}
 							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
 								{{var sourCode=col.validationResult.sourceCode;}}
-								{{ if(sourCode==-4||sourCode==-5){ }}
+								{{ if(sourCode==-2){ }}
 									<div class="detail-item-alert alert-danger">
 										<span class="icon"><i class="iconfont">!</i></span>
 										<!-- <span class="status">未校验</span> -->
@@ -426,7 +531,7 @@
 										<!-- <span class="status">通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
-								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
+								{{ }else if(sourCode==-1){ }}
 									<div class="detail-item-alert alert-warning">
 										<span class="icon"><i class="iconfont">&#xe612;</i></span>
 										<!-- <span class="status">不通过</span> -->
@@ -450,6 +555,7 @@
 										</div>
 									</div>
 									<div class="right-model">
+										{{ if(sourCode==1){ }}
 										<h3>合格证管理部平台查得信息</h3>
 										<ul class="table-key-val">
 											<li><span class="key">车辆合格证编号：</span>{{=certificate.certifitionNum||'-'}}</li>
@@ -457,13 +563,19 @@
 											<li><span class="key">车辆识别代号/车架号：</span>{{=certificate.carVin||'-'}}</li>
 											<li><span class="key">发动机号码：</span>{{=certificate.engineNum||'-'}}</li>
 										</ul>
+										{{ }else if(sourCode==-1){ }}
+										<h3>提供查询的参数</h3>
+										<ul class="table-key-val">
+											<li><span class="key">车辆合格证编号：</span>{{=certificate.certifitionNum||'-'}}</li>
+										</ul>
+										{{ } }}
 									</div>
 								</div>
 								{{ }else{ }}
 									<div class="detail-item-context clearfix">
 										<div class="explain">
 											<span class="key">
-												{{=col.houseMsg||'该用户无合格证记录'}}！
+												该用户无合格证记录！
 											</span>
 										</div>
 									</div>
@@ -471,9 +583,10 @@
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中'}}!</span>
+										<span class="key">数据处理中!</span>
 									</div>
 								</div>								
+							{{ } }}
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
@@ -496,11 +609,12 @@
 					<div class="detail-item-title">
 						<i class="iconfont">&#xe642;</i>保单核查
 					</div>
-					{{ if(item.length>0){ }}
+					{{ if(item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
+							{{ var thisOb=it.methodReportList[i].filter(o=>o==col.reportId);if(thisOb&&thisOb.length==1){ }}
 							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
 								{{var sourCode=col.validationResult.sourceCode;}}
-								{{ if(sourCode==-4||sourCode==-5){ }}
+								{{ if(sourCode==-3){ }}
 									<div class="detail-item-alert alert-danger">
 										<span class="icon"><i class="iconfont">!</i></span>
 										<!-- <span class="status">未校验</span> -->
@@ -512,32 +626,17 @@
 										<!-- <span class="status">通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
-								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
+								{{ }else if(sourCode==-1||sourCode==-2){ }}
 									<div class="detail-item-alert alert-warning">
 										<span class="icon"><i class="iconfont">&#xe612;</i></span>
 										<!-- <span class="status">不通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
-										<!-- <span class="message-number">new</span> -->
 									</div>
 								{{ } }}
 								{{ if(col.basicInfo&&col.basicInfo.insurancePolicyBaseInfo){ }}
 									{{var bdNumber=col.basicInfo.insurancePolicyBaseInfo;}}
+									{{var res=col.validationResult;}}
 									<div class="detail-item-context clearfix">
-										<div>
-											<table class="table-search-msg" cellspacing="0" cellpadding="0">
-												<tr>
-													<td class="table-key">提供查询的参数</td>
-													<td class="table-val">
-														<table class="table-inner">
-															<tr>
-																<td><span class="key">保单号：</span>{{=bdNumber.policy_num}}</td>
-																<td><span class="key">身份证号：</span>{{=bdNumber.idCard_num}}</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-											</table>
-										</div>
 										<div class="no-img-group left-model clearfix">
 											<div class="no-img-list">
 												<div class="no-img">
@@ -551,32 +650,88 @@
 											</div>
 										</div>
 										<div class="right-model">
+											{{ if(sourCode==1||sourCode==-2){ }}
 											<h3>保险平台查得信息</h3>
 											<ul class="table-key-val">
 												<li><span class="key">保单号：</span>
-												{{=bdNumber.policy_num}}</li>
+												{{=bdNumber.policy_num||'-'}}</li>
+												{{ if(res&&res.insurant&&res.insurant.isMatch){ }}
+												<li><span class="text-warning">被保险人：{{=res.insurant.value}}</span>
+												<span class="key">
+												（保单原件数据：{{=bdNumber.insurant||'-'}}）
+												</span>
+												</li>
+												{{ }else{ }}
 												<li><span class="key">被保险人：</span>
 												{{=bdNumber.insurant||'-'}}</li>
+												{{ } }}
+												{{ if(res&&res.brand_model&&res.brand_model.isMatch){ }}
+												<li><span class="text-warning">厂牌型号：{{=res.brand_model.value}}</span>
+												<span class="key">
+												（保单原件数据：{{=bdNumber.vehicleInvoiceCarModel||'-'}}）
+												</span>
+												</li>
+												{{ }else{ }}
 												<li><span class="key">厂牌型号：</span>
-												{{=bdNumber.brand_model||'-'}}</li>
+												{{=bdNumber.vehicleInvoiceCarModel||'-'}}</li>
+												{{ } }}
+												{{ if(res&&res.plate_num&&res.plate_num.isMatch){ }}
+												<li><span class="text-warning">号牌号码：{{=res.plate_num.value}}</span>
+												<span class="key">
+												（保单原件数据：{{=bdNumber.plate_num||'-'}}）
+												</span>
+												</li>
+												{{ }else{ }}
 												<li><span class="key">号牌号码：</span>
-												{{=bdNumber.policy_num}}元</li>
+												{{=bdNumber.plate_num||'-'}}</li>
+												{{ } }}
+												{{ if(res&&res.engineer_num&&res.engineer_num.isMatch){ }}
+												<li><span class="text-warning">发动机号：{{=res.engineer_num.value}}</span>
+												<span class="key">
+												（保单原件数据：{{=bdNumber.engineer_num||'-'}}）
+												</span>
+												</li>
+												{{ }else{ }}
 												<li><span class="key">发动机号：</span>
 												{{=bdNumber.engineer_num||'-'}}</li>
+												{{ } }}
+												{{ if(res&&res.vehicle_framenum&&res.vehicle_framenum.isMatch){ }}
+												<li><span class="text-warning">车架号：{{=res.vehicle_framenum.value}}</span>
+												<span class="key">
+												（保单原件数据：{{=bdNumber.vehicle_framenum||'-'}}）
+												</span>
+												</li>
+												{{ }else{ }}
 												<li><span class="key">车架号：</span>
 												{{=bdNumber.vehicle_framenum||'-'}}</li>
-												<li><span class="key">初次登记日期：</span>
-												{{=bdNumber.insurance_startDate||'-'}}</li>
+												{{ } }}
+												{{ if(res&&res.insurance_premium&&res.insurance_premium.isMatch){ }}
+												<li><span class="text-warning">保险费合计：{{=res.insurance_premium.value}}</span>
+												<span class="key">
+												（保单原件数据：{{=bdNumber.insurance_premium||'-'}}）
+												</span>
+												</li>
+												{{ }else{ }}
 												<li><span class="key">保险费合计：</span>
 												{{=bdNumber.insurance_premium||'-'}}</li>
+												{{ } }}
 											</ul>
+											{{ }else if(sourCode==-1){ }}
+											<h3>提供查询的参数</h3>
+											<ul class="table-key-val">
+												<li><span class="key">保单号：</span>
+												{{=bdNumber.policy_num||'-'}}</li>
+												<li><span class="key">身份证号：</span>
+												{{=bdNumber.idCard_num||'-'}}</li>
+											</ul>
+											{{ } }}
 										</div>
 									</div>
 								{{ }else{ }}
 									<div class="detail-item-context clearfix">
 										<div class="explain">
 											<span class="key">
-												{{=col.msg||'该用户无保单记录'}}！
+												该用户无保单记录！
 											</span>
 										</div>
 									</div>
@@ -584,9 +739,10 @@
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中'}}！</span>
+										<span class="key">数据处理中！</span>
 									</div>
 								</div>
+							{{ } }}
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
@@ -609,11 +765,12 @@
 					<div class="detail-item-title">
 						<i class="iconfont">&#xe6cc;</i>车辆登记核查
 					</div>
-					{{ if(item.length>0){ }}
+					{{ if(item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
+							{{ var thisOb=it.methodReportList[i].filter(o=>o==col.reportId);if(thisOb&&thisOb.length==1){ }}
 							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
 								{{var sourCode=col.validationResult.sourceCode;}}
-								{{ if(sourCode==-4||sourCode==-5){ }}
+								{{ if(sourCode==-2){ }}
 									<div class="detail-item-alert alert-danger">
 										<span class="icon"><i class="iconfont">!</i></span>
 										<!-- <span class="status">未校验</span> -->
@@ -625,7 +782,7 @@
 										<!-- <span class="status">通过</span> -->
 										<span class="text">{{=col.validationResult.sourceContent}}</span>
 									</div>
-								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
+								{{ }else if(sourCode==-1){ }}
 									<div class="detail-item-alert alert-warning">
 										<span class="icon"><i class="iconfont">&#xe612;</i></span>
 										<!-- <span class="status">不通过</span> -->
@@ -635,26 +792,7 @@
 								{{ } }}
 								{{  if(col.basicInfo){var carReg=col.basicInfo; }}
 								<div class="detail-item-context clearfix">
-									<div>
-										<table class="table-search-msg" cellspacing="0" cellpadding="0">
-											<tr>
-												<td class="table-key">提供查询的参数</td>
-												<td class="table-val">
-													<table class="table-inner">
-														<tr>
-															<td><span class="key">车牌号：</span>
-															{{=carReg.registerPlateNumber}}</td>
-															<td><span class="key">发动机号：</span>
-															{{=carReg.registerEngineNumber}}</td>
-															<td><span class="key">车架号：</span>
-															{{=carReg.registerVin}}</td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</table>
-									</div>
-									<div class="no-img-group clearfix">
+									<div class="no-img-group clearfix left-model">
 										<div class="no-img-list">
 											<div class="no-img">
 												{{ if(carReg.picPath){ }}
@@ -666,22 +804,34 @@
 											<p class="img-explain">车辆登记证原件</p>
 										</div>
 									</div>
+									{{ if(sourCode==1||sourCode==-1){ }}
+									<div class="right-model">										
+										<h3>提供查询的参数</h3>
+										<ul class="table-key-val">								
+											<li><span class="key">车牌号：</span>
+											{{=carReg.registerPlateNumber||'-'}}</li>
+											<li><span class="key">发动机号：</span>
+											{{=carReg.registerEngineNumber||'-'}}</li>
+											<li><span class="key">车架号：</span>
+											{{=carReg.registerVin||'-'}}</li>
+										</ul>
+									</div>
+									{{ } }}
 								</div>
 								{{ }else{ }}
 									<div class="detail-item-context clearfix">
 										<div class="explain">
-											<span class="key">
-												{{=col.houseMsg||'该用户无车辆登记记录'}}！
-											</span>
+											<span class="key">该用户无车辆登记记录！</span>
 										</div>
 									</div>
 								{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.msg||'数据处理中'}}！</span>
+										<span class="key">数据处理中！</span>
 									</div>
 								</div>								
+							{{ } }}
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
@@ -704,75 +854,121 @@
 					<div class="detail-item-title">
 						<i class="iconfont">&#xe679;</i>房产证核查
 					</div>
-					{{ if(item.length>0){ }}
+					{{ if(item.length>0&&it.methodReportList&&it.methodReportList[i]&&it.methodReportList[i].length>0){ }}
 						{{ for(var j=0;j<item.length;j++){var col=item[j]; }}
-							{{ if(col.validationResult&&col.validationResult.sourceCode){ }}
-								{{var sourCode=col.validationResult.sourceCode;}}
-								{{ if(sourCode==-4||sourCode==-5){ }}
+							{{ var thisOb=it.methodReportList[i].filter(o=>o==col.reportId);if(thisOb&&thisOb.length==1){ }}
+							{{ if(col.validationResult&&col.validationResult.houseCode){ }}
+								{{var res=col.validationResult;}}
+								{{ if(res.houseCode==502){ }}
 									<div class="detail-item-alert alert-danger">
 										<span class="icon"><i class="iconfont">!</i></span>
-										<!-- <span class="status">未校验</span> -->
-										<span class="text">{{=col.validationResult.sourceContent}}</span>
+										<span class="status">未校验</span>
 									</div>
-								{{ }else if(sourCode==1){ }}
-									<div class="detail-item-alert alert-success">
-										<span class="icon"><i class="iconfont">&#xe659;</i></span>
-										<!-- <span class="status">通过</span> -->
-										<span class="text">{{=col.validationResult.sourceContent}}</span>
-									</div>
-								{{ }else if(sourCode==-1||sourCode==-2||sourCode==-3){ }}
-									<div class="detail-item-alert alert-warning">
-										<span class="icon"><i class="iconfont">&#xe612;</i></span>
-										<!-- <span class="status">不通过</span> -->
-										<span class="text">{{=col.validationResult.sourceContent}}</span>
-									</div>
-								{{ } }}
-								{{ if(col.basicInfo){ }}
-									{{var _hours=col.basicInfo;}}
 									<div class="detail-item-context clearfix">
-										<div>
-											<table class="table-search-msg" cellspacing="0" cellpadding="0">
-												<tr>
-													<td class="table-key">提供查询的参数</td>
-													<td class="table-val">
-														<table class="table-inner">
-															<tr>
-																<td><span class="key">权利人：</span>
-																{{=_hours.name_tag}}</td>
-																<td><span class="key">房产坐落：</span>
-																{{=_hours.houseAddress_tag}}</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-											</table>
+										<div class="explain">
+											<span class="key">查询结果：</span>
+											{{=res.houserMsg||'无法校验'}}！
 										</div>
-										{{ if(_hours.elationship_tag){ }}
-										<div class="no-img-group clearfix">
+									</div>
+								{{ }else if(res.houseCode==500||res.houseCode==503){ }}
+									{{ if(res.houseCode==503){ }}
+										<div class="detail-item-alert alert-warning">
+											<span class="icon"><i class="iconfont">&#xe612;</i></span>
+											<span class="status">不通过</span>
+											<span class="text">{{=res.houserMsg}}</span>
+										</div>
+									{{ }else{ }}
+										<div class="detail-item-alert alert-success">
+											<span class="icon"><i class="iconfont">&#xe659;</i></span>
+											<span class="status">通过</span>
+											<span class="text">{{=res.houserMsg}}</span>
+										</div>
+									{{ } }}
+									<div class="detail-item-context clearfix">
+										<div class="no-img-group left-model clearfix">
 											<div class="no-img-list">
 												<div class="no-img">
-													<img src="{{=_hours.elationship_tag}}" />
+													{{ if(col.basicInfo.catePic){ }}
+														<img src="{{=col.basicInfo.catePic}}" />
+													{{ }else{ }}
+														<i class="iconfont">&#xe61f;</i>
+													{{ } }}
 												</div>
-												<p class="img-explain">房产证原件</p>
+												<p class="img-explain">购车发票原件</p>
 											</div>
+										</div>
+										{{ if(res.powerNumber){ }}
+										<div class="right-model">
+											<h3>税务查得信息</h3>
+											<ul class="table-key-val">
+												{{ if(res.name_tag&&res.name_tag==1){ }}
+												<li>
+												<span class="text-warning">权利人：
+												{{=res.name||'-'}}</span>
+												<span class="key">（房产证原件数据：{{=col.basicInfo.name||'-'}}）</span>
+												</li>
+												{{ }else{ }}
+												<li><span class="key">权利人：</span>
+												{{=res.name||'-'}}</li>
+												{{ } }}
+												{{ if(res.houseAddress_tag&&res.houseAddress_tag==1){ }}
+												<li>
+												<span class="text-warning">房产坐落：
+												{{=res.houseAddress||'-'}}</span>
+												<span class="key">（房产证原件数据：{{=col.basicInfo.houseAddress||'-'}}）</span>
+												</li>
+												{{ }else{ }}
+												<li><span class="key">房产坐落：</span>
+												{{=res.houseAddress||'-'}}</li>
+												{{ } }}
+												{{ if(res.relationship_tag&&res.relationship_tag==1){ }}
+												<li>
+												<span class="text-warning">共有人与共有情况：
+												{{=res.relationship||'-'}}</span>
+												<span class="key">（房产证原件数据：{{=col.basicInfo.relationship||'-'}}）</span>
+												</li>
+												{{ }else{ }}
+												<li><span class="key">共有人与共有情况：</span>
+												{{=res.relationship||'-'}}</li>
+												{{ } }}
+												{{ if(res.powerNumber_tag&&res.powerNumber_tag==1){ }}
+												<li>
+												<span class="text-warning">权证与证明号：
+												{{=res.powerNumber||'-'}}</span>
+												<span class="key">（房产证原件数据：{{=col.basicInfo.powerNumber||'-'}}）</span>
+												</li>
+												{{ }else{ }}
+												<li><span class="key">权证与证明号：</span>
+												{{=res.powerNumber||'-'}}</li>
+												{{ } }}
+											</ul>
+										</div>
+										{{ }else{ }}
+										<div class="right-model">
+											<h3>提供查询的参数</h3>
+											<ul class="table-key-val">
+												<li><span class="key">权利人：</span>
+												{{=col.basicInfo.name||'-'}}</li>
+												<li><span class="key">房产坐落：</span>
+												{{=col.basicInfo.houseAddress||'-'}}</li>
+											</ul>
 										</div>
 										{{ } }}
 									</div>
-								{{ }else{ }}
-									<div class="detail-item-context clearfix">
-										<div class="explain">
-											<span class="key">
-												{{=col.houseMsg||'该用户无房产记录'}}！
-											</span>
-										</div>
+								{{ }else if(res.houseCode==501){ }}
+								<div class="detail-item-context clearfix">
+									<div class="explain">
+										<span class="key">{{=res.houseMsg||'数据处理中'}}！</span>
 									</div>
+								</div>
 								{{ } }}
 							{{ }else{ }}
 								<div class="detail-item-context clearfix">
 									<div class="explain">
-										<span class="key">{{=col.houseMsg||'数据处理中'}}！</span>
+										<span class="key">数据处理中！</span>
 									</div>
 								</div>
+							{{ } }}
 							{{ } }}
 						{{ } }}
 					{{ }else{ }}
