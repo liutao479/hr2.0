@@ -198,26 +198,40 @@ page.ctrl('dataAssistant', function($scope) {
 										serviceType:'2',/*1材料验真，2数据辅证，必传*/
 										userIds:apiParams.userId
 									},
-									success: $http.ok(function(res) {
-										_conDialog.close();
-										_srvDialog.close();
-										var _oneObj=toastArr.filter(it=>it==_key);
-										var _el=dialogTml.wContent.realTimeMsg;//及时提示
-										if(_oneObj&&_oneObj.length==1)
-											_el=dialogTml.wContent.nonRealTimeMsg;//非及时提示
-										var _tipHtml = doT.template(_el)();
-										$.dialog({
-											title:false,
-											content:_tipHtml,
-											onContentReady:function(){
-												var _tioDialog=this;
-												setTimeout(function() {
-													_tioDialog.close();
-													search(apiParams);
-												},1500);
-											}
-										});
-									})
+									success: function(response){
+										if(response.code==1000&&response.msg=="查询无结果"){
+											$.alert({
+												title: '提示',
+												content: tool.alert(response.msg),
+												buttons:{
+													ok: {
+														text: '确定'
+													}
+												}
+											})
+										}else{
+											$http.ok(function(res) {
+												_conDialog.close();
+												_srvDialog.close();
+												var _oneObj=toastArr.filter(it=>it==_key);
+												var _el=dialogTml.wContent.realTimeMsg;//及时提示
+												if(_oneObj&&_oneObj.length==1)
+													_el=dialogTml.wContent.nonRealTimeMsg;//非及时提示
+												var _tipHtml = doT.template(_el)();
+												$.dialog({
+													title:false,
+													content:_tipHtml,
+													onContentReady:function(){
+														var _tioDialog=this;
+														setTimeout(function() {
+															_tioDialog.close();
+															search(apiParams);
+														},1500);
+													}
+												});
+											})(response);
+										};
+									},
 								});
 					        }
 				        }
