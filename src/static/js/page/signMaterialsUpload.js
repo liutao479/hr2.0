@@ -22,7 +22,7 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		if($params.type) {
 			data.type = $params.type;
 			data.orderNo = $params.orderNo;	
-			url = 'loanMaterials/loanMaterialsByOrderNo';
+			url = 'signMaterials/signMaterialsByOrderNo';
 		}
 		$.ajax({
 			type: 'post',

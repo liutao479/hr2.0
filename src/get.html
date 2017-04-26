@@ -184,7 +184,8 @@
 	<script type="text/javascript" src="static/js/vendor/third.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			var api = 'http://192.168.0.33:8080/',
+			var api = 'http://nf.hrfax.cn:9999/',
+			// var api = 'http://192.168.1.124:8080/',
 				token;
 			var $phone = $('#phone'),
 				$icode = $('#imgCode'),
@@ -224,10 +225,10 @@
 					success: function(xhr) {
 						if(!xhr.code) {
 							token = xhr.data;
-							$.ajaxSetup({
-								headers: { Authorization: 'Bearer ' + token }
-							})
-							cb();
+							// $.ajaxSetup({
+							// 	headers: { Authorization: 'Bearer ' + token }
+							// })
+							cb(token);
 						}
 					}
 				})
@@ -241,14 +242,16 @@
 				if(!phone || !icode) {
 					return $alert('请输入手机号码和图形验证码');
 				}
-				function _g() {
+				function _g(_t) {
 					$.ajax({
 						url: method('sms/send'),
+						headers: { Authorization: 'Bearer ' + token },
 						data: {
 							businessKey: 'retrivePassword',
 							mobile: phone,
 							captchaCode: icode
 						},
+						type: 'post',
 						dataType: 'json',
 						success: function(xhr) {
 							var code = xhr.code;
@@ -281,11 +284,14 @@
 
 			function submit() {
 				var phone = $.trim($phone.val()),
-						pcode = $.trim($pcode.val());
-					if(!phone || !pcode) {
-						return $alert('请输入手机号和手机验证码');
-					};
+					pcode = $.trim($pcode.val());
+				if(!phone || !pcode) {
+					return $alert('请输入手机号和手机验证码');
+				};
+
+				function _f(_t) {
 					$.ajax({
+						headers: { Authorization: 'Bearer ' + _t },
 						url: method('password/retrive'),
 						dataType: 'json',
 						data: {
@@ -316,6 +322,9 @@
 							}
 						}
 					})
+				}
+
+				getToken(_f);
 			}
 
 			function addEventListener() {

@@ -13,6 +13,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadCreaditList = function(params, cb) {
+		console.log(params);
 		$.ajax({
 			url: $http.api('loanOrder/getMyCustomer', 'zjy'),
 			type: 'post',
@@ -122,7 +123,6 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 			$console.find('.select input').val('');
 			$console.find('#searchInput').val('');
 			apiParams = {
-				queryType: 1,  //征信资料下载
 		    	pageNum: 1
 			};
 		});
@@ -219,9 +219,9 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 		cb();
 	}
 
-	$scope.bankPicker = function(picked) {
+	$scope.demanBankPicker = function(picked) {
 		console.log(picked);
-		apiParams.id = picked.id;
+		apiParams.demandBankId = picked.id;
 	}
 
 	/**

@@ -176,12 +176,12 @@
 	menu.prototype._render = function(){
 		var self = this,
 			arr = [];
-		arr.push('<div class="menu">');
+		arr.push('<a href="#" class="showHide"></a><div class="menu">');
 		$.each(self.data, function(key, obj) {
 			if(!$.isArray(obj)) return;
 			var len = obj.length;
 			var menuItem = menuMap[key];
-			if(!menuItem) return;
+			if(!menuItem) return true;
 			if(len === 0) {
 				arr.push('<a class="menu-item" data-href="{2}" id="menu{3}">\
 							<i class="iconfont mark">{0}</i>\
@@ -197,6 +197,7 @@
 				for(var i = 0; i < len; i++) {
 					var innerKey = obj[i];
 					var innerItem = menuMap[innerKey];
+					if(!innerItem) continue;
 					arr.push('<a class="menu-group-item" id="menu{0}" data-href="{1}">{2}</a>'.format(innerKey, innerItem.route, innerItem.name));
 				}
 				arr.push('</div>');
@@ -223,6 +224,7 @@
 	menu.prototype._trigger = function(route, $item, unRouter) {
 		var self = this;
 		// if($item.hasClass(self.activeCss)) return;
+		if(self.$selected == $item) return;
 		if(self.$selected) {
 			self.$selected.removeClass(self.activeCss);
 		}
@@ -234,8 +236,20 @@
 		}
 	};
 
+	menu.prototype.remove = function() {
+		var self = this;
+		if(self.$selected) {
+			self.$selected.removeClass(self.activeCss);
+			self.$selected = null;
+			self.selectedKey = '';
+		}
+	}
+
 	menu.prototype.setup = function(key, unRouter){
 		var self = this;
+		if(key.indexOf('/') > 0) {
+			return self.remove();
+		}
 		var $item = self.$dom.find('#menu'+key);
 		self._trigger(key, $item, unRouter);
 	};

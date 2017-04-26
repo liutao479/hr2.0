@@ -21,7 +21,12 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 				result.data.loanTask = {
 					category: 'pledge',
 					editable: 1
-				}
+				};
+				result.data.cfgMaterials = [
+					{
+						zcdjzydy: '注册登记证（已抵押）'
+					}
+				];
 				$scope.result = result;
 				setupLocation(result.data.orderInfo);
 				setupBackReason(result.data.orderInfo.loanOrderApproval);
@@ -38,7 +43,6 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	 */
 	var submitOrders = function(params, cb) {
 		console.log(params);
-		debugger
 		$.ajax({
 			url: $http.api('loanPledge/sumbit', 'cyj'),
 			type: 'post',
@@ -109,8 +113,9 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			current: '抵押办理详情',
+			pmsDept: $scope.result.data.orderInfo.deptName,
 			loanUser: $scope.result.data.orderInfo.realName || '',
-			orderDate: tool.formatDate($scope.result.data.orderInfo.pickDate, true) || ''
+			pickDate: $scope.result.data.orderInfo.pickDateStr || ''
 		});
 		$location.location();
 	}
@@ -253,6 +258,9 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 									for(var i = 0, len = infoParams.length; i < len; i++) {
 										infoParams[i].reason = _reason;
 									}
+								}
+								for(var i = 0, len = infoParams.length; i < len; i++) {
+									infoParams[i].orderNo = $params.orderNo;
 								}
 								submitOrders(infoParams, function() {
 									router.render('mortgageProcess');

@@ -5,7 +5,7 @@
 				<div class="select-search-bar no-bottom-border clearfix">
 					<div class="search-item">
 						<span class="select-name">经办银行：</span>
-						<div class="select select-bank-name" data-dropdown="page.$scope['creditArchiveDownload'].bankPicker" data-trigger="page.$scope['creditArchiveDownload'].dropdownTrigger.demandBank"></div>
+						<div class="select select-bank-name" data-dropdown="page.$scope['creditArchiveDownload'].demanBankPicker" data-trigger="page.$scope['creditArchiveDownload'].dropdownTrigger.demandBank"></div>
 					</div>
 					<div class="search-item">
 						<div class="input-text">
@@ -67,8 +67,8 @@
 								<div class="checkbox checkbox-normal" data-checked="false" data-order-no="{{=row.orderNo}}"></div>
 							</td>
 							<td class="orders-item-data">{{=row.orderNo}}</td>
-							<td class="orders-item-data">{{=row.userName || '未录入'}}（{{=row.idCard || '未录入'}}）</td>
-							<td class="orders-item-data">{{=row.bankName || '未知'}}</td>
+							<td class="orders-item-data">{{=row.userName || '未知'}}（{{=row.idCard || '未知'}}）</td>
+							<td class="orders-item-data">{{=row.demandBankName || '未知'}}</td>
 							<td class="orders-item-data orders-item-data-blank"></td>
 							<td class="orders-item-data">
 								<table class="table-inner">

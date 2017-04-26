@@ -16,7 +16,7 @@ page.ctrl('licenceProcess', [], function($scope) {
 	var loadLicenceProcessList = function(params, cb) {
 		console.log(params);
 		$.ajax({
-			url: $http.api('loanRegistration/List', 'cyj'),
+			url: $http.api('loanRegistration/list', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',

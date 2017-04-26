@@ -352,7 +352,9 @@ page.ctrl('loanMaterialsUpload', function($scope) {
 				viewable: true,
 				markable: $params.refer ? true : false,
 				getimg: function(cb) {
-					cb($scope.result.data[_type][_idx].materials)
+					var newImg = tool.adjust($scope.result.cfgData.frames[0].sections, _type, $scope.result.data[_type][_idx].materials);
+					console.log(newImg);
+					cb(newImg);
 				},
 				marker: function (img, mark, cb) {
 					var params = {

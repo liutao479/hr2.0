@@ -5,6 +5,7 @@
     top: 254px;
     right: 0;
     .sideBar-item {
+        display: block;
         position: relative;
         width: 44px;
         height: 44px;
@@ -16,18 +17,19 @@
         border: 1px solid @borderColor;
         border-bottom: 1px solid transparent; 
         border-top: 1px solid transparent;
-        &:hover {
+        border-right: none;
+        &.hover {
             color: #FFFFFF;
-            background-color: @mainColor;
-            border-color: @mainColor !important;
-            .iconfont {
-                color: #FFFFFF;
-            }
+                background-color: @mainColor;
+                border-color: @mainColor !important;
+                .iconfont {
+                    color: #FFFFFF;
+                }
         }
         &:first-child {
             border-top: 1px solid @borderColor;
         }
-        &:last-child {
+        &.last {
             border-color: @borderColor;
             line-height: 16px; 
             padding-top: 5px;
@@ -59,6 +61,8 @@
             }
             .arrow {
                 position: absolute;
+                top: 50%;
+                margin-top: -2px;
                 right: -9px;
                 border-color: transparent transparent transparent #f3f4f9;
             }

@@ -32,7 +32,9 @@ $(function() {
 			role: Cookies.get('_hr_role'),
 			phone: Cookies.get('_hr_phone'),
 			name: Cookies.get('_hr_name'),
-			token: Cookies.get('_hr_token')
+			token: Cookies.get('_hr_token'),
+			orgId: Cookies.get('_hr_orgId'),
+			userId: Cookies.get('_hr_userId')
 		}
 		if(!_info.token || !_info.account) {
 			return self.showModal();
@@ -111,6 +113,8 @@ $(function() {
 		Cookies.remove('_hr_role');
 		Cookies.remove('_hr_name');
 		Cookies.remove('_hr_phone');
+		Cookies.remove('_hr_userId');
+		Cookies.remove('_hr_orgId');
 	}
 
 	NavComponent.prototype.showModal = function() {
@@ -177,6 +181,8 @@ $(function() {
 					Cookies.set('_hr_name', result.name);
 					Cookies.set('_hr_account', result.account);
 					Cookies.set('_hr_token', result.token);
+					Cookies.set('_hr_userId', info.id);
+					Cookies.set('_hr_orgId', info.orgId);
 					location.href = location.href;
 				} else {
 					$err.html('登录失败，' + xhr.msg).show();
@@ -315,7 +321,8 @@ $(function() {
 			url: $http.api('password/change', 'test'),
 			data: {
 				password: md5(ov),
-				newPassword: md5(nv)
+				newPassword: md5(nv),
+				confirmNewPassword: md5(rv)
 			},
 			dataType: 'json',
 			success: function(xhr) {
@@ -369,6 +376,18 @@ $(function() {
 				})
 			})
 		},
+		countDown: function($el) {
+			var counter = 60;
+			$el[0].counter = setInterval(function() {
+				$el.text(counter + 's后重新获取');
+				counter--;
+				if(counter <= 0) {
+					clearInterval($el[0].counter);
+					$el[0].counter = null;
+					$el.text('获取验证码');
+				}
+			}, 1000);
+		},
 		bind: function() {
 			$.confirm({
 				title: '绑定手机号码',
@@ -385,16 +404,19 @@ $(function() {
 							return $err.html('请输入手机号码').show();
 						}
 						NavComponent.internal.getPhoneCode(phone, function() {
+							NavComponent.internal.countDown($that);
+							/*
 							var counter = 60;
 							$this.counter = setInterval(function() {
 								$that.html(counter + 's后重新获取');
 								counter--;
-								if(counter == 0) {
+								if(counter <= 0) {
 									$that.html('获取验证码');
 									clearInterval(self.counter);
 									$this.counter = null;
 								}
 							}, 1000);
+							*/
 						});
 					})
 				},
@@ -412,9 +434,10 @@ $(function() {
 			})
 		},
 		change: function(phone) {
-			var p = $(phone).data('phone');
+			var p = $(phone).data('phone'),
+				$ctn;
 
-			function _gc(phone) {
+			function _gc(phone, status) {
 				$.ajax({
 					url: $http.api('sms/send', 'test'),
 					type: 'post',
@@ -426,7 +449,7 @@ $(function() {
 					dataType: 'json',
 					success: $http.ok(function(xhr) {
 						if(!xhr.code) {
-							cf();
+							cf(status);
 						} else {
 							$.alert({
 								title: '错误',
@@ -437,52 +460,48 @@ $(function() {
 					})
 				})
 			}
-			
+
 			_gc(p);
 
-			function cf() {
-				$.confirm({
-					title: '修改手机号码',
-					content:'url:./defs/phone.modify.html',
-					onContentReady: function() {
-						var self = this;
-						self.$content.find('#phoneNumber').html(p);
-						var $cd = self.$content.find('#codeCountDown'),
-							counter = 60;
-						$cd[0].counter = setInterval(function() {
-							$cd.text(counter + 's后重新获取');
-							counter--;
-							if(counter == 0) {
-								clearInterval($cd[0].counter);
-								$cd[0].counter = null;
-								$cd.html('获取验证码');
-							}
-						}, 1000);
-						$cd.on('click', function() {
-							if(this.counter) return false;
-							_gc(p);
-						})
-					},
-					buttons: {
-						ok: {
-							text: '确定',
-							action: function() {
-								var self = this;
-								return unbindPhone(self.$content, p, function(status) {
-									!!status && self.close();
-									Cookies.remove('_hr_phone');
-									delete navInstance.info.phone
-									navInstance.__compile();
-									NavComponent.internal.bind();
-								});
-							}
+			function cf(show) {
+				if(!show) {
+					$.confirm({
+						title: '修改手机号码',
+						content:'url:./defs/phone.modify.html',
+						onContentReady: function() {
+							var self = this;
+							self.$content.find('#phoneNumber').html(p);
+							var $cd = self.$content.find('#codeCountDown');
+							$ctn = $cd;
+							NavComponent.internal.countDown($cd)
+							$cd.on('click', function() {
+								if(this.counter) return false;
+								_gc(p, true);
+							})
 						},
-						cancel: {
-							text: '取消',
-							btnClass: 'btn-cancel'
+						buttons: {
+							ok: {
+								text: '确定',
+								action: function() {
+									var self = this;
+									return unbindPhone(self.$content, p, function(status) {
+										!!status && self.close();
+										Cookies.remove('_hr_phone');
+										delete navInstance.info.phone
+										navInstance.__compile();
+										NavComponent.internal.bind();
+									});
+								}
+							},
+							cancel: {
+								text: '取消',
+								btnClass: 'btn-cancel'
+							}
 						}
-					}
-				})
+					})
+				} else {
+					NavComponent.internal.countDown($ctn);
+				}
 			}
 		},
 		password: function() {

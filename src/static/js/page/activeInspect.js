@@ -102,7 +102,7 @@ page.ctrl('activeInspect', function($scope) {
 		cb();
 	};
 	/*发起核查弹窗*/
-	var openDialog=function(that,_orderNOs){		
+	var openDialog=function(_orderNOs){		
 		$.ajax({
 			type: 'post',
 			dataType:'json',
@@ -113,52 +113,66 @@ page.ctrl('activeInspect', function($scope) {
 				for(var i in _data){
 					_data[i].checkStatus=0;
 					_data[i].funcName=_data[i].taskName;
-				};
-				that.openWindow({
-					title:"请选择查询类型",
-					content: dialogTml.wContent.btngroup,
-					commit: dialogTml.wCommit.cancelSure,
-					data:_data
-				},function($dialog){
-					var _arr=[];
-					$dialog.find(".block-item-data:not(.not-selected)").click(function() {
-						$(this).toggleClass("selected");	
-						var _val=_data[$(this).data('index')].id;
-						if($(this).hasClass("selected"))
-							_arr.push(_val);	
-						else		
-							_arr.splice(_arr.indexOf(_val),1);
-					});
-					$dialog.find(".w-sure").click(function() {
-						$dialog.remove();
-						var _taskIds=_arr.join(',');
-						if(_orderNOs&&_taskIds){
-							$.ajax({
-								type: "post",
-								url: $http.api('bankLoanAfter/submitBank',true),
-								data:{
-									orderNOs:_orderNOs,
-									taskIds:_taskIds
-								},
-								dataType:"json",
-								success: $http.ok(function(result) {		
-									var jc=$.dialog($scope.def.toastTmpl,function($dialog){
-										//$(".jconfirm .jconfirm-closeIcon").hide();
-										var context=$(".jconfirm .jconfirm-content").html();
-										if(context){
-											setTimeout(function() {
-												jc.close();
-												resetForm();
-												//var _searchMsg=getFormMsg();
-												search(delNull(_searchMsg));
-											}, 1500);
-										};
-									});
-								})
-							});			
-						};			
-					});
-				});	
+				};				
+				var dialogHtml = doT.template(dialogTml.wContent.btngroup)(_data);
+				$.confirm({
+					title: '请选择查询类型',
+					offsetBottom: "50px",
+					content:dialogHtml,
+					onContentReady:function(){	
+						var _btnDialog=this;					
+						_btnDialog._arr=[];
+						_btnDialog.$content.find(".block-item-data:not(.not-selected)").click(function() {
+							$(this).toggleClass("selected");	
+							var _val=_data[$(this).data('index')].id;
+							if($(this).hasClass("selected"))
+								_btnDialog._arr.push(_val);	
+							else		
+								_btnDialog._arr.splice(_btnDialog._arr.indexOf(_val),1);
+						});
+					},
+					buttons: {
+						close: {
+							text: '取消',
+				        	btnClass:"btn-default btn-cancel",
+							action: function() {}
+						},
+						ok: {
+							text: '确定',
+							action: function () {
+								var _btnDialog=this;
+								var _taskIds=_btnDialog._arr.join(',');
+								if(_orderNOs&&_taskIds){
+									$.ajax({
+										type: "post",
+										url: $http.api('bankLoanAfter/submitBank',true),
+										data:{
+											orderNOs:_orderNOs,
+											taskIds:_taskIds
+										},
+										dataType:"json",
+										success: $http.ok(function(result) {
+											var _tipHtml = doT.template($scope.def.toastTmpl)();
+											$.dialog({
+												title:false,
+												content:_tipHtml,
+												onContentReady:function(){
+													var _tioDialog=this;
+													setTimeout(function() {
+														_tioDialog.close();
+														resetForm();
+														var _searchMsg=getFormMsg();
+														search(delNull(_searchMsg));
+													},1500);
+												}
+											});	
+										})
+									});			
+								};	
+							}
+						}
+					}
+				});
 			})
 		});	
 	};
@@ -212,17 +226,15 @@ page.ctrl('activeInspect', function($scope) {
 		});
 		/*发起多人核查*/
 		$scope.$el.$gocheck.click(function() {
-			var that=$(this);
-			/*这块先问产品要不要写多个用户发起多个审核*/
 			if(checkedIds.length==0)
 				return false;
-			openDialog(that,checkedIds.join(','));
+			openDialog(checkedIds.join(','));
 		});
 		/*发起单人核查*/
 		$scope.$el.$tbl.off("click",".gocheck").on("click",".gocheck",function() {
-			var that=$(this);
-			var _id=that.parents(".expire-orders-table").data("id");
-			openDialog(that,_id);
+			var _id=$(this).parents(".expire-orders-table").data("id");
+			if(_id)
+				openDialog(_id);
 		});
  	};
  	

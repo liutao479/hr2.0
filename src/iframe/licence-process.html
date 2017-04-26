@@ -68,8 +68,8 @@
 									{{ } else if(row.status == 4) { }}
 										<td class="orders-item-data status-back">被退回</td>
 										{{ } }} 
-							<td class="orders-item-data">{{=tool.formatDate(row.pickDate)}}</td>
-							<td class="orders-item-data">{{=tool.formatDate(row.deadline)}}</td>
+							<td class="orders-item-data">{{=row.pickDateStr || ''}}</td>
+							<td class="orders-item-data">{{=row.deadlineStr || ''}}</td>
 							{{ if(row.status == 2) { }}
 							<td class="orders-item-data">--</td>
 							{{ } else if(tool.overdue(row.pickDate, row.deadline) == "已超期") { }}

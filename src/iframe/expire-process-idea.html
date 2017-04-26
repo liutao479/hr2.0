@@ -1,0 +1,18 @@
+<div class="panel">
+	<div class="tab-content-item" id="ideaTable"></div>
+</div>
+<script type="text/x-dot-template" id="expireProcessDetailTmpl">
+	{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}
+	<dl class="expire-opinion">
+		<dt class="clearfix">
+			<div class="expire-left">
+				逾期管理员：<span class="expire-manager">{{=row.submitUserName}}</span>
+			</div>
+			<div class="expire-right">{{=row.submitDateStr}}</div>
+		</dt>
+		<dd>
+			{{=row.overdueIdea || '无逾期处理意见'}}
+		</dd>
+	</dl>
+	{{ } }}
+</script>

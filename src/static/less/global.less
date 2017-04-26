@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_ed8ka5gep3fskyb9.eot');
-  src: url('//at.alicdn.com/t/font_ed8ka5gep3fskyb9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_ed8ka5gep3fskyb9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_ed8ka5gep3fskyb9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_ed8ka5gep3fskyb9.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_nyfsefnbl0udi.eot');
+  src: url('//at.alicdn.com/t/font_nyfsefnbl0udi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_nyfsefnbl0udi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_nyfsefnbl0udi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_nyfsefnbl0udi.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -55,6 +55,10 @@
 }
 .mt15 {
     margin-top: 15px !important;
+}
+.underline {
+    text-decoration: underline;
+    word-wrap : break-word;
 }
 .ml15 {
     margin-left: 15px !important;
@@ -135,7 +139,7 @@ input[disabled]{
     color: @messageNumberBgColor !important;
     position: absolute;
     right: 0;
-    top: 26px;
+    top: 30px;
     font-size: 12px;
 }
 .pic-err{
@@ -656,7 +660,26 @@ input[disabled]{
         transform: translate(-50%,-50%);
     }
 }
-
+.table-box {
+    border: 1px solid @borderColor;
+    padding: 10px 0;
+    margin: 15px;
+    .table-inner {
+        margin: 0 auto;
+        .table-inner-tr {
+            .key {
+                color: @tiperColor;
+                text-align: right;
+                line-height: 24px;
+            }
+            .value {
+                color: @fontColor;
+                text-align: left;
+                line-height: 24px;
+            }
+        }
+    }
+}
 // 特殊类表格（逾期信息历史导入详情）
 .expire-orders-table {
     border: 1px solid @borderColor;
@@ -1088,8 +1111,10 @@ input[disabled]{
                 //文字元素给行高保持与左侧水平
                 .panel-value-item {
                     float: left;
-                    line-height: 32px;
+                    word-wrap: break-word;
+                    line-height: 34px;
                     margin-right: 10px;
+                    width: 100%;
                     .input-text {
                         width: 270px;
                     }
@@ -1120,7 +1145,7 @@ input[disabled]{
                     width: 100%;
                     .borderRadius(3px);
                     border: 1px solid @borderColor;
-                    padding: 7px;
+                    padding: 7px 7px 20px 7px;
                     color: @fontColor;
                     .remark {
                         width: 100%;
@@ -1495,7 +1520,7 @@ input[disabled]{
 .remarks-box-mini {
     display: inline-block;
     min-width: 250px;
-    min-height: 160px;
+    min-height: 80px;
     .borderRadius(3px);
     border: 1px solid @borderColor;
     resize:none;
@@ -1729,34 +1754,34 @@ input[disabled]{
     .layout;
     margin-top: 15px;
     padding: 50px 130px 100px 130px;
-    .news-title {
-        font-size: 20px;
-        font-weight: 500;
-        text-align: center;
-    }
-    .news-tips {
-        text-align: center;
-        margin-top: 20px;
-        margin-bottom: 50px;
-        color: #696969;
-        .news-tips-item {
-            margin-right: 10px;
-        }
-    }
-    .news-content {
-        color: #000;
-        p {
-            line-height: 28px;
-        }
-        .news-section {
-            text-indent: 2em;
-        }
-        .news-company, .news-time {
-            text-align: right;
-        }
-
-    }
 } 
+.news-title {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+.news-tips {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    color: #696969;
+    .news-tips-item {
+        margin-right: 10px;
+    }
+}
+.news-content {
+    color: #000;
+    p {
+        line-height: 28px;
+    }
+    .news-section {
+        text-indent: 2em;
+    }
+    .news-company, .news-time {
+        text-align: right;
+    }
+
+}
 //箭头
 .arrow {
     border-width: 5px;
@@ -2761,6 +2786,7 @@ input[disabled]{
     .detail-item-alert{
         padding:5px 15px;
         margin:10px 0;
+        clear:both;
         .borderRadius(6px);
         span{
             display:inline-block;
@@ -2776,14 +2802,14 @@ input[disabled]{
                 }
             }
             &.status{
-                margin:0 15px;
+                margin-left:15px;
                 vertical-align: middle;
                 font-weight: bolder;
                 vertical-align: top;
             }
             &.text{
-                width:calc(~"100% - 140px");
-                padding-right:15px;
+                width:calc(~"100% - 75px");
+                padding:0 15px;
             }
         }
     }
@@ -3059,7 +3085,8 @@ input[disabled]{
     }
 }
 .serviceItems{
-    margin-top:20px;
+    text-align: center;
+    margin:0 50px;
     li{
         float:left;
         overflow:hidden;
@@ -3318,5 +3345,10 @@ input[disabled]{
                 margin-top:10px;
             }
         }
+    }
+} 
+@media screen and (max-width: 768px) {  
+    .serviceItems li{
+        width:46%;
     }
 } 

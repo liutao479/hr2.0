@@ -176,9 +176,9 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result);
-									
-									router.render('loanProcess');
-									// toast.hide();
+									$.toast('处理成功！', function() {
+										router.render('loanProcess');
+									});
 								})
 							})
 						}
@@ -192,31 +192,7 @@ page.ctrl('advanceMaterialsUpload', function($scope) {
 		 */
 		$sub.on('taskSubmit', function() {
 			checkData(function() {
-				var canSubmit = flow.taskSubmit($params.tasks);
-				if(canSubmit) {
-					return process();
-				}
-				$.alert({
-					title: '提示',
-					content: tool.alert('您还有未完成的tab栏任务，前往完善？'),
-					buttons: {
-						ok: {
-							text: '确定',
-							action: function() {
-								var taskIds = [];
-								for(var i = 0, len = $params.tasks.length; i < len; i++) {
-									taskIds.push(parseInt($params.tasks[i].id));
-								}
-								var params = {
-									taskId: $params.taskId,
-									taskIds: taskIds,
-									orderNo: $params.orderNo
-								}
-								flow.tasksJump(params, 'complete');
-							}
-						}
-					}
-				})
+				process();
 			})
 		})
 	}

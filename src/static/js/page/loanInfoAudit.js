@@ -17,6 +17,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 		"saveFYXX": $http.api('loanInfoInput/updLoanFee', 'jbs'),
 		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation', 'jbs')
 	};
+	console.log(postUrl)
 
 	/**
 	* 加载车贷办理数据
@@ -53,6 +54,64 @@ page.ctrl('loanInfoAudit', function($scope) {
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result,true);
+				render.compile($scope.$el.$sideBar, $scope.def.siderBarTmpl, result, function() {
+					// console.log($('.remind-content'))
+					// // $('#remind .remind-content').css('min-height', '550px');
+					$scope.$el.$sideBar.find('li').not(".last").hover(function() {
+						$(this).toggleClass('hover');
+						// $scope.$el.$sideBar.find('.sideBar-content').hide();
+						$(this).find('.sideBar-content').toggle();
+					});
+					 //鼠标点击
+					var mark = 1;
+					$scope.$el.$sideBar.find('li').not(".last").click(function() {
+						mark = 2; //改变标记
+						//点击右侧边导航 然后跳到指定的区块
+						var $index = $(this).index(); //找到了对应的序列号
+						//alert($index);
+						var $top = $console.find(".panel-loan").eq($index).offset().top; //获取制定Louti与浏览器上面的距离)
+						//alert($top);
+						$("body,html").animate({
+							scrollTop: $top - 75
+						}, 500, function() {
+							mark = 1;
+						}); //浏览器滚动的高度
+					});
+					 //浏览器串口滚动事件
+					// $(window).scroll(function() {
+					// 	if (mark == 1) {
+					// 		var $t = $(this).scrollTop(); //获取滚动条滚动的高度
+					// 		//document.title = $t;
+					// 		// if ($t > 1000) { //通过滚动条来判断
+					// 		// 	$("#LoutiNav").fadeIn(); //淡入 导航慢慢显示出来
+					// 		// } else {
+					// 		// 	$("#LoutiNav").fadeOut(); //淡出 导航慢慢消失
+					// 		// }
+					// 		var $obj = $console.find(".panel-loan");
+					// 		//循环每一个区块 然后找到最先满足条件的那个 区块
+					// 		$obj.each(function() {
+					// 			var $index = $(this).index();
+					// 			//楼层与浏览器上面的高度
+					// 			var $height = $obj.eq($index).offset().top + $(this).height() / 2;
+					// 			//alert($height) 
+					// 			// document.title = $t + "--" + $height;
+					// 			if ($t < $height) {
+					// 				$scope.$el.$sideBar.find('.sideBar-content').hide();
+					// 				$scope.$el.$sideBar.find('.sideBar-content').eq($index).show();
+					// 				return false;
+					// 			}
+					// 		});
+					// 	}
+					// });
+					//点击 Top按钮 跳转到浏览器顶部
+					$scope.$el.$sideBar.find('li.last').click(function() {
+						$("body,html").animate({
+							scrollTop: 0
+						}, 500, function() {
+							mark = 1;
+						});
+					});
+				}, true);
 				loanFinishedInput();
 				loanFinishedCheckbox();
 				loanFinishedGps();
@@ -330,7 +389,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 						data[index]=data1;
 			        })
 		        }
-		        var dataPost;
+		        var dataPost;debugger
 		        if(btnType){
 		        	dataPost = JSON.stringify(data);
 					$.ajax({
@@ -807,8 +866,10 @@ page.ctrl('loanInfoAudit', function($scope) {
 	 */
 	$console.load(router.template('iframe/loanInfoAudit'), function() {
 		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
+		$scope.def.siderBarTmpl = $console.find('#siderBarTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#loanAudit')
+			$tbl: $console.find('#loanAudit'),
+			$sideBar: $console.find('#sideBar')
 		}
 		loadLoanList(function(){
 			setupSubmitBar();

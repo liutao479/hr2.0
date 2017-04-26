@@ -4,14 +4,14 @@
 				<!--用款时间选择-->
 				<div class="select-search-bar no-bottom-border clearfix">
 					<div class="search-item">
-						<span class="select-name">银行回款日期：</span>
+						<span class="select-name">用款日期：</span>
 						<div class="input-text input-date-mini">
 							<input id="dateStart" type="text" class="dateBtn" data-type="utilityTime" readonly="readonly" value="" />
 						</div>	
 					</div>
 					<div class="search-item">
 						<span class="select-name">分公司：</span>
-						<div class="select select-common" data-dropdown="page.$scope['moneyBusinessAuditPrint'].bankPicker" data-trigger="page.$scope['moneyBusinessAuditPrint'].dropdownTrigger.deptCompany"></div>
+						<div class="select select-common" data-dropdown="page.$scope['moneyBusinessAuditPrint'].deptCompanyPicker" data-trigger="page.$scope['moneyBusinessAuditPrint'].dropdownTrigger.deptCompany"></div>
 					</div>
 					<div class="search-item">
 						<div class="input-text">
@@ -26,7 +26,7 @@
 				<!--银行汇款日期选择  end-->
 				
 				<!--全选删除框-->
-				<div class="all-select-panel all-select-panel-nobottomborder clearfix">
+				<!-- <div class="all-select-panel all-select-panel-nobottomborder clearfix">
 					<div class="all-check-box">
 						<div class="checkbox checkbox-normal" data-checked="false" id="allCheck"></div>
 						<span>全选</span>
@@ -34,7 +34,7 @@
 					<div class="all-check-box">
 						<div class="button button-mini button-deep" id="allPrint">批量打印</div>
 					</div>
-				</div>
+				</div> -->
 				<!--全选删除框  end-->
 				
 				
@@ -42,7 +42,7 @@
 				<table width="100%" class="orders-table">
 					<thead>
 						<tr class="orders-bar-title">
-							<td class="orders-item-data order-item-first"></td>
+							<!-- <td class="orders-item-data order-item-first"></td> -->
 							<td class="orders-item-data">订单号</td>
 							<td class="orders-item-data">借款人</td>
 							<td class="orders-item-data">用款时间</td>
@@ -71,20 +71,20 @@
 						{{ } else { }}
 						<tr class="orders-item">
 						{{ } }}
-							<td class="orders-item-data order-item-first">
+							<!-- <td class="orders-item-data order-item-first">
 								<div class="checkbox checkbox-normal"></div>
-							</td>
+							</td> -->
 							<td class="orders-item-data">{{=row.orderNo || ''}}</td>
-							<td class="orders-item-data">{{=row.userName || ''}}（{{=row.idCard || ''}}）</td>
-							<td class="orders-item-data">{{=row.tilityTimeStr || ''}}</td>
+							<td class="orders-item-data">{{=row.realName || ''}}（{{=row.idCard || ''}}）</td>
+							<td class="orders-item-data">{{=row.utilityTimeStr || ''}}</td>
 							<td class="orders-item-data">{{=row.deptName || ''}}</td>
-							<td class="orders-item-data">{{=row.stageMoney || ''}}</td>
+							<td class="orders-item-data">{{=row.stageMoney + '元' || ''}}</td>
 							<td class="orders-item-data"><div class="button button-mini button-gray businessPrint" data-order-no="{{=row.orderNo}}">打印</div></td>
 						</tr>
 					{{ } }}
 				{{ } else { }}
 				<tr class="tr-noborder">
-					<td colspan="7" class="orders-blank">
+					<td colspan="6" class="orders-blank">
 						<div class="blank-box">
 							<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
 							<p>暂无待办任务！</p>
@@ -92,4 +92,8 @@
 					</td>
 				</tr>	
 				{{ } }}
+			</script>
+
+			<script type="text/x-dot-template" id="printTmpl">
+				<div class="pContent"></div>
 			</script>
