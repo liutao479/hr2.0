@@ -27,7 +27,7 @@
 				<div class="key-value">
 					{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
 					<div class="input-text input-name">
-						<input type="text" class="required" value="{{=row.userName || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="userName"/>
+						<input type="text" maxlength="10" class="required" value="{{=row.userName || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="userName"/>
 					</div>
 					{{ } }}
 					{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}

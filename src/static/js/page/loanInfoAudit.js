@@ -55,8 +55,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result,true);
 				render.compile($scope.$el.$sideBar, $scope.def.siderBarTmpl, result, function() {
-					// console.log($('.remind-content'))
-					// // $('#remind .remind-content').css('min-height', '550px');
+					$scope.$el.$sideBar.css('right', $('#remind').css('right'))
 					$scope.$el.$sideBar.find('li').not(".last").hover(function() {
 						$(this).toggleClass('hover');
 						// $scope.$el.$sideBar.find('.sideBar-content').hide();
@@ -1141,6 +1140,9 @@ page.ctrl('loanInfoAudit', function($scope) {
 		},
 		remitAccountNumber: function(t, p, cb) {
 			if(!$scope.busiSourceNameId) {
+				$console.find('#numSel .select-box').css({
+					zIndex : 1000
+				})
 				$.alert({
 					title: '提示',
 					content: tool.alert('请填写业务来源方名称！'),
