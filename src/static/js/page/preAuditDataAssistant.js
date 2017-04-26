@@ -81,19 +81,19 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 				};
 				/*整理title中发起人，最新发起时间等信息*/
 				if(_mout.verifyRecord&&_mout.verifyRecord.submitByName)
-					_mout.body.submitByName=_mout.verifyRecord.submitByName;
+					_mout.submitByName=_mout.verifyRecord.submitByName;
 				if(_mout.verifyRecord&&_mout.verifyRecord.updateTime)
-					_mout.body.updateTime=_mout.verifyRecord.updateTime;
+					_mout.updateTime=_mout.verifyRecord.updateTime;
 				if(res.data.loanUser&&res.data.loanUser.userName){
-					_mout.body.userName=res.data.loanUser.userName;
+					_mout.userName=res.data.loanUser.userName;
 					var _minObj=userType.filter(it=>it.userType==res.data.loanUser.userType);
 					if(_minObj&&_minObj.length==1){
-						_mout.body.userTypeName=_minObj[0].text;
+						_mout.userTypeName=_minObj[0].text;
 					};
 				};
 				/*网贷平台借贷数据统计end*/
 				/*模板绑定数据*/
-				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout.body, true);
+				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout, true);
 				/*回调*/
 				if(callback && typeof callback == 'function') {
 					callback();
