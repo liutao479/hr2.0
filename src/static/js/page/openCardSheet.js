@@ -190,6 +190,7 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		})
 		$console.find('#loanMoney').on('change', function() {
+
 			var loanMoney = $("#loanMoney").val(),
 				feeRate = $("#feeRate").val(),
 				carPrice = $("#carPrice").val(),
@@ -197,14 +198,16 @@ page.ctrl('openCardSheet', function($scope) {
 				adjustAmount,
 				loanRatio;
 			if(loanMoney && feeRate){
+
 				feeamount = loanMoney * feeRate / 100;
 				adjustAmount = feeamount*1 + loanMoney*1;
 				$("#feeamount").val(feeamount);
 				$("#adjustAmount").val(adjustAmount);
 				if(carPrice){
 					loanRatio = (adjustAmount*1) / (carPrice*1) * 100;
-					var loanRatio1 = loanRatio.toFixed(6)
+					var loanRatio1 = loanRatio.toFixed(6);
 					$("#loanRatio").val(loanRatio1);
+					  
 				}
 			}
 		})
@@ -235,7 +238,7 @@ page.ctrl('openCardSheet', function($scope) {
 				loanRatio;
 			if(adjustAmount && carPrice){
 				loanRatio = (adjustAmount*1) / (carPrice*1) * 100;
-				var loanRatio1 = loanRatio.toFixed(6)
+				var loanRatio1 = loanRatio.toFixed(0)
 				$("#loanRatio").val(loanRatio1);
 			}
 		})
