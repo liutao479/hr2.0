@@ -85,12 +85,21 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	/**
 	* 设置修改征信查询银行区域
 	*/
-	var setupCreditBank = function() {
+	var setupCreditBank = function(refresh) {
 		$scope.currentType = 0;
 		if(!$scope.demandBankId) {
 			setupWindow();
 		} else {
 			loadOrderInfo($scope.currentType, function() {
+				if(refresh) {
+					for(var i in $scope.tabs) {
+						if(i == $scope.currentType) {
+							continue;
+						} else {
+							delete $scope.tabs[i];
+						}
+					}
+				}
 				render.compile($scope.$el.$modifyBankPanel, $scope.def.modifyBankTmpl, $scope.result.data.loanTask.loanOrder, function() {
 					$scope.$el.$modifyBankPanel.find('.modifyBankEvt').on('click', function() {
 						setupWindow(true);
@@ -117,7 +126,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				if( cb && typeof cb == 'function' ) {
-					cb();
+					cb(result.data.refresh);
 				}
 			})
 		})
@@ -153,8 +162,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
             		return false;
             	}
             	$scope.clickable = true;
-            	updBank(function() {
-            		setupCreditBank();
+            	updBank(function(refresh) {
+            		setupCreditBank(refresh);
             	});
             }
 		}
