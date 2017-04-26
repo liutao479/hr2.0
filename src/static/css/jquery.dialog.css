@@ -368,7 +368,7 @@
 
 .jconfirm .jconfirm-box div.jconfirm-content-pane .jconfirm-content img {
 	max-width: 100%;
-	height: auto
+	// height: auto
 }
 
 .jconfirm .jconfirm-box div.jconfirm-content-pane .jconfirm-content:empty {

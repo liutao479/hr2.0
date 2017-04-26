@@ -5,19 +5,20 @@ page.ctrl('loanInfoAudit', function($scope) {
 	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
 
+
+	//保存按钮请求的接口，type为ApplyModify时，表示申请修改贷款信息的保存接口
 	var postUrl = {
-		"saveDDXX": $http.api('loanInfoInput/updLoanOrder', 'jbs'),
-		"saveCLXX": $http.api('loanInfoInput/updLoanUserCar', 'jbs'),
-		"saveFQXX": $http.api('loanInfoInput/updLoanUserStage', 'jbs'),
-		"saveZJKR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
-		"saveGTHK": $http.api('loanInfoInput/updLoanUser', 'jbs'),
-		"saveFDBR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
-		"saveJJLXR": $http.api('loanInfoInput/updLoanEmergencyConact', 'jbs'),
-		"saveHKKXX": $http.api('loanInfoInput/updLoanPayCard', 'jbs'),
-		"saveFYXX": $http.api('loanInfoInput/updLoanFee', 'jbs'),
-		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation', 'jbs')
+		"saveDDXX": $http.api('loanInfoInput/updLoanOrder' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveCLXX": $http.api('loanInfoInput/updLoanUserCar' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveFQXX": $http.api('loanInfoInput/updLoanUserStage' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveZJKR": $http.api('loanInfoInput/updLoanUser' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveGTHK": $http.api('loanInfoInput/updLoanUser' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveFDBR": $http.api('loanInfoInput/updLoanUser' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveJJLXR": $http.api('loanInfoInput/updLoanEmergencyConact' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveHKKXX": $http.api('loanInfoInput/updLoanPayCard' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveFYXX": $http.api('loanInfoInput/updLoanFee' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs')
 	};
-	console.log(postUrl)
 
 	/**
 	* 加载车贷办理数据

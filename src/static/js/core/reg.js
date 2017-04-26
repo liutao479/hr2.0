@@ -7,10 +7,10 @@
 	*/
 	g.regMap = {
 		userName: /^[\u4E00-\u9FA5]{1,15}$/,
-		accountName: /^[\u4E00-\u9FA5]{1,25}$/,
+		accountName: /^[a-zA-Z0-9\u4e00-\u9fa5]+$/,
 		idCard: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
 		accountBankName: /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/,
-		bankName: /^[\u4E00-\u9FA5]{1,25}$/,
+		bankName: /^[a-zA-Z0-9\u4e00-\u9fa5]+$/,
 		accountNumber: /^(\d{16}|\d{19})$/,
 		account: /^(\d{16}|\d{19})$/,
 		phone: /^1[\d+]{10}$/,

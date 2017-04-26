@@ -147,14 +147,6 @@
 							</dd>\
 						</dl>\
 						<dl class="w-dropdown float-left">\
-							<dt class="dt">垫资时间：</dt>\
-							<dd class="dd">\
-								<div class="input-text input-date">\
-									<input id="loaningDate" type="text" class="dateBtn" data-key="loaningDate" data-type="yymmddhhmm" readonly="readonly" value="{{=it.loaningDateStr || \"\"}}" />\
-								</div>\
-							</dd>\
-						</dl>\
-						<dl class="w-dropdown float-left">\
 							<dt class="dt">打款凭证：</dt>\
 							<dd class="dd">\
 								<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope[\'myCustomer\'].deletecb" data-uploadcb="page.$scope[\'myCustomer\'].uploadcb" data-card="true" data-id="" data-orderno="123" data-code="cardUpd" data-name="垫资凭证" data-scene="homeMaterialsUpload" data-img="{{= it.advanceCertificate || \'\'}}" data-err="0" data-editable="1"></div>\

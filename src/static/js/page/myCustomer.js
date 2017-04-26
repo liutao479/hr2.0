@@ -125,7 +125,9 @@ page.ctrl('myCustomer', [], function($scope) {
 						oncleared: function() {
 						}
 					});
-
+					if(data.advanceCertificate) {
+						$scope.imgUrl = data.advanceCertificate;
+					}
 				},
 				buttons: {
 					close: {
@@ -163,15 +165,17 @@ page.ctrl('myCustomer', [], function($scope) {
 							});
 							if(isSure) {
 								if(!$scope.imgUrl) {
-									that.$content.find('.uploadEvt').removeClass('error-input').addClass('error-input');
+									that.$content.find('.uploadEvt .imgs-item-upload').removeClass('error-input').addClass('error-input');
 									flag = false;
 								} else {
-									that.$content.find('.uploadEvt').removeClass('error-input');
+									that.$content.find('.uploadEvt .imgs-item-upload').removeClass('error-input');
 									_params.advanceCertificate = $scope.imgUrl;
 								}
 							}
 							if(flag) {
+								console.log(_params)
 								if(isSure) {
+									_params.paymentStatus = 1;
 									makeloanSureSubmit(_params);
 								} else {
 									makeloanSubmit(_params);
@@ -551,6 +555,18 @@ page.ctrl('myCustomer', [], function($scope) {
 		apiParams.pageNum = _pageNum;
 		loadCustomerList(apiParams);
 		cb();
+	}
+
+	/***
+	* 上传图片成功后的回调函数
+	*/
+	$scope.uploadcb = function(self) {
+		self.$el.removeClass('error-input');
+		$scope.imgUrl = $('.jconfirm .imgs-view').attr('src');
+	}
+	
+	$scope.deletecb = function(self) {
+		delete $scope.imgUrl;
 	}
 
 	/**
