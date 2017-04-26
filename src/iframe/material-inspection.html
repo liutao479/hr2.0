@@ -114,7 +114,7 @@
 													{{=query.billDate.value||'-'}}
 												</span>
 												<span class="key">
-												（购车发票原件数据：{{=buyCar.vehicleInvoiceIssueDate||'-'}}）</span>
+												（原件数据：{{=buyCar.vehicleInvoiceIssueDate||'-'}}）</span>
 											</li> 
 											{{ }else{ }}
 											<li>
@@ -129,7 +129,7 @@
 													{{=query.totalAmount.value||'-'}}元
 												</span>
 												<span class="key">
-												（购车发票原件数据：{{=buyCar.vehicleInvoiceTotalPrice||'-'}}元）</span>
+												（原件数据：{{=buyCar.vehicleInvoiceTotalPrice||'-'}}元）</span>
 											</li> 
 											{{ }else{ }}
 											<li>
@@ -145,7 +145,7 @@
 													{{=query.buyerName.value||'-'}}
 												</span>
 												<span class="key">
-												（购车发票原件数据：{{=buyCar.vehicleInvoiceBuyer||'-'}}）</span>
+												（原件数据：{{=buyCar.vehicleInvoiceBuyer||'-'}}）</span>
 											</li> 
 											{{ }else{ }}
 											<li>
@@ -164,7 +164,7 @@
 													{{=query.taxpayerIdentityNumber.value||'-'}}
 												</span>
 												<span class="key">
-												（购车发票原件数据：{{=buyCar.taxpayerNumber||'-'}}）</span>
+												（原件数据：{{=buyCar.taxpayerNumber||'-'}}）</span>
 											</li> 
 											{{ }else{ }}
 											<li>
@@ -180,7 +180,7 @@
 													{{=query.drawerName.value||'-'}}
 												</span>
 												<span class="key">
-												（购车发票原件数据：{{=buyCar.vehicleInvoiceDealer||'-'}}）</span>
+												（原件数据：{{=buyCar.vehicleInvoiceDealer||'-'}}）</span>
 											</li> 
 											{{ }else{ }}
 											<li>
@@ -282,7 +282,7 @@
 													{{=query.billDate.value||'-'}}
 												</span>
 												<span class="key">
-												（购房发票原件数据：{{=hourseBasic.billDate||'-'}}）</span>
+												（原件数据：{{=hourseBasic.billDate||'-'}}）</span>
 											</li> 
 											{{ }else{ }}
 											<li>
@@ -297,7 +297,7 @@
 													{{=query.totalAmount.value||'-'}}
 												</span>
 												<span class="key">
-												（购房发票原件数据：{{=hourseBasic.totalAmount||'-'}}）</span>
+												（原件数据：{{=hourseBasic.totalAmount||'-'}}）</span>
 											</li> 
 											{{ }else{ }}
 											<li>
@@ -313,7 +313,7 @@
 													{{=query.payer.value||'-'}}
 												</span>
 												<span class="key">
-												（购房发票原件数据：{{=hourseBasic.payerName||'-'}}）</span>
+												（原件数据：{{=hourseBasic.payerName||'-'}}）</span>
 											</li> 
 											{{ }else{ }}
 											<li>
@@ -329,7 +329,7 @@
 													{{=query.taxpayerIdentityNumber.value||'-'}}
 												</span>
 												<span class="key">
-												（购房发票原件数据：{{=hourseBasic.payerIdentity||'-'}}）</span>
+												（原件数据：{{=hourseBasic.payerIdentity||'-'}}）</span>
 											</li> 
 											{{ }else{ }}
 											<li>
@@ -658,7 +658,7 @@
 												{{ if(res&&res.insurant&&res.insurant.isMatch){ }}
 												<li><span class="text-warning">被保险人：{{=res.insurant.value}}</span>
 												<span class="key">
-												（保单原件数据：{{=bdNumber.insurant||'-'}}）
+												（原件数据：{{=bdNumber.insurant||'-'}}）
 												</span>
 												</li>
 												{{ }else{ }}
@@ -668,7 +668,7 @@
 												{{ if(res&&res.brand_model&&res.brand_model.isMatch){ }}
 												<li><span class="text-warning">厂牌型号：{{=res.brand_model.value}}</span>
 												<span class="key">
-												（保单原件数据：{{=bdNumber.vehicleInvoiceCarModel||'-'}}）
+												（原件数据：{{=bdNumber.vehicleInvoiceCarModel||'-'}}）
 												</span>
 												</li>
 												{{ }else{ }}
@@ -678,7 +678,7 @@
 												{{ if(res&&res.plate_num&&res.plate_num.isMatch){ }}
 												<li><span class="text-warning">号牌号码：{{=res.plate_num.value}}</span>
 												<span class="key">
-												（保单原件数据：{{=bdNumber.plate_num||'-'}}）
+												（原件数据：{{=bdNumber.plate_num||'-'}}）
 												</span>
 												</li>
 												{{ }else{ }}
@@ -688,7 +688,7 @@
 												{{ if(res&&res.engineer_num&&res.engineer_num.isMatch){ }}
 												<li><span class="text-warning">发动机号：{{=res.engineer_num.value}}</span>
 												<span class="key">
-												（保单原件数据：{{=bdNumber.engineer_num||'-'}}）
+												（原件数据：{{=bdNumber.engineer_num||'-'}}）
 												</span>
 												</li>
 												{{ }else{ }}
@@ -698,7 +698,7 @@
 												{{ if(res&&res.vehicle_framenum&&res.vehicle_framenum.isMatch){ }}
 												<li><span class="text-warning">车架号：{{=res.vehicle_framenum.value}}</span>
 												<span class="key">
-												（保单原件数据：{{=bdNumber.vehicle_framenum||'-'}}）
+												（原件数据：{{=bdNumber.vehicle_framenum||'-'}}）
 												</span>
 												</li>
 												{{ }else{ }}
@@ -708,7 +708,7 @@
 												{{ if(res&&res.insurance_premium&&res.insurance_premium.isMatch){ }}
 												<li><span class="text-warning">保险费合计：{{=res.insurance_premium.value}}</span>
 												<span class="key">
-												（保单原件数据：{{=bdNumber.insurance_premium||'-'}}）
+												（原件数据：{{=bdNumber.insurance_premium||'-'}}）
 												</span>
 												</li>
 												{{ }else{ }}
@@ -905,7 +905,7 @@
 												<li>
 												<span class="text-warning">权利人：
 												{{=res.name||'-'}}</span>
-												<span class="key">（房产证原件数据：{{=col.basicInfo.name||'-'}}）</span>
+												<span class="key">（原件数据：{{=col.basicInfo.name||'-'}}）</span>
 												</li>
 												{{ }else{ }}
 												<li><span class="key">权利人：</span>
@@ -915,7 +915,7 @@
 												<li>
 												<span class="text-warning">房产坐落：
 												{{=res.houseAddress||'-'}}</span>
-												<span class="key">（房产证原件数据：{{=col.basicInfo.houseAddress||'-'}}）</span>
+												<span class="key">（原件数据：{{=col.basicInfo.houseAddress||'-'}}）</span>
 												</li>
 												{{ }else{ }}
 												<li><span class="key">房产坐落：</span>
@@ -925,7 +925,7 @@
 												<li>
 												<span class="text-warning">共有人与共有情况：
 												{{=res.relationship||'-'}}</span>
-												<span class="key">（房产证原件数据：{{=col.basicInfo.relationship||'-'}}）</span>
+												<span class="key">（原件数据：{{=col.basicInfo.relationship||'-'}}）</span>
 												</li>
 												{{ }else{ }}
 												<li><span class="key">共有人与共有情况：</span>
@@ -935,7 +935,7 @@
 												<li>
 												<span class="text-warning">权证与证明号：
 												{{=res.powerNumber||'-'}}</span>
-												<span class="key">（房产证原件数据：{{=col.basicInfo.powerNumber||'-'}}）</span>
+												<span class="key">（原件数据：{{=col.basicInfo.powerNumber||'-'}}）</span>
 												</li>
 												{{ }else{ }}
 												<li><span class="key">权证与证明号：</span>
