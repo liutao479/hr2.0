@@ -378,7 +378,7 @@
 			title: '逾期记录',
 			page: 'expireProcessInputList'
 		},
-		'expireProcess/expireSingleDetail':{
+		'expire/expireSingleDetail':{
 			title: '逾期记录',
 			page: 'expireSingleDetail'
 		},

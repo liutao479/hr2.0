@@ -25,24 +25,46 @@ page.ctrl('expireInfoInputHead', [], function($scope) {
 	var setupEvt = function($el) {
 		$console.find('.tabEvt').on('click', function() {
 			var $that = $(this);
-			$(".tabEvt").each(function(){
-				$(this).removeClass('role-item-active');
-			})
-			$that.addClass('role-item-active');
-			var code = $that.data('type');
-			var params = {
-				code: code,
-				orderNo: $params.orderNo
+			var beforeload = $console.find('#content').length;
+			function _direct() {
+				$(".tabEvt").each(function(){
+					$(this).removeClass('role-item-active');
+				})
+				$that.addClass('role-item-active');
+				var code = $that.data('type');
+				var params = {
+					code: code,
+					orderNo: $params.orderNo
+				}
+				if(code == '1'){
+					router.innerRender('#innerPanel', 'expire/expireInfoSingle', params);
+				}else{
+					router.innerRender('#innerPanel', 'expire/expireInfoInput', params);
+				}
 			}
-			if(code == '1'){
-				router.innerRender('#innerPanel', 'expire/expireInfoSingle', params);
-			}else{
-				router.innerRender('#innerPanel', 'expire/expireInfoInput', params);
+			if(!beforeload) {
+				return $.confirm({
+					title: '警告',
+					content: '<div class="w-content">您当前导入的逾期记录将不会被保存，确认离开？</div>',
+					buttons: {
+						ok: {
+							text: '确定',
+							action: function() {
+								_direct();
+							}
+						},
+						cancel: {
+							text: '取消',
+							btnClass:'btn-default btn-cancel'
+						}
+					}
+				})
 			}
+			_direct();
 		})
 		$console.find('#importHistory').on('click', function() {
 			var params = {
-				orderNo: $params.orderNo
+				path: 'expireInfoInput'
 			}
 			var beforeload = $console.find('#content').length;
 			function _direct() {
@@ -71,17 +93,17 @@ page.ctrl('expireInfoInputHead', [], function($scope) {
 		
 	}	
     
-		$console.on('click', '#pathExp',function() {
-			var importId = $(this).data('type');
+	$console.on('click', '#pathExp',function() {
+		var importId = $(this).data('type');
 //			router.render('expire/expireInfoPrev', {
 //				importId: importId, 
 //				path: 'expire'
 //			});
-			var params = {
-				importId: importId
-			};
-			router.innerRender('#innerPanel', 'expire/expireInfoPrev', params);
-	    })
+		var params = {
+			importId: importId
+		};
+		router.innerRender('#innerPanel', 'expire/expireInfoPrev', params);
+    })
 	function listenGuide() {
 		var params = {
 			code: 0,

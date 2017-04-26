@@ -167,7 +167,6 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 				valArr[i] = $(this).data('id');
 	        });
 			var vals = valArr.join(',');
-	      	console.log(vals);
 	      	var dataP={};
 	      		dataP['importId'] = $params.importId;
 	      	if(vals){
@@ -225,7 +224,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 	      	}
 		});
 		//获取选中选项的值
-		$console.find('#list .checkbox').on('click', function() {
+		$console.on('click', '#list .checkbox', function() {
 			var detailId = $(this).data('id');
 			var dataP={};
 				dataP['detailId']=detailId;
@@ -238,6 +237,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 					url: $http.api('loanOverdueImport/isCreateOverdue', true),
 					data: dataP,
 					type: 'post',
+					global: false,
 					dataType: 'json',
 					success: $http.ok(function(result) {
 						console.log(result.msg)
@@ -254,6 +254,7 @@ page.ctrl('expireInfoPrev', [], function($scope) {
 					data: dataP,
 					type: 'post',
 					dataType: 'json',
+					global: false,
 					success: $http.ok(function(result) {
 						console.log(result.msg)
 					})

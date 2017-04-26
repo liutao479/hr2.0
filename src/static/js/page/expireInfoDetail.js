@@ -2,10 +2,39 @@
 page.ctrl('expireInfoDetail', [], function($scope) {
 	var $params = $scope.$params,
 		$console = $params.refer ? $($params.refer) : render.$console,
+		internel = {},
 		apiParams = {
 			pageNum: $params.pageNum || 1,
 			process: $params.process || ''
 		};
+
+	internel.setup = {
+		setupLocation: function() {
+			if($params.path == 'expireInfoInput') {
+				$console.find('#location').location({
+					backspace: [
+						{
+							title: '逾期信息导入',
+							href: 'expireInfoInput'
+						},
+						{
+							title: '历史导入记录',
+							href: 'expire/importHistory',
+							params: {
+								path: "expireInfoInput"
+							}
+						}
+					],
+					current: '批量导入详情'
+				})
+			}
+		}
+	}
+
+	internel.init = function() {
+		internel.setup.setupLocation();
+	}
+
 	/**
 	 *逾期导入查看详情 
 	* 加载逾期管理数据
@@ -138,6 +167,7 @@ page.ctrl('expireInfoDetail', [], function($scope) {
 			$paging: $console.find('#pageToolbar'),
 			$scrollBar: $console.find('#scrollBar')
 		}
+		internel.init();
 		loadExpireProcessList();
 	});
 

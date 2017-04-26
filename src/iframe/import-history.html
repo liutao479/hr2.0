@@ -1,13 +1,7 @@
 	<!--历史导入记录-->
 			<div class="container expire-info-input" id="expire-info-input">
 				<!-- 面包屑 返回列表 -->
-				<div class="path-back-bar clearfix">
-					<div class="path-back">
-						<i class="iconfont">&#xe626;</i>
-						<a id="expInIpt" style="cursor: pointer;">逾期信息录入</a>&nbsp;&gt;
-						<span class="current-page">历史导入记录</span>
-					</div>
-				</div>
+				<div id="location"></div>
 				<!-- 面包屑 返回列表 end-->
 
 				<div class="layout mt15">
@@ -15,26 +9,21 @@
 					<div class="select-search-bar no-border clearfix">
 						<div class="search-item">
 							<span class="select-name">导入时间：</span>
-							<span class="select select-date">
-								<span class="placeholder">0000-00-00</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
+							<div class="input-text input-date-mini">
+								<input id="dateStart" type="text" class="dateBtn" data-max="dateEnd" readonly="readonly" data-type="startDate" value="" />	
+							</div>
 							<span class="separator">-</span>
-							<span class="select select-date">
-								<span class="placeholder">0000-00-00</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
+							<div class="input-text input-date-mini">
+								<input id="dateEnd" type="text" class="dateBtn" data-min="dateStart" readonly="readonly" data-type="endDate" value="" />	
+							</div>
 						</div>
 						<div class="search-item">
 							<span class="select-name">经办行：</span>
-							<span class="select select-common">
-								<span class="placeholder">请选择</span>
-								<span class="arrow arrow-bottom"></span>
-							</span>
+							<div class="select select-common" style="width: 200px;" data-placeholder="全部" data-dropdown="page.$scope['importHistory'].dropdown.bankPicker" data-trigger="page.$scope['importHistory'].dropdown.getData"></div>
 						</div>
 						<div class="search-item">
-							<a href="javascript:;">重置</a>
-							<div id="" class="button button-mini button-deep">搜索</div>
+							<a id="reset" class="link">重置</a>
+							<div id="doSearch" class="button button-mini button-deep">搜索</div>
 						</div>
 					</div>
 					<!-- 搜素条件栏 end-->
@@ -74,13 +63,13 @@
 						{{ } else { }}
 							<tr class="orders-item tr-odd">
 						{{ } }}
-							<td class="orders-item-data">{{=row.createDate}}</td>
-							<td class="orders-item-data">{{=row.bankName}}</td>
-							<td class="orders-item-data">{{=row.replaceOverdueNum}}</td>
-							<td class="orders-item-data">{{=row.foundOverdueNum}}</td>
-							<td class="orders-item-data">{{=row.settleOverdueNum}}</td>
+							<td class="orders-item-data">{{=row.createDate ? tool.formatDate(row.createDate) : ''}}</td>
+							<td class="orders-item-data">{{=row.bankName || ''}}</td>
+							<td class="orders-item-data">{{=row.replaceOverdueNum || 0}}</td>
+							<td class="orders-item-data">{{=row.foundOverdueNum || 0}}</td>
+							<td class="orders-item-data">{{=row.settleOverdueNum || 0}}</td>
 							<td class="orders-item-data">
-								<a href="#" class="button button-mini button-gray">查看</a>
+								<a class="button button-mini button-gray detailEvt" data-id="{{=row.importId}}">查看</a>
 							</td>
 						</tr>
 					{{ } }}
