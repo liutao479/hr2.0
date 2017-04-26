@@ -542,8 +542,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		$self.find('.input-text input').on('keyup', function() {
 			if($(this).data('type') == 'idCard' || $(this).data('type') == 'mobile') {
 				var c = $(this);  
-	            if(/[^\d]/.test(c.val())) {//替换非数字字符  
-	            	var temp_amount = c.val().replace(/[^\d]/g,'');  
+	            if(/[^0-9Xx]/.test(c.val())) {//替换非数字字符  
+	            	var temp_amount = c.val().replace(/[^0-9Xx]/g,'');  
 	            	$(this).val(temp_amount);  
 	            }  
 			}
