@@ -326,7 +326,13 @@ page.ctrl('myCustomer', [], function($scope) {
 			router.render(that.data('href'), {
 				orderNo: that.data('orderNo'),
 				type: 'OrderDetails',
-				path: 'myCustomer'
+				path: 'myCustomer',
+				btnStatus: {
+					terminateDisplay: that.data('terminateDisplay'),
+					paymentApplyDisplay: that.data('paymentApplyDisplay'),
+					paymentConfirmDisplay: that.data('paymentConfirmDisplay'),
+					modifyDisplay: that.data('modifyDisplay')
+				}
 			});
 		});
 

@@ -244,7 +244,7 @@
 				}
 				$.alert({
 					title: '提示',
-					content: tool.alert('确认删除该照片吗？'),
+					content: tool.alert('确认删除该' + (!self.options.type ? '图片' : '视频') + '吗？'),
 					buttons: {
 						close: {
 							text: '取消',

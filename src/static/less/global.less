@@ -1111,11 +1111,10 @@ input[disabled]{
                 margin-left: 210px;
                 //文字元素给行高保持与左侧水平
                 .panel-value-item {
-                    // float: left;
-                    word-wrap: break-word;
+                    float: left;
+                    word-break:break-all;
                     line-height: 34px;
                     margin-right: 10px;
-                    width: 100%;
                     .input-text {
                         width: 270px;
                     }
@@ -1816,7 +1815,7 @@ input[disabled]{
     background-color: #FFF;
     border: 1px solid @borderColor;
     border-bottom: none;
-    line-height: 53px;
+    line-height: 52px;
     text-align: right;
     padding-right: 20px;
     &.tab-bar-special {
