@@ -139,7 +139,7 @@ input[disabled]{
     color: @messageNumberBgColor !important;
     position: absolute;
     right: 0;
-    top: 26px;
+    top: 30px;
     font-size: 12px;
 }
 .pic-err{
@@ -1111,8 +1111,10 @@ input[disabled]{
                 //文字元素给行高保持与左侧水平
                 .panel-value-item {
                     float: left;
-                    line-height: 32px;
+                    word-wrap: break-word;
+                    line-height: 34px;
                     margin-right: 10px;
+                    width: 100%;
                     .input-text {
                         width: 270px;
                     }
@@ -1143,7 +1145,7 @@ input[disabled]{
                     width: 100%;
                     .borderRadius(3px);
                     border: 1px solid @borderColor;
-                    padding: 7px;
+                    padding: 7px 7px 20px 7px;
                     color: @fontColor;
                     .remark {
                         width: 100%;

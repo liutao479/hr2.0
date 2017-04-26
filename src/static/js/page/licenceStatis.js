@@ -119,7 +119,9 @@ page.ctrl('licenceStatis', [], function($scope) {
 		});
 
 		// 导出超期记录
-		$console.find('#importItems').attr('href', $http.api('loanRegistration/downLoadOverdueData', 'cyj'));
+		var userId = Cookies.get('_hr_userId'),
+			orgId = Cookies.get('_hr_orgId');
+		$console.find('#importItems').attr('href', $http.api('loanRegistration/downLoadOverdueData?userId=' + userId + '&orgId=' + orgId, 'cyj'));
 	}
 	/***
 	* 加载页面模板

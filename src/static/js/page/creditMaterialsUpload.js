@@ -775,7 +775,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		if(xhr.data.refresh) {
 			loadOrderInfo($scope.currentType, function() {
 				setupCreditBank();
-				setupLocation();
 				evt();
 			});
 		}

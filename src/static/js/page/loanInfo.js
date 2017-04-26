@@ -530,10 +530,6 @@ page.ctrl('loanInfo', function($scope) {
 				$.alert({
 					title: '提示',
 					content: '<div class="w-content"><div>请填写还款期限！</div></div>',
-					useBootstrap: false,
-					boxWidth: '500px',
-					theme: 'light',
-					type: 'purple',
 					buttons: {
 						'确定': {
 				            action: function () {

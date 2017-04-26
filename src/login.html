@@ -183,6 +183,8 @@
 							Cookies.set('_hr_account', info.account);
 							Cookies.set('_hr_dept', info.organization.name + '-' + info.dept.name);
 							Cookies.set('_hr_role', info.role.name);
+							Cookies.set('_hr_userId', info.id);
+							Cookies.set('_hr_orgId', info.orgId);
 							if(info.phone1)
 								Cookies.set('_hr_phone', info.phone1);
 							window.location.href = 'app.html';
