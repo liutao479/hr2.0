@@ -52,7 +52,7 @@ page.ctrl('licenceStatisDetail', [], function($scope) {
 			backspace: $scope.$params.path,
 			current: '上牌进度统计详情',
 			loanUser: $scope.result.data.orderInfo.realName || '',
-			orderDate: tool.formatDate($scope.result.data.orderInfo.pickDate, true) || ''
+			orderDate: $scope.result.data.orderInfo.createDateStr || ''
 		});
 		$location.location();
 	}

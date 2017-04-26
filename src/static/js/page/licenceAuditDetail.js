@@ -109,7 +109,7 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 			backspace: $scope.$params.path,
 			current: '上牌审核详情',
 			loanUser: $scope.result.data.orderInfo.realName || '',
-			orderDate: tool.formatDate($scope.result.data.orderInfo.pickDate, true) || ''
+			orderDate: $scope.result.data.orderInfo.createDateStr || ''
 		});
 		$location.location();
 	}

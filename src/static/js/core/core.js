@@ -49,9 +49,9 @@
 					// return 'http://192.168.1.86:9999/' + method;
 					 // return 'http://192.168.0.187:9999/' + method;
 					// return 'http://192.168.0.186:9999/' + method;
-					return 'http://192.168.1.124:8080/' + method;
+					// return 'http://192.168.1.124:8080/' + method;
 					// return 'http://192.168.1.74:8080/' + method;
-					// return 'http://nf.hrfax.cn:9999/' + method;
+					return 'http://nf.hrfax.cn:9999/' + method;
 					// return 'http://192.168.1.55:8080/' + method;
 					// return 'http://192.168.1.200:8080/' + method;
 			}
@@ -308,7 +308,7 @@
 		var termTime = deadline - pickDate; //超期期限
 		var duringTime = currentTime - pickDate; //至今距离提车日期的时间
 		var result = termTime - duringTime;  //相差的毫秒数（倒计时）
-		if(result <= 0) return '已超期';
+		if(result <= 0 || deadline > currentTime) return '已超期';
 		var _date = Math.floor(result / (24 * 3600 * 1000));
 		var remain1 = result % (24 * 3600 * 1000);
 		var	_hours = Math.floor(remain1 / (3600 * 1000));
@@ -325,8 +325,6 @@
 
 	/**
 	 * 添加弹窗的提示内容html格式化方法
-	 * @params {number} pickDate 提车日期时间戳
-	 * @params {boolean} deadline 上牌截止时间戳
 	 */
 	 tool.alert = function(str) {
 	 	return '<div class="w-content"><div class="w-text">' + str + '</div></div>';

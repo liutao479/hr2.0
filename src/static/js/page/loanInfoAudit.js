@@ -6,17 +6,18 @@ page.ctrl('loanInfoAudit', function($scope) {
 	$scope.activeTaskIdx = $params.selected || 0;
 
 	var postUrl = {
-		"saveDDXX": $http.api('loanInfoInput/updLoanOrder' + $params.type == 'ApplyModify' ? '?flag=1' : '', 'jbs'),
-		"saveCLXX": $http.api('loanInfoInput/updLoanUserCar' + $params.type == 'ApplyModify' ? '?flag=1' : '', 'jbs'),
-		"saveFQXX": $http.api('loanInfoInput/updLoanUserStage' + $params.type == 'ApplyModify' ? '?flag=1' : '', 'jbs'),
-		"saveZJKR": $http.api('loanInfoInput/updLoanUser' + $params.type == 'ApplyModify' ? '?flag=1' : '', 'jbs'),
-		"saveGTHK": $http.api('loanInfoInput/updLoanUser' + $params.type == 'ApplyModify' ? '?flag=1' : '', 'jbs'),
-		"saveFDBR": $http.api('loanInfoInput/updLoanUser' + $params.type == 'ApplyModify' ? '?flag=1' : '', 'jbs'),
-		"saveJJLXR": $http.api('loanInfoInput/updLoanEmergencyConact' + $params.type == 'ApplyModify' ? '?flag=1' : '', 'jbs'),
-		"saveHKKXX": $http.api('loanInfoInput/updLoanPayCard' + $params.type == 'ApplyModify' ? '?flag=1' : '', 'jbs'),
-		"saveFYXX": $http.api('loanInfoInput/updLoanFee' + $params.type == 'ApplyModify' ? '?flag=1' : '', 'jbs'),
-		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation' + $params.type == 'ApplyModify' ? '?flag=1' : '', 'jbs')
+		"saveDDXX": $http.api('loanInfoInput/updLoanOrder', 'jbs'),
+		"saveCLXX": $http.api('loanInfoInput/updLoanUserCar', 'jbs'),
+		"saveFQXX": $http.api('loanInfoInput/updLoanUserStage', 'jbs'),
+		"saveZJKR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
+		"saveGTHK": $http.api('loanInfoInput/updLoanUser', 'jbs'),
+		"saveFDBR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
+		"saveJJLXR": $http.api('loanInfoInput/updLoanEmergencyConact', 'jbs'),
+		"saveHKKXX": $http.api('loanInfoInput/updLoanPayCard', 'jbs'),
+		"saveFYXX": $http.api('loanInfoInput/updLoanFee', 'jbs'),
+		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation', 'jbs')
 	};
+	console.log(postUrl)
 
 	/**
 	* 加载车贷办理数据
@@ -388,7 +389,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 						data[index]=data1;
 			        })
 		        }
-		        var dataPost;
+		        var dataPost;debugger
 		        if(btnType){
 		        	dataPost = JSON.stringify(data);
 					$.ajax({

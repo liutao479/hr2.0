@@ -68,8 +68,9 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			current: '抵押进度统计详情',
+			pmsDept: $scope.result.data.orderInfo.deptName,
 			loanUser: $scope.result.data.orderInfo.realName || '',
-			orderDate: tool.formatDate($scope.result.data.orderInfo.pickDate, true) || ''
+			pickDate: $scope.result.data.orderInfo.pickDateStr || ''
 		});
 		$location.location();
 	}
