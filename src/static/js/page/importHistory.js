@@ -126,33 +126,6 @@ page.ctrl('importHistory', [], function($scope) {
 		});
 		$('#pageToolbar').paging();
 	}
-
-	/**
-	* 编译翻单页栏
-	*/
-	var setupScroll = function(page, cb) {
-		render.compile($scope.$el.$scrollBar, $scope.def.scrollBarTmpl, page, true);
-		if(cb && typeof cb == 'function') {
-			cb();
-		}
-	}
-	// 绑定翻页栏（上下页）按钮事件
-	var pageChangeEvt = function() {
-		$console.find('.page-change').on('click', function() {
-			var that = $(this);
-			var _pageNum = parseInt($scope.$el.$scrollBar.find('#page-num').text());
-			if(that.hasClass('disabled')) return;
-			if(that.hasClass('scroll-prev')) {
-				apiParams.pageNum = _pageNum - 1;
-				$params.pageNum = _pageNum - 1;
-			} else if(that.hasClass('scroll-next')) {
-				apiParams.pageNum = _pageNum + 1;
-				$params.pageNum = _pageNum + 1;
-			}
-			loadCustomerList(apiParams);
-		});
-	}
-
 	/***
 	* 加载页面模板
 	*/
@@ -171,9 +144,7 @@ page.ctrl('importHistory', [], function($scope) {
 	});
 
 	$scope.paging = function(_pageNum, _size, $el, cb) {
-		apiParams.pageNum = _pageNum;
-		$params.pageNum = _pageNum;
-		// router.updateQuery($scope.$path, $params);
+		apiParams.page = _pageNum;
 		loadExpireProcessList(apiParams);
 		cb();
 	}

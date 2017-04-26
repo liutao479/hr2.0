@@ -118,6 +118,9 @@
 	}
 
 	router.get = function(key, params, title) {
+		if(g.xhrPool.length) {
+			g.abortXhr();
+		}
 		var item = g.routerMap[key];
 		if(!item) {
 			return g.location.href = '404.html';
