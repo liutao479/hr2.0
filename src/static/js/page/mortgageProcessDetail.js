@@ -68,11 +68,10 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				
-				result.disabled = false;
-				result.pledgeId = $params.pledgeId;
+				result.data.disabled = false;
+				result.data.pledgeId = $params.pledgeId;
 				console.log(result);
-				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result, true);
+				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -166,11 +165,11 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	}
 
 	var setupInfoEvt = function() {
-		// 新增表格的除去日历框的input元素
-		$scope.$newInputs = $scope.$el.$infoPanel.find('#newSubmitTable .input-x');
-		// 新增表格的所有input元素
-		$scope.$newItems = $scope.$el.$infoPanel.find('#newSubmitTable input');
-
+		// // 新增表格的除去日历框的input元素
+		// $scope.$newInputs = $scope.$el.$infoPanel.find('#newSubmitTable .input-x');
+		// // 新增表格的所有input元素
+		// $scope.$newItems = $scope.$el.$infoPanel.find('#newSubmitTable input');
+		// console.log($scope.$newInputs)
 		// 待提交输入框失去焦点校验
 		$scope.$el.$infoPanel.find('.submitTable .input-x').on('blur', function() {
 			if(!$.trim($(this).val())) {
@@ -181,14 +180,14 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 		});
 
 		// 新增抵押权人表的输入框失去焦点校验
-		$scope.$newInputs.on('blur', function() {
-			if(!$.trim($(this).val())) {
-				$(this).removeClass('error-input').addClass('error-input');
-			} else {
-				$(this).removeClass('error-input');
-			}
-			isSubmit();
-		});
+		// $scope.$newInputs.on('blur', function() {
+		// 	if(!$.trim($(this).val())) {
+		// 		$(this).removeClass('error-input').addClass('error-input');
+		// 	} else {
+		// 		$(this).removeClass('error-input');
+		// 	}
+		// 	isSubmit();
+		// });
 		setupDatepicker();
 	}
 
@@ -216,6 +215,7 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	*/
 	var setupCommitEvt = function() {
 		$console.find('#submit').on('click', function() {
+			
 			var infoParams = [], list = 0;
 			var $tables = $console.find('.submitTable');
 			$tables.each(function() {
@@ -223,6 +223,7 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 				var that = $(this);
 				var $inputs = $(this).find('.required');
 				$inputs.each(function() {
+					console.log($.trim($(this).val()));
 					if(!$.trim($(this).val())) {
 						$(this).removeClass('error-input').addClass('error-input');
 					} else {
@@ -239,6 +240,7 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 				}
 			});
 			if(list == $tables.length) {
+
 				//去做提交
 				// console.log(infoParams)
 				$.confirm({
@@ -262,9 +264,9 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 								for(var i = 0, len = infoParams.length; i < len; i++) {
 									infoParams[i].orderNo = $params.orderNo;
 								}
-								submitOrders(infoParams, function() {
-									router.render('mortgageProcess');
-								})
+								// submitOrders(infoParams, function() {
+								// 	router.render('mortgageProcess');
+								// })
 							}
 						}
 					}

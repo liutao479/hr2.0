@@ -248,7 +248,7 @@ page.ctrl('lendAudit', function($scope) {
 						applyAdvance();
 						break;
 					default:
-						noAdvance();
+						process();
 						break;
 				};
 			})
