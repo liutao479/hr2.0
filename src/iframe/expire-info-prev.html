@@ -25,6 +25,7 @@
 			</div>
 			<!--逾期信息（预览） end-->				
 			<div id="pageToolbar" class="pageToolbar" data-request="page.$scope['expireInfoPrev'].paging" data-pages="1" data-current="1"></div>
+
 			<script type="text/x-dot-template" id="scrollBarTmpl">
 				<span class="page-count"><i id="page-num" >{{=(it.pages == 0 ? 0 : it.pageNum)}}</i>/<i id="pages">{{=it.pages}}</i></span>
 				<a href="javascript:;" class="page-change scroll-prev{{=(it.pageNum <= 1 ? ' disabled' : '')}}"><i class="iconfont">&#xe601;</i></a>
@@ -37,7 +38,7 @@
 				<!--订单表格 （无匹配订单）-->
 				<div class="tab-content">
 					{{ if(it.data.length>0){ }}
-						{{ for(var i=0,len = it.data.length;i<len;i++){ var item=it.data[i];if(item.status == '0'){ }}
+						{{ for(var i=0,len = it.data.length; i < len; i++) { var item=it.data[i]; if(i == 0) { if(item.status == '0'){ }}
 								<div class="all-select-panel no-top-border mb15 clearfix" >
 									<div class="all-check-box">
 										<div id="all" data-id='83' class="checkbox checkbox-normal"></div>
@@ -65,14 +66,14 @@
 										逾期将结清<strong class="">{{= it.page.total}}</strong>条
 									</div>
 								</div>
-							{{ } }} 
+							{{ } } }} 
 							<table class="expire-orders-table" id="list" width="100%">
 								<thead class="expire-title">
 									<tr>
 										{{ if(item.status != '1'){ }}
 											<td colspan="3">
-												{{ if(item.status == '0'){ }}
-													<div id="onlyCheck" data-id = "{{= item.detailId}}" class="checkbox checkbox-normal"></div>
+												{{ if(item.status == '0'){ var chk = !!item.isFoundTask; }}
+													<div id="onlyCheck" data-id = "{{= item.detailId}}" checked="{{=chk ? 'checked':''}}" class="checkbox checkbox-normal{{=chk?' checked':''}}"></div>
 												{{ } }} 
 												<i class="iconfont iconfont-man">&#xe656;</i>
 												<span class="userName">{{= item.userName}}</span>
@@ -173,7 +174,7 @@
 									<td colspan="6" class="orders-blank">
 										<div class="blank-box">
 											<img src="/hr2.0/dist/static/css/img/orders_blank.png" alt="" title="暂无订单！">
-											<p>暂无逾期记录！</p>
+											<p>无记录！</p>
 										</div>
 									</td>
 								</tr>	
