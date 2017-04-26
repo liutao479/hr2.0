@@ -132,7 +132,7 @@
 					case -1:
 						$.alert({
 							title: '提示',
-							content: tool.alert('系统异常！'),
+							content: tool.alert(response.msg),
 							buttons:{
 								ok: {
 									text: '确定',
