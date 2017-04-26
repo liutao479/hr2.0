@@ -74,6 +74,26 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 		})
 	}
 
+	/**
+	 * 图片必传标记校验
+	 */
+	var checkData = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('loanRegistration/valiRegistrationMaterials', 'zyj'),
+			dataType: 'json',
+			data: {
+				orderNo: $params.orderNo
+			},
+			success: $http.ok(function(result) {
+				console.log(result);
+				if( cb && typeof cb == 'function' ) {
+					cb();
+				}
+			})
+		})
+	}
+
 
 	/**
 	* 底部操作按钮区域
@@ -203,29 +223,32 @@ page.ctrl('licenceAuditDetail', [], function($scope) {
 
 		// 审核通过
 		$console.find('#verify').on('click', function() {
-			var that = $(this);
-			$.confirm({
-				title: '提交',
-				content: dialogTml.wContent.suggestion,
-				buttons: {
-					close: {
-						text: '取消',
-						btnClass: 'btn-default btn-cancel'
-					},
-					ok: {
-						text: '确定',
-						action: function () {
-							var _reason = $('.jconfirm #suggestion').val().trim();
-							var _params = {
-								orderNo: $scope.orderNo
-							};
-							if(_reason) _params.reason = _reason;
-							verifyOrders(_params, function() {
-								router.render('licenceAudit', {});
-							});
+			checkData(function() {
+				$.confirm({
+					title: '提交',
+					content: dialogTml.wContent.suggestion,
+					buttons: {
+						close: {
+							text: '取消',
+							btnClass: 'btn-default btn-cancel'
+						},
+						ok: {
+							text: '确定',
+							action: function () {
+								var _reason = $('.jconfirm #suggestion').val().trim();
+								var _params = {
+									orderNo: $scope.orderNo
+								};
+								if(_reason) _params.reason = _reason;
+								verifyOrders(_params, function() {
+									$.toast('处理成功！', function() {
+										router.render('licenceAudit');	
+									});
+								});
+							}
 						}
 					}
-				}
+				});
 			});
 		})
 	}
