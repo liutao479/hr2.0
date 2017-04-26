@@ -648,7 +648,7 @@ page.ctrl('creditApproval', [], function($scope) {
 				var flag = 0,
 					str = '',
 					value = $reason.val(),
-					reg = /[#][^"]*[#]/;
+					reg = /[#][^#]*[#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
@@ -656,13 +656,7 @@ page.ctrl('creditApproval', [], function($scope) {
 					}
 				})
 				str = str.substring(0, str.length - 1);
-				// debugger
-				if(value && value.match(reg)) {
-					debugger
-					$reason.val(value.replace(value.replace(reg, str), str);
-				} else {
-					$reason.val('#' + str + '#' + $reason.val());
-				}
+				
 				if(flag > 0) {
 					// $reason.val(value.replace(reg, str));
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
@@ -672,7 +666,12 @@ page.ctrl('creditApproval', [], function($scope) {
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 
-				// if()
+				// debugger
+				if(value && value.match(reg)) {
+					$reason.val(value.replace(reg, str));
+				} else {
+					$reason.val('#' + str + '#' + $reason.val());
+				}
 			});
 		})
 

@@ -577,7 +577,7 @@
 		msg: '<div class="imgs-describe">{0}</div>',
 		name: '<span class="imgs-item-p">{1}{0}</span>',
 		other: '<div class="input-text imgs-input-text">\
-					<input type="text" value="{0}" />\
+					<input type="text" maxlength="14" value="{0}" />\
 				</div>'
 	}
 
