@@ -172,7 +172,7 @@ page.ctrl('newBank', [], function($scope) {
 			var stopUseChange = function(params, cb) {
 				console.log(params)
 				$.ajax({
-					url: $http.api('demandBankAccount/save', 'cyj'),
+					url: $http.api('demandBankAccount/cancle', 'cyj'),
 					type: 'post',
 					data: params,
 					dataType: 'json',

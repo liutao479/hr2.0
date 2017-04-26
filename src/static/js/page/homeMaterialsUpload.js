@@ -31,6 +31,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+
 				$scope.result = result;
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
 				$scope.result.orderNo = $params.orderNo;
@@ -42,9 +43,9 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 				}
 				if(!$params.refer) {
 					setupLocation();
-					setupBackReason(result.data.loanTask.backApprovalInfo);	
+					setupBackReason($scope.result.data.loanTask.backApprovalInfo);	
 				}
-				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, function() {
+				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, $scope.result, function() {
 					setupEvt();
 				}, true);
 				if(cb && typeof cb == 'function') {
@@ -350,7 +351,11 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 				viewable: true,
 				markable: $params.refer ? true : false,
 				getimg: function(cb) {
-					cb($scope.result.data[_type])
+					debugger
+					var newImg = tool.adjust($scope.result.cfgData.frames[0].sections, _type, $scope.result.data[_type]);
+					console.log(newImg);
+					cb(newImg);
+					// cb($scope.result.data[_type])
 				},
 				marker: function (img, mark, cb) {
 					var params = {

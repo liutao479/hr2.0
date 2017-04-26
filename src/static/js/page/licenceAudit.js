@@ -16,7 +16,7 @@ page.ctrl('licenceAudit', [], function($scope) {
 		console.log(params);
 		$.ajax({
 			type: 'post',
-			url: $http.api('loanRegistration/List', 'cyj'),
+			url: $http.api('loanRegistration/list', 'cyj'),
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {

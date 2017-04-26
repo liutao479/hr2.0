@@ -44,6 +44,29 @@ page.ctrl('lendAudit', function($scope) {
 			})
 		})
 	}
+
+	/**
+	 * 材料必填，必传检验(提交批量验证接口)
+	 */
+	function checkData(cb) {
+		var data = {
+			taskIds: []
+		};
+		data.taskIds.push($params.taskId);
+		$.ajax({
+			type: 'post',
+			url: $http.api('tasks/validate', 'zyj'),
+			dataType: 'json',
+			data: JSON.stringify(data),
+			contentType: 'application/json;charset=utf-8',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
 	
 	/**
 	* 加载左侧导航菜单
@@ -197,8 +220,9 @@ page.ctrl('lendAudit', function($scope) {
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result);
-									router.render('loanProcess');
-									// toast.hide();
+									$.toast('处理成功！', function() {
+										router.render('loanProcess');
+									});
 								})
 							})
 						}
@@ -211,21 +235,23 @@ page.ctrl('lendAudit', function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
-			var advanceWay = $submitBar.find('.checkItem.checked').data('type');
-			switch (advanceWay) {
-				case 0:
-					noAdvance();
-					break;
-				case 1:
-					selfAdvance();
-					break;
-				case 2:
-					applyAdvance();
-					break;
-				default:
-					noAdvance();
-					break;
-			};
+			var advancedWay = $submitBar.find('.checkItem.checked').data('type');
+			checkData(function() {
+				switch (advancedWay) {
+					case 0:
+						noAdvance();
+						break;
+					case 1:
+						selfAdvance();
+						break;
+					case 2:
+						applyAdvance();
+						break;
+					default:
+						process();
+						break;
+				};
+			})
 		})
 
 	}
@@ -249,7 +275,8 @@ page.ctrl('lendAudit', function($scope) {
 						var that = this,
 							reason = $.trim(that.$content.find('#suggestion').val());
 						var _params = {
-							advanceWay: 0
+							orderNo: $params.orderNo,
+							advancedWay: 0
 						}
 						process(_params, reason);
 					}
@@ -294,7 +321,7 @@ page.ctrl('lendAudit', function($scope) {
 								imgFlag = true,
 								_params = {
 									orderNo: $params.orderNo,
-									advanceWay: 1
+									advancedWay: 1
 								},
 								$inputs = that.$content.find('.input-text input'),
 								reason = $.trim(that.$content.find('#suggestion').val());
@@ -420,7 +447,7 @@ page.ctrl('lendAudit', function($scope) {
 								imgFlag = true,
 								_params = {
 									orderNo: $params.orderNo,
-									advanceWay: 2
+									advancedWay: 2
 								},
 								$inputs = that.$content.find('.input-text input'),
 								reason = $.trim(that.$content.find('#suggestion').val());
@@ -560,10 +587,12 @@ page.ctrl('lendAudit', function($scope) {
 	 * 任务提交跳转
 	 */
 	function process(_params, reason) {
-		console.log(_params)
+		// debugger
+		console.log(_params);
 		if(reason) {
 			_params.reason = reason;
 		}
+		_params.frameCode = $scope.result.cfgData.frames[0].code;
 		$.ajax({
 			type: 'post',
 			url: $http.api('makeLoanApproval/submit/' + $params.taskId, true),

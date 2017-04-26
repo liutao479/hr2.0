@@ -176,7 +176,7 @@
 	menu.prototype._render = function(){
 		var self = this,
 			arr = [];
-		arr.push('<div class="menu">');
+		arr.push('<a href="#" class="showHide"></a><div class="menu">');
 		$.each(self.data, function(key, obj) {
 			if(!$.isArray(obj)) return;
 			var len = obj.length;
@@ -236,8 +236,20 @@
 		}
 	};
 
+	menu.prototype.remove = function() {
+		var self = this;
+		if(self.$selected) {
+			self.$selected.removeClass(self.activeCss);
+			self.$selected = null;
+			self.selectedKey = '';
+		}
+	}
+
 	menu.prototype.setup = function(key, unRouter){
 		var self = this;
+		if(key.indexOf('/') > 0) {
+			return self.remove();
+		}
 		var $item = self.$dom.find('#menu'+key);
 		self._trigger(key, $item, unRouter);
 	};

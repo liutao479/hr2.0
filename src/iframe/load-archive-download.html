@@ -71,7 +71,7 @@
 							<td class="orders-item-data">{{=row.orderNo || ''}}</td>
 							<td class="orders-item-data">{{=row.userName || '未知'}}（{{=row.idCard || '未知'}}）</td>
 							<td class="orders-item-data">{{=row.stageMoney || '未知'}}</td>
-							<td class="orders-item-data">{{=row.bankName || '未知'}}</td>
+							<td class="orders-item-data">{{=row.demandBankName || '未知'}}</td>
 							<td class="orders-item-data loanTasks">
 								<table class="meanwhile">
 									{{ for(var j = 0, len2 = row.progressNameList.length; j < len2; j++) { var col = row.progressNameList[j]; }}

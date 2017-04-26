@@ -1,6 +1,7 @@
 // 按钮
 .button {
     display: inline-block;
+    position: relative;
     cursor: pointer;
     .borderRadius;
     height: 40px;
@@ -43,6 +44,7 @@
         }
     }
     &&-empty {
+        position: relative;
         height: 32px;
         line-height: 30px;
         border:1px solid @buttonBgColor;
@@ -120,6 +122,20 @@
     }
     i {
         margin-right: 7px;
+    }
+    .correct {
+        display: block;
+        width: 14px;
+        height: 14px;
+        line-height: normal;
+        font-size: 10px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-right: 0;
+        background-color: @mainColor;
+        color: #FFF;
+        border-radius: 0 0 0 3px;
     }
 }
 //必填标志

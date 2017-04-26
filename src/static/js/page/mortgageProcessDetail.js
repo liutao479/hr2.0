@@ -21,7 +21,12 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 				result.data.loanTask = {
 					category: 'pledge',
 					editable: 1
-				}
+				};
+				result.data.cfgMaterials = [
+					{
+						zcdjzydy: '注册登记证（已抵押）'
+					}
+				];
 				$scope.result = result;
 				setupLocation(result.data.orderInfo);
 				setupBackReason(result.data.orderInfo.loanOrderApproval);
@@ -38,13 +43,11 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	 */
 	var submitOrders = function(params, cb) {
 		console.log(params);
-		debugger
 		$.ajax({
 			url: $http.api('loanPledge/sumbit', 'cyj'),
 			type: 'post',
-			data: JSON.stringify(params),
+			data: params,
 			dataType: 'json',
-			contentType: 'application/json;charset=utf-8',
 			success: $http.ok(function(result) {
 				console.log(result);
 				if(cb && typeof cb == 'function') {
@@ -64,11 +67,10 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				
-				result.disabled = false;
-				result.pledgeId = $params.pledgeId;
+				result.data.disabled = false;
+				result.data.pledgeId = $params.pledgeId;
 				console.log(result);
-				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result, true);
+				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
 					cb();
 				}
@@ -109,8 +111,9 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			current: '抵押办理详情',
+			pmsDept: $scope.result.data.orderInfo.deptName,
 			loanUser: $scope.result.data.orderInfo.realName || '',
-			orderDate: tool.formatDate($scope.result.data.orderInfo.pickDate, true) || ''
+			pickDate: $scope.result.data.orderInfo.pickDateStr || ''
 		});
 		$location.location();
 	}
@@ -132,6 +135,26 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 			});
 			$backReason.backReason();
 		}
+	}
+
+	/**
+	 * 图片必传标记校验
+	 */
+	var checkData = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('loanPledge/valiPledgenMaterials', 'zyj'),
+			dataType: 'json',
+			data: {
+				orderNo: $params.orderNo
+			}
+			success: $http.ok(function(result) {
+				console.log(result);
+				if( cb && typeof cb == 'function' ) {
+					cb();
+				}
+			})
+		})
 	}
 
 	/**
@@ -161,11 +184,11 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	}
 
 	var setupInfoEvt = function() {
-		// 新增表格的除去日历框的input元素
-		$scope.$newInputs = $scope.$el.$infoPanel.find('#newSubmitTable .input-x');
-		// 新增表格的所有input元素
-		$scope.$newItems = $scope.$el.$infoPanel.find('#newSubmitTable input');
-
+		// // 新增表格的除去日历框的input元素
+		// $scope.$newInputs = $scope.$el.$infoPanel.find('#newSubmitTable .input-x');
+		// // 新增表格的所有input元素
+		// $scope.$newItems = $scope.$el.$infoPanel.find('#newSubmitTable input');
+		// console.log($scope.$newInputs)
 		// 待提交输入框失去焦点校验
 		$scope.$el.$infoPanel.find('.submitTable .input-x').on('blur', function() {
 			if(!$.trim($(this).val())) {
@@ -176,14 +199,14 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 		});
 
 		// 新增抵押权人表的输入框失去焦点校验
-		$scope.$newInputs.on('blur', function() {
-			if(!$.trim($(this).val())) {
-				$(this).removeClass('error-input').addClass('error-input');
-			} else {
-				$(this).removeClass('error-input');
-			}
-			isSubmit();
-		});
+		// $scope.$newInputs.on('blur', function() {
+		// 	if(!$.trim($(this).val())) {
+		// 		$(this).removeClass('error-input').addClass('error-input');
+		// 	} else {
+		// 		$(this).removeClass('error-input');
+		// 	}
+		// 	isSubmit();
+		// });
 		setupDatepicker();
 	}
 
@@ -211,72 +234,69 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	*/
 	var setupCommitEvt = function() {
 		$console.find('#submit').on('click', function() {
-			var infoParams = [], list = 0;
-			var $tables = $console.find('.submitTable');
-			$tables.each(function() {
-				var item = {}, flag = 0;
-				var that = $(this);
-				var $inputs = $(this).find('.required');
-				$inputs.each(function() {
-					if(!$.trim($(this).val())) {
-						$(this).removeClass('error-input').addClass('error-input');
-					} else {
-						item[$(this).data('type')] = $.trim($(this).val());
-						$(this).removeClass('error-input');
-						flag++;
+			checkData(function() {
+				process();
+			});
+		})
+	}
+
+	/**
+	 * 提交订单
+	 */
+	var process = function() {
+		var flag = true,
+			params = {
+				pledgeId: $params.pledgeId
+			},
+			$inputs = $console.find('#submitTable .required');
+		$inputs.each(function() {
+			if(!$.trim($(this).val())) {
+				$(this).removeClass('error-input').addClass('error-input');
+				flag = false;
+			} else {
+				params[$(this).data('type')] = $.trim($(this).val());
+				$(this).removeClass('error-input');
+			}
+		});
+		console.log(params);
+		if(!flag) {
+			$.alert({
+				title: '提示',
+				content: tool.alert('请完善各项信息！'),
+				buttons: {
+					ok: {
+						text: '确定',
+						action: function() {
+
+						}
 					}
-				});
-				if(flag == $inputs.length) {
-					list++;
-					item.pledgeId = that.data('pledgeId');
-					item.id = that.data('id');
-					infoParams.push(item);
+				}
+			})
+		} else {
+			$.confirm({
+				title: '提交',
+				content: dialogTml.wContent.suggestion,
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function () {
+							var _reason = $.trim(this.$content.find('#suggestion').val());
+							if(_reason) params.reason = _reason;
+							console.log(params)
+							submitOrders(params, function() {
+								$.toast('提交成功！', function() {
+									router.render('mortgageProcess');	
+								});
+							})
+						}
+					}
 				}
 			});
-			if(list == $tables.length) {
-				//去做提交
-				// console.log(infoParams)
-				$.confirm({
-					title: '提交',
-					content: dialogTml.wContent.suggestion,
-					buttons: {
-						close: {
-							text: '取消',
-							btnClass: 'btn-default btn-cancel'
-						},
-						ok: {
-							text: '确定',
-							action: function () {
-								console.log(infoParams)
-								var _reason = $.trim($('.jconfirm #suggestion').val());
-								if(_reason) {
-									for(var i = 0, len = infoParams.length; i < len; i++) {
-										infoParams[i].reason = _reason;
-									}
-								}
-								submitOrders(infoParams, function() {
-									router.render('mortgageProcess');
-								})
-							}
-						}
-					}
-				});
-				
-			} else {
-				$.alert({
-					title: '提示',
-					content: dialogTml.wContent.complete,
-					buttons: {
-						ok: {
-							text: '确定',
-							action: function() {
-
-							}
-						}
-					}
-				})
-			}
-		})
+		}
 	}
 
 	/***

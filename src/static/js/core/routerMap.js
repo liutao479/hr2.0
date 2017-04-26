@@ -471,7 +471,7 @@
 		'T0068': 'pickMaterialsUpload',//提车材料审核
 		'T0069': 'materialInspection',//材料验真
 		'T0070': 'dataAssistant',//数据辅证
-		'T0071': '',//材料交叉验证
+		'T0071': 'loanInfoAudit',//修改贷款信息
 		'T0072': 'loanLog',//订单日志
 		'T0073': 'cardInfoApproval',//开卡信息
 		'T0074': 'loanInfoAudit',//待审核信息

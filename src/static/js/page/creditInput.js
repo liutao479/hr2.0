@@ -357,10 +357,11 @@ page.ctrl('creditInput', [], function($scope) {
 					pdfCb(false, file);
 				}
 				
-			});
-			
+			});	
 		});
+		//启动下拉框
 		setupDropDown($el);
+		//图片控件
 		$el.find('.uploadEvt').imgUpload();
 		// 征信报告失去焦点事件
 		$el.find('.creditReportId').on('blur', function() {
@@ -437,7 +438,9 @@ page.ctrl('creditInput', [], function($scope) {
 		// });
 
 		// 备注框实时监听事件
-		var maxLen = 1000;
+		var maxLen = 1000,
+			len = $el.find('.remark').val().length;
+		$el.find('.remain').text('还可输入' + (maxLen - len) + '/' + maxLen + '字')
 		// $el.find('.remark').next().text('还可输入' + (maxLen - $el.find('.remark').val().length) + '/' + maxLen + '字');
 		$el.find('.remark').on('input', function() {
 			var that = $(this),

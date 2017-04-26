@@ -10,11 +10,9 @@ page.ctrl('expireInfoInputHead', [], function($scope) {
 	var loadExpireProcessList = function(cb) {
 		$.ajax({
 			type: 'post',
-			url: urlStr + '/loanOverdueImport/queryParsingDate',
-//			url: $http.api('loanOverdueImport/queryParsingDate','jbs'),
+			url: $http.api('loanOverdueImport/queryParsingDate', true),
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				console.log(result);
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result.data, true);
 				listenGuide();
 				setupEvt();
@@ -46,12 +44,34 @@ page.ctrl('expireInfoInputHead', [], function($scope) {
 			var params = {
 				orderNo: $params.orderNo
 			}
-			router.render('expire/importHistory', params);
+			var beforeload = $console.find('#content').length;
+			function _direct() {
+				router.render('expire/importHistory', params);
+			}
+			if(!beforeload) {
+				return $.confirm({
+					title: '警告',
+					content: '<div class="w-content">您当前导入的逾期记录将不会被保存，确认离开？</div>',
+					buttons: {
+						ok: {
+							text: '确定',
+							action: function() {
+								_direct();
+							}
+						},
+						cancel: {
+							text: '取消',
+							btnClass:'btn-default btn-cancel'
+						}
+					}
+				})
+			}
+			_direct();
 		})	
 		
 	}	
     
-		$(document).on('click', '#pathExp',function() {
+		$console.on('click', '#pathExp',function() {
 			var importId = $(this).data('type');
 //			router.render('expire/expireInfoPrev', {
 //				importId: importId, 

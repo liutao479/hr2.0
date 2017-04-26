@@ -85,86 +85,105 @@ page.ctrl('myCustomer', [], function($scope) {
 	}
 
 	/**
-	* 放款预约弹窗信息取得
-	*/
-	var makeLoan = function(orderNo) {
+	 * 弹窗前获取信息
+	 */
+	function getFinancePayment(orderNo, cb) {
 		$.ajax({
-			type: "post",
-			url: $http.api('financePayment/get', 'cyj'),
-			data:{
+			type: 'post',
+			url: $http.api('financePayment/info', true),
+			dataType: 'json',
+			data: {
 				orderNo: orderNo
 			},
-			dataType:"json",
-			success: $http.ok(function(result) {
-				console.log(result);
-				console.log('获取信息ok!');
-				// var _paymentId = result.data.paymentId;
-				$.confirm({
-					title: '放款预约',
-					content: doT.template(dialogTml.wContent.makeLoan)(result.data),
-					onContentReady: function() {
-						//启动用款时间日历控件
-						this.$content.find('.dateBtn').datepicker({
-							dateFmt: 'yyyy-MM-dd HH:mm',
-							onpicked: function() {
-							},
-							oncleared: function() {
-							}
-						});
+			success: $http.ok(function(xhr) {
+				console.log(xhr)
+				if(cb && typeof cb == 'function') {
+					cb(xhr.data);
+				}
+			})
+		});
+	}
 
-					},
-					buttons: {
-						close: {
-							text: '取消',
-							btnClass: 'btn-default btn-cancel'
+	/**
+	* 放款预约弹窗信息取得
+	* isSure 是否是放款预约
+	*/
+	var makeLoan = function(orderNo, isSure) {
+		getFinancePayment(orderNo, function(data) {
+			$.confirm({
+				title: '放款预约',
+				content: doT.template(dialogTml.wContent.makeLoan)(result.data),
+				onContentReady: function() {
+					//启动用款时间日历控件
+					this.$content.find('.dateBtn').datepicker({
+						dateFmt: 'yyyy-MM-dd HH:mm',
+						onpicked: function() {
 						},
-						ok: {
-							text: '确定',
-							action: function() {
-								var isTrue = true,
-									_orderNo = orderNo,
-									that = this.$content;
-								
-								var _loaningDate = $.trim(that.find('#loaningDate').val());
-								var _paymentMoney = $.trim(that.find('#paymentMoney').val());
-								var _receiveCompanyAddress = $.trim(that.find('#receiveCompanyAddress').val());
-								var _receiveAccount = $.trim(that.find('#receiveAccount').val());
-								var _receiveAccountBank = $.trim(that.find('#receiveAccountBank').val());
+						oncleared: function() {
+						}
+					});
 
-								console.log(that.find('.required'))
-								that.find('.required').each(function() {
-									var value = $.trim($(this).val()),
-										$parent = $(this).parent();
-									console.log(value)
-									if(!value){
-										$parent.removeClass("error-input").addClass("error-input");
-										$parent.append('<span class=\"input-err\">请完善该必填项！</span>');
-										console.log($(this).index());
-										isTrue = false;
-									} else {
-
-									}
-								})
-								if(isTrue) {
-									var _params = {
-										orderNo: _orderNo, //订单号
-										paymentId: _paymentId,
-										loaningDate: new Date(_loaningDate), //用款时间
-										paymentMoney: _paymentMoney, //垫资金额
-										receiveCompanyAddress: _receiveCompanyAddress, //收款账户名称
-										receiveAccount: _receiveAccount, //收款账号
-										receiveAccountBank: _receiveAccountBank //开户行
-									}
-									console.log(_params)
-									// makeloanSubmit(_params);
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							var that = this,
+								flag = true,
+								imgFlag = true,
+								_params = {
+									orderNo: orderNo
+								},
+								$inputs = that.$content.find('.input-text input');
+							$inputs.each(function() {
+								var value = $.trim($(this).val()),
+									$parent = $(this).parent();
+								if(!value) {
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
+									$parent.append('<span class="input-err">该项不能为空！</span>');
+									flag = false;
+								} else if(!regMap[$(this).data('type')].test(value)) {
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
+									$parent.append('<span class="input-err">该项不符合输入规则！</span>');
+									flag = false;
+								} else {
+									$parent.removeClass('error-input');
+									$parent.find('.input-err').remove();
+									_params[$(this).data('key')] = value;
 								}
+							});
+							if(flag) {
+								makeloanSubmit(_params)
+							} else {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请完善各项信息！'),
+									buttons: {
+										close: {
+											text: '取消',
+											btnClass: 'btn-default btn-cancel'
+										},
+										ok: {
+											text: '确定',
+											action: function() {
+
+											}
+										}
+									}
+								});
 								return false;
 							}
 						}
 					}
-				});
-			})
-		})
+				}
+			});
+		});
 	}
 
 	/**
@@ -173,11 +192,14 @@ page.ctrl('myCustomer', [], function($scope) {
 	var makeloanSubmit = function(params) {
 		$.ajax({
 			type: "post",
-			url: $http.api('financePayment/update', 'cyj'),
+			url: $http.api('financePayment/save', 'cyj'),
 			data: params,
 			dataType: "json",
 			success: $http.ok(function(result) {
 				console.log(result)
+				$.toast('提交成功！', function() {
+					
+				})
 			})
 		});
 	}
@@ -295,6 +317,14 @@ page.ctrl('myCustomer', [], function($scope) {
 			makeLoan(orderNo);
 			return false;
 		});
+
+		// 放款确认
+		// $console.find('#myCustomerTable .makeLoanSure').on('click', function() {
+		// 	var that = $(this),
+		// 		orderNo = that.data('orderNo');
+		// 	makeLoan(orderNo, true);
+		// 	return false;
+		// });
 
 		// 申请终止订单
 		$console.find('#myCustomerTable .applyTerminate').on('click', function() {

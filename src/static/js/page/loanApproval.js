@@ -68,13 +68,19 @@ page.ctrl('loanApproval', function($scope) {
 	}
 
 	/**
-	 * 材料必填，必传检验
+	 * 材料必填，必传检验(提交批量验证接口)
 	 */
 	function checkData(cb) {
+		var data = {
+			taskIds: []
+		};
+		data.taskIds.push($params.taskId);
 		$.ajax({
 			type: 'post',
-			url: $http.api('loanApproval/submit/' + $params.taskId, 'zyj'),
+			url: $http.api('tasks/validate', 'zyj'),
 			dataType: 'json',
+			data: JSON.stringify(data),
+			contentType: 'application/json;charset=utf-8',
 			success: $http.ok(function(result) {
 				console.log(result);
 				if(cb && typeof cb == 'function') {
@@ -299,7 +305,9 @@ page.ctrl('loanApproval', function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 		})
 
 		/**

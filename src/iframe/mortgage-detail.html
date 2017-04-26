@@ -40,57 +40,52 @@
 			<!-- 登记证材料 end-->
 
 			<script type="text/x-dot-template" id="mortgageInfoTmpl">
-				{{ for(var i = 0, len = it.data.length; i < len; i++) { var row = it.data[i]; }}
-				{{ if(i == 0) { }}
-				<table border="1" class="submitTable field-table" data-pledge-id="{{=it.pledgeId}}" data-id="{{=row.id}}">
-				{{ } else { }}
-				<table border="1" class="submitTable field-table mt30" data-pledge-id="{{=it.pledgeId}}" data-id="{{=row.id}}">
-				{{ } }}
+				<table border="1" class="submitTable field-table" id="submitTable" data-pledge-id="{{=it.pledgeId}}" data-id="{{=it.id}}">
 					<tbody>
 						<tr class="tr-odd">
-							<td class="td-key">抵押权人{{=i+1}}</td>
+							<td class="td-key"><i class="is-empty">*</i>抵押权人</td>
 							<td class="td-value">
-								<input class="input-x required" data-type="pledgee" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgee || ''}}">
+								<input class="input-x required" data-type="pledgee" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=it.pledgee || ''}}">
 							</td>
-							<td class="td-key">身份证明名称{{=i+1}}</td>
+							<td class="td-key"><i class="is-empty">*</i>身份证明名称</td>
 							<td class="td-value">
-								<input class="input-x required" data-type="cardName" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.cardName || ''}}">
+								<input class="input-x required" data-type="cardName" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=it.cardName || ''}}">
 							</td>
 						</tr>
 						<tr class="tr-even">
-							<td class="td-key">身份证号码{{=i+1}}</td>
+							<td class="td-key"><i class="is-empty">*</i>身份证号码</td>
 							<td class="td-value">
-								<input class="input-x required" data-type="idCard" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.idCard || ''}}">
+								<input class="input-x required" data-type="idCard" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=it.idCard || ''}}">
 							</td>
-							<td class="td-key">登记机关{{=i+1}}</td>
+							<td class="td-key"><i class="is-empty">*</i>登记机关</td>
 							<td class="td-value">
-								<input class="input-x required" data-type="pledgeDept" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgeDept || ''}}">
+								<input class="input-x required" data-type="pledgeDept" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=it.pledgeDept || ''}}">
 							</td>
 						</tr>
 						<tr class="tr-odd">
-							<td class="td-key">机动车登记编号{{=i+1}}</td>
+							<td class="td-key"><i class="is-empty">*</i>机动车登记编号</td>
 							<td class="td-value">
-								<input class="input-x required" data-type="vehileRegNo" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.vehileRegNo || ''}}">
+								<input class="input-x required" data-type="vehileRegNo" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=it.vehileRegNo || ''}}">
 							</td>
-							<td class="td-key">抵押登记日期{{=i+1}}</td>
+							<td class="td-key"><i class="is-empty">*</i>抵押登记日期</td>
 							<td class="td-value">
 								{{ if(it.disabled) { }}
-									<input class="input-x" data-type="pledgeDate" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgeDateStr || ''}}">
+									<input class="input-x" data-type="pledgeDate" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=it.pledgeDateStr || ''}}">
 								{{ } else { }}
 								<div class="input-text input-date-mini">
-									<input id="srart{{=i}}" data-type="pledgeDate" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.pledgeDateStr || ''}}" />	
+									<input id="srart" data-type="pledgeDate" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=it.pledgeDateStr || ''}}" />	
 								</div>
 								{{ } }}
 							</td>
 						</tr>
 						<tr class="tr-even">
-							<td class="td-key">解除抵押日期{{=i+1}}</td>
+							<td class="td-key"><i class="is-empty">*</i>解除抵押日期</td>
 							<td class="td-value">
 								{{ if(it.disabled) { }}
-									<input class="input-x" data-type="unPledgeDate" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.unPledgeDateStr || ''}}">
+									<input class="input-x" data-type="unPledgeDate" type="text"{{=(it.disabled ? ' disabled' : '' )}} value="{{=it.unPledgeDateStr || ''}}">
 								{{ } else { }}
 								<div class="input-text input-date-mini">
-									<input id="end{{=i}}" data-type="unPledgeDate" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=row.unPledgeDateStr || ''}}" />	
+									<input id="end" data-type="unPledgeDate" type="text" class="dateBtn required" readonly="readonly"{{=(it.disabled ? ' disabled' : '' )}} value="{{=it.unPledgeDateStr || ''}}" />	
 								</div>
 								{{ } }}
 							</td>
@@ -99,9 +94,47 @@
 						</tr>
 					</tbody>
 				</table>
-				{{ } }}
+			</script>
 
-				{{ if(!it.disabled) { }}
+			<script type="text/x-dot-template" id="loanUploadTmpl">
+				<div class="panel mt15 clearfix">
+					<!-- 标题名 -->
+					<div class="panel-title-box">
+						<div class="panel-title">
+							<i class="iconfont">&#xe626;</i>
+							<span class="panel-title-name">登记证材料</span>
+						</div>
+					</div>
+					<!-- 标题名 end-->
+
+					<!-- 标题对应项 -->
+					<div class="panel-content clearfix">
+						<div class="loan-imgs-bar">
+							{{ for(var j = 0, len2 = it.cfgMaterials.length; j < len2; j++) { var nl = it.cfgMaterials[j], flag = 0; }}
+								{{ for(var m in nl) { }}
+									{{ var len3 = it.userMaterials.length; if(len3) { }}
+										{{ for(var k = 0; k < len3; k++) { var mr = it.userMaterials[k]; }}
+											{{ if(mr.materialsCode == m) { }}
+												<div class="imgs-item-group uploadEvt imgs" data-idx="{{=k}}" data-orderno="{{=it.orderInfo.orderNo}}" data-code="{{=m}}" data-name="{{=nl[m]}}" data-scene="{{=it.loanTask.category}}" data-img="{{=mr.materialsPic}}" data-id="{{=mr.id}}" data-err="{{=mr.auditResult || 0}}" data-editable="{{=it.loanTask.editable}}" data-empty="0"></div>
+											{{ break;} else { flag++; }}
+											{{ } }}
+										{{ } }}
+									{{ } }}
+									{{ if(flag == len3) { }}
+									<div class="imgs-item-group uploadEvt noimgs" data-orderno="{{=it.orderInfo.orderNo}}" data-code="{{=m}}" data-name="{{=nl[m]}}" data-scene="{{=it.loanTask.category}}" data-err="0" data-editable="{{=it.loanTask.editable}}" data-empty="0"></div>
+									{{ } }}
+								{{ } }}
+							{{ } }}
+
+							
+							<!-- <div class="imgs-item-group uploadEvt imgs" data-orderno="{{=it.orderInfo.orderNo}}" data-code="zcdjzydy" data-name="注册登记证（已抵押）" data-scene="{{=it.loanTask.category}}" data-img="{{=(it.userMaterials[0] ? it.userMaterials[0].materialsPic : undefined)}}" data-id="{{=(it.userMaterials[0] ? it.userMaterials[0].id : undefined)}}" data-err="{{=(it.userMaterials[0] ? it.userMaterials[0].auditResult : undefined)}}" data-editable="{{=it.loanTask.editable}}"></div> -->
+						</div>
+					</div>
+					<!-- 标题对应项 end-->
+				</div>
+			</script>
+
+			<!-- {{ if(!it.disabled) { }}
 				<table border="1" class="{{=(len == 0 ? 'submitTable' : '')}} field-table{{=(len > 0 ? ' mt30' : '')}}" id="newSubmitTable" data-pledge-id="{{=it.pledgeId}}">
 					<tbody>
 						<tr class="tr-odd">
@@ -156,26 +189,4 @@
 						</tr>
 					</tbody>
 				</table>
-				{{ } }}
-			</script>
-
-			<script type="text/x-dot-template" id="loanUploadTmpl">
-				<div class="panel mt15 clearfix">
-					<!-- 标题名 -->
-					<div class="panel-title-box">
-						<div class="panel-title">
-							<i class="iconfont">&#xe626;</i>
-							<span class="panel-title-name">登记证材料</span>
-						</div>
-					</div>
-					<!-- 标题名 end-->
-
-					<!-- 标题对应项 -->
-					<div class="panel-content clearfix">
-						<div class="loan-imgs-bar">
-							<div class="imgs-item-group uploadEvt imgs" data-orderno="{{=it.orderInfo.orderNo}}" data-code="zcdjzydy" data-name="注册登记证（已抵押）" data-scene="{{=it.loanTask.category}}" data-img="{{=(it.userMaterials[0] ? it.userMaterials[0].materialsPic : undefined)}}" data-id="{{=(it.userMaterials[0] ? it.userMaterials[0].id : undefined)}}" data-err="{{=(it.userMaterials[0] ? it.userMaterials[0].auditResult : undefined)}}" data-editable="{{=it.loanTask.editable}}"></div>
-						</div>
-					</div>
-					<!-- 标题对应项 end-->
-				</div>
-			</script>
+				{{ } }} -->

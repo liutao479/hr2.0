@@ -46,6 +46,29 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 		$location.location();
 	}
 
+	/**
+	 * 材料必填，必传检验(提交批量验证接口)
+	 */
+	function checkData(cb) {
+		var data = {
+			taskIds: []
+		};
+		data.taskIds.push($params.taskId);
+		$.ajax({
+			type: 'post',
+			url: $http.api('tasks/validate', 'zyj'),
+			dataType: 'json',
+			data: JSON.stringify(data),
+			contentType: 'application/json;charset=utf-8',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
 	
 	/**
 	* 加载左侧导航菜单
@@ -96,23 +119,6 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 			if($(this).hasClass('panel-menu-item-active')){
 				$(this).find('.arrow').show();
 			}
-		})
-	}
-
-	/**
-	 * 材料必填，必传检验
-	 */
-	function checkData(cb) {
-		$.ajax({
-			type: 'post',
-			url: $http.api('loanApproval/submit/' + $params.taskId, 'zyj'),
-			dataType: 'json',
-			success: $http.ok(function(result) {
-				console.log(result);
-				if(cb && typeof cb == 'function') {
-					cb();
-				}
-			})
 		})
 	}
 
@@ -214,7 +220,9 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 		 * 提交
 		 */
 		$sub.on('approvalPass', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 		})
 	}
 
@@ -237,7 +245,7 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 						var that = this;
         				$.ajax({
 							type: 'post',
-							url: $http.api('loanApproval/submit/' + $params.taskId),
+							url: $http.api('loanApproval/submit/' + $params.taskId, true),
 							dataType: 'json',
 							data: {
 								frameCode: $scope.result.cfgData.frames[0].code
@@ -275,40 +283,6 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 		for(var i = 0, len = taskJumps.length; i < len; i++) {
 			taskJumps[i].jumpReason = taskJumps[i].jumpReason.split(',');
 		}
-	}
-
-	/**
-	 * 跳流程
-	 */
-	function process() {
-		$.confirm({
-			title: '提交',
-			content: dialogTml.wContent.suggestion,
-			buttons: {
-				close: {
-					text: '取消',
-					btnClass: 'btn-default btn-cancel',
-					action: function() {}
-				},
-				ok: {
-					text: '确定',
-					action: function () {
-						var taskIds = [];
-						for(var i = 0, len = $params.tasks.length; i < len; i++) {
-							taskIds.push(parseInt($params.tasks[i].id));
-						}
-						var params = {
-							taskId: $params.taskId,
-							taskIds: taskIds,
-							orderNo: $params.orderNo
-						}
-						var reason = $.trim(this.$content.find('#suggestion').val());
-						if(reason) params.reason = reason;
-						flow.tasksJump(params, 'complete');
-					}
-				}
-			}
-		})
 	}
 
 	/**

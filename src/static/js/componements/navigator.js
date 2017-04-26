@@ -32,7 +32,9 @@ $(function() {
 			role: Cookies.get('_hr_role'),
 			phone: Cookies.get('_hr_phone'),
 			name: Cookies.get('_hr_name'),
-			token: Cookies.get('_hr_token')
+			token: Cookies.get('_hr_token'),
+			orgId: Cookies.get('_hr_orgId'),
+			userId: Cookies.get('_hr_userId')
 		}
 		if(!_info.token || !_info.account) {
 			return self.showModal();
@@ -111,6 +113,8 @@ $(function() {
 		Cookies.remove('_hr_role');
 		Cookies.remove('_hr_name');
 		Cookies.remove('_hr_phone');
+		Cookies.remove('_hr_userId');
+		Cookies.remove('_hr_orgId');
 	}
 
 	NavComponent.prototype.showModal = function() {
@@ -177,6 +181,8 @@ $(function() {
 					Cookies.set('_hr_name', result.name);
 					Cookies.set('_hr_account', result.account);
 					Cookies.set('_hr_token', result.token);
+					Cookies.set('_hr_userId', info.id);
+					Cookies.set('_hr_orgId', info.orgId);
 					location.href = location.href;
 				} else {
 					$err.html('登录失败，' + xhr.msg).show();
@@ -370,6 +376,18 @@ $(function() {
 				})
 			})
 		},
+		countDown: function($el) {
+			var counter = 60;
+			$el[0].counter = setInterval(function() {
+				$el.text(counter + 's后重新获取');
+				counter--;
+				if(counter <= 0) {
+					clearInterval($el[0].counter);
+					$el[0].counter = null;
+					$el.text('获取验证码');
+				}
+			}, 1000);
+		},
 		bind: function() {
 			$.confirm({
 				title: '绑定手机号码',
@@ -386,6 +404,8 @@ $(function() {
 							return $err.html('请输入手机号码').show();
 						}
 						NavComponent.internal.getPhoneCode(phone, function() {
+							NavComponent.internal.countDown($that);
+							/*
 							var counter = 60;
 							$this.counter = setInterval(function() {
 								$that.html(counter + 's后重新获取');
@@ -396,6 +416,7 @@ $(function() {
 									$this.counter = null;
 								}
 							}, 1000);
+							*/
 						});
 					})
 				},
@@ -439,19 +460,6 @@ $(function() {
 					})
 				})
 			}
-			
-			function _ct($el) {
-				var counter = 60;
-				$el[0].counter = setInterval(function() {
-					$el.text(counter + 's后重新获取');
-					counter--;
-					if(counter == 0) {
-						clearInterval($el[0].counter);
-						$el[0].counter = null;
-						$el.html('获取验证码');
-					}
-				}, 1000);
-			}
 
 			_gc(p);
 
@@ -462,10 +470,10 @@ $(function() {
 						content:'url:./defs/phone.modify.html',
 						onContentReady: function() {
 							var self = this;
-							$ctn = self.$content;
-							$ctn.find('#phoneNumber').html(p);
+							self.$content.find('#phoneNumber').html(p);
 							var $cd = self.$content.find('#codeCountDown');
-							_ct($cd)
+							$ctn = $cd;
+							NavComponent.internal.countDown($cd)
 							$cd.on('click', function() {
 								if(this.counter) return false;
 								_gc(p, true);
@@ -492,7 +500,7 @@ $(function() {
 						}
 					})
 				} else {
-					_ct($ctn);
+					NavComponent.internal.countDown($ctn);
 				}
 			}
 		},

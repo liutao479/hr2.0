@@ -14,7 +14,7 @@ page.ctrl('mortgageStatis', [], function($scope) {
 	var loadMortgageStatisList = function(params, cb) {
 		console.log(params)
 		$.ajax({
-			url: $http.api('loanPledge/List', 'cyj'),
+			url: $http.api('loanPledge/list', 'cyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -116,7 +116,9 @@ page.ctrl('mortgageStatis', [], function($scope) {
 		});
 
 		// 导出超期记录
-		$console.find('#importItems').attr('href', $http.api('loanPledge/downLoadOverDueData', 'cyj'));
+		var userId = Cookies.get('_hr_userId'),
+			orgId = Cookies.get('_hr_orgId');
+		$console.find('#importItems').attr('href', $http.api('loanPledge/downLoadOverDueData?userId=' + userId + '&orgId=' + orgId, 'cyj'));
 	}
 
 	/***

@@ -8,7 +8,7 @@
 	g.dialogTml = {};
 	g.dialogTml.wContent = {
 		back: '<div class="w-content">\
-					<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					{{ for(var i = 0, len = it.length; i < len; i++) { var row = it[i]; }}\
 					<div class="w-select-area mt15 clearfix">\
 						<div class="w-select clearfix">\
@@ -27,10 +27,16 @@
 		handelSuggestion: '<div class="w-content"><div class="w-text">请填写处理意见！</div></div>',
 		complete: '<div class="w-content"><div class="w-text">请完善必填项！</div></div>',
 		suggestion: '<div class="w-content">\
-						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+						<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+					</div>',
+		rejectModify: '<div class="w-content">\
+						<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="请在此说明拒绝意见！"></textarea>\
+					</div>',
+		approvalPass: '<div class="w-content">\
+						<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="请在此说明处理意见！">#审核通过#</textarea>\
 					</div>',
 		loanOrderApply: '<div class="w-content">\
-							<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+							<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 							<dl class="w-dropdown">\
 								<dt class="dt">请选择审核人：</dt>\
 								<dd class="dd">\
@@ -73,44 +79,44 @@
 								</div>\
 							</div>\
 						</div>',
-		makeLoan: '<div class="w-content">\
-						<dl class="w-dropdown">\
-							<dt class="dt">用款时间：</dt>\
-							<dd class="dd">\
-								<div class="input-text input-date">\
-									<input id="loaningDate" type="text" class="dateBtn" readonly="readonly" value="{{=it.loaningDateStr || \"\"}}" />\
-								</div>\
-							</dd>\
-						</dl>\
-						<dl class="w-dropdown">\
-							<dt class="dt">垫资金额：</dt>\
+		makeLoan: '<div class="w-content clearfix">\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">收款单位：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="paymentMoney" value="{{=it.paymentMoney || \"\"}}"><span class="unit">元</span>\
+									<input type="text required" id="receiveCompany" data-key="receiveCompany" data-type="accountName" value="{{=it.receiveCompany || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
-							<dt class="dt">收款账户名称：</dt>\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">收款账号：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="receiveCompanyAddress" value="{{=it.receiveCompanyAddress || \"\"}}">\
+									<input type="text required" id="receiveAccount" data-key="receiveAccount" data-type="accountNumber" value="{{=it.receiveAccount || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">收款账户：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="receiveAccount" value="{{=it.receiveAccount || \"\"}}">\
+									<input type="text required" id="receiveAccountName" data-key="receiveAccountName" data-type="accountName" value="{{=it.receiveAccountName || \"\"}}">\
 								</div>\
 							</dd>\
 						</dl>\
-						<dl class="w-dropdown">\
+						<dl class="w-dropdown float-left">\
 							<dt class="dt">开户行：</dt>\
 							<dd class="dd">\
 								<div class="input-text input-text-mini">\
-									<input type="text required" id="receiveAccountBank" value="{{=it.receiveAccountBank || \"\"}}">\
+									<input type="text required" id="receiveAccountBank" data-key="receiveAccountBank" data-type="accountName" value="{{=it.receiveAccountBank || \"\"}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">垫资时间：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-date">\
+									<input id="loaningDate" type="text" class="dateBtn" data-key="loaningDate" data-type="yymmddhhmm" readonly="readonly" value="{{=it.loaningDateStr || \"\"}}" />\
 								</div>\
 							</dd>\
 						</dl>\
@@ -156,7 +162,7 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+						<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					</div>',
 		ptsqdzContent: '<div class="w-content">\
 						<dl class="w-dropdown">\
@@ -199,7 +205,7 @@
 								</div>\
 							</dd>\
 						</dl>\
-						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+						<textarea  maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					</div>',
 		viewFee: '<div class="w-content">\
 					<table border="0" cellpadding="" width="100%" class="orders-table orders-table-borders">\
@@ -390,7 +396,7 @@
 						<dl class="w-dropdown float-left">\
 							<dt class="dt">审核意见：</dt>\
 							<dd class="dd">\
-								<textarea id="suggestion" class="remarks-box-mini" placeholder="在此处填写处理意见"></textarea>\
+								<textarea maxlength="500" id="suggestion" class="remarks-box-mini" placeholder="在此处填写处理意见"></textarea>\
 							</dd>\
 						</dl>\
 					</div>',
@@ -415,7 +421,7 @@
 							<dt class="checkbox checkbox-normal float-left" style= "margin-left: 5px;"></dt>\
 							<dd class="dd" style= "margin-left: 35px;">确定申请平台垫资并同意签署<a href="javascript:;" class="view-sign" style="text-decoration: underline;">《代还款承诺函》</a>吗？</dt>\
 						</dl>\
-						<textarea name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
+						<textarea maxlength="500" name="" id="suggestion" cols="5" rows="5" class="remarks-box" placeholder="在此处填写处理意见"></textarea>\
 					</div>',
 		contract: '<div class="w-content">\
 					<div class="news-content">\

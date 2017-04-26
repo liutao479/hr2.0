@@ -17,6 +17,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 		"saveFYXX": $http.api('loanInfoInput/updLoanFee', 'jbs'),
 		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation', 'jbs')
 	};
+	console.log(postUrl)
 
 	/**
 	* 加载车贷办理数据
@@ -54,8 +55,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result,true);
 				render.compile($scope.$el.$sideBar, $scope.def.siderBarTmpl, result, function() {
-					// console.log($('.remind-content'))
-					// // $('#remind .remind-content').css('min-height', '550px');
+					$scope.$el.$sideBar.css('right', $('#remind').css('right'))
 					$scope.$el.$sideBar.find('li').not(".last").hover(function() {
 						$(this).toggleClass('hover');
 						// $scope.$el.$sideBar.find('.sideBar-content').hide();
@@ -232,10 +232,10 @@ page.ctrl('loanInfoAudit', function($scope) {
 			}
 			if( thisName == 'phone'){
 				var thisVal = that.val();
-				var reg = /^1[\d+]{10}$/;
+				var reg = /^((0\d{2,3}-\d{7,8})|(\d{11}))$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
-					$(this).after('<i class="error-input-tip sel-err">请您填写11位正确格式的手机号码！</i>');
+					$(this).after('<i class="error-input-tip sel-err">请正常填写手机号或常规电话号码。</i>');
 					that.val('');
 				}
 			}
@@ -332,6 +332,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 			var btnType = $(this).data('type');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 			requireList.each(function(){
+				$('.sel-err').remove();
 				var value = $(this).val();
 				if(!value){
 					if(!$(this).parent().hasClass('info-value') && !$(this).parent().hasClass('info-check-box')){
@@ -1140,6 +1141,9 @@ page.ctrl('loanInfoAudit', function($scope) {
 		},
 		remitAccountNumber: function(t, p, cb) {
 			if(!$scope.busiSourceNameId) {
+				$console.find('#numSel .select-box').css({
+					zIndex : 1000
+				})
 				$.alert({
 					title: '提示',
 					content: tool.alert('请填写业务来源方名称！'),

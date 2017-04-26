@@ -14,7 +14,7 @@ page.ctrl('mortgageAudit', [], function($scope) {
 	*/
 	var loadMortgageAuditList = function(params, cb) {
 		$.ajax({
-			url: $http.api('loanPledge/List', 'cyj'),
+			url: $http.api('loanPledge/list', 'cyj'),
 			type: 'post',
 			dataType: 'json',
 			data: params,

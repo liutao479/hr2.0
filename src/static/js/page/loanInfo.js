@@ -45,7 +45,7 @@ page.ctrl('loanInfo', function($scope) {
 				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				render.compile($scope.$el.$sideBar, $scope.def.siderBarTmpl, result, function() {
-					$('.remind-content').css('min-height', '550px');
+					$scope.$el.$sideBar.css('right', $('#remind').css('right'))
 					$scope.$el.$sideBar.find('li').not(".last").hover(function() {
 						$(this).toggleClass('hover');
 						// $scope.$el.$sideBar.find('.sideBar-content').hide();
@@ -206,9 +206,18 @@ page.ctrl('loanInfo', function($scope) {
 					that.val('');
 				}
 			}
-			if( thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'advancedMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
+			if( thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
 				var thisVal = that.val();
 				var reg =  /^0\.([1-9]|\d[1-9])$|^[1-9]\d{0,8}\.\d{0,4}$|^[1-9]\d{0,8}$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">请填写小于10亿最多四位小数的数字</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'advancedMoney' ){
+				var thisVal = that.val();
+				var reg =  /^([0-9]|\d[1-9])$|^[1-9]\d{0,8}\.\d{0,4}$|^[1-9]\d{0,8}$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip sel-err">请填写小于10亿最多四位小数的数字</i>');
@@ -530,10 +539,6 @@ page.ctrl('loanInfo', function($scope) {
 				$.alert({
 					title: '提示',
 					content: '<div class="w-content"><div>请填写还款期限！</div></div>',
-					useBootstrap: false,
-					boxWidth: '500px',
-					theme: 'light',
-					type: 'purple',
 					buttons: {
 						'确定': {
 				            action: function () {
@@ -1159,6 +1164,9 @@ page.ctrl('loanInfo', function($scope) {
 		},
 		remitAccountNumber: function(t, p, cb) {
 			if(!$scope.busiSourceNameId) {
+				$console.find('#numSel .select-box').css({
+					zIndex : 1000
+				})
 				$.alert({
 					title: '提示',
 					content: tool.alert('请填写业务来源方名称！'),

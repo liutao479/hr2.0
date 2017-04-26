@@ -20,7 +20,12 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 				console.log(result);
 				result.data.loanTask = {
 					editable: 0
-				}
+				};
+				result.data.cfgMaterials = [
+					{
+						zcdjzydy: '注册登记证（已抵押）'
+					}
+				];
 				$scope.result = result;
 				setupLocation(result.data.orderInfo);
 				// console.log(result.data.backApprovalInfo)
@@ -63,8 +68,9 @@ page.ctrl('mortgageStatisDetail', [], function($scope) {
 		$location.data({
 			backspace: $scope.$params.path,
 			current: '抵押进度统计详情',
+			pmsDept: $scope.result.data.orderInfo.deptName,
 			loanUser: $scope.result.data.orderInfo.realName || '',
-			orderDate: tool.formatDate($scope.result.data.orderInfo.pickDate, true) || ''
+			pickDate: $scope.result.data.orderInfo.pickDateStr || ''
 		});
 		$location.location();
 	}
