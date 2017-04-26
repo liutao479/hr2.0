@@ -343,6 +343,7 @@ page.ctrl('loanInfo', function($scope) {
 			var isTure = true;
 			var btnType = $(this).data('type');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
+			$(".error-input-tip").remove("i");
 			requireList.each(function(){
 				var value = $(this).val();
 				if(!value){
