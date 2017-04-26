@@ -286,8 +286,9 @@ page.ctrl('loanInfo', function($scope) {
 			var isTure = true;
 			var btnType = $(this).data('type');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
+			 $(.error-input-tip).remove("error-input");
 			requireList.each(function(){
-				var value = $(this).val();
+				
 				if(!value){
 					if(!$(this).parent().hasClass('info-value') && !$(this).parent().hasClass('info-check-box')){
 						$(this).siblings('.select').addClass("error-input");
