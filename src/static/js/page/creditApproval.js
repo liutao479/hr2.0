@@ -648,7 +648,7 @@ page.ctrl('creditApproval', [], function($scope) {
 				var flag = 0,
 					str = '',
 					value = $reason.val(),
-					reg = /[#][^#]*[#]/;
+					reg = /[^#][^#]*[^#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
@@ -658,15 +658,12 @@ page.ctrl('creditApproval', [], function($scope) {
 				str = str.substring(0, str.length - 1);
 				
 				if(flag > 0) {
-					// $reason.val(value.replace(reg, str));
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
 				} else {
-					// $reason.val('#' + str + '#' + $reason.val());
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 
-				// debugger
 				if(value && value.match(reg)) {
 					$reason.val(value.replace(reg, str));
 				} else {

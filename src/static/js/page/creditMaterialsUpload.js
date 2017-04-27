@@ -560,52 +560,55 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		/**
 		 * 表单输入失去焦点保存信息
 		 */
-		$self.find('.input-text input').on('blur', function() {
-			var that = $(this),
-			    value = that.val(),
-				type = that.data('type'),
-				$parent = that.parent(),
-				params = {};
-			if(!value) {
-				$parent.find('.input-err').remove();
-				if(that.hasClass('required')) {
+		$self.find('.input-text input').on('change', function() {
+			// setTimeout(function() {
+				var that = $(this),
+				    value = that.val(),
+					type = that.data('type'),
+					$parent = that.parent(),
+					params = {};
+				if(!value) {
+					$parent.find('.input-err').remove();
+					if(that.hasClass('required')) {
+						$parent.removeClass('error-input').addClass('error-input');
+						$parent.append('<span class=\"input-err\">该项不能为空！</span>');
+					} else {
+						$parent.removeClass('error-input');
+					}
+					value = '';
+				} else if(!regMap[type].test(value)) {
+					$parent.find('.input-err').remove();
 					$parent.removeClass('error-input').addClass('error-input');
-					$parent.append('<span class=\"input-err\">该项不能为空！</span>');
+					if(type == 'userName') {
+						$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
+					} else if(type == 'idCard') {
+						$parent.append('<span class=\"input-err\">请输入15或18位身份证号！</span>');
+					} else if(type == 'mobile') {
+						$parent.append('<span class=\"input-err\">请输入11位手机号！</span>');
+					}
+					value = '';
 				} else {
 					$parent.removeClass('error-input');
+					$parent.find('.input-err').remove();
+					if(type == 'idCard' && value.substring(value.length - 1) == 'x') {
+						value = value.replace(/x/, 'X');
+					}
 				}
-				value = '';
-			} else if(!regMap[type].test(value)) {
-				$parent.find('.input-err').remove();
-				$parent.removeClass('error-input').addClass('error-input');
-				if(type == 'userName') {
-					$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
-				} else if(type == 'idCard') {
-					$parent.append('<span class=\"input-err\">请输入15或18位身份证号！</span>');
-				} else if(type == 'mobile') {
-					$parent.append('<span class=\"input-err\">请输入11位手机号！</span>');
+				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+					var item = $scope.apiParams[i];
+					if(that.data('userId') == item.userId) {
+						item[that.data('type')] = value;
+					}
 				}
-				value = '';
-			} else {
-				$parent.removeClass('error-input');
-				$parent.find('.input-err').remove();
-				if(type == 'idCard' && value.substring(value.length - 1) == 'x') {
-					value = value.replace(/x/, 'X');
+				console.log($scope.apiParams)
+				if(!value) return false;
+				params = {
+					userId: that.data('userId')
 				}
-			}
-			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-				var item = $scope.apiParams[i];
-				if(that.data('userId') == item.userId) {
-					item[that.data('type')] = value;
-				}
-			}
-			console.log($scope.apiParams)
-			if(!value) return false;
-			params = {
-				userId: that.data('userId')
-			}
-			params[that.data('type')] = value;
-			updateUser(params);
+				params[that.data('type')] = value;
+				updateUser(params);
+			// }, 200);
+			
 		})
 
 		/**
@@ -624,6 +627,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					}
 				}
 			})
+			return false;
 		});
 
 		/**
@@ -650,8 +654,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			success: $http.ok(function(xhr) {
 				if(xhr.data.refresh) {
 					loadOrderInfo($scope.currentType, function() {
-						setupCreditBank();
-						initApiParams();
+						// setupCreditBank();
 					});
 				}
 			})
@@ -670,6 +673,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				item.userId = row.userId;
 				item.userName = row.userName || '';
 				item.idCard = row.idCard || '';
+				item.mobile = row.mobile || '';
 				item.userType = row.userType;
 				item.userRelationship = row.userRelationship;
 				item.sortNo = row.sortNo;

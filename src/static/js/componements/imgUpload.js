@@ -550,7 +550,7 @@
 				<input type="file" class="input-file activeEvt" accept="image/gif,image/jpeg,image/jpg,image/png,image/tif" />\
 			   </div>{0}',
 		videoEdit: '<div class="imgs-item-upload">\
-				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
+				<div class="iconfont-upload"><i class="iconfont">&#xe65f;</i></div>\
 				<span class="i-tips">点击上传视频</span>\
 				<input type="file" class="input-file activeEvt" accept="video/rm,video/rmvb,video/wmv,video/avi,video/mp4,video/3gp,video/mkv" />\
 			   </div>{0}',

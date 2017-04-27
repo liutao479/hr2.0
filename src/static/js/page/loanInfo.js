@@ -43,6 +43,7 @@ page.ctrl('loanInfo', function($scope) {
 				if(result.data.FQXX && result.data.FQXX.renewalInfo){
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				}
+				console.log(result.data.FQXX.renewalInfo)
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				render.compile($scope.$el.$sideBar, $scope.def.siderBarTmpl, result, function() {
 					$scope.$el.$sideBar.css('right', $('#remind').css('right'))
@@ -360,14 +361,28 @@ page.ctrl('loanInfo', function($scope) {
 				var key = $(this).data('key');
 				if(key == 'saveFQXX'){
 					var renewalStr = '';
-					var inputList = $(".bxxbyearIpt");
-					for(var i=0;i<inputList.length;i++){
-						var rene = inputList[i];
-						if(rene.parentNode.parentNode.parentNode.parentNode.parentNode.style.display == 'none'){
-					        rene.value = '';
+					var $inputLists = $(".bxxbyearIpt");
+					$inputLists.each(function() {
+						if($(this).parent().css('display') == 'none') {
+							$(this).val('');
 						}
-						renewalStr += rene.value+',';
-					}
+						if(!$(this).val()) {
+							
+						} else {
+							renewalStr += $(this).val()+',';
+						}
+					});
+					renewalStr = renewalStr.substring(0, renewalStr.length - 1);
+					console.log(renewalStr);
+					// for(var i=0;i<inputList.length;i++){
+					// 	var rene = inputList[i];
+					// 	// debugger
+					// 	if(rene.parentNode.parentNode.parentNode.parentNode.parentNode.style.display == 'none'){
+					//         rene.value = '';
+					// 	}
+					// 	renewalStr += rene.value+',';
+					// }
+					
 					$("input[name='renewalInfo']").val(renewalStr);
 				}
 				var data;
@@ -401,6 +416,7 @@ page.ctrl('loanInfo', function($scope) {
 			        })
 		        }
 		        var dataPost;
+		        console.log(dataPost);
 		        if(btnType){
 		        	dataPost = JSON.stringify(data);
 					$.ajax({
@@ -534,6 +550,7 @@ page.ctrl('loanInfo', function($scope) {
 		var bxxbInput = $("input[name='renewalMode']").val();
 		var repayInput = $("input[name='repayPeriod']").val();
 		var bxxbLength = Math.ceil(repayInput/12);
+		var $reneDivs = $('.reneDiv');
 		if(bxxbInput == 1){
 			if(!repayInput){
 				$.alert({
@@ -548,57 +565,67 @@ page.ctrl('loanInfo', function($scope) {
 				})
 				return false;
 			}else{
-				if(bxxbLength == 1){
-					$("#year1").show();
-					$("#year2").hide();
-					$("#year3").hide();
-					$("#year4").hide();
-					$("#year5").hide();
-					$("#year6").hide();
-				}else if(bxxbLength == 2){
-					$("#year1").show();
-					$("#year2").show();
-					$("#year3").hide();
-					$("#year4").hide();
-					$("#year5").hide();
-					$("#year6").hide();
-				}else if(bxxbLength == 3){
-					$("#year1").show();
-					$("#year2").show();
-					$("#year3").show();
-					$("#year4").hide();
-					$("#year5").hide();
-					$("#year6").hide();
-				}else if(bxxbLength == 4){
-					$("#year1").show();
-					$("#year2").show();
-					$("#year3").show();
-					$("#year4").show();
-					$("#year5").hide();
-					$("#year6").hide();
-				}else if(bxxbLength == 5){
-					$("#year1").show();
-					$("#year2").show();
-					$("#year3").show();
-					$("#year4").show();
-					$("#year5").show();
-					$("#year6").hide();
-				}else{
-					$("#year1").show();
-					$("#year2").show();
-					$("#year3").show();
-					$("#year4").show();
-					$("#year5").show();
-					$("#year6").show();
-				}
+				// if(bxxbLength == 1){
+					$reneDivs.each(function(index) {
+						if(index + 1 <= bxxbLength) {
+							$reneDivs.eq(index).show();
+						} else {
+							$reneDivs.eq(index).hide();
+							$reneDivs.eq(index).find('input[hidden]').val('');
+						}
+					})
+					// $("#year1").show();
+					// $("#year2").hide();
+					// $("#year3").hide();
+					// $("#year4").hide();
+					// $("#year5").hide();
+					// $("#year6").hide();
+				// }else if(bxxbLength == 2){
+				// 	$("#year1").show();
+				// 	$("#year2").show();
+				// 	$("#year3").hide();
+				// 	$("#year4").hide();
+				// 	$("#year5").hide();
+				// 	$("#year6").hide();
+				// }else if(bxxbLength == 3){
+				// 	$("#year1").show();
+				// 	$("#year2").show();
+				// 	$("#year3").show();
+				// 	$("#year4").hide();
+				// 	$("#year5").hide();
+				// 	$("#year6").hide();
+				// }else if(bxxbLength == 4){
+				// 	$("#year1").show();
+				// 	$("#year2").show();
+				// 	$("#year3").show();
+				// 	$("#year4").show();
+				// 	$("#year5").hide();
+				// 	$("#year6").hide();
+				// }else if(bxxbLength == 5){
+				// 	$("#year1").show();
+				// 	$("#year2").show();
+				// 	$("#year3").show();
+				// 	$("#year4").show();
+				// 	$("#year5").show();
+				// 	$("#year6").hide();
+				// }else{
+				// 	$("#year1").show();
+				// 	$("#year2").show();
+				// 	$("#year3").show();
+				// 	$("#year4").show();
+				// 	$("#year5").show();
+				// 	$("#year6").show();
+				// }
 			}
 		}else{
-			$("#year1").hide();
-			$("#year2").hide();
-			$("#year3").hide();
-			$("#year4").hide();
-			$("#year5").hide();
-			$("#year6").hide();
+			$reneDivs.hide();
+			$reneDivs.find('input[hidden]').val('');
+			// $("#year1").hide();
+			// $("#year2").hide();
+			// $("#year3").hide();
+			// $("#year4").hide();
+			// $("#year5").hide();
+			// $("#year6").hide();
 		}
 	}
 	
@@ -790,23 +817,30 @@ page.ctrl('loanInfo', function($scope) {
 			var that = this;
 			that.$checking.onChange(function() {
 				//用于监听意见有一个选中，则标题项选中
-				var flag = 0;
-				var str = '';
+				var flag = 0,
+					str = '',
+					value = $reason.val(),
+					reg = /[^#][^#]*[^#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
 						flag++;
 					}
 				})
-				str = '#' + str.substring(0, str.length - 1) + '#';				
-				$reason.val(str);
+				str = str.substring(0, str.length - 1);
+				
 				if(flag > 0) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
 				} else {
-					$reason.val('');
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
+
+				if(value && value.match(reg)) {
+					$reason.val(value.replace(reg, str));
+				} else {
+					$reason.val('#' + str + '#' + $reason.val());
+				}
 			});
 		})
 

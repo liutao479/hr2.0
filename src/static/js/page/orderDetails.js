@@ -327,7 +327,7 @@ page.ctrl('orderDetails', function($scope) {
 	function applySubmit(approvalStatus, reason) {
 		var params = {
 			orderNo: $params.orderNo,
-			approvalStatus: approvalStatus, // 申请待审核 1同意终止订单 2保留终止订单
+			approvalStatus: approvalStatus // 0申请待审核 1同意终止订单 2保留终止订单
 		};
 		if(!reason) {
 			params.reason = reason;
