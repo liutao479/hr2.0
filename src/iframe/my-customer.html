@@ -66,7 +66,7 @@
 			<script type="text/x-dot-template" id="myCustomerListTmpl">
 				{{ var len = it.length; if(len) { }}
 					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
-					<a data-href="myCustomer/orderDetails" class="orders-detail" data-order-no="{{=row.orderNo}}">
+					<a data-href="myCustomer/orderDetails" data-modify-display="{{=row.modifyDisplay}}" data-payment-apply-display="{{=row.paymentApplyDisplay}}" data-payment-confirm-display="{{=row.paymentConfirmDisplay}}" data-terminate-display="{{=row.terminateDisplay}}" class="orders-detail" data-order-no="{{=row.orderNo}}">
 					<table border="0" cellpadding="" width="100%" class="orders-box">
 						<thead>
 							<tr class="orders-bar-title">

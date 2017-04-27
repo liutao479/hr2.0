@@ -21,7 +21,7 @@ page.ctrl('orderDetails', function($scope) {
 				setupLocation();
 				loadGuide(xhr.cfgData);
 				if($params.type == 'OrderDetails') {
-					render.compile($scope.$el.$buttonsPanel, $scope.def.buttonsTmpl, xhr.data.BTNSTATUS, true);
+					render.compile($scope.$el.$buttonsPanel, $scope.def.buttonsTmpl, $params.btnStatus, true);
 				}
 				setupEvent();
 				leftArrow();
@@ -327,7 +327,7 @@ page.ctrl('orderDetails', function($scope) {
 	function applySubmit(approvalStatus, reason) {
 		var params = {
 			orderNo: $params.orderNo,
-			approvalStatus: approvalStatus, // 申请待审核 1同意终止订单 2保留终止订单
+			approvalStatus: approvalStatus // 0申请待审核 1同意终止订单 2保留终止订单
 		};
 		if(!reason) {
 			params.reason = reason;
@@ -386,6 +386,128 @@ page.ctrl('orderDetails', function($scope) {
 		});
 	}
 
+	/**
+	 * 弹窗前获取信息
+	 */
+	function getFinancePayment(orderNo, cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('financePayment/info', true),
+			dataType: 'json',
+			data: {
+				orderNo: orderNo
+			},
+			success: $http.ok(function(xhr) {
+				console.log(xhr)
+				if(cb && typeof cb == 'function') {
+					cb(xhr.data);
+				}
+			})
+		});
+	}
+
+	/**
+	* 放款预约弹窗信息取得
+	* isSure 是否是放款预约
+	*/
+	var makeLoan = function(orderNo, isSure) {
+		getFinancePayment(orderNo, function(data) {
+			$.confirm({
+				title: '放款预约',
+				content: isSure ? doT.template(dialogTml.wContent.makeLoanSure)(data) : doT.template(dialogTml.wContent.makeLoan)(data),
+				onContentReady: function() {
+					if(isSure) {
+						this.$content.find('.uploadEvt').imgUpload();
+					}
+					//启动用款时间日历控件
+					this.$content.find('.dateBtn').datepicker({
+						dateFmt: 'yyyy-MM-dd HH:mm',
+						onpicked: function() {
+						},
+						oncleared: function() {
+						}
+					});
+					if(data.advanceCertificate) {
+						$scope.imgUrl = data.advanceCertificate;
+					}
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							var that = this,
+								flag = true,
+								imgFlag = true,
+								_params = {
+									orderNo: orderNo
+								},
+								$inputs = that.$content.find('.input-text input');
+							$inputs.each(function() {
+								var value = $.trim($(this).val()),
+									$parent = $(this).parent();
+								if(!value) {
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
+									$parent.append('<span class="input-err">该项不能为空！</span>');
+									flag = false;
+								} else if(!regMap[$(this).data('type')].test(value)) {
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
+									$parent.append('<span class="input-err">该项不符合输入规则！</span>');
+									flag = false;
+								} else {
+									$parent.removeClass('error-input');
+									$parent.find('.input-err').remove();
+									_params[$(this).data('key')] = value;
+								}
+							});
+							if(isSure) {
+								if(!$scope.imgUrl) {
+									that.$content.find('.uploadEvt .imgs-item-upload').removeClass('error-input').addClass('error-input');
+									flag = false;
+								} else {
+									that.$content.find('.uploadEvt .imgs-item-upload').removeClass('error-input');
+									_params.advanceCertificate = $scope.imgUrl;
+								}
+							}
+							if(flag) {
+								console.log(_params)
+								if(isSure) {
+									_params.paymentStatus = 1;
+									makeloanSureSubmit(_params);
+								} else {
+									makeloanSubmit(_params);
+								}
+							} else {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请完善各项信息！'),
+									buttons: {
+										close: {
+											text: '取消',
+											btnClass: 'btn-default btn-cancel'
+										},
+										ok: {
+											text: '确定',
+											action: function() {
+
+											}
+										}
+									}
+								});
+								return false;
+							}
+						}
+					}
+				}
+			});
+		});
+	}
+
 
 	/**
 	 * 加载立即处理事件
@@ -404,14 +526,21 @@ page.ctrl('orderDetails', function($scope) {
 		// 放款预约
 		$console.find('#makeLoan').on('click', function() {
 			var that = $(this),
-				orderNo = that.data('orderNo');
+				orderNo = $params.orderNo;
 			makeLoan(orderNo);
+		});
+
+		// 放款确认
+		$console.find('#makeLoanSure').on('click', function() {
+			var that = $(this),
+				orderNo = $params.orderNo;
+			makeLoan(orderNo, true);
 		});
 
 		// 申请终止订单
 		$console.find('#applyTerminate').on('click', function() {
 			var that = $(this),
-				orderNo = that.data('orderNo');
+				orderNo = $params.orderNo;
 			loanOrderApplyCount(orderNo, 1, function() {
 				applyTerminate(orderNo);
 			});
@@ -420,7 +549,7 @@ page.ctrl('orderDetails', function($scope) {
 		// 申请修改贷款信息
 		$console.find('#applyModify').on('click', function() {
 			var that = $(this),
-				orderNo = that.data('orderNo');
+				orderNo = $params.orderNo;
 			loanOrderApplyCount(orderNo, 0, function() {
 				applyModify(orderNo, that);
 			});

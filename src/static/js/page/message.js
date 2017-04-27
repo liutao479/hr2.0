@@ -36,7 +36,7 @@ page.ctrl('message', function($scope) {
 			default:
 				idKey = 'orderNo';
 				timeKey = 'createDate';
-				titleKey = 'title';
+				titleKey = 'content';
 				api = $http.api('busiMsg/page', true);
 			break;
 		}

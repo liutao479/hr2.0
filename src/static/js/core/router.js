@@ -118,6 +118,9 @@
 	}
 
 	router.get = function(key, params, title) {
+		if(g.xhrPool.length) {
+			g.abortXhr();
+		}
 		var item = g.routerMap[key];
 		if(!item) {
 			return g.location.href = '404.html';
@@ -167,7 +170,7 @@
 		var _paths = _origin.split('/'),
 			_params = !!_search ? $.deparam(Base64.atob(decodeURI(_search)), true) : undefined;
 		router.render(_origin, _params);
-		cb && typeof cb == 'function' && cb(_paths[0]);
+		cb && typeof cb == 'function' && (_params && !_params.path) && cb(_paths[0]);
 	}
 
 	$(window).bind('hashchange', function() {

@@ -296,25 +296,30 @@ page.ctrl('pickMaterialsApproval', function($scope) {
 			var that = this;
 			that.$checking.onChange(function() {
 				//用于监听意见有一个选中，则标题项选中
-				var flag = 0;
-				var str = '';
+				var flag = 0,
+					str = '',
+					value = $reason.val(),
+					reg = /[^#][^#]*[^#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
 						flag++;
 					}
 				})
-				str = '#' + str.substring(0, str.length - 1) + '#';				
-				$reason.val(str);
+				str = str.substring(0, str.length - 1);
+				
 				if(flag > 0) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
 				} else {
-					$reason.val('');
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 
-				// if()
+				if(value && value.match(reg)) {
+					$reason.val(value.replace(reg, str));
+				} else {
+					$reason.val('#' + str + '#' + $reason.val());
+				}
 			});
 		})
 

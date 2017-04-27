@@ -1,11 +1,11 @@
 //iconfont矢量字体
 @font-face {
   font-family: 'iconfont';  /* project id 203349 */
-  src: url('//at.alicdn.com/t/font_nyfsefnbl0udi.eot');
-  src: url('//at.alicdn.com/t/font_nyfsefnbl0udi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_nyfsefnbl0udi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_nyfsefnbl0udi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_nyfsefnbl0udi.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_nnq7zi3nfqiwwmi.eot');
+  src: url('//at.alicdn.com/t/font_nnq7zi3nfqiwwmi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_nnq7zi3nfqiwwmi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_nnq7zi3nfqiwwmi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_nnq7zi3nfqiwwmi.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -149,6 +149,7 @@ input[disabled]{
 }
 .link {
     color: @linkColor;
+    cursor: pointer;
 }
 
 // 边框灰色背景白色的框
@@ -1110,11 +1111,10 @@ input[disabled]{
                 margin-left: 210px;
                 //文字元素给行高保持与左侧水平
                 .panel-value-item {
-                    // float: left;
-                    word-wrap: break-word;
+                    float: left;
+                    word-break:break-all;
                     line-height: 34px;
                     margin-right: 10px;
-                    width: 100%;
                     .input-text {
                         width: 270px;
                     }
@@ -1815,7 +1815,7 @@ input[disabled]{
     background-color: #FFF;
     border: 1px solid @borderColor;
     border-bottom: none;
-    line-height: 53px;
+    line-height: 52px;
     text-align: right;
     padding-right: 20px;
     &.tab-bar-special {

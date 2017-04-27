@@ -112,8 +112,11 @@ page.ctrl('myCustomer', [], function($scope) {
 		getFinancePayment(orderNo, function(data) {
 			$.confirm({
 				title: '放款预约',
-				content: doT.template(dialogTml.wContent.makeLoan)(result.data),
+				content: isSure ? doT.template(dialogTml.wContent.makeLoanSure)(data) : doT.template(dialogTml.wContent.makeLoan)(data),
 				onContentReady: function() {
+					if(isSure) {
+						this.$content.find('.uploadEvt').imgUpload();
+					}
 					//启动用款时间日历控件
 					this.$content.find('.dateBtn').datepicker({
 						dateFmt: 'yyyy-MM-dd HH:mm',
@@ -122,7 +125,9 @@ page.ctrl('myCustomer', [], function($scope) {
 						oncleared: function() {
 						}
 					});
-
+					if(data.advanceCertificate) {
+						$scope.imgUrl = data.advanceCertificate;
+					}
 				},
 				buttons: {
 					close: {
@@ -158,8 +163,23 @@ page.ctrl('myCustomer', [], function($scope) {
 									_params[$(this).data('key')] = value;
 								}
 							});
+							if(isSure) {
+								if(!$scope.imgUrl) {
+									that.$content.find('.uploadEvt .imgs-item-upload').removeClass('error-input').addClass('error-input');
+									flag = false;
+								} else {
+									that.$content.find('.uploadEvt .imgs-item-upload').removeClass('error-input');
+									_params.advanceCertificate = $scope.imgUrl;
+								}
+							}
 							if(flag) {
-								makeloanSubmit(_params)
+								console.log(_params)
+								if(isSure) {
+									_params.paymentStatus = 1;
+									makeloanSureSubmit(_params);
+								} else {
+									makeloanSubmit(_params);
+								}
 							} else {
 								$.alert({
 									title: '提示',
@@ -193,6 +213,24 @@ page.ctrl('myCustomer', [], function($scope) {
 		$.ajax({
 			type: "post",
 			url: $http.api('financePayment/save', 'cyj'),
+			data: params,
+			dataType: "json",
+			success: $http.ok(function(result) {
+				console.log(result)
+				$.toast('提交成功！', function() {
+					
+				})
+			})
+		});
+	}
+
+	/**
+	 * 放款确认提交
+	 */
+	var makeloanSureSubmit = function(params) {
+		$.ajax({
+			type: "post",
+			url: $http.api('financePayment/confirm', 'cyj'),
 			data: params,
 			dataType: "json",
 			success: $http.ok(function(result) {
@@ -288,7 +326,13 @@ page.ctrl('myCustomer', [], function($scope) {
 			router.render(that.data('href'), {
 				orderNo: that.data('orderNo'),
 				type: 'OrderDetails',
-				path: 'myCustomer'
+				path: 'myCustomer',
+				btnStatus: {
+					terminateDisplay: that.data('terminateDisplay'),
+					paymentApplyDisplay: that.data('paymentApplyDisplay'),
+					paymentConfirmDisplay: that.data('paymentConfirmDisplay'),
+					modifyDisplay: that.data('modifyDisplay')
+				}
 			});
 		});
 
@@ -319,12 +363,12 @@ page.ctrl('myCustomer', [], function($scope) {
 		});
 
 		// 放款确认
-		// $console.find('#myCustomerTable .makeLoanSure').on('click', function() {
-		// 	var that = $(this),
-		// 		orderNo = that.data('orderNo');
-		// 	makeLoan(orderNo, true);
-		// 	return false;
-		// });
+		$console.find('#myCustomerTable .makeLoanSure').on('click', function() {
+			var that = $(this),
+				orderNo = that.data('orderNo');
+			makeLoan(orderNo, true);
+			return false;
+		});
 
 		// 申请终止订单
 		$console.find('#myCustomerTable .applyTerminate').on('click', function() {
@@ -517,6 +561,18 @@ page.ctrl('myCustomer', [], function($scope) {
 		apiParams.pageNum = _pageNum;
 		loadCustomerList(apiParams);
 		cb();
+	}
+
+	/***
+	* 上传图片成功后的回调函数
+	*/
+	$scope.uploadcb = function(self) {
+		self.$el.removeClass('error-input');
+		$scope.imgUrl = $('.jconfirm .imgs-view').attr('src');
+	}
+	
+	$scope.deletecb = function(self) {
+		delete $scope.imgUrl;
 	}
 
 	/**

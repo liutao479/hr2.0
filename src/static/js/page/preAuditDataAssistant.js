@@ -3,7 +3,7 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		userType=[
-			{userType:0,text:"主申请人"},
+			{userType:0,text:"主借款人"},
 			{userType:1,text:"共同还款人"},
 			{userType:2,text:"反担保人"}
 		],

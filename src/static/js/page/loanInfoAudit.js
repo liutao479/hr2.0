@@ -5,19 +5,20 @@ page.ctrl('loanInfoAudit', function($scope) {
 	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
 
+
+	//保存按钮请求的接口，type为ApplyModify时，表示申请修改贷款信息的保存接口
 	var postUrl = {
-		"saveDDXX": $http.api('loanInfoInput/updLoanOrder', 'jbs'),
-		"saveCLXX": $http.api('loanInfoInput/updLoanUserCar', 'jbs'),
-		"saveFQXX": $http.api('loanInfoInput/updLoanUserStage', 'jbs'),
-		"saveZJKR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
-		"saveGTHK": $http.api('loanInfoInput/updLoanUser', 'jbs'),
-		"saveFDBR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
-		"saveJJLXR": $http.api('loanInfoInput/updLoanEmergencyConact', 'jbs'),
-		"saveHKKXX": $http.api('loanInfoInput/updLoanPayCard', 'jbs'),
-		"saveFYXX": $http.api('loanInfoInput/updLoanFee', 'jbs'),
-		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation', 'jbs')
+		"saveDDXX": $http.api('loanInfoInput/updLoanOrder' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveCLXX": $http.api('loanInfoInput/updLoanUserCar' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveFQXX": $http.api('loanInfoInput/updLoanUserStage' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveZJKR": $http.api('loanInfoInput/updLoanUser' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveGTHK": $http.api('loanInfoInput/updLoanUser' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveFDBR": $http.api('loanInfoInput/updLoanUser' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveJJLXR": $http.api('loanInfoInput/updLoanEmergencyConact' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveHKKXX": $http.api('loanInfoInput/updLoanPayCard' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveFYXX": $http.api('loanInfoInput/updLoanFee' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs')
 	};
-	console.log(postUrl)
 
 	/**
 	* 加载车贷办理数据
@@ -796,25 +797,30 @@ page.ctrl('loanInfoAudit', function($scope) {
 			var that = this;
 			that.$checking.onChange(function() {
 				//用于监听意见有一个选中，则标题项选中
-				var flag = 0;
-				var str = '';
+				var flag = 0,
+					str = '',
+					value = $reason.val(),
+					reg = /[^#][^#]*[^#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
 						flag++;
 					}
 				})
-				str = '#' + str.substring(0, str.length - 1) + '#';				
-				$reason.val(str);
+				str = str.substring(0, str.length - 1);
+				
 				if(flag > 0) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
 				} else {
-					$reason.val('');
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 
-				// if()
+				if(value && value.match(reg)) {
+					$reason.val(value.replace(reg, str));
+				} else {
+					$reason.val('#' + str + '#' + $reason.val());
+				}
 			});
 		})
 

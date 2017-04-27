@@ -62,6 +62,26 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 	}
 
 	/**
+	 * 图片必传标记校验
+	 */
+	var checkData = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('loanRegistration/valiRegistrationMaterials', 'zyj'),
+			dataType: 'json',
+			data: {
+				orderNo: $params.orderNo
+			},
+			success: $http.ok(function(result) {
+				console.log(result);
+				if( cb && typeof cb == 'function' ) {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
 	* 底部操作按钮区域
 	*/	
 	var loadCommitBar = function(cb) {
@@ -149,7 +169,9 @@ page.ctrl('licenceProcessDetail', [], function($scope) {
 							}
 							_params.orderNo = $params.orderNo;
 							submitOrders(_params, function() {
-								router.render('licenceProcess');
+								$.toast('提交成功！', function() {
+									router.render('licenceProcess');	
+								});
 							});
 						}
 					}

@@ -121,6 +121,38 @@
 							</dd>\
 						</dl>\
 					</div>',
+		makeLoanSure: '<div class="w-content clearfix">\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">开户行：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="advanceBank" data-key="advanceBank" data-type="accountName" value="{{=it.advanceBank || \"\"}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">打款账户：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="advanceAccount" data-key="advanceAccount" data-type="accountName" value="{{=it.advanceAccount || \"\"}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">打款账号：</dt>\
+							<dd class="dd">\
+								<div class="input-text input-text-mini">\
+									<input type="text required" id="advanceAccountName" data-key="advanceAccountName" data-type="accountNumber" value="{{=it.advanceAccountName || \"\"}}">\
+								</div>\
+							</dd>\
+						</dl>\
+						<dl class="w-dropdown float-left">\
+							<dt class="dt">打款凭证：</dt>\
+							<dd class="dd">\
+								<div class="imgs-item-group uploadEvt" data-deletecb="page.$scope[\'myCustomer\'].deletecb" data-uploadcb="page.$scope[\'myCustomer\'].uploadcb" data-card="true" data-id="" data-orderno="123" data-code="cardUpd" data-name="垫资凭证" data-scene="homeMaterialsUpload" data-img="{{= it.advanceCertificate || \'\'}}" data-err="0" data-editable="1"></div>\
+							</dd>\
+						</dl>\
+					</div>',
 		zxdzContent: '<div class="w-content">\
 						<dl class="w-dropdown">\
 							<dt class="dt">用款时间：</dt>\

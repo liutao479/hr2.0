@@ -162,8 +162,10 @@
 								</div>
 							{{ } }}
 						{{ } }}
-						{{ if(ml.type == 1) { }}
+						{{ if(ml.type == 1) {console.log(ml); }}
 							{{ if(!ml.isEditor) { }}
+								<div class="panel-value-item">{{=col.orgName || ''}}</div>
+							{{ } else { }}
 								<div class="panel-value-item">{{=col.orgName || ''}}</div>
 							{{ } }}
 						{{ } }}

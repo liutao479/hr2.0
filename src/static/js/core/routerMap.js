@@ -321,10 +321,6 @@
 			title: '开卡信息录入',
 			page: 'openCardSheet'
 		},
-		'loanProcess/creditAudit':{
-			title: '开卡审核',
-			page: 'operateAnalysis'
-		},
 		'loanProcess/usedCarInfoInput':{
 			title: '二手车信息录入',
 			page: 'secondhandInput'
@@ -373,7 +369,7 @@
 			title: '逾期记录',
 			page: 'expireProcessInputList'
 		},
-		'expireProcess/expireSingleDetail':{
+		'expire/expireSingleDetail':{
 			title: '逾期记录',
 			page: 'expireSingleDetail'
 		},

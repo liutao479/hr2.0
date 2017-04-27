@@ -49,10 +49,30 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
-				result.disabled = true;
+				result.data.disabled = true;
 				console.log(result)
-				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result, true);
+				render.compile($scope.$el.$infoPanel, $scope.def.infoTmpl, result.data, true);
 				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
+	 * 图片必传标记校验
+	 */
+	var checkData = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('loanPledge/valiPledgenMaterials', 'zyj'),
+			dataType: 'json',
+			data: {
+				orderNo: $params.orderNo
+			},
+			success: $http.ok(function(result) {
+				console.log(result);
+				if( cb && typeof cb == 'function' ) {
 					cb();
 				}
 			})
@@ -260,30 +280,34 @@ page.ctrl('mortgageAuditDetail', [], function($scope) {
 
 		// 审核通过
 		$console.find('#verify').on('click', function() {
-			$.confirm({
-				title: '审核通过',
-				content: dialogTml.wContent.suggestion,
-				buttons: {
-					close: {
-						text: '取消',
-						btnClass: 'btn-default btn-cancel'
-					},
-					ok: {
-						text: '确定',
-						action: function () {
-							var _reason = $.trim($('.jconfirm #suggestion').val()),
-								_params = {
-									orderNo: $scope.orderNo
-								};
-							if(_reason) {
-								_params.reason = _reason;
+			checkData(function() {
+				$.confirm({
+					title: '审核通过',
+					content: dialogTml.wContent.suggestion,
+					buttons: {
+						close: {
+							text: '取消',
+							btnClass: 'btn-default btn-cancel'
+						},
+						ok: {
+							text: '确定',
+							action: function () {
+								var _reason = $.trim($('.jconfirm #suggestion').val()),
+									_params = {
+										orderNo: $scope.orderNo
+									};
+								if(_reason) {
+									_params.reason = _reason;
+								}
+								verifyOrders(_params, function() {
+									$.toast('处理成功！', function() {
+										router.render('mortgageAudit');	
+									});
+								})
 							}
-							verifyOrders(_params, function() {
-								router.render('mortgageAudit');
-							})
 						}
 					}
-				}
+				});
 			});
 			// var that = $(this);
 			// that.openWindow({

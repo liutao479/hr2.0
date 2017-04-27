@@ -67,6 +67,9 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 			data: params,
 			dataType: 'json',
 			success: $http.ok(function(result) {
+				if(!result.data) {
+					result.data = {};
+				}
 				result.data.disabled = false;
 				result.data.pledgeId = $params.pledgeId;
 				console.log(result);
@@ -147,7 +150,7 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 			dataType: 'json',
 			data: {
 				orderNo: $params.orderNo
-			}
+			},
 			success: $http.ok(function(result) {
 				console.log(result);
 				if( cb && typeof cb == 'function' ) {
@@ -245,16 +248,20 @@ page.ctrl('mortgageProcessDetail', [], function($scope) {
 	 */
 	var process = function() {
 		var flag = true,
+			$inputs = $console.find('#submitTable .required'),
 			params = {
 				pledgeId: $params.pledgeId
 			},
-			$inputs = $console.find('#submitTable .required');
+			id = $console.find('#submitTable').data('id');
+		if(id) {
+			params.id = id;
+		}
 		$inputs.each(function() {
 			if(!$.trim($(this).val())) {
 				$(this).removeClass('error-input').addClass('error-input');
 				flag = false;
 			} else {
-				params[$(this).data('type')] = $.trim($(this).val());
+				params[$(this).data('key')] = $.trim($(this).val());
 				$(this).removeClass('error-input');
 			}
 		});

@@ -64,6 +64,7 @@ page.ctrl('phoneAudit', function($scope) {
 			console.log(tContext);
 			$(this).siblings('input').val(tContext)
 		})
+
 	    /***
 		* 保存按钮
 		*/
@@ -146,6 +147,7 @@ page.ctrl('phoneAudit', function($scope) {
 	$(document).on('click','.selecter', function() {
 		$(".selectOptBox1",$(this)).show();
 	})
+
 	//点击下拉选项赋值zhy
 	$(document).on('click', '.selectOptBox1 li', function() {
 		var value = $(this).data('key');

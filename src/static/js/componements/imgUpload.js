@@ -81,7 +81,7 @@
 				} else {
 					self.name = internalTemplates.name.format(self.options.name, self.empty);
 				}
-				tmp = internalTemplates.edit.format(self.name);
+				tmp = (!self.options.type ? internalTemplates.edit : internalTemplates.videoEdit).format(self.name);
 				self.status = 0;
 			} else {
 				if(self.options.other) {
@@ -89,7 +89,7 @@
 				} else {
 					self.name = internalTemplates.name.format(self.options.name, self.empty);
 				}
-				tmp = internalTemplates.blank.format(self.name);
+				tmp = internalTemplates.blank.format(self.name, (!self.options.type ? '图片':'视频'));
 				self.status = 2;
 			}
 			
@@ -109,7 +109,7 @@
 				} else {
 					self.name = internalTemplates.name.format(self.options.name, self.empty);
 				}
-				tmp = internalTemplates.modify.format(self.name, self.options.img, self.errImg, self.errMsg);
+				tmp = (!self.options.type ? internalTemplates.modify : internalTemplates.videoModify).format(self.name, self.options.img, self.errImg, self.errMsg);
 				self.status = 1;
 			} else {
 				if(self.options.err != undefined) {
@@ -122,7 +122,7 @@
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
 				self.name = internalTemplates.name.format(self.options.name, self.empty);
-				tmp = internalTemplates.view.format(self.name, self.options.img || '', self.errImg, self.errMsg);
+				tmp = (!self.options.type ? internalTemplates.view : internalTemplates.videoView).format(self.name, self.options.img || '', self.errImg, self.errMsg);
 				self.status = 2;
 			}
 		}
@@ -244,7 +244,7 @@
 				}
 				$.alert({
 					title: '提示',
-					content: tool.alert('确认删除该照片吗？'),
+					content: tool.alert('确认删除该' + (!self.options.type ? '图片' : '视频') + '吗？'),
 					buttons: {
 						close: {
 							text: '取消',
@@ -339,7 +339,6 @@
 		if(self.options.delUrl) {
 			_url = self.options.delUrl;
 		}
-		console.log(params);
 		$.ajax({
 			url: _url,
 			type: 'post',
@@ -425,7 +424,6 @@
 		if(self.options.uplUrl) {
 			_url = self.options.uplUrl;
 		}
-		console.log(params);
 		$.ajax({
 			url: _url,
 			data: params,
@@ -510,6 +508,7 @@
 			contentType: false,
 			global: false,
 			success: function(response) {
+				console.log(response);
 				var _url = host + '/' + fd.get('key');
 				self.options.img = _url;
 				if(self.options.card){
@@ -550,22 +549,35 @@
 				<span class="i-tips">点击上传图片</span>\
 				<input type="file" class="input-file activeEvt" accept="image/gif,image/jpeg,image/jpg,image/png,image/tif" />\
 			   </div>{0}',
+		videoEdit: '<div class="imgs-item-upload">\
+				<div class="iconfont-upload"><i class="iconfont">&#xe65f;</i></div>\
+				<span class="i-tips">点击上传视频</span>\
+				<input type="file" class="input-file activeEvt" accept="video/rm,video/rmvb,video/wmv,video/avi,video/mp4,video/3gp,video/mkv" />\
+			   </div>{0}',
 		modify: '<div class="imgs-item-upload">\
 				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传" accept="image/gif,image/jpeg,image/jpg,image/png"/></div>\
 				<div class="imgs-delete" title="删除"><i class="iconfont">&#xe602;</i></div>\
 				<img src="{1}" class="imgs-view" />\
 				{2}{3}</div>{0}',
+		videoModify: '<div class="imgs-item-upload">\
+				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传" accept="video/rm,video/rmvb,video/wmv,video/avi,video/mp4,video/3gp,video/mkv"/></div>\
+				<div class="imgs-delete" title="删除"><i class="iconfont">&#xe602;</i></div>\
+				<video src="{1}" class="imgs-view" />\
+				{2}{3}</div>{0}',
 		view: '<div class="imgs-item-upload">\
 				<img src="{1}" class="imgs-view viewEvt" />\
 			   {2}{3}</div>{0}',
+		videoView: '<div class="imgs-item-upload">\
+					<video src="{1}" class="imgs-view"></video>\
+				</div>{0}',
 		blank: '<div class="imgs-item-upload imgs-item-upload-blank">\
 				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
-				<span class="i-tips">图片未上传</span>\
+				<span class="i-tips">{1}未上传</span>\
 			   </div>{0}',
 		msg: '<div class="imgs-describe">{0}</div>',
 		name: '<span class="imgs-item-p">{1}{0}</span>',
 		other: '<div class="input-text imgs-input-text">\
-					<input type="text" value="{0}" />\
+					<input type="text" maxlength="14" value="{0}" />\
 				</div>'
 	}
 

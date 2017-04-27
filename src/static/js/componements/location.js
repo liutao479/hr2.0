@@ -1,9 +1,9 @@
 'use strict';
 (function($, _) {
-	$.fn.location = function() {
+	$.fn.location = function(opts) {
 		return this.each(function() {
 			var that = $(this);
-			that.$location = new hLocation(that, that.data());
+			that.$location = new hLocation(that, opts || that.data());
 		});
 	}
 
@@ -16,25 +16,30 @@
 	* --@orderDate {string} 订单日期
 	**/
 	function hLocation($el, data) {
+		if(typeof data.backspace == 'string') {
+			data.backspace = [{ title: '返回上级', href: data.backspace }];
+		}
+		self.opts = data;
 		this.$location = $(_.template(tpl)(data)).insertAfter($el);
 		$el.remove();
 		this.setupLocation();
 	}
 
 	hLocation.prototype.setupLocation = function(){
-		this.$location.find('#backspace').on('click', function() {
+		this.$location.find('.backEvt').on('click', function() {
 			var that = $(this),
-				params = that.data();
-			var href = params.href;
-			delete params['href'];
-			router.render(href, params);
+				idx = that.data('idx'),
+				bsp = self.opts.backspace[idx];
+			router.render(bsp.href, bsp.params);
 		})
 	};
 
 	var tpl = '<div class="path-back-bar">\
 					<div class="path-back">\
 						<i class="iconfont">&#xe626;</i>\
-						<a href="javascript:;" id="backspace" class="link" data-href="{{=it.backspace}}">返回列表</a>&nbsp;&gt;&nbsp;\
+						{{ for(var i = 0, len = it.backspace.length; i < len; i++) { var bsp = it.backspace[i]; }}\
+						<a href="javascript:;" class="link backEvt" data-idx="{{=i}}" data-href="{{=bsp.href}}">{{=bsp.title || "返回上级"}}</a>&nbsp;&gt;&nbsp;\
+						{{ } }}\
 						<span class="current-page">{{=it.current}}</span>\
 					</div>\
 					{{ if(it.pmsDept) { }}\
