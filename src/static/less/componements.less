@@ -1,6 +1,7 @@
 // 按钮
 .button {
     display: inline-block;
+    position: relative;
     cursor: pointer;
     .borderRadius;
     height: 40px;
@@ -43,6 +44,7 @@
         }
     }
     &&-empty {
+        position: relative;
         height: 32px;
         line-height: 30px;
         border:1px solid @buttonBgColor;
@@ -53,11 +55,37 @@
             border-color: @mainColor !important;
             background-color: @mainColor !important;
         }
+        &.checked {
+            color: #FFF !important;
+            border-color: @mainColor !important;
+            background-color: @mainColor !important;
+        }
         &:active {
             color: #FFF !important;
             border-color: lighten(@mainColor, 8%) !important;
             background-color: lighten(@mainColor, 8%) !important;
         }
+    }
+    &&-check {
+        height: 32px;
+        line-height: 30px;
+        border:1px solid @borderColor;
+        background-color: #ffffff;
+        color: @fontColor;
+        &:hover {
+            color: @mainColor !important;
+            border-color: @mainColor !important;
+            // background-color: @mainColor !important;
+        }
+        &.checked {
+            color: @mainColor !important;
+            border-color: @mainColor !important;
+        }
+        // &:active {
+        //     color: #FFF !important;
+        //     border-color: lighten(@mainColor, 8%) !important;
+        //     background-color: lighten(@mainColor, 8%) !important;
+        // }
     }
     &&-width {
         width: 126px;
@@ -94,6 +122,20 @@
     }
     i {
         margin-right: 7px;
+    }
+    .correct {
+        display: block;
+        width: 14px;
+        height: 14px;
+        line-height: normal;
+        font-size: 10px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-right: 0;
+        background-color: @mainColor;
+        color: #FFF;
+        border-radius: 0 0 0 3px;
     }
 }
 //必填标志
@@ -663,7 +705,7 @@
         width: 150px;
     }
     &&-bank-name {
-        width: 180px;
+        width: 190px;
     }
     &&-date {
         width: 120px;
@@ -673,6 +715,9 @@
     }
     &&-bank {
         width: 260px;
+    }
+    &&-new-bank {
+        width: 300px;
     }
     &&-dept-source {
         width: 280px;
@@ -1074,6 +1119,7 @@
     display: inline-block;
     vertical-align:middle;
     width: 500px;
+    max-height:80%;
     // 标题部分
     .w-title {
         position: relative;
@@ -1117,8 +1163,11 @@
             margin-right: 5px;
         }
     }
+    &.contextWidth{
+        width:70%;
+        height:80%;
+    }
     
-
 }
 // 内容部分
 .w-content {
@@ -1131,6 +1180,8 @@
     .w-text {
         line-height: 22px;
         text-align: center;
+        margin: 10px 0;
+        font-size: 14px;
     }
     .w-select {
         margin: 5px 0; 

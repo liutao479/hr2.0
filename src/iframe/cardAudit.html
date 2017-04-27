@@ -74,6 +74,7 @@
 												{{ }else{ }}
 													<input type="text" name="yearIncomeMoney" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -92,6 +93,7 @@
 												{{ }else{ }}
 													<input type="text" id="loanMoney" name="loanMoney" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -110,6 +112,7 @@
 												{{ }else{ }}
 													<input type="text" id="feeRate" name="feeRate" />
 												{{ } }}
+												<span class="unitInfo">%</span>
 											</span>
 										</td>
 									</tr>
@@ -128,6 +131,7 @@
 												{{ }else{ }}
 													<input type="text" id="feeamount" readonly="readonly" name="feeamount" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -164,6 +168,7 @@
 												{{ }else{ }}
 													<input type="text" id="carPrice" name="carPrice" />
 												{{ } }}
+												<span class="unitInfo">元</span>
 											</span>
 										</td>
 									</tr>
@@ -200,6 +205,7 @@
 												{{ }else{ }}
 													<input type="text" id="loanRatio" readonly="readonly" name="loanRatio" />
 												{{ } }}
+												<span class="unitInfo">%</span>
 											</span>
 										</td>
 									</tr>
@@ -954,7 +960,7 @@
 					</div>
 					<div class="panel-detail-content-layout">
 						<div class="loan-imgs-bar clearfix positionRela">
-							<div class="imgs-item-group openCardPic uploadEvt" data-deletecb="page.$scope['cardInfoApproval'].deletecb" data-uploadcb="page.$scope['cardInfoApproval'].uploadcb" data-card="true" data-id="" data-orderno="{{= it.loanTask.orderNo}}" data-code="cardUpd" data-name="信用卡申请表" data-scene="homeMaterialsUpload" data-img="{{= it.creditCard.creditCardImgUrl ? it.creditCard.creditCardImgUrl :''}}" data-err="0" data-editable="1"></div>
+							<div class="imgs-item-group openCardPic uploadEvt" data-deletecb="page.$scope['cardInfoApproval'].deletecb" data-uploadcb="page.$scope['cardInfoApproval'].uploadcb" data-card="true" data-id="" data-orderno="{{= (it.loanTask ? it.loanTask.orderNo : '')}}" data-code="cardUpd" data-name="信用卡申请表" data-scene="homeMaterialsUpload" data-img="{{= it.creditCard.creditCardImgUrl ? it.creditCard.creditCardImgUrl :''}}" data-err="0" data-editable="1"></div>
 							{{if(it.creditCard.creditCardImgUrl){ }}
 								<input id="imgUrl" class="required" type="hidden" name="creditCardImgUrl" value="{{= it.creditCard.creditCardImgUrl}}" />
 							{{ }else{ }}
@@ -967,7 +973,7 @@
 					<input type="hidden" name="id" value="{{= it.creditCard.id}}" />
 				{{ } }} 
 				
-				<input type="hidden" name="orderNo" value="{{= it.loanTask.orderNo}}" />
+				<input type="hidden" name="orderNo" value="{{= (it.loanTask ? it.loanTask.orderNo : '')}}" />
 							</form>
 			</script>
 				

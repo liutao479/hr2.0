@@ -22,7 +22,7 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		if($params.type) {
 			data.type = $params.type;
 			data.orderNo = $params.orderNo;	
-			url = 'loanMaterials/loanMaterialsByOrderNo';
+			url = 'signMaterials/signMaterialsByOrderNo';
 		}
 		$.ajax({
 			type: 'post',
@@ -73,10 +73,19 @@ page.ctrl('signMaterialsUpload', function($scope) {
 	 * 材料必填，必传检验
 	 */
 	function checkData(cb) {
+		var taskIds = [];
+		for(var i = 0, len = $params.tasks.length; i < len; i++) {
+			taskIds.push($params.tasks[i].id);
+		}
+		var params = {
+			taskIds: taskIds
+		}
 		$.ajax({
 			type: 'post',
-			url: $http.api('signMaterials/submit/' + $params.taskId, 'zyj'),
+			url: $http.api('tasks/validate', 'zyj'),
+			data: JSON.stringify(params),
 			dataType: 'json',
+			contentType: 'application/json;charset=utf-8',
 			success: $http.ok(function(result) {
 				console.log(result);
 				if(cb && typeof cb == 'function') {
@@ -120,7 +129,9 @@ page.ctrl('signMaterialsUpload', function($scope) {
 		 * 提交订单
 		 */
 		$sub.on('taskSubmit', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 			// checkData(function() {
 			// 	var canSubmit = flow.taskSubmit($params.tasks, $params.taskId);
 			// 	if(canSubmit) {
@@ -288,25 +299,30 @@ page.ctrl('signMaterialsUpload', function($scope) {
 			var that = this;
 			that.$checking.onChange(function() {
 				//用于监听意见有一个选中，则标题项选中
-				var flag = 0;
-				var str = '';
+				var flag = 0,
+					str = '',
+					value = $reason.val(),
+					reg = /[^#][^#]*[^#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
 						flag++;
 					}
 				})
-				str = '#' + str.substring(0, str.length - 1) + '#';				
-				$reason.val(str);
+				str = str.substring(0, str.length - 1);
+				
 				if(flag > 0) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
 				} else {
-					$reason.val('');
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 
-				// if()
+				if(value && value.match(reg)) {
+					$reason.val(value.replace(reg, str));
+				} else {
+					$reason.val('#' + str + '#' + $reason.val());
+				}
 			});
 		})
 

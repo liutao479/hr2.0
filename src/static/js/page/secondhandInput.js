@@ -460,6 +460,11 @@ page.ctrl('secondhandInput', function($scope) {
 			$(this).attr('readonly','readonly')
 		})
 	}
+	var noWrite = function(){
+		$(".pointDisabled").each(function(){
+			$(this).find('input').attr('readonly','readonly')
+		})
+	}
 	/***
 	* 加载页面模板
 	*/
@@ -474,6 +479,7 @@ page.ctrl('secondhandInput', function($scope) {
 			setupDropDown();
 			seleLoad();
 			seNotInp();
+			noWrite();
 		});
 	});
 });

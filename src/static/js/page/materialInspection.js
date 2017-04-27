@@ -5,13 +5,15 @@ page.ctrl('materialInspection', function($scope) {
 		apiParams = {
 			orderNo: $params.orderNo,
 			//orderNo: 'nfdb2016102820480790',
-			//orderNo:'vxnfdb20170417174718965',
 			sceneCode:'loanApproval'
 		},userType=[
-			{userType:0,text:"主申请人"},
+			{userType:0,text:"主借款人"},
 			{userType:1,text:"共同还款人"},
 			{userType:2,text:"反担保人"}
-		];
+		],
+		toastArr=["bankWater","carBuy","houseInfo","submitCarInvoice","submitCertificate",
+		"submitHouseInvoice","submitInsurancePolicy","submitRegister",
+		"userCarInfoBuy"];/*非及时，除此之外都是及时的*/
 	// 查询列表数据
 	var search=function(param,callback){
 		$.ajax({
@@ -30,6 +32,10 @@ page.ctrl('materialInspection', function($scope) {
 					_mout.updateTime=_mout.verifyRecord.updateTime;
 				if(_mout.itemNum)
 					_mout.itemNum=_mout.itemNum;
+				if(_mout.verifyingNum)
+					_mout.verifyingNum=_mout.verifyingNum;
+				if($params.type)
+					_mout.type=$params.type;
 				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout, true);
 				if(callback && typeof callback == 'function') {
 					callback();
@@ -63,111 +69,94 @@ page.ctrl('materialInspection', function($scope) {
 			})
 		});
 	};
-	var openUserDialog=function(that,_data,key){		
-		for(var z in _data){
-			var _minObj=userType.filter(it=>it.userType==_data[z].userType);
-			if(_minObj&&_minObj.length==1){
-				_data[z].userTypeName=_minObj[0].text;
-			};
-		};
-		that.openWindow({
-			title:"———— 服务项目 ————",
-			width:"70%",
-			content: dialogTml.wContent.userBtnGroup,	
-			commit: dialogTml.wCommit.cancelSure,			
-			data:_data
-		},function($dia){
-			var _arr=[];
-			$dia.find(".block-item-data:not(.not-selected)").click(function() {
-				$(this).toggleClass("selected");	
-				var _index=$(this).data("index");
-				var _thisVal=_data[_index].userId;
-				if($(this).hasClass("selected"))
-					_arr.push(_thisVal);	
-				else
-					_arr.splice(_arr.indexOf(_thisVal),1);
-			});
-			$dia.find(".w-sure").click(function() {
-				$dia.remove();
-				if(_arr.length==0)
-					return false;
-				$.ajax({
-					type: 'post',
-					dataType:"json",
-					url: $http.api('loanAudit/verifyCheck',true),
-					data: {
-						key:key,
-						orderNo:apiParams.orderNo,
-						serviceType:'1',/*1材料验真，2数据辅证，必传*/
-						userIds:_arr.join("_")
-					},
-					success: $http.ok(function(res) {
-						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
-							var context=$(".jconfirm .jconfirm-content").html();
-							if(context){
-								setTimeout(function() {
-									jc.close();
-									search(apiParams);
-								},1500);
-							};
-						});
-					})
-				});
-			});
-		});	
-	};
 	/*发起核查*/
-	var openDialog=function(that,_data){
+	var openDialog=function(_data){
 		var _loalList=[
-			{text:"购车",isBank:true,class:"bacf09054",icon:"&#xe676;"},
-			{text:"购房",isBank:true,class:"bac73c7df",icon:"&#xe6bb;"},
-			{text:"银行",isBank:true,class:"bacAgain",icon:"&#xe673;"},
-			{text:"房产证",isBank:true,class:"bac59cfb7",icon:"&#xe679;"},
-			{text:"合格证",isBank:false,class:"bac82b953",icon:"&#xe672;"},
-			{text:"保单",isBank:false,class:"bac84bef0",icon:"&#xe642;"},
-			{text:"车辆",isBank:false,class:"bacf5bf5b",icon:"&#xe6cc;"},
+			{text:"购车",class:"bacf09054",icon:"&#xe676;"},
+			{text:"购房",class:"bac73c7df",icon:"&#xe6bb;"},
+			{text:"银行",class:"bacAgain",icon:"&#xe673;"},
+			{text:"房产证",class:"bac59cfb7",icon:"&#xe679;"},
+			{text:"合格证",class:"bac82b953",icon:"&#xe672;"},
+			{text:"保单",class:"bac84bef0",icon:"&#xe642;"},
+			{text:"车辆",class:"bacf5bf5b",icon:"&#xe6cc;"},
 		];
 		for(var i in _data){
 			for(var j=0;j<_loalList.length;j++){
 				if(_data[i].funcName.indexOf(_loalList[j].text)!=-1){
-					_data[i].isBank=_loalList[j].isBank;
 					_data[i].class=_loalList[j].class;
 					_data[i].icon=_loalList[j].icon;
 					break;
 				};
 				if(j==_loalList.length-1){
-					_data[i].isBank=false;
 					_data[i].class="bac73c7df";
 					_data[i].icon="&#xe6bb;";					
 				};
 			};
-		};
-		that.openWindow({
-			title:"———— 服务项目 ————",
-			width:"70%",
-			content: dialogTml.wContent.serviceItems,				
-			data:_data//0：未核查，1:未查询，缺少相关数据,2: 查询中,3：已核查
-		},function($dialog){
-			$dialog.find(".nextDialog").click(function() {
-				$dialog.remove();
-				var _key=_data[$(this).data('index')].key;
-				$.ajax({
-					type: 'post',
-					dataType:'json',
-					url: $http.api('loanAudit/checkUserList','cyj'),
-					data: {
-						orderNo:apiParams.orderNo,
-						key:_key
+		};		
+		var dialogHtml = doT.template(dialogTml.wContent.serviceItems)(_data);
+		$.dialog({
+			title: '———— 服务项目 ————',
+			boxWidth:"70%",
+			offsetTop: 62,
+			content:dialogHtml,
+			onContentReady:function(){
+				var _title="提示";
+				var _srvDialog=this;
+				_srvDialog.$content.find(".nextDialog").confirm({
+					title:_title,
+					content:"<p class='blank'>请确认是否发起本次核查？</p>",
+					onOpenBefore:function(){
+						_title=_data[this.$target.data('index')].funcName;
+						this.setTitle(_title);
 					},
-					success: $http.ok(function(res) {
-						if(res&&res.data&&res.data.length>0)
-							openUserDialog(that,res.data,_key);
-						else
-							openUserDialog(that,[],_key);
-					})
-				});	
-			});
-		});		
+				    buttons: {
+				        close: {
+				        	text:"取消",
+				        	btnClass:"btn-default btn-cancel",
+				        	action:function(){}
+				        },
+				        ok: {
+				        	text:"确定",
+				        	action:function(){
+				        		var _conDialog=this;
+								var _key=_data[_conDialog.$target.data('index')].key;
+								$.ajax({
+									type: 'post',
+									dataType:"json",
+									url: $http.api('loanAudit/verifyCheck',true),
+									data: {
+										key:_key,
+										orderNo:apiParams.orderNo,
+										serviceType:'2',/*1材料验真，2数据辅证，必传*/
+										userIds:apiParams.userId
+									},
+									success: $http.ok(function(res) {
+										_conDialog.close();
+										_srvDialog.close();
+										var _oneObj=toastArr.filter(it=>it==_key);
+										var _el=dialogTml.wContent.realTimeMsg//及时提示
+										if(_oneObj&&_oneObj.length==1)
+											_el=dialogTml.wContent.nonRealTimeMsg;//非及时提示
+										var _tipHtml = doT.template(_el)();
+										$.dialog({
+											title:false,
+											content:_tipHtml,
+											onContentReady:function(){
+												var _tioDialog=this;
+												setTimeout(function() {
+													_tioDialog.close();
+													search(apiParams);
+												},1500);
+											}
+										});
+									})
+								});
+					        }
+				        }
+				    }
+				});
+			}
+		});	
 	};
 	// 页面首次载入时绑定事件
  	var evt = function() {
@@ -182,7 +171,6 @@ page.ctrl('materialInspection', function($scope) {
 		});
 		/*获取核查列表*/
 		$scope.$el.$listDiv.off("click","#startCheck").on("click","#startCheck",function() {
-			var that=$(this);
 			$.ajax({
 				type: 'post',
 				dataType:'json',
@@ -193,10 +181,34 @@ page.ctrl('materialInspection', function($scope) {
 				},
 				success: $http.ok(function(res) {
 					if(res&&res.data&&res.data.length>0)
-						openDialog(that,res.data);
+						openDialog(res.data);
 					else
-						openDialog(that,[]);
+						$.alert({
+							title: '提示',
+							content: tool.alert("您尚未开通该核查权限！"),
+							buttons:{
+								ok: {
+									text: '确定',
+								}
+							}
+						});
 				})
+			});
+		});
+		$scope.$el.$listDiv.off("click",".no-img").on("click",".no-img",function() {
+			var _parent=$(this).parents('.no-img-group');
+			var _imgs=[],
+				_idx=$(this).parent(".no-img-list").index();
+			_parent.find('.no-img-list').each(function(){
+				var _src=$(this).find("img").attr('src');
+				if(_src)
+					_imgs.push({materialsPic:_src});
+			});
+			$.preview(_imgs, function(img, mark, cb) {
+				cb();	
+			}, {
+				markable: false,
+				idx: _idx
 			});
 		});
  	};
@@ -205,7 +217,6 @@ page.ctrl('materialInspection', function($scope) {
 	$console.load(router.template('iframe/material-inspection'), function() {
 		$scope.def.tabTmpl = $console.find('#roleBarTabTmpl').html();
 		$scope.def.listTmpl = $console.find('#materialInspectionTmpl').html();
-		$scope.def.toastTmpl = $console.find('#importResultTmpl').html();
 		$scope.$el = {
 			$tab: $console.find('#roleBarTab'),
 			$listDiv: $console.find('#listDiv')

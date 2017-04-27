@@ -35,6 +35,8 @@ page.ctrl('riskManagementDetail', function($scope) {
 			data: param,
 			success: $http.ok(function(res) {
 				pageBcData=param;
+				res.data.headerInfo.companyName=$params.companyName;
+				res.data.headerInfo.bankName=$params.bankName;
 				render.compile($scope.$el.$searchInfo, $scope.def.searchInfoTmpl, res.data.headerInfo, true);
 				render.compile($scope.$el.$table, $scope.def.tableTmpl, res.data.list, true);
 				// 构造分页
@@ -67,23 +69,13 @@ page.ctrl('riskManagementDetail', function($scope) {
 			router.render("operationsAnalysis");
 		});
  		$scope.$el.$table.off("click",".detailed").on("click",".detailed",function() {
- 			var _uid=$(this).data('userid');
+ 			//var _uid=$(this).data('userid');
  			var _orderno=$(this).data('orderno');
- 			var _sceneCode=$(this).data('scenecode');
-			router.render("preAuditDataAssistant", {	
-				orderNo:_orderno,
-				//userId:'334232',
-				userId:_uid,
-				sceneCode:_sceneCode,
-				upperLevelData:$params,
-				backJson:{
-					firstHref:"operationsAnalysis",
-					firstText:"返回列表",
-					secondHref:"riskManagementDetail",
-					secondText:"服务明细",
-					secondParam:JSON.stringify($params),
-					text:"数据辅证报告"
-				}
+ 			//var _sceneCode=$(this).data('scenecode');
+			router.render("myCustomer/orderDetails", {	
+				orderNo: _orderno,
+				type: 'OrderDetails',
+				path: 'operationsAnalysis'
 			});
 		});
  	};

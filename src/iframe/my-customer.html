@@ -66,7 +66,7 @@
 			<script type="text/x-dot-template" id="myCustomerListTmpl">
 				{{ var len = it.length; if(len) { }}
 					{{for(var i = 0; i < len; i++) { var row = it[i]; }}
-					<a data-href="myCustomer/orderDetails" class="orders-detail" data-order-no="{{=row.orderNo}}">
+					<a data-href="myCustomer/orderDetails" data-modify-display="{{=row.modifyDisplay}}" data-payment-apply-display="{{=row.paymentApplyDisplay}}" data-payment-confirm-display="{{=row.paymentConfirmDisplay}}" data-terminate-display="{{=row.terminateDisplay}}" class="orders-detail" data-order-no="{{=row.orderNo}}">
 					<table border="0" cellpadding="" width="100%" class="orders-box">
 						<thead>
 							<tr class="orders-bar-title">
@@ -107,12 +107,11 @@
 							</tr>
 							<tr>
 								<td class="status-name">身份证：<span class="status-value idCard">{{=row.idCard || ''}}</span></td>
-								<td class="status-name">首付比例：<span class="status-value">{{=(row.sfProportion ? (row.sfProportion*100).toFixed(2) + '%' : '')}}</span></td>
-								
+								<td></td>
 							</tr>
 							<tr>
 								<td class="status-name">分期金额：<span class="status-value">{{=(row.stageMoney ? row.stageMoney + '元' : '')}}</span></td>
-								<td class="status-name">手机号：<span class="status-value">{{=row.mobile || ''}}</span></td>
+								<td class="status-name">手机号：<span class="status-value">{{=row.phone || ''}}</span></td>
 								<td></td>
 							</tr>
 							<tr class="last-tr">

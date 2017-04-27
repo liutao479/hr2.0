@@ -18,9 +18,7 @@
 * 				data-creditid="征信人id" 
 * 				data-uplUrl="特殊材料上传url"
 * 				data-delUrl="特殊材料删除url"
-* 				data-materialspic="征信报告照片"
-* 				data-thumbnailpic="征信报告缩略图照片"
-* 				data-materialsAduitResult="",
+* 				data-auditResult="",
 *				data-materialsAduitOpinion="图片意见">
 * 		</element>
 */
@@ -60,7 +58,8 @@
 			uploadcb: $.noop,
 			viewable: false,
 			markable: false,
-			creditClickAble: undefined
+			creditClickAble: undefined,
+			location: undefined
 		}
 		var self = this;
 		self.$el = $el;
@@ -100,6 +99,9 @@
 					self.errImg = imgs[self.options.err];
 				}
 				if(self.options.msg && self.options.msg != 'undefined') {
+					if(self.options.scene == 'homeMaterialsUpload') {
+						self.options.msg = '<i class="iconfont">&#xe626;</i>' + self.options.msg
+					}
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
 				if(self.options.other) {
@@ -114,6 +116,9 @@
 					self.errImg = imgs[self.options.err];
 				}
 				if(self.options.msg && self.options.msg != 'undefined') {
+					if(self.options.scene == 'homeMaterialsUpload') {
+						self.options.msg = '<i class="iconfont">&#xe626;</i>' + self.options.msg
+					}
 					self.errMsg = internalTemplates.msg.format(self.options.msg);
 				}
 				self.name = internalTemplates.name.format(self.options.name, self.empty);
@@ -239,7 +244,7 @@
 				}
 				$.alert({
 					title: '提示',
-					content: tool.alert('确认删除该照片吗？'),
+					content: tool.alert('确认删除该' + (!self.options.type ? '图片' : '视频') + '吗？'),
 					buttons: {
 						close: {
 							text: '取消',
@@ -283,6 +288,7 @@
 	imgUpload.prototype.onUpload = function(file) {
 		var self = this;
 		self.$el.find('.imgs-item-upload').LoadingOverlay("show");
+		window.clickable = false;
 		imgUpload.getLicense(self.options.type, function(res) {
 			if(!res) {
 				throw "can not get the license";
@@ -396,12 +402,6 @@
 			if(self.options.thumbnailpic) {
 				params.thumbnailPic = self.options.thumbnailpic;
 			}
-			if(self.options.materialsaduitresult) {
-				params.materialsAduitResult = self.options.materialsaduitresult;
-			}
-			if(self.options.materialsaduitopinion) {
-				params.materialsAduitOpinion = self.options.materialsaduitopinion;
-			}
 			params.orderNo = self.options.orderno;
 			params.creditId = self.options.creditid;
 			params.materialsPic = url;
@@ -449,6 +449,7 @@
 			success: function(xhr) {
 				console.log(xhr);
 				self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
+				window.clickable = true;
 				if(!xhr.code) {					
 					if(self.status != 1) {
 						self.$el.html(internalTemplates.modify.format(self.name, url, self.errImg, self.errMsg));
@@ -565,7 +566,7 @@
 				<input type="file" class="input-file activeEvt" accept="image/gif,image/jpeg,image/jpg,image/png,image/tif" />\
 			   </div>{0}',
 		videoEdit: '<div class="imgs-item-upload">\
-				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
+				<div class="iconfont-upload"><i class="iconfont">&#xe65f;</i></div>\
 				<span class="i-tips">点击上传视频</span>\
 				<input type="file" class="input-file activeEvt" accept="video/rm,video/rmvb,video/wmv,video/avi,video/mp4,video/3gp,video/mkv" />\
 			   </div>{0}',
@@ -592,7 +593,7 @@
 		msg: '<div class="imgs-describe">{0}</div>',
 		name: '<span class="imgs-item-p">{1}{0}</span>',
 		other: '<div class="input-text imgs-input-text">\
-					<input type="text" value="{0}" />\
+					<input type="text" maxlength="14" value="{0}" />\
 				</div>'
 	}
 
@@ -675,7 +676,6 @@
 		var self = this;
 		var items = self.runtime.items = parseInt((self.runtime.vw - 120) / (self.size.iw + self.size.im));
 		var boxWidth = items * self.size.iw + (items -1) * self.size.im;
-
 		var viewbox = '<div class="img-view-box" onselectstart="return false;" style="background: #000; position: fixed; z-index:99999999; width: '+self.runtime.vw+'px;height:'+self.runtime.vh+'px;border-raidus:3px;left:50%;top:50%;margin-left:-'+self.runtime.vw/2+'px;margin-top:-'+self.runtime.vh/2+'px;">\
 							<div style="width:'+boxWidth+'px; position:relative; margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;overflow:hidden;" id="__move__trigger"><img ondragstart="return false" style="position: absolute; left:50%;top:50%; display:block; cursor:move; margin: 0 auto;" id="___originImage___" src="'+self.imgs[0].materialsPic+'" /></div>\
 							<a class="prev big"></a><a class="next big"></a>\
@@ -688,7 +688,7 @@
 		for(var i = 0, len = self.imgs.length; i < len; i++) {
 			var img = self.imgs[i],
 				ml = i * self.size.im,
-				mark = self.getMark(img.auditResult || img.aduitResult);
+				mark = self.getMark(img.auditResult);
 			if(ml > 0) ml = self.size.im;
 			arr.push('<div data-idx="'+i+'" class="thumb-view" style="cursor: pointer; position:relative; float:left; width:'+self.size.iw+'px;height:'+self.size.iw+'px;margin-left:'+ml+'px;"><img src="'+img.materialsPic+'" style="width:100%; height:100%;" />'+mark+'</div>');
 		}

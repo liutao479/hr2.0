@@ -26,7 +26,11 @@
 						<td class="orders-item-data">操作</td>
 					</tr>
 				</thead>
-				<tbody id="riskManagementDetailTable"></tbody>
+				<tbody id="riskManagementDetailTable">					
+					<tr class="orders-item">
+						<td class="orders-item-data" colspan="10">暂无数据</td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 	</div>
@@ -48,13 +52,13 @@
 		<table>
 			<tr>
 				<td><span class="key">查询时间：</span>{{=it.startDate}}至{{=it.endDate}}</td>
-				<td><span class="key">分公司：</span>{{=it.deptId||'-'}}</td>
-				<td><span class="key">银行：</span>{{=it.bankCode||'-'}}</td>
+				<td><span class="key">分公司：</span>{{=it.companyName||'-'}}</td>
+				<td><span class="key">银行：</span>{{=it.bankName||'-'}}</td>
 			</tr>
 			<tr>
-				<td><span class="key">订单数：</span>{{=it.orderNum}}笔</td>
-				<td><span class="key">服务调用次数：</span>{{=it.totalCallNum}}次</td>
-				<td><span class="key">服务使用费：</span>{{=it.totalServiceAmt}}元</td>
+				<td><span class="key">订单数：</span>{{=it.orderNum||'0'}}笔</td>
+				<td><span class="key">服务调用次数：</span>{{=it.totalCallNum||'0'}}次</td>
+				<td><span class="key">服务使用费：</span>{{=it.totalServiceAmt||'0'}}元</td>
 			</tr>
 		</table>
 	</div>	
@@ -73,10 +77,10 @@
 					{{ }else{ }}否
 					{{ } }}
 				</td>
-				<td class="orders-item-data">{{=item.serviceFee}}</td>
-				<td class="orders-item-data">{{=item.verifyNum}}</td>
+				<td class="orders-item-data">{{=item.serviceFee||'0'}}</td>
+				<td class="orders-item-data">{{=item.verifyNum||'0'}}</td>
 				<td class="orders-item-data">{{=tool.formatDate(item.lastestVerifyTime)}}</td>
-				<td class="orders-item-data">{{=item.submitByName}}</td>
+				<td class="orders-item-data">{{=item.submitByName||'系统'}}</td>
 				<td class="orders-item-data">
 					<span class="detailed view-fee" 
 					data-userid="{{=item.userId}}" data-orderno="{{=item.orderNo}}" 

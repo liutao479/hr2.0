@@ -16,11 +16,21 @@ page.ctrl('cardInfoApproval', function($scope) {
 	* @params {function} cb 回调ck函数
 	*/
 	var loadLoanList = function(cb) {
-		var data={};
-			data['taskId']=$params.taskId;
+		var data = {},
+			url = 'icbcCreditCardForm/queryICBCCreditCardForm';
+		if($params.taskId) {
+			data.taskId = $params.taskId;
+		}
+		// if($params.refer) {
+		// 	data.frameCode = $params.code;	
+		// }
+		if($params.type) {
+			data.orderNo = $params.orderNo;	
+			url = 'icbcCreditCardForm/icbcCreditCardFormOrder';
+		}
 		$.ajax({
 			type: 'post',
-			url: urlStr+'/icbcCreditCardForm/queryICBCCreditCardForm',
+			url: $http.api(url, 'jbs'),
 			data: data,
 			dataType: 'json',
 			success: $http.ok(function(result) {
@@ -241,25 +251,30 @@ page.ctrl('cardInfoApproval', function($scope) {
 			var that = this;
 			that.$checking.onChange(function() {
 				//用于监听意见有一个选中，则标题项选中
-				var flag = 0;
-				var str = '';
+				var flag = 0,
+					str = '',
+					value = $reason.val(),
+					reg = /[^#][^#]*[^#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
 						flag++;
 					}
 				})
-				str = '#' + str.substring(0, str.length - 1) + '#';				
-				$reason.val(str);
+				str = str.substring(0, str.length - 1);
+				
 				if(flag > 0) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
 				} else {
-					$reason.val('');
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 
-				// if()
+				if(value && value.match(reg)) {
+					$reason.val(value.replace(reg, str));
+				} else {
+					$reason.val('#' + str + '#' + $reason.val());
+				}
 			});
 		})
 

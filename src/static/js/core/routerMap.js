@@ -65,11 +65,6 @@
 			refer: [],
 			page: 'riskManagementDetail'
 		},
-		'preAudit': {
-			title: '预审核',
-			refer: [],
-			page: 'preAudit'
-		},
 		'preAuditDataAssistant': {
 			title: '预审核数据辅证',
 			refer: [],
@@ -326,10 +321,6 @@
 			title: '开卡信息录入',
 			page: 'openCardSheet'
 		},
-		'loanProcess/creditAudit':{
-			title: '开卡审核',
-			page: 'operateAnalysis'
-		},
 		'loanProcess/usedCarInfoInput':{
 			title: '二手车信息录入',
 			page: 'secondhandInput'
@@ -443,13 +434,13 @@
 		'T0023': 'loanMaterialsUpload',//贷款材料
 //		'T0024': 'cardAudit',//开卡信息表
 		'T0024': 'cardInfoApproval',//开卡信息表
-		'T0025': 'materialInspection',//材料验真
-		'T0026': 'dataAssistant',//数据辅证
+		'T0025': 'materialInspection',//材料验真-贷款审核
+		'T0026': 'dataAssistant',//数据辅证-贷款审核
 		'T0027': '',//材料交叉验证
 		'T0028': 'loanLog',//订单日志
 		'T0038': 'loanLog',//订单日志
-		'T0040': '',//材料验真
-		'T0041': '',//数据辅证
+		'T0040': 'materialInspection',//材料验真
+		'T0041': 'dataAssistant',//数据辅证
 		'T0042': '',//材料交叉验证
 		'T0043': 'loanLog',//订单日志
 		'T0046': 'phoneAudit',//电核结果
@@ -474,11 +465,11 @@
 		'T0066': 'homeMaterialsUpload',//上门材料
 		'T0067': 'signMaterialsUpload',//签约材料
 		'T0068': 'pickMaterialsUpload',//提车材料审核
-		'T0069': '',//材料验真
-		'T0070': '',//数据辅证
-		'T0071': '',//材料交叉验证
+		'T0069': 'materialInspection',//材料验真
+		'T0070': 'dataAssistant',//数据辅证
+		'T0071': 'loanInfoAudit',//修改贷款信息
 		'T0072': 'loanLog',//订单日志
-		'T0073': 'loanInfoAudit',
+		'T0073': 'cardInfoApproval',//开卡信息
 		'T0074': 'loanInfoAudit',//待审核信息
 		'T0075': 'loanLog',//订单日志
 		'T0076': 'loanInfoAudit',//贷款信息表结果
@@ -488,8 +479,8 @@
 		'T0080': 'homeMaterialsUpload',//上门材料
 		'T0081': 'signMaterialsUpload',//签约材料
 		'T0082': 'pickMaterialsUpload',//提车材料审核
-		'T0083': '',//材料验真
-		'T0084': '',//数据辅证
+		'T0083': 'materialInspection',//材料验真
+		'T0084': 'dataAssistant',//数据辅证
 		'T0085': '',//材料交叉验证
 		'T0086': 'loanLog',//订单日志
 

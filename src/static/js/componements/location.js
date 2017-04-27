@@ -60,5 +60,11 @@
 						<span class="value">{{=it.orderDate}}</span>\
 					</div>\
 					{{ } }}\
+					{{ if(it.pickDate) { }}\
+					<div class="key-value-box">\
+						<span class="key">提车时间：</span>\
+						<span class="value">{{=it.pickDate}}</span>\
+					</div>\
+					{{ } }}\
 				</div>'
 })(jQuery, doT);

@@ -31,6 +31,7 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 			dataType: 'json',
 			success: $http.ok(function(result) {
 				console.log(result);
+
 				$scope.result = result;
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
 				$scope.result.orderNo = $params.orderNo;
@@ -42,9 +43,9 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 				}
 				if(!$params.refer) {
 					setupLocation();
-					setupBackReason(result.data.loanTask.backApprovalInfo);	
+					setupBackReason($scope.result.data.loanTask.backApprovalInfo);	
 				}
-				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, result, function() {
+				render.compile($scope.$el.$loanPanel, $scope.def.listTmpl, $scope.result, function() {
 					setupEvt();
 				}, true);
 				if(cb && typeof cb == 'function') {
@@ -92,10 +93,19 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 	 * 材料必填，必传检验
 	 */
 	function checkData(cb) {
+		var taskIds = [];
+		for(var i = 0, len = $params.tasks.length; i < len; i++) {
+			taskIds.push($params.tasks[i].id);
+		}
+		var params = {
+			taskIds: taskIds
+		}
 		$.ajax({
 			type: 'post',
-			url: $http.api('orderMaterial/submit/' + $params.taskId, 'zyj'),
+			url: $http.api('tasks/validate', 'zyj'),
+			data: JSON.stringify(params),
 			dataType: 'json',
+			contentType: 'application/json;charset=utf-8',
 			success: $http.ok(function(result) {
 				console.log(result);
 				if(cb && typeof cb == 'function') {
@@ -198,7 +208,9 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 			// checkData(function() {
 			// 	var canSubmit = flow.taskSubmit($params.tasks, $params.taskId);
 			// 	if(canSubmit) {
@@ -288,25 +300,30 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 			var that = this;
 			that.$checking.onChange(function() {
 				//用于监听意见有一个选中，则标题项选中
-				var flag = 0;
-				var str = '';
+				var flag = 0,
+					str = '',
+					value = $reason.val(),
+					reg = /[^#][^#]*[^#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
 						flag++;
 					}
 				})
-				str = '#' + str.substring(0, str.length - 1) + '#';				
-				$reason.val(str);
+				str = str.substring(0, str.length - 1);
+				
 				if(flag > 0) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
 				} else {
-					$reason.val('');
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 
-				// if()
+				if(value && value.match(reg)) {
+					$reason.val(value.replace(reg, str));
+				} else {
+					$reason.val('#' + str + '#' + $reason.val());
+				}
 			});
 		})
 
@@ -339,7 +356,11 @@ page.ctrl('homeMaterialsUpload', function($scope) {
 				viewable: true,
 				markable: $params.refer ? true : false,
 				getimg: function(cb) {
-					cb($scope.result.data[_type])
+					debugger
+					var newImg = tool.adjust($scope.result.cfgData.frames[0].sections, _type, $scope.result.data[_type]);
+					console.log(newImg);
+					cb(newImg);
+					// cb($scope.result.data[_type])
 				},
 				marker: function (img, mark, cb) {
 					var params = {

@@ -5,17 +5,19 @@ page.ctrl('loanInfoAudit', function($scope) {
 	$scope.tasks = $params.tasks || [];
 	$scope.activeTaskIdx = $params.selected || 0;
 
+
+	//保存按钮请求的接口，type为ApplyModify时，表示申请修改贷款信息的保存接口
 	var postUrl = {
-		"saveDDXX": $http.api('loanInfoInput/updLoanOrder', 'jbs'),
-		"saveCLXX": $http.api('loanInfoInput/updLoanUserCar', 'jbs'),
-		"saveFQXX": $http.api('loanInfoInput/updLoanUserStage', 'jbs'),
-		"saveZJKR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
-		"saveGTHK": $http.api('loanInfoInput/updLoanUser', 'jbs'),
-		"saveFDBR": $http.api('loanInfoInput/updLoanUser', 'jbs'),
-		"saveJJLXR": $http.api('loanInfoInput/updLoanEmergencyConact', 'jbs'),
-		"saveHKKXX": $http.api('loanInfoInput/updLoanPayCard', 'jbs'),
-		"saveFYXX": $http.api('loanInfoInput/updLoanFee', 'jbs'),
-		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation', 'jbs')
+		"saveDDXX": $http.api('loanInfoInput/updLoanOrder' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveCLXX": $http.api('loanInfoInput/updLoanUserCar' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveFQXX": $http.api('loanInfoInput/updLoanUserStage' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveZJKR": $http.api('loanInfoInput/updLoanUser' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveGTHK": $http.api('loanInfoInput/updLoanUser' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveFDBR": $http.api('loanInfoInput/updLoanUser' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveJJLXR": $http.api('loanInfoInput/updLoanEmergencyConact' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveHKKXX": $http.api('loanInfoInput/updLoanPayCard' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveFYXX": $http.api('loanInfoInput/updLoanFee' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs'),
+		"saveQTXX": $http.api('loanInfoInput/updLoanIndividuation' + ($params.type == 'ApplyModify' ? 'Flg' : ''), 'jbs')
 	};
 
 	/**
@@ -53,6 +55,63 @@ page.ctrl('loanInfoAudit', function($scope) {
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				}
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result,true);
+				render.compile($scope.$el.$sideBar, $scope.def.siderBarTmpl, result, function() {
+					$scope.$el.$sideBar.css('right', $('#remind').css('right'))
+					$scope.$el.$sideBar.find('li').not(".last").hover(function() {
+						$(this).toggleClass('hover');
+						// $scope.$el.$sideBar.find('.sideBar-content').hide();
+						$(this).find('.sideBar-content').toggle();
+					});
+					 //鼠标点击
+					var mark = 1;
+					$scope.$el.$sideBar.find('li').not(".last").click(function() {
+						mark = 2; //改变标记
+						//点击右侧边导航 然后跳到指定的区块
+						var $index = $(this).index(); //找到了对应的序列号
+						//alert($index);
+						var $top = $console.find(".panel-loan").eq($index).offset().top; //获取制定Louti与浏览器上面的距离)
+						//alert($top);
+						$("body,html").animate({
+							scrollTop: $top - 75
+						}, 500, function() {
+							mark = 1;
+						}); //浏览器滚动的高度
+					});
+					 //浏览器串口滚动事件
+					// $(window).scroll(function() {
+					// 	if (mark == 1) {
+					// 		var $t = $(this).scrollTop(); //获取滚动条滚动的高度
+					// 		//document.title = $t;
+					// 		// if ($t > 1000) { //通过滚动条来判断
+					// 		// 	$("#LoutiNav").fadeIn(); //淡入 导航慢慢显示出来
+					// 		// } else {
+					// 		// 	$("#LoutiNav").fadeOut(); //淡出 导航慢慢消失
+					// 		// }
+					// 		var $obj = $console.find(".panel-loan");
+					// 		//循环每一个区块 然后找到最先满足条件的那个 区块
+					// 		$obj.each(function() {
+					// 			var $index = $(this).index();
+					// 			//楼层与浏览器上面的高度
+					// 			var $height = $obj.eq($index).offset().top + $(this).height() / 2;
+					// 			//alert($height) 
+					// 			// document.title = $t + "--" + $height;
+					// 			if ($t < $height) {
+					// 				$scope.$el.$sideBar.find('.sideBar-content').hide();
+					// 				$scope.$el.$sideBar.find('.sideBar-content').eq($index).show();
+					// 				return false;
+					// 			}
+					// 		});
+					// 	}
+					// });
+					//点击 Top按钮 跳转到浏览器顶部
+					$scope.$el.$sideBar.find('li.last').click(function() {
+						$("body,html").animate({
+							scrollTop: 0
+						}, 500, function() {
+							mark = 1;
+						});
+					});
+				}, true);
 				loanFinishedInput();
 				loanFinishedCheckbox();
 				loanFinishedGps();
@@ -100,18 +159,20 @@ page.ctrl('loanInfoAudit', function($scope) {
 	}
 	
 	var dis = function(){
-		$('.info-key-value-box').each(function(){
-			var edit = $(this).data('edit');
-			if(edit == '0'){
-				$(this).addClass('pointDisabled');
-			}else{
-				$(this).removeClass('pointDisabled');
-			}
-		})
 		$('.info-key-check-box').each(function(){
 			var edit = $(this).data('edit');
 			if(edit == '0'){
 				$(this).addClass('pointDisabled');
+				$(this).find('input').removeClass('required');
+			}else{
+				$(this).removeClass('pointDisabled');
+			}
+		})
+		$('.info-key-value-box').each(function(){
+			var edit = $(this).data('edit');
+			if(edit == '0'){
+				$(this).addClass('pointDisabled');
+				$(this).find('input').removeClass('required');
 			}else{
 				$(this).removeClass('pointDisabled');
 			}
@@ -120,6 +181,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 			var edit = $(this).data('edit');
 			if(edit == '0'){
 				$(this).addClass('pointDisabled');
+				$(this).find('input').removeClass('required');
 			}else{
 				$(this).removeClass('pointDisabled');
 			}
@@ -133,12 +195,30 @@ page.ctrl('loanInfoAudit', function($scope) {
 		$console.find('input[type="text"]').on('change', function() {
 			var thisName = $(this).attr('name'),
 				that = $(this);
-			if(thisName == 'carPrice' || thisName == 'phone' || thisName == 'systemCarPrice' || thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'advancedMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'companyTel' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
+			if(thisName == 'carPrice' || thisName == 'systemCarPrice' ){
 				var thisVal = that.val();
-				var reg = /^(\d+\.\d{1,4}|\d+)$/;
+				var reg =  /^0\.([1-9]|\d[1-9])$|^[1-9]\d{0,8}\.\d{0,2}$|^[1-9]\d{0,8}$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
-					$(this).after('<i class="error-input-tip sel-err">该项只能填写数字及最多四位小数</i>');
+					$(this).after('<i class="error-input-tip sel-err">请填写小于10亿最多两位小数的数字</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'advancedMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
+				var thisVal = that.val();
+				var reg =  /^0\.([1-9]|\d[1-9])$|^[1-9]\d{0,8}\.\d{0,4}$|^[1-9]\d{0,8}$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">请填写小于10亿最多四位小数的数字</i>');
+					that.val('');
+				}
+			}
+			if( thisName == 'familyTel' || thisName == 'companyTel' ){
+				var thisVal = that.val();
+				var reg = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">0000-12345678-8888(如有分机号)</i>');
 					that.val('');
 				}
 			}
@@ -151,6 +231,16 @@ page.ctrl('loanInfoAudit', function($scope) {
 					that.val('');
 				}
 			}
+			if( thisName == 'phone'){
+				var thisVal = that.val();
+				var reg = /^((0\d{2,3}-\d{7,8})|(\d{11}))$/;
+				if(!reg.test(thisVal)){
+					$(this).parent().addClass("error-input");
+					$(this).after('<i class="error-input-tip sel-err">请正常填写手机号或常规电话号码。</i>');
+					that.val('');
+				}
+			}
+
 		})
 		$('i').each(function(){
 			var dataNum = $(this).data('num');
@@ -243,6 +333,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 			var btnType = $(this).data('type');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 			requireList.each(function(){
+				$('.sel-err').remove();
 				var value = $(this).val();
 				if(!value){
 					if(!$(this).parent().hasClass('info-value') && !$(this).parent().hasClass('info-check-box')){
@@ -706,25 +797,30 @@ page.ctrl('loanInfoAudit', function($scope) {
 			var that = this;
 			that.$checking.onChange(function() {
 				//用于监听意见有一个选中，则标题项选中
-				var flag = 0;
-				var str = '';
+				var flag = 0,
+					str = '',
+					value = $reason.val(),
+					reg = /[^#][^#]*[^#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
 						flag++;
 					}
 				})
-				str = '#' + str.substring(0, str.length - 1) + '#';				
-				$reason.val(str);
+				str = str.substring(0, str.length - 1);
+				
 				if(flag > 0) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
 				} else {
-					$reason.val('');
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 
-				// if()
+				if(value && value.match(reg)) {
+					$reason.val(value.replace(reg, str));
+				} else {
+					$reason.val('#' + str + '#' + $reason.val());
+				}
 			});
 		})
 
@@ -765,14 +861,21 @@ page.ctrl('loanInfoAudit', function($scope) {
 			$(this).attr('readonly','readonly')
 		})
 	}
+	var noWrite = function(){
+		$(".pointDisabled").each(function(){
+			$(this).find('input').attr('readonly','readonly')
+		})
+	}
 	
 	/**
 	 * 加载页面模板
 	 */
 	$console.load(router.template('iframe/loanInfoAudit'), function() {
 		$scope.def.listTmpl = render.$console.find('#loanlisttmpl').html();
+		$scope.def.siderBarTmpl = $console.find('#siderBarTmpl').html();
 		$scope.$el = {
-			$tbl: $console.find('#loanAudit')
+			$tbl: $console.find('#loanAudit'),
+			$sideBar: $console.find('#sideBar')
 		}
 		loadLoanList(function(){
 			setupSubmitBar();
@@ -780,6 +883,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 			seleLoad();
 			dis();
 			seNotInp();
+			noWrite();
 		});
 	});
 	
@@ -837,7 +941,11 @@ page.ctrl('loanInfoAudit', function($scope) {
 	}
 	$scope.carPicker = function(picked) {
 		var pirce = picked['车型'].price;
-		$("#systemCarPrice").val(pirce);
+		if(pirce){
+			$("#systemCarPrice").val(pirce);
+		}else{
+			$("#systemCarPrice").val('0');
+		}
 		var carname = $("#carMode").find('.select-text').val();
 		$("#carName").val(carname);
 		
@@ -1039,6 +1147,9 @@ page.ctrl('loanInfoAudit', function($scope) {
 		},
 		remitAccountNumber: function(t, p, cb) {
 			if(!$scope.busiSourceNameId) {
+				$console.find('#numSel .select-box').css({
+					zIndex : 1000
+				})
 				$.alert({
 					title: '提示',
 					content: tool.alert('请填写业务来源方名称！'),

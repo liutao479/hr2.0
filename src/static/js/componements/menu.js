@@ -34,11 +34,6 @@
 			route: '',
 			icon: '&#xe623;'
 		},
-		'loanManage': {
-			parent: 'moneyManage',
-			name: '借款管理',
-			route: 'loanManage'
-		},
 		'marginManage': {
 			parent: 'moneyManage',
 			name: '保证金管理',
@@ -47,12 +42,17 @@
 		inspectData: {
 			name: '贷后数据核查',
 			route: '',
-			icon: '&#xe61b;'
+			icon: '&#xe65c;'
 		},
 		'activeInspect': {
 			parent: 'inspectData',
 			name: '发起主动抽查',
 			route: 'activeInspect'
+		},
+		'historyInspect': {
+			key: 'inspectData',
+			name: '历史核查记录',
+			route: 'historyInspect'
 		},
 		'historyInspect': {
 			key: 'inspectData',
@@ -176,11 +176,12 @@
 	menu.prototype._render = function(){
 		var self = this,
 			arr = [];
-		arr.push('<div class="menu">');
+		arr.push('<a href="#" class="showHide"></a><div class="menu">');
 		$.each(self.data, function(key, obj) {
 			if(!$.isArray(obj)) return;
 			var len = obj.length;
 			var menuItem = menuMap[key];
+			if(!menuItem) return true;
 			if(len === 0) {
 				arr.push('<a class="menu-item" data-href="{2}" id="menu{3}">\
 							<i class="iconfont mark">{0}</i>\
@@ -196,6 +197,7 @@
 				for(var i = 0; i < len; i++) {
 					var innerKey = obj[i];
 					var innerItem = menuMap[innerKey];
+					if(!innerItem) continue;
 					arr.push('<a class="menu-group-item" id="menu{0}" data-href="{1}">{2}</a>'.format(innerKey, innerItem.route, innerItem.name));
 				}
 				arr.push('</div>');

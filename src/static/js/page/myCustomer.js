@@ -85,86 +85,125 @@ page.ctrl('myCustomer', [], function($scope) {
 	}
 
 	/**
-	* 放款预约弹窗信息取得
-	*/
-	var makeLoan = function(orderNo) {
+	 * 弹窗前获取信息
+	 */
+	function getFinancePayment(orderNo, cb) {
 		$.ajax({
-			type: "post",
-			url: $http.api('financePayment/get', 'cyj'),
-			data:{
+			type: 'post',
+			url: $http.api('financePayment/info', true),
+			dataType: 'json',
+			data: {
 				orderNo: orderNo
 			},
-			dataType:"json",
-			success: $http.ok(function(result) {
-				console.log(result);
-				console.log('获取信息ok!');
-				// var _paymentId = result.data.paymentId;
-				$.confirm({
-					title: '放款预约',
-					content: doT.template(dialogTml.wContent.makeLoan)(result.data),
-					onContentReady: function() {
-						//启动用款时间日历控件
-						this.$content.find('.dateBtn').datepicker({
-							dateFmt: 'yyyy-MM-dd HH:mm',
-							onpicked: function() {
-							},
-							oncleared: function() {
-							}
-						});
+			success: $http.ok(function(xhr) {
+				console.log(xhr)
+				if(cb && typeof cb == 'function') {
+					cb(xhr.data);
+				}
+			})
+		});
+	}
 
-					},
-					buttons: {
-						close: {
-							text: '取消',
-							btnClass: 'btn-default btn-cancel'
+	/**
+	* 放款预约弹窗信息取得
+	* isSure 是否是放款预约
+	*/
+	var makeLoan = function(orderNo, isSure) {
+		getFinancePayment(orderNo, function(data) {
+			$.confirm({
+				title: '放款预约',
+				content: isSure ? doT.template(dialogTml.wContent.makeLoanSure)(data) : doT.template(dialogTml.wContent.makeLoan)(data),
+				onContentReady: function() {
+					if(isSure) {
+						this.$content.find('.uploadEvt').imgUpload();
+					}
+					//启动用款时间日历控件
+					this.$content.find('.dateBtn').datepicker({
+						dateFmt: 'yyyy-MM-dd HH:mm',
+						onpicked: function() {
 						},
-						ok: {
-							text: '确定',
-							action: function() {
-								var isTrue = true,
-									_orderNo = orderNo,
-									that = this.$content;
-								
-								var _loaningDate = $.trim(that.find('#loaningDate').val());
-								var _paymentMoney = $.trim(that.find('#paymentMoney').val());
-								var _receiveCompanyAddress = $.trim(that.find('#receiveCompanyAddress').val());
-								var _receiveAccount = $.trim(that.find('#receiveAccount').val());
-								var _receiveAccountBank = $.trim(that.find('#receiveAccountBank').val());
-
-								console.log(that.find('.required'))
-								that.find('.required').each(function() {
-									var value = $.trim($(this).val()),
-										$parent = $(this).parent();
-									console.log(value)
-									if(!value){
-										$parent.removeClass("error-input").addClass("error-input");
-										$parent.append('<span class=\"input-err\">请完善该必填项！</span>');
-										console.log($(this).index());
-										isTrue = false;
-									} else {
-
-									}
-								})
-								if(isTrue) {
-									var _params = {
-										orderNo: _orderNo, //订单号
-										paymentId: _paymentId,
-										loaningDate: new Date(_loaningDate), //用款时间
-										paymentMoney: _paymentMoney, //垫资金额
-										receiveCompanyAddress: _receiveCompanyAddress, //收款账户名称
-										receiveAccount: _receiveAccount, //收款账号
-										receiveAccountBank: _receiveAccountBank //开户行
-									}
-									console.log(_params)
-									// makeloanSubmit(_params);
+						oncleared: function() {
+						}
+					});
+					if(data.advanceCertificate) {
+						$scope.imgUrl = data.advanceCertificate;
+					}
+				},
+				buttons: {
+					close: {
+						text: '取消',
+						btnClass: 'btn-default btn-cancel'
+					},
+					ok: {
+						text: '确定',
+						action: function() {
+							var that = this,
+								flag = true,
+								imgFlag = true,
+								_params = {
+									orderNo: orderNo
+								},
+								$inputs = that.$content.find('.input-text input');
+							$inputs.each(function() {
+								var value = $.trim($(this).val()),
+									$parent = $(this).parent();
+								if(!value) {
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
+									$parent.append('<span class="input-err">该项不能为空！</span>');
+									flag = false;
+								} else if(!regMap[$(this).data('type')].test(value)) {
+									$parent.removeClass('error-input').addClass('error-input');
+									$parent.find('.input-err').remove();
+									$parent.append('<span class="input-err">该项不符合输入规则！</span>');
+									flag = false;
+								} else {
+									$parent.removeClass('error-input');
+									$parent.find('.input-err').remove();
+									_params[$(this).data('key')] = value;
 								}
+							});
+							if(isSure) {
+								if(!$scope.imgUrl) {
+									that.$content.find('.uploadEvt .imgs-item-upload').removeClass('error-input').addClass('error-input');
+									flag = false;
+								} else {
+									that.$content.find('.uploadEvt .imgs-item-upload').removeClass('error-input');
+									_params.advanceCertificate = $scope.imgUrl;
+								}
+							}
+							if(flag) {
+								console.log(_params)
+								if(isSure) {
+									_params.paymentStatus = 1;
+									makeloanSureSubmit(_params);
+								} else {
+									makeloanSubmit(_params);
+								}
+							} else {
+								$.alert({
+									title: '提示',
+									content: tool.alert('请完善各项信息！'),
+									buttons: {
+										close: {
+											text: '取消',
+											btnClass: 'btn-default btn-cancel'
+										},
+										ok: {
+											text: '确定',
+											action: function() {
+
+											}
+										}
+									}
+								});
 								return false;
 							}
 						}
 					}
-				});
-			})
-		})
+				}
+			});
+		});
 	}
 
 	/**
@@ -173,11 +212,32 @@ page.ctrl('myCustomer', [], function($scope) {
 	var makeloanSubmit = function(params) {
 		$.ajax({
 			type: "post",
-			url: $http.api('financePayment/update', 'cyj'),
+			url: $http.api('financePayment/save', 'cyj'),
 			data: params,
 			dataType: "json",
 			success: $http.ok(function(result) {
 				console.log(result)
+				$.toast('提交成功！', function() {
+					
+				})
+			})
+		});
+	}
+
+	/**
+	 * 放款确认提交
+	 */
+	var makeloanSureSubmit = function(params) {
+		$.ajax({
+			type: "post",
+			url: $http.api('financePayment/confirm', 'cyj'),
+			data: params,
+			dataType: "json",
+			success: $http.ok(function(result) {
+				console.log(result)
+				$.toast('提交成功！', function() {
+					
+				})
 			})
 		});
 	}
@@ -266,7 +326,13 @@ page.ctrl('myCustomer', [], function($scope) {
 			router.render(that.data('href'), {
 				orderNo: that.data('orderNo'),
 				type: 'OrderDetails',
-				path: 'myCustomer'
+				path: 'myCustomer',
+				btnStatus: {
+					terminateDisplay: that.data('terminateDisplay'),
+					paymentApplyDisplay: that.data('paymentApplyDisplay'),
+					paymentConfirmDisplay: that.data('paymentConfirmDisplay'),
+					modifyDisplay: that.data('modifyDisplay')
+				}
 			});
 		});
 
@@ -293,6 +359,14 @@ page.ctrl('myCustomer', [], function($scope) {
 			var that = $(this),
 				orderNo = that.data('orderNo');
 			makeLoan(orderNo);
+			return false;
+		});
+
+		// 放款确认
+		$console.find('#myCustomerTable .makeLoanSure').on('click', function() {
+			var that = $(this),
+				orderNo = that.data('orderNo');
+			makeLoan(orderNo, true);
 			return false;
 		});
 
@@ -404,7 +478,7 @@ page.ctrl('myCustomer', [], function($scope) {
 							var params = {
 								orderNo: orderNo,
 								applyReason: applyReason,
-								approvalId: $scope.approvalId    //当前审核用户的id
+								approvalId: $scope.approvalId    //下拉审核用户的id
 							}
 							console.log(params)
 							$.ajax({
@@ -487,6 +561,18 @@ page.ctrl('myCustomer', [], function($scope) {
 		apiParams.pageNum = _pageNum;
 		loadCustomerList(apiParams);
 		cb();
+	}
+
+	/***
+	* 上传图片成功后的回调函数
+	*/
+	$scope.uploadcb = function(self) {
+		self.$el.removeClass('error-input');
+		$scope.imgUrl = $('.jconfirm .imgs-view').attr('src');
+	}
+	
+	$scope.deletecb = function(self) {
+		delete $scope.imgUrl;
 	}
 
 	/**

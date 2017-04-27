@@ -133,6 +133,23 @@ page.ctrl('creditApproval', [], function($scope) {
 	}
 
 	/**
+	 * 图片必传校验
+	 */
+	var checkData = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditApproval/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if( cb && typeof cb == 'function' ) {
+					cb();
+				}
+			})
+		})
+	}
+
+	/**
 	 * 渲染tab栏
 	 * @param  {object} result 请求获得的数据
 	 */
@@ -221,55 +238,68 @@ page.ctrl('creditApproval', [], function($scope) {
 	}
 
 	/*发起核查*/
-	var openDialog=function(that,_data,_uid){
-		that.openWindow({
-			title:"核查项目选择",
-			content: dialogTml.wContent.btngroup,
-			commit: dialogTml.wCommit.cancelSure,
-			data:_data
-		},function($dialog){
-			var _arr=[];
-			$dialog.find(".block-item-data:not(.not-selected)").click(function() {
-				$(this).toggleClass("selected");	
-				var _index=$(this).data("index");
-				var _thisVal=_data[_index].key;
-				if($(this).hasClass("selected"))
-					_arr.push(_thisVal);	
-				else
-					_arr.splice(_arr.indexOf(_thisVal),1);
-			});
-			$dialog.find(".w-sure").click(function() {
-				$dialog.remove();
-				if(_arr.length==0)
-					return false;
-				$.ajax({
-					type: "post",
-					url: $http.api('creditAudit/startVerify','cyj'),
-					data:{
-						keys:_arr.join(','),
-						orderNo:$params.orderNo,
-						userId:_uid
-					/*	keys:'doPolice,bankWater',
-						orderNo:'nfdb2016102820480799',
-						userId:"334232"*/
-					},
-					dataType:"json",
-					success: $http.ok(function(res) {
-						var jc=$.dialog($scope.def.toastTmpl,function($dialog){
-							var context=$(".jconfirm .jconfirm-content").html();
-							if(context){
-								setTimeout(function() {
-									jc.close();
-									loadOrderInfo($scope.idx, function() {
-										evt();
-									});/*关闭之后自动刷新页面数据*/
-								},1500);
-							};
-						});
-					})
-				});						
-			});
-		});		
+	var openDialog=function(_data,_uid){		
+		var dialogHtml = doT.template(dialogTml.wContent.btngroup)(_data);
+		$.confirm({
+			title: '核查项目选择',
+			offsetBottom: "50px",
+			content:dialogHtml,
+			onContentReady:function(){
+				var $dia=this;
+				$dia._arr=[];
+				$dia.$content.find(".block-item-data:not(.not-selected)").click(function() {
+					$(this).toggleClass("selected");	
+					var _index=$(this).data("index");
+					var _thisVal=_data[_index].key;
+					if($(this).hasClass("selected"))
+						$dia._arr.push(_thisVal);	
+					else
+						$dia._arr.splice($dia._arr.indexOf(_thisVal),1);
+				});
+			},
+			buttons: {
+				close: {
+					text: '取消',
+				    btnClass:"btn-default btn-cancel",
+					action: function() {}
+				},
+				ok: {
+					text: '确定',
+					action: function () {
+						var _btnDialog=this;
+						if(_btnDialog._arr.length!=0)
+							$.ajax({
+								type: "post",
+								url: $http.api('creditAudit/startVerify','cyj'),
+								data:{
+									keys:_btnDialog._arr.join(','),
+									orderNo:$params.orderNo,
+									userId:_uid
+								/*	keys:'doPolice,bankWater',
+									orderNo:'nfdb2016102820480799',
+									userId:"334232"*/
+								},
+								dataType:"json",
+								success: $http.ok(function(res) {
+									$.dialog({
+										title:false,
+										content:$scope.def.toastTmpl,
+										onContentReady:function(){
+											var _tioDialog=this;
+											setTimeout(function() {
+												_tioDialog.close();
+												loadOrderInfo($scope.idx, function() {
+													evt();
+												});/*关闭之后自动刷新页面数据*/
+											},1500);
+										}
+									});
+								})
+							});	
+					}
+				}
+			}
+		});	
 	};
 	/**
 	* 绑定立即处理事件
@@ -283,17 +313,17 @@ page.ctrl('creditApproval', [], function($scope) {
 			var $imgs = $(this).find('.uploadEvt.imgs');
 			$imgs.imgUpload({
 				viewable: true,
-				markable: true,
+				markable: false,
 				getimg: function(cb) {
 					cb($scope.result.data.creditUsers[_type][index].loanCreditReportList);
 				},
 				marker: function (img, mark, cb) {
 					var params = {
 						id: img.id,
-						aduitResult: mark
+						auditResult: mark
 					}
 					if(mark == 0) {
-						params.aduitOpinion = '';
+						params.auditOpinion = '';
 					}
 					$.ajax({
 						type: 'post',
@@ -309,7 +339,7 @@ page.ctrl('creditApproval', [], function($scope) {
 					console.log(imgs)
 					$imgs.each(function(idx) {
 						$(this).find('.imgs-error').remove();
-						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].aduitResult]);
+						$(this).find('.imgs-item-upload').append(tool.imgs[imgs[idx].auditResult]);
 					});
 				}
 			});
@@ -349,8 +379,7 @@ page.ctrl('creditApproval', [], function($scope) {
 		});
 		//发起核查
 		$self.off('click','.gocheck').on('click','.gocheck', function() {
-			var that=$(this);
-			var _uid=that.data('user-id');
+			var _uid=$(this).data('user-id');
 			if(!_uid)
 				return false;
 			$.ajax({
@@ -364,11 +393,11 @@ page.ctrl('creditApproval', [], function($scope) {
 				},
 				success: $http.ok(function(res) {
 					if(res&&res.data&&res.data.length>0)
-						openDialog(that,res.data,_uid);
+						openDialog(res.data,_uid);
 					else{
 						$.alert({
 							title: '提示',
-							content: tool.alert("您没有权限进行该操作！"),
+							content: tool.alert("您尚未开通该核查权限！"),
 							buttons:{
 								ok: {
 									text: '确定',
@@ -401,6 +430,7 @@ page.ctrl('creditApproval', [], function($scope) {
 			});
 		});
 	}
+
 
 	/**
 	* 设置底部按钮操作栏
@@ -484,8 +514,9 @@ page.ctrl('creditApproval', [], function($scope) {
 								data: _params,
 								dataType: 'json',
 								success: $http.ok(function(result) {
-									router.render('loanProcess');
-									// toast.hide();
+									$.toast('处理成功！', function() {
+										router.render('loanProcess');
+									});
 								})
 							})
 						}
@@ -526,15 +557,16 @@ page.ctrl('creditApproval', [], function($scope) {
 							} 
 							$.ajax({
 								type: 'post',
-								url: $http.api('loanOrder/terminate', 'zyj'),
+								url: $http.api('loanOrder/refused', 'zyj'),
 								data: {
 									taskId: $params.taskId,
 									reason: _reason
 								},
 								dataType: 'json',
 								success: $http.ok(function(result) {
-									router.render('loanProcess');
-									// toast.hide();
+									$.toast('该订单已被终止！', function() {
+										router.render('loanProcess');	
+									});
 								})
 							})
 			            }
@@ -548,7 +580,10 @@ page.ctrl('creditApproval', [], function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
-			process();
+			if(!window.clickable) return;
+			// checkData(function() {
+				process();
+			// });
 		})
 	}
 
@@ -610,25 +645,30 @@ page.ctrl('creditApproval', [], function($scope) {
 			var that = this;
 			that.$checking.onChange(function() {
 				//用于监听意见有一个选中，则标题项选中
-				var flag = 0;
-				var str = '';
+				var flag = 0,
+					str = '',
+					value = $reason.val(),
+					reg = /[^#][^#]*[^#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
 						flag++;
 					}
 				})
-				str = '#' + str.substring(0, str.length - 1) + '#';				
-				$reason.val(str);
+				str = str.substring(0, str.length - 1);
+				
 				if(flag > 0) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
 				} else {
-					$reason.val('');
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 
-				// if()
+				if(value && value.match(reg)) {
+					$reason.val(value.replace(reg, str));
+				} else {
+					$reason.val('#' + str + '#' + $reason.val());
+				}
 			});
 		})
 

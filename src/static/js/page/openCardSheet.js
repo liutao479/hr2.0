@@ -134,7 +134,7 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 			if( thisName == 'mvblno' || thisName == 'reltmobl1' || thisName == 'reltmobl2' ){
 				var thisVal = that.val();
-				var reg = /^(13[0-9]{9})|(15[89][0-9]{8})$/;
+				var reg = /^1(3|4|5|7|8)\d{9}$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip sel-err">手机号码格式不正确</i>');
@@ -161,7 +161,7 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		})
 		$(".select-text").each(function(){
-			$(this).attr('readonly','readonly')
+			$(this).attr('readonly','readonly');
 		})
 		if($("#dateStart").val("9999-12-31")){
 			$("#dateStart").addClass('pointDisabled');
@@ -190,6 +190,7 @@ page.ctrl('openCardSheet', function($scope) {
 			}
 		})
 		$console.find('#loanMoney').on('change', function() {
+
 			var loanMoney = $("#loanMoney").val(),
 				feeRate = $("#feeRate").val(),
 				carPrice = $("#carPrice").val(),
@@ -197,14 +198,16 @@ page.ctrl('openCardSheet', function($scope) {
 				adjustAmount,
 				loanRatio;
 			if(loanMoney && feeRate){
+
 				feeamount = loanMoney * feeRate / 100;
 				adjustAmount = feeamount*1 + loanMoney*1;
 				$("#feeamount").val(feeamount);
 				$("#adjustAmount").val(adjustAmount);
 				if(carPrice){
 					loanRatio = (adjustAmount*1) / (carPrice*1) * 100;
-					var loanRatio1 = loanRatio.toFixed(6)
+					var loanRatio1 = loanRatio.toFixed(6);
 					$("#loanRatio").val(loanRatio1);
+					  
 				}
 			}
 		})
@@ -235,7 +238,7 @@ page.ctrl('openCardSheet', function($scope) {
 				loanRatio;
 			if(adjustAmount && carPrice){
 				loanRatio = (adjustAmount*1) / (carPrice*1) * 100;
-				var loanRatio1 = loanRatio.toFixed(6)
+				var loanRatio1 = loanRatio.toFixed(0)
 				$("#loanRatio").val(loanRatio1);
 			}
 		})
@@ -469,25 +472,30 @@ page.ctrl('openCardSheet', function($scope) {
 			var that = this;
 			that.$checking.onChange(function() {
 				//用于监听意见有一个选中，则标题项选中
-				var flag = 0;
-				var str = '';
+				var flag = 0,
+					str = '',
+					value = $reason.val(),
+					reg = /[^#][^#]*[^#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
 						flag++;
 					}
 				})
-				str = '#' + str.substring(0, str.length - 1) + '#';				
-				$reason.val(str);
+				str = str.substring(0, str.length - 1);
+				
 				if(flag > 0) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
 				} else {
-					$reason.val('');
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 
-				// if()
+				if(value && value.match(reg)) {
+					$reason.val(value.replace(reg, str));
+				} else {
+					$reason.val('#' + str + '#' + $reason.val());
+				}
 			});
 		})
 
@@ -520,6 +528,7 @@ page.ctrl('openCardSheet', function($scope) {
 	var seleLoad = function(){
 		$(".select").each(function(){
 			var $that = $(this);
+			$that.find('input').attr('readonly','readonly');
 			var selected = $(this).data('selected');
 			var re = /^[0-9]+.?[0-9]*$/;
 			if((selected && re.test(selected)) || selected=='0'){
@@ -534,6 +543,11 @@ page.ctrl('openCardSheet', function($scope) {
 					}
 				})
 			}
+		})
+	}
+	var noWrite = function(){
+		$(".pointDisabled").each(function(){
+			$(this).find('input').attr('readonly','readonly')
 		})
 	}
 	
@@ -552,6 +566,7 @@ page.ctrl('openCardSheet', function($scope) {
 			setupSubmitBar();
 			setupDropDown();
 			seleLoad();
+			noWrite();
 			$console.find('#cophonext').removeClass('required');
 		});
 	});

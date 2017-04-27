@@ -85,12 +85,21 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	/**
 	* 设置修改征信查询银行区域
 	*/
-	var setupCreditBank = function() {
+	var setupCreditBank = function(refresh) {
 		$scope.currentType = 0;
 		if(!$scope.demandBankId) {
 			setupWindow();
 		} else {
 			loadOrderInfo($scope.currentType, function() {
+				if(refresh) {
+					for(var i in $scope.tabs) {
+						if(i == $scope.currentType) {
+							continue;
+						} else {
+							delete $scope.tabs[i];
+						}
+					}
+				}
 				render.compile($scope.$el.$modifyBankPanel, $scope.def.modifyBankTmpl, $scope.result.data.loanTask.loanOrder, function() {
 					$scope.$el.$modifyBankPanel.find('.modifyBankEvt').on('click', function() {
 						setupWindow(true);
@@ -117,7 +126,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			success: $http.ok(function(result) {
 				console.log(result);
 				if( cb && typeof cb == 'function' ) {
-					cb();
+					cb(result.data.refresh);
 				}
 			})
 		})
@@ -153,8 +162,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
             		return false;
             	}
             	$scope.clickable = true;
-            	updBank(function() {
-            		setupCreditBank();
+            	updBank(function(refresh) {
+            		setupCreditBank(refresh);
             	});
             }
 		}
@@ -259,6 +268,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		 * 征信查询
 		 */
 		$sub.on('creditQuery', function() {
+			if(!window.clickable) return;
 			saveData(function() {
 				process();
 			});
@@ -308,22 +318,22 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				flag = true;
 			for(var j in item) {
 				if(j == 'idCard' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.idx : '') + '的身份证号！<br/>';
+					_alert = '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.sortNo + 1 : '') + '的身份证号！<br/>';
 					flag = false;
 					break;
 				}
 				if(j == 'userName' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.idx : '') + '的真实姓名！<br/>';
+					_alert = '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.sortNo + 1 : '') + '的真实姓名！<br/>';
 					flag = false;
 					break;
 				}
-				if(j == 'mobile' && !item[j]) {
-					_alert += '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.idx : '') + '的手机号！<br/>';
-					flag = false;
-					break;
-				}
-				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType == 0) {
-					_alert += '请选择' + $scope.userMap[item.userType] + item.idx + '与借款人的关系！<br/>';
+				// if(j == 'mobile' && !item[j]) {
+				// 	_alert = '请填写' + $scope.userMap[item.userType] + (item.userType != 0 ? item.sortNo + 1 : '') + '的手机号！<br/>';
+				// 	flag = false;
+				// 	break;
+				// }
+				if(j == 'userRelationship' && item[j] != 0 && !item[j] && item.userType == 1) {
+					_alert = '请选择' + $scope.userMap[item.userType] + (item.sortNo + 1) + '与借款人的关系！<br/>';
 					flag = false;
 					break;
 				}
@@ -420,6 +430,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		 * 增加共同还款人
 		 */
 		$console.find('#btnNewLoanPartner').on('click', function() {
+			if(!window.clickable) return;
 			// 后台接口修改完成时使用
 			$.ajax({
 				type: 'post',
@@ -440,6 +451,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		 * 增加反担保人
 		 */
 		$console.find('#btnNewGuarantor').on('click', function() {
+			if(!window.clickable) return;
 			// 后台接口修改完成时使用
 			$.ajax({
 				type: 'post',
@@ -463,6 +475,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 */
 	var setupTabEvt = function() {
 		$console.find('#creditTabs .tabEvt').on('click', function() {
+			if(!window.clickable) return;
 			var $this = $(this);
 			if($this.hasClass('role-item-active')) return;
 			var _type = $this.data('type');
@@ -533,54 +546,74 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		});
 
 		/**
+		 * 文本框只能输入整数，并且左右键可移动
+		 */
+		$self.find('.input-text input').on('keyup', function() {
+			if($(this).data('type') == 'idCard' || $(this).data('type') == 'mobile') {
+				var c = $(this);  
+	            if(/[^0-9Xx]/.test(c.val())) {//替换非数字字符  
+	            	var temp_amount = c.val().replace(/[^0-9Xx]/g,'');  
+	            	$(this).val(temp_amount);  
+	            }  
+			}
+		});
+		/**
 		 * 表单输入失去焦点保存信息
 		 */
-		$self.find('.input-text input').on('blur', function() {
-			var that = $(this),
-			    value = that.val(),
-				type = that.data('type'),
-				$parent = that.parent(),
-				params = {};
-			if(!value) {
-				$parent.removeClass('error-input').addClass('error-input');
-				$parent.find('.input-err').remove();
-				$parent.append('<span class=\"input-err\">该项不能为空！</span>');
-				value = '';
-				// return false;
-			} else if(!regMap[type].test(value)) {
-				$parent.removeClass('error-input').addClass('error-input');
-				$parent.find('.input-err').remove();
-				if(type == 'userName') {
-					$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
-				} else if(type == 'idCard') {
-					$parent.append('<span class=\"input-err\">请输入15或18位身份证号！</span>');
-				} else if(type == 'mobile') {
-					$parent.append('<span class=\"input-err\">请输入11位手机号！</span>');
+		$self.find('.input-text input').on('change', function() {
+			// setTimeout(function() {
+				var that = $(this),
+				    value = that.val(),
+					type = that.data('type'),
+					$parent = that.parent(),
+					params = {};
+				if(!value) {
+					$parent.find('.input-err').remove();
+					if(that.hasClass('required')) {
+						$parent.removeClass('error-input').addClass('error-input');
+						$parent.append('<span class=\"input-err\">该项不能为空！</span>');
+					} else {
+						$parent.removeClass('error-input');
+					}
+					value = '';
+				} else if(!regMap[type].test(value)) {
+					$parent.find('.input-err').remove();
+					$parent.removeClass('error-input').addClass('error-input');
+					if(type == 'userName') {
+						$parent.append('<span class=\"input-err\">输入不符合规则！</span>');
+					} else if(type == 'idCard') {
+						$parent.append('<span class=\"input-err\">请输入15或18位身份证号！</span>');
+					} else if(type == 'mobile') {
+						$parent.append('<span class=\"input-err\">请输入11位手机号！</span>');
+					}
+					value = '';
+				} else {
+					$parent.removeClass('error-input');
+					$parent.find('.input-err').remove();
+					if(type == 'idCard' && value.substring(value.length - 1) == 'x') {
+						value = value.replace(/x/, 'X');
+					}
 				}
-				value = '';
-				// return false;
-			} else {
-				$parent.removeClass('error-input');
-				$parent.find('.input-err').remove();
-				if(type == 'idCard' && value.substring(value.length - 1) == 'x') {
-					value = value.replace(/x/, 'X');
+				for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+					var item = $scope.apiParams[i];
+					if(that.data('userId') == item.userId) {
+						item[that.data('type')] = value;
+					}
 				}
-			}
-			for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
-				var item = $scope.apiParams[i];
-				if(that.data('userId') == item.userId) {
-					item[that.data('type')] = value;
+				console.log($scope.apiParams)
+				if(!value) return false;
+				params = {
+					userId: that.data('userId')
 				}
-			}
-			if(!value) return false;
-			params = {
-				userId: that.data('userId')
-			}
-			params[that.data('type')] = value;
-			updateUser(params);
-			console.log($scope.apiParams)
+				params[that.data('type')] = value;
+				updateUser(params);
+			// }, 200);
+			
 		})
 
+		/**
+		 * input框（征信已经返回，不能修改！）
+		 */
 		$self.find('.input-text input[readonly]').on('click', function() {
 			$.alert({
 				title: '提示',
@@ -594,6 +627,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					}
 				}
 			})
+			return false;
 		});
 
 		/**
@@ -620,8 +654,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			success: $http.ok(function(xhr) {
 				if(xhr.data.refresh) {
 					loadOrderInfo($scope.currentType, function() {
-						setupCreditBank();
-						initApiParams();
+						// setupCreditBank();
 					});
 				}
 			})
@@ -640,11 +673,12 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				item.userId = row.userId;
 				item.userName = row.userName || '';
 				item.idCard = row.idCard || '';
-				item.userType = row.userType;
 				item.mobile = row.mobile || '';
+				item.userType = row.userType;
 				item.userRelationship = row.userRelationship;
-				item.idx = j + 1;
+				item.sortNo = row.sortNo;
 				if(i == 0) {
+					item.sortNo = 0;
 					item.userRelationship = 0;
 				}
 				if(i == 2) {
@@ -692,9 +726,9 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 上传图片数据回调
 	 */
 	$scope.uploadcb = function(self, xhr) {
-		console.log(self.$el)
 		if(self.options.code == 'sfzzm') {
 			self.$el.find('.imgs-item-upload').LoadingOverlay("show");
+			window.clickable = false;
 			$.ajax({
 				type: 'post',
 				url: $http.api('materials/ocr', true),
@@ -722,6 +756,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 					}
 				}),
 				complete: function() {
+					window.clickable = true;
 					self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 				}
 			});
@@ -753,7 +788,6 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		if(xhr.data.refresh) {
 			loadOrderInfo($scope.currentType, function() {
 				setupCreditBank();
-				setupLocation();
 				evt();
 			});
 		}

@@ -3,16 +3,16 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		userType=[
-			{userType:0,text:"主申请人"},
+			{userType:0,text:"主借款人"},
 			{userType:1,text:"共同还款人"},
 			{userType:2,text:"反担保人"}
 		],
 		apiParams = {
 			orderNo: $params.orderNo,
-			userId: $params.userId,
+			userId: $params.userId,	
 			/*orderNo: 'nfdb2016102820480790',
 			userId: '334232',*/
-			sceneCode: $params.sceneCode
+			/*sceneCode: $params.sceneCode*///接口换成resultDetailCreditApproval后，后台屏蔽了场景code	
 		};
 	/**
 	* 设置面包屑
@@ -32,20 +32,11 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 		$.ajax({
 			type: 'post',
 			dataType:"json",
-			url: $http.api('verifyResult/resultDetail',true),
+			url: $http.api('verifyResult/resultDetailCreditApproval',true),
 			data: param,
 			success: $http.ok(function(res) {
 				var _mout=res.data.data;
-				/*var _mobil=_mout.body[1021];*/
-				var _platLend=_mout.body[1018];
-				/*在网列表的运营商数据处理*/
-				/*if(_mobil){
-					for(var i in _mobil){
-						var _thisOperator=operator.filter(it=>it.type==_mobil[i].OPERATOR);
-						if(_thisOperator&&_thisOperator.length==1)
-							_mout.body[1021][i].operatorName=_thisOperator[0].text;
-					};
-				};*/
+				var _platLend=_mout.body[1016];//同盾网贷信息核查
 				/*网贷平台借贷数据统计start*/
 				var _platArr=[];
 				var repeatPlat=function(platJson,attr){
@@ -68,37 +59,41 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 						};
 					};
 				};
+				/*借贷记录数据整理*/
 				if(_platLend&&_platLend.length>0){
-					for(var k in _platLend){
-						var platJson=_platLend[k].multipleJSON;
-						if(platJson&&platJson['seven_day'])
-							repeatPlat(platJson,'seven_day');
-						if(platJson&&platJson['one_month'])
-							repeatPlat(platJson,'one_month');
-						if(platJson&&platJson['three_month'])
-							repeatPlat(platJson,'three_month');
-						if(platJson&&platJson['six_month'])
-							repeatPlat(platJson,'six_month');
-						if(platJson&&platJson['twelve_month'])
-							repeatPlat(platJson,'twelve_month');
+					for(var c=0;c<_platLend.length;c++){
+						_platArr=[];
+						if(_platLend[c]&&_platLend[c].credit&&_platLend[c].credit.multipleJSON){
+							var platObj=_platLend[c].credit.multipleJSON;
+							if(platObj['seven_day'])
+								repeatPlat(platObj,'seven_day');
+							if(platObj['one_month'])
+								repeatPlat(platObj,'one_month');
+							if(platObj['three_month'])
+								repeatPlat(platObj,'three_month');
+							if(platObj['six_month'])
+								repeatPlat(platObj,'six_month');
+							if(platObj['twelve_month'])
+								repeatPlat(platObj,'twelve_month');
+						};	
+						_mout.body[1016][c].plat=_platArr;					
 					};
-					_mout.body[1018]=_platArr;
 				};
 				/*整理title中发起人，最新发起时间等信息*/
 				if(_mout.verifyRecord&&_mout.verifyRecord.submitByName)
-					_mout.body.submitByName=_mout.verifyRecord.submitByName;
+					_mout.submitByName=_mout.verifyRecord.submitByName;
 				if(_mout.verifyRecord&&_mout.verifyRecord.updateTime)
-					_mout.body.updateTime=_mout.verifyRecord.updateTime;
+					_mout.updateTime=_mout.verifyRecord.updateTime;
 				if(res.data.loanUser&&res.data.loanUser.userName){
-					_mout.body.userName=res.data.loanUser.userName;
+					_mout.userName=res.data.loanUser.userName;
 					var _minObj=userType.filter(it=>it.userType==res.data.loanUser.userType);
 					if(_minObj&&_minObj.length==1){
-						_mout.body.userTypeName=_minObj[0].text;
+						_mout.userTypeName=_minObj[0].text;
 					};
 				};
 				/*网贷平台借贷数据统计end*/
 				/*模板绑定数据*/
-				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout.body, true);
+				render.compile($scope.$el.$listDiv, $scope.def.listTmpl, _mout, true);
 				/*回调*/
 				if(callback && typeof callback == 'function') {
 					callback();
@@ -112,7 +107,6 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 			var _href=$(this).data('href');
 			var _param=$(this).data('param');
 			var _cparam={};
-			debugger
 			if(_param){
 				if(typeof _param=='string')
 					_cparam=JSON.parse(_param);
@@ -122,6 +116,22 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 			if(_href){
 				router.render(_href,_cparam);
 			};
+		});
+		$scope.$el.$listDiv.off("click",".no-img").on("click",".no-img",function() {
+			var _parent=$(this).parents('.no-img-group');
+			var _imgs=[],
+				_idx=$(this).parent(".no-img-list").index();
+			_parent.find('.no-img-list').each(function(){
+				var _src=$(this).find("img").attr('src');
+				if(_src)
+					_imgs.push({materialsPic:_src});
+			});
+			$.preview(_imgs, function(img, mark, cb) {
+				cb();	
+			}, {
+				markable: false,
+				idx: _idx
+			});
 		});
  	};
  	

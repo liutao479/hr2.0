@@ -21,7 +21,6 @@ page.ctrl('phoneAudit', function($scope) {
 				$scope.result = result;
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				if(result.cfgData.frames[0].code != 'T0046'){
-					debugger
 					$(".saveBtn").hide();
 					$(".selecter").addClass('pointDisabled');
 					$(".textArea").addClass('pointDisabled');
@@ -65,6 +64,7 @@ page.ctrl('phoneAudit', function($scope) {
 			console.log(tContext);
 			$(this).siblings('input').val(tContext)
 		})
+
 	    /***
 		* 保存按钮
 		*/
@@ -87,20 +87,23 @@ page.ctrl('phoneAudit', function($scope) {
 				}
 			});
 			if(isTure){
-//				debugger
+				// debugger
 				var data;
 		        var formList = $(this).parent().parent().siblings().find('form');
 	        	data = [];
 		        formList.each(function(index){
 			        var params = $(this).serialize();
-			        var b = params.replace(/\+/g," ");
+			        var b = params.replace(/undefined/g, '');
+			        console.log(b)
 					b =  decodeURIComponent(b);
 		            var paramArray = b.split("&");
 //		            params = decodeURIComponent(params,true);
 //		            var paramArray = params.split("&");
 		            var data1 = {};
+
 		            for(var i=0;i<paramArray.length;i++){
 		                var valueStr = paramArray[i];
+		                // console.log(valueStr)
 		                data1[valueStr.split('=')[0]] = valueStr.split('=')[1];
 		            }
 					data[index]=data1;
@@ -144,6 +147,7 @@ page.ctrl('phoneAudit', function($scope) {
 	$(document).on('click','.selecter', function() {
 		$(".selectOptBox1",$(this)).show();
 	})
+
 	//点击下拉选项赋值zhy
 	$(document).on('click', '.selectOptBox1 li', function() {
 		var value = $(this).data('key');
@@ -163,10 +167,10 @@ page.ctrl('phoneAudit', function($scope) {
 		return false;
 	});
 
-//点击下拉消失	zhy
-	$(document).on("click",function(e){ 
+	//点击下拉消失	zhy
+	$(document).on("click",function(e){
 		var target = $(e.target);
-		if(target.closest(".selectOptBox1").length == 0){ 
+		if(target.closest(".selecter").length == 0){ 
 			$(".selectOptBox1").hide();
 			return;
 		}

@@ -32,7 +32,9 @@ $(function() {
 			role: Cookies.get('_hr_role'),
 			phone: Cookies.get('_hr_phone'),
 			name: Cookies.get('_hr_name'),
-			token: Cookies.get('_hr_token')
+			token: Cookies.get('_hr_token'),
+			orgId: Cookies.get('_hr_orgId'),
+			userId: Cookies.get('_hr_userId')
 		}
 		if(!_info.token || !_info.account) {
 			return self.showModal();
@@ -111,6 +113,8 @@ $(function() {
 		Cookies.remove('_hr_role');
 		Cookies.remove('_hr_name');
 		Cookies.remove('_hr_phone');
+		Cookies.remove('_hr_userId');
+		Cookies.remove('_hr_orgId');
 	}
 
 	NavComponent.prototype.showModal = function() {
@@ -177,6 +181,8 @@ $(function() {
 					Cookies.set('_hr_name', result.name);
 					Cookies.set('_hr_account', result.account);
 					Cookies.set('_hr_token', result.token);
+					Cookies.set('_hr_userId', info.id);
+					Cookies.set('_hr_orgId', info.orgId);
 					location.href = location.href;
 				} else {
 					$err.html('登录失败，' + xhr.msg).show();

@@ -22,7 +22,7 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		if($params.type) {
 			data.type = $params.type;
 			data.orderNo = $params.orderNo;	
-			url = 'materials/materialsByOrderNo';
+			url = 'pickMaterials/pickMaterialsByOrderNo';
 		}
 		$.ajax({
 			type: 'post',
@@ -86,6 +86,23 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 			});
 			$backReason.backReason();
 		}
+	}
+
+	/**
+	 * 材料必填，必传检验
+	 */
+	function checkData(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('orderMaterial/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if(cb && typeof cb == 'function') {
+					cb();
+				}
+			})
+		})
 	}
 
 	/**
@@ -179,7 +196,9 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
-			process();
+			checkData(function() {
+				process();
+			});
 		})
 	}
 
@@ -216,7 +235,6 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 								}
 								var reason = $.trim(that.$content.find('#suggestion').val());
 								if(reason) params.reason = reason;
-								console.log(params);
 								flow.tasksJump(params, 'complete');
 							})
 						})
@@ -286,25 +304,30 @@ page.ctrl('pickMaterialsUpload', function($scope) {
 			var that = this;
 			that.$checking.onChange(function() {
 				//用于监听意见有一个选中，则标题项选中
-				var flag = 0;
-				var str = '';
+				var flag = 0,
+					str = '',
+					value = $reason.val(),
+					reg = /[^#][^#]*[^#]/;
 				$(that).parent().parent().find('.checkbox-normal').each(function() {
 					if($(this).attr('checked')) {
 						str += $(this).data('value') + ',';
 						flag++;
 					}
 				})
-				str = '#' + str.substring(0, str.length - 1) + '#';				
-				$reason.val(str);
+				str = str.substring(0, str.length - 1);
+				
 				if(flag > 0) {
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').addClass('checked').attr('checked', true);
 				} else {
-					$reason.val('');
 					$(that).parent().parent().find('.checkbox-radio').removeClass('checked').attr('checked', false);
 				}
 				$(that).parent().parent().siblings().find('.checkbox').removeClass('checked').attr('checked', false);
 
-				// if()
+				if(value && value.match(reg)) {
+					$reason.val(value.replace(reg, str));
+				} else {
+					$reason.val('#' + str + '#' + $reason.val());
+				}
 			});
 		})
 

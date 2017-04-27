@@ -3,7 +3,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			queryType: 2,  //贷款资料下载
+			// queryType: 2,  //贷款资料下载
 			pageNum: 1
 		};
 	$scope.userIds = [];//资料待下载用户userId
@@ -13,8 +13,9 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	* @params {function} cb 回调函数
 	*/
 	var loadArchiveDownloadList = function(params, cb) {
+		console.log(params)
 		$.ajax({
-			url: $http.api('creditUser/getCreditMaterials', 'zyj'),
+			url: $http.api('loanOrder/getMyCustomer', 'zyj'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -55,7 +56,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 	var setupEvt = function() {
 		$scope.isAllClick = false;//批量下载是否能点击
 		$scope.$checks = $scope.$el.$tbl.find('.checkbox').checking();
-
+		
 		$scope.$checks.each(function() {
 			var that = this;
 			that.$checking.onChange(function() {
@@ -63,7 +64,6 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 				$scope.$checks.each(function() {
 					if($(this).attr('checked')) {
 						flag++;
-					} else {
 					}
 				})
 				if(flag == 0) {
@@ -109,15 +109,16 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 								return false;
 							}
 							$.ajax({
-								url: $http.api('contractPrint/queryContractExeclList', 'lyb'),
+								url: $http.api('contractPrint/verifyTemplateIsExist', 'lyb'),
 								type: 'post',
 								data: {
 									fileId: $scope.fileId
 								},
+								async: false,
 								dataType: 'json',
 								success: $http.ok(function(result) {
 									console.log(result)
-									// window.open($http.api('contractPrint/printContractFile?fileId=' + $scope.fileId + '&orderNo=' + orderNo, true), '_self');
+									window.open($http.api('contractPrint/printContractFile?fileId=' + $scope.fileId + '&orderNo=' + orderNo, true), '_self');
 								})
 							});
 						}
@@ -128,24 +129,61 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 
 		// 绑定下载按钮
 		$scope.$el.$tbl.find('.loanDownload').on('click', function() {
-			$.confirm({
-				title: '下载',
-				content: dialogTml.wContent.loanDownload,
-				buttons: {
-					close: {
-						text: '取消',
-						btnClass: 'btn-default btn-cancel'
+			var that = this,
+				orderNos = $(that).data('orderNo'),
+				userIds = $(that).data('userId');
+			downLoad(userIds, orderNos, 2);
+		});
+	}
+
+	/**
+	 * [downLoad description]
+	 * @param  {[type]} userIds  [description]
+	 * @param  {[type]} orderNos [description]
+	 * @param  {[type]} type     1表示批量下载，2表示单个下载
+	 * @return {[type]}          [description]
+	 */
+	function downLoad(userIds, orderNos, type) {
+		$.ajax({
+			url: $http.api('materialsDownLoad/getArchiveDownload', 'lyb'),
+			type: 'post',
+			dataType: 'json',
+			data: {
+				type: type
+			},
+			success: $http.ok(function(result) {
+				console.log(result);
+				$.confirm({
+					title: '下载',
+					content: doT.template(dialogTml.wContent.loanDownload)(result.data),
+					onContentReady: function() {
+						this.$content.find('.checkbox').checking();
 					},
-					ok: {
-						text: '确定',
-						action: function() {
-							
+					buttons: {
+						close: {
+							text: '取消',
+							btnClass: 'btn-default btn-cancel'
+						},
+						ok: {
+							text: '确定',
+							action: function() {
+								var funcIds = [];
+								this.$content.find('.checkbox').each(function() {
+									if($(this).attr('checked')) {
+										funcIds.push($(this).data('id'));
+									}
+								});
+								funcIds = funcIds.join(',');
+								window.open($http.api('materialsDownLoad/downLoad?userIds=' + userIds + '&orderNos=' + orderNos + '&downLoadTypes=' + funcIds, true), '_blank');
+							}
 						}
 					}
-				}
+				})
 			})
 		});
 	}
+
+
 	// $.ajax({
 	// 	url: $http.api('contractPrint/queryContractExeclList', 'lyb'),
 	// 	type: 'post',
@@ -203,7 +241,6 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 			$console.find('.select input').val('');
 			$console.find('#searchInput').val('');
 			apiParams = {
-				queryType: 2,  //征信资料下载
 		    	pageNum: 1
 			};
 		});
@@ -225,10 +262,23 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 
 			var that = $(this);
 			if(!$scope.isAllClick) {
-				//toast('请选择批量下载的订单！')
+				$.toast('请选择批量下载的订单！', {
+					timeout: 500
+				}, function() {
+
+				});
 				return false;
 			}
-			alert('批量下载！')
+			$scope.userIds = [], $scope.orderNos = [];
+			$scope.$el.$tbl.find('.checkbox').each(function() {
+				if($(this).attr('checked')) {
+					$scope.userIds.push($(this).data('userId'));
+					$scope.orderNos.push($(this).data('orderNo'));
+				}
+			});
+			$scope.userIds = $scope.userIds.join(',');
+			$scope.orderNos = $scope.orderNos.join(',');
+			downLoad($scope.userIds, $scope.orderNos, 1);
 			// $.confirm({
 			// 	title: '批量下载',
 			// 	content: dialogTml.wContent.allCreditDownload,
@@ -258,7 +308,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 			// 					}
 			// 				});
 			// 				$scope.userIds = $scope.userIds.join(',');
-			// 				console.log($scope.userIds)
+			// 				console.log($scope.userIds);
 			// 				this.$content.find('.checkbox').each(function() {
 			// 					if($(this).attr('checked')) {
 			// 						$scope.downLoadType = $(this).data('type');
@@ -289,18 +339,17 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 
 	$scope.paging = function(_pageNum, _size, $el, cb) {
 		apiParams.pageNum = _pageNum;
-		$params.pageNum = _pageNum;
-		// router.updateQuery($scope.$path, $params);
 		loadArchiveDownloadList(apiParams);
 		cb();
 	}
 
 	//下拉点击回调
 	$scope.demandBankPicker = function(picked) {
-
+		console.log(picked);
+		apiParams.demandBankId = picked.id;
 	}
 	$scope.templatePicker = function(picked) {
-		console.log(picked)
+		console.log(picked);
 		$scope.fileId = picked.id;
 	}
 
@@ -317,7 +366,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 				success: $http.ok(function(xhr) {
 					var sourceData = {
 						items: xhr.data,
-						id: 'bankId',
+						id: 'id',
 						name: 'bankName'
 					};
 					cb(sourceData);

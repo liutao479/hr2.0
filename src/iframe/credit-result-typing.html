@@ -74,7 +74,7 @@
 			<div class="right-Evt">
 				{{ if(it.cfgData.code == 'creditInput') { }}
 
-					<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + col.userId +'&downLoadType=3', true)}}" target="_blank" class="button button-mini download-creditMaterials" data-type="{{=it.index}}" data-idx="{{=i}}">下载征信材料</a>
+					<a href="{{=$http.api('materialsDownLoad/downLoadCreditMaterialsByUser?userIds=' + col.userId +'&downLoadType=3', true)}}" target="_blank" class="button button-mini download-creditMaterials" data-type="{{=it.index}}" data-idx="{{=i}}">下载征信材料</a>
 				{{ } else { }}
 					{{ if(row.code == 'GTHKR') { }}
 					<div class="button button-mini button-gray setJkrEvt" data-user-id="{{=col.userId}}"><i class="iconfont">&#xe66d;</i>设为主借款人</div>
@@ -91,7 +91,7 @@
 			{{ if(it.cfgData.code == 'creditInput') { }}
 				<!-- 征信是否合格 -->
 				<div class="panel-item-box mt15">
-					<div class="panel-key-area">征信是否合格：</div>
+					<div class="panel-key-area"><i class="is-empty">*</i>征信是否合格：</div>
 					<div class="panel-value-area clearfix">
 						<div class="panel-value-item">
 							<div class="select select-common required" data-user-id="{{=col.userId}}" data-type="creditLevel" data-dropdown="page.$scope['creditInput'].creditLevelPicker" data-trigger="page.$scope['creditInput'].dropdownTrigger.creditLevel" data-selected="{{=(col.creditLevel == 1 ? '正常' : (col.creditLevel == 2 ? '关注' : (col.creditLevel == 3 ? '禁入' : '')))}}"></div>
@@ -102,7 +102,7 @@
 				
 				<!-- 征信报告文件 -->
 				<div class="panel-item-box mt15">
-					<div class="panel-key-area">征信报告文件：</div>
+					<div class="panel-key-area"><i class="is-empty">*</i>征信报告文件：</div>
 					<div class="panel-value-area clearfix">
 						{{ if(col.creditReportFile) { }}
 							<div class="panel-value-item file-area">
@@ -134,7 +134,7 @@
 			{{ } else { }}
 				<!-- 征信是否合格 -->
 				<div class="panel-item-box mt15">
-					<div class="panel-key-area">征信是否合格：</div>
+					<div class="panel-key-area"><i class="is-empty">*</i>征信是否合格：</div>
 					<div class="panel-value-area clearfix">
 						<div class="panel-value-item">{{=(col.creditLevel == 1 ? '正常' : (col.creditLevel == 2 ? '关注' : (col.creditLevel == 3 ? '禁入' : '')))}}</div>
 					</div>
@@ -143,7 +143,11 @@
 			{{ } }}
 			{{ for(var j = 0, len2 = row.segments.length; j < len2; j++) { var ml = row.segments[j]; }}
 				<div class="panel-item-box mt15">
-					<div class="panel-key-area">{{=ml.name}}：</div>
+					{{ if(ml.code != 'ZXBGP' && ml.code != 'ZXZD' && ml.code != 'ZXCXJG') { }}
+						<div class="panel-key-area">{{=(!ml.empty ? '<i class="is-empty">*</i>' : '')}}{{=ml.name}}：</div>
+					{{ } else { }}
+						<div class="panel-key-area">{{=ml.name}}：</div>
+					{{ } }}
 					<div class="panel-value-area{{=(ml.code == 'ZXBGP' ? ' creditMaterials' : '')}} clearfix">
 					{{ if(ml.code !== 'ZXBGP' && ml.code !== 'ZXZD') { }}
 						<!-- 全配置区块 -->
@@ -158,8 +162,10 @@
 								</div>
 							{{ } }}
 						{{ } }}
-						{{ if(ml.type == 1) { }}
+						{{ if(ml.type == 1) {console.log(ml); }}
 							{{ if(!ml.isEditor) { }}
+								<div class="panel-value-item">{{=col.orgName || ''}}</div>
+							{{ } else { }}
 								<div class="panel-value-item">{{=col.orgName || ''}}</div>
 							{{ } }}
 						{{ } }}
@@ -171,7 +177,7 @@
 					{{ if(ml.code == 'ZXBGP') { }}
 						<!-- 只配置到显示区块 -->
 						{{ for(var h = 0, len4 = col.loanCreditReportList.length; h < len4; h++) { var hl = col.loanCreditReportList[h], flag = 0; }}
-							<div class="imgs-item-group uploadEvt imgs" data-idx="{{=h}}" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.aduitResult || 0}}" data-msg="{{=hl.aduitOpinion}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
+							<div class="imgs-item-group uploadEvt imgs" data-idx="{{=h}}" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=h + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="{{=hl.materialsPic}}" data-id="{{=hl.id}}" data-err="{{=hl.auditResult || 0}}" data-msg="{{=hl.auditOpinion}}" data-editable="{{=it.editable}}" data-empty="{{=ml.empty}}"></div>
 						{{ } }}
 						{{ if(it.cfgData.code == 'creditInput') { }}
 							<div class="imgs-item-group uploadEvt noimgs" data-idx="{{=h}}" data-deletecb="page.$scope['creditInput'].deletecb" data-uploadcb="page.$scope['creditInput'].uploadcb" data-request="true" data-name="征信报告照片{{=len4 + 1}}" data-creditid="{{=col.creditId}}" data-orderno="{{=col.orderNo}}" data-img="" data-editable="{{=it.editable}}" data-empty="1"></div>
@@ -179,20 +185,20 @@
 					{{ } if(ml.code == 'ZXZD') { }}
 						<table border="1" class="field-table{{=(!ml.empty ? ' required' : '')}}">
 							{{ var zxzd = col.loanCreditResultList; }}
-							{{ for(var k = 0, len3 = parseInt((zxzd.length + 1) / 2) ; k < len3; k++){ }}
+							{{ for(var k = 0, len3 = parseInt((zxzd.length + 1) / 2) ; k < len3; k++){console.log(len3); }}
 								{{ if(k % 2 == 0) { }}
 								<tr class="tr-odd">
 								{{ }else{ }}
 								<tr class="tr-even">
 								{{ } }}
-									<td class="td-key"><i class="{{=(!zxzd[2 * k].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k].fieldName}}</td>
-									<td class="td-value"><input class="input zxzd{{=(!zxzd[2 * k].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k].creditKey}}" data-required="{{=zxzd[2 * k].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit || ''}}</span></td>
-									{{ if(k == len3) { }}
+									<td class="td-key"><i class="{{=(!zxzd[2 * k].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k].fieldName || ''}}</td>
+									<td class="td-value"><input class="input zxzd{{=(!zxzd[2 * k].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k].creditVal || ''}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k].creditKey}}" data-required="{{=zxzd[2 * k].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit || ''}}</span></td>
+									{{ if(k == len3 - 1 && zxzd.length % 2 != 0) { }}
 										<td class="td-key"></td>
 										<td class="td-value"></td>
 									{{ }else{ }}
-										<td class="td-key"><i class="{{=(!zxzd[2 * k + 1].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k + 1].fieldName}}</td>
-										<td class="td-value"><input class="input zxzd{{=(!zxzd[2 * k + 1].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k + 1].creditVal}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k + 1].creditKey}}" data-required="{{=zxzd[2 * k + 1].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit  || ''}}</span></td>
+										<td class="td-key"><i class="{{=(!zxzd[2 * k + 1].required ? 'is-empty' : '')}}">*</i>{{=zxzd[2 * k + 1].fieldName || ''}}</td>
+										<td class="td-value"><input class="input zxzd{{=(!zxzd[2 * k + 1].required ? ' required' : '')}}" type="text"{{=(it.cfgData.code == 'creditInput' ? '' : ' disabled')}} value="{{=zxzd[2 * k + 1].creditVal || ''}}" data-user-id="{{=col.userId}}" data-type="creditVal" data-credit-key="{{=zxzd[2 * k + 1].creditKey}}" data-required="{{=zxzd[2 * k + 1].required}}" /><span class="unit">{{=zxzd[2 * k].fieldUnit  || ''}}</span></td>
 									{{ } }}
 								</tr>
 							{{ } }}
@@ -205,7 +211,7 @@
 			
 			<!-- 备注信息 -->
 			<div class="panel-item-box">
-				<div class="panel-key-area">备注信息：</div>
+				<div class="panel-key-area"><i class="is-empty">*</i>备注信息：</div>
 				<div class="panel-value-area clearfix">
 					{{ if(it.cfgData.code == 'creditApproval') { }}
 						<div class="panel-value-item">{{=col.remark || ''}}</div>
@@ -213,7 +219,7 @@
 					{{ if(it.cfgData.code == 'creditInput') { }}
 					<div class="remarks-box">
 						<textarea name="" id="" cols="30" rows="6" class="remark{{=(!ml.empty ? ' required' : '')}}" data-user-id="{{=col.userId}}" data-type="remark">{{=col.remark || '' }}</textarea>
-						<div class="remain">还可输入1000/1000字</div>
+						<div class="remain"></div>
 					</div>
 					{{ } }}
 				</div>
@@ -236,7 +242,7 @@
 			<!-- 辅证数据 end-->
 			<!-- 征信报告详表 -->
 			<div class="panel-item-box">
-				<div class="panel-key-area">征信报告详表：</div>
+				<div class="panel-key-area"><i class="is-empty">*</i>征信报告详表：</div>
 				<div class="panel-value-area clearfix">
 					{{ if(!col.creditReportFile) { }}
 					<div class="panel-value-item">未上传征信报告文件</div>
@@ -263,8 +269,8 @@
 			</div>
 		</dt>
 		<dd class="import-msg-box">
-			<div class="import-result">您已成功查询该项服务！</div>
-			<div class="import-text">请点击“查看报告结果”查看</div>
+			<div class="import-result">查询成功！</div>
+			<div class="import-text">请点击“查看报告结果”查看详情</div>
 		</dd>
 	</dl>
 </script>	

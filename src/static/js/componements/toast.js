@@ -14,7 +14,8 @@
     }
 
     toast.prototype.__init = function() {
-        this.background = '<div style="position: fixed; left: 50%; top: 50%; width:300px; margin-left: -150px; z-index:{1}; border-radius:2px; background-color: #000; opacity: {0};"></div>';
+        this.mask = '<div style="position: fixed; left: 0; top: 0; right: 0; bottom: 0; width:100%; height: 100%; z-index:{0}; background-color: #FFF; opacity: 0; filter: alpha(opacity=0);"></div>';
+        this.background = '<div style="position: fixed; left: 50%; top: 50%; width:300px; margin-left: -150px; z-index:{1}; border-radius:2px; background-color: #000; opacity: {0}; filter: alpha(opacity={2})"></div>';
         this.content = '<div style="position: fixed; left: 50%; top: 50%; padding: 20px; color: #fff; line-height: 22px; z-index:{0}; font-size: 15px;">{1}</div>';
         this.$el = $('body');
     }
@@ -22,7 +23,8 @@
     toast.prototype.__setup = function(msg, opts) {
         var self = this;
         opts = $.extend(self.def, opts);
-        self.$background = $(self.background.format(opts.opacity, opts.zIndex)).appendTo(self.$el);
+        self.$mask = $(self.mask.format(opts.zIndex - 1)).appendTo(self.$el);
+        self.$background = $(self.background.format(opts.opacity, opts.zIndex, opts.opacity * 100)).appendTo(self.$el);
         self.$content = $(self.content.format(opts.zIndex+1, msg)).appendTo(self.$el);
         var width = self.$content.width() + 40;
         if(width > 300) {
@@ -45,6 +47,7 @@
     toast.prototype.show = function(msg, opts, callback) {
         var self = this;
         self.__setup(msg, opts || {});
+        // self.clickEvt();
         setTimeout(function() {
             self.close();
             callback && typeof callback == 'function' && callback();
@@ -52,9 +55,19 @@
     }
 
     toast.prototype.close = function() {
+        this.$mask.remove();
         this.$background.remove();
         this.$content.remove();
     }
+
+    // toast.prototype.clickEvt = function(callback) {
+    //     var self = this;
+    //     self.$mask.on('click', function() {
+    //         self.close();
+    //         callback && typeof callback == 'function' && callback();
+    //         return false;
+    //     });
+    // }
 
     var _toast = new toast();
 

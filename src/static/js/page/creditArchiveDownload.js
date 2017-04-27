@@ -3,18 +3,19 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	var $console = render.$console,
 		$params = $scope.$params,
 		apiParams = {
-			queryType: 1,  //征信资料下载
+			// queryType: 1,  //征信资料下载
 			pageNum: 1
 		};
-	$scope.userIds = [];//资料待下载用户userId
+	$scope.orderNos = [];//资料待下载用户orderNos
 	/**
 	* 加载征信资料数据
 	* @params {object} params 请求参数
 	* @params {function} cb 回调函数
 	*/
 	var loadCreaditList = function(params, cb) {
+		console.log(params);
 		$.ajax({
-			url: $http.api('creditUser/getCreditMaterials', 'zjy'),
+			url: $http.api('loanOrder/getMyCustomer', 'zjy'),
 			type: 'post',
 			data: params,
 			dataType: 'json',
@@ -55,7 +56,7 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 	var setupEvt = function() {
 		$scope.isAllClick = false;//批量下载是否能点击
 		$scope.$checks = $scope.$el.$tbl.find('.checkbox').checking();
-
+		
 		$scope.$checks.each(function() {
 			var that = this;
 			that.$checking.onChange(function() {
@@ -63,7 +64,6 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 				$scope.$checks.each(function() {
 					if($(this).attr('checked')) {
 						flag++;
-					} else {
 					}
 				})
 				if(flag == 0) {
@@ -123,7 +123,6 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 			$console.find('.select input').val('');
 			$console.find('#searchInput').val('');
 			apiParams = {
-				queryType: 1,  //征信资料下载
 		    	pageNum: 1
 			};
 		});
@@ -145,7 +144,11 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 
 			var that = $(this);
 			if(!$scope.isAllClick) {
-				//toast('请选择批量下载的订单！')
+				$.toast('请选择批量下载的订单！', {
+					timeout: 500
+				}, function() {
+
+				});
 				return false;
 			}
 			$.confirm({
@@ -170,20 +173,20 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 					ok: {
 						text: '确定',
 						action: function() {
-							$scope.userIds = [];
+							$scope.orderNos = [];
 							$scope.$el.$tbl.find('.checkbox').each(function() {
 								if($(this).attr('checked')) {
-									$scope.userIds.push($(this).data('userId'));
+									$scope.orderNos.push($(this).data('orderNo'));
 								}
 							});
-							$scope.userIds = $scope.userIds.join(',');
-							console.log($scope.userIds)
+							$scope.orderNos = $scope.orderNos.join(',');
+							console.log($scope.orderNos)
 							this.$content.find('.checkbox').each(function() {
 								if($(this).attr('checked')) {
 									$scope.downLoadType = $(this).data('type');
 								}
 							});
-							window.open($http.api('materialsDownLoad/downLoadCreditMaterials?userIds=' + $scope.userIds + '&downLoadType=' + $scope.downLoadType, true), '_blank');
+							window.open($http.api('materialsDownLoad/downLoadCreditMaterials?orderNos=' + $scope.orderNos + '&downLoadType=' + $scope.downLoadType, true), '_blank');
 						}
 					}
 				}
@@ -216,9 +219,9 @@ page.ctrl('creditArchiveDownload', [], function($scope) {
 		cb();
 	}
 
-	$scope.bankPicker = function(picked) {
+	$scope.demanBankPicker = function(picked) {
 		console.log(picked);
-		apiParams.id = picked.id;
+		apiParams.demandBankId = picked.id;
 	}
 
 	/**

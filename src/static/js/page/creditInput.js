@@ -124,9 +124,27 @@ page.ctrl('creditInput', [], function($scope) {
 		 * 提交
 		 */
 		$sub.on('taskSubmit', function() {
+			if(!window.clickable) return;
 			saveData(function() {
 				process();
 			});
+		})
+	}
+
+	/**
+	 * 图片必传校验
+	 */
+	var checkData = function(cb) {
+		$.ajax({
+			type: 'post',
+			url: $http.api('creditApproval/submit/' + $params.taskId, 'zyj'),
+			dataType: 'json',
+			success: $http.ok(function(result) {
+				console.log(result);
+				if( cb && typeof cb == 'function' ) {
+					cb();
+				}
+			})
 		})
 	}
 
@@ -245,6 +263,7 @@ page.ctrl('creditInput', [], function($scope) {
 	var pdfCb = function(res, file, cb) {
 		if(!res) {
 			throw "can not get the license";
+			window.clickable = true;
 		}
 		console.log(res);
 		// var suffix = file.name.substr(file.name.lastIndexOf('.'));
@@ -257,6 +276,7 @@ page.ctrl('creditInput', [], function($scope) {
 		fd.append('key', key);
 		fd.append('file', file, file.name);
 		fd.append('success_action_status', 200);
+		window.clickable = false;
 		$.ajax({
 			url: res.host,
 			data: fd,
@@ -313,6 +333,7 @@ page.ctrl('creditInput', [], function($scope) {
 				if(!response.code) {
 					pdfCb(response.data, file, function(_url) {
 						that.LoadingOverlay("hide");
+						window.clickable = true;
 						// 上传完成pdf后将地址信息保存在待提交数组apiParams中
 						for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
 							var item = $scope.apiParams[i];
@@ -336,10 +357,11 @@ page.ctrl('creditInput', [], function($scope) {
 					pdfCb(false, file);
 				}
 				
-			});
-			
+			});	
 		});
+		//启动下拉框
 		setupDropDown($el);
+		//图片控件
 		$el.find('.uploadEvt').imgUpload();
 		// 征信报告失去焦点事件
 		$el.find('.creditReportId').on('blur', function() {
@@ -416,7 +438,9 @@ page.ctrl('creditInput', [], function($scope) {
 		// });
 
 		// 备注框实时监听事件
-		var maxLen = 1000;
+		var maxLen = 1000,
+			len = $el.find('.remark').val().length;
+		$el.find('.remain').text('还可输入' + (maxLen - len) + '/' + maxLen + '字')
 		// $el.find('.remark').next().text('还可输入' + (maxLen - $el.find('.remark').val().length) + '/' + maxLen + '字');
 		$el.find('.remark').on('input', function() {
 			var that = $(this),
@@ -605,6 +629,31 @@ page.ctrl('creditInput', [], function($scope) {
 		}
 		if(!_alert) {
 			console.log($scope.apiParams);
+			//检查图片是否有标记，有则不能提交
+			// var temp = true, mp;
+			// for(var i = 0, len = $scope.apiParams.length; i < len; i++) {
+			// 	var item = $scope.apiParams[i], np = true;
+			// 	for(var j = 0, len2 = item.loanCreditReportList.length; j < len2; j++) {
+			// 		if(item.loanCreditReportList[j].auditResult != 0) {
+			// 			temp = false;
+			// 			np = false;
+			// 			mp = item.userType;
+			// 			break;
+			// 		}
+			// 	}
+			// 	if(!np) break;
+			// }
+			// if(!temp) {
+			// 	$.alert({
+			// 		title: '提示',
+			// 		content: tool.alert($scope.userMap[mp] + '的征信报告图片被标记，不能提交！'),
+			// 		buttons: {
+			// 			ok: {
+			// 				text: '确定'
+			// 			}
+			// 		}
+			// 	})
+			// }
 			if(cb && typeof cb == 'function') {
 				cb();
 			}

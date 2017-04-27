@@ -27,7 +27,7 @@
 				<div class="key-value">
 					{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
 					<div class="input-text input-name">
-						<input type="text" value="{{=row.userName || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="userName"/>
+						<input type="text" maxlength="10" class="required" value="{{=row.userName || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="userName"/>
 					</div>
 					{{ } }}
 					{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}
@@ -40,7 +40,7 @@
 				<div class="key-value">
 					{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
 						<div class="input-text input-idc">
-							<input type="text" value="{{=row.idCard || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="idCard"/>		
+							<input type="text" class="required" maxlength="18" value="{{=row.idCard || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="idCard"/>		
 						</div>	
 					{{ } }}
 					{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}
@@ -53,11 +53,11 @@
 				<div class="key-value">
 					{{ if(it.loanTask.category == 'creditMaterialsUpload') { }}
 						<div class="input-text input-phone">
-							<input type="text" value="{{=row.mobile || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="mobile"/>		
+							<input type="text" maxlength="11" value="{{=row.mobile || ''}}"{{=(row.loanUserCredit.creditStatus == 9 ? ' readonly' : '')}} data-user-id="{{=row.userId}}" data-type="mobile"/>		
 						</div>	
 					{{ } }}
 					{{ if(it.loanTask.category == 'creditMaterialsApproval') { }}
-						{{=row.mobile || ''}}
+						{{=row.mobile || '（未填写）'}}
 					{{ } }}
 				</div>
 			</div>

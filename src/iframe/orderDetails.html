@@ -29,23 +29,29 @@
 </script>
 
 <script type="text/x-dot-template" id="buttonsTmpl">
-	<div class="commit-orders-box commit-orders-box-area" id="buttonsPanel">
+	<div class="commit-orders-box commit-orders-box-area" id="buttonsPanel">{{console.log(it);}}
 	{{ if(it.paymentApplyDisplay) { }}
 		<a href="javascript:;" class="commit-item" id="makeLoan">
 			<i class="iconfont">&#xe614;</i>
 			<span>放款预约</span>
 		</a>
 	{{ } }}
+	{{ if(it.paymentConfirmDisplay) { }}
+		<a href="javascript:;" class="commit-item" id="makeLoanSure">
+			<i class="iconfont">&#xe659;</i>
+			<span>放款确认</span>
+		</a>
+	{{ } }}
 	{{ if(it.terminateDisplay) { }}
-		<a href="javascript:;" class="commit-item" data-order-no="{{=it.orderNo}}" id="applyTerminate">
+		<a href="javascript:;" class="commit-item" id="applyTerminate">
 			<i class="iconfont">&#xe6fd;</i>
 			<span>申请终止订单</span>
 		</a>
 	{{ } }}
 	{{ if(it.modifyDisplay) { }}
-		<a href="javascript:;" class="commit-item" data-href="myCustomer/orderDetails" data-order-no="{{=it.orderNo}}" id="applyModify">
+		<a href="javascript:;" class="commit-item" data-href="myCustomer/orderDetails" id="applyModify">
 			<i class="iconfont">&#xe640;</i>
-			<span>申请修改分期信息</span>
+			<span>申请修改贷款信息</span>
 		</a>
 	{{ } }}
 	</div>

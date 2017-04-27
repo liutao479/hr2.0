@@ -24,17 +24,24 @@
         left: 44px;
         top: 0;
         width: 155px;
+        // min-height: 159px;
+        min-height: 570px;
         background-color: #FFF;
-        padding: 9px 20px;
+        padding: 9px 0 9px 15px;
         border-top: 1px solid @borderColor;
         border-left: 1px solid @borderColor;
         .remind-box .remind-item{
+            padding-left: 5px;
+            .borderRadius(3px);
             position: relative;
             line-height: 33px;
             cursor: pointer;
+            &:hover {
+                background-color: @borderColor;
+            }
             .message-number {
                 position: absolute;
-                right: 0;
+                right: 3px;
                 top: 8px;
             }
         }
