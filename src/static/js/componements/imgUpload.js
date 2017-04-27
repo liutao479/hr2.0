@@ -298,8 +298,24 @@
 			fd.append('file', file, file.name);
 			fd.append('success_action_status', 200);
 			self.doUpload(res.host, fd);
+			console.log(file);
+			internelTest(file);
 		})
 	};
+
+	function internelTest(f) {
+		var canvas = document.createElement('canvas');
+		canvas.width = 220;
+		canvas.height = 173;
+		canvas.getContext('2d').drawImage(f, 0, 0, canvas.width, canvas.height);
+		var img = document.createElement("img");
+        img.src = canvas.toDataURL("image/png");
+        $.alert({
+        	title: 'd', 
+        	content: img
+        });
+	}
+
 	/**
 	* 删除图片
 	*/
@@ -561,13 +577,13 @@
 		videoModify: '<div class="imgs-item-upload">\
 				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传" accept="video/rm,video/rmvb,video/wmv,video/avi,video/mp4,video/3gp,video/mkv"/></div>\
 				<div class="imgs-delete" title="删除"><i class="iconfont">&#xe602;</i></div>\
-				<video src="{1}" class="imgs-view" />\
+				<video src="{1}" preload="none" controls class="imgs-view">浏览器不支持</video>\
 				{2}{3}</div>{0}',
 		view: '<div class="imgs-item-upload">\
 				<img src="{1}" class="imgs-view viewEvt" />\
 			   {2}{3}</div>{0}',
 		videoView: '<div class="imgs-item-upload">\
-					<video src="{1}" class="imgs-view"></video>\
+					<video src="{1}" preload="none" class="imgs-view">浏览器不支持</video>\
 				</div>{0}',
 		blank: '<div class="imgs-item-upload imgs-item-upload-blank">\
 				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
@@ -1011,5 +1027,9 @@
 
 	$.preview = function(imgCollections, marker, opt) {
 		new Preview(imgCollections, marker, opt);
+	}
+
+	function Vview() {
+		
 	}
 })(jQuery);

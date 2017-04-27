@@ -303,6 +303,10 @@ $(function() {
 			etip('密码不能为空');
 			return false;
 		}
+		if(nv.length < 6 || nv.length > 20) {
+			etip('密码长度在6-20位之间');
+			return false;
+		}
 		if(ov == nv) {
 			etip('新密码不能与旧密码相同');
 			return false;

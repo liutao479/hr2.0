@@ -73,7 +73,8 @@ gulp.task('copy', function() {
             path.src.root('static/css/img/**/*'),
             path.src.root('static/css/jquery.dialog.css'),
             path.src.root('iframe/**/*.html'),
-            path.src.root('defs/**/*.html')
+            path.src.root('defs/**/*.html'),
+            path.src.root('extention/**/*.html')
         ])
         .pipe($.copy('dist', {prefix: 1}))
 })

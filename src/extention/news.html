@@ -40,55 +40,32 @@
 	<div class="timestamp" id="timestamp"></div>
 	<div class="content" id="content"></div>
 	<div class="copyright">浙江惠瀜网络科技有限公司</div>
+	<script type="text/javascript" src="../static/js/vendor/jquery.min.js"></script>
 	<script type="text/javascript">
-		function connectWebViewJavascriptBridge(callback) {
-	        if (window.WebViewJavascriptBridge) {
-	         	callback(WebViewJavascriptBridge)
-	        } else {
-	          	document.addEventListener('WebViewJavascriptBridgeReady', function() {
-                    callback(WebViewJavascriptBridge)
-                    }, false)
-	        }
-	    }
-
-	    connectWebViewJavascriptBridge(function(bridge) {
-	    	bridge.init(function(msg, responseCallback) {
-	    		responseCallback('初始化成功');
-	    	});
-			/**
-			* 注册事件-渲染模板
-			* @params {object} data
-			* {
-			*	data: data,
-			* 	template: '',
-			* 	pict: 1,
-			* 	defaultimg: ""
-			* }
-			*/
-			bridge.registerHandler('renderNews', function(data, responseCallback) {
-				responseCallback(data);
-				var ctn = data.data;
-				render(ctn);
-			})
-	    });
-
-	    var $title,
-	    	$content,
-	    	$timestamp;
-
-	    function render(data) {
-	    	var date = new Date(data.noticePublishTime);
-	    	$title.innerHTML = data.noticeTitle;
-	    	$timestamp.innerHTML = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-') + ' ' + date.getHours() + ':' + date.getMinutes();
-	    	$content.innerHTML = data.noticeContent;
-	    }
-
-	    function init() {
-	    	$title = document.getElementById('title'),
-	    	$content = document.getElementById('content'),
-	    	$timestamp = document.getElementById('timestamp');
-	    }
-	    init();
+		$(function() {
+			var srh = location.search;
+			if(!srh) return;
+			function format(time) {
+				var date = new Date(time);
+				return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+			}
+			$.ajax({
+				url: 'http://192.168.0.187:9999/notice/detail',
+				data: {
+					noticeId: srh.replace('?id=', '')
+				},
+				dataType: 'json',
+				success: function(xhr) {
+					if(!xhr.code) {
+						var d = xhr.data;
+						$('#title').html(d.noticeTitle);
+						$('#timestamp').html(format(d.noticePublishTime));
+						$('#content').html(d.noticeContent);
+					}
+				}
+			})	
+		})
+		
 	</script>
 </body>
 </html>
