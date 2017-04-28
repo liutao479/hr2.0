@@ -56,7 +56,6 @@
 									{{ } }}
 									<div class="loan-info">
 										{{for(var x = 0, lenthx = sec.segments.length; x < lenthx; x++) { var seg = sec.segments[x]; }}
-											{{var verificationLength = seg.verificationLength}}
 											{{var detailCode = seg.code;}}
 											{{ if(detailCode == 'residentType'){ }}
 												<div class="info-key-check-box" data-edit='{{= seg.isEditor}}'>
@@ -210,30 +209,17 @@
 																	<input type="hidden" name="{{= detailCode}}" />
 																{{ } }}
 															</td>
-														{{ }else if(detailCode == 'monthIncomeMoney' || detailCode == 'balance' || detailCode == 'averageDailyBalance'){ }}
-															<td>
-																<span class="info-value">
-																	{{ if(row[detailCode] || row[detailCode] == '0'){ }}
-																		<input type="text" name="{{= detailCode}}" value="{{= row[detailCode]}}" />
-																	{{ }else{ }}
-																		<input type="text" name="{{= detailCode}}" maxlength="{{= seg.verificationLength}}"/>
-																	{{ } }}
-																		<span class="unitInfo">元</span>
-																</span>
-															</td>
 														{{ }else{ }}
 															<td>
 																<span class="info-value">
 																	{{ if(row[detailCode] || row[detailCode] == '0'){ }}
 																		<input type="text" name="{{= detailCode}}" value="{{= row[detailCode]}}" />
 																	{{ }else{ }}
-																		<input type="text" name="{{= detailCode}}" maxlength="{{= seg.verificationLength}}"/>
+																		<input type="text" name="{{= detailCode}}" />
 																	{{ } }}
 																</span>
 															</td>
 														{{ } }}
-
-
 													</tr>
 												</table>
 											</div>
@@ -281,7 +267,7 @@
 																	{{ if(row.name){ }}
 																		<input type="text" name="name" value="{{= row.name}}" />
 																	{{ }else{ }}
-																		<input type="text" name="name" maxlength="{{= seg.verificationLength}}" />
+																		<input type="text" name="name" />
 																	{{ } }}
 																</span>
 															</td>
@@ -302,7 +288,7 @@
 																{{ if(row.phone){ }}
 																	<input type="text" name="phone" value="{{= row.phone}}" />
 																{{ }else{ }}
-																	<input type="text" name="phone" maxlength="{{= seg.verificationLength}}" />
+																	<input type="text" name="phone" />
 																{{ } }}
 															</span>
 														</td>
@@ -323,7 +309,7 @@
 																{{ if(row.relationship){ }}
 																	<input type="text" name="relationship" value="{{= row.relationship}}" />
 																{{ }else{ }}
-																	<input type="text" name="relationship" maxlength="{{= seg.verificationLength}}" />
+																	<input type="text" name="relationship" />
 																{{ } }}
 															</span>
 														</td>	
@@ -374,7 +360,7 @@
 																{{ if(row.value){ }}
 																	<input type="text" name="value" value="{{= row.value}}" />
 																{{ }else{ }}
-																	<input type="text" name="value" maxlength="{{= seg.verificationLength}}"//>
+																	<input type="text" name="value" />
 																{{ } }}
 																{{ if(row.fieldUnit){ }}
 																	<span class="unitInfo">{{=row.fieldUnit}}</span> 
@@ -434,7 +420,7 @@
 																{{ if(row.value){ }}
 																	<input type="text" name="value" value="{{= row.value}}" />
 																{{ }else{ }}
-																	<input type="text" name="value" maxlength="{{= seg.verificationLength}}"//>
+																	<input type="text" name="value" />
 																{{ } }}
 															</span>
 														</td>
@@ -491,7 +477,7 @@
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																	<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																{{ }else{ }}
-																	<input type="text" name="{{= detailCode}}" maxlength="{{= seg.verificationLength}}" />
+																	<input type="text" name="{{= detailCode}}" />
 																{{ } }}
 															</span>
 														</td>
@@ -735,9 +721,9 @@
 															<td id="discountRate">
 																<span class="info-value">
 																	{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" maxlength="{{= seg.verificationLength}}"//>
+																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																	{{ }else{ }}
-																		<input type="text" name="{{= detailCode}}" >
+																		<input type="text" name="{{= detailCode}}" />
 																	{{ } }}
 																	<span class="unitInfo">%</span>
 																</span>
@@ -746,9 +732,9 @@
 															<td id="discountMoney">
 																<span class="info-value">
 																	{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" maxlength="{{= seg.verificationLength}}"//>
+																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																	{{ }else{ }}
-																		<input type="text" name="{{= detailCode}}" >
+																		<input type="text" name="{{= detailCode}}" />
 																	{{ } }}
 																	<span class="unitInfo">元</span>
 																</span>
@@ -769,33 +755,32 @@
 															<td>
 																<span class="info-value">
 																	{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" maxlength="{{= seg.verificationLength}}"//>
+																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																	{{ }else{ }}
-																		<input type="text" name="{{= detailCode}}" >
+																		<input type="text" name="{{= detailCode}}" />
 																	{{ } }}
 																	<span class="unitInfo">元</span>
 																</span>
 															</td>
-														{{ }else if(detailCode == 'bareRate' ||detailCode == 'sfProportion' || detailCode == 'commissionFeeRate' || detailCode == 'bankBaseRates' || detailCode == 'contractSfRatio'){ }}
+														{{ }else if(detailCode == 'sfProportion' || detailCode == 'commissionFeeRate' || detailCode == 'bankBaseRates' || detailCode == 'contractSfRatio'){ }}
 															<td>
 																<span class="info-value">
 																	{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" maxlength="{{= seg.verificationLength}}" //>
+																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																	{{ }else{ }}
-																		<input type="text" name="{{= detailCode}}" >
+																		<input type="text" name="{{= detailCode}}" />
 																	{{ } }}
 																	<span class="unitInfo">%</span>
 																</span>
 															</td>
-														{{ }else { }}
+														{{ }else{ }}
 															<td>
 																<span class="info-value">
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
-																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" maxlength="{{= seg.verificationLength}}" //>
+																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																	{{ }else{ }}
-																		<input type="text" name="{{= detailCode}}" >
+																		<input type="text" name="{{= detailCode}}" />
 																	{{ } }}
-																	<span class="unitInfo">元</span>
 																</span>
 															</td>
 														{{ } }}
@@ -965,7 +950,7 @@
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																		<input type="text" readonly="readonly" id="bankName" value="{{= it.data[fieldCode][detailCode]}}" />
 																	{{ }else{ }}
-																		<input type="text" readonly="readonly" id="bankName" maxlength="{{= seg.verificationLength}}"/ />
+																		<input type="text" readonly="readonly" id="bankName" />
 																	{{ } }}
 																</span>	
 															</td>
@@ -975,7 +960,7 @@
 																{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																		<input type="text" readonly="readonly" id="accountName" value="{{= it.data[fieldCode][detailCode]}}" />
 																	{{ }else{ }}
-																		<input type="text" readonly="readonly" id="accountName" maxlength="{{= seg.verificationLength}}"/ />
+																		<input type="text" readonly="readonly" id="accountName" />
 																	{{ } }}
 																</span>	
 															</td>
@@ -1025,7 +1010,7 @@
 																	{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																		<input id="systemCarPrice" type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																	{{ }else{ }}
-																		<input id="systemCarPrice" type="text" name="{{= detailCode}}" maxlength="{{= seg.verificationLength}}"//>
+																		<input id="systemCarPrice" type="text" name="{{= detailCode}}" />
 																	{{ } }}
 																	<span class="unitInfo">万元</span>
 																</span>
@@ -1036,7 +1021,7 @@
 																	{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																	{{ }else{ }}
-																		<input type="text" name="{{= detailCode}}" maxlength="{{= seg.verificationLength}}"//>
+																		<input type="text" name="{{= detailCode}}" />
 																	{{ } }}
 																	<span class="unitInfo">元</span>
 																</span>
@@ -1047,7 +1032,7 @@
 																	{{ if(it.data[fieldCode] && (it.data[fieldCode][detailCode] || it.data[fieldCode][detailCode] == '0')){ }}
 																		<input type="text" name="{{= detailCode}}" value="{{= it.data[fieldCode][detailCode]}}" />
 																	{{ }else{ }}
-																		<input type="text" name="{{= detailCode}}" maxlength="{{= seg.verificationLength}}"//>
+																		<input type="text" name="{{= detailCode}}" />
 																	{{ } }}
 																</span>
 															</td>
