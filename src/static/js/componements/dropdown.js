@@ -90,7 +90,7 @@
 		if(!self.opts.placeholder) {
 			self.opts.placeholder = false;
 		}
-		self.$el.append(_.template(internal.template.fields)({readonly: !self.search, selected: self.opts.selected, placeholder: self.opts.placeholder, disabled: self.opts.disabled}));
+		self.$el.append(_.template(internal.template.fields)({readonly: !self.opts.search, selected: self.opts.selected, placeholder: self.opts.placeholder, disabled: self.opts.disabled}));
 		self.$dropdown = $('<div class="select-box"></div>').appendTo(self.$el);
 		self.$text = self.$el.find('.select-text');
 		if(self.opts.tabs.length > 1) {
@@ -109,6 +109,48 @@
 	*/
 	dropdown.prototype.__addEventListener = function() {
 		var self = this;
+		self.$text.on('focus', function() {
+			$(this).val("");//清空组件显示的值
+			self.onDropdown({id:null,name:null});//清空传到调用页面的值
+			self.opened = true;
+			self.open();
+		})
+        //过滤功能
+        //让jQuery的contains方法不区分大小写
+        jQuery.expr[':'].Contains = function(a,i,m){
+            return (a.textContent || a.innerText|| a.innerHTML || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
+        };
+        /*下拉列表input按钮Input事件*/
+		self.$text.on('input propertychange', function() {
+            if($(this).prop('comStart')) return;    // 中文输入过程中不截断
+			var _val=$(this).val().trim();
+			if(_val) {
+                $matches = self.$el.find('li:Contains(' + _val + ')');
+                self.$el.find('li').not($matches).slideUp('fast');
+                $matches.slideDown('fast');
+            } else {
+                self.$el.find("li").slideDown('fast');
+            }
+		}).on('compositionstart', function(){
+            $(this).prop('comStart', true);
+            //console.log('中文输入：开始');
+        }).on('compositionend', function(){
+            $(this).prop('comStart', false);
+            //console.log('中文输入：结束');
+            var _val=$(this).val().trim();
+			if(_val) {
+                $matches = self.$el.find('li:Contains(' + _val + ')');
+                self.$el.find('li').not($matches).slideUp('fast');
+                $matches.slideDown('fast');
+            } else {
+                self.$el.find("li").slideDown('fast');
+            }
+        });
+		self.$dropdown.on('click', function() {
+			if(self.opts.search){
+				self.$text.focus();
+			};
+		})
 		self.$el.find('.arrow-trigger').on('click', function() {
 			self.opened = true;
 			self.open();
@@ -123,7 +165,7 @@
 	/**
 	* 渲染下拉列表
 	*/
-	dropdown.prototype.compileItems = function(idx, parentId){
+	dropdown.prototype.compileItems = function(idx, parentId,val){
 		var self = this;
 		var items = self.sourceData[self.opts.tabs[idx] || self.defautKey];
 		if(!items || self.opts.forceload) {
@@ -134,6 +176,10 @@
 				self.listenItem(data);
 			});
 		} else {
+			/*var _item=$.extend(true, {}, items);
+			if(_item&&_item.items&&_item.items.length>0&&val){
+				_item.items=items.items.filter(it=>it[_item.name].indexOf(val)!=-1);
+			};*/
 			self.listenItem(items);
 		}
 		
@@ -147,7 +193,7 @@
 		} else {
 			self.$items.html(_.template(internal.template.brandContent)(items));
 		}
-		self.$items.find('.itemEvt').on('click', function() {
+		self.$items.find('.itemEvt').on('click', function(e) {
 			var $that = $(this);
 			var inputItem = $(this).parents(".select").siblings("input");
 			var id = $that.data('id'),
@@ -210,6 +256,7 @@
 					self.compileItems(self.actionIdx, id);
 				}	
 			}
+			e.stopPropagation();/*阻止冒泡*/
 		})
 	};
 	/**
@@ -258,8 +305,11 @@
 			if(current && current.originKey == $d.originKey) {
 				continue;
 			}
-			if($d.opened)
+			if($d.opened){
+				$d.$text.val("");
+				$d.onDropdown({id:null,name:null});//清空传到调用页面的值
 				$d.close();
+			};
 		}
 	}
 	$(document).on('click', function(e) {

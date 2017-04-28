@@ -33,7 +33,7 @@ page.ctrl('dataAssistant', function($scope) {
 					_mout=res.data.data;
 				var _mobil=_mout.body[1021];
 				var _usedCar=_mout.body[1025];
-				var _platLend=_mout.body[1016];//同盾网贷信息核查
+				var _platLend=_mout.body['o'];//同盾网贷信息核查
 				/*在网列表的运营商数据处理*/
 				if(_mobil){
 					for(var i in _mobil){
@@ -81,7 +81,7 @@ page.ctrl('dataAssistant', function($scope) {
 							if(platObj['twelve_month'])
 								repeatPlat(platObj,'twelve_month');
 						};	
-						_mout.body[1016][c].plat=_platArr;					
+						_mout.body['o'][c].plat=_platArr;					
 					};
 				};
 				/*整理title中发起人，最新发起时间等信息*/
