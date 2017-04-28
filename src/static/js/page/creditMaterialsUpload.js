@@ -232,6 +232,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		 * 取消订单
 		 */
 		$sub.on('cancelOrder', function() {
+			if(!window.clickable) return;
 			$.alert({
 				title: '取消订单',
 				content: tool.alert('确定要取消该笔贷款申请吗？'),

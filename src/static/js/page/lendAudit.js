@@ -237,13 +237,13 @@ page.ctrl('lendAudit', function($scope) {
 		$sub.on('approvalPass', function() {
 			var $checked = $submitBar.find('.checkItem.checked');
 			var advancedWay;
+			
 			if(!$checked) {
-				advancedWay = $checked.data('type');
-				checkData(function() {
-					process({});
-				});
-				return;
+				return checkData(function() {
+							process({});
+						});
 			}
+			advancedWay = $checked.data('type');
 			checkData(function() {
 				switch (advancedWay) {
 					case 0:
@@ -594,7 +594,6 @@ page.ctrl('lendAudit', function($scope) {
 	 * 任务提交跳转
 	 */
 	function process(_params, reason) {
-		// debugger
 		console.log(_params);
 		if(reason) {
 			_params.reason = reason;
