@@ -683,7 +683,7 @@
 		var items = self.runtime.items = parseInt((self.runtime.vw - 120) / (self.size.iw + self.size.im));
 		var boxWidth = items * self.size.iw + (items -1) * self.size.im;
 		var viewbox = '<div class="img-view-box" onselectstart="return false;" style="background: #000; position: fixed; z-index:99999999; width: '+self.runtime.vw+'px;height:'+self.runtime.vh+'px;border-raidus:3px;left:50%;top:50%;margin-left:-'+self.runtime.vw/2+'px;margin-top:-'+self.runtime.vh/2+'px;">\
-							<div style="width:'+boxWidth+'px; position:relative; margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;overflow:hidden;" id="__move__trigger"><img ondragstart="return false" style="position: absolute; left:50%;top:50%; display:block; cursor:move; margin: 0 auto;" id="___originImage___" src="'+self.imgs[0].materialsPic+'" /></div>\
+							<div style="width:'+boxWidth+'px; position:relative; margin: 10px auto;height:'+(self.runtime.vh - self.size.iw - 30)+'px;overflow:hidden;" id="__move_area"><div id="__move__trigger" style="width:200%;height:200%;position:absolute;left:-50%;top:-50%;"><img ondragstart="return false" style="position: absolute; left:50%;top:50%; display:block; cursor:move; margin: 0 auto;" id="___originImage___" src="'+self.imgs[0].materialsPic+'" /></div></div>\
 							<a class="prev big"></a><a class="next big"></a>\
 							<div style="width:'+boxWidth+'px; position:relative; height:'+self.size.iw+'px;margin:0 auto; overflow: hidden;"><div id="___thumbnails___" style="width:'+items * (self.size.im + self.size.iw) + self.size.im +'px;position:absolute;left:0;top:0;"></div></div>\
 							<a class="prev mini"></a><a class="next mini"></a>\
@@ -700,6 +700,7 @@
 		}
 		self.$items = $(arr.join('')).appendTo(self.$itemBody);
 		self.$view = self.$preview.find('#___originImage___');
+		self.$viewArea = self.$preview.find('#__move_area');
 		self.$viewbox = self.$preview.find('#__move__trigger');
 		self.$prev = self.$preview.find('.prev');
 		self.$next = self.$preview.find('.next');
@@ -813,7 +814,7 @@
 				y: evt.pageY
 			}
 		})
-		self.$viewbox.on('mouseleave', function(evt) {
+		self.$viewArea.on('mouseleave', function(evt) {
 			if(!self.tool.canDrag) return;
 			self.tool.canDrag = false;
 			self.endPos = {x: evt.pageX, y: evt.pageY};
@@ -1014,11 +1015,11 @@
 
 	Preview.prototype.move = function(evt) {
 		var self = this;
-		var pos = {
+		var	pos = {
 			x: evt.pageX - self.originPos.x,
 			y: evt.pageY - self.originPos.y
 		}
-		self.transition('translate({0}px,{1}px)'.format(pos.x, pos.y), 'move');
+		self.$viewbox.css({ transform: 'translate({0}px,{1}px)'.format(pos.x, pos.y) });
 	}
 
 	Preview.prototype.zoom = function(rate) {
