@@ -54,11 +54,6 @@
 			name: '历史核查记录',
 			route: 'historyInspect'
 		},
-		'historyInspect': {
-			key: 'inspectData',
-			name: '历史核查记录',
-			route: 'historyInspect'
-		},
 		licenceManage: {
 			name: '上牌管理',
 			route: '',
