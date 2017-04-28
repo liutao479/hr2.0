@@ -43,7 +43,7 @@ page.ctrl('loanInfo', function($scope) {
 				if(result.data.FQXX && result.data.FQXX.renewalInfo){
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				}
-				console.log(result.data.FQXX.renewalInfo)
+				// console.log(result.data.FQXX.renewalInfo)
 				render.compile($scope.$el.$tbl, $scope.def.listTmpl, result, true);
 				render.compile($scope.$el.$sideBar, $scope.def.siderBarTmpl, result, function() {
 					$scope.$el.$sideBar.css('right', $('#remind').css('right'))
@@ -739,8 +739,9 @@ page.ctrl('loanInfo', function($scope) {
 								data: _params,
 								dataType: 'json',
 								success: $http.ok(function(result) {
-									router.render('loanProcess');
-									// toast.hide();
+									$.toast('处理成功！', function() {
+										router.render('loanProcess');	
+									})
 								})
 							})
 						}

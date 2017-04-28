@@ -297,8 +297,6 @@ page.ctrl('orderDetails', function($scope) {
 			url: $http.api('loanOrderApply/modify', 'cyj'),
 			data: {
 				orderNo: $params.orderNo,
-				type: type,  //0 贷款信息修改申请  1 终止订单申请
-				approvalStatus: approvalStatus, // 申请待审核 1同意申请 2拒绝申请
 				approvalId: $scope.approvalId    //下拉审核用户的id
 			},
 			dataType:"json",
