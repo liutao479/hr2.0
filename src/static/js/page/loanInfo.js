@@ -343,6 +343,7 @@ page.ctrl('loanInfo', function($scope) {
 			var $btn = $(this);
 			var isTure = true;
 			var btnType = $(this).data('type');
+			var key = $(this).data('key');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 			requireList.each(function(){
 				var value = $(this).val();
@@ -357,34 +358,29 @@ page.ctrl('loanInfo', function($scope) {
 					isTure = false;
 				}
 			});
+			if(key == 'saveFQXX'){
+				var renewalStr = '';
+				var $inputLists = $(".bxxbyearIpt");
+				$inputLists.each(function() {
+					if($(this).parent().css('display') == 'none') {
+						$(this).val('');
+						return true;
+					}
+					if(!$(this).val()) {
+						$('.positionAbso').removeClass('error-input').addClass('error-input');
+						$('.positionAbso').find('.error-input-tip').remove();
+						$('.positionAbso').append('<i class="error-input-tip baoxian-err">请完善该必填项</i>');
+						isTure = false;
+					} else {
+						$('.positionAbso').removeClass('error-input');
+						$('.positionAbso').find('.error-input-tip baoxian-err').remove();
+						renewalStr += $(this).val()+',';
+					}
+				});
+				renewalStr = renewalStr.substring(0, renewalStr.length - 1);
+				$("input[name='renewalInfo']").val(renewalStr);
+			}
 			if(isTure){
-				var key = $(this).data('key');
-				if(key == 'saveFQXX'){
-					var renewalStr = '';
-					var $inputLists = $(".bxxbyearIpt");
-					$inputLists.each(function() {
-						if($(this).parent().css('display') == 'none') {
-							$(this).val('');
-						}
-						if(!$(this).val()) {
-							
-						} else {
-							renewalStr += $(this).val()+',';
-						}
-					});
-					renewalStr = renewalStr.substring(0, renewalStr.length - 1);
-					console.log(renewalStr);
-					// for(var i=0;i<inputList.length;i++){
-					// 	var rene = inputList[i];
-					// 	// debugger
-					// 	if(rene.parentNode.parentNode.parentNode.parentNode.parentNode.style.display == 'none'){
-					//         rene.value = '';
-					// 	}
-					// 	renewalStr += rene.value+',';
-					// }
-					
-					$("input[name='renewalInfo']").val(renewalStr);
-				}
 				var data;
 		        var formList = $(this).parent().parent().siblings().find('form');
 		        if(formList.length == 1){
@@ -416,7 +412,6 @@ page.ctrl('loanInfo', function($scope) {
 			        })
 		        }
 		        var dataPost;
-		        console.log(dataPost);
 		        if(btnType){
 		        	dataPost = JSON.stringify(data);
 					$.ajax({
@@ -948,7 +943,6 @@ page.ctrl('loanInfo', function($scope) {
 
 	$scope.selfPicker = function(picked) {
 		var isDiscount = $("#isDiscount").val();
-		console.log(isDiscount);
 		if(isDiscount != '1'){
 			$("#discountRate").parents('.info-key-value-box').hide();
 			$("#discountRate").find('input').removeClass('required').val('0');
@@ -959,6 +953,18 @@ page.ctrl('loanInfo', function($scope) {
 			$("#discountRate").find('input').addClass('required');
 			$("#discountMoney").parents('.info-key-value-box').show();
 			$("#discountMoney").find('input').addClass('required');
+		}
+
+		//保险续保的报错提示框的（满足条件时）隐藏
+		var $reneDivs = $('.reneDiv');
+		var $reneDivsShow = $reneDivs.filter(function(index) {
+			return $reneDivs.eq(index).css('display') == 'block';
+		});
+		var isLen = $reneDivsShow.filter(function(index) {
+			return $reneDivsShow.eq(index).find('.bxxbyearIpt').val() != '';
+		}).length;
+		if(isLen == $reneDivsShow.length) {
+			$('.positionAbso').removeClass('error-input').find('.error-input-tip').remove();
 		}
 	}
 	$scope.areaPicker = function(picked) {

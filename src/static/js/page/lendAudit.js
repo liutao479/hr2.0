@@ -235,7 +235,13 @@ page.ctrl('lendAudit', function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
-			var advancedWay = $submitBar.find('.checkItem.checked').data('type');
+			var advancedWay = .data('type');
+			var $checked = $submitBar.find('.checkItem.checked');
+			if(!$checked) {
+				return checkData(function() {
+							process();
+						});
+			}
 			checkData(function() {
 				switch (advancedWay) {
 					case 0:
@@ -248,7 +254,6 @@ page.ctrl('lendAudit', function($scope) {
 						applyAdvance();
 						break;
 					default:
-						process();
 						break;
 				};
 			})

@@ -603,7 +603,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				console.log($scope.apiParams)
 				if(!value) return false;
 				params = {
-					userId: that.data('userId')
+					userId: that.data('userId'),
+					userType: $scope.currentType
 				}
 				params[that.data('type')] = value;
 				updateUser(params);
@@ -819,6 +820,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			}
 		}
 		params['userId'] = that.data('userId');
+		params['userType'] = $scope.currentType;
 		params[that.data('type')] = picked.id;
 		updateUser(params);
 		console.log($scope.apiParams);
