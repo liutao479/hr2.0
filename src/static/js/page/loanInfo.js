@@ -972,7 +972,8 @@ page.ctrl('loanInfo', function($scope) {
 		//保险续保切换时，把年限信息清空
 		console.log(this.$el);
 		if(this.$el.data('key') == 'renewalMode') {
-			alert(1)
+			$('.positionAbso').find('.select .select-text').val('');
+			$('.positionAbso').find('.bxxbyearIpt').val('');
 		}
 	}
 	$scope.areaPicker = function(picked) {
