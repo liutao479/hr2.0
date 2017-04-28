@@ -392,9 +392,12 @@ page.ctrl('creditApproval', [], function($scope) {
 					userId:_uid
 				},
 				success: $http.ok(function(res) {
-					if(res&&res.data&&res.data.length>0)
+					if(res&&res.data&&res.data.length>0){
+						for(var i in res.data){
+							res.data[i].checkStatus=0;
+						};
 						openDialog(res.data,_uid);
-					else{
+					}else{
 						$.alert({
 							title: '提示',
 							content: tool.alert("您尚未开通该核查权限！"),
