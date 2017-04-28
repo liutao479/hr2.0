@@ -178,6 +178,7 @@ page.ctrl('loanInfo', function($scope) {
 	var loanFinishedInputReq = function(){
 		$("input[type='hidden'],input[type='text']").each(function(){
 			var required = $(this).attr("name");
+			
 			if(!required){
 				$(this).removeClass("required");
 			}
@@ -203,7 +204,7 @@ page.ctrl('loanInfo', function($scope) {
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip sel-err">请填写小于10亿最多两位小数的数字</i>');
-					that.val('');
+					
 				}
 			}
 			if( thisName == 'sfMoney' || thisName == 'sfProportion' || thisName == 'commissionFeeRate' || thisName == 'loanMoney' || thisName == 'stageMoney' || thisName == 'bankBaseRates' || thisName == 'bankFeeMoney' || thisName == 'contractSfMoney' || thisName == 'firstMonthMoney' || thisName == 'contractSfRatio' || thisName == 'loanFeeMoney' || thisName == 'bareRate' || thisName == 'monthIncomeMoney' || thisName == 'balance' || thisName == 'averageDailyBalance'){
@@ -212,7 +213,7 @@ page.ctrl('loanInfo', function($scope) {
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip sel-err">请填写小于10亿最多四位小数的数字</i>');
-					that.val('');
+					
 				}
 			}
 			if( thisName == 'advancedMoney' ){
@@ -221,7 +222,7 @@ page.ctrl('loanInfo', function($scope) {
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip sel-err">请填写小于10亿最多四位小数的数字</i>');
-					that.val('');
+					
 				}
 			}
 			if( thisName == 'familyTel' || thisName == 'companyTel' ){
@@ -230,7 +231,7 @@ page.ctrl('loanInfo', function($scope) {
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip sel-err">0000-12345678-8888(如有分机号)</i>');
-					that.val('');
+					
 				}
 			}
 			if( thisName == 'familyZipcode' || thisName == 'companyZipcode' ){
@@ -239,16 +240,16 @@ page.ctrl('loanInfo', function($scope) {
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
 					$(this).after('<i class="error-input-tip sel-err">邮政编码格式不正确</i>');
-					that.val('');
+					
 				}
 			}
 			if( thisName == 'phone'){
 				var thisVal = that.val();
-				var reg = /^1[\d+]{10}$/;
+				var reg = /^((0\d{2,3}-\d{7,8})|(\d{11}))$/;
 				if(!reg.test(thisVal)){
 					$(this).parent().addClass("error-input");
-					$(this).after('<i class="error-input-tip sel-err">请您填写11位正确格式的手机号码！</i>');
-					that.val('');
+					$(this).after('<i class="error-input-tip sel-err">请正常填写手机号或常规电话号码。</i>');
+					
 				}
 			}
 		})
@@ -344,6 +345,7 @@ page.ctrl('loanInfo', function($scope) {
 			var btnType = $(this).data('type');
 			var requireList = $(this).parent().parent().siblings().find("form").find(".required");
 			requireList.each(function(){
+				$('.sel-err').remove();
 				var value = $(this).val();
 				if(!value){
 					if(!$(this).parent().hasClass('info-value') && !$(this).parent().hasClass('info-check-box')){
@@ -913,7 +915,7 @@ page.ctrl('loanInfo', function($scope) {
 
 	$scope.selfPicker = function(picked) {
 		var isDiscount = $("#isDiscount").val();
-		console.log(isDiscount);
+		
 		if(isDiscount != '1'){
 			$("#discountRate").parents('.info-key-value-box').hide();
 			$("#discountRate").find('input').removeClass('required').val('0');
