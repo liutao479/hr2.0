@@ -235,9 +235,11 @@ page.ctrl('lendAudit', function($scope) {
 		 * 审核通过
 		 */
 		$sub.on('approvalPass', function() {
-			var advancedWay = .data('type');
 			var $checked = $submitBar.find('.checkItem.checked');
+				
+			// debugger
 			if(!$checked) {
+				advancedWay = $checked.data('type');
 				return checkData(function() {
 							process();
 						});

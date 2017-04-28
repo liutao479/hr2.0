@@ -944,6 +944,7 @@ page.ctrl('loanInfo', function($scope) {
 	});
 
 	$scope.selfPicker = function(picked) {
+		console.log(picked)
 		var isDiscount = $("#isDiscount").val();
 		if(isDiscount != '1'){
 			$("#discountRate").parents('.info-key-value-box').hide();
@@ -968,8 +969,17 @@ page.ctrl('loanInfo', function($scope) {
 		if(isLen == $reneDivsShow.length) {
 			$('.positionAbso').removeClass('error-input').find('.error-input-tip').remove();
 		}
+		//保险续保切换时，把年限信息清空
+		console.log(this.$el);
+		if(this.$el.data('key') == 'renewalMode') {
+			alert(1)
+		}
 	}
 	$scope.areaPicker = function(picked) {
+	}
+	$scope.postPicker = function(picked) {
+		$('.positionAbso').find('.select .select-text').val('');
+		$('.positionAbso').find('.bxxbyearIpt').val('');
 	}
 	$scope.serviceTypePicker = function(picked) {
 	}
