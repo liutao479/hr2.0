@@ -176,5 +176,29 @@ page.ctrl('test', function($scope) {
 				markable: false
 			});
 		})
+		$("#searchSelect").dropdown();
 	})
+
+	// 下拉功能数据
+	$scope.dropdownTrigger = {
+		TypeSel: function(t, p, cb) {
+			var sourceData = {
+				items: [
+					{value:'3',text:"公安核查"},
+					{value:'0',text:"法院核查"},
+					{value:'6',text:"ABCD"},
+					{value:'7',text:"efgG"},
+					{value:'8',text:"HJK"},
+					{value:'9',text:"RG"},
+					{value:'1',text:"身份查询"}
+				],
+				id: 'value',
+				name: 'text'
+			};
+			cb(sourceData);
+		}
+	};
+	$scope.TypePicker=function(val){
+		console.log(val);
+	};
 })
