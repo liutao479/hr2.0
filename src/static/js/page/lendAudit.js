@@ -236,13 +236,13 @@ page.ctrl('lendAudit', function($scope) {
 		 */
 		$sub.on('approvalPass', function() {
 			var $checked = $submitBar.find('.checkItem.checked');
-				
-			// debugger
+			var advancedWay;
 			if(!$checked) {
 				advancedWay = $checked.data('type');
-				return checkData(function() {
-							process();
-						});
+				checkData(function() {
+					process({});
+				});
+				return;
 			}
 			checkData(function() {
 				switch (advancedWay) {
@@ -600,6 +600,7 @@ page.ctrl('lendAudit', function($scope) {
 			_params.reason = reason;
 		}
 		_params.frameCode = $scope.result.cfgData.frames[0].code;
+		return;
 		$.ajax({
 			type: 'post',
 			url: $http.api('makeLoanApproval/submit/' + $params.taskId, true),
