@@ -36,7 +36,7 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 			data: param,
 			success: $http.ok(function(res) {
 				var _mout=res.data.data;
-				var _platLend=_mout.body[1016];//同盾网贷信息核查
+				var _platLend=_mout.body['o'];//同盾网贷信息核查
 				/*网贷平台借贷数据统计start*/
 				var _platArr=[];
 				var repeatPlat=function(platJson,attr){
@@ -76,7 +76,7 @@ page.ctrl('preAuditDataAssistant', function($scope) {
 							if(platObj['twelve_month'])
 								repeatPlat(platObj,'twelve_month');
 						};	
-						_mout.body[1016][c].plat=_platArr;					
+						_mout.body['o'][c].plat=_platArr;					
 					};
 				};
 				/*整理title中发起人，最新发起时间等信息*/
