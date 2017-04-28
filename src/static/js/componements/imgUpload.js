@@ -304,21 +304,28 @@
 			fd.append('file', file, file.name);
 			fd.append('success_action_status', 200);
 			self.doUpload(res.host, fd);
-			console.log(file);
-			internelTest(file);
 		})
 	};
 
-	function internelTest(f) {
+	function internelTest(url) {
 		var canvas = document.createElement('canvas');
 		canvas.width = 220;
 		canvas.height = 173;
-		canvas.getContext('2d').drawImage(f, 0, 0, canvas.width, canvas.height);
-		var img = document.createElement("img");
-        img.src = canvas.toDataURL("image/png");
+		var video = document.createElement('video');
+		video.src = url;
+		
         $.alert({
         	title: 'd', 
-        	content: img
+        	content: '',
+        	onContentReady: function() {
+        		this.$content.append(video);
+        		video.play();
+        		video.style.display = 'none';
+        		canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+				var img = document.createElement("img");
+		        img.src = canvas.toDataURL("image/png");
+        		this.$content.append(img);
+        	}
         });
 	}
 
@@ -341,7 +348,7 @@
 			_url = api.otherDel;
 		} else if(self.options.card) {
 			self.delCb(self);
-			self.$el.html(internalTemplates.edit.format(self.name));
+			self.$el.html((!self.options.type ? internalTemplates.edit : internalTemplates.videoEdit).format(self.name));
 			self.status = 0;
 			self.listen();			
 //			self.$el.find('#imgUrl').val('');
@@ -366,7 +373,7 @@
 				self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 				if(!xhr.code) {
 					self.delCb(self, xhr);
-					self.$el.html(internalTemplates.edit.format(self.name));
+					self.$el.html((!self.options.type ? internalTemplates.edit : internalTemplates.videoEdit).format(self.name));
 					delete self.options.id;
 					self.status = 0;
 					self.listen();		
@@ -452,7 +459,7 @@
 				window.clickable = true;
 				if(!xhr.code) {					
 					if(self.status != 1) {
-						self.$el.html(internalTemplates.modify.format(self.name, url, self.errImg, self.errMsg));
+						self.$el.html((!self.options.type ? internalTemplates.modify : internalTemplates.videoModify).format(self.name, url, self.errImg, self.errMsg));
 						if(self.options.credit) {
 							self.options.id = xhr.data.id;
 						} else {
@@ -524,20 +531,19 @@
 			contentType: false,
 			global: false,
 			success: function(response) {
-				console.log(response);
 				var _url = host + '/' + fd.get('key');
 				self.options.img = _url;
 				if(self.options.card){
 					self.$el.find('.imgs-item-upload').LoadingOverlay("hide");
 					if(self.status != 1) {
-						self.$el.html(internalTemplates.modify.format(self.name,self.url));
+						self.$el.html((!self.options.type ? internalTemplates.modify : internalTemplates.videoModify).format(self.name,self.url));
 						self.status = 1;	
 						self.listen();
 						self.$el.find('.imgs-error').remove();
 						self.$el.find('img').attr('src',_url);
 						self.uplCb(self, response);
 					} else {
-						self.$el.html(internalTemplates.modify.format(self.name,self.url));
+						self.$el.html((!self.options.type ? internalTemplates.modify : internalTemplates.videoModify).format(self.name,self.url));
 						self.status = 1;	
 						self.listen();
 						self.$el.find('.imgs-error').remove();
@@ -578,13 +584,13 @@
 		videoModify: '<div class="imgs-item-upload">\
 				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传" accept="video/rm,video/rmvb,video/wmv,video/avi,video/mp4,video/3gp,video/mkv"/></div>\
 				<div class="imgs-delete" title="删除"><i class="iconfont">&#xe602;</i></div>\
-				<video src="{1}" preload="none" controls class="imgs-view">浏览器不支持</video>\
+				<video src="{1}" preload="meta" controls class="imgs-view">浏览器不支持</video>\
 				{2}{3}</div>{0}',
 		view: '<div class="imgs-item-upload">\
 				<img src="{1}" class="imgs-view viewEvt" />\
 			   {2}{3}</div>{0}',
 		videoView: '<div class="imgs-item-upload">\
-					<video src="{1}" preload="none" class="imgs-view">浏览器不支持</video>\
+					<video src="{1}" preload="meta" class="imgs-view">浏览器不支持</video>\
 				</div>{0}',
 		blank: '<div class="imgs-item-upload imgs-item-upload-blank">\
 				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
