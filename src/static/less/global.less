@@ -139,8 +139,11 @@ input[disabled]{
     color: @messageNumberBgColor !important;
     position: absolute;
     right: 0;
-    top: 30px;
+    bottom: -14px;
     font-size: 12px;
+}
+.baoxian-err {
+    top: 35px;
 }
 .pic-err{
     right: 50% !important;
@@ -1845,7 +1848,7 @@ input[disabled]{
         float: left;
         overflow:hidden;
         .role-bar-li {
-            height: 50px;
+            height: 52px;
             float: left;
             &:last-child .role-item{
                 border-right: 1px solid @borderColor;
@@ -1858,6 +1861,7 @@ input[disabled]{
                 color: @fontColor;
                 cursor: pointer;
                 border-left: 1px solid @borderColor;
+                // border-bottom: 1px solid @borderColor;
                 &.role-item-active {
                     background-color: @buttonBgColor;
                     color: #FFF;
@@ -2126,7 +2130,7 @@ input[disabled]{
         display:inline-block;
         width:139px;
         text-align:right;
-        margin-right: 20px;
+       
         position: relative;
         left: 0;
     }
@@ -2636,9 +2640,9 @@ input[disabled]{
         border: none;
         padding: 5px 0;
     }
-    .error-input-tip{
-        bottom: -25px;
-    }
+    // .error-input-tip{
+    //     bottom: -25px;
+    // }
 }
 
 .l-key-value-box {

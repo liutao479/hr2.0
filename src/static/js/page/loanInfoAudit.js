@@ -50,7 +50,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 					$scope.busiSourceNameId = result.data.DDXX.busiSourceId
 				};
 				$scope.result.tasks = $params.tasks ? $params.tasks.length : 1;
-				console.log(result)
+				
 				if(result.data.FQXX && result.data.FQXX.renewalInfo){
 					result.data.FQXX.renewalInfo = result.data.FQXX.renewalInfo.split(',');
 				}
@@ -142,16 +142,20 @@ page.ctrl('loanInfoAudit', function($scope) {
 	var loanFinishedInput = function(){
 		$(".info-key").each(function(){
 			var jqObj = $(this);
+			// console.log(jqObj..has('i'));
 			if(jqObj.has('i').length > 0){
-				$(this).parent().siblings().find("input").addClass("required");
+				// $(this).parent().siblings().find("input").addClass("required");
 			}
-			loanFinishedInputReq();
+				// $("input").removeClass('required');			}
+			
+			 loanFinishedInputReq();
 		});
 	}
-//页面加载完成对所有带“*”的input进行必填绑定,不需要必填的删除required
+// 页面加载完成对所有带“*”的input进行必填绑定,不需要必填的删除required
 	var loanFinishedInputReq = function(){
 		$("input[type='hidden'],input[type='text']").each(function(){
 			var required = $(this).attr("name");
+			
 			if(!required){
 				$(this).removeClass("required");
 			}
@@ -650,7 +654,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 		 */
 		$el.find('#backOrder').on('click', function() {
 			var that = $(this);
-			console.log($scope.result.data.loanTask.taskJumps)
+			
 			$.alert({
 				title: '退回订单',
 				content: doT.template(dialogTml.wContent.back)($scope.result.data.loanTask.taskJumps),
@@ -712,14 +716,14 @@ page.ctrl('loanInfoAudit', function($scope) {
 								jumpId: $scope.jumpId,
 								reason: _reason
 							}
-							console.log(_params)
+							
 							$.ajax({
 								type: 'post',
 								url: $http.api('task/jump', 'zyj'),
 								data: _params,
 								dataType: 'json',
 								success: $http.ok(function(result) {
-									console.log(result);
+									
 									
 									router.render('loanProcess');
 									// toast.hide();
@@ -889,7 +893,7 @@ page.ctrl('loanInfoAudit', function($scope) {
 	
 	$scope.selfPicker = function(picked) {
 		var isDiscount = $("#isDiscount").val();
-		console.log(isDiscount);
+		
 		if(isDiscount != '1'){
 			$("#discountRate").parents('.info-key-value-box').hide();
 			$("#discountRate").find('input').removeClass('required').val('0');

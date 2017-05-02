@@ -29,14 +29,15 @@ page.ctrl('moneyBusinessAuditPrint', [], function($scope) {
 			})
 		});
 	}
+	
 	/**
 	* 构造分页
 	*/
-	var setupPaging = function(count, isPage) {
+	var setupPaging = function(_page, isPage) {
 		$scope.$el.$paging.data({
-			current: parseInt(apiParams.page),
-			pages: isPage ? count : (tool.pages(count || 0, apiParams.pageSize)),
-			size: apiParams.pageSize
+			current: parseInt(apiParams.pageNum),
+			pages: isPage ? _page.pages : (tool.pages(_page.pages || 0, _page.pageSize)),
+			size: _page.pageSize
 		});
 		$('#pageToolbar').paging();
 	}

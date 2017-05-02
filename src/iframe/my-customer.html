@@ -89,7 +89,11 @@
 									{{ } }}
 								</td>
 								<td class="status-name">借款人：<span class="status-value">{{=row.realName || '未知'}}</span></td>
+								{{ if(!row.cardStatus) { }}
+								<td class="status-name"></td>
+								{{ } else { }}
 								<td class="status-name">开卡进度：<span class="status-value">{{=row.cardStatus || '未知'}}</span></td>
+								{{ } }}
 								<td class="td-last" rowspan="4">
 									{{ if(row.paymentApplyDisplay) { }}
 										<a href="javascript:;" data-order-no="{{=row.orderNo}}" class="button button-mini button-mini-width button-gray makeLoan">放款预约</a><br>

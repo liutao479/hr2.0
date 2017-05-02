@@ -149,7 +149,8 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 			type: 'post',
 			dataType: 'json',
 			data: {
-				type: type
+				type: type,
+				userId: Cookies.get('_hr_userId')
 			},
 			success: $http.ok(function(result) {
 				console.log(result);
@@ -174,7 +175,7 @@ page.ctrl('loadArchiveDownload', [], function($scope) {
 									}
 								});
 								funcIds = funcIds.join(',');
-								window.open($http.api('materialsDownLoad/downLoad?userIds=' + userIds + '&orderNos=' + orderNos + '&downLoadTypes=' + funcIds, true), '_blank');
+								window.open($http.api('materialsDownLoad/downLoad?orderNos=' + orderNos + '&downLoadTypes=' + funcIds, true), '_blank');
 							}
 						}
 					}

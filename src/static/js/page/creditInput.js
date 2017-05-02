@@ -241,6 +241,7 @@ page.ctrl('creditInput', [], function($scope) {
 	*/
 	var setupTabEvt = function () {
 		$scope.$el.$tab.find('.tabEvt').on('click', function () {
+			if(!window.clickable) return;
 			var $this = $(this);
 			if($this.hasClass('role-item-active')) return;
 			var _type = $this.data('type');
@@ -286,6 +287,7 @@ page.ctrl('creditInput', [], function($scope) {
 			contentType: false,
 			global: false,
 			success: function(response) {
+				window.clickable = true;
 				var _url = res.host + '/' + fd.get('key');
 				// var _name = fd.get('key');
 				// _name = _name.substr(_name.lastIndexOf('/') + 1);
@@ -325,6 +327,7 @@ page.ctrl('creditInput', [], function($scope) {
 				return false;
 			}
 			that.LoadingOverlay("show");
+			window.clickable = false;
 			$.ajax({
 				global: false,
 				url: $http.api('oss/video/sign', 'zyj'),

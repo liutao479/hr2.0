@@ -237,6 +237,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		 * 取消订单
 		 */
 		$sub.on('cancelOrder', function() {
+			if(!window.clickable) return;
 			$.alert({
 				title: '取消订单',
 				content: tool.alert('确定要取消该笔贷款申请吗？'),
@@ -607,7 +608,8 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 				console.log($scope.apiParams)
 				if(!value) return false;
 				params = {
-					userId: that.data('userId')
+					userId: that.data('userId'),
+					userType: $scope.currentType
 				}
 				params[that.data('type')] = value;
 				updateUser(params);
@@ -823,6 +825,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 			}
 		}
 		params['userId'] = that.data('userId');
+		params['userType'] = $scope.currentType;
 		params[that.data('type')] = picked.id;
 		updateUser(params);
 		console.log($scope.apiParams);
