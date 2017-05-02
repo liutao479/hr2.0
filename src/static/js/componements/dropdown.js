@@ -87,6 +87,9 @@
 		if(!self.opts.selected && self.opts.selected !='0') {
 			self.opts.selected = '';
 		}
+		if(!!self.opts.selected) {
+			self.text = self.opts.selected.split('-');
+		}
 		if(!self.opts.placeholder) {
 			self.opts.placeholder = false;
 		}
@@ -97,7 +100,7 @@
 			self.$tabPanel = $(_.template(internal.template.tab)(self.opts.tabs)).appendTo(self.$dropdown);
 			self.$tabs = self.$tabPanel.find('.select-tab-item');
 			self.$content = $('<div class="select-content-box"></div>').appendTo(self.$dropdown);
-			self.$items = $('<div class="select-content select-content-brand select-content-active"></div>').appendTo(self.$content);
+			self.$items = $('<div class="select-content select-content-active"></div>').appendTo(self.$content);
 		} else {
 			self.$items = $('<ul class="select-area"></ul>').appendTo(self.$dropdown);
 		}
@@ -118,6 +121,13 @@
 				closeDropDowns(self);
 			}
 			if(self.opened) return false;
+		})
+		self.$tabs.on('click', function() {
+			var idx = $(this).eq();
+			if(idx > self.actionIdx) {
+				return false;
+			}
+			
 		})
 	};
 	/**
@@ -141,11 +151,11 @@
 	dropdown.prototype.listenItem = function(items){
 		if(!items) return;
 		var self = this;
-		items.actionName = self.text[self.actionIdx];
+		items.actionName = self.textInstance[self.actionIdx];
 		if(self.opts.tabs.length <= 1) {
 			self.$items.html(_.template(internal.template.single)(items));
 		} else {
-			self.$items.html(_.template(internal.template.brandContent)(items));
+			self.$items.html(_.template(internal.template.multiple)(items));
 		}
 		self.$items.find('.itemEvt').on('click', function() {
 			var $that = $(this);
@@ -287,16 +297,14 @@
 									<li class="select-item itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</li>\
 								{{ } }}\
 								{{ } }}';
-	internal.template.brandContent = '<dl class="word-area">\
-										<dd class="clearfix">\
-											{{ for(var i = 0, len=it.items.length; i < len; i++) { var row = it.items[i]; name=row[it.name]; if(row[it.price]){ }}\
-												<a class="car-item{{=(it.actionName == name ? \" picked\":\"\")}} itemEvt" data-id="{{=row[it.id]}}" data-price="{{=row[it.price]}}">{{=row[it.name]}}</a>\
-											{{ }else{ }}\
-												<a class="car-item{{=(it.actionName == name ? \" picked\":\"\")}} itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</a>\
-											{{ } }}\
-											{{ } }}\
-										</dd>\
-									</dl>';
+	internal.template.multiple = '<div class="clearfix">\
+									{{ for(var i = 0, len=it.items.length; i < len; i++) { var row = it.items[i]; name=row[it.name]; if(row[it.price]){ }}\
+										<a class="select-item{{=(it.actionName == name ? \" picked\":\"\")}} itemEvt" data-id="{{=row[it.id]}}" data-price="{{=row[it.price]}}">{{=row[it.name]}}</a>\
+									{{ }else{ }}\
+										<a class="select-item{{=(it.actionName == name ? \" picked\":\"\")}} itemEvt" data-id="{{=row[it.id]}}">{{=row[it.name]}}</a>\
+									{{ } }}\
+									{{ } }}\
+								</div>';
 	internal.noop = function(t, p, f) {
 		f();
 	}

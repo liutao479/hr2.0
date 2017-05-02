@@ -857,14 +857,25 @@
         }
         .select-content-box {
             width: 100%;
-            height: 336px;
+            height: 280px;
             overflow-x: hidden;
             overflow-y: auto;
             background-color: #FFF;
             //品牌车系车型
             .select-content {
                 display: none;
-                padding: 0 15px 15px 15px;
+                padding: 10px 6px;
+                // padding: 0 15px 15px 15px;
+                .select-item {
+                    padding: 0 10px;
+                    cursor: pointer;
+                    display: inline-block;
+                    &:hover ,&.picked {
+                        background-color: @buttonBgColor;
+                        color: #fff;
+                        .borderRadius(3px);
+                    }
+                }
                 &.select-content-active {
                     display: block;
                 }

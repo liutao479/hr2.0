@@ -344,7 +344,7 @@ $(function() {
 					})
 					return cb(true);
 				} else {
-					etip('修改密码失败，请重试');
+					etip(xhr.msg || '修改密码失败，请重试');
 					return false;
 				}
 			},

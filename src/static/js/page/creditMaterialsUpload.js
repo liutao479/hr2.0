@@ -12,6 +12,7 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	$scope.tabs = {};
 	$scope.currentType = $scope.$params.type || 0;
 	$scope.$el = {};
+	$scope.picked = {};
 	
 
 	
@@ -140,18 +141,16 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		if(t) {
 			buttons['close'] = {
 	        	text: '取消',
-				btnClass: 'btn-default btn-cancel',
-	            action: function () {
-
-	            }
+				btnClass: 'btn-default btn-cancel'
 	        };
 		}
 		buttons['ok']  = {
         	text: '确定',
             action: function () {
-            	var $demandBank = $('#demandBank input').val();
-            	var $areaSource = $('#areaSource input').val();
-            	if(!$demandBank || !$areaSource) {
+            	// var $demandBank = $('#demandBank input').val();
+            	// var $areaSource = $('#areaSource input').val();
+            	// if(!$demandBank || !$areaSource) {
+            	if(!$scope.picked.bank || !$scope.picked.area) {
             		$.alert({
             			title: '提示',
             			content: tool.alert('请选择经办银行和业务发生地！'),
@@ -163,6 +162,12 @@ page.ctrl('creditMaterialsUpload', function($scope) {
             	}
             	$scope.clickable = true;
             	updBank(function(refresh) {
+            		$scope.bankName = $scope.picked.bank.name;
+            		var arr = [];
+            		var ap = $scope.picked.area['省'],
+            			ac = $scope.picked.area['市'],
+            			aa = $scope.picked.area['区'];
+            		$scope.areaName = [ap.name, ac.name, aa.name].join('-')
             		setupCreditBank(refresh);
             	});
             }
@@ -343,12 +348,11 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 		if(!_alert) {
 			$.ajax({
 				type: 'post',
-				url: $http.api('creditMaterials/submit/' + $params.taskId, 'zyj'),
+				url: $http.api('creditMaterials/submit/' + $params.taskId, true),
 				data: JSON.stringify($scope.apiParams),
 				dataType: 'json',
 				contentType: 'application/json;charset=utf-8',
 				success: $http.ok(function(result) {
-					console.log(result);
 					if(cb && typeof cb == 'function') {
 						cb();
 					}
@@ -797,15 +801,15 @@ page.ctrl('creditMaterialsUpload', function($scope) {
 	 * 下拉框点击回调
 	 */
 	$scope.demandBankPicker = function(picked) {
-		console.log(picked);
-		$scope.demandBankId = picked.id;
-		$scope.bankName = picked.name;
+		$scope.picked.bank = picked;
+		// $scope.demandBankId = picked.id;
+		// $scope.bankName = picked.name;
 	}
 
 	$scope.areaSourcePicker = function(picked) {
-		console.log(picked);
-		$scope.busiAreaCode = picked['市'].id;
-		$scope.areaName = picked['市'].name;
+		$scope.picked.area = picked;
+		// $scope.busiAreaCode = picked['市'].id;
+		// $scope.areaName = picked['市'].name;
 	}
 
 	$scope.relationShipPicker = function(picked) {

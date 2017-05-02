@@ -195,7 +195,7 @@
 				}
 				if(self.options.type == 1) {
 					var name = this.files[0].name.substring(this.files[0].name.lastIndexOf('.') + 1).toLowerCase();
-					if(name != 'rm' && name != 'rmvb' && name != 'wmv' && name != 'avi' && name != 'mp4' && name != '3gp' && name != 'mkv') {
+					if(name != 'rm' && name != 'rmvb' && name != 'wmv' && name != 'avi' && name != 'mp4' && name != '3gp' && name != 'mkv' && name != 'mov') {
 						$.alert({
 							title: '提示',
 							content: tool.alert('请选择正确的视频格式的文件进行上传!'),
@@ -478,7 +478,7 @@
 						}
 						self.$el.data('img', url);
 						self.$el.find('.imgs-error').remove();
-						self.$el.find('img').attr('src', url);
+						self.$el.find(!self.options.type ? 'img':'video').attr('src', url);
 						self.uplCb(self, xhr);
 					}
 					
@@ -489,9 +489,7 @@
 						content: tool.alert(xhr.msg),
 						buttons:{
 							ok: {
-								text: '确定',
-								action: function() {
-								}
+								text: '确定'
 							}
 						}
 					})
@@ -540,14 +538,14 @@
 						self.status = 1;	
 						self.listen();
 						self.$el.find('.imgs-error').remove();
-						self.$el.find('img').attr('src',_url);
+						self.$el.find(!self.options.type ? 'img' : 'video').attr('src',_url);
 						self.uplCb(self, response);
 					} else {
 						self.$el.html((!self.options.type ? internalTemplates.modify : internalTemplates.videoModify).format(self.name,self.url));
 						self.status = 1;	
 						self.listen();
 						self.$el.find('.imgs-error').remove();
-						self.$el.find('img').attr('src',_url);
+						self.$el.find(!self.options.type ? 'img' : 'video').attr('src',_url);
 						self.uplCb(self, response);
 					}
 					return false;
@@ -574,7 +572,7 @@
 		videoEdit: '<div class="imgs-item-upload">\
 				<div class="iconfont-upload"><i class="iconfont">&#xe65f;</i></div>\
 				<span class="i-tips">点击上传视频</span>\
-				<input type="file" class="input-file activeEvt" accept="video/rm,video/rmvb,video/wmv,video/avi,video/mp4,video/3gp,video/mkv" />\
+				<input type="file" class="input-file activeEvt" accept="video/rm,video/rmvb,video/mov,video/wmv,video/avi,video/mp4,video/3gp,video/mkv" />\
 			   </div>{0}',
 		modify: '<div class="imgs-item-upload">\
 				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传" accept="image/gif,image/jpeg,image/jpg,image/png"/></div>\
@@ -582,7 +580,7 @@
 				<img src="{1}" class="imgs-view" />\
 				{2}{3}</div>{0}',
 		videoModify: '<div class="imgs-item-upload">\
-				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传" accept="video/rm,video/rmvb,video/wmv,video/avi,video/mp4,video/3gp,video/mkv"/></div>\
+				<div class="imgs-upload"><i class="iconfont">&#xe6ac;</i><input type="file" class="input-file activeEvt" title="重新上传" accept="video/rm,video/rmvb,video/mov,video/wmv,video/avi,video/mp4,video/3gp,video/mkv"/></div>\
 				<div class="imgs-delete" title="删除"><i class="iconfont">&#xe602;</i></div>\
 				<video src="{1}" preload="meta" controls class="imgs-view">浏览器不支持</video>\
 				{2}{3}</div>{0}',
@@ -590,7 +588,7 @@
 				<img src="{1}" class="imgs-view viewEvt" />\
 			   {2}{3}</div>{0}',
 		videoView: '<div class="imgs-item-upload">\
-					<video src="{1}" preload="meta" class="imgs-view">浏览器不支持</video>\
+					<video src="{1}" controls preload="meta" class="imgs-view">浏览器不支持</video>\
 				</div>{0}',
 		blank: '<div class="imgs-item-upload imgs-item-upload-blank">\
 				<div class="iconfont-upload"><i class="iconfont">&#xe61f;</i></div>\
